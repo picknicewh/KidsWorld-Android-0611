@@ -22,4 +22,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.lzy.net:okhttputils:1.6.0'
+    compile 'com.google.code.gson:gson:2.7'
+    compile files('lib/universal-image-loader-1.9.3.jar')
 }
