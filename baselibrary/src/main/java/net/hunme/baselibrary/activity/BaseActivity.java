@@ -57,6 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void setLiftImage(int imageResource){
         iv_lift.setImageResource(imageResource);
+        iv_lift.setVisibility(View.VISIBLE);
     }
 
     public void setRightImage(int imageResource){
