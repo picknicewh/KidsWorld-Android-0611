@@ -9,10 +9,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.RadioGroup;
 
-import net.hunme.kidsworld.base.ActionFragement;
-import net.hunme.kidsworld.base.FindFragement;
-import net.hunme.kidsworld.base.MessageFragement;
-import net.hunme.kidsworld.base.SchoolFragement;
+import net.hunme.message.MessageFragement;
+import net.hunme.school.SchoolFragement;
+import net.hunme.status.StatusFragement;
+import net.hunme.user.UserFragement;
+
 
 public class MainActivity extends Activity {
 
@@ -26,7 +27,7 @@ public class MainActivity extends Activity {
          fragmentManager = getFragmentManager();
          radioGroup = (RadioGroup) findViewById(R.id.rg_tab);
          FragmentTransaction transaction =fragmentManager.beginTransaction();
-         transaction.replace(R.id.content,  new ActionFragement());
+         transaction.replace(R.id.content,  new StatusFragement());
          transaction.commit();
          radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -35,13 +36,13 @@ public class MainActivity extends Activity {
                 Fragment fragment = null;
                 switch (checkedId){
                         case R.id.rb_action:
-                            fragment = new ActionFragement();
+                            fragment = new StatusFragement();
                             break;
                         case R.id.rb_school:
                             fragment = new SchoolFragement();
                             break;
                         case R.id.rb_find:
-                            fragment = new FindFragement();
+                            fragment = new UserFragement();
                             break;
                         case R.id.rb_message:
                             fragment = new MessageFragement();

@@ -25,4 +25,5 @@ dependencies {
     compile 'com.lzy.net:okhttputils:1.6.0'
     compile 'com.google.code.gson:gson:2.7'
     compile files('lib/universal-image-loader-1.9.3.jar')
+    compile 'com.jakewharton:butterknife:7.0.1'
 }
