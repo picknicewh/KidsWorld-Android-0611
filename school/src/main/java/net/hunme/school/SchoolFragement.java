@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
+
 /**
  * 作者： Administrator
  * 时间： 2016/7/14
@@ -16,10 +18,13 @@ import android.view.ViewGroup;
  * 主要接口：
  */
 public class SchoolFragement extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view  = inflater.inflate(R.layout.fragment_school,null);
+        View view = inflater.inflate(R.layout.fragment_school, null);
+        ButterKnife.bind(this, view);
         return view;
     }
+
 }

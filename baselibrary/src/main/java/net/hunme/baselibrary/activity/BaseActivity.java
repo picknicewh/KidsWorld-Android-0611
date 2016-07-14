@@ -1,6 +1,7 @@
 package net.hunme.baselibrary.activity;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -77,4 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         iv_right.setOnClickListener(listener);
     }
 
+    public <T extends View> T $(@IdRes int resId){
+        return (T)super.findViewById(resId);
+    }
 }
