@@ -22,7 +22,7 @@ import net.hunme.baselibrary.R;
 public class NavigationBar extends RelativeLayout implements View.OnClickListener {
     public static final int TAG_LEFT_BUTTON = -1;
     public static final int TAG_MIDDLE_TITLE = 0;
-    public static final int TAG_RIGHT_TITLE = 1;
+    public static final int TAG_RIGHT_BUTTON = 1;
     private Context context;
     private OnNavigationBarClickListener mListener;
     public NavigationBar(Context context, AttributeSet attrs, int defStyle) {
@@ -57,7 +57,7 @@ public class NavigationBar extends RelativeLayout implements View.OnClickListene
         setButton(text, resid, TAG_LEFT_BUTTON);
     }
     public void setRightButton(String text, int resid) {
-        setButton(text, resid, TAG_RIGHT_TITLE);
+        setButton(text, resid, TAG_RIGHT_BUTTON);
 
     }
 
@@ -70,7 +70,7 @@ public class NavigationBar extends RelativeLayout implements View.OnClickListene
         TextView view = new TextView(context);
         // set text
         view.setText(text);
-        view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         view.setTextColor(Color.WHITE);
         setView(view, false, 0, TAG_MIDDLE_TITLE);
     }
@@ -115,19 +115,17 @@ public class NavigationBar extends RelativeLayout implements View.OnClickListene
         switch (tag) {
             case TAG_LEFT_BUTTON:
                 lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT|RelativeLayout.CENTER_VERTICAL);
-
                 break;
             case TAG_MIDDLE_TITLE:
                 lp.addRule(RelativeLayout.CENTER_IN_PARENT);
                 break;
-            case TAG_RIGHT_TITLE:
+            case TAG_RIGHT_BUTTON:
                 lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT|RelativeLayout.CENTER_VERTICAL);
                 break;
             default:
                 throw new IllegalArgumentException("请使用NavigationBar的TAG常量,例如：NavigationBar.TAG_LEFT_BUTTON,谢谢合作!");
         }
         view.setLayoutParams(lp);
-        // set view drawable
         if (resid != 0) {
             view.setBackgroundResource(resid);
         }

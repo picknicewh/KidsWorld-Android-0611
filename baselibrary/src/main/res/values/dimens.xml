@@ -6,6 +6,7 @@
     <dimen name="space_x1.5">15dp</dimen>
     <dimen name="space_x2">20dp</dimen>
     <dimen name="space_x2.5">25dp</dimen>
+    <dimen name="space_x4">25dp</dimen>
 
     <!-- Text Size -->
     <dimen name="ts_small">12sp</dimen>
@@ -18,4 +19,5 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!-- Default screen margins, per the Android Design guidelines. -->
 </resources>

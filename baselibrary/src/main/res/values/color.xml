@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#F83F2F</color>
     <color name="colorPrimaryDark">#F83F2F</color>
     <color name="colorAccent">#FF3B30</color>
@@ -104,5 +105,4 @@
     <color name="c_qtsr_zjsr">#ff0000</color>
     <color name="c_qtsr_ywsr">#00a0e9</color>
     <color name="c_qtsr_jysr">#996c33</color>
-
 </resources>

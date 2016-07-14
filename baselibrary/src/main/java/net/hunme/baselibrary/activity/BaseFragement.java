@@ -1,6 +1,5 @@
 package net.hunme.baselibrary.activity;
 
-import android.app.Fragment;
 import android.support.annotation.IdRes;
 import android.view.View;
 
@@ -12,7 +11,7 @@ import android.view.View;
  * 附加注释：
  * 主要接口：
  */
-public class BaseFragement extends Fragment {
+public class BaseFragement extends android.support.v4.app.Fragment {
     public <T extends View> T $(View layoutView, @IdRes int resId){
         return (T)layoutView.findViewById(resId);
     }

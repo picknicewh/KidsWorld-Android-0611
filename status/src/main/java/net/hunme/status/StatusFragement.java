@@ -1,6 +1,5 @@
 package net.hunme.status;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -17,7 +16,7 @@ import butterknife.ButterKnife;
  * 附加注释：
  * 主要接口：
  */
-public class StatusFragement extends Fragment {
+public class StatusFragement extends android.support.v4.app.Fragment {
 
     @Nullable
     @Override
