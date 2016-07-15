@@ -297,9 +297,6 @@
     <color name="rc_voice_color">#0195ff</color>
     <color name="rc_voice_color_left">#4385bf</color>
     <color name="rc_voice_color_right">#a2a2a2</color>
-    <color name="rc_voip_background_color">#262e42</color>
-    <color name="rc_voip_check_disable">#1f4a76</color>
-    <color name="rc_voip_check_enable">#0099ff</color>
     <declare-styleable name="AsyncImageView"><attr format="dimension" name="RCMinShortSideSize"/><attr format="dimension" name="RCCornerRadius"/><attr format="boolean" name="RCMask"/><attr name="RCShape"><flag name="square" value="0"/><flag name="circle" value="1"/></attr><attr format="reference" name="RCDefDrawable"/></declare-styleable>
     <declare-styleable name="InputView"><attr name="RCStyle"><enum name="SCE" value="0x123"/><enum name="CES" value="0x231"/><enum name="ECS" value="0x321"/><enum name="CSE" value="0x213"/><enum name="SC" value="0x120"/><enum name="CS" value="0x21"/><enum name="EC" value="0x320"/><enum name="CE" value="0x023"/><enum name="C" value="0x020"/></attr></declare-styleable>
     <dimen name="rc_conversation_item_data_size">14sp</dimen>
@@ -354,14 +351,13 @@
     <item name="rc_txt" type="id"/>
     <item name="rc_unread_message" type="id"/>
     <item name="rc_unread_message_right" type="id"/>
-    <item name="rc_user_name" type="id"/>
-    <item name="rc_user_portrait" type="id"/>
     <item name="rc_warning" type="id"/>
     <integer name="rc_audio_encoding_bit_rate">7950</integer>
     <integer name="rc_chatroom_first_pull_message_count">10</integer>
     <integer name="rc_custom_service_evaluation_interval">60</integer>
     <integer name="rc_image_quality">85</integer>
     <integer name="rc_image_size">960</integer>
+    <string name="rc_blacklist_prompt">您已被加入黑名单</string>
     <string name="rc_called_accept">对方接受了通话请求</string>
     <string name="rc_called_is_calling">对方正在通话中</string>
     <string name="rc_called_not_accept">对方未接听</string>
@@ -488,46 +484,7 @@
     <string name="rc_voice_failure">录音失败！</string>
     <string name="rc_voice_rec">手指上滑，取消发送</string>
     <string name="rc_voice_short">录音时间太短</string>
-    <string name="rc_voip_answer">接听</string>
-    <string name="rc_voip_audio">语音聊天</string>
-    <string name="rc_voip_audio_call_inviting">邀请你进行语音聊天...</string>
-    <string name="rc_voip_audio_ended">语音聊天已经结束</string>
-    <string name="rc_voip_audio_no_response">语音聊天未接听</string>
-    <string name="rc_voip_call_busy">忙线中</string>
-    <string name="rc_voip_call_connecting">连接中</string>
-    <string name="rc_voip_call_hangup">已挂断</string>
-    <string name="rc_voip_call_interrupt">已挂断</string>
-    <string name="rc_voip_call_network_error">当前网络不可用,请检查你的网络设置</string>
-    <string name="rc_voip_call_no_response">无响应</string>
-    <string name="rc_voip_call_start_fail">正在通话中</string>
-    <string name="rc_voip_call_started">开始通话</string>
-    <string name="rc_voip_call_terminalted">通话结束</string>
-    <string name="rc_voip_call_time_length">通话时长</string>
-    <string name="rc_voip_call_waiting">正在等待对方接受邀请...</string>
-    <string name="rc_voip_camera">摄像头</string>
     <string name="rc_voip_cpu_error">很抱歉，该功能暂时不支持您的机型</string>
-    <string name="rc_voip_disable_camera">关闭摄像头</string>
-    <string name="rc_voip_enable_camera">开启摄像头</string>
-    <string name="rc_voip_handfree">免提</string>
-    <string name="rc_voip_hangup">挂断</string>
-    <string name="rc_voip_message_audio">[语音聊天]</string>
-    <string name="rc_voip_message_video">[视频聊天]</string>
-    <string name="rc_voip_mo_cancel">已取消</string>
-    <string name="rc_voip_mo_no_response">未接听</string>
-    <string name="rc_voip_mo_reject">已拒绝</string>
-    <string name="rc_voip_mt_busy">对方忙,请稍后再播</string>
-    <string name="rc_voip_mt_cancel">对方已取消</string>
-    <string name="rc_voip_mt_no_response">对方未接听</string>
-    <string name="rc_voip_mt_reject">对方已拒绝</string>
-    <string name="rc_voip_mute">静音</string>
-    <string name="rc_voip_participant_users">群聊成员</string>
-    <string name="rc_voip_remote_switch_to_audio">对方已切换到语音聊天</string>
-    <string name="rc_voip_select_member">选择成员</string>
-    <string name="rc_voip_switch_to_audio">已切换到语音聊天</string>
-    <string name="rc_voip_video">视频聊天</string>
-    <string name="rc_voip_video_call_inviting">邀请你进行视频聊天...</string>
-    <string name="rc_voip_video_ended">视频聊天已经结束</string>
-    <string name="rc_voip_video_no_response">视频聊天未接听</string>
     <string name="rc_waiting">等待中</string>
     <string name="rc_yes">是</string>
     <string name="rc_yesterday_format">昨天 %1$s</string>
@@ -594,10 +551,6 @@
         <item name="android:layout_height">0.5dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@android:color/darker_gray</item>
-    </style>
-    <style name="rc_voip_text_style_style" parent="@android:style/TextAppearance.Widget.TextView">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">14sp</item>
     </style>
     <style name="vertical_light_thin_divider">
         <item name="android:layout_height">match_parent</item>

@@ -30,7 +30,7 @@ public class SchoolFragement extends BaseFragement {
         return view;
     }
     private  void init(View v){
-        navigationBar = $(v,R.id.nb_message);
+        navigationBar = $(v,R.id.nb_school);
         navigationBar.setTitle("学校");
 
     }

@@ -4,14 +4,6 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_volume_8.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_handfree_hover.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_handfree_hover.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_phone.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_phone.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_unread_remind_without_count.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_unread_remind_without_count.png"
     },
@@ -46,10 +38,6 @@
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f46a.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f46a.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_disable_camera.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_disable_camera.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f3c2.png",
@@ -108,16 +96,8 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f648.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_camera.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_camera.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f434.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f434.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_disable_camera_hover.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_disable_camera_hover.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_def_msg_portrait.png",
@@ -134,10 +114,6 @@
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_picsel_back_normal.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_picsel_back_normal.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_icon_add.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_icon_add.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_camera_selected.png",
@@ -228,12 +204,12 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_extend_selected.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f613.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f613.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f62c.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f62c.png"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f613.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f613.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f3b5.png",
@@ -258,10 +234,6 @@
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f36b.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f36b.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_icon_camera.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_icon_camera.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_volume_6.png",
@@ -328,12 +300,12 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_voice_sent_play3.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u263a.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u263a.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u23f3.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u23f3.png"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u263a.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u263a.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f636.png",
@@ -360,12 +332,12 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f48d.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_default_discussion_portrait.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_default_discussion_portrait.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u270a.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u270a.png"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_default_discussion_portrait.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_default_discussion_portrait.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_volume_1.png",
@@ -396,20 +368,16 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u26c4.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_icon_input_video_hover.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_icon_input_video_hover.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_public_service_menu_bg.9.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_public_service_menu_bg.9.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_notice_wraning.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_notice_wraning.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u270b.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u270b.png"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_notice_wraning.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_notice_wraning.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f436.png",
@@ -428,24 +396,24 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f4a1.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f6b2.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f6b2.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u2744.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u2744.png"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f6b2.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f6b2.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_smiley_selected.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_smiley_selected.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voide_message_unread.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voide_message_unread.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_location_selected.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_location_selected.png"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voide_message_unread.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voide_message_unread.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u261d.png",
@@ -488,10 +456,6 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_def_rich_content.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_icon_input_video.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_icon_input_video.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f004.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f004.png"
     },
@@ -520,20 +484,16 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_btn_pub_service_enter_normal.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f4da.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f4da.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f60c.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f60c.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_text_selected.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_text_selected.png"
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f4da.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f4da.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_camera_hover.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_camera_hover.png"
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_text_selected.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_text_selected.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_indicator.png",
@@ -632,10 +592,6 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f631.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_audio_answer_hover.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_audio_answer_hover.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f44e.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f44e.png"
     },
@@ -680,10 +636,6 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_bubble_white.9.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_icon_checkbox_hover.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_icon_checkbox_hover.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voice_icon_right.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voice_icon_right.png"
     },
@@ -712,10 +664,6 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_bg_text_normal.9.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_video_answer_hover.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_video_answer_hover.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f46b.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f46b.png"
     },
@@ -724,28 +672,20 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_receive_voice_two.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f332.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f332.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ed_pub_service_search_normal.9.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ed_pub_service_search_normal.9.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_mute.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_mute.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_switch_camera.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_switch_camera.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f612.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f612.png"
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f332.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f332.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_volume_wraning.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_volume_wraning.png"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f612.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f612.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_indicator_hover.png",
@@ -756,32 +696,12 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_notification_network_available.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_video_answer.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_video_answer.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u26bd.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u26bd.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_audio_right_connected.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_audio_right_connected.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_float_audio.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_float_audio.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_star_hover.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_star_hover.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_audio_left_cancel.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_audio_left_cancel.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_minimize.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_minimize.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f609.png",
@@ -800,16 +720,16 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f4aa.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f4b0.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f4b0.png"
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_img_camera.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_img_camera.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_conversation_newmsg.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_conversation_newmsg.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_img_camera.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_img_camera.png"
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f4b0.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f4b0.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f44a.png",
@@ -820,44 +740,36 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_complete_hover.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_trangle.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_trangle.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_extend_normal.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_extend_normal.png"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_trangle.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_trangle.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ed_pub_service_search_hover.9.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ed_pub_service_search_hover.9.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_icon_checkbox_normal.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_icon_checkbox_normal.png"
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f525.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f525.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_btn_send_normal.9.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_btn_send_normal.9.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f525.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f525.png"
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_picsel_pictype_normal.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_picsel_pictype_normal.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_bubble_right.9.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_bubble_right.9.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_picsel_pictype_normal.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_picsel_pictype_normal.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f4a3.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f4a3.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_mute_hover.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_mute_hover.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f556.png",
@@ -876,16 +788,8 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f60d.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_video_left.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_video_left.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_volume_0.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_volume_0.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_icon_checkbox_checked.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_icon_checkbox_checked.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_volume_3.png",
@@ -900,12 +804,12 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f635.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_grid_image_error.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_grid_image_error.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_message_block.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_message_block.png"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_grid_image_error.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_grid_image_error.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f616.png",
@@ -920,20 +824,16 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_no_hover.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f377.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f377.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_btn_pub_service_follow_normal.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_btn_pub_service_follow_normal.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f437.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f437.png"
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f377.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f377.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_handfree.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_handfree.png"
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f437.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f437.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f606.png",
@@ -944,10 +844,6 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_yes_hover.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_float_video.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_float_video.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u2615.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u2615.png"
     },
@@ -956,20 +852,20 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f623.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_unread_message_count.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_unread_message_count.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_picsel_catalog_selected.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_picsel_catalog_selected.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_delete.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_delete.png"
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_unread_message_count.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_unread_message_count.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f52b.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f52b.png"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_delete.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_delete.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_default_portrait.png",
@@ -994,14 +890,6 @@
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_setting_friends_add.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_setting_friends_add.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_icon_input_video_selected.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_icon_input_video_selected.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_hang_up_hover.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_hang_up_hover.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_default_group_portrait.png",
@@ -1072,16 +960,8 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f633.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_video_right.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_video_right.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_volume_4.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_volume_4.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_audio_right_cancel.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_audio_right_cancel.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f3c0.png",
@@ -1094,10 +974,6 @@
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u26a1.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u26a1.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_audio_answer.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_audio_answer.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f61e.png",
@@ -1132,20 +1008,12 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f382.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_audio_left_connected.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_audio_left_connected.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_location_normal.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_location_normal.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f605.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f605.png"
-    },
-    {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_hang_up.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_hang_up.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_btn_send_hover.9.png",
