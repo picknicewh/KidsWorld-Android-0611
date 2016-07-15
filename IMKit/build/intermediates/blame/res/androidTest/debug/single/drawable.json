@@ -36,12 +36,12 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_voip_vedio_answer_selector.xml"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_bg_editinput.xml",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_bg_editinput.xml"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_ic_no_selector.xml",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_ic_no_selector.xml"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_bg_editinput.xml",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_bg_editinput.xml"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_corner_location_style.xml",

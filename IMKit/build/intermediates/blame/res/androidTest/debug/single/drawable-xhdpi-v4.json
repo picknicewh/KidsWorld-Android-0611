@@ -228,12 +228,12 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_extend_selected.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f62c.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f62c.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f613.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f613.png"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f62c.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f62c.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f3b5.png",
@@ -1096,12 +1096,12 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u26a1.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f61e.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f61e.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_audio_answer.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_voip_audio_answer.png"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f61e.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f61e.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f60f.png",
