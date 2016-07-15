@@ -13,4 +13,9 @@ public class ClassActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class);
     }
+
+    @Override
+    protected void setToolBar() {
+
+    }
 }

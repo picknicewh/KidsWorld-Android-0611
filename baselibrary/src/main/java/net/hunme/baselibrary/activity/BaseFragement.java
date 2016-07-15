@@ -1,7 +1,8 @@
 package net.hunme.baselibrary.activity;
 
-import android.app.Fragment;
+
 import android.support.annotation.IdRes;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.umeng.analytics.MobclickAgent;

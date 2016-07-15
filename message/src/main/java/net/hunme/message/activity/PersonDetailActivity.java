@@ -58,6 +58,12 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
         inittoobar();
         initview();
     }
+
+    @Override
+    protected void setToolBar() {
+
+    }
+
     private void inittoobar(){
         setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickListener(new View.OnClickListener() {

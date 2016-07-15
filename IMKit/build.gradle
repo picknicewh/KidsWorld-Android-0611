@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "24.0.0"
     defaultConfig {
         minSdkVersion 15
@@ -31,5 +31,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'src/main/libs', include: ['*.jar'])
-       }
+    compile fileTree(include: ['*.jar'], dir: 'src/main/libs')
+    compile 'com.android.support:appcompat-v7:24.0.0'
+}

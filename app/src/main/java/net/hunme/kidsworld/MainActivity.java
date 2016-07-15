@@ -1,21 +1,21 @@
 package net.hunme.kidsworld;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
 
 import net.hunme.discovery.DiscoveryFragement;
-import net.hunme.message.MessageFragement;
+import net.hunme.message.fragment.MessageFragement;
 import net.hunme.school.SchoolFragement;
 import net.hunme.status.StatusFragement;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
     private FragmentManager fragmentManager;
     private RadioGroup radioGroup;
@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         fragmentManager = getFragmentManager();
+         fragmentManager =getSupportFragmentManager();
          radioGroup = (RadioGroup) findViewById(R.id.rg_tab);
          FragmentTransaction transaction =fragmentManager.beginTransaction();
          transaction.replace(R.id.content,  new StatusFragement());

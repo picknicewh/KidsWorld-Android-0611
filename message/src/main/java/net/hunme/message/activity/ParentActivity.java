@@ -83,6 +83,12 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
         init();
         initList();
     }
+
+    @Override
+    protected void setToolBar() {
+
+    }
+
     private void init(){
         setLiftImage(R.mipmap.ic_arrow_lift);
         setCententTitle(getIntent().getStringExtra("title"));
