@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="match_parent">
     <net.hunme.baselibrary.widget.NavigationBar
@@ -10,24 +9,75 @@
         android:padding="@dimen/space"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
-
-    <net.hunme.baselibrary.widget.PagerSlidingTabStrip
-        android:id="@+id/pst_meaasge"
+    <LinearLayout
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="@dimen/space_x4"
-        android:layout_marginRight="@dimen/space_x4"
-        app:selectedTabTextColor="@color/red_message"
-        app:pstsIndicatorColor="@color/red_message"
-        app:pstsDividerPadding="10dp"
-        app:pstsIndicatorHeight="2dp"
-        app:pstsShouldExpand="true"
-        app:pstsUnderlineHeight="0dp"/>
+        android:layout_height="wrap_content">
+      <LinearLayout
+          android:id="@+id/ll_class"
+          android:padding="@dimen/space_x0.5"
+          android:gravity="center"
+          android:layout_weight="1"
+          android:orientation="vertical"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+          <ImageView
+              android:src="@mipmap/myclass"
 
-    <!--可滑动的布局内容-->
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_view"
+              android:layout_width="40dp"
+              android:layout_height="40dp" />
+          <TextView
+              android:text="班级"
+              android:textColor="@color/myclass"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+      </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_teacher"
+            android:padding="@dimen/space_x0.5"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/teacher"
+
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:text="老师"
+                android:textColor="@color/myteacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_parent"
+            android:padding="@dimen/space_x0.5"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/parent"
+
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:text="家长"
+                android:textColor="@color/parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:background="@color/gray_6"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="@dimen/line_gray"/>
+    <FrameLayout
+        android:id="@+id/rong_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

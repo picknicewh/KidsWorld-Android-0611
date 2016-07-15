@@ -2,6 +2,7 @@ package net.hunme.user;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import android.view.ViewGroup;
  * 附加注释：
  * 主要接口：
  */
-public class UserFragement extends android.support.v4.app.Fragment {
+public class UserFragement extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <net.hunme.baselibrary.widget.CircleImageView
+            android:id="@+id/iv_phead"
+            android:src="@mipmap/person"
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+        <TextView
+            android:id="@+id/tv_pname"
+            android:layout_marginTop="@dimen/space"
+            android:layout_marginBottom="@dimen/space_x2"
+            android:text="大幂幂"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ts_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:background="@color/line_gray"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_gray"/>
+    <LinearLayout
+        android:padding="@dimen/space"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+           <TextView
+               android:id="@+id/tv_role"
+               android:text="爸爸"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginTop="@dimen/space"
+                android:id="@+id/tv_phone"
+                android:text="13735484622"
+                android:textColor="@color/black"
+                android:textSize="@dimen/ts_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+           <ImageView
+               android:layout_centerInParent="true"
+               android:id="@+id/iv_pcall"
+               android:src="@mipmap/call"
+               android:layout_width="30dp"
+               android:layout_height="30dp" />
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:id="@+id/iv_pmessage"
+                android:src="@mipmap/message"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+        </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:layout_marginLeft="@dimen/space"
+        android:background="@color/line_gray"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_gray"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="@dimen/space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="学校"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="@dimen/space"
+            android:id="@+id/tv_school"
+            android:text="杭州行知幼儿园"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ts_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:layout_marginLeft="@dimen/space"
+        android:background="@color/line_gray"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_gray"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="@dimen/space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="班级"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="@dimen/space"
+            android:id="@+id/tv_pclass"
+            android:text="苗苗班"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ts_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:layout_marginLeft="@dimen/space"
+        android:background="@color/line_gray"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_gray"/>
+</LinearLayout>
