@@ -1,8 +1,10 @@
 package net.hunme.baselibrary.activity;
 
+import android.app.Fragment;
 import android.support.annotation.IdRes;
-import android.support.v4.app.Fragment;
 import android.view.View;
+
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 作者： Administrator
@@ -15,5 +17,17 @@ import android.view.View;
 public class BaseFragement extends Fragment {
     public <T extends View> T $(View layoutView, @IdRes int resId){
         return (T)layoutView.findViewById(resId);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(getActivity());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(getActivity());
     }
 }

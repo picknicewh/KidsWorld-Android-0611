@@ -1,12 +1,12 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="line_gray">0.5dip</dimen>
+    <dimen name="line_gray">0.5dp</dimen>
+
     <dimen name="space_x0.5">5dp</dimen>
     <dimen name="space">10dp</dimen>
     <dimen name="space_x1.5">15dp</dimen>
     <dimen name="space_x2">20dp</dimen>
     <dimen name="space_x2.5">25dp</dimen>
-    <dimen name="space_x4">25dp</dimen>
 
     <!-- Text Size -->
     <dimen name="ts_small">12sp</dimen>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_name">
+        <item>苗苗班</item>
+        <item>哈哈班 </item>
+        <item>渣渣班</item>
+    </string-array>
+</resources>

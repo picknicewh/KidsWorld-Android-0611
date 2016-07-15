@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import net.hunme.baselibrary.R;
 import net.hunme.baselibrary.util.ToolBarHelper;
 
@@ -16,8 +18,9 @@ import net.hunme.baselibrary.util.ToolBarHelper;
  * ================================================
  * 作    者：ZLL
  * 时    间：2016/7/13
- * 描    述：
- * 版    本：
+ * 描    述：所有Activity父类
+ * 版    本：1.0 添加Toolbar代码
+ *          1.2 添加友盟统计
  * 修订历史：
  * 主要接口：
  * ================================================
@@ -44,6 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         /*自定义的一些操作*/
         onCreateCustomToolBar(toolbar) ;
         getToolbarViews(toolbar);
+        setToolBar();
     }
 
     public void onCreateCustomToolBar(Toolbar toolbar){
@@ -68,6 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void setCententTitle(String title){
         tv_title.setText(title);
+        tv_title.setVisibility(View.VISIBLE);
     }
 
     public void setLiftOnClickListener(View.OnClickListener listener){
@@ -80,5 +85,19 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public <T extends View> T $(@IdRes int resId){
         return (T)super.findViewById(resId);
+    }
+
+    protected abstract void setToolBar();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

@@ -1,21 +1,21 @@
 package net.hunme.kidsworld;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
 
-import net.hunme.message.fragment.MessageFragement;
+import net.hunme.discovery.DiscoveryFragement;
+import net.hunme.message.MessageFragement;
 import net.hunme.school.SchoolFragement;
 import net.hunme.status.StatusFragement;
-import net.hunme.user.UserFragement;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends Activity {
 
     private FragmentManager fragmentManager;
     private RadioGroup radioGroup;
@@ -24,7 +24,7 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         fragmentManager = getSupportFragmentManager();
+         fragmentManager = getFragmentManager();
          radioGroup = (RadioGroup) findViewById(R.id.rg_tab);
          FragmentTransaction transaction =fragmentManager.beginTransaction();
          transaction.replace(R.id.content,  new StatusFragement());
@@ -32,8 +32,8 @@ public class MainActivity extends FragmentActivity {
          radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId){
-                FragmentTransaction transaction =fragmentManager.beginTransaction();
-               Fragment fragment = null;
+             FragmentTransaction transaction =fragmentManager.beginTransaction();
+                Fragment fragment = null;
                 switch (checkedId){
                         case R.id.rb_action:
                             fragment = new StatusFragement();
@@ -42,7 +42,7 @@ public class MainActivity extends FragmentActivity {
                             fragment = new SchoolFragement();
                             break;
                         case R.id.rb_find:
-                            fragment = new UserFragement();
+                            fragment = new DiscoveryFragement();
                             break;
                         case R.id.rb_message:
                             fragment = new MessageFragement();
