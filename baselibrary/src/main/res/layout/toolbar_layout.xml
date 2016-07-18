@@ -32,6 +32,7 @@
         android:layout_gravity="center|right">
 
         <TextView
+            android:padding="@dimen/space"
             android:visibility="gone"
             android:id="@+id/tv_subtitle"
             android:layout_gravity="center"

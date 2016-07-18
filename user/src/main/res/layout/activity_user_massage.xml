@@ -7,17 +7,18 @@
     tools:context="net.hunme.user.activity.UserMassageActivity">
 
     <RelativeLayout
+        android:background="@drawable/layout_selecter"
         android:padding="@dimen/space"
         android:layout_marginTop="@dimen/space_x2.5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-       <TextView
-          android:layout_centerVertical="true"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:textSize="@dimen/ts_large"
-           android:text="头像" />
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ts_large"
+            android:text="头像" />
 
         <ImageView
             android:id="@+id/iv_into"
@@ -35,147 +36,152 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:padding="@dimen/space"
         android:layout_marginTop="@dimen/space"
-        android:paddingTop="@dimen/space"
-        android:paddingBottom="@dimen/space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:background="@color/white">
 
-        <TextView
-            android:layout_gravity="center"
-            android:textSize="@dimen/ts_large"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <LinearLayout
+            android:background="@drawable/layout_selecter"
+            android:padding="@dimen/space"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="姓名"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:textSize="@dimen/ts_large"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_gravity="center"
+                android:textSize="@dimen/ts_large"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="姓名"/>
+
+            <TextView
+                android:textSize="@dimen/ts_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="哈哈"/>
+        </LinearLayout>
+
+        <View
+            android:layout_marginLeft="@dimen/space"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_gray"
+            android:background="@color/line_gray"/>
+
+        <LinearLayout
+            android:background="@drawable/layout_selecter"
+            android:padding="@dimen/space"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="哈哈"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_gravity="center"
+                android:textSize="@dimen/ts_large"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="性别"/>
+
+            <TextView
+                android:textSize="@dimen/ts_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="男"/>
+        </LinearLayout>
+
+        <View
+            android:layout_marginLeft="@dimen/space"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_gray"
+            android:background="@color/line_gray"/>
+
+        <LinearLayout
+            android:background="@drawable/layout_selecter"
+            android:padding="@dimen/space"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_gravity="center"
+                android:textSize="@dimen/ts_large"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="签名"/>
+
+            <TextView
+                android:layout_gravity="center"
+                android:textSize="@dimen/ts_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="还没有想好啊"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher"/>
+        </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:layout_marginLeft="@dimen/space"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line_gray"
-        android:background="@color/line_gray"/>
 
     <LinearLayout
-        android:padding="@dimen/space"
         android:layout_marginTop="@dimen/space"
-        android:paddingTop="@dimen/space"
-        android:paddingBottom="@dimen/space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_gravity="center"
-            android:textSize="@dimen/ts_large"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <LinearLayout
+            android:background="@drawable/layout_selecter"
+            android:padding="@dimen/space"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="性别"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:textSize="@dimen/ts_large"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_gravity="center"
+                android:textSize="@dimen/ts_large"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="班级"/>
+
+            <TextView
+                android:textSize="@dimen/ts_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="苗苗班"/>
+        </LinearLayout>
+
+        <View
+            android:layout_marginLeft="@dimen/space"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_gray"
+            android:background="@color/line_gray"/>
+
+        <LinearLayout
+            android:background="@drawable/layout_selecter"
+            android:padding="@dimen/space"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="男"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_gravity="center"
+                android:textSize="@dimen/ts_large"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="学校"/>
+
+            <TextView
+                android:textSize="@dimen/ts_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="恒镁幼儿园"/>
+        </LinearLayout>
     </LinearLayout>
 
-    <View
-        android:layout_marginLeft="@dimen/space"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line_gray"
-        android:background="@color/line_gray"/>
-
-    <LinearLayout
-        android:padding="@dimen/space"
-        android:layout_marginTop="@dimen/space"
-        android:paddingTop="@dimen/space"
-        android:paddingBottom="@dimen/space"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_gravity="center"
-            android:textSize="@dimen/ts_large"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="签名"/>
-
-        <TextView
-            android:layout_gravity="center"
-            android:textSize="@dimen/ts_large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="还没有想好啊"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:padding="@dimen/space"
-        android:layout_marginTop="@dimen/space_x2"
-        android:paddingTop="@dimen/space"
-        android:paddingBottom="@dimen/space"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_gravity="center"
-            android:textSize="@dimen/ts_large"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="班级"/>
-
-        <TextView
-            android:textSize="@dimen/ts_large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="苗苗班"/>
-    </LinearLayout>
-
-    <View
-        android:layout_marginLeft="@dimen/space"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line_gray"
-        android:background="@color/line_gray"/>
-
-    <LinearLayout
-        android:padding="@dimen/space"
-        android:layout_marginTop="@dimen/space"
-        android:paddingTop="@dimen/space"
-        android:paddingBottom="@dimen/space"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_gravity="center"
-            android:textSize="@dimen/ts_large"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="学校"/>
-
-        <TextView
-            android:textSize="@dimen/ts_large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="恒镁幼儿园"/>
-    </LinearLayout>
 </LinearLayout>

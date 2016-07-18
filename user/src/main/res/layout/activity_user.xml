@@ -134,6 +134,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_myphoto"
         android:background="@drawable/layout_selecter"
         android:layout_marginTop="@dimen/space"
         android:padding="@dimen/space"
@@ -164,6 +165,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_usersetting"
         android:layout_marginTop="@dimen/space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="net.hunme.user.activity.UploadPhotoActivity">
+    <GridView
+        android:id="@+id/gv_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:horizontalSpacing="20dp"
+        android:numColumns="3"
+        android:scrollbars="none"
+        android:verticalSpacing="20dp">
+    </GridView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_gray"
+        android:background="@color/line_gray"/>
+
+    <LinearLayout
+        android:id="@+id/ll_selcet_photoname"
+        android:background="@drawable/layout_selecter"
+        android:padding="@dimen/space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/ts_large"
+            android:text="上传到"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ts_large"
+            android:text="默认相册"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_gray"
+        android:background="@color/line_gray"/>
+</LinearLayout>
