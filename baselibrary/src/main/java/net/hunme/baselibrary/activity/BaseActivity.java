@@ -31,6 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private ImageView iv_lift;
     private TextView tv_title;
     private ImageView iv_right;
+    private TextView tv_subTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         iv_lift= (ImageView) toolbar.findViewById(R.id.iv_left);
         iv_right= (ImageView) toolbar.findViewById(R.id.iv_right);
         tv_title= (TextView) toolbar.findViewById(R.id.tv_title);
+        tv_subTitle= (TextView) toolbar.findViewById(R.id.tv_subtitle);
     }
 
     public void setLiftImage(int imageResource){
@@ -73,6 +75,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setCententTitle(String title){
         tv_title.setText(title);
         tv_title.setVisibility(View.VISIBLE);
+    }
+
+    public void setSubTitle(String title){
+        tv_subTitle.setText(title);
+        tv_subTitle.setVisibility(View.VISIBLE);
+    }
+
+    public void setSubTitleOnClickListener(View.OnClickListener listener){
+        tv_subTitle.setOnClickListener(listener);
     }
 
     public void setLiftOnClickListener(View.OnClickListener listener){
