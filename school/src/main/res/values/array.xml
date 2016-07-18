@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="myclass">
+        <item>一一班</item>
+        <item>一二班</item>
+        <item>一三班</item>
+        <item>一四班</item>
+        <item>二三班</item>
+        <item>二四班</item>
+    </string-array>
+</resources>

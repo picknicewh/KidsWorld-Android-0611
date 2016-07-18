@@ -1,11 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
     <net.hunme.baselibrary.widget.NavigationBar
         android:id="@+id/nb_school"
-        android:background="@color/red"
         android:padding="@dimen/space"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
-</RelativeLayout>
+    <View
+        android:background="@color/line_gray"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_gray"/>
+    <LinearLayout
+        android:id="@+id/ll_openclass"
+        android:background="@color/white"
+        android:layout_marginBottom="@dimen/space_x2"
+        android:padding="@dimen/space"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+       <ImageView
+           android:src="@mipmap/teacher"
+           android:layout_width="50dp"
+           android:layout_height="50dp" />
+        <TextView
+            android:layout_marginLeft="@dimen/space"
+            android:text="开发课堂"
+            android:textSize="@dimen/ts_large"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_check"
+        android:background="@color/white"
+        android:padding="@dimen/space"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@mipmap/teacher"
+            android:layout_width="50dp"
+            android:layout_height="50dp"  />
+        <TextView
+            android:layout_marginLeft="@dimen/space"
+            android:text="考勤"
+            android:textSize="@dimen/ts_large"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:layout_marginLeft="@dimen/space"
+        android:background="@color/line_gray"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_gray"/>
+    <LinearLayout
+        android:id="@+id/ll_leave"
+        android:layout_marginBottom="@dimen/space_x2"
+        android:background="@color/white"
+        android:padding="@dimen/space"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@mipmap/teacher"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <TextView
+            android:layout_marginLeft="@dimen/space"
+            android:text="请假"
+            android:textSize="@dimen/ts_large"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_info"
+        android:background="@color/white"
+        android:padding="@dimen/space"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@mipmap/teacher"
+            android:layout_width="50dp"
+            android:layout_height="50dp"  />
+        <TextView
+            android:layout_marginLeft="@dimen/space"
+            android:text="通知"
+            android:textSize="@dimen/ts_large"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:layout_marginLeft="@dimen/space"
+        android:background="@color/line_gray"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_gray"/>
+    <LinearLayout
+        android:id="@+id/ll_food"
+        android:background="@color/white"
+        android:padding="@dimen/space"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@mipmap/teacher"
+            android:layout_width="50dp"
+            android:layout_height="50dp"  />
+        <TextView
+            android:layout_marginLeft="@dimen/space"
+            android:text="食谱"
+            android:textSize="@dimen/ts_large"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:layout_marginLeft="@dimen/space"
+        android:background="@color/line_gray"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_gray"/>
+    <LinearLayout
+        android:id="@+id/ll_arrangement"
+        android:background="@color/white"
+        android:padding="@dimen/space"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@mipmap/teacher"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <TextView
+            android:layout_marginLeft="@dimen/space"
+            android:text="课程安排"
+            android:textSize="@dimen/ts_large"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

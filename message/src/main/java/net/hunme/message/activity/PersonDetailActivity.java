@@ -10,6 +10,8 @@ import android.widget.TextView;
 import net.hunme.baselibrary.activity.BaseActivity;
 import net.hunme.message.R;
 
+import io.rong.imkit.RongIM;
+
 /**
  * 作者： Administrator
  * 时间： 2016/7/15
@@ -51,20 +53,23 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
      * 角色
      */
     private TextView tv_role;
+    /**
+     * 用户名
+     */
+    private  String username;
+    /**
+     * 用户id
+     */
+    private String userid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_persondatail);
-        inittoobar();
         initview();
     }
 
     @Override
     protected void setToolBar() {
-
-    }
-
-    private void inittoobar(){
         setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +78,7 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
             }
         });
     }
+
     private void initview(){
         iv_pcall = $(R.id.iv_pcall);
         iv_phead = $(R.id.iv_phead);
@@ -84,6 +90,10 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
         tv_school = $(R.id.tv_school);
         iv_pcall.setOnClickListener(this);
         iv_pmessage.setOnClickListener(this);
+        Intent intent = getIntent();
+        username = intent.getStringExtra("name");
+        userid = intent.getStringExtra("userid");
+        tv_pname.setText(username);
     }
 
     @Override
@@ -95,11 +105,9 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }else if (v.getId()==R.id.iv_pmessage){
-             Uri  smsUri =Uri.parse(phone);
-             Intent intent = new Intent(Intent.ACTION_VIEW);
-             intent.setType("vnd.android-dir/mms-sms");
-            intent.setData(Uri.parse("smsto:"+smsUri));
-             startActivity(intent);
+            if (RongIM.getInstance()!=null){
+                RongIM.getInstance().startPrivateChat(this,userid,username);
+            }
         }
     }
 }

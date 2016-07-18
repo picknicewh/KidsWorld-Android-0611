@@ -5,7 +5,15 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".activity.LeaveActivity"/>
+        <activity android:name=".activity.ArrangmentActivity"/>
+        <activity android:name=".activity.OpenClassActivity"/>
+        <activity android:name=".activity.CheckActivity"/>
+        <activity android:name=".activity.FoodListActivity"/>
+        <activity android:name=".activity.LeaveAskActivity"/>
+        <activity android:name=".activity.InformDetailActivity"/>
+        <activity android:name=".activity.InformActivity"/>
+        <activity android:name=".activity.PublishActivity"/>
     </application>
 
 </manifest>

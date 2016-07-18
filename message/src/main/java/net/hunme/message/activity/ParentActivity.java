@@ -67,7 +67,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
      */
     private PinyinComparator pinyinComparator;
 
-    public static String[] userList;
+    public static List<String> usernames;
     /**
      * 适配器
      */
@@ -76,6 +76,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
      * 用户id
      */
     private List<String> userids;
+    private List<GroupMemberBean> groupMemberBeanList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +89,6 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
     protected void setToolBar() {
 
     }
-
     private void init(){
         setLiftImage(R.mipmap.ic_arrow_lift);
         setCententTitle(getIntent().getStringExtra("title"));
@@ -110,27 +110,52 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
         });
     }
     private void initdata(){
-        userList = new String[10];
-        userids = new ArrayList<>();
-        userList[0] = "王小二";
-        userList[1] = "吴用";
-        userList[2] = "周磊";
-        userList[3] = "鹿晗";
-        userList[4] = "刘涛";
-        userList[5] = "郑爽";
-        userList[6] = "刘德华";
-        userList[7] = "大幂幂";
-        userList[8] = "吴彦祖";
-        userList[9] = "刘诗诗";
-        for (int  i = 1;i <10;i++){
-            userids.add("100"+i);
-        }
-        userids.add("1100");
+        groupMemberBeanList = new ArrayList<>();
+        GroupMemberBean groupMemberBean1 = new GroupMemberBean();
+        groupMemberBean1.setName("王小二");
+        groupMemberBean1.setUserid("1001");
+        groupMemberBeanList.add(groupMemberBean1);
+        GroupMemberBean groupMemberBean2 = new GroupMemberBean();
+        groupMemberBean2.setName("刘德华");
+        groupMemberBean2.setUserid("1002");
+        groupMemberBeanList.add(groupMemberBean2);
+        GroupMemberBean groupMemberBean3 = new GroupMemberBean();
+        groupMemberBean3.setName("吴亦凡");
+        groupMemberBean3.setUserid("1003");
+        groupMemberBeanList.add(groupMemberBean3);
+        GroupMemberBean groupMemberBean4 = new GroupMemberBean();
+        groupMemberBean4.setName("吴用");
+        groupMemberBean4.setUserid("1001");
+        groupMemberBeanList.add(groupMemberBean4);
+        GroupMemberBean groupMemberBean5 = new GroupMemberBean();
+        groupMemberBean5.setName("周磊");
+        groupMemberBean5.setUserid("1005");
+        groupMemberBeanList.add(groupMemberBean5);
+        GroupMemberBean groupMemberBean6 = new GroupMemberBean();
+        groupMemberBean6.setName("鹿晗");
+        groupMemberBean6.setUserid("1006");
+        groupMemberBeanList.add(groupMemberBean6);
+        GroupMemberBean groupMemberBean7 = new GroupMemberBean();
+        groupMemberBean7.setName("郑爽");
+        groupMemberBean7.setUserid("1007");
+        groupMemberBeanList.add(groupMemberBean7);
+        GroupMemberBean groupMemberBean8 = new GroupMemberBean();
+        groupMemberBean8.setName("大幂幂");
+        groupMemberBean8.setUserid("1008");
+        groupMemberBeanList.add(groupMemberBean8);
+        GroupMemberBean groupMemberBean9 = new GroupMemberBean();
+        groupMemberBean9.setName("吴彦祖");
+        groupMemberBean9.setUserid("1009");
+        groupMemberBeanList.add(groupMemberBean9);
+        GroupMemberBean groupMemberBean = new GroupMemberBean();
+        groupMemberBean.setName("刘诗诗");
+        groupMemberBean.setUserid("1100");
+        groupMemberBeanList.add(groupMemberBean);
 
     }
     private void initList() {
         initdata();
-        SourceDateList = filledData(userList);
+        SourceDateList = filledData(groupMemberBeanList);
         Collections.sort(SourceDateList, pinyinComparator);
         adapter = new ContractAdapter(this, SourceDateList);
         //  adapter.isCrateGroup(createGroup);
@@ -155,9 +180,11 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 if (RongIM.getInstance()!=null){
+                    Log.i("TDDAG", SourceDateList.get(position).getUserid());
                     RongIM.getInstance().startConversation(
                             ParentActivity.this, Conversation.ConversationType.PRIVATE,
-                           userids.get(position),SourceDateList.get(position).getName());
+                           SourceDateList.get(position).getUserid(),SourceDateList.get(position).getName());
+
                 }
             }
         });
@@ -209,15 +236,15 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
      * @param date
      * @return
      */
-    private List<GroupMemberBean> filledData(String[] date) {
+    private List<GroupMemberBean> filledData(List<GroupMemberBean> date) {
         List<GroupMemberBean> mSortList = new ArrayList<GroupMemberBean>();
-        for (int i = 0; i < date.length; i++) {
+        for (int i = 0; i < date.size(); i++) {
             GroupMemberBean sortModel = new GroupMemberBean();
-            sortModel.setName(date[i]);
+            sortModel.setUserid(date.get(i).getUserid());
+            sortModel.setName(date.get(i).getName());
             // 汉字转换成拼音
-            String pinyin = characterParser.getSelling(date[i]);
+            String pinyin = characterParser.getSelling(date.get(i).getName());
             String sortString = pinyin.substring(0, 1).toUpperCase();
-
             // 正则表达式，判断首字母是否是英文字母
             if (sortString.matches("[A-Z]")) {
                 sortModel.setSortLetters(sortString.toUpperCase());
@@ -226,6 +253,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
             }
 
             mSortList.add(sortModel);
+
         }
         return mSortList;
 

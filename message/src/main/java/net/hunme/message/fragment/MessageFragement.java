@@ -3,15 +3,16 @@ package net.hunme.message.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import net.hunme.baselibrary.activity.BaseFragement;
-import net.hunme.baselibrary.widget.NavigationBar;
 import net.hunme.message.MyApplication;
 import net.hunme.message.R;
 import net.hunme.message.activity.ParentActivity;
@@ -31,7 +32,7 @@ import io.rong.imlib.model.Conversation;
  */
 public class MessageFragement extends BaseFragement implements View.OnClickListener{
 
-    private NavigationBar navigationBar;
+    private ImageView iv_search;
     /**
      * 班级
      */
@@ -59,18 +60,18 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, null);
         init(view);
+        setNoreadMessage();
         return view;
     }
    private  void init(View v){
-        navigationBar = $(v,R.id.nb_message);
+       iv_search = $(v,R.id.iv_search);
         ll_class = $(v,R.id.ll_class);
         ll_teacher = $(v,R.id.ll_teacher);
         ll_parent = $(v,R.id.ll_parent);
-        navigationBar.setTitle("消息");
         initframent();
-       ll_parent.setOnClickListener(this);
-       ll_teacher.setOnClickListener(this);
-       ll_class.setOnClickListener(this);
+        ll_parent.setOnClickListener(this);
+        ll_teacher.setOnClickListener(this);
+        ll_class.setOnClickListener(this);
    }
     private void  initframent(){
         connect("V5tYQjjmYQGGUT5RP9YyZ0bso9ndFkPYvochz2Gw7s692q5Oy6+dsfcJT13ag45+j9HeWAqVtz/T0ApFSaea8Q==");
@@ -87,7 +88,9 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.rong_content, fragment);
         transaction.commit();
+
     }
+
     /**
      * 建立与融云服务器的连接
      *
@@ -135,7 +138,18 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
             });
         }
     }
-
+    /**
+     * 未读消息监听
+     */
+   private void setNoreadMessage(){
+       Handler handler = new Handler();
+       handler.postDelayed(new Runnable() {
+           @Override
+           public void run() {
+               RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener, Conversation.ConversationType.PRIVATE);
+           }
+       }, 500);
+   }
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
@@ -144,10 +158,30 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         }else if (v.getId()==R.id.ll_teacher){
             intent.setClass(getActivity(), ParentActivity.class);
             intent.putExtra("title","教师");
+            startActivity(intent);
         }else if (v.getId()==R.id.ll_parent){
             intent.setClass(getActivity(), ParentActivity.class);
             intent.putExtra("title","家长");
+            startActivity(intent);
+        }else if (v.getId()==R.id.iv_search){
+
         }
-        startActivity(intent);
+
     }
+    /**
+     * 监听处理
+     */
+    public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.OnReceiveUnreadCountChangedListener() {
+        @Override
+        public void onMessageIncreased(int count) {
+               Intent intent = new Intent();
+                intent.setAction("net.hunme.message.showdos");
+                intent.putExtra("count",count);
+               if (getActivity()!=null){
+                  getActivity().sendBroadcast(intent);
+               }
+
+        }
+    };
+
 }

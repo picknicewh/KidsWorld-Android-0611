@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="E:\AndroidStuiodProject\KidsWorlds\IMKit\src\main\assets"/><source path="E:\AndroidStuiodProject\KidsWorlds\IMKit\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="E:\AndroidStuiodProject\KidsWorlds\IMKit\src\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="E:\android-stdio-workspace\KidsWorld2\IMKit\src\main\assets"/><source path="E:\android-stdio-workspace\KidsWorld2\IMKit\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="E:\android-stdio-workspace\KidsWorld2\IMKit\src\release\assets"/></dataSet></merger>

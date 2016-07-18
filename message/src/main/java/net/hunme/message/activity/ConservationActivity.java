@@ -1,12 +1,9 @@
 package net.hunme.message.activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,10 +14,6 @@ import net.hunme.message.ronglistener.MySendMessageListener;
 import io.rong.imkit.RongIM;
 
 public class ConservationActivity extends FragmentActivity implements View.OnClickListener{
-    private SharedPreferences sp;
-    private String username;
-    private String userId;
-    private String portrait;
     /**
      * 名字view
      */
@@ -37,6 +30,14 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
      * 用户详情
      */
     private ImageView iv_detail;
+    /**
+     * 聊天用户id
+     */
+    private String targetId;
+    /**
+     * 用户昵称
+     */
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +47,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
             //设置自己发出的消息监听器。
             RongIM.getInstance().setSendMessageListener(new MySendMessageListener());
         }
-        sp = getSharedPreferences("config", Activity.MODE_PRIVATE);
-
-        String userid = RongIM.getInstance().getCurrentUserId();
-        Log.i("TAGFGG",userid);
         findview();
     }
     private  void findview(){
@@ -60,6 +57,10 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         iv_call.setOnClickListener(this);
         iv_detail.setOnClickListener(this);
         iv_back.setOnClickListener(this);
+        Intent intent = getIntent();
+        targetId = intent.getData().getQueryParameter("targetId");
+        name = intent.getData().getQueryParameter("title");
+        tv_name.setText(name);
     }
 
     @Override
@@ -73,6 +74,8 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         }else if (v.getId()==R.id.iv_detail){
             Intent intent = new Intent();
             intent.setClass(this,PersonDetailActivity.class);
+            intent.putExtra("name",name);
+            intent.putExtra("userid",targetId);
             startActivity(intent);
         }
     }
