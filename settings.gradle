@@ -1,1 +1,1 @@
-include ':app', ':baselibrary', ':message', ':status', ':user', ':school', ':discovery', ':IMKit', ':jpushlibrary'
+include ':app', ':baselibrary', ':message', ':status', ':user', ':school', ':discovery', ':IMKit', ':jpushlibrary', ':login'
