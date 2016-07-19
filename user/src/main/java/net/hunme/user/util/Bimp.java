@@ -14,18 +14,33 @@ import java.util.List;
  * ================================================
  * 作    者：ZLL
  * 时    间：2016/7/18
- * 描    述：
+ * 描    述：获取图片公共类，初始化数据
  * 版    本：
  * 修订历史：
  * 主要接口：
  * ================================================
  */
 public class Bimp {
+    /**
+     * 选择图片最大值
+     */
     public static int max = 0;
-
 //    public static ArrayList<ImageItemVo> tempSelectBitmap = new ArrayList<ImageItemVo>();
+    /**
+     * 选中图片的路径
+     */
     public static List<String> tempSelectBitmap = new ArrayList<String>();
+    /**
+     * 选中的图片
+     */
     public static List<Bitmap> bmp = new ArrayList<Bitmap>();
+
+    /**
+     * 根据图片路径返回一个bitmap对象
+     * @param path 图片路径
+     * @return bitmap对象
+     * @throws IOException 图片不存在 路径错误异常
+     */
     public static Bitmap revitionImageSize(String path) throws IOException {
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(
                 new File(path)));

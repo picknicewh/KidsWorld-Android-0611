@@ -18,7 +18,16 @@ import net.hunme.user.util.Bimp;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
+/**
+ * ================================================
+ * 作    者：ZLL
+ * 时    间：2016/7/18
+ * 描    述：用户本地所有相册中所有图片显示
+ * 版    本：1.0
+ * 修订历史：
+ * 主要接口：
+ * ================================================
+ */
 public class AlbumActivity extends BaseActivity {
     public static final String EXTRA_IMAGE_LIST = "imagelist";
     private GridView myGridView;

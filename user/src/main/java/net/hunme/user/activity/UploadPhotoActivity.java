@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import net.hunme.baselibrary.activity.BaseActivity;
 import net.hunme.user.R;
@@ -14,11 +15,26 @@ import net.hunme.user.adapter.GridAdapter;
 import net.hunme.user.util.Bimp;
 
 import java.io.File;
-
+import java.util.ArrayList;
+/**
+ * ================================================
+ * 作    者：ZLL
+ * 时    间：2016/7/18
+ * 描    述：上传图片
+ * 版    本：1.0
+ * 修订历史：
+ * 主要接口：
+ * ================================================
+ */
 public class UploadPhotoActivity extends BaseActivity implements View.OnClickListener {
     private GridView gv_photo;
     private LinearLayout ll_selcet_photoname;
     private GridAdapter adapter;
+    private TextView tv_album_name;
+    private ArrayList<String> albumNameList;
+    public static int position=0;
+    private static final int TAKE_PICTURE = 0x000000;
+    private static final int Album_NAME_SELECT=1111;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +46,8 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     private void initView(){
         gv_photo=$(R.id.gv_photo);
         ll_selcet_photoname=$(R.id.ll_selcet_photoname);
+        tv_album_name=$(R.id.tv_album_name);
+        ll_selcet_photoname.setOnClickListener(this);
     }
 
     private void initDate(){
@@ -44,12 +62,17 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
 //                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //                    startActivityForResult(intent, RESULT_LOAD_IMAGE);
                     Intent intent = new Intent(UploadPhotoActivity.this,
-                            PicActivity.class);
+                            UPicActivity.class);
                     startActivity(intent);
                     finish();
                 }
             }
         });
+        albumNameList=new ArrayList<>();
+        albumNameList.add("默认相册");
+        albumNameList.add("相册一");
+        albumNameList.add("相册二");
+        tv_album_name.setText(albumNameList.get(position));
     }
 
     @Override
@@ -69,9 +92,13 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
             Bimp.bmp.clear();
         }else if(viewId==R.id.tv_subtitle){
 
+        }else if(viewId==R.id.ll_selcet_photoname){
+            Intent intent=new Intent(this, AlbumSelectActivity.class);
+            intent.putStringArrayListExtra("namelist",albumNameList);
+            startActivityForResult(intent,Album_NAME_SELECT);
         }
     }
-    private static final int TAKE_PICTURE = 0x000000;
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case TAKE_PICTURE:
@@ -81,6 +108,9 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
                             + ".jpg");
                     Bimp.tempSelectBitmap.add(file.getPath());
                 }
+                break;
+            case Album_NAME_SELECT:
+                tv_album_name.setText(albumNameList.get(position));
                 break;
         }
     }

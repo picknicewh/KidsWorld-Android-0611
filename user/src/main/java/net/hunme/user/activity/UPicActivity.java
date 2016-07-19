@@ -16,8 +16,17 @@ import net.hunme.user.util.ImageBucket;
 
 import java.io.Serializable;
 import java.util.List;
-
-public class PicActivity extends BaseActivity {
+/**
+ * ================================================
+ * 作    者：ZLL
+ * 时    间：2016/7/18
+ * 描    述：用户本地所有相册
+ * 版    本：1.0
+ * 修订历史：
+ * 主要接口：
+ * ================================================
+ */
+public class UPicActivity extends BaseActivity {
     private List<ImageBucket> dataList;
     private GridView gridView;
     private ImageBucketAdapter adapter;// 自定义的适配器
@@ -60,7 +69,7 @@ public class PicActivity extends BaseActivity {
      */
     private void initView() {
         gridView = (GridView) findViewById(R.id.gridview);
-        adapter = new ImageBucketAdapter(PicActivity.this, dataList);
+        adapter = new ImageBucketAdapter(UPicActivity.this, dataList);
         gridView.setAdapter(adapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -72,9 +81,9 @@ public class PicActivity extends BaseActivity {
                  * 通知适配器，绑定的数据发生了改变，应当刷新视图
                  */
                 // adapter.notifyDataSetChanged();
-                Intent intent = new Intent(PicActivity.this,
+                Intent intent = new Intent(UPicActivity.this,
                         AlbumActivity.class);
-                intent.putExtra(PicActivity.EXTRA_IMAGE_LIST,
+                intent.putExtra(UPicActivity.EXTRA_IMAGE_LIST,
                         (Serializable) dataList.get(position).imageList);
                 startActivity(intent);
                 finish();

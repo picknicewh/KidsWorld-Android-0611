@@ -3,16 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.UPicActivity">
-    <GridView
-        android:id="@+id/gridview"
+    tools:context="net.hunme.user.activity.AlbumSelectActivity">
+    <ListView
+        android:divider="@null"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:horizontalSpacing="20dp"
-        android:numColumns="2"
-        android:scrollbars="none"
-        android:verticalSpacing="20dp" >
-    </GridView>
+        android:id="@+id/lv_album">
+    </ListView>
 
 </RelativeLayout>

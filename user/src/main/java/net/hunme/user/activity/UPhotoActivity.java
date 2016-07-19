@@ -14,12 +14,20 @@ import net.hunme.user.mode.PhotoVo;
 
 import java.util.ArrayList;
 import java.util.List;
-
-public class MyPhotoActivity extends BaseActivity implements View.OnClickListener {
-
+/**
+ * ================================================
+ * 作    者：ZLL
+ * 时    间：2016/7/18
+ * 描    述：用户相册
+ * 版    本：1.0
+ * 修订历史：
+ * 主要接口：
+ * ================================================
+ */
+public class UPhotoActivity extends BaseActivity implements View.OnClickListener {
     private ListView lv_photo;
     private PhotoAdapter adapter;
-    private List<PhotoVo>photoList;
+    private List<PhotoVo>photoList; //用户相册实体类 list
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +59,12 @@ public class MyPhotoActivity extends BaseActivity implements View.OnClickListene
         lv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startActivity(new Intent(MyPhotoActivity.this,UploadPhotoActivity.class));
+                startActivity(new Intent(UPhotoActivity.this,UploadPhotoActivity.class));
             }
         });
     }
 
+    //测试数据
     private PhotoVo TestDate(){
         PhotoVo photoVo=new PhotoVo();
         photoVo.setPhotoBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_test01));

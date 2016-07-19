@@ -5,8 +5,17 @@ import android.view.View;
 
 import net.hunme.baselibrary.activity.BaseActivity;
 import net.hunme.user.R;
-
-public class UserSettingActivity extends BaseActivity implements View.OnClickListener {
+/**
+ * ================================================
+ * 作    者：ZLL
+ * 时    间：2016/7/18
+ * 描    述：用户设置
+ * 版    本：1.0
+ * 修订历史：
+ * 主要接口：
+ * ================================================
+ */
+public class USettingActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

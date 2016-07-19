@@ -14,7 +14,16 @@ import net.hunme.user.util.BitmapCache;
 import net.hunme.user.util.ImageBucket;
 
 import java.util.List;
-
+/**
+ * ================================================
+ * 作    者：ZLL
+ * 时    间：2016/7/18
+ * 描    述：显示用户本地所有相册的适配器
+ * 版    本：1.0
+ * 修订历史：
+ * 主要接口：
+ * ================================================
+ */
 public class ImageBucketAdapter extends BaseAdapter {
 	final String TAG = getClass().getSimpleName();
 

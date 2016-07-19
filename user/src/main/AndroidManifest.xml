@@ -8,12 +8,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.UserActivity" />
-        <activity android:name=".activity.UserMassageActivity" />
-        <activity android:name=".activity.UserSettingActivity" />
-        <activity android:name=".activity.MyPhotoActivity" />
+        <activity android:name=".activity.UMassageActivity" />
+        <activity android:name=".activity.USettingActivity" />
+        <activity android:name=".activity.UPhotoActivity" />
         <activity android:name=".activity.UploadPhotoActivity" />
         <activity android:name=".activity.AlbumActivity" />
-        <activity android:name=".activity.PicActivity"></activity>
+        <activity android:name=".activity.UPicActivity" />
+        <activity android:name=".activity.AlbumSelectActivity" />
+        <activity android:name=".activity.UDynamicsActivity" />
+        <activity android:name=".activity.UCollectionActivity"></activity>
     </application>
 
 </manifest>

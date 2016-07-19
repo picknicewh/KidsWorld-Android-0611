@@ -17,10 +17,14 @@ import java.util.List;
 import java.util.Map.Entry;
 
 /**
- * 专辑帮助类
- * 
- * @author Administrator
- * 
+ * ================================================
+ * 作    者：ZLL
+ * 时    间：2016/7/18
+ * 描    述：获取用户所有相册辅助类
+ * 版    本：
+ * 修订历史：
+ * 主要接口：
+ * ================================================
  */
 public class AlbumHelper {
 	final String TAG = getClass().getSimpleName();
@@ -29,7 +33,7 @@ public class AlbumHelper {
 
 	// 缩略图列表
 	HashMap<String, String> thumbnailList = new HashMap<String, String>();
-	// 专辑列表
+	// 相册列表
 	List<HashMap<String, String>> albumList = new ArrayList<HashMap<String, String>>();
 	HashMap<String, ImageBucket> bucketList = new HashMap<String, ImageBucket>();
 
@@ -83,18 +87,9 @@ public class AlbumHelper {
 			int dataColumn = cur.getColumnIndex(Thumbnails.DATA);
 
 			do {
-				// Get the field values
 				_id = cur.getInt(_idColumn);
 				image_id = cur.getInt(image_idColumn);
 				image_path = cur.getString(dataColumn);
-
-				// Do something with the values.
-				// Log.i(TAG, _id + " image_id:" + image_id + " path:"
-				// + image_path + "---");
-				// HashMap<String, String> hash = new HashMap<String, String>();
-				// hash.put("image_id", image_id + "");
-				// hash.put("path", image_path);
-				// thumbnailList.add(hash);
 				thumbnailList.put("" + image_id, image_path);
 			} while (cur.moveToNext());
 		}
