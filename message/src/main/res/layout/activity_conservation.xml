@@ -21,7 +21,6 @@
             android:textColor="@color/white"
             android:text="大幂幂"
             android:textSize="20sp"
-
             android:layout_centerInParent="true"
             android:layout_height="30dp"/>
         <ImageView

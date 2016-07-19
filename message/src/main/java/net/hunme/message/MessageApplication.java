@@ -1,10 +1,7 @@
 package net.hunme.message;
 
 import android.app.ActivityManager;
-import android.app.Application;
 import android.content.Context;
-
-import com.lzy.okhttputils.OkHttpUtils;
 
 import io.rong.imkit.RongIM;
 
@@ -16,12 +13,10 @@ import io.rong.imkit.RongIM;
  * 附加注释：
  * 主要接口：
  */
-public class MyApplication extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        RongIM.init(this);
-        OkHttpUtils.init(this);
+public class MessageApplication {
+
+    public  static  void  initMessage(Context context){
+        RongIM.init(context);
     }
     /**
      * 获得当前进程的名字

@@ -1,9 +1,11 @@
 package net.hunme.school.activity;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 
 import net.hunme.baselibrary.activity.BaseActivity;
+import net.hunme.baselibrary.widget.PubishPopWindow;
 import net.hunme.school.R;
 
 /**
@@ -24,14 +26,29 @@ public class InformActivity extends BaseActivity {
 
     @Override
     protected void setToolBar() {
-      setLiftImage(R.mipmap.ic_arrow_lift);
-      setLiftOnClickListener(new View.OnClickListener() {
+         setLiftImage(R.mipmap.ic_arrow_lift);
+        setLiftOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
               finish();
           }
        });
         setCententTitle("通知");
-
+        setSubTitle("发通知");
+        setSubTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final PubishPopWindow pubishPopWindow = new PubishPopWindow(InformActivity.this,0);
+                pubishPopWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+                pubishPopWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus) {
+                            pubishPopWindow.dismiss();
+                        }
+                    }
+                });
+            }
+        });
     }
 }

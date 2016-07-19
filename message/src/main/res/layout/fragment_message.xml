@@ -3,17 +3,11 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
-    <!--<net.hunme.baselibrary.widget.NavigationBar
-        android:id="@+id/nb_message"
-        android:background="@color/red_message"
-        android:padding="@dimen/space"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>-->
-    <RelativeLayout
-        android:background="@color/red_message"
-        android:padding="@dimen/space"
-        android:layout_width="match_parent"
 
+    <RelativeLayout
+        android:background="@color/red"
+        android:padding="@dimen/space"
+        android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
             android:layout_centerInParent="true"
@@ -95,7 +89,7 @@
         </LinearLayout>
     </LinearLayout>
     <View
-        android:background="@color/gray_6"
+        android:background="@color/line_gray"
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_gray"/>
     <FrameLayout

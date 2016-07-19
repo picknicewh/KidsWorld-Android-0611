@@ -3,18 +3,35 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-   <net.hunme.baselibrary.widget.NavigationBar
-       android:id="@+id/nb_descovery"
-       android:background="@color/red"
+   <RelativeLayout
+       android:background="@color/red_dis"
        android:padding="@dimen/space"
        android:layout_width="match_parent"
-       android:layout_height="50dp"/>
-   <TextView
-       android:id="@+id/tv_descovery"
-       android:text="发现"
-       android:layout_gravity="center"
-       android:gravity="center"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent" />
+       android:layout_height="50dp">
+      <TextView
+          android:layout_centerInParent="true"
+          android:text="记录"
+          android:layout_alignParentLeft="true"
+          android:textSize="@dimen/ts_x_large"
+          android:textColor="@color/white"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+      <TextView
+          android:layout_centerInParent="true"
+          android:text="乐园"
+          android:textSize="@dimen/ts_x_large"
+          android:textColor="@color/white"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+      <ImageView
+          android:id="@+id/iv_dsearch"
+          android:src="@mipmap/search"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+
+   </RelativeLayout>
+
 
 </LinearLayout>

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.hunme.baselibrary.activity.BaseFragement;
-import net.hunme.baselibrary.widget.NavigationBar;
 
 /**
  * 作者： Administrator
@@ -17,7 +16,7 @@ import net.hunme.baselibrary.widget.NavigationBar;
  * 主要接口：
  */
 public class DiscoveryFragement extends BaseFragement {
-    private NavigationBar navigationBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_discovery,null);
@@ -25,8 +24,7 @@ public class DiscoveryFragement extends BaseFragement {
         return view;
     }
     private  void init(View v){
-        navigationBar = $(v,R.id.nb_descovery);
-        navigationBar.setTitle("学校");
+
 
     }
 }

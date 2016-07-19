@@ -592,12 +592,12 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f366.png"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_def_coversation_portrait.png",
-        "source": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_def_coversation_portrait.png"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_public_service_menu_bg.9.png",
         "source": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_public_service_menu_bg.9.png"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_def_coversation_portrait.png",
+        "source": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_def_coversation_portrait.png"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voice_icon_right.png",

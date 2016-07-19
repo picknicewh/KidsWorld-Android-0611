@@ -13,7 +13,6 @@
         <activity android:name=".activity.LeaveAskActivity"/>
         <activity android:name=".activity.InformDetailActivity"/>
         <activity android:name=".activity.InformActivity"/>
-        <activity android:name=".activity.PublishActivity"/>
     </application>
 
 </manifest>

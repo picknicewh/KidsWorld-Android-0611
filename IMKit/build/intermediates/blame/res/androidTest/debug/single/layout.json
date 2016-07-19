@@ -76,12 +76,12 @@
         "source": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_location_message.xml"
     },
     {
-        "merged": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_media_cancel_action.xml",
-        "source": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\notification_media_cancel_action.xml"
-    },
-    {
         "merged": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_simple.xml",
         "source": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_screen_simple.xml"
+    },
+    {
+        "merged": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_media_cancel_action.xml",
+        "source": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\notification_media_cancel_action.xml"
     },
     {
         "merged": "E:\\android-stdio-workspace\\KidsWorld2\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_fr_conversation.xml",

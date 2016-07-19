@@ -13,9 +13,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import net.hunme.baselibrary.activity.BaseFragement;
-import net.hunme.message.MyApplication;
+import net.hunme.message.MessageApplication;
 import net.hunme.message.R;
 import net.hunme.message.activity.ParentActivity;
+import net.hunme.message.ronglistener.MyConversationBehaviorListener;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
@@ -61,6 +62,8 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_message, null);
         init(view);
         setNoreadMessage();
+        // 设置点击头像监听事件
+        RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
         return view;
     }
    private  void init(View v){
@@ -72,6 +75,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         ll_parent.setOnClickListener(this);
         ll_teacher.setOnClickListener(this);
         ll_class.setOnClickListener(this);
+
    }
     private void  initframent(){
         connect("V5tYQjjmYQGGUT5RP9YyZ0bso9ndFkPYvochz2Gw7s692q5Oy6+dsfcJT13ag45+j9HeWAqVtz/T0ApFSaea8Q==");
@@ -88,7 +92,6 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.rong_content, fragment);
         transaction.commit();
-
     }
 
     /**
@@ -98,7 +101,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
      */
     private void connect(String token) {
 
-        if (getActivity().getApplicationInfo().packageName.equals(MyApplication.getCurProcessName(getActivity()))) {
+        if (getActivity().getApplicationInfo().packageName.equals(MessageApplication.getCurProcessName(getActivity()))) {
 
             /**
              * IMKit SDK调用第二步,建立与服务器的连接
@@ -174,7 +177,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.OnReceiveUnreadCountChangedListener() {
         @Override
         public void onMessageIncreased(int count) {
-               Intent intent = new Intent();
+                Intent intent = new Intent();
                 intent.setAction("net.hunme.message.showdos");
                 intent.putExtra("count",count);
                if (getActivity()!=null){
@@ -183,5 +186,4 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
 
         }
     };
-
 }

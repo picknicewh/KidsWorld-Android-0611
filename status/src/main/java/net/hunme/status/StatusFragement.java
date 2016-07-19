@@ -2,6 +2,7 @@ package net.hunme.status;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import net.hunme.baselibrary.activity.BaseFragement;
+import net.hunme.baselibrary.widget.PubishPopWindow;
 import net.hunme.user.activity.UserActivity;
 
 /**
@@ -42,6 +44,21 @@ public class StatusFragement extends BaseFragement {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), UserActivity.class));
+            }
+        });
+        iv_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final PubishPopWindow pubishPopWindow = new PubishPopWindow(getActivity(),1);
+                pubishPopWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+                pubishPopWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus) {
+                            pubishPopWindow.dismiss();
+                        }
+                    }
+                });
             }
         });
     }

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -21,9 +20,10 @@ import net.hunme.status.StatusFragement;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import main.jpushlibrary.JPush.JPushBaseActivity;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends JPushBaseActivity {
     private static final String SHOWDOS = "net.hunme.message.showdos";
     /**
      * 通讯圆点
@@ -75,6 +75,7 @@ public class MainActivity extends FragmentActivity {
         ButterKnife.bind(this);
         init();
         registerBoradcastReceiver();
+        initJPushConfiguration();
     }
     /**
      * 初始化数据
@@ -89,8 +90,8 @@ public class MainActivity extends FragmentActivity {
         transaction.replace(R.id.content, statusFragement);
         transaction.commit();
         mBroadcastReceiver = new ShwoMessageReceiver();
-
     }
+
     @OnClick({R.id.ll_status, R.id.ll_school, R.id.ll_discovery, R.id.ll_message})
     public void onClick(View view) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -139,7 +140,6 @@ public class MainActivity extends FragmentActivity {
     public void registerBoradcastReceiver(){
         IntentFilter myIntentFilter = new IntentFilter();
         myIntentFilter.addAction(SHOWDOS);
-
         registerReceiver(mBroadcastReceiver, myIntentFilter);
     }
     /**
@@ -159,6 +159,15 @@ public class MainActivity extends FragmentActivity {
             }
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mBroadcastReceiver!=null){
+            unregisterReceiver(mBroadcastReceiver);
+        }
+    }
+
 }
 
 
