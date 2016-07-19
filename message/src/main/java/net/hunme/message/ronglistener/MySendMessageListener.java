@@ -13,7 +13,7 @@ import io.rong.message.VoiceMessage;
 /**
  * 作者： Administrator
  * 时间： 2016/7/11
- * 名称：
+ * 名称：融云发送消息监听事件
  * 版本说明：
  * 附加注释：
  * 主要接口：

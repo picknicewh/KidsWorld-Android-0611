@@ -12,9 +12,9 @@ import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/7/11
- * 名称：
+ * 名称：融云接收消息监听事件
  * 版本说明：
  * 附加注释：
  * 主要接口：

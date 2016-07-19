@@ -10,13 +10,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import net.hunme.baselibrary.activity.BaseFragement;
-import net.hunme.baselibrary.widget.PubishPopWindow;
+import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.activity.UserActivity;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/7/14
- * 名称：
+ * 名称：动态首页
  * 版本说明：
  * 附加注释：
  * 主要接口：
@@ -37,6 +37,7 @@ public class StatusFragement extends BaseFragement {
         iv_right=$(view,R.id.iv_right);
         s_title=$(view,R.id.s_title);
         setViewAction();
+
     }
 
     private void setViewAction(){
@@ -49,7 +50,7 @@ public class StatusFragement extends BaseFragement {
         iv_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final PubishPopWindow pubishPopWindow = new PubishPopWindow(getActivity(),1);
+                final StatusPublishPopWindow pubishPopWindow = new StatusPublishPopWindow(getActivity());
                 pubishPopWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                 pubishPopWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override

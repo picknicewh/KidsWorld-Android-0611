@@ -13,7 +13,14 @@ import android.widget.TextView;
 
 import net.hunme.message.R;
 
-
+/**
+ * 作者： wh
+ * 时间： 2016/7/14
+ * 名称：联系人页面右边的字母表
+ * 版本说明：
+ * 附加注释：
+ * 主要接口：
+ */
 public class SideBar extends View {
 	// 触摸事件
 	private OnTouchingLetterChangedListener onTouchingLetterChangedListener;

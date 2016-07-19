@@ -13,9 +13,9 @@ import net.hunme.message.R;
 import io.rong.imkit.RongIM;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/7/15
- * 名称：
+ * 名称：聊天--联系人详情页面
  * 版本说明：
  * 附加注释：
  * 主要接口：
@@ -78,7 +78,9 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
             }
         });
     }
-
+    /**
+     * 初始化界面数据
+     */
     private void initview(){
         iv_pcall = $(R.id.iv_pcall);
         iv_phead = $(R.id.iv_phead);

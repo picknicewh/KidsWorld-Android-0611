@@ -9,9 +9,9 @@ import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/7/19
- * 名称：
+ * 名称：融云聊天页面的监听事件
  * 版本说明：
  * 附加注释：
  * 主要接口：

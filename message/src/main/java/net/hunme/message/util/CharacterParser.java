@@ -5,10 +5,13 @@
  * @version	0.1
  */
 package net.hunme.message.util;
-
 /**
- * Java汉字转换为拼音
- *
+ * 作者： wh
+ * 时间： 2016/7/14
+ * 名称：Java汉字转换为拼音--工具类
+ * 版本说明：
+ * 附加注释：
+ * 主要接口：
  */
 public class CharacterParser {
 	private static int[] pyvalue = new int[] {-20319, -20317, -20304, -20295, -20292, -20283, -20265, -20257, -20242, -20230, -20051, -20036, -20032,

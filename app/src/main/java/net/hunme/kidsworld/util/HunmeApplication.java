@@ -8,7 +8,12 @@ import net.hunme.message.MessageApplication;
 import cn.jpush.android.api.JPushInterface;
 
 /**
- * Created by DELL on 2016/1/19.
+ * 作者： wh
+ * 时间： 2016/7/15
+ * 名称：整个app初始化配置信息
+ * 版本说明：
+ * 附加注释：
+ * 主要接口：
  */
 public class HunmeApplication extends Application {
     private static HunmeApplication instance;

@@ -22,7 +22,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import main.jpushlibrary.JPush.JPushBaseActivity;
 
-
+/**
+ * 作者： wh
+ * 时间： 2016/7/19
+ * 名称：app--首页
+ * 版本说明：
+ * 附加注释：继承了极光推送页面，初始化极光的设置,其中ShwoMessageReceiver为通讯未读消息个数接收广播，当未读消息不为0时，显示小圆点，否则不显示
+ * 主要接口：
+ */
 public class MainActivity extends JPushBaseActivity {
     private static final String SHOWDOS = "net.hunme.message.showdos";
     /**
@@ -65,7 +72,7 @@ public class MainActivity extends JPushBaseActivity {
     @Bind(R.id.tv_message)
     TextView tvMessage;
     /**
-     * 消息广播
+     * 通讯未读消息个数接收广播
      */
     private ShwoMessageReceiver mBroadcastReceiver;
     @Override
@@ -91,7 +98,9 @@ public class MainActivity extends JPushBaseActivity {
         transaction.commit();
         mBroadcastReceiver = new ShwoMessageReceiver();
     }
-
+    /**
+     * 通过点击事件改变tab
+     */
     @OnClick({R.id.ll_status, R.id.ll_school, R.id.ll_discovery, R.id.ll_message})
     public void onClick(View view) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();

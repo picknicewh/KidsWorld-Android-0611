@@ -22,18 +22,39 @@ import butterknife.ButterKnife;
 /**
  * 作者： Administrator
  * 时间： 2016/7/14
- * 名称：
+ * 名称：学校首页
  * 版本说明：
  * 附加注释：
  * 主要接口：
  */
 public class SchoolFragement extends BaseFragement implements View.OnClickListener{
+    /**
+     * 导航栏
+     */
     private NavigationBar navigationBar;
+    /**
+     * 开放课堂
+     */
     private LinearLayout ll_openclass;
+    /**
+     *考勤
+     */
     private LinearLayout ll_check;
+    /**
+     * 请假
+     */
     private LinearLayout ll_leave;
+    /**
+     * 通知
+     */
     private LinearLayout ll_inform;
+    /**
+     * 食谱
+     */
     private LinearLayout ll_food;
+    /**
+     * 课程安排
+     */
     private LinearLayout ll_arrangement;
     @Nullable
     @Override

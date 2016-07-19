@@ -1,11 +1,25 @@
 package net.hunme.message.bean;
 
+/**
+ * 作者： wh
+ * 时间： 2016/7/14
+ * 名称：联系人类
+ * 版本说明：
+ * 附加注释：
+ * 主要接口：
+ */
 public class GroupMemberBean {
-
-	private String name;   //显示的数据
-	private String sortLetters;  //显示数据拼音的首字母
-
-
+	/**
+	 * 联系人的姓名
+	 */
+	private String name;
+	/**
+	 * 联系人的姓名拼音的首字母
+	 */
+	private String sortLetters;
+	/**
+	 * 联系人的userid
+	 */
 	private String userid;
 	public String getName() {
 		return name;

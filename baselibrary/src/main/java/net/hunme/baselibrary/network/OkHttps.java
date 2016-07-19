@@ -8,14 +8,7 @@ import com.lzy.okhttputils.callback.AbsCallback;
 import com.lzy.okhttputils.model.HttpParams;
 import com.lzy.okhttputils.request.PostRequest;
 
-import net.hunme.baselibrary.mode.Result;
-import net.hunme.baselibrary.util.EncryptUtil;
 import net.hunme.baselibrary.util.G;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Request;
@@ -72,30 +65,28 @@ public class OkHttps<T> {
     /**
      *  没有缓存的请求
      * @param uri 请求地址
-     * @param map 请求参数
+     * @param params 请求参数
      * @param okHttpListener 请求回调对象
      */
-    public  void sendPost(final String uri, Map<String,Object> map, final OkHttpListener<T> okHttpListener) {
+    public  void sendPost(final String uri, HttpParams params, final OkHttpListener okHttpListener) {
         if(null==uri||okHttpListener==null) {
             G.log("参数或者访问地址为空");
             return;
         }
-
-        //进行网络请求
         postRequest= OkHttps.getInstance()
                 .post(uri_host+uri);
-        doInternet(uri,getParams(map),okHttpListener);
+        doInternet(uri,params,okHttpListener);
     }
 
     /**
      * 带缓存的请求
      * @param uri 请求地址
-     * @param map  请求参数
+     * @param params  请求参数
      * @param okHttpListener  请求回调对象
      * @param cacheMode   缓存模式
      * @param cacheKey  缓存名
      */
-    public  void sendPost(final String uri, Map<String,Object> map,
+    public  void sendPost(final String uri,HttpParams params,
                           final OkHttpListener okHttpListener, int cacheMode, String cacheKey) {
         if(null==uri||okHttpListener==null) {
             G.log("参数或者访问地址为空");
@@ -128,10 +119,11 @@ public class OkHttps<T> {
                 .post(uri_host+uri)
                 .cacheMode(mode)
                 .cacheKey(cacheKey);
-        doInternet(uri,getParams(map),okHttpListener);
+        doInternet(uri,params,okHttpListener);
     }
 
-    private void doInternet(final String uri, HttpParams params, final OkHttpListener okHttpListener){
+    private void doInternet(final String uri, HttpParams params,
+                            final OkHttpListener okHttpListener){
 
         if(isResString)
             postRequest.params(params)
@@ -157,22 +149,11 @@ public class OkHttps<T> {
                     });
         else
             postRequest.params(params)
-                    .execute(new JsonCallback<Result<T>>(tClass){
-//                        @Override
-//                        public void onResponse(boolean isFromCache, Object o, Request request, @Nullable Response response) {
-//                            okHttpListener.onSuccess(uri,o);
-//                        }
+                    .execute(new JsonCallback<Class>(tClass){
 
                         @Override
-                        public void onResponse(boolean isFromCache, Result result, Request request, @Nullable Response response) {
-                            Map<String,Object>map=new HashMap<>();
-                            map.put("data",result.getData());
-                            //验签
-                            boolean isSuccess=EncryptUtil.verify(map,result.getMsec(),result.getSign());
-                            if(isSuccess)
-                                okHttpListener.onSuccess(uri,result);
-                            else
-                                okHttpListener.onError(uri,"非法访问");
+                        public void onResponse(boolean isFromCache, Object o, Request request, @Nullable Response response) {
+                            okHttpListener.onSuccess(uri,o);
                         }
 
                         @Override
@@ -186,28 +167,5 @@ public class OkHttps<T> {
                     });
     }
 
-    /**
-     *  组合访问参数
-     * @param map 参数map对象
-     * @return httpParams 对象
-     */
-    private HttpParams getParams(Map<String,Object> map){
-        if(map==null){
-            return  null;
-        }
-        //将参数加签
-        String msec = String.valueOf(System.currentTimeMillis());
-        String sign = EncryptUtil.getSign(map, msec);
 
-        //将map转化成httpParams
-        HttpParams params=new HttpParams();
-        Set<Map.Entry<String, Object>> set = map.entrySet();
-        Iterator<Map.Entry<String, Object>> iterator = set.iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, Object> entry = iterator.next();
-            params.put(entry.getKey(), entry.getValue().toString());
-        }
-        params.put("sign",sign);
-        return  params;
-    }
 }

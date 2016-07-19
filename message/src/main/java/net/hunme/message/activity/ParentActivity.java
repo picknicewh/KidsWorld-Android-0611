@@ -26,6 +26,14 @@ import java.util.List;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
+/**
+ * 作者： wh
+ * 时间： 2016/7/15
+ * 名称：通讯首页--老师+家长(联系人列表显示)
+ * 版本说明：
+ * 附加注释：通过传递不同的联系人列表分别显示老师，家长两个页面
+ * 主要接口：
+ */
 public class ParentActivity extends BaseActivity implements SectionIndexer {
 
     /**

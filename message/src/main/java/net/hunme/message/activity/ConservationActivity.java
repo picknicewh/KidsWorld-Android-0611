@@ -11,8 +11,19 @@ import android.widget.TextView;
 import net.hunme.message.R;
 import net.hunme.message.ronglistener.MySendMessageListener;
 
-import io.rong.imkit.RongIM;
+import java.util.Locale;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
+
+/**
+ * 作者： wh
+ * 时间： 2016/7/15
+ * 名称：通讯--聊天页面
+ * 版本说明：
+ * 附加注释：
+ * 主要接口：
+ */
 public class ConservationActivity extends FragmentActivity implements View.OnClickListener{
     /**
      * 名字view
@@ -38,6 +49,10 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
      * 用户昵称
      */
     private String name;
+    /**
+     *当前的会话类型
+     */
+    private Conversation.ConversationType mconversationType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +62,13 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
             //设置自己发出的消息监听器。
             RongIM.getInstance().setSendMessageListener(new MySendMessageListener());
         }
-        findview();
+        initView();
+
     }
-    private  void findview(){
+    /**
+     * 初始化数据
+     */
+    private  void initView(){
         iv_back = (ImageView) findViewById(R.id.iv_cback);
         tv_name = (TextView) findViewById(R.id.tv_cname);
         iv_detail = (ImageView) findViewById(R.id.iv_detail);
@@ -61,6 +80,17 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         targetId = intent.getData().getQueryParameter("targetId");
         name = intent.getData().getQueryParameter("title");
         tv_name.setText(name);
+        mconversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
+        showview(mconversationType);
+    }
+    private void  showview(Conversation.ConversationType mconversationType){
+         if (mconversationType.equals(Conversation.ConversationType.DISCUSSION)){
+             iv_call.setVisibility(View.GONE);
+             iv_detail.setVisibility(View.VISIBLE);
+         }else if (mconversationType.equals(Conversation.ConversationType.PRIVATE)){
+             iv_call.setVisibility(View.VISIBLE);
+             iv_detail.setVisibility(View.GONE);
+         }
     }
 
     @Override

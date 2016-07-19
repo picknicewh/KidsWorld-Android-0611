@@ -5,11 +5,11 @@ import android.view.Gravity;
 import android.view.View;
 
 import net.hunme.baselibrary.activity.BaseActivity;
-import net.hunme.baselibrary.widget.PubishPopWindow;
 import net.hunme.school.R;
+import net.hunme.school.widget.SchoolPublishPopWindow;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/7/18
  * 名称：通知
  * 版本说明：
@@ -38,7 +38,7 @@ public class InformActivity extends BaseActivity {
         setSubTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final PubishPopWindow pubishPopWindow = new PubishPopWindow(InformActivity.this,0);
+                final SchoolPublishPopWindow pubishPopWindow = new SchoolPublishPopWindow(InformActivity.this);
                 pubishPopWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                 pubishPopWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override

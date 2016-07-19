@@ -13,8 +13,14 @@ import net.hunme.message.R;
 import net.hunme.message.bean.GroupMemberBean;
 
 import java.util.List;
-
-
+/**
+ * 作者： wh
+ * 时间： 2016/7/15
+ * 名称：联系人列表---适配器
+ * 版本说明：
+ * 附加注释：
+ * 主要接口：
+ */
 public class ContractAdapter extends BaseAdapter implements SectionIndexer {
 	private List<GroupMemberBean> list = null;
 	private Context mContext;
@@ -22,7 +28,6 @@ public class ContractAdapter extends BaseAdapter implements SectionIndexer {
 		this.mContext = mContext;
 		this.list = list;
 	}
-
 	/**
 	 * 当ListView数据发生变化时,调用此方法来更新ListView
 	 *

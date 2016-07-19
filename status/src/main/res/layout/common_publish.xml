@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="@dimen/space_x0.5"
+    android:layout_height="wrap_content">
+   <EditText
+       android:id="@+id/et_pcontent"
+       android:paddingTop="@dimen/space_x0.5"
+       android:paddingLeft="@dimen/space_x0.5"
+       android:background="@drawable/dialog_bg"
+       android:layout_width="match_parent"
+       android:hint="请输入文字内容"
+       android:gravity="left"
+       android:layout_height="200dp" />
+    <TextView
+        android:id="@+id/tv_pcount"
+        android:paddingTop="@dimen/space"
+        android:text="0/100"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

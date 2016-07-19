@@ -6,9 +6,12 @@ import net.hunme.message.bean.GroupMemberBean;
 import java.util.Comparator;
 
 /**
- * 
- * @author xiaanming
- *
+ * 作者： wh
+ * 时间： 2016/7/14
+ * 名称：根据拼音首字母-比较联系人排序
+ * 版本说明：
+ * 附加注释：
+ * 主要接口：
  */
 public class PinyinComparator implements Comparator<GroupMemberBean> {
 

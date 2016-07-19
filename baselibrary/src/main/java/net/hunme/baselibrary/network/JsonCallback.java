@@ -15,7 +15,7 @@ import okhttp3.Response;
  * 主要接口：
  * ================================================
  */
-public abstract class JsonCallback<T> extends AbsCallback<T> {
+public abstract class JsonCallback<T> extends AbsCallback {
     private Class<T> mclass;
 
     public JsonCallback(Class<T> mclass) {
@@ -23,7 +23,7 @@ public abstract class JsonCallback<T> extends AbsCallback<T> {
     }
 
     @Override
-    public T parseNetworkResponse(Response response) throws Exception {
+    public Object parseNetworkResponse(Response response) throws Exception {
 
         return new Gson().fromJson(response.body().string(),mclass);
     }

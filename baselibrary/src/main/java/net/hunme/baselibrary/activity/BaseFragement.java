@@ -8,9 +8,9 @@ import android.view.View;
 import com.umeng.analytics.MobclickAgent;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/7/14
- * 名称：
+ * 名称：所有Fragment父类
  * 版本说明：
  * 附加注释：
  * 主要接口：

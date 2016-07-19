@@ -37,7 +37,14 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import net.hunme.baselibrary.R;
-
+/**
+ * 作者： wh
+ * 时间： 2016/7/14
+ * 名称：圆形图片
+ * 版本说明：
+ * 附加注释：
+ * 主要接口：
+ */
 public class CircleImageView extends ImageView {
 
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;

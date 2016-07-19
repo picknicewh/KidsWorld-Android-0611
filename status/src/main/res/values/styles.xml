@@ -12,4 +12,8 @@
         <item name="android:textSize">@dimen/ts_x_large</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="custom_checkbox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/my_checkbox</item>
+    </style>
 </resources>

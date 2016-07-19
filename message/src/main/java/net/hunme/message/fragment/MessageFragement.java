@@ -18,6 +18,8 @@ import net.hunme.message.R;
 import net.hunme.message.activity.ParentActivity;
 import net.hunme.message.ronglistener.MyConversationBehaviorListener;
 
+import java.util.List;
+
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.RongIMClient;
@@ -26,13 +28,15 @@ import io.rong.imlib.model.Conversation;
 /**
  * 作者： wh
  * 时间： 2016/7/14
- * 名称：
+ * 名称：通讯首页
  * 版本说明：
  * 附加注释：
  * 主要接口：
  */
 public class MessageFragement extends BaseFragement implements View.OnClickListener{
-
+    /**
+     * 搜索
+     */
     private ImageView iv_search;
     /**
      * 班级
@@ -77,6 +81,9 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         ll_class.setOnClickListener(this);
 
    }
+    /**
+     *获取聊天列表
+     */
     private void  initframent(){
         connect("V5tYQjjmYQGGUT5RP9YyZ0bso9ndFkPYvochz2Gw7s692q5Oy6+dsfcJT13ag45+j9HeWAqVtz/T0ApFSaea8Q==");
         Log.i("TAFGG","cfdfefdfedfdf");
@@ -113,7 +120,6 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
                  */
                 @Override
                 public void onTokenIncorrect() {
-
                     Log.d("LoginActivity", "--onTokenIncorrect");
                 }
 
@@ -169,10 +175,9 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         }else if (v.getId()==R.id.iv_search){
 
         }
-
     }
     /**
-     * 监听处理
+     * 发送广播通知改变主界面的圆点的显示状态
      */
     public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.OnReceiveUnreadCountChangedListener() {
         @Override
@@ -186,4 +191,25 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
 
         }
     };
+    /**
+     * 创建班级的讨论组
+     *
+     * @param name 班级的姓名
+     * @param userids 班级所有的用户id
+     */
+    private void createDiscuss(final String name, List<String> userids ){
+
+        if (RongIM.getInstance()!=null){
+            RongIM.getInstance().createDiscussion(name, userids, new RongIMClient.CreateDiscussionCallback() {
+                @Override
+                public void onSuccess(String groupId) {
+                    RongIM.getInstance().startDiscussionChat(getActivity(), groupId, name);
+               }
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+
+                }
+            });
+        }
+    }
 }
