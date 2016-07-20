@@ -1,0 +1,152 @@
+<ion-view title="教育资源">
+    <ion-nav-bar class="nav-title-slide-ios7" align-title="center"></ion-nav-bar>
+    <ion-nav-buttons side="left">
+        <span class="button ion-chevron-left"></span>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        搜索
+    </ion-nav-buttons>
+    <ion-content>
+        <!--选项卡-->
+        <div class="TabsBox">
+            <div class="TabItem" ng-click="changeTab(0)" ng-class="{'active':tabCur==0}">
+                <span>精选</span>
+            </div>
+            <div class="TabItem" ng-click="changeTab(1)" ng-class="{'active':tabCur==1}">
+                <span>全部</span>
+            </div>
+        </div>
+        <!--精选-->
+        <div class="SelContent" ng-show="tabCur==0">
+            <div class="SelItem">
+                <div class="SelImage">
+                    <img src="images/temp/recItem01.png" />
+                </div>
+                <div class="SelItemTitle">
+                    大家好大家好大家好
+                </div>
+                <div class="SelItemSubTitle">
+                    已有34万人阅读
+                </div>
+            </div>
+            <div class="SelItem">
+                <div class="SelImage">
+                    <img src="images/temp/recItem02.png" />
+                </div>
+                <div class="SelItemTitle">
+                    大家好大家好大家好
+                </div>
+                <div class="SelItemSubTitle">
+                    已有34万人阅读
+                </div>
+            </div>
+            <div class="SelItem">
+                <div class="SelImage">
+                    <img src="images/temp/recItem03.png" />
+                </div>
+                <div class="SelItemTitle">
+                    大家好大家好大家好
+                </div>
+                <div class="SelItemSubTitle">
+                    已有34万人阅读
+                </div>
+            </div>
+            <div class="SelItem">
+                <div class="SelImage">
+                    <img src="images/temp/recItem04.png" />
+                </div>
+                <div class="SelItemTitle">
+                    大家好大家好大家好
+                </div>
+                <div class="SelItemSubTitle">
+                    已有34万人阅读
+                </div>
+            </div>
+            <div class="SelItem">
+                <div class="SelImage">
+                    <img src="images/temp/recItem03.png" />
+                </div>
+                <div class="SelItemTitle">
+                    大家好大家好大家好
+                </div>
+                <div class="SelItemSubTitle">
+                    已有34万人阅读
+                </div>
+            </div>
+            <div class="SelItem">
+                <div class="SelImage">
+                    <img src="images/temp/recItem04.png" />
+                </div>
+                <div class="SelItemTitle">
+                    大家好大家好大家好
+                </div>
+                <div class="SelItemSubTitle">
+                    已有34万人阅读
+                </div>
+            </div>
+            <div class="SelItem">
+                <div class="SelImage">
+                    <img src="images/temp/recItem04.png" />
+                </div>
+                <div class="SelItemTitle">
+                    大家好大家好大家好
+                </div>
+                <div class="SelItemSubTitle">
+                    已有34万人阅读
+                </div>
+            </div>
+        </div>
+        <!--全部-->
+        <div class="AllSort" ng-show="tabCur==1">
+            <div class="SortItem">
+                <div class="SortImage">
+                    <img src="images/temp/sort01.png" />
+                </div>
+                <div class="SortItemTitle">
+                    语言学习
+                </div>
+            </div>
+            <div class="SortItem">
+                <div class="SortImage">
+                    <img src="images/temp/sort01.png" />
+                </div>
+                <div class="SortItemTitle">
+                    宝宝识字
+                </div>
+            </div>
+            <div class="SortItem">
+                <div class="SortImage">
+                    <img src="images/temp/sort01.png" />
+                </div>
+                <div class="SortItemTitle">
+                    安全教育
+                </div>
+            </div>
+            <div class="SortItem">
+                <div class="SortImage">
+                    <img src="images/temp/sort01.png" />
+                </div>
+                <div class="SortItemTitle">
+                    艺术创意
+                </div>
+            </div>
+            <div class="SortItem">
+                <div class="SortImage">
+                    <img src="images/temp/sort01.png" />
+                </div>
+                <div class="SortItemTitle">
+                    英语天地
+                </div>
+            </div>
+            <div class="SortItem">
+                <div class="SortImage">
+                    <img src="images/temp/sort01.png" />
+                </div>
+                <div class="SortItemTitle">
+                    习惯养成
+                </div>
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>

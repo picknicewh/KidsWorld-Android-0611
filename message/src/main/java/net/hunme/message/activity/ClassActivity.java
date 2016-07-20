@@ -2,7 +2,7 @@ package net.hunme.message.activity;
 
 import android.os.Bundle;
 
-import net.hunme.baselibrary.activity.BaseActivity;
+import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.message.R;
 
 /**

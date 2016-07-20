@@ -12,10 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import net.hunme.baselibrary.activity.BaseFragement;
+import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.message.MessageApplication;
 import net.hunme.message.R;
 import net.hunme.message.activity.ParentActivity;
+import net.hunme.message.activity.SearchActivity;
 import net.hunme.message.ronglistener.MyConversationBehaviorListener;
 
 import java.util.List;
@@ -79,6 +80,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         ll_parent.setOnClickListener(this);
         ll_teacher.setOnClickListener(this);
         ll_class.setOnClickListener(this);
+       iv_search.setOnClickListener(this);
 
    }
     /**
@@ -152,10 +154,13 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
      */
    private void setNoreadMessage(){
        Handler handler = new Handler();
+       final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
+               Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
+               Conversation.ConversationType.PUBLIC_SERVICE};
        handler.postDelayed(new Runnable() {
            @Override
            public void run() {
-               RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener, Conversation.ConversationType.PRIVATE);
+               RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener,conversationTypes);
            }
        }, 500);
    }
@@ -173,7 +178,8 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
             intent.putExtra("title","家长");
             startActivity(intent);
         }else if (v.getId()==R.id.iv_search){
-
+            intent.setClass(getActivity(), SearchActivity.class);
+            startActivity(intent);
         }
     }
     /**
@@ -185,10 +191,10 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
                 Intent intent = new Intent();
                 intent.setAction("net.hunme.message.showdos");
                 intent.putExtra("count",count);
+               Log.i("TAFFG",count+"");
                if (getActivity()!=null){
                   getActivity().sendBroadcast(intent);
                }
-
         }
     };
     /**

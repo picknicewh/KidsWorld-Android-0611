@@ -1,0 +1,29 @@
+<ion-view title="教育资讯">
+    <ion-nav-bar class="nav-title-slide-ios7" align-title="center"></ion-nav-bar>
+    <ion-nav-buttons side="left">
+        <span class="button ion-chevron-left"></span>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        搜索
+    </ion-nav-buttons>
+    <!--选项卡-->
+    <div class="InfTabsBox">
+        <div class="InfTabItem" ng-click="changeTab(0)" ng-class="{'active':tabCur==0}">
+            <span>育儿宝典</span>
+        </div>
+        <div class="InfTabItem" ng-click="changeTab(1)" ng-class="{'active':tabCur==1}">
+            <span>教育政策</span>
+        </div>
+        <div class="InfTabItem" ng-click="changeTab(2)" ng-class="{'active':tabCur==2}">
+            <span>营养健康</span>
+        </div>
+        <div class="InfTabItem" ng-click="changeTab(3)" ng-class="{'active':tabCur==3}">
+            <span>常见问题</span>
+        </div>
+    </div>
+    <!--选项卡内容-->
+    <ion-content class="InfContent">
+        <ion-nav-view></ion-nav-view>
+    </ion-content>
+
+</ion-view>

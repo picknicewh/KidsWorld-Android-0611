@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
-import net.hunme.baselibrary.activity.BaseFragement;
+import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.activity.UserActivity;
 

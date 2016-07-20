@@ -9,7 +9,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import net.hunme.baselibrary.activity.BaseActivity;
+import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.user.R;
 import net.hunme.user.adapter.GridAdapter;
 import net.hunme.user.util.Bimp;

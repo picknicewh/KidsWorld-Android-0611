@@ -2,7 +2,7 @@ package net.hunme.status.activity;
 
 import android.os.Bundle;
 
-import net.hunme.baselibrary.activity.BaseActivity;
+import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.status.R;
 
 public class ChoosePhotoAvtivity extends BaseActivity {

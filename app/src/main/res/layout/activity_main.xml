@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_gray" />
     <LinearLayout
+        android:padding="@dimen/space_x0.5"
         android:orientation="horizontal"
         android:layout_gravity="bottom"
         android:gravity="center"
@@ -33,9 +34,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:src="@mipmap/ic_test01"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp" />
+                    android:id="@+id/iv_status"
+                    android:src="@mipmap/status_p"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
                 <FrameLayout
                     android:layout_gravity="right"
                     android:padding="1dip"
@@ -55,8 +57,9 @@
 
             </FrameLayout>
             <TextView
+
                 android:id="@+id/tv_status"
-                android:textColor="@color/red"
+                android:textColor="@color/main_green"
                 android:text="动态"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -73,9 +76,10 @@
                 android:id="@+id/iv_school"
                 android:layout_gravity="center"
                 android:src="@mipmap/school"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
+
                 android:id="@+id/tv_school"
                 android:text="学校"
                 android:layout_gravity="center"
@@ -89,11 +93,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/iv_discovery"
                 android:layout_gravity="center"
-                android:src="@mipmap/ic_test01"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:src="@mipmap/discovery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
+
                 android:id="@+id/tv_discovery"
                 android:text="乐园"
                 android:layout_gravity="center"
@@ -112,9 +118,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:src="@mipmap/ic_test01"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp" />
+                    android:id="@+id/iv_message"
+                    android:src="@mipmap/message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
                 <FrameLayout
                     android:layout_gravity="right"
                     android:padding="1dip"
@@ -135,6 +142,7 @@
 
             </FrameLayout>
             <TextView
+
                 android:id="@+id/tv_message"
                 android:text="通讯"
                 android:layout_gravity="center"

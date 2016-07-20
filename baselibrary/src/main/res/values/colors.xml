@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F83F2F</color>
-    <color name="colorPrimaryDark">#F83F2F</color>
-    <color name="colorAccent">#FF3B30</color>
+    <color name="colorPrimary">#8dc700</color>
+    <color name="colorPrimaryDark">#8dc700</color>
+    <color name="colorAccent">#8dc700</color>
 
     <!-- 主题颜色-->
     <color name="red">#FF3B30</color>

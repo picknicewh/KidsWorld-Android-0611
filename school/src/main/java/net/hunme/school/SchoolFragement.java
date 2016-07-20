@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import net.hunme.baselibrary.activity.BaseFragement;
+import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.widget.NavigationBar;
 
 import net.hunme.school.activity.ArrangmentActivity;

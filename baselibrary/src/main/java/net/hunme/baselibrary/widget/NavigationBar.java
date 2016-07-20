@@ -42,7 +42,7 @@ public class NavigationBar extends RelativeLayout implements View.OnClickListene
 
     private void init(Context context) {
         this.context = context;
-        this.setBackgroundColor(getResources().getColor(R.color.red));
+        this.setBackgroundColor(getResources().getColor(R.color.colorAccent));
     }
 
     /**

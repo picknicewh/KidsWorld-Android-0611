@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import net.hunme.baselibrary.activity.BaseActivity;
+import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.school.R;
 import net.hunme.school.util.DateTimePickDialogUtil;
 

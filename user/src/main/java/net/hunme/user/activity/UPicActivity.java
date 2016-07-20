@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import net.hunme.baselibrary.activity.BaseActivity;
+import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.user.R;
 import net.hunme.user.adapter.ImageBucketAdapter;
 import net.hunme.user.util.AlbumHelper;

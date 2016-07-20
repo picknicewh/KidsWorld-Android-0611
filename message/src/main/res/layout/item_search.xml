@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_margin="@dimen/space"
+    android:padding="@dimen/space"
+    android:layout_height="wrap_content">
+        <net.hunme.baselibrary.widget.CircleImageView
+            android:id="@+id/iv_contract_icon"
+            android:src="@mipmap/person"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <TextView
+            android:id="@+id/tv_contract_name"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="@dimen/space"
+
+            android:paddingBottom="10dip"
+            android:paddingTop="10dip"
+            android:text="王小二"
+            android:textColor="#336598" />
+</LinearLayout>

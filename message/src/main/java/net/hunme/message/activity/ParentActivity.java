@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-import net.hunme.baselibrary.activity.BaseActivity;
+import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.message.R;
 import net.hunme.message.adapter.ContractAdapter;
 import net.hunme.message.bean.GroupMemberBean;
