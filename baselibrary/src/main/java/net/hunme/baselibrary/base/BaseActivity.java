@@ -1,4 +1,4 @@
-package net.hunme.baselibrary.activity;
+package net.hunme.baselibrary.base;
 
 import android.os.Bundle;
 import android.support.annotation.IdRes;

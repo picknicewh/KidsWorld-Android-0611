@@ -1,0 +1,79 @@
+<ion-view title="搜索">
+    <ion-nav-bar class="nav-title-slide-ios7" align-title="center"></ion-nav-bar>
+    <ion-nav-buttons side="left">
+        <span class="button ion-chevron-left"  ng-click="goBack()"></span>
+    </ion-nav-buttons>
+    <!--搜索框-->
+    <div class="search">
+        <div class="inbox">
+            <img class="search_icon" src="images/temp/search_icon.png" />
+            <input type="text" placeholder="请选择您要的号码" class="filter" ng-keyup="filterList()" />
+            <img class="clear_icon" src="images/temp/clear_icon.png" ng-click="reset()" />
+        </div>
+    </div>
+
+    <!--搜索结果-选项卡-->
+    <div class="searchTabsBox" ng-show="hasSearch==1">
+        <div class="searchTabItem" ng-click="changeTab(0)" ng-class="{'active':tabCur==0}">
+            <span>幼儿课堂</span>
+        </div>
+        <div class="searchTabItem" ng-click="changeTab(1)" ng-class="{'active':tabCur==1}">
+            <span>幼儿听听</span>
+        </div>
+        <div class="searchTabItem" ng-click="changeTab(2)" ng-class="{'active':tabCur==2}">
+            <span>教育资讯</span>
+        </div>
+    </div>
+    <!--搜索结果-->
+    <ion-content class="searchContent" ng-show="hasSearch==1">
+        <!--幼儿课堂-->
+        <div class="InfCntBox" ng-show="tabCur==0">
+            <div class="SelItem" ng-repeat="item_video in items_video" ng-click="playVideo(item_video)">
+                <div class="SelImage">
+                    <img src="images/temp/recItem01.png" />
+                </div>
+                <div class="SelItemTitle">
+                    大家好大家好大家好
+                </div>
+                <div class="SelItemSubTitle">
+                    已有34万人阅读
+                </div>
+            </div>
+        </div>
+        <!--幼儿听听-->
+        <div class="InfCntBox" ng-show="tabCur==1">
+            <div class="SelItem" ng-repeat="item_audio in items_audio" ng-click="playAudio(item_audio)">
+                <div class="SelImage">
+                    <img src="images/temp/recItem01.png" />
+                </div>
+                <div class="SelItemTitle">
+                    大家好大家好大家好
+                </div>
+                <div class="SelItemSubTitle">
+                    已有34万人阅读
+                </div>
+            </div>
+        </div>
+        <!--教育资讯-->
+        <div class="InfCntBox" ng-show="tabCur==2">
+            <div class="InfItem"  ng-repeat="item_inf in items_inf" ng-click="showInfDet(item_inf)">
+                <div class="InfTitle">
+                    南苏丹的中国女医生：当地中国人已在8个点紧急集结
+                </div>
+                <ul class="InfImgBox">
+                    <li><img src="images/temp/navItem01.png" /></li>
+                    <li><img src="images/temp/navItem01.png" /></li>
+                    <li><img src="images/temp/navItem01.png" /></li>
+                </ul>
+                <div class="InfAbout">
+                    <span>
+                        <img src="images/temp/infIcon.png" />
+                    </span>
+                    <span>华西都市报</span>
+                    <span>422评论</span>
+                    <span>1分钟内</span>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

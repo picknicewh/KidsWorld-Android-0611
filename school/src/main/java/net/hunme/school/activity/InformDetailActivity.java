@@ -3,7 +3,7 @@ package net.hunme.school.activity;
 import android.os.Bundle;
 import android.view.View;
 
-import net.hunme.baselibrary.activity.BaseActivity;
+import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.school.R;
 
 /**

@@ -1,0 +1,29 @@
+<ion-view title="儿歌名称">
+    <ion-nav-bar class="nav-title-slide-ios7" align-title="center"></ion-nav-bar>
+    <ion-nav-buttons side="left">
+        <span class="button ion-chevron-left" ng-click="goBack()"></span>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <span ng-click="store()">收藏</span>
+    </ion-nav-buttons>
+
+    <div class="AudioContent">
+        <div class="SongImg">
+            <img src="images/temp/navItem03.png" />
+        </div>
+    </div>
+
+    <audio class="AudioPlayer" controls="controls">
+        <source src="http://www.w3school.com.cn/i/song.ogg" type="audio/ogg">
+        <source src="http://www.w3school.com.cn/i/song.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <div class="AudioCtrl">
+        <button class="button button-positive">循环</button>
+        <button class="button button-calm">上一首</button>
+        <button class="button button-energized">播放</button>
+        <button class="button button-royal">下一首</button>
+        <button class="button button-calm">列表</button>
+    </div>
+</ion-view>

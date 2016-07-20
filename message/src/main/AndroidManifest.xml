@@ -24,7 +24,7 @@
         <activity android:name=".activity.ClassActivity" />
         <activity android:name=".activity.ParentActivity"></activity>
         <activity android:name=".activity.PersonDetailActivity"/>
-
+        <activity android:name=".activity.SearchActivity"/>
     </application>
 
 </manifest>

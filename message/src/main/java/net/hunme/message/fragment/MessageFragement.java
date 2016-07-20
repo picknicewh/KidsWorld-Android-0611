@@ -12,10 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import net.hunme.baselibrary.activity.BaseFragement;
+import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.message.MessageApplication;
 import net.hunme.message.R;
 import net.hunme.message.activity.ParentActivity;
+import net.hunme.message.activity.SearchActivity;
 import net.hunme.message.ronglistener.MyConversationBehaviorListener;
 
 import java.util.List;
@@ -79,6 +80,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         ll_parent.setOnClickListener(this);
         ll_teacher.setOnClickListener(this);
         ll_class.setOnClickListener(this);
+       iv_search.setOnClickListener(this);
 
    }
     /**
@@ -176,7 +178,8 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
             intent.putExtra("title","家长");
             startActivity(intent);
         }else if (v.getId()==R.id.iv_search){
-
+            intent.setClass(getActivity(), SearchActivity.class);
+            startActivity(intent);
         }
     }
     /**
