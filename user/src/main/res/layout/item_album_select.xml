@@ -3,11 +3,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line_gray"
-        android:background="@color/line_gray"/>
-
     <LinearLayout
         android:padding="@dimen/space"
         android:layout_width="match_parent"
@@ -15,7 +10,7 @@
         android:orientation="horizontal">
         <TextView
             android:id="@+id/tv_album_name"
-            android:textSize="@dimen/ts_large"
+            style="@style/TextStyleBase"
             android:text="默认相册"
             android:layout_marginLeft="@dimen/space_x2"
             android:gravity="center_vertical"
@@ -31,4 +26,8 @@
             android:src="@mipmap/ic_launcher"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray"/>
 </LinearLayout>

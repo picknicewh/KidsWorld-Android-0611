@@ -24,18 +24,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:textColor="@color/black"
                 android:id="@+id/tv_photoname_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="@dimen/ts_xx_large"/>
+                android:textSize="@dimen/ts_large"/>
             <TextView
                 android:id="@+id/tv_photonumber_item"
                 android:layout_marginTop="@dimen/space_x2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/ts_large"/>
+                style="@style/TextStyleBase"/>
         </LinearLayout>
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray"/>
 </LinearLayout>

@@ -17,7 +17,7 @@
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/ts_large"
+            style="@style/TextStyleBase"
             android:text="头像" />
 
         <ImageView
@@ -29,6 +29,7 @@
             android:layout_alignParentRight="true"/>
 
         <ImageView
+            android:background="@drawable/bg_head_portrait"
             android:layout_toLeftOf="@id/iv_into"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,24 +51,23 @@
             android:orientation="horizontal">
 
             <TextView
+                style="@style/TextStyleBase"
                 android:layout_gravity="center"
-                android:textSize="@dimen/ts_large"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="姓名"/>
 
             <TextView
-                android:textSize="@dimen/ts_large"
+                android:textSize="@dimen/ts_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="哈哈"/>
         </LinearLayout>
 
         <View
-            android:layout_marginLeft="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/line_gray"
+            android:layout_height="0.5dp"
             android:background="@color/line_gray"/>
 
         <LinearLayout
@@ -79,23 +79,22 @@
 
             <TextView
                 android:layout_gravity="center"
-                android:textSize="@dimen/ts_large"
+                style="@style/TextStyleBase"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="性别"/>
 
             <TextView
-                android:textSize="@dimen/ts_large"
+                android:textSize="@dimen/ts_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="男"/>
         </LinearLayout>
 
         <View
-            android:layout_marginLeft="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/line_gray"
+            android:layout_height="0.5dp"
             android:background="@color/line_gray"/>
 
         <LinearLayout
@@ -107,7 +106,7 @@
 
             <TextView
                 android:layout_gravity="center"
-                android:textSize="@dimen/ts_large"
+                style="@style/TextStyleBase"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -115,7 +114,7 @@
 
             <TextView
                 android:layout_gravity="center"
-                android:textSize="@dimen/ts_large"
+                style="@style/TextStyleBase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="还没有想好啊"/>
@@ -142,23 +141,22 @@
 
             <TextView
                 android:layout_gravity="center"
-                android:textSize="@dimen/ts_large"
+                style="@style/TextStyleBase"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="班级"/>
 
             <TextView
-                android:textSize="@dimen/ts_large"
+                style="@style/TextStyleBase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="苗苗班"/>
         </LinearLayout>
 
         <View
-            android:layout_marginLeft="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/line_gray"
+            android:layout_height="0.5dp"
             android:background="@color/line_gray"/>
 
         <LinearLayout
@@ -170,14 +168,14 @@
 
             <TextView
                 android:layout_gravity="center"
-                android:textSize="@dimen/ts_large"
+                style="@style/TextStyleBase"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="学校"/>
 
             <TextView
-                android:textSize="@dimen/ts_large"
+                style="@style/TextStyleBase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="恒镁幼儿园"/>

@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/bg_layout"
     tools:context=".activity.UserActivity">
+
     <LinearLayout
         android:background="@drawable/layout_selecter"
         android:id="@+id/ll_userMassage"
@@ -41,17 +43,18 @@
             android:layout_marginLeft="@dimen/space"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:text="龙马"
-                android:textSize="@dimen/ts_xx_large" />
-            <TextView
-                android:layout_marginTop="@dimen/space_x0.5"
                 android:textSize="@dimen/ts_large"
+               style="@style/TextStyleBase" />
+            <TextView
+                style="@style/TextStyleBase"
+                android:layout_marginTop="@dimen/space"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="世纪幼儿园-小小班" />
@@ -87,13 +90,14 @@
                 android:padding="@dimen/space"
                 android:layout_marginLeft="@dimen/space"
                 android:layout_gravity="center"
-                android:textSize="@dimen/ts_large"
+                style="@style/TextStyleBase"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="我的收藏"/>
 
             <ImageView
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_launcher"/>
@@ -102,7 +106,7 @@
         <View
             android:layout_marginLeft="80dp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/line_gray"
+            android:layout_height="0.5dp"
             android:background="@color/line_gray"/>
 
         <LinearLayout
@@ -122,13 +126,14 @@
                 android:padding="@dimen/space"
                 android:layout_marginLeft="@dimen/space"
                 android:layout_gravity="center"
-                android:textSize="@dimen/ts_large"
+                style="@style/TextStyleBase"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="我的动态"/>
 
             <ImageView
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_launcher"/>
@@ -153,13 +158,14 @@
             android:padding="@dimen/space"
             android:layout_marginLeft="@dimen/space"
             android:layout_gravity="center"
-            android:textSize="@dimen/ts_large"
+            style="@style/TextStyleBase"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="我的相册"/>
 
         <ImageView
+            android:layout_gravity="center_vertical"
             android:id="@+id/iv_into"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -175,6 +181,7 @@
         android:background="@color/white">
 
         <LinearLayout
+            android:background="@drawable/layout_selecter"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -186,16 +193,18 @@
                 android:src="@mipmap/ic_launcher"/>
 
             <TextView
+
                 android:padding="@dimen/space"
                 android:layout_marginLeft="@dimen/space"
                 android:layout_gravity="center"
-                android:textSize="@dimen/ts_large"
+                style="@style/TextStyleBase"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="账户设置"/>
 
             <ImageView
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_launcher"/>
@@ -204,7 +213,7 @@
         <View
             android:layout_marginLeft="80dp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/line_gray"
+            android:layout_height="0.5dp"
             android:background="@color/line_gray"/>
 
         <LinearLayout
@@ -224,13 +233,14 @@
                 android:padding="@dimen/space"
                 android:layout_marginLeft="@dimen/space"
                 android:layout_gravity="center"
-                android:textSize="@dimen/ts_large"
+                style="@style/TextStyleBase"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="更多"/>
 
             <ImageView
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_launcher"/>
