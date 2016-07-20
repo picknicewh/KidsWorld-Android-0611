@@ -19,13 +19,26 @@ angular.module('app.controllers')
         });
     });
 
+    $scope.goSearch= function () {
+        clearInterval($scope.bannnerTimer);
+        goSearch_Origin();
+        //$state.go('search');
+    };
+    $scope.goHistory= function () {
+        clearInterval($scope.bannnerTimer);
+        $state.go('history');
+    };
+
     $scope.goChildClass= function () {
+        clearInterval($scope.bannnerTimer);
         $state.go('childClass');
     };
     $scope.goChildMusic= function () {
+        clearInterval($scope.bannnerTimer);
         $state.go('childMusic');
     };
     $scope.goEduInformation= function () {
+        clearInterval($scope.bannnerTimer);
         $state.go('eduInformation');
     };
 
@@ -34,14 +47,19 @@ angular.module('app.controllers')
     $scope.items_video=[0,1,2,3];
 
     $scope.showEduInf= function (idx) {
+        clearInterval($scope.bannnerTimer);
         $state.go('eduInformation_Detail');
     };
     $scope.playAudio= function (idx) {
+        clearInterval($scope.bannnerTimer);
         $state.go('audioPlay');
     };
     $scope.playVideo= function () {
+        clearInterval($scope.bannnerTimer);
         $state.go('videoPlay');
     };
+
+    $scope.bannnerTimer=null;
 
     //轮播图自动播放方法，需传入图片数量
     function bannerAutoPlay(length){
@@ -54,6 +72,6 @@ angular.module('app.controllers')
             }
             $scope.$digest();
         }
-        var bannnerTimer=setInterval(bannerPlay,3000);
+        $scope.bannnerTimer=setInterval(bannerPlay,3000);
     }
 })

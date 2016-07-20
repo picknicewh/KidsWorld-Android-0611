@@ -1,10 +1,12 @@
 package net.hunme.discovery;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -26,19 +28,24 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
     /**
      * 左边的显示
      */
-    private TextView tv_record;
+    public TextView tv_left;
+    /**
+     * 左边的图片
+     */
+    public ImageView iv_left;
     /**
      * 中间的标题
      */
-    private TextView tv_title;
+    public TextView tv_title;
     /**
      * 右边显示
      */
-    private ImageView iv_search;
+    public TextView tv_right;
     /**
      * webview
      */
     private WebView webView;
+    @SuppressLint("JavascriptInterface")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_discovery,null);
@@ -46,14 +53,16 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         return view;
     }
     private  void init(View v){
-        tv_record = $(v,R.id.tv_drecord);
-        iv_search = $(v,R.id.iv_dsearch);
+        tv_left = $(v,R.id.tv_left);
+        tv_right = $(v,R.id.tv_right);
         tv_title = $(v,R.id.tv_dtitle);
+        iv_left = $(v,R.id.iv_left);
         webView = $(v,R.id.wv_discovery);
         webView.loadUrl("file:///android_asset/discovery/paradise/index.html#/paradiseHome");
         interactive(webView);
-        tv_record.setOnClickListener(this);
-        iv_search.setOnClickListener(this);
+        tv_right.setOnClickListener(this);
+        tv_left.setOnClickListener(this);
+
     }
      /**
      * 交互配置
@@ -72,14 +81,39 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         webView.getSettings().setAllowContentAccess(true);
         webView.getSettings().setAllowFileAccessFromFileURLs(true);
         webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
-        //javascript调用本地，新建一个类。调用类中的方法给js调用,其中myObj为调用的名字
-        //webView.addJavascriptInterface(null, "myObj");  //设置本地调用对象及其接口
+        webView.addJavascriptInterface(this, "change_nb");  //设置本地调用对象及其接口
     }
     @Override
     public void onClick(View view) {
-        if (view.getId()==R.id.tv_drecord){
-            webView.loadUrl("javascript:goChildClass()");
-        }else if (view.getId()==R.id.iv_dsearch){
-        }
+        if (view.getId()==R.id.tv_left){
+            webView.loadUrl("javascript:goChildClass_Android()");
+        }else if (view.getId()==R.id.tv_right){}
+    }
+    /**
+     * 设置导航栏
+    */
+    @JavascriptInterface
+    public void  setToolbar(final String LeftTitle,final String centerTitle,final String RightTitle){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (LeftTitle==null){
+                    tv_left.setVisibility(View.GONE);
+                    iv_left.setVisibility(View.VISIBLE);
+                }else {
+                    tv_left.setVisibility(View.VISIBLE);
+                    iv_left.setVisibility(View.GONE);
+                    tv_left.setText(LeftTitle);
+                }
+                tv_title.setText(centerTitle);
+                if (RightTitle==null){
+                    tv_right.setVisibility(View.GONE);
+                }else {
+                    tv_right.setVisibility(View.VISIBLE);
+                    tv_right.setText(RightTitle);
+                }
+            }
+        });
+
     }
 }

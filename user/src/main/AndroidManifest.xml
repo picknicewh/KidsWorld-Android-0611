@@ -16,7 +16,10 @@
         <activity android:name=".activity.UPicActivity" />
         <activity android:name=".activity.AlbumSelectActivity" />
         <activity android:name=".activity.UDynamicsActivity" />
-        <activity android:name=".activity.UCollectionActivity"></activity>
+        <activity android:name=".activity.UCollectionActivity" />
+        <activity android:name=".activity.ModifyPhoneActivity" />
+        <activity android:name=".activity.ModifyNextActivity" />
+        <activity android:name=".activity.ResetPhoneActivity"></activity>
     </application>
 
 </manifest>

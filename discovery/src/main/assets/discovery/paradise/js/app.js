@@ -23,6 +23,26 @@ angular.module('app', ['ui.router','ngAnimate','ionic','app.services', 'app.cont
                 templateUrl: 'views/search.html',
                 controller: 'SearchCtrl'
             })
+            .state('search_Audio', {
+                url: '/search_Audio',
+                templateUrl: 'views/search_Audio.html',
+                controller: 'Search_AudioCtrl'
+            })
+            .state('search_Video', {
+                url: '/search_Video',
+                templateUrl: 'views/search_Video.html',
+                controller: 'Search_VideoCtrl'
+            })
+            .state('search_Inf', {
+                url: '/search_Inf',
+                templateUrl: 'views/search_Inf.html',
+                controller: 'Search_InfCtrl'
+            })
+            .state('history', {
+                url: '/history',
+                templateUrl: 'views/history.html',
+                controller: 'HistoryCtrl'
+            })
             .state('childClass', {
                 url: '/childClass',
                 templateUrl: 'views/childClass.html',

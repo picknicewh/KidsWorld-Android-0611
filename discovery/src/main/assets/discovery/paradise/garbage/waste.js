@@ -30,3 +30,10 @@
     <!--<script src="js/controllers/EduInformationCtrl_tab1.js"></script>-->
     <!--<script src="js/controllers/EduInformationCtrl_tab2.js"></script>-->
     <!--<script src="js/controllers/EduInformationCtrl_tab3.js"></script>-->
+
+	    if(typeof change_nb !== 'undefined'){
+            alert(change_nb);
+            change_nb.setToolbar(null,"ËÑË÷",null);
+        }else{
+            alert("Ã»ÓÐchange_nb");
+        }

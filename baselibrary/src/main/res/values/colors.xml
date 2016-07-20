@@ -166,5 +166,8 @@
     <color name="transparent">#0000</color><!-- 透明 -->
     <color name="transparent2">#8000</color><!-- 透明 -->
     <color name="bg_layout">#90dcdcdc</color><!--淡灰色 -->
+    <color name="pgrey">#b3b3b3</color>
+    <color name="main_green">#8dc700</color>
+    <color name="text_blue">#1b8bc8</color>
 
 </resources>
