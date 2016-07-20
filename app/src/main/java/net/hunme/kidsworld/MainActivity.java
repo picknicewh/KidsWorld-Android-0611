@@ -49,6 +49,8 @@ public class MainActivity extends JPushBaseActivity {
     private StatusFragement statusFragement;
     @Bind(R.id.tv_status)
     TextView tvStatus;
+    @Bind(R.id.iv_status)
+    ImageView ivStatus;
     /**
      * 学校
      */
@@ -56,7 +58,6 @@ public class MainActivity extends JPushBaseActivity {
 
     @Bind(R.id.tv_school)
     TextView tvSchool;
-
     @Bind(R.id.iv_school)
     ImageView ivSchool;
     /**
@@ -65,16 +66,21 @@ public class MainActivity extends JPushBaseActivity {
     private DiscoveryFragement discoveryFragement;
     @Bind(R.id.tv_discovery)
     TextView tvDiscovery;
+    @Bind(R.id.iv_discovery)
+    ImageView ivDiscovery;
     /**
      * 通讯
      */
     private MessageFragement messageFragement;
     @Bind(R.id.tv_message)
     TextView tvMessage;
+    @Bind(R.id.iv_message)
+    ImageView ivMessage;
     /**
      * 通讯未读消息个数接收广播
      */
     private ShwoMessageReceiver mBroadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +90,7 @@ public class MainActivity extends JPushBaseActivity {
         registerBoradcastReceiver();
         initJPushConfiguration();
     }
+
     /**
      * 初始化数据
      */
@@ -98,6 +105,7 @@ public class MainActivity extends JPushBaseActivity {
         transaction.commit();
         mBroadcastReceiver = new ShwoMessageReceiver();
     }
+
     /**
      * 通过点击事件改变tab
      */
@@ -108,35 +116,47 @@ public class MainActivity extends JPushBaseActivity {
         switch (view.getId()) {
             case R.id.ll_status:
                 fragment = statusFragement;
-                tvDiscovery.setTextColor(getResources().getColor(R.color.black));
-                tvMessage.setTextColor(getResources().getColor(R.color.black));
-                tvSchool.setTextColor(getResources().getColor(R.color.black));
-                tvStatus.setTextColor(getResources().getColor(R.color.red));
+                tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
+                tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
+                tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
+                tvStatus.setTextColor(getResources().getColor(R.color.main_green));
                 ivSchool.setImageResource(R.mipmap.school);
+                ivDiscovery.setImageResource(R.mipmap.discovery);
+                ivMessage.setImageResource(R.mipmap.message);
+                ivStatus.setImageResource(R.mipmap.status_p);
                 break;
             case R.id.ll_school:
                 fragment = schoolFragement;
-                tvDiscovery.setTextColor(getResources().getColor(R.color.black));
-                tvMessage.setTextColor(getResources().getColor(R.color.black));
-                tvSchool.setTextColor(getResources().getColor(R.color.red));
-                tvStatus.setTextColor(getResources().getColor(R.color.black));
+                tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
+                tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
+                tvSchool.setTextColor(getResources().getColor(R.color.main_green));
+                tvStatus.setTextColor(getResources().getColor(R.color.default_grey));
                 ivSchool.setImageResource(R.mipmap.school_p);
+                ivDiscovery.setImageResource(R.mipmap.discovery);
+                ivMessage.setImageResource(R.mipmap.message);
+                ivStatus.setImageResource(R.mipmap.status);
                 break;
             case R.id.ll_discovery:
                 fragment = discoveryFragement;
-                tvDiscovery.setTextColor(getResources().getColor(R.color.red));
-                tvMessage.setTextColor(getResources().getColor(R.color.black));
-                tvSchool.setTextColor(getResources().getColor(R.color.black));
-                tvStatus.setTextColor(getResources().getColor(R.color.black));
+                tvDiscovery.setTextColor(getResources().getColor(R.color.main_green));
+                tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
+                tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
+                tvStatus.setTextColor(getResources().getColor(R.color.default_grey));
                 ivSchool.setImageResource(R.mipmap.school);
+                ivDiscovery.setImageResource(R.mipmap.discovery_p);
+                ivMessage.setImageResource(R.mipmap.message);
+                ivStatus.setImageResource(R.mipmap.status);
                 break;
             case R.id.ll_message:
                 fragment = messageFragement;
-                tvDiscovery.setTextColor(getResources().getColor(R.color.black));
-                tvMessage.setTextColor(getResources().getColor(R.color.red));
-                tvSchool.setTextColor(getResources().getColor(R.color.black));
-                tvStatus.setTextColor(getResources().getColor(R.color.black));
+                tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
+                tvMessage.setTextColor(getResources().getColor(R.color.main_green));
+                tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
+                tvStatus.setTextColor(getResources().getColor(R.color.default_grey));
                 ivSchool.setImageResource(R.mipmap.school);
+                ivDiscovery.setImageResource(R.mipmap.discovery);
+                ivMessage.setImageResource(R.mipmap.message_p);
+                ivStatus.setImageResource(R.mipmap.status);
                 break;
         }
         transaction.replace(R.id.content, fragment);
@@ -146,11 +166,12 @@ public class MainActivity extends JPushBaseActivity {
     /**
      * 注册广播
      */
-    public void registerBoradcastReceiver(){
+    public void registerBoradcastReceiver() {
         IntentFilter myIntentFilter = new IntentFilter();
         myIntentFilter.addAction(SHOWDOS);
         registerReceiver(mBroadcastReceiver, myIntentFilter);
     }
+
     /**
      * 对消息的圆点处理广播
      */
@@ -159,10 +180,10 @@ public class MainActivity extends JPushBaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(SHOWDOS)) {
-                int count = intent.getIntExtra("count",0);
-                if (count>0){
+                int count = intent.getIntExtra("count", 0);
+                if (count > 0) {
                     tvMeaasgeDos.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     tvMeaasgeDos.setVisibility(View.GONE);
                 }
             }
@@ -172,7 +193,7 @@ public class MainActivity extends JPushBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mBroadcastReceiver!=null){
+        if (mBroadcastReceiver != null) {
             unregisterReceiver(mBroadcastReceiver);
         }
     }

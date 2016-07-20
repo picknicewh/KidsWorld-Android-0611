@@ -152,10 +152,13 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
      */
    private void setNoreadMessage(){
        Handler handler = new Handler();
+       final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
+               Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
+               Conversation.ConversationType.PUBLIC_SERVICE};
        handler.postDelayed(new Runnable() {
            @Override
            public void run() {
-               RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener, Conversation.ConversationType.PRIVATE);
+               RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener,conversationTypes);
            }
        }, 500);
    }
@@ -185,10 +188,10 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
                 Intent intent = new Intent();
                 intent.setAction("net.hunme.message.showdos");
                 intent.putExtra("count",count);
+               Log.i("TAFFG",count+"");
                if (getActivity()!=null){
                   getActivity().sendBroadcast(intent);
                }
-
         }
     };
     /**
