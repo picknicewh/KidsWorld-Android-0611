@@ -18,6 +18,9 @@
     <color name="myteacher">#f6af00</color>
     <color name="myclass">#005bb1</color>
     <color name="parent">#8ec500</color>
+    <color name="main_green">#8dc700</color>
+    <!--tab选项颜色-->
+    <color name="default_grey">#646464</color>
 
     <color name="ivory">#fffff0</color><!--象牙色 -->
     <color name="lightyellow">#ffffe0</color><!--亮黄色 -->
@@ -163,4 +166,5 @@
     <color name="transparent">#0000</color><!-- 透明 -->
     <color name="transparent2">#8000</color><!-- 透明 -->
     <color name="bg_layout">#90dcdcdc</color><!--淡灰色 -->
+
 </resources>

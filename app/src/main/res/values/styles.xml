@@ -1,15 +1,5 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="AppTheme.Base">
-    </style>
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/red</item>
-        <item name="colorPrimaryDark">@color/red</item>
-        <item name="colorAccent">@color/red</item>
-    </style>
-
     <style name="tab">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>

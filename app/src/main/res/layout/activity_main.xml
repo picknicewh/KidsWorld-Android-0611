@@ -57,9 +57,8 @@
 
             </FrameLayout>
             <TextView
-
                 android:id="@+id/tv_status"
-                android:textColor="@color/main_green"
+                android:textColor="@color/colorAccent"
                 android:text="动态"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
