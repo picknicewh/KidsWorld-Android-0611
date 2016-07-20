@@ -15,17 +15,18 @@ import okhttp3.Response;
  * 主要接口：
  * ================================================
  */
-public abstract class JsonCallback<T> extends AbsCallback {
+public abstract class JsonCallback<T> extends AbsCallback<T> {
     private Class<T> mclass;
 
-    public JsonCallback(Class<T> mclass) {
+    public JsonCallback(Class mclass) {
         this.mclass = mclass;
     }
 
     @Override
-    public Object parseNetworkResponse(Response response) throws Exception {
-
-        return new Gson().fromJson(response.body().string(),mclass);
+    public T parseNetworkResponse(Response response) throws Exception {
+        String value="{\"code\":\"123\",\"data\":{},\"msec\":\"133\",\"sign\":\"455\"}";
+        //response.body().string()
+        return new Gson().fromJson(value,mclass);
     }
 
 }

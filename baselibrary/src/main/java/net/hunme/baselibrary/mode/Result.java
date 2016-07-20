@@ -11,7 +11,7 @@ package net.hunme.baselibrary.mode;
  * ================================================
  */
 public class Result<T> {
-    private T  data;      //返回数据
+    private T data;      //返回数据
 
     private String sign;  //签名
 
@@ -53,6 +53,7 @@ public class Result<T> {
 //    public void setData(Object  data) {
 //        this.data = data;
 //    }
+
 
     public T getData() {
         return data;

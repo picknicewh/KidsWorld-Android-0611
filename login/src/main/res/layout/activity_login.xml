@@ -17,6 +17,7 @@
             android:src="@mipmap/ic_launcher"/>
 
         <EditText
+            android:id="@+id/ed_username"
             android:layout_margin="@dimen/space_x1.5"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
@@ -26,16 +27,18 @@
             android:background="@color/white"
             />
         <EditText
+            android:id="@+id/ed_password"
             android:layout_margin="@dimen/space_x1.5"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/ic_launcher"
-            android:hint="请输入您的手机号码"
+            android:hint="请输入您的密码"
             android:background="@color/white"
             />
 
         <Button
+            android:id="@+id/b_login"
             android:background="@drawable/bg_login_btn"
             android:padding="@dimen/space"
             android:layout_margin="@dimen/space_x1.5"

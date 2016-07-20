@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.hunme.discovery.DiscoveryFragement;
-import net.hunme.kidsworld.util.UserAction;
+import net.hunme.login.util.UserAction;
 import net.hunme.message.fragment.MessageFragement;
 import net.hunme.school.SchoolFragement;
 import net.hunme.status.StatusFragement;
@@ -79,8 +79,8 @@ public class MainActivity extends JPushBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UserAction.userLogin(MainActivity.this,this);
-        setContentView(R.layout.activity_login);
+        UserAction.isGoLogin(MainActivity.this,this);
+        setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         init();
         registerBoradcastReceiver();

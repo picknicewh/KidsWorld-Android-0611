@@ -2,13 +2,22 @@ package net.hunme.baselibrary.network;
 
 import android.support.annotation.Nullable;
 
+import com.google.gson.Gson;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
 import com.lzy.okhttputils.callback.AbsCallback;
 import com.lzy.okhttputils.model.HttpParams;
 import com.lzy.okhttputils.request.PostRequest;
 
+import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.util.EncryptUtil;
 import net.hunme.baselibrary.util.G;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Request;
@@ -27,15 +36,13 @@ import okhttp3.Response;
 public class OkHttps<T> {
     private static OkHttpUtils httpUtils;
     public static PostRequest postRequest;
-    private static Class tClass;
-    private static boolean isResString=true;
-    private static OkHttps okHttps;
-    private String uri_host=ServerConfigManager.SERVER_IP;
+    //ServerConfigManager.SERVER_IP;
+    private static String uri_host="http://";
     private static OkHttpUtils getInstance() {
         if(null==httpUtils){
             OkHttpUtils.getInstance().getOkHttpClient();
             httpUtils =OkHttpUtils.getInstance()
-                    .setCertificates("")          // 自签名https的证书，可变参数，可以设置多个
+//                    .setCertificates("")          // 自签名https的证书，可变参数，可以设置多个
                     .debug("OkHttpUtils")                                              //是否打开调试
                     .setConnectTimeout(OkHttpUtils.DEFAULT_MILLISECONDS)               //全局的连接超时时间
                     .setReadTimeOut(OkHttpUtils.DEFAULT_MILLISECONDS)                  //全局的读取超时时间
@@ -44,49 +51,42 @@ public class OkHttps<T> {
         return httpUtils;
     }
 
-    public static OkHttps setClass(){
-        isResString=true;
-        return init();
-    }
 
-    public static OkHttps setClass(Class mclass){
-        isResString=false;
-        tClass=mclass;
-        return init();
-    }
-
-    private static OkHttps init() {
-        if(okHttps==null){
-            okHttps=new OkHttps<>();
-        }
-        return  okHttps;
-    }
+//    public static OkHttps getIntence() {
+////        OkHttps.mClass = mClass;
+//        if(okHttps==null){
+//            okHttps= new OkHttps();
+//        }
+//        return okHttps;
+//    }
 
     /**
      *  没有缓存的请求
      * @param uri 请求地址
-     * @param params 请求参数
+     * @param map 请求参数
      * @param okHttpListener 请求回调对象
      */
-    public  void sendPost(final String uri, HttpParams params, final OkHttpListener okHttpListener) {
+    public static void sendPost(Type type, final String uri, Map<String, Object> map, final OkHttpListener okHttpListener) {
         if(null==uri||okHttpListener==null) {
             G.log("参数或者访问地址为空");
             return;
         }
-        postRequest= OkHttps.getInstance()
+
+        //进行网络请求
+        postRequest= getInstance()
                 .post(uri_host+uri);
-        doInternet(uri,params,okHttpListener);
+        doInternet(type,uri,getParams(map),okHttpListener);
     }
 
     /**
      * 带缓存的请求
      * @param uri 请求地址
-     * @param params  请求参数
+     * @param map  请求参数
      * @param okHttpListener  请求回调对象
      * @param cacheMode   缓存模式
      * @param cacheKey  缓存名
      */
-    public  void sendPost(final String uri,HttpParams params,
+    public static void sendPost(final String uri, Map<String,Object> map,
                           final OkHttpListener okHttpListener, int cacheMode, String cacheKey) {
         if(null==uri||okHttpListener==null) {
             G.log("参数或者访问地址为空");
@@ -115,45 +115,34 @@ public class OkHttps<T> {
                 break;
         }
 
-        postRequest= OkHttps.getInstance()
+        postRequest=getInstance()
                 .post(uri_host+uri)
                 .cacheMode(mode)
                 .cacheKey(cacheKey);
-        doInternet(uri,params,okHttpListener);
+//        doInternet(uri,getParams(map),okHttpListener);
     }
 
-    private void doInternet(final String uri, HttpParams params,
-                            final OkHttpListener okHttpListener){
-
-        if(isResString)
+    private static void doInternet(final Type type, final String uri, HttpParams params, final OkHttpListener okHttpListener){
             postRequest.params(params)
-                    .execute(new AbsCallback<String>() {
+                    .execute(new AbsCallback<Object>(){
                         @Override
-                        public String parseNetworkResponse(Response response) throws Exception {
-                            return response.body().string();
+                        public Object parseNetworkResponse(Response response) throws Exception {
+                            String value="{\"code\":\"123\",\"data\":{},\"msec\":\"133\",\"sign\":\"455\"}";
+                            //response.body().toString();
+                            return new Gson().fromJson(value,type);
                         }
-
-                        @Override
-                        public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-                            okHttpListener.onSuccess(uri,s);
-                        }
-
-                        @Override
-                        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                            super.onError(isFromCache, call, response, e);
-                            if(null==e)
-                                okHttpListener.onError(uri,response.networkResponse().toString());
-                            else
-                                okHttpListener.onError(uri,e.toString());
-                        }
-                    });
-        else
-            postRequest.params(params)
-                    .execute(new JsonCallback<Class>(tClass){
 
                         @Override
                         public void onResponse(boolean isFromCache, Object o, Request request, @Nullable Response response) {
-                            okHttpListener.onSuccess(uri,o);
+                            Result result= (Result) o;
+                            Map<String,Object>map=new HashMap<>();
+                            map.put("data",result.getData());
+                            //验签
+                            boolean isSuccess=EncryptUtil.verify(map,result.getMsec(),result.getSign());
+//                            if(isSuccess)
+                                okHttpListener.onSuccess(uri,result);
+//                            else
+//                                okHttpListener.onError(uri,"非法访问");
                         }
 
                         @Override
@@ -167,5 +156,31 @@ public class OkHttps<T> {
                     });
     }
 
+    /**
+     *  组合访问参数
+     * @param map 参数map对象
+     * @return httpParams 对象
+     */
+    private static HttpParams getParams(Map<String,Object> map){
+        if(map==null){
+            return  null;
+        }
+        //将参数加签
+        String msec = String.valueOf(System.currentTimeMillis());
+        String sign = EncryptUtil.getSign(map, msec);
 
+        //将map转化成httpParams
+        HttpParams params=new HttpParams();
+        Set<Map.Entry<String, Object>> set = map.entrySet();
+        Iterator<Map.Entry<String, Object>> iterator = set.iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Object> entry = iterator.next();
+            params.put(entry.getKey(), entry.getValue().toString());
+        }
+        params.put("msec",msec);
+        params.put("sign",sign);
+        G.log("-----sign---------"+sign);
+        G.log("-----msec---------"+msec);
+        return  params;
+    }
 }
