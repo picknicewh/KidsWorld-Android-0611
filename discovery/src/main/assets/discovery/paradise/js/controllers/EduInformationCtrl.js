@@ -29,6 +29,10 @@ angular.module('app.controllers')
         $state.go('paradiseHome');
     };
 
+    $scope.goSearch_Inf= function () {
+        $state.go('search_Inf');
+    };
+
     $scope.items_inf0=[0,1,2,3,4,5,6];
     $scope.items_inf1=[0,1,2,3,4,5,6];
     $scope.items_inf2=[0,1,2,3,4,5,6];

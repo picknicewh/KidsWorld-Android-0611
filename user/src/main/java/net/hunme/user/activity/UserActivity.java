@@ -69,6 +69,8 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
             startActivity(new Intent(UserActivity.this,UCollectionActivity.class));
         }else if(viewId==R.id.ll_mydynamics){
             startActivity(new Intent(UserActivity.this,UDynamicsActivity.class));
+        }else if (viewId==R.id.ll_more){
+            startActivity(new Intent(UserActivity.this,ModifyPhoneActivity.class));
         }
     }
 }

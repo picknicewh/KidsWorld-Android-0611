@@ -7,11 +7,23 @@
     <div class="search">
         <div class="inbox">
             <img class="search_icon" src="images/temp/search_icon.png" />
-            <input type="text" placeholder="请选择您要的号码" class="filter" ng-keyup="filterList()" />
+            <input type="text" placeholder="请输入关键字" class="filter" ng-keyup="filterList()" />
             <img class="clear_icon" src="images/temp/clear_icon.png" ng-click="reset()" />
         </div>
+        <button class="button" ng-click="search()">
+            搜索
+        </button>
     </div>
-
+    <!--搜索记录-->
+    <div class="hisBox" ng-show="hasSearch==0">
+        <ul class="hisList">
+            <li ng-click="quickSearch()">宝宝乖</li>
+            <li ng-click="quickSearch()">宝宝好</li>
+            <li ng-click="quickSearch()">125宝宝棒</li>
+            <li ng-click="quickSearch()">宝宝帅</li>
+            <li ng-click="quickSearch()">宝宝宝宝</li>
+        </ul>
+    </div>
     <!--搜索结果-选项卡-->
     <div class="searchTabsBox" ng-show="hasSearch==1">
         <div class="searchTabItem" ng-click="changeTab(0)" ng-class="{'active':tabCur==0}">

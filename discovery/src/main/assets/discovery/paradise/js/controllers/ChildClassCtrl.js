@@ -18,6 +18,10 @@ angular.module('app.controllers')
         $state.go('videoPlay');
     };
 
+    $scope.goSearch_Video= function () {
+        $state.go('search_Video');
+    };
+
     $scope.items_videoSort=[0,1,2,3,4,5,6];
     $scope.goVideoSort= function (idx) {
         $state.go('childClass_Sort');
