@@ -26,7 +26,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void setToolBar() {
         setCententTitle("个人信息");
-        setLiftImage(R.mipmap.ic_launcher);
+        setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickListener(this);
     }
 

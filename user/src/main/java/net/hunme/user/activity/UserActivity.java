@@ -33,7 +33,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void setToolBar() {
-        setLiftImage(R.mipmap.ic_launcher);
+        setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickListener(this);
         setCententTitle("我的");
     }

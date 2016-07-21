@@ -58,7 +58,6 @@ public class PublishStatusActivity extends BaseActivity {
     private void  showView(int type){
         switch (type){
             case StatusPublishPopWindow.WORDS:
-
                 break;
             case StatusPublishPopWindow.PICTURE:
                 break;

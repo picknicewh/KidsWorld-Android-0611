@@ -25,7 +25,7 @@ public class UCollectionActivity extends BaseActivity {
 
     @Override
     protected void setToolBar() {
-        setLiftImage(R.mipmap.ic_launcher);
+        setLiftImage(R.mipmap.ic_arrow_lift);
         setCententTitle("我的收藏");
         setSubTitle("搜索");
         setSubTitleOnClickListener(new View.OnClickListener() {

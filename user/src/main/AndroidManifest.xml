@@ -19,7 +19,10 @@
         <activity android:name=".activity.UCollectionActivity" />
         <activity android:name=".activity.ModifyPhoneActivity" />
         <activity android:name=".activity.ModifyNextActivity" />
-        <activity android:name=".activity.ResetPhoneActivity"></activity>
+        <activity android:name=".activity.ResetPhoneActivity" />
+        <activity android:name=".activity.UserChooseActivity" />
+        <activity android:name=".activity.SystemInfoActivity" />
+        <activity android:name=".activity.AdviceActivity"></activity>
     </application>
 
 </manifest>

@@ -38,7 +38,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void setToolBar() {
         setCententTitle("我的相册");
-        setLiftImage(R.mipmap.ic_launcher);
+        setLiftImage(R.mipmap.ic_arrow_lift);
         setSubTitle("添加");
         setLiftOnClickListener(this);
         setRightOnClickListener(this);

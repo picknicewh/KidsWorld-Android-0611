@@ -8,15 +8,15 @@
       android:padding="@dimen/space_x2"
       android:layout_height="wrap_content">
       <TextView
-          android:layout_weight="1"
+          android:layout_weight="2"
           android:text="姓名"
           android:textSize="@dimen/ts_large"
           android:layout_width="0dp"
           android:layout_height="wrap_content" />
-      <TextView
 
+      <Spinner
+          android:id="@+id/sp_name"
           android:layout_weight="1"
-          android:text="大幂幂"
           android:textColor="@color/black"
           android:layout_width="0dp"
           android:textSize="@dimen/ts_large"
@@ -34,7 +34,6 @@
         android:padding="@dimen/space_x2"
         android:layout_height="wrap_content">
         <TextView
-
             android:layout_weight="1"
             android:text="开始时间"
             android:textSize="@dimen/ts_large"
@@ -87,13 +86,15 @@
         android:padding="@dimen/space_x2"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="用餐"
             android:textSize="@dimen/ts_large"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
-        <TextView
+        <Spinner
 
+            android:id="@+id/sp_eat"
+            android:entries="@array/eat"
             android:layout_weight="1"
             android:text="不用餐"
             android:textColor="@color/black"
