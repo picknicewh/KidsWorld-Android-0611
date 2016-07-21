@@ -1,13 +1,18 @@
 package net.hunme.user.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.util.G;
 import net.hunme.user.R;
 import net.hunme.user.adapter.PhotoAdapter;
 import net.hunme.user.mode.PhotoVo;
@@ -41,7 +46,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
         setLiftImage(R.mipmap.ic_launcher);
         setSubTitle("添加");
         setLiftOnClickListener(this);
-        setRightOnClickListener(this);
+        setSubTitleOnClickListener(this);
     }
 
     private void initView(){
@@ -78,7 +83,30 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
         int viewID=view.getId();
         if(viewID==R.id.iv_left){
             finish();
-        }else if(viewID==R.id.iv_right){
+        }else if(viewID==R.id.tv_subtitle){
+            AlertDialog.Builder builder=new AlertDialog.Builder(this);
+            builder.setTitle("请输入相册名");
+            final EditText editText =new EditText(this);
+            editText.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+            editText.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+            int date=G.px2dp(this,10);
+            editText.setPadding(date,date,date,date);
+            builder.setView(editText);
+            builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    String albumName=editText.getText().toString().trim();
+                    if(G.isEmteny(albumName)){
+                        G.showToast(UPhotoActivity.this,"相册名不能为空");
+                        return;
+                    }
+                    PhotoVo photoVo=new PhotoVo();
+                    photoVo.setPhotoBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_test01));
+                    photoVo.setPhotoName(albumName);
+                    photoList.add(0,photoVo);
+                    adapter.notifyDataSetChanged();
+                }
+            }).show();
 
         }
     }

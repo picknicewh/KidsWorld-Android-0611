@@ -16,5 +16,5 @@ import java.util.List;
 public class ImageBucket {
 	public int count = 0; //图片数量
 	public String bucketName;  //相册名字
-	public List<ImageItemVo> imageList; //改相册所有相片数量
+	public List<ImageItemVo> imageList; //改相册所有相片
 }

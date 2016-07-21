@@ -1,15 +1,25 @@
 package net.hunme.status.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.status.R;
 import net.hunme.status.widget.StatusPublishPopWindow;
+import net.hunme.user.activity.AlbumActivity;
+import net.hunme.user.activity.UploadPhotoActivity;
+import net.hunme.user.adapter.GridAdapter;
+import net.hunme.user.util.Bimp;
+
+import java.io.File;
 
 /**
  * 作者： wh
@@ -28,15 +38,14 @@ public class PublishStatusActivity extends BaseActivity {
      *文字的长度
      */
     private TextView tv_count;
-    /**
-     * 发布类型的值
-     */
-    private  int type;
+    private GridView gv_photo;
+    private GridAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_status);
         initView();
+        showView(getIntent().getIntExtra("type",-1));
     }
 
     @Override
@@ -55,12 +64,15 @@ public class PublishStatusActivity extends BaseActivity {
      * 显示不同值传过来界面的状态
      * @param  type 类型值
      */
-    private void  showView(int type){
+    private void showView(int type){
         switch (type){
             case StatusPublishPopWindow.WORDS:
-
                 break;
             case StatusPublishPopWindow.PICTURE:
+                Intent intent = new Intent(PublishStatusActivity.this,
+                        AlbumActivity.class);
+                startActivityForResult(intent,UploadPhotoActivity.TAKE_PICTURE);
+                showPhoto();
                 break;
             case StatusPublishPopWindow.VEDIO:
                 break;
@@ -72,9 +84,10 @@ public class PublishStatusActivity extends BaseActivity {
     private void initView(){
         et_content = $(R.id.et_pcontent);
         tv_count = $(R.id.tv_pcount);
+        gv_photo =$(R.id.gv_photo);
         setEditContent();
-        type  = getIntent().getIntExtra("type",-1);
     }
+
     /**
      * 计算文字的长度，如果文字的长度大于100则不能再输入
      */
@@ -102,6 +115,40 @@ public class PublishStatusActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    /**
+     * 发布照片页面
+     */
+    private void showPhoto(){
+        adapter=new GridAdapter(this);
+        adapter.update();
+        gv_photo.setAdapter(adapter);
+        gv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i == Bimp.bmp.size()) {
+                    Intent intent = new Intent(PublishStatusActivity.this,
+                            AlbumActivity.class);
+                    startActivityForResult(intent,UploadPhotoActivity.TAKE_PICTURE);
+                }
+            }
+        });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case UploadPhotoActivity.TAKE_PICTURE:
+                if (Bimp.tempSelectBitmap.size() < 9 && resultCode == -1) {
+                    File file = new File(Environment.getExternalStorageDirectory()
+                            + "/myimage/", String.valueOf(System.currentTimeMillis())
+                            + ".jpg");
+                    Bimp.tempSelectBitmap.add(file.getPath());
+                }
+                adapter.update();
+                adapter.notifyDataSetChanged();
+                break;
+        }
     }
 }
 

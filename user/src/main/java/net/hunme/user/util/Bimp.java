@@ -36,7 +36,7 @@ public class Bimp {
     public static List<Bitmap> bmp = new ArrayList<Bitmap>();
 
     /**
-     * 根据图片路径返回一个bitmap对象
+     * 根据图片路径返回一个bitmap对象 压缩图片
      * @param path 图片路径
      * @return bitmap对象
      * @throws IOException 图片不存在 路径错误异常
@@ -50,9 +50,10 @@ public class Bimp {
         in.close();
         int i = 0;
         Bitmap bitmap = null;
+//        int hight=options.outHeight>options.outWidth?options.outHeight+1000:options.outWidth+1000;
         while (true) {
-            if ((options.outWidth >> i <= 1000)
-                    && (options.outHeight >> i <= 1000)) {
+            if ((options.outWidth >> i <= 500)
+                    && (options.outHeight >> i <= 500)) {
                 in = new BufferedInputStream(
                         new FileInputStream(new File(path)));
                 options.inSampleSize = (int) Math.pow(2.0D, i);
