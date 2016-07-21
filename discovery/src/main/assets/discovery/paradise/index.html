@@ -17,7 +17,6 @@
     <script src="../common/jquery/jquery.js"></script>
     <!-- app:js -->
     <script src="js/app.js"></script>
-    <script src="js/intectWithOrigin.js"></script>
 
     <script src="js/constants/constants.js"></script>
     <script src="js/directives/directives.js"></script>
@@ -42,6 +41,49 @@
     <script src="js/controllers/AudioPlayCtrl.js"></script>
     <script src="js/controllers/EduInformationCtrl.js"></script>
     <script src="js/controllers/EduInformation_DetailCtrl.js"></script>
+
+    <script type="text/javascript">
+      //测试Android调用js
+      function testAndroid(){
+        alert("android调到了js方法");
+      }
+      //跳转到乐园首页
+      function goParadiseHome_Origin(){
+        window.location.href = '#/paradiseHome';
+      }
+      //跳转到播放历史页面
+      function goHistory_Origin(){
+        window.location.href = '#/history';
+      }
+      //跳转到搜索页面
+      function goSearch_Origin(){
+        window.location.href = '#/search';
+      }
+      //跳转到搜索课程页面
+      function goSearchVideo_Origin(){
+        window.location.href = '#/search_Video';
+      }
+      //跳转到搜索音乐页面
+      function goSearchAudio_Origin(){
+        window.location.href = '#/search_Audio';
+      }
+      //跳转到搜索资讯页面
+      function goSearchInf_Origin(){
+        window.location.href = '#/search_Inf';
+      }
+      //跳转到幼儿课堂页面
+      function goChildClass_Origin(){
+        window.location.href = '#/childClass';
+      }
+      //跳转到幼儿听听页面
+      function goChildMusic_Origin(){
+        window.location.href = '#/childMusic';
+      }
+      //跳转到教育资讯页面
+      function goEduInformation_Origin(){
+        window.location.href = '#/eduInformation';
+      }
+    </script>
 
   </body>
 </html>

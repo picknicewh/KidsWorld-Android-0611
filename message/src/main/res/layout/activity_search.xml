@@ -27,6 +27,8 @@
        <EditText
            android:id="@+id/et_contract"
            android:hint="请输入搜索的联系人"
+           android:textSize="@dimen/ts_small"
+           android:layout_gravity="center"
            android:padding="@dimen/space_x0.5"
            android:background="@color/white"
            android:layout_weight="1"

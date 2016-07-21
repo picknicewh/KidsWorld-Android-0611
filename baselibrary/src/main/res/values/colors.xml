@@ -17,6 +17,8 @@
     <color name="harf_black">#50000000</color>
     <color name="myteacher">#f6af00</color>
     <color name="myclass">#005bb1</color>
+    <color name="dark_gray">#555555</color>
+    <color name="light_gray">#eeeeee</color>
     <color name="parent">#8ec500</color>
     <color name="main_green">#8dc700</color>
     <!--tab选项颜色-->

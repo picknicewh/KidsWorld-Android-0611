@@ -5,6 +5,7 @@ import android.content.Context;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebStorage;
 import android.webkit.WebView;
 
 /**
@@ -50,6 +51,11 @@ public class MWebChromeClient  extends WebChromeClient {
     public boolean onJsPrompt(WebView view, String url, String message,
                               String defaultValue, JsPromptResult result) {
         return super.onJsPrompt(view, url, message, defaultValue, result);
+    }
+    //扩充缓存的容量
+    @Override
+    public void onReachedMaxAppCacheSize(long spaceNeeded, long totalUsedQuota, WebStorage.QuotaUpdater quotaUpdater) {
+        quotaUpdater.updateQuota(spaceNeeded * 2);
     }
 }
 

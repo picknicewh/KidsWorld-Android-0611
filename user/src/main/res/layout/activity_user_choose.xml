@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.hunme.user.activity.UserChooseActivity">
+   <LinearLayout
+       android:background="@drawable/bg_chooseuser_selecter"
+       android:orientation="vertical"
+       android:layout_margin="@dimen/space_x2"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+      <LinearLayout
+          android:id="@+id/ll_choose1"
+          android:padding="@dimen/space_x1.5"
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+          <net.hunme.baselibrary.widget.CircleImageView
+              android:src="@mipmap/person"
+              android:padding="@dimen/space_x2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+          <RelativeLayout
+              android:paddingLeft="@dimen/space"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+              <TextView
+                  android:layout_gravity="center"
+                  android:gravity="center"
+                  android:id="@+id/tv_tusername"
+                  android:text="奥丽"
+                  android:textSize="@dimen/ts_x_large"
+                  android:layout_width="wrap_content"
+                  android:layout_height="20dp" />
+              <TextView
+                  android:layout_gravity="center"
+                  android:id="@+id/tv_txt"
+                  android:layout_marginLeft="@dimen/space"
+                  android:layout_toRightOf="@id/tv_tusername"
+                  android:text="学"
+                  android:gravity="center"
+                  android:background="@drawable/user_study_selecter"
+                  android:textColor="@color/white"
+                  android:layout_width="20dp"
+                  android:layout_height="20dp" />
+              <TextView
+                  android:layout_gravity="center"
+                 android:layout_marginTop="@dimen/space_x1.5"
+                  android:text="钱江新城幼儿园 小小班(01)班"
+                  android:layout_below="@id/tv_tusername"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" />
+
+          </RelativeLayout>
+          <ImageView
+              android:id="@+id/iv_choose1"
+              android:padding="@dimen/space"
+              android:layout_gravity="center"
+              android:src="@mipmap/ic_choose"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+      </LinearLayout>
+       <View
+           android:layout_marginLeft="@dimen/space_x2"
+           android:layout_marginRight="@dimen/space_x2"
+           android:background="#e4e4e4"
+           android:layout_width="match_parent"
+           android:layout_height="1dp"/>
+       <LinearLayout
+           android:id="@+id/ll_choose2"
+           android:padding="@dimen/space_x1.5"
+           android:orientation="horizontal"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <net.hunme.baselibrary.widget.CircleImageView
+               android:src="@mipmap/person"
+               android:padding="@dimen/space_x2"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+           <RelativeLayout
+               android:layout_gravity="center"
+               android:paddingLeft="@dimen/space"
+               android:orientation="vertical"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+               <TextView
+                   android:gravity="center"
+                   android:id="@+id/tv_cusername"
+                   android:text="奥丽"
+                   android:textSize="@dimen/ts_x_large"
+                   android:layout_width="wrap_content"
+                   android:layout_height="20dp" />
+               <TextView
+                   android:layout_marginLeft="@dimen/space"
+                   android:layout_toRightOf="@id/tv_cusername"
+                   android:text="师"
+                   android:gravity="center"
+                   android:background="@drawable/user_teach_selecter"
+                   android:textColor="@color/white"
+                   android:layout_width="20dp"
+                   android:layout_height="20dp" />
+               <TextView
+                   android:layout_marginTop="@dimen/space_x1.5"
+                   android:text="钱江新城幼儿园 小小班(01)班"
+                   android:layout_below="@id/tv_cusername"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+           </RelativeLayout>
+           <ImageView
+               android:visibility="gone"
+               android:id="@+id/iv_choose2"
+               android:padding="@dimen/space"
+               android:layout_gravity="center"
+               android:src="@mipmap/ic_choose"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+       </LinearLayout>
+       <View
+
+           android:layout_marginLeft="@dimen/space_x2"
+           android:layout_marginRight="@dimen/space_x2"
+           android:background="#e4e4e4"
+           android:layout_width="match_parent"
+           android:layout_height="1dp"/>
+       <LinearLayout
+           android:id="@+id/ll_choose3"
+           android:padding="@dimen/space_x1.5"
+           android:orientation="horizontal"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <net.hunme.baselibrary.widget.CircleImageView
+               android:src="@mipmap/person"
+               android:padding="@dimen/space_x2"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+           <RelativeLayout
+               android:layout_gravity="center"
+               android:paddingLeft="@dimen/space"
+               android:orientation="vertical"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+               <TextView
+                   android:gravity="center"
+                   android:id="@+id/tv_susername"
+                   android:text="校通讯1"
+                   android:textSize="@dimen/ts_x_large"
+                   android:layout_width="wrap_content"
+                   android:layout_height="20dp" />
+               <TextView
+                   android:layout_marginLeft="@dimen/space"
+                   android:layout_toRightOf="@id/tv_susername"
+                   android:text="师"
+                   android:gravity="center"
+                   android:background="@drawable/user_teach_selecter"
+                   android:textColor="@color/white"
+                   android:layout_width="20dp"
+                   android:layout_height="20dp" />
+               <TextView
+                   android:layout_marginTop="@dimen/space_x1.5"
+                   android:text="钱江新城幼儿园 小小班(01)班"
+                   android:layout_below="@id/tv_susername"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+           </RelativeLayout>
+           <ImageView
+               android:visibility="gone"
+               android:id="@+id/iv_choose3"
+               android:padding="@dimen/space"
+               android:layout_gravity="center"
+               android:src="@mipmap/ic_choose"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+       </LinearLayout>
+
+       <View
+           android:layout_marginLeft="@dimen/space_x2"
+           android:layout_marginRight="@dimen/space_x2"
+           android:background="#e4e4e4"
+           android:layout_width="match_parent"
+           android:layout_height="1dp"/>
+   </LinearLayout>
+
+</LinearLayout>

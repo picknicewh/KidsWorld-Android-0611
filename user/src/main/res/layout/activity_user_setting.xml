@@ -13,6 +13,7 @@
             android:orientation="vertical"
             android:background="@color/white">
             <LinearLayout
+                android:id="@+id/ll_changepasswd"
                 android:background="@drawable/layout_selecter"
                 android:padding="@dimen/space"
                 android:layout_width="match_parent"
@@ -20,6 +21,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+
                     android:layout_gravity="center"
                     style="@style/TextStyleBase"
                     android:layout_width="0dp"
@@ -30,7 +32,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@mipmap/ic_arrow_right"/>
             </LinearLayout>
 
             <View
@@ -39,6 +41,7 @@
                 android:background="@color/line_gray"/>
 
             <LinearLayout
+                android:id="@+id/ll_changephone"
                 android:background="@drawable/layout_selecter"
                 android:padding="@dimen/space"
                 android:paddingBottom="@dimen/space"
@@ -62,13 +65,16 @@
                     android:text="158*****456"/>
 
                 <ImageView
+                    android:layout_marginLeft="@dimen/space_x0.5"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@mipmap/ic_arrow_right"/>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_systeminfo"
             android:background="@drawable/layout_selecter"
             android:padding="@dimen/space"
             android:layout_marginTop="@dimen/space"
@@ -87,7 +93,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher"/>
+                android:src="@mipmap/ic_arrow_right"/>
         </LinearLayout>
 
         <LinearLayout
@@ -118,9 +124,11 @@
                     android:layout_height="wrap_content"
                     android:text="53MB"/>
                 <ImageView
+                    android:layout_marginLeft="@dimen/space_x0.5"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@mipmap/ic_arrow_right"/>
             </LinearLayout>
 
             <View
@@ -129,6 +137,7 @@
                 android:background="@color/line_gray"/>
 
             <LinearLayout
+                android:id="@+id/ll_callback"
                 android:background="@drawable/layout_selecter"
                 android:padding="@dimen/space"
                 android:layout_width="match_parent"
@@ -146,7 +155,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@mipmap/ic_arrow_right"/>
             </LinearLayout>
 
 
@@ -177,9 +186,11 @@
                     android:layout_height="wrap_content"
                     android:text="已是最新"/>
                 <ImageView
+                    android:layout_marginLeft="@dimen/space_x0.5"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@mipmap/ic_arrow_right"/>
             </LinearLayout>
         </LinearLayout>
 

@@ -1,6 +1,7 @@
 package net.hunme.discovery;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -62,7 +63,8 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         interactive(webView);
         tv_right.setOnClickListener(this);
         tv_left.setOnClickListener(this);
-
+      //  getActivity().onKeyDown(KeyEvent.KEYCODE_BACK,)
+    //    getActivity().onKeyDown(KeyEvent.KEYCODE_BACK,new KeyDowmEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_BACK));
     }
      /**
      * 交互配置
@@ -72,21 +74,28 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         WebSettings webSettings = webView.getSettings();
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setUseWideViewPort(true);
+        WebSettings webSetting = webView.getSettings();
         webView.setWebViewClient(new MWebViewClient(webView));
         webView.setWebChromeClient(new MWebChromeClient(getActivity()));
         webView.getSettings().setDefaultTextEncodingName("utf-8"); //设置编码
         webView.getSettings().setJavaScriptEnabled(true); //支持js
         webView.setBackgroundColor(Color.argb(0, 0, 0, 0)); //设置背景颜色 透明
-        webView.getSettings().setAllowFileAccess(true);
-        webView.getSettings().setAllowContentAccess(true);
-        webView.getSettings().setAllowFileAccessFromFileURLs(true);
-        webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
         webView.addJavascriptInterface(this, "change_nb");  //设置本地调用对象及其接口
+        webSetting.setDomStorageEnabled(true);//使用localStorage则必须打开
+        webSetting.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小
+        String appCacheDir = getActivity().getDir("cache", Context.MODE_PRIVATE).getPath();//缓存的地址
+        webSetting.setAppCachePath(appCacheDir);//设置缓存地址
+        webSetting.setAllowFileAccess(true); // 可以读取文件缓存(manifest生效)
+        webSetting.setAppCacheEnabled(true);
+        webSetting.setAllowContentAccess(true);
+        webSetting.setAllowFileAccessFromFileURLs(true);
+        webSetting.setAllowUniversalAccessFromFileURLs(true);
+        webSetting.setCacheMode(WebSettings.LOAD_DEFAULT);/// 默认使用缓存
     }
     @Override
     public void onClick(View view) {
         if (view.getId()==R.id.tv_left){
-            webView.loadUrl("javascript:goChildClass_Android()");
+            webView.loadUrl("javascript:goChildMusic_Origin()");
         }else if (view.getId()==R.id.tv_right){}
     }
     /**
@@ -114,6 +123,5 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                 }
             }
         });
-
     }
 }

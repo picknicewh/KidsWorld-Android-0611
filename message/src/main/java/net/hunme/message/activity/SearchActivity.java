@@ -112,4 +112,5 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             et_contract.setText("");
         }
     }
+
 }
