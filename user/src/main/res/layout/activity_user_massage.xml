@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="@color/bg_layout"
     tools:context=".activity.UMassageActivity">
 
     <RelativeLayout
         android:background="@drawable/layout_selecter"
         android:padding="@dimen/space"
-        android:layout_marginTop="@dimen/space_x2.5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -29,11 +30,13 @@
             android:src="@mipmap/ic_arrow_right"
             android:layout_alignParentRight="true"/>
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:background="@drawable/bg_head_portrait"
             android:layout_toLeftOf="@id/iv_into"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#ffffff"
             android:src="@mipmap/ic_test01" />
     </RelativeLayout>
 
@@ -42,13 +45,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@drawable/layout_selecter">
 
         <LinearLayout
-            android:background="@drawable/layout_selecter"
+            android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/item_height"
             android:orientation="horizontal">
 
             <TextView
@@ -60,6 +63,7 @@
                 android:text="姓名"/>
 
             <TextView
+                android:layout_gravity="center"
                 android:textSize="@dimen/ts_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,10 +76,10 @@
             android:background="@color/line_gray"/>
 
         <LinearLayout
-            android:background="@drawable/layout_selecter"
+            android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/item_height"
             android:orientation="horizontal">
 
             <TextView
@@ -87,6 +91,7 @@
                 android:text="性别"/>
 
             <TextView
+                android:layout_gravity="center"
                 android:textSize="@dimen/ts_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -99,10 +104,10 @@
             android:background="@color/line_gray"/>
 
         <LinearLayout
-            android:background="@drawable/layout_selecter"
+            android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/item_height"
             android:orientation="horizontal">
 
             <TextView
@@ -134,12 +139,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@drawable/layout_selecter">
         <LinearLayout
-            android:background="@drawable/layout_selecter"
+            android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/item_height"
             android:orientation="horizontal">
 
             <TextView
@@ -151,6 +156,7 @@
                 android:text="班级"/>
 
             <TextView
+                android:layout_gravity="center"
                 style="@style/TextStyleBase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -163,10 +169,10 @@
             android:background="@color/line_gray"/>
 
         <LinearLayout
-            android:background="@drawable/layout_selecter"
+            android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/item_height"
             android:orientation="horizontal">
 
             <TextView
@@ -178,6 +184,7 @@
                 android:text="学校"/>
 
             <TextView
+                android:layout_gravity="center"
                 style="@style/TextStyleBase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

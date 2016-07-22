@@ -3,6 +3,4 @@
     <item android:state_focused="true" android:drawable="@color/bg_layout"/>
     <item android:state_pressed="true" android:drawable="@color/bg_layout" />
     <!-- 默认时的背景图片 -->
-    <item android:drawable="@drawable/layout_select_line"></item>
-
 </selector>

@@ -73,9 +73,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@drawable/layout_select_line">
+
         <LinearLayout
-            android:background="@drawable/layout_selecter"
+            android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -111,7 +112,7 @@
 
         <LinearLayout
             android:id="@+id/ll_mydynamics"
-            android:background="@drawable/layout_selecter"
+            android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -193,7 +194,6 @@
                 android:src="@mipmap/ic_launcher"/>
 
             <TextView
-
                 android:padding="@dimen/space"
                 android:layout_marginLeft="@dimen/space"
                 android:layout_gravity="center"
@@ -210,42 +210,6 @@
                 android:src="@mipmap/ic_arrow_right"/>
         </LinearLayout>
 
-        <View
-            android:layout_marginLeft="80dp"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/line_gray"/>
-
-        <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/ll_more"
-            android:padding="@dimen/space"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/layout_selecter">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher"/>
-
-            <TextView
-                android:padding="@dimen/space"
-                android:layout_marginLeft="@dimen/space"
-                android:layout_gravity="center"
-                style="@style/TextStyleBase"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="更多"/>
-
-            <ImageView
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_arrow_right"/>
-        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

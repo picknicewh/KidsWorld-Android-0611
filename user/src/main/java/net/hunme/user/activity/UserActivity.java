@@ -19,7 +19,6 @@ import net.hunme.user.R;
  */
 public class UserActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout ll_userMassage;   //用户信息
-
     private LinearLayout ll_myphoto;       //我的相册
     private LinearLayout ll_usersetting;   //用户设置
     private LinearLayout ll_mycollection;  //我的收藏
@@ -44,9 +43,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
         ll_usersetting=$(R.id.ll_usersetting);
         ll_mycollection=$(R.id.ll_mycollection);
         ll_mydynamics=$(R.id.ll_mydynamics);
-
         ll_userMassage.setOnClickListener(this);
-
         ll_myphoto.setOnClickListener(this);
         ll_usersetting.setOnClickListener(this);
         ll_mycollection.setOnClickListener(this);

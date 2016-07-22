@@ -12,7 +12,7 @@
     <color name="red_x0.005">#FFD9D6</color>
     <color name="gray">#F6F6F6</color>
     <color name="b_gray">#787878</color>
-    <color name="line_gray">#d7d7d7</color>
+    <color name="line_gray">#e1e1e1</color>
     <color name="harf_white">#80ffffff</color>
     <color name="harf_black">#50000000</color>
     <color name="myteacher">#f6af00</color>
@@ -167,8 +167,8 @@
     <color name="navy">#000080</color><!--海军色 -->
     <color name="transparent">#0000</color><!-- 透明 -->
     <color name="transparent2">#8000</color><!-- 透明 -->
-    <color name="bg_layout">#90dcdcdc</color><!--淡灰色 -->
+    <color name="bg_layout">#f0eff5</color><!--淡灰色 -->
     <color name="pgrey">#b3b3b3</color>
     <color name="text_blue">#1b8bc8</color>
-
+    <color name="bg_line">#e1e1e1</color>
 </resources>
