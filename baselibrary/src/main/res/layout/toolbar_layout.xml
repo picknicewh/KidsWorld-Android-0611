@@ -9,6 +9,7 @@
     android:background="@color/colorAccent">
 
     <ImageView
+        android:padding="@dimen/space"
         android:visibility="gone"
         android:id="@+id/iv_left"
         android:layout_width="wrap_content"
@@ -42,6 +43,7 @@
             android:textSize="@dimen/ts_large" />
 
         <ImageView
+            android:padding="@dimen/space"
             android:visibility="gone"
             android:id="@+id/iv_right"
             android:layout_width="wrap_content"

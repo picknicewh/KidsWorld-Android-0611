@@ -76,13 +76,13 @@ public class AlbumGridViewAdapter extends BaseAdapter{
         viewHold.ivImage.setTag(itemVo.imagePath);
         cache.displayBmp(viewHold.ivImage, itemVo.thumbnailPath, itemVo.imagePath,
                 callback);
-        if(itemVo.isSelected){
-            viewHold.ivSelect.setImageResource(R.mipmap.ic_pic_select_itme);
-            viewHold.tvImageBg.setBackgroundResource(R.drawable.item_pic_selecter);
-        }else{
-//            viewHold.ivSelect.setImageResource(-1);
+//        if(itemVo.isSelected){
+//            viewHold.ivSelect.setVisibility(View.VISIBLE);
+//            viewHold.tvImageBg.setBackgroundResource(R.drawable.item_pic_selecter);
+//        }else{
+            viewHold.ivSelect.setVisibility(View.GONE);
             viewHold.tvImageBg.setBackgroundColor(0x00000000);
-        }
+//        }
 
         viewHold.ivImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,13 +91,13 @@ public class AlbumGridViewAdapter extends BaseAdapter{
                 if ((Bimp.bmp.size() + selectTotal) < 9) {
                     itemVo.isSelected = !itemVo.isSelected;
                     if (itemVo.isSelected) {
-                        viewHold.ivSelect.setImageResource(R.mipmap.ic_pic_select_itme);
+                        viewHold.ivSelect.setVisibility(View.VISIBLE);
                         viewHold.tvImageBg.setBackgroundResource(R.drawable.item_pic_selecter);
                         selectTotal++;
                         map.put(path, path);
 
                     } else if (!itemVo.isSelected) {
-//                        viewHold.ivSelect.setImageResource(-1);
+                        viewHold.ivSelect.setVisibility(View.GONE);
                         viewHold.tvImageBg.setBackgroundColor(0x00000000);
                         selectTotal--;
                         map.remove(path);
@@ -105,7 +105,7 @@ public class AlbumGridViewAdapter extends BaseAdapter{
                 }else if((Bimp.bmp.size() + selectTotal) >= 9){
                     if (itemVo.isSelected == true) {
                         itemVo.isSelected = !itemVo.isSelected;
-//                        viewHold.ivSelect.setImageResource(-1);
+                        viewHold.ivSelect.setVisibility(View.GONE);
                         selectTotal--;
                         map.remove(path);
                     } else {
@@ -127,6 +127,7 @@ public class AlbumGridViewAdapter extends BaseAdapter{
             tvImageBg= (TextView) view.findViewById(R.id.tv_image_bg);
             ivImage= (ImageView) view.findViewById(R.id.iv_image);
             ivSelect= (ImageView) view.findViewById(R.id.iv_select);
+            ivSelect.setImageResource(R.mipmap.ic_pic_select_itme);
             view.setTag(this);
         }
     }

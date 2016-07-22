@@ -4,11 +4,14 @@
     android:layout_height="match_parent">
     <include layout="@layout/common_publish"/>
 
-
     <GridView
-        android:layout_marginTop="@dimen/space_x2"
-        android:id="@+id/gv_pphoto"
-        android:numColumns="4"
+        android:id="@+id/gv_photo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:horizontalSpacing="20dp"
+        android:numColumns="3"
+        android:scrollbars="none"
+        android:verticalSpacing="20dp">
+    </GridView>
 </LinearLayout>

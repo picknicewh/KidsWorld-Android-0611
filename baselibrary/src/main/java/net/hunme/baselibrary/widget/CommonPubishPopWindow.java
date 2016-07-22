@@ -12,6 +12,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.R;
+import net.hunme.baselibrary.util.G;
 
 /**
  * 作者： wh
@@ -52,7 +53,7 @@ public abstract class CommonPubishPopWindow extends PopupWindow implements View.
         this.context = context;
         init();
     }
-      private void initview(){
+    private void initview(){
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         conentView = inflater.inflate(R.layout.dialog_inform, null);
         tv_poptext1 = (TextView) conentView.findViewById(R.id.tv_poptext1);
@@ -60,16 +61,17 @@ public abstract class CommonPubishPopWindow extends PopupWindow implements View.
         tv_poptext3 = (TextView) conentView.findViewById(R.id.tv_poptext3);
         iv_popimage1 = (ImageView)conentView.findViewById(R.id.iv_popimage1);
         iv_popimage2 = (ImageView)conentView.findViewById(R.id.iv_popimage2);
-          iv_popimage3 = (ImageView)conentView.findViewById(R.id.iv_popimage3);
+        iv_popimage3 = (ImageView)conentView.findViewById(R.id.iv_popimage3);
     }
+
     public void init() {
         initview();
         //设置SignPopupWindow的View
         this.setContentView(conentView);
-        //设置SignPopupWindow弹出窗体的宽
-        int height =  context.getWindow().getWindowManager().getDefaultDisplay().getHeight();
-        this.setHeight(height-dp2px(context,80));
         //设置SignPopupWindow弹出窗体的高
+        int height =  context.getWindow().getWindowManager().getDefaultDisplay().getHeight();
+        this.setHeight(height- G.dp2px(context,80));
+        //设置SignPopupWindow弹出窗体的宽
         this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         //设置SignPopupWindow弹出窗体可点击
         this.setFocusable(true);
@@ -82,10 +84,4 @@ public abstract class CommonPubishPopWindow extends PopupWindow implements View.
         this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 
-    /* 根据手机的分辨率从 dp 的单位 转成为 px(像素)
-      */
-    public static int dp2px(Context context, double dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
-    }
 }

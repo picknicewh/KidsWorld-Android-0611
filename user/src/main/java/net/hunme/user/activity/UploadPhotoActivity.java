@@ -16,6 +16,8 @@ import net.hunme.user.util.Bimp;
 
 import java.io.File;
 import java.util.ArrayList;
+
+
 /**
  * ================================================
  * 作    者：ZLL
@@ -33,7 +35,7 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     private TextView tv_album_name;
     private ArrayList<String> albumNameList;
     public static int position=0;
-    private static final int TAKE_PICTURE = 0x000000;
+    public static final int TAKE_PICTURE = 0x000000;
     private static final int Album_NAME_SELECT=1111;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +64,8 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
 //                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //                    startActivityForResult(intent, RESULT_LOAD_IMAGE);
                     Intent intent = new Intent(UploadPhotoActivity.this,
-                            UPicActivity.class);
-                    startActivity(intent);
-                    finish();
+                            AlbumActivity.class);
+                    startActivityForResult(intent,TAKE_PICTURE);
                 }
             }
         });
@@ -108,6 +109,8 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
                             + ".jpg");
                     Bimp.tempSelectBitmap.add(file.getPath());
                 }
+                adapter.update();
+                adapter.notifyDataSetChanged();
                 break;
             case Album_NAME_SELECT:
                 tv_album_name.setText(albumNameList.get(position));

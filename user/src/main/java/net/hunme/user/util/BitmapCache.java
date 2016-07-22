@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
-import net.hunme.user.activity.UPicActivity;
+import net.hunme.user.activity.AlbumActivity;
 
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
@@ -42,7 +42,7 @@ public class BitmapCache extends Activity {
      * @param callback 返回对象
      */
 	public void displayBmp(final ImageView iv, final String thumbPath,
-			final String sourcePath, final ImageCallback callback) {
+						   final String sourcePath, final ImageCallback callback) {
 		if (TextUtils.isEmpty(thumbPath) && TextUtils.isEmpty(sourcePath)) {
 			Log.e(TAG, "no paths pass in");
 			return;
@@ -73,27 +73,25 @@ public class BitmapCache extends Activity {
 				return;
 			}
 		}
-		iv.setImageBitmap(null);
+//		iv.setImageBitmap(null);
 
 		new Thread() {
 			Bitmap thumb;
-
 			public void run() {
-
 				try {
 					if (isThumbPath) {
 						thumb = BitmapFactory.decodeFile(thumbPath);
 						if (thumb == null) {
 							thumb = Bimp.revitionImageSize(sourcePath);
-						}						
+						}
 					} else {
 						thumb = Bimp.revitionImageSize(sourcePath);
 					}
-				} catch (Exception e) {	
-					
+				} catch (Exception e) {
+
 				}
 				if (thumb == null) {
-					thumb = UPicActivity.bimap;
+					thumb = AlbumActivity.bimap;
 				}
 				put(path, thumb);
 
