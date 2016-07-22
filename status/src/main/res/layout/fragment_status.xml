@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:padding="@dimen/space_x0.5"
         android:background="@color/colorAccent">
         <ImageView
@@ -13,12 +13,14 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_launcher"/>
 
-        <Spinner
-            android:id="@+id/s_title"
+        <TextView
+            android:text="苗苗班"
+            android:textColor="@color/white"
+            android:id="@+id/tv_classname"
+            android:textSize="@dimen/ts_xx_large"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/spinner_name"/>
+            android:layout_height="wrap_content" />
 
         <ImageView
             android:id="@+id/iv_right"

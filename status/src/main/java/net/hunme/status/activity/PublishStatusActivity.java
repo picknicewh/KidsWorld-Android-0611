@@ -61,8 +61,8 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickListener(this);
-        setCententTitle("发布");
-        setSubTitle("完成");
+        setCententTitle("发表状态");
+        setSubTitle("发送");
     }
     /**
      * 显示不同值传过来界面的状态
