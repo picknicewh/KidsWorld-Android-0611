@@ -5,14 +5,13 @@
     android:layout_height="match_parent"
     tools:context="net.hunme.user.activity.UserChooseActivity">
    <LinearLayout
-       android:background="@drawable/bg_chooseuser_selecter"
+
        android:orientation="vertical"
-       android:layout_margin="@dimen/space_x2"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
       <LinearLayout
           android:id="@+id/ll_choose1"
-          android:padding="@dimen/space_x1.5"
+          android:padding="@dimen/space"
           android:orientation="horizontal"
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
@@ -70,7 +69,7 @@
            android:layout_height="1dp"/>
        <LinearLayout
            android:id="@+id/ll_choose2"
-           android:padding="@dimen/space_x1.5"
+           android:padding="@dimen/space"
            android:orientation="horizontal"
            android:layout_width="match_parent"
            android:layout_height="wrap_content">
@@ -126,7 +125,7 @@
            android:layout_height="1dp"/>
        <LinearLayout
            android:id="@+id/ll_choose3"
-           android:padding="@dimen/space_x1.5"
+           android:padding="@dimen/space"
            android:orientation="horizontal"
            android:layout_width="match_parent"
            android:layout_height="wrap_content">

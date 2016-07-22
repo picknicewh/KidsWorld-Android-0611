@@ -217,6 +217,7 @@
             android:background="@color/line_gray"/>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_more"
             android:padding="@dimen/space"
             android:layout_width="match_parent"

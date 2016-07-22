@@ -103,6 +103,7 @@
             android:orientation="vertical"
             android:background="@color/white">
             <LinearLayout
+                android:id="@+id/ll_cleancache"
                 android:background="@drawable/layout_selecter"
                 android:padding="@dimen/space"
                 android:layout_width="match_parent"
@@ -195,6 +196,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_exit"
             android:background="@drawable/layout_selecter"
             android:padding="@dimen/space"
             android:layout_marginTop="@dimen/space"

@@ -19,7 +19,7 @@ import net.hunme.user.R;
  */
 public class UserActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout ll_userMassage;   //用户信息
-    private LinearLayout ll_more;          //更多
+
     private LinearLayout ll_myphoto;       //我的相册
     private LinearLayout ll_usersetting;   //用户设置
     private LinearLayout ll_mycollection;  //我的收藏
@@ -40,14 +40,13 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
 
     private void setViewAction(){
         ll_userMassage=$(R.id.ll_userMassage);
-        ll_more=$(R.id.ll_more);
         ll_myphoto=$(R.id.ll_myphoto);
         ll_usersetting=$(R.id.ll_usersetting);
         ll_mycollection=$(R.id.ll_mycollection);
         ll_mydynamics=$(R.id.ll_mydynamics);
 
         ll_userMassage.setOnClickListener(this);
-        ll_more.setOnClickListener(this);
+
         ll_myphoto.setOnClickListener(this);
         ll_usersetting.setOnClickListener(this);
         ll_mycollection.setOnClickListener(this);
@@ -69,8 +68,6 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
             startActivity(new Intent(UserActivity.this,UCollectionActivity.class));
         }else if(viewId==R.id.ll_mydynamics){
             startActivity(new Intent(UserActivity.this,UDynamicsActivity.class));
-        }else if (viewId==R.id.ll_more){
-            startActivity(new Intent(UserActivity.this,ModifyPhoneActivity.class));
         }
     }
 }

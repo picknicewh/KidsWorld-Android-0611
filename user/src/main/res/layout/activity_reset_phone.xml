@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="net.hunme.user.activity.ModifyNextActivity">
+    android:orientation="vertical">
     <TextView
         android:layout_margin="@dimen/space_x2"
         android:textColor="@color/black"
@@ -81,11 +79,11 @@
         android:layout_height="wrap_content" />
     <TextView
         android:gravity="center"
-        android:layout_marginTop="@dimen/space_x2"
+        android:layout_marginTop="@dimen/space_x0.5"
         android:text="您可以在(58)秒后重新获取"
         android:id="@+id/tv_time"
         android:layout_width="match_parent"
         android:textSize="@dimen/ts_xx_large"
-        android:textColor="@color/text_blue"
+        android:textColor="@color/pgrey"
         android:layout_height="wrap_content" />
 </LinearLayout>
