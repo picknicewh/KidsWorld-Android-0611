@@ -7,11 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
+import net.hunme.status.widget.ChooseClassPopWindow;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.activity.UserActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者： wh
@@ -21,10 +25,13 @@ import net.hunme.user.activity.UserActivity;
  * 附加注释：
  * 主要接口：
  */
-public class StatusFragement extends BaseFragement {
+public class StatusFragement extends BaseFragement implements View.OnClickListener{
     private ImageView iv_lift;
     private ImageView iv_right;
-    private Spinner s_title;
+    private TextView tv_classname;
+    private List<String> classlist ;
+    private ChooseClassPopWindow popWindow;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_status, null);
@@ -35,11 +42,16 @@ public class StatusFragement extends BaseFragement {
     private void initView(View view){
         iv_lift=$(view,R.id.iv_left);
         iv_right=$(view,R.id.iv_right);
-        s_title=$(view,R.id.s_title);
+        tv_classname=$(view,R.id.tv_classname);
         setViewAction();
+        classlist = new ArrayList<>();
+        classlist.add("一(1)班");
+        classlist.add("一(2)班");
+        classlist.add("一(3)班");
+        popWindow = new ChooseClassPopWindow(this,classlist);
+        tv_classname.setOnClickListener(this);
 
     }
-
     private void setViewAction(){
         iv_lift.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,5 +75,23 @@ public class StatusFragement extends BaseFragement {
             }
         });
     }
+   public void setClassname(String classname){
+       tv_classname.setText(classname);
+   }
 
+    @Override
+    public void onClick(View view) {
+        int viewId = view.getId();
+        if (viewId==R.id.tv_classname){
+            popWindow.showAtLocation(view, Gravity.CENTER_HORIZONTAL,0,0);
+            popWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!hasFocus) {
+                        popWindow.dismiss();
+                    }
+                }
+            });
+        }
+    }
 }
