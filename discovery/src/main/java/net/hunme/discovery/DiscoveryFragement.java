@@ -77,8 +77,8 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         WebSettings webSetting = webView.getSettings();
         webView.setWebViewClient(new MWebViewClient(webView));
         webView.setWebChromeClient(new MWebChromeClient(getActivity()));
-        webView.getSettings().setDefaultTextEncodingName("utf-8"); //设置编码
-        webView.getSettings().setJavaScriptEnabled(true); //支持js
+        webSetting.setDefaultTextEncodingName("utf-8"); //设置编码
+        webSetting.setJavaScriptEnabled(true); //支持js
         webView.setBackgroundColor(Color.argb(0, 0, 0, 0)); //设置背景颜色 透明
         webView.addJavascriptInterface(this, "change_nb");  //设置本地调用对象及其接口
         webSetting.setDomStorageEnabled(true);//使用localStorage则必须打开
