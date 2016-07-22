@@ -12,6 +12,8 @@ import net.hunme.user.activity.AlbumActivity;
 
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
+import java.util.concurrent.Executors;
+
 /**
  * ================================================
  * 作    者：ZLL
@@ -37,8 +39,8 @@ public class BitmapCache extends Activity {
 	/**
 	 *  将图片转化成略缩图 并显示图片
 	 * @param iv 显示图片空间 imageView
-	 * @param thumbPath 小图的路径
-	 * @param sourcePath 资源路径
+	 * @param thumbPath 小图路径
+	 * @param sourcePath 原图路径
      * @param callback 返回对象
      */
 	public void displayBmp(final ImageView iv, final String thumbPath,
@@ -48,8 +50,8 @@ public class BitmapCache extends Activity {
 			return;
 		}
 
-		final String path;
-		final boolean isThumbPath;
+		final String path; //图片路径
+		final boolean isThumbPath; //是否做过处理（也可以认为是否第一次加载这张图）
 		if (!TextUtils.isEmpty(thumbPath)) {
 			path = thumbPath;
 			isThumbPath = true;
@@ -74,9 +76,9 @@ public class BitmapCache extends Activity {
 			}
 		}
 //		iv.setImageBitmap(null);
-
-		new Thread() {
+		Executors.newFixedThreadPool(5).execute(new Runnable() {
 			Bitmap thumb;
+			@Override
 			public void run() {
 				try {
 					if (isThumbPath) {
@@ -94,7 +96,6 @@ public class BitmapCache extends Activity {
 					thumb = AlbumActivity.bimap;
 				}
 				put(path, thumb);
-
 				if (callback != null) {
 					h.post(new Runnable() {
 						@Override
@@ -104,7 +105,7 @@ public class BitmapCache extends Activity {
 					});
 				}
 			}
-		}.start();
+		});
 
 	}
 

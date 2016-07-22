@@ -78,7 +78,7 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void setToolBar() {
-        setLiftImage(R.mipmap.ic_launcher);
+        setLiftImage(R.mipmap.ic_arrow_lift);
         setCententTitle("上传图片");
         setSubTitle("完成");
         setLiftOnClickListener(this);

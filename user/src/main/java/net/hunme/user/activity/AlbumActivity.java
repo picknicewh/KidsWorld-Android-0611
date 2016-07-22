@@ -1,5 +1,7 @@
 package net.hunme.user.activity;
 
+import android.Manifest;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -13,8 +15,10 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.activity.PermissionsActivity;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.user.R;
 import net.hunme.user.adapter.AlbumAdapter;
 import net.hunme.user.adapter.AlbumGridViewAdapter;
@@ -38,7 +42,6 @@ import java.util.List;
  * ================================================
  */
 public class AlbumActivity extends BaseActivity {
-    public static final String EXTRA_IMAGE_LIST = "imagelist";
     private GridView myGridView;
     private List<ImageItemVo>dateList;
     private List<ImageBucket>contentList;
@@ -46,6 +49,15 @@ public class AlbumActivity extends BaseActivity {
     private AlbumHelper helper;
     private TextView tv_select_album;
     public static Bitmap bimap;
+
+    private static final int  REQUEST_CODE = 0;
+    // 所需的全部权限
+    static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
+            Manifest.permission.MODIFY_AUDIO_SETTINGS
+    };
+    private PermissionsChecker mPermissionsChecker; // 权限检测器
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +86,7 @@ public class AlbumActivity extends BaseActivity {
     }
 
     private void initDate(){
+        mPermissionsChecker = new PermissionsChecker(this);
         helper = AlbumHelper.getHelper();
         helper.init(getApplicationContext());
         contentList= helper.getImagesBucketList(false);//本地所有相册对象
@@ -89,7 +102,7 @@ public class AlbumActivity extends BaseActivity {
 
     @Override
     protected void setToolBar() {
-        setLiftImage(R.mipmap.ic_launcher);
+        setLiftImage(R.mipmap.ic_arrow_lift);
         setCententTitle("选择图片");
         setSubTitle("确定");
         setSubTitleOnClickListener(new View.OnClickListener() {
@@ -114,6 +127,15 @@ public class AlbumActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 缺少权限时, 进入权限配置页面
+        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+            PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
+        }
     }
 
     /**
@@ -151,4 +173,12 @@ public class AlbumActivity extends BaseActivity {
         return listView;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
+        if (requestCode == REQUEST_CODE && resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
+            finish();
+        }
+    }
 }

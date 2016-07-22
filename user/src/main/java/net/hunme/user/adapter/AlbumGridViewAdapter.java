@@ -81,7 +81,7 @@ public class AlbumGridViewAdapter extends BaseAdapter{
 //            viewHold.tvImageBg.setBackgroundResource(R.drawable.item_pic_selecter);
 //        }else{
             viewHold.ivSelect.setVisibility(View.GONE);
-            viewHold.tvImageBg.setBackgroundColor(0x00000000);
+            viewHold.tvImageBg.setVisibility(View.GONE);
 //        }
 
         viewHold.ivImage.setOnClickListener(new View.OnClickListener() {
@@ -92,13 +92,13 @@ public class AlbumGridViewAdapter extends BaseAdapter{
                     itemVo.isSelected = !itemVo.isSelected;
                     if (itemVo.isSelected) {
                         viewHold.ivSelect.setVisibility(View.VISIBLE);
-                        viewHold.tvImageBg.setBackgroundResource(R.drawable.item_pic_selecter);
+                        viewHold.tvImageBg.setVisibility(View.VISIBLE);
                         selectTotal++;
                         map.put(path, path);
 
                     } else if (!itemVo.isSelected) {
                         viewHold.ivSelect.setVisibility(View.GONE);
-                        viewHold.tvImageBg.setBackgroundColor(0x00000000);
+                        viewHold.tvImageBg.setVisibility(View.GONE);
                         selectTotal--;
                         map.remove(path);
                     }
@@ -128,6 +128,7 @@ public class AlbumGridViewAdapter extends BaseAdapter{
             ivImage= (ImageView) view.findViewById(R.id.iv_image);
             ivSelect= (ImageView) view.findViewById(R.id.iv_select);
             ivSelect.setImageResource(R.mipmap.ic_pic_select_itme);
+            tvImageBg.setBackgroundResource(R.drawable.item_pic_selecter);
             view.setTag(this);
         }
     }
@@ -139,7 +140,7 @@ public class AlbumGridViewAdapter extends BaseAdapter{
             if (imageView != null && bitmap != null) {
                 String url = (String) params[0];
                 if (url != null && url.equals(imageView.getTag())) {
-                    (imageView).setImageBitmap(bitmap);
+                    imageView.setImageBitmap(bitmap);
                 }
             }
         }

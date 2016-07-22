@@ -85,7 +85,6 @@ public class AlbumHelper {
 			int _idColumn = cur.getColumnIndex(Thumbnails._ID);
 			int image_idColumn = cur.getColumnIndex(Thumbnails.IMAGE_ID);
 			int dataColumn = cur.getColumnIndex(Thumbnails.DATA);
-
 			do {
 				_id = cur.getInt(_idColumn);
 				image_id = cur.getInt(image_idColumn);
@@ -218,20 +217,21 @@ public class AlbumHelper {
 				imageItem.imagePath = path;
 				imageItem.thumbnailPath = thumbnailList.get(_id);
 				bucket.imageList.add(imageItem);
-
 			} while (cur.moveToNext());
+
+			cur.close();
 		}
 
-		Iterator<Entry<String, ImageBucket>> itr = bucketList.entrySet()
-				.iterator();
-		while (itr.hasNext()) {
-			Entry<String, ImageBucket> entry = (Entry<String, ImageBucket>) itr
-					.next();
-			ImageBucket bucket = entry.getValue();
-			for (int i = 0; i < bucket.imageList.size(); ++i) {
-				ImageItemVo image = bucket.imageList.get(i);
-			}
-		}
+//		Iterator<Entry<String, ImageBucket>> itr = bucketList.entrySet()
+//				.iterator();
+//		while (itr.hasNext()) {
+//			Entry<String, ImageBucket> entry = (Entry<String, ImageBucket>) itr
+//					.next();
+//			ImageBucket bucket = entry.getValue();
+//			for (int i = 0; i < bucket.imageList.size(); ++i) {
+//				ImageItemVo image = bucket.imageList.get(i);
+//			}
+//		}
 		hasBuildImagesBucketList = true;
 		long endTime = System.currentTimeMillis();
 		Log.d(TAG, "use time: " + (endTime - startTime) + " ms");

@@ -34,7 +34,7 @@ public class AlbumSelectActivity extends BaseActivity {
 
     @Override
     protected void setToolBar() {
-        setLiftImage(R.mipmap.ic_launcher);
+        setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

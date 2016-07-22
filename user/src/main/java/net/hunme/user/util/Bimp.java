@@ -42,27 +42,28 @@ public class Bimp {
      * @throws IOException 图片不存在 路径错误异常
      */
     public static Bitmap revitionImageSize(String path) throws IOException {
-        BufferedInputStream in = new BufferedInputStream(new FileInputStream(
-                new File(path)));
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(path)));
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeStream(in, null, options);
         in.close();
-        int i = 0;
+//        int i = 0;
         Bitmap bitmap = null;
-//        int hight=options.outHeight>options.outWidth?options.outHeight+1000:options.outWidth+1000;
-        while (true) {
-            if ((options.outWidth >> i <= 500)
-                    && (options.outHeight >> i <= 500)) {
-                in = new BufferedInputStream(
-                        new FileInputStream(new File(path)));
-                options.inSampleSize = (int) Math.pow(2.0D, i);
+//        while (true) {
+//            if ((options.outWidth >> i <= 1000)
+//                    && (options.outHeight >> i <= 1000)) {
+                in = new BufferedInputStream(new FileInputStream(new File(path)));
+                options.inSampleSize =2;
                 options.inJustDecodeBounds = false;
+                options.inPreferredConfig = Bitmap.Config.ARGB_4444;
                 bitmap = BitmapFactory.decodeStream(in, null, options);
-                break;
-            }
-            i += 1;
-        }
+                in.close();
+//                G.log("---------xxxx---------"+(int) Math.pow(2.0D, i));
+//                break;
+//            }
+//            i += 1;
+//        }
+//        bitmap= ThumbnailUtils.extractThumbnail(BitmapFactory.decodeStream(in),300,300);
         return bitmap;
     }
 }

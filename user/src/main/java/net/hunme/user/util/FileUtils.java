@@ -29,7 +29,7 @@ public class FileUtils {
 			if (!isFileExist("")) {
 				File tempf = createSDDir("");
 			}
-			File f = new File(SDPATH, picName + ".JPEG"); 
+			File f = new File(SDPATH, picName + ".JPEG");
 			if (f.exists()) {
 				f.delete();
 			}
