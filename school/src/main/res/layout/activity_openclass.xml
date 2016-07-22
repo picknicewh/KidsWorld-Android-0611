@@ -17,5 +17,11 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"/>
    </RelativeLayout>
-
+    <SurfaceView
+        android:id="@+id/surface_camera"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:layout_weight="1">
+    </SurfaceView>
 </LinearLayout>

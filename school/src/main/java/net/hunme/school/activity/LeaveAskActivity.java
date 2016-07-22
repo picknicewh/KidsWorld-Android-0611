@@ -35,7 +35,8 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
     private  String[] student = new String[]{"王小二","刘德华","吴亦凡","吴用","周磊","鹿晗","郑爽","大幂幂","吴彦祖","刘诗诗"};
     private ArrayAdapter<String> adapter;
 
-    private CustomDateTimeDialog dateTimeDialog;
+    private CustomDateTimeDialog customDateTimeDialog;
+
     private long lastClickTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,8 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
         tv_end.setText("请选择时间");
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,student);
         sp_name.setAdapter(adapter);
-        dateTimeDialog = new CustomDateTimeDialog(LeaveAskActivity.this,R.style.MyDialog);
+        customDateTimeDialog = new CustomDateTimeDialog(LeaveAskActivity.this,R.style.MyDialog);
+
     }
     /**
      * 设置选择时间
@@ -75,7 +77,6 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
         String datestr = format.format(date);
         tv_start.setText(datestr);
         tv_end.setText(datestr);
-
     }
     private void init(){
         ll_start = $(R.id.ll_istarttime);
@@ -113,14 +114,15 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
                 return;
             } else {
                 markLastClickTime();
-                dateTimeDialog.show();
+                customDateTimeDialog.show();
+
             }
         }else if (view.getId()==R.id.ll_iendtime){
             if (isFastDoubleClick()) {
                 return;
             } else {
                 markLastClickTime();
-                dateTimeDialog.show();
+                customDateTimeDialog.show();
             }
         }
     }

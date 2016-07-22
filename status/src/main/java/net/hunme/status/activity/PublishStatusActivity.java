@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
@@ -24,12 +25,12 @@ import java.io.File;
 /**
  * 作者： wh
  * 时间： 2016/7/19
- * 名称：
+ * 名称：发布动态
  * 版本说明：
  * 附加注释：
  * 主要接口：
  */
-public class PublishStatusActivity extends BaseActivity {
+public class PublishStatusActivity extends BaseActivity implements View.OnClickListener{
     /**
      * 文字的内容
      */
@@ -40,6 +41,14 @@ public class PublishStatusActivity extends BaseActivity {
     private TextView tv_count;
     private GridView gv_photo;
     private GridAdapter adapter;
+    /**
+     * 选择可见范围
+     */
+    private LinearLayout ll_permitchoose;
+    /**
+     * 选择的内容
+     */
+    private TextView tv_permitchoose;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,14 +60,9 @@ public class PublishStatusActivity extends BaseActivity {
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
+        setLiftOnClickListener(this);
         setCententTitle("发布");
         setSubTitle("完成");
-        setLiftOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
     }
     /**
      * 显示不同值传过来界面的状态
@@ -85,7 +89,11 @@ public class PublishStatusActivity extends BaseActivity {
         et_content = $(R.id.et_pcontent);
         tv_count = $(R.id.tv_pcount);
         gv_photo =$(R.id.gv_photo);
+        tv_permitchoose =  $(R.id.tv_permitchoose);
+        ll_permitchoose = $(R.id.ll_permitchoose);
+        ll_permitchoose.setOnClickListener(this);
         setEditContent();
+
     }
 
     /**
@@ -102,10 +110,10 @@ public class PublishStatusActivity extends BaseActivity {
                 String str = s.toString();
                 int count = 0;
                 count = str.length();
-                if (count > 100) {
+                if (count > 140) {
                     deleteSelection(s);
                 }else {
-                    tv_count.setText(count+"/100");
+                    tv_count.setText(count+"/140");
                 }
             }
             private void deleteSelection(Editable s) {
@@ -137,6 +145,7 @@ public class PublishStatusActivity extends BaseActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         switch (requestCode) {
             case UploadPhotoActivity.TAKE_PICTURE:
                 if (Bimp.tempSelectBitmap.size() < 9 && resultCode == -1) {
@@ -148,6 +157,24 @@ public class PublishStatusActivity extends BaseActivity {
                 adapter.update();
                 adapter.notifyDataSetChanged();
                 break;
+            case ChoosePermitActivity.CHOOSE_PERMIT:
+                if (data!=null){
+                    String permit =  data.getStringExtra("permit");
+                    tv_permitchoose.setText(permit);
+                }
+                break;
+        }
+    }
+    @Override
+    public void onClick(View view) {
+        int viewId = view.getId();
+        if (viewId==R.id.iv_left){
+            finish();
+        }else if (viewId==R.id.ll_permitchoose){
+            Intent intent = new Intent();
+            intent.setClass(this,ChoosePermitActivity.class);
+            intent.putExtra("permit",tv_permitchoose.getText().toString());
+            startActivityForResult(intent,ChoosePermitActivity.CHOOSE_PERMIT);
         }
     }
 }

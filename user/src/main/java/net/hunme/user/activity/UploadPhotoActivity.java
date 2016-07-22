@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.util.G;
 import net.hunme.user.R;
 import net.hunme.user.adapter.GridAdapter;
 import net.hunme.user.util.Bimp;
@@ -53,6 +54,7 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initDate(){
+        G.initDisplaySize(this);
         adapter=new GridAdapter(this);
         adapter.update();
         gv_photo.setAdapter(adapter);

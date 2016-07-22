@@ -8,7 +8,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.PublishStatusActivity" />
-        <activity android:name=".activity.ChoosePhotoAvtivity"></activity>
+        <activity android:name=".activity.ChoosePermitActivity"></activity>
     </application>
 
 </manifest>

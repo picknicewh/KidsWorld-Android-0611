@@ -102,6 +102,7 @@ public class CustomDateTimeDialog extends Dialog implements View.OnClickListener
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_date_picker, null);
         setContentView(view);
         initview(view);
+
         textSize = (int) b_confirm.getTextSize();
         // 年
         int year = calendar.get(Calendar.YEAR);
@@ -162,8 +163,8 @@ public class CustomDateTimeDialog extends Dialog implements View.OnClickListener
         wv_minute = (NumericWheelView) view.findViewById(R.id.wv_minute);
         b_confirm = (Button) view.findViewById(R.id.b_confirm);
         b_cancle = (Button) view.findViewById(R.id.b_cancel);
-        b_confirm.setOnClickListener(this);
-        b_cancle.setOnClickListener(this);
+//        b_confirm.setOnClickListener(this);
+//        b_cancle.setOnClickListener(this);
     }
 
     /**

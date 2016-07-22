@@ -2,16 +2,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include layout="@layout/common_publish"/>
-
-    <GridView
-        android:id="@+id/gv_photo"
+    <RelativeLayout
+        android:background="@color/white"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:horizontalSpacing="20dp"
-        android:numColumns="3"
-        android:scrollbars="none"
-        android:verticalSpacing="20dp">
-    </GridView>
+        android:layout_height="220dp">
+    <EditText
+        android:id="@+id/et_pcontent"
+        android:paddingTop="@dimen/space"
+        android:paddingLeft="@dimen/space"
+        android:layout_width="match_parent"
+        android:hint="请输入文字内容"
+        android:gravity="left"
+        android:background="@color/white"
+        android:layout_height="wrap_content" />
+
+        <GridView
+            android:layout_alignParentBottom="true"
+            android:id="@+id/gv_photo"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_margin="@dimen/space_x0.5"
+            android:horizontalSpacing="20dp"
+            android:numColumns="4"
+            android:scrollbars="none"
+            android:verticalSpacing="20dp"/>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/tv_pcount"
+            android:padding="@dimen/space_x0.5"
+            android:layout_marginLeft="@dimen/space_x1.5"
+            android:text="0/140"
+            android:layout_gravity="left"
+            android:paddingLeft="@dimen/space_x2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:id="@+id/ll_permitchoose"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/space"
+            android:layout_marginRight="@dimen/space"
+            android:layout_weight="1"
+            android:background="@drawable/bg_choosepermit"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_permitchoose"
+                android:padding="@dimen/space_x0.5"
+                android:textColor="@color/main_green"
+                android:text="班级空间和校园空间"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>
