@@ -38,6 +38,7 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     public static int position=0;
     public static final int TAKE_PICTURE = 0x000000;
     private static final int Album_NAME_SELECT=1111;
+    //https://github.com/jeasonlzy0216/ImagePicker
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +69,20 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
                     Intent intent = new Intent(UploadPhotoActivity.this,
                             AlbumActivity.class);
                     startActivityForResult(intent,TAKE_PICTURE);
+//                    if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+//                        PermissionsActivity.startActivityForResult(UploadPhotoActivity.this, REQUEST_CODE, PERMISSIONS);
+//                        return;
+//                    }
+//                    AndroidImagePicker.getInstance().pickMulti(UploadPhotoActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
+//                        @Override
+//                        public void onImagePickComplete(List<ImageItem> items) {
+//                            if(items != null && items.size() > 0){
+////                                Log.i(TAG,"=====selected："+items.get(0).path);
+////                                mAdapter.clear();
+////                                mAdapter.addAll(items);
+//                            }
+//                        }
+//                    });
                 }
             }
         });
