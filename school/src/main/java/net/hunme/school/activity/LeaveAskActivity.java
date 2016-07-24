@@ -48,14 +48,9 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void setToolBar() {
       setLiftImage(R.mipmap.ic_arrow_lift);
-      setLiftOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              finish();
-          }
-       });
-        setCententTitle("请假申请");
-        setSubTitle("完成");
+      setLiftOnClickClose();
+      setCententTitle("请假申请");
+      setSubTitle("完成");
     }
     private void initdata(){
         tv_end.setText("请选择时间");

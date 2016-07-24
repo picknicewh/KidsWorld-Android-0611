@@ -27,12 +27,7 @@ public class InformActivity extends BaseActivity {
     @Override
     protected void setToolBar() {
          setLiftImage(R.mipmap.ic_arrow_lift);
-        setLiftOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              finish();
-          }
-       });
+        setLiftOnClickClose();
         setCententTitle("通知");
         setSubTitle("发通知");
         setSubTitleOnClickListener(new View.OnClickListener() {

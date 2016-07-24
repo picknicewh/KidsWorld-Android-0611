@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg_layout"
     tools:context=".activity.UserActivity">
 
     <LinearLayout
+        android:layout_marginTop="@dimen/space_x0.5"
         android:background="@drawable/layout_selecter"
         android:id="@+id/ll_userMassage"
         android:padding="@dimen/space"

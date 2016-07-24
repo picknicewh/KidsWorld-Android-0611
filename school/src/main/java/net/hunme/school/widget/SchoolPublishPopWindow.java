@@ -19,24 +19,15 @@ public class SchoolPublishPopWindow extends CommonPubishPopWindow {
     public SchoolPublishPopWindow(Activity context) {
         super(context);
         this.context = context;
-        init();
-        setConent();
     }
-    private void setConent(){
-        tv_poptext1.setText("学校通知");
-        tv_poptext2.setText("班级通知");
-        tv_poptext3.setText("老师通知");
-        iv_popimage1.setOnClickListener(this);
-        iv_popimage2.setOnClickListener(this);
-        iv_popimage3.setOnClickListener(this);
-    }
+
     @Override
     public void onClick(View view) {
-        if (view.getId()== net.hunme.baselibrary.R.id.iv_popimage1){
+        if (view.getId()== net.hunme.baselibrary.R.id.iv_text){
 
-        }else if (view.getId()== net.hunme.baselibrary.R.id.iv_popimage2){
+        }else if (view.getId()== net.hunme.baselibrary.R.id.iv_photo){
 
-        }else if (view.getId()== net.hunme.baselibrary.R.id.iv_popimage3){
+        }else if (view.getId()== net.hunme.baselibrary.R.id.iv_move){
 
         }
     }

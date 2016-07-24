@@ -17,15 +17,12 @@ public class PhoneNumberActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
-        setLiftOnClickListener(this);
+        setLiftOnClickClose();
         setCententTitle("手机号码");
     }
 
     @Override
     public void onClick(View view) {
-        int viewId = view.getId();
-        if (viewId == R.id.iv_left) {
-            finish();
-        }
+
     }
 }

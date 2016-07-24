@@ -110,12 +110,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
         pinyinComparator = new PinyinComparator();
         SourceDateList = new ArrayList<>();
         sb_parent.setTextView(tv_dialog_parent);
-        setLiftOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        setLiftOnClickClose();
     }
     private void initdata(){
         groupMemberBeanList = new ArrayList<>();

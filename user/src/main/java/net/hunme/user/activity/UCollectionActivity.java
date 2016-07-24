@@ -34,11 +34,6 @@ public class UCollectionActivity extends BaseActivity {
 
             }
         });
-        setLiftOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        setLiftOnClickClose();
     }
 }

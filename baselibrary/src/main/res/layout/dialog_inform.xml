@@ -1,70 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:background="@color/harf_black"
     android:layout_height="match_parent">
-
     <LinearLayout
-        android:padding="@dimen/space"
-        android:background="@drawable/dialog_bg"
+        android:background="@color/white"
+        android:padding="@dimen/space_x2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-      <LinearLayout
-          android:orientation="vertical"
-          android:layout_weight="1"
-          android:layout_width="0dp"
-          android:gravity="center"
-          android:layout_height="wrap_content">
-          <ImageView
-              android:id="@+id/iv_popimage1"
-              android:src="@mipmap/ic_launcher"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content" />
-          <TextView
-              android:id="@+id/tv_poptext1"
-              android:text="学校通知"
-              android:textColor="@color/black"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content" />
-      </LinearLayout>
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-            <ImageView
 
-                android:id="@+id/iv_popimage2"
-                android:src="@mipmap/ic_launcher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/tv_poptext2"
-                android:text="班级通知"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_weight="1"
+        <ImageView
+            android:id="@+id/iv_text"
+            android:src="@mipmap/ic_status_text"
             android:layout_width="0dp"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/iv_popimage3"
-                android:src="@mipmap/ic_launcher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/tv_poptext3"
-                android:text="教师通知"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/iv_photo"
+            android:src="@mipmap/ic_status_photo"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/iv_move"
+            android:src="@mipmap/ic_status_move"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 </LinearLayout>

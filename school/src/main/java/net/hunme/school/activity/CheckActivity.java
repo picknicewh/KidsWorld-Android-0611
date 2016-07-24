@@ -1,7 +1,6 @@
 package net.hunme.school.activity;
 
 import android.os.Bundle;
-import android.view.View;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.school.R;
@@ -25,12 +24,7 @@ public class CheckActivity extends BaseActivity {
     @Override
     protected void setToolBar() {
       setLiftImage(R.mipmap.ic_arrow_lift);
-      setLiftOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              finish();
-          }
-       });
-        setCententTitle("考勤");
+      setLiftOnClickClose();
+      setCententTitle("考勤");
     }
 }

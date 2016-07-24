@@ -121,12 +121,7 @@ public class AlbumActivity extends BaseActivity {
                 finish();
             }
         });
-        setLiftOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        setLiftOnClickClose();
     }
 
     @Override

@@ -62,12 +62,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
         setCententTitle("搜索");
-        setLiftOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        setLiftOnClickClose();
     }
     private void initview(){
         et_contract = $(R.id.et_contract);

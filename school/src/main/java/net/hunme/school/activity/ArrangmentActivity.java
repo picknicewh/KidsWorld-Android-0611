@@ -27,15 +27,10 @@ public class ArrangmentActivity extends BaseActivity {
     @Override
     protected void setToolBar() {
       setLiftImage(R.mipmap.ic_arrow_lift);
-      setLiftOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              finish();
-          }
-       });
-        setCententTitle("课程安排");
-       setSubTitle("发布");
-        setSubTitleOnClickListener(new View.OnClickListener() {
+      setLiftOnClickClose();
+      setCententTitle("课程安排");
+      setSubTitle("发布");
+      setSubTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

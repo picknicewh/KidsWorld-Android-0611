@@ -1,13 +1,13 @@
 package net.hunme.user.activity;
 
-import android.content.DialogInterface;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -16,6 +16,7 @@ import net.hunme.baselibrary.util.G;
 import net.hunme.user.R;
 import net.hunme.user.adapter.PhotoAdapter;
 import net.hunme.user.mode.PhotoVo;
+import net.hunme.user.util.MyAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
         setCententTitle("我的相册");
         setLiftImage(R.mipmap.ic_arrow_lift);
         setSubTitle("添加");
-        setLiftOnClickListener(this);
+        setLiftOnClickClose();
         setSubTitleOnClickListener(this);
     }
 
@@ -81,21 +82,29 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View view) {
         int viewID=view.getId();
-        if(viewID==R.id.iv_left){
-            finish();
-        }else if(viewID==R.id.tv_subtitle){
-            AlertDialog.Builder builder=new AlertDialog.Builder(this);
-            builder.setTitle("请输入相册名");
-            final EditText editText =new EditText(this);
-            editText.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-            editText.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-            int date=G.px2dp(this,10);
-            editText.setPadding(date,date,date,date);
-            builder.setView(editText);
-            builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+        if(viewID==R.id.tv_subtitle){
+            //获取View
+            final View dialogView = LayoutInflater.from(this).inflate(R.layout.alertdialog_add_album, null);
+            //获取弹框
+            final AlertDialog alertDialog =MyAlertDialog.getDialog(dialogView,this);
+            Button alertCancel= (Button) dialogView.findViewById(R.id.b_cancel);
+            Button alertConfirm= (Button) dialogView.findViewById(R.id.b_confirm);
+            final EditText etAlbumName= (EditText) dialogView.findViewById(R.id.et_album_name);
+            etAlbumName.setFocusable(true);
+            etAlbumName.setFocusableInTouchMode(true);
+            etAlbumName.requestFocus();
+            //取消
+            alertCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    String albumName=editText.getText().toString().trim();
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
+            //确定
+            alertConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String albumName=etAlbumName.getText().toString().trim();
                     if(G.isEmteny(albumName)){
                         G.showToast(UPhotoActivity.this,"相册名不能为空");
                         return;
@@ -105,9 +114,9 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
                     photoVo.setPhotoName(albumName);
                     photoList.add(0,photoVo);
                     adapter.notifyDataSetChanged();
+                    alertDialog.dismiss();
                 }
-            }).show();
-
+            });
         }
     }
 }

@@ -26,15 +26,10 @@ public class LeaveActivity extends BaseActivity {
     @Override
     protected void setToolBar() {
       setLiftImage(R.mipmap.ic_arrow_lift);
-      setLiftOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              finish();
-          }
-       });
-        setCententTitle("请假");
-       setSubTitle("我要请假");
-        setSubTitleOnClickListener(new View.OnClickListener() {
+      setLiftOnClickClose();
+      setCententTitle("请假");
+      setSubTitle("我要请假");
+      setSubTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();

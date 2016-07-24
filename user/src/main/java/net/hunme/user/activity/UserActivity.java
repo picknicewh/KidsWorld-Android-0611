@@ -33,7 +33,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
-        setLiftOnClickListener(this);
+        setLiftOnClickClose();
         setCententTitle("我的");
     }
 
@@ -53,9 +53,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         int viewId=v.getId();
-        if(viewId==R.id.iv_left){
-            finish();
-        }else if(viewId==R.id.ll_userMassage){
+        if(viewId==R.id.ll_userMassage){
             startActivity(new Intent(UserActivity.this,UMassageActivity.class));
         }else if(viewId==R.id.ll_usersetting){
             startActivity(new Intent(UserActivity.this,USettingActivity.class));

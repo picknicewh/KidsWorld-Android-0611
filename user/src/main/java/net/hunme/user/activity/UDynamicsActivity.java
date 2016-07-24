@@ -1,7 +1,6 @@
 package net.hunme.user.activity;
 
 import android.os.Bundle;
-import android.view.View;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.user.R;
@@ -26,12 +25,7 @@ public class UDynamicsActivity extends BaseActivity {
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
-        setLiftOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        setLiftOnClickClose();
         setCententTitle("我的动态");
     }
 }

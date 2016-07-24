@@ -5,10 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/bg_layout"
     tools:context=".activity.UMassageActivity">
 
     <RelativeLayout
+        android:layout_marginTop="@dimen/space_x0.5"
         android:background="@drawable/layout_selecter"
         android:padding="@dimen/space"
         android:layout_width="match_parent"

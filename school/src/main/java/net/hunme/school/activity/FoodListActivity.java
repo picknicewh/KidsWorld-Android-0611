@@ -1,7 +1,6 @@
 package net.hunme.school.activity;
 
 import android.os.Bundle;
-import android.view.View;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.school.R;
@@ -25,13 +24,8 @@ public class FoodListActivity extends BaseActivity {
     @Override
     protected void setToolBar() {
       setLiftImage(R.mipmap.ic_arrow_lift);
-      setLiftOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              finish();
-          }
-       });
-        setCententTitle("食谱");
+      setLiftOnClickClose();
+      setCententTitle("食谱");
 
     }
 }

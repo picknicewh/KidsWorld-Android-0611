@@ -8,6 +8,7 @@
         android:text="我们已发送短信验证码到你的手机"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <TextView
         android:layout_marginLeft="@dimen/space_x2"
         android:layout_marginRight="@dimen/space_x2"
@@ -21,15 +22,16 @@
         android:background="@drawable/password_selecter"
         android:layout_margin="@dimen/space_x2"
         android:padding="@dimen/space_x1.5"
-        android:id="@+id/et_cp_heckNumber"
+        android:id="@+id/et_heckNumber"
         android:layout_width="match_parent"
         android:hint="请输入你的验证码"
         android:textColorHint="@color/pgrey"
         android:layout_gravity="center"
         android:layout_height="wrap_content" />
+
     <EditText
         android:background="@drawable/password_selecter"
-        android:id="@+id/et_cp_password"
+        android:id="@+id/et_password"
         android:layout_marginLeft="@dimen/space_x2"
         android:layout_marginRight="@dimen/space_x2"
         android:padding="@dimen/space_x1.5"
@@ -42,7 +44,7 @@
     <Button
         android:layout_margin="@dimen/space_x2"
         android:layout_marginTop="@dimen/space_x2"
-        android:id="@+id/bt_cp_finish"
+        android:id="@+id/b_finish"
         android:text="完成"
         android:textColor="@color/white"
         android:textSize="@dimen/ts_xx_large"
@@ -50,11 +52,12 @@
         android:padding="@dimen/space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <TextView
         android:gravity="center"
         android:layout_marginTop="@dimen/space_x0.5"
         android:text="您可以在(58)秒后重新获取"
-        android:id="@+id/tv_cp_time"
+        android:id="@+id/tv_time"
         android:layout_width="match_parent"
         android:textSize="@dimen/ts_x_large"
         android:layout_height="wrap_content" />

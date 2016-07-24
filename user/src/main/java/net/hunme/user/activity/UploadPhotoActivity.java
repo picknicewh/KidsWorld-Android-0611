@@ -81,25 +81,28 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
-        setCententTitle("上传图片");
+        setCententTitle("上传照片");
         setSubTitle("完成");
-        setLiftOnClickListener(this);
+        setLiftOnClickClose();
         setSubTitleOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         int viewId=view.getId();
-        if(viewId==R.id.iv_left){
-            finish();
-            Bimp.bmp.clear();
-        }else if(viewId==R.id.tv_subtitle){
+        if(viewId==R.id.tv_subtitle){
 
         }else if(viewId==R.id.ll_selcet_photoname){
             Intent intent=new Intent(this, AlbumSelectActivity.class);
             intent.putStringArrayListExtra("namelist",albumNameList);
             startActivityForResult(intent,Album_NAME_SELECT);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Bimp.bmp.clear();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

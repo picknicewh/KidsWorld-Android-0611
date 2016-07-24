@@ -60,8 +60,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
-        setLiftOnClickListener(this);
-        setCententTitle("发表状态");
+        setLiftOnClickClose();
         setSubTitle("发送");
     }
     /**
@@ -71,14 +70,17 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     private void showView(int type){
         switch (type){
             case StatusPublishPopWindow.WORDS:
+                setCententTitle("发布文字");
                 break;
             case StatusPublishPopWindow.PICTURE:
+                setCententTitle("发布图片");
                 Intent intent = new Intent(PublishStatusActivity.this,
                         AlbumActivity.class);
                 startActivityForResult(intent,UploadPhotoActivity.TAKE_PICTURE);
                 showPhoto();
                 break;
             case StatusPublishPopWindow.VEDIO:
+                setCententTitle("发布视频");
                 break;
         }
     }
@@ -145,7 +147,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         switch (requestCode) {
             case UploadPhotoActivity.TAKE_PICTURE:
                 if (Bimp.tempSelectBitmap.size() < 9 && resultCode == -1) {
@@ -168,9 +169,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
-        if (viewId==R.id.iv_left){
-            finish();
-        }else if (viewId==R.id.ll_permitchoose){
+        if (viewId==R.id.ll_permitchoose){
             Intent intent = new Intent();
             intent.setClass(this,ChoosePermitActivity.class);
             intent.putExtra("permit",tv_permitchoose.getText().toString());

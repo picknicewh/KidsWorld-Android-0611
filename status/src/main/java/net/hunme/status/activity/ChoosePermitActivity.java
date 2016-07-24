@@ -37,18 +37,20 @@ public class ChoosePermitActivity extends BaseActivity implements View.OnClickLi
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
         setCententTitle("选择可见范围");
-        setLiftOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        setLiftOnClickClose();
     }
+
     private void  initView(){
         rb_allroom = $(R.id.rb_allroom);
         rb_classroom = $(R.id.rb_classroom);
         rb_classroom.setOnClickListener(this);
         rb_allroom.setOnClickListener(this);
+        String chooseValue=getIntent().getStringExtra("permit");
+        if(rb_allroom.getText().toString().equals(chooseValue)){
+            rb_allroom.setChecked(true);
+        }else{
+            rb_classroom.setChecked(true);
+        }
     }
 
     private void choose(String permit){

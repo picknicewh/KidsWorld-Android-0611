@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
+import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.status.widget.ChooseClassPopWindow;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.activity.UserActivity;
@@ -26,7 +27,7 @@ import java.util.List;
  * 主要接口：
  */
 public class StatusFragement extends BaseFragement implements View.OnClickListener{
-    private ImageView iv_lift;
+    private CircleImageView iv_lift;
     private ImageView iv_right;
     private TextView tv_classname;
     private List<String> classlist ;

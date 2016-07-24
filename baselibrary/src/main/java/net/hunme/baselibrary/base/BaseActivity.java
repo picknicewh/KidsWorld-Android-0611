@@ -56,15 +56,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void getToolbarViews(Toolbar toolbar){
-        iv_lift= (ImageView) toolbar.findViewById(R.id.iv_left);
+//        iv_lift= (ImageView) toolbar.findViewById(R.id.iv_left);
         iv_right= (ImageView) toolbar.findViewById(R.id.iv_right);
         tv_title= (TextView) toolbar.findViewById(R.id.tv_title);
         tv_subTitle= (TextView) toolbar.findViewById(R.id.tv_subtitle);
     }
 
     public void setLiftImage(int imageResource){
-        iv_lift.setImageResource(imageResource);
-        iv_lift.setVisibility(View.VISIBLE);
+        toolbar.setNavigationIcon(imageResource);
+//        iv_lift.setImageResource(imageResource);
+//        iv_lift.setVisibility(View.VISIBLE);
     }
 
     public void setRightImage(int imageResource){
@@ -87,9 +88,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void setLiftOnClickListener(View.OnClickListener listener){
-        iv_lift.setOnClickListener(listener);
+//        iv_lift.setOnClickListener(listener);
+        toolbar.setNavigationOnClickListener(listener);
     }
-
+    public void setLiftOnClickClose(){
+//        iv_lift.setOnClickListener(listener);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
     public void setRightOnClickListener(View.OnClickListener listener){
         iv_right.setOnClickListener(listener);
     }

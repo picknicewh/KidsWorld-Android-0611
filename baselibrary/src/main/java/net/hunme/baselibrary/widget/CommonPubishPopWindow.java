@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import net.hunme.baselibrary.R;
 import net.hunme.baselibrary.util.G;
@@ -26,29 +25,17 @@ public abstract class CommonPubishPopWindow extends PopupWindow implements View.
     private Activity context;
     private View conentView;
     /**
-     * 第一个文本
+     *  发布文字
      */
-    public TextView tv_poptext1;
+    private ImageView iv_text;
     /**
-     * 第一个图片
+     * 发布照片
      */
-    public ImageView iv_popimage1;
+    private ImageView iv_photo;
     /**
-     * 第二个文本
+     * 发布视频
      */
-    public TextView tv_poptext2;
-    /**
-     * 第二个图片
-     */
-    public ImageView iv_popimage2;
-    /**
-     * 第三个文本
-     */
-    public TextView tv_poptext3;
-    /**
-     * 第三个图片
-     */
-    public ImageView iv_popimage3;
+    private ImageView iv_move;
     public CommonPubishPopWindow(Activity context){
         this.context = context;
         init();
@@ -56,12 +43,14 @@ public abstract class CommonPubishPopWindow extends PopupWindow implements View.
     private void initview(){
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         conentView = inflater.inflate(R.layout.dialog_inform, null);
-        tv_poptext1 = (TextView) conentView.findViewById(R.id.tv_poptext1);
-        tv_poptext2 = (TextView) conentView.findViewById(R.id.tv_poptext2);
-        tv_poptext3 = (TextView) conentView.findViewById(R.id.tv_poptext3);
-        iv_popimage1 = (ImageView)conentView.findViewById(R.id.iv_popimage1);
-        iv_popimage2 = (ImageView)conentView.findViewById(R.id.iv_popimage2);
-        iv_popimage3 = (ImageView)conentView.findViewById(R.id.iv_popimage3);
+
+        iv_text= (ImageView) conentView.findViewById(R.id.iv_text);
+        iv_photo= (ImageView) conentView.findViewById(R.id.iv_photo);
+        iv_move= (ImageView) conentView.findViewById(R.id.iv_move);
+        iv_text.setOnClickListener(this);
+        iv_photo.setOnClickListener(this);
+        iv_move.setOnClickListener(this);
+
     }
 
     public void init() {
@@ -83,5 +72,6 @@ public abstract class CommonPubishPopWindow extends PopupWindow implements View.
         //防止虚拟软键盘被弹出菜单遮住
         this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
+
 
 }

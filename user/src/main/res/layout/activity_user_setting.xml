@@ -1,113 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/bg_layout">
-    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
         <LinearLayout
+            android:layout_marginTop="@dimen/space_x0.5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/layout_selecter">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <LinearLayout
-                android:id="@+id/ll_changepasswd"
-                android:background="@drawable/layout_select_not_line"
-                android:padding="@dimen/space"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/item_height"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_gravity="center"
-                    style="@style/TextStyleBase"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="密码修改"/>
-
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_arrow_right"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/line_gray"/>
-
-            <LinearLayout
-                android:id="@+id/ll_changephone"
-                android:background="@drawable/layout_select_not_line"
-                android:padding="@dimen/space"
-                android:paddingBottom="@dimen/space"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/item_height"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_gravity="center"
-                    style="@style/TextStyleBase"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="手机号码"/>
-
-                <TextView
-                    android:layout_gravity="center"
-                    style="@style/TextStyleBase"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="158*****456"/>
-
-                <ImageView
-                    android:layout_marginLeft="@dimen/space_x0.5"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_arrow_right"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_systeminfo"
-            android:background="@drawable/layout_selecter"
-            android:padding="@dimen/space"
-            android:layout_marginTop="@dimen/space"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_gravity="center"
-                style="@style/TextStyleBase"
-                android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="系统消息"/>
+                android:orientation="vertical"
+                android:background="@drawable/layout_selecter">
+                <LinearLayout
+                    android:id="@+id/ll_changepasswd"
+                    android:background="@drawable/layout_select_not_line"
+                    android:padding="@dimen/space"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:orientation="horizontal">
 
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_gravity="center"
+                        style="@style/TextStyleBase"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="密码修改"/>
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_arrow_right"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_gray"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_changephone"
+                    android:background="@drawable/layout_select_not_line"
+                    android:padding="@dimen/space"
+                    android:paddingBottom="@dimen/space"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_gravity="center"
+                        style="@style/TextStyleBase"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="手机号码"/>
+
+                    <TextView
+                        android:layout_gravity="center"
+                        style="@style/TextStyleBase"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="158*****456"/>
+
+                    <ImageView
+                        android:layout_marginLeft="@dimen/space_x0.5"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_arrow_right"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_systeminfo"
+                android:background="@drawable/layout_selecter"
+                android:padding="@dimen/space"
+                android:layout_marginTop="@dimen/space"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_gravity="center"
+                    style="@style/TextStyleBase"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="系统消息"/>
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_arrow_right"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/space"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_arrow_right"/>
-        </LinearLayout>
+                android:orientation="vertical"
+                android:background="@drawable/layout_selecter">
+                <LinearLayout
+                    android:id="@+id/ll_cleancache"
+                    android:background="@drawable/layout_select_not_line"
+                    android:padding="@dimen/space"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_marginTop="@dimen/space"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/layout_selecter">
+                    <TextView
+                        android:layout_gravity="center"
+                        style="@style/TextStyleBase"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="缓存清理"/>
+
+                    <TextView
+                        android:layout_gravity="center"
+                        style="@style/TextStyleBase"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="53MB"/>
+
+                    <ImageView
+                        android:layout_marginLeft="@dimen/space_x0.5"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_arrow_right"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_gray"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_callback"
+                    android:background="@drawable/layout_select_not_line"
+                    android:padding="@dimen/space"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_gravity="center"
+                        style="@style/TextStyleBase"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="意见反馈"/>
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_arrow_right"/>
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_gray"/>
+
+                <LinearLayout
+                    android:background="@drawable/layout_select_not_line"
+                    android:padding="@dimen/space"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_gravity="center"
+                        style="@style/TextStyleBase"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="关于版本"/>
+
+                    <TextView
+                        android:layout_gravity="center"
+                        style="@style/TextStyleBase"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="已是最新"/>
+                    <ImageView
+                        android:layout_marginLeft="@dimen/space_x0.5"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_arrow_right"/>
+                </LinearLayout>
+            </LinearLayout>
+
             <LinearLayout
-                android:id="@+id/ll_cleancache"
-                android:background="@drawable/layout_select_not_line"
+                android:id="@+id/ll_exit"
+                android:background="@drawable/layout_selecter"
                 android:padding="@dimen/space"
+                android:layout_marginTop="@dimen/space"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_height"
                 android:orientation="horizontal">
@@ -118,116 +217,17 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="缓存清理"/>
-
-                <TextView
-                    android:layout_gravity="center"
-                    style="@style/TextStyleBase"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="53MB"/>
-                <ImageView
-                    android:layout_marginLeft="@dimen/space_x0.5"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_arrow_right"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/line_gray"/>
-
-            <LinearLayout
-                android:id="@+id/ll_callback"
-                android:background="@drawable/layout_select_not_line"
-                android:padding="@dimen/space"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/item_height"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_gravity="center"
-                    style="@style/TextStyleBase"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="意见反馈"/>
-
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_arrow_right"/>
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/line_gray"/>
-
-            <LinearLayout
-                android:background="@drawable/layout_select_not_line"
-                android:padding="@dimen/space"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/item_height"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_gravity="center"
-                    style="@style/TextStyleBase"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="关于版本"/>
-
-                <TextView
-                    android:layout_gravity="center"
-                    style="@style/TextStyleBase"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="已是最新"/>
-                <ImageView
-                    android:layout_marginLeft="@dimen/space_x0.5"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_arrow_right"/>
+                    android:text="退出账号"/>
             </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_exit"
-            android:background="@drawable/layout_selecter"
-            android:padding="@dimen/space"
-            android:layout_marginTop="@dimen/space"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_gravity="center"
-                style="@style/TextStyleBase"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="退出账号"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:padding="@dimen/space_x2"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="服务条款"
-            style="@style/TextStyleBase"/>
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/space_x2"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="服务条款"
+        style="@style/TextStyleBase"/>
+</RelativeLayout>

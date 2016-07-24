@@ -44,16 +44,14 @@ public class UserChooseActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
-        setLiftOnClickListener(this);
+        setLiftOnClickClose();
         setCententTitle("选择账号");
     }
 
     @Override
     public void onClick(View view) {
         int viewID =view.getId();
-        if (viewID==R.id.iv_left){
-            finish();
-        }else if (viewID==R.id.ll_choose1){
+        if (viewID==R.id.ll_choose1){
             iv_choose1.setVisibility(View.VISIBLE);
             iv_choose2.setVisibility(View.GONE);
             iv_choose3.setVisibility(View.GONE);
@@ -66,5 +64,6 @@ public class UserChooseActivity extends BaseActivity implements View.OnClickList
             iv_choose2.setVisibility(View.GONE);
             iv_choose1.setVisibility(View.GONE);
         }
+        finish();
     }
 }

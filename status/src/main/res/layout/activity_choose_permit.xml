@@ -10,6 +10,7 @@
          android:orientation="vertical"
          android:layout_width="match_parent"
          android:layout_height="match_parent">
+
          <RadioButton
              android:id="@+id/rb_allroom"
              android:padding="@dimen/space_x2"
@@ -21,12 +22,14 @@
              android:background="@color/line_gray"
              android:layout_width="match_parent"
              android:layout_height="@dimen/line_gray"/>
+
          <RadioButton
              android:id="@+id/rb_classroom"
              android:padding="@dimen/space_x2"
              android:text="班级空间"
              android:layout_width="match_parent"
              android:layout_height="wrap_content" />
+
          <View
              android:background="@color/line_gray"
              android:layout_width="match_parent"

@@ -3,16 +3,16 @@ package net.hunme.user.activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.user.R;
+import net.hunme.user.util.MyAlertDialog;
+
 /**
  * ================================================
  * 作    者：ZLL
@@ -59,7 +59,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
-        setLiftOnClickListener(this);
+        setLiftOnClickClose();
         setSubTitleOnClickListener(this);
         setCententTitle("账户设置");
         setSubTitle("切换");
@@ -81,19 +81,19 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         int viewID=v.getId();
-        if(viewID==R.id.iv_left){
-            finish();
-        }else if (viewID==R.id.tv_subtitle) {
+        if (viewID==R.id.tv_subtitle) {
             Intent intent = new Intent();
             intent.setClass(this, UserChooseActivity.class);
             startActivity(intent);
         }else if (viewID==R.id.ll_changepasswd){
             Intent intent = new Intent();
-            intent.setClass(this,ChangePswdActivity.class);
+            intent.putExtra("type","pw");
+            intent.setClass(this,UpdateMessageActivity.class);
             startActivity(intent);
         }else if (viewID==R.id.ll_changephone){
             Intent intent = new Intent();
-            intent.setClass(this,PhoneNumberActivity.class);
+            intent.putExtra("type","phone");
+            intent.setClass(this,UpdateMessageActivity.class);
             startActivity(intent);
         }else if (viewID==R.id.ll_systeminfo){
             Intent intent = new Intent();
@@ -104,28 +104,17 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
             intent.setClass(this,AdviceActivity.class);
             startActivity(intent);
         }else if (viewID==R.id.ll_exit){
-            showPopupWindow(1);
+            showAlertDialog(1);
         }else if (viewID==R.id.ll_cleancache){
-            showPopupWindow(0);
+            showAlertDialog(0);
         }
     }
     /**
      * 退出提示框
      */
-    private void showPopupWindow(int flag) {
-        View coupons_view = LayoutInflater.from(this).inflate(R.layout.pop_exit, null);
-        final AlertDialog coupons_s = new AlertDialog.Builder(this).create();
-        coupons_s.setCanceledOnTouchOutside(true);
-        coupons_s.show();
-        WindowManager windowManager = this.getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams params =
-                coupons_s.getWindow().getAttributes();
-//        params.height = (int) (display.getHeight());
-        params.width = (int) (display.getWidth() * 0.8);
-        coupons_s.getWindow().setAttributes(params);
-        coupons_s.getWindow().setBackgroundDrawableResource(R.drawable.fillet_pop);
-        coupons_s.getWindow().setContentView(coupons_view);
+    private void showAlertDialog(final int flag) {
+        View coupons_view = LayoutInflater.from(this).inflate(R.layout.alertdialog_message, null);
+        final AlertDialog alertDialog= MyAlertDialog.getDialog(coupons_view,this);
         Button pop_notrigst = (Button) coupons_view.findViewById(R.id.pop_notrigst);
         Button pop_mastrigst = (Button) coupons_view.findViewById(R.id.pop_mastrigst);
         TextView pop_title =  (TextView) coupons_view.findViewById(R.id.tv_poptitle);
@@ -145,13 +134,19 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
                 Intent intent = new Intent(USettingActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);*/
-                finish();
+                if(flag==1)
+                    //退出账号
+                    finish();
+                else
+                    //清除缓存
+                    alertDialog.dismiss();
+
             }
         });
         pop_notrigst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                coupons_s.cancel();
+                alertDialog.dismiss();
             }
         });
     }
