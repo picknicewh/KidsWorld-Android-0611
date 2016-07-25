@@ -2,7 +2,6 @@ package net.hunme.status.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -12,15 +11,17 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.pizidea.imagepicker.AndroidImagePicker;
+import com.pizidea.imagepicker.bean.ImageItem;
+
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.util.G;
 import net.hunme.status.R;
 import net.hunme.status.widget.StatusPublishPopWindow;
-import net.hunme.user.activity.AlbumActivity;
-import net.hunme.user.activity.UploadPhotoActivity;
-import net.hunme.user.adapter.GridAdapter;
-import net.hunme.user.util.Bimp;
+import net.hunme.user.adapter.GridAlbumAdapter;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者： wh
@@ -40,7 +41,8 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      */
     private TextView tv_count;
     private GridView gv_photo;
-    private GridAdapter adapter;
+    private GridAlbumAdapter mAdapter;
+    private List<ImageItem> itemList;
     /**
      * 选择可见范围
      */
@@ -74,9 +76,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 break;
             case StatusPublishPopWindow.PICTURE:
                 setCententTitle("发布图片");
-                Intent intent = new Intent(PublishStatusActivity.this,
-                        AlbumActivity.class);
-                startActivityForResult(intent,UploadPhotoActivity.TAKE_PICTURE);
+                goSelectImager();
                 showPhoto();
                 break;
             case StatusPublishPopWindow.VEDIO:
@@ -95,7 +95,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         ll_permitchoose = $(R.id.ll_permitchoose);
         ll_permitchoose.setOnClickListener(this);
         setEditContent();
-
     }
 
     /**
@@ -131,16 +130,14 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 发布照片页面
      */
     private void showPhoto(){
-        adapter=new GridAdapter(this);
-        adapter.update();
-        gv_photo.setAdapter(adapter);
+        itemList=new ArrayList<>();
+        mAdapter=new GridAlbumAdapter(itemList,this);
+        gv_photo.setAdapter(mAdapter);
         gv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == Bimp.bmp.size()) {
-                    Intent intent = new Intent(PublishStatusActivity.this,
-                            AlbumActivity.class);
-                    startActivityForResult(intent,UploadPhotoActivity.TAKE_PICTURE);
+                if (i == itemList.size()) {
+                    goSelectImager();
                 }
             }
         });
@@ -148,16 +145,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case UploadPhotoActivity.TAKE_PICTURE:
-                if (Bimp.tempSelectBitmap.size() < 9 && resultCode == -1) {
-                    File file = new File(Environment.getExternalStorageDirectory()
-                            + "/myimage/", String.valueOf(System.currentTimeMillis())
-                            + ".jpg");
-                    Bimp.tempSelectBitmap.add(file.getPath());
-                }
-                adapter.update();
-                adapter.notifyDataSetChanged();
-                break;
             case ChoosePermitActivity.CHOOSE_PERMIT:
                 if (data!=null){
                     String permit =  data.getStringExtra("permit");
@@ -175,6 +162,26 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             intent.putExtra("permit",tv_permitchoose.getText().toString());
             startActivityForResult(intent,ChoosePermitActivity.CHOOSE_PERMIT);
         }
+    }
+
+    /**
+     * 前往获取图片
+     */
+    private void goSelectImager(){
+        AndroidImagePicker.getInstance().pickMulti(PublishStatusActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
+            @Override
+            public void onImagePickComplete(List<ImageItem> items) {
+                if(items != null && items.size() > 0){
+                    for(ImageItem item:items){
+                        G.log("选择了===="+item.path);
+                        if(itemList.size()<9){
+                            itemList.add(item);
+                        }
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 }
 

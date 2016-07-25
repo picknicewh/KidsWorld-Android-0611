@@ -8,6 +8,7 @@
     tools:context=".activity.UMassageActivity">
 
     <RelativeLayout
+        android:id="@+id/rl_userMessage"
         android:layout_marginTop="@dimen/space_x0.5"
         android:background="@drawable/layout_selecter"
         android:padding="@dimen/space"
@@ -23,7 +24,7 @@
 
         <ImageView
             android:layout_marginLeft="@dimen/space"
-            android:id="@+id/iv_into"
+            android:id="@+id/iv_right"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,8 +32,9 @@
             android:layout_alignParentRight="true"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_into"
             android:background="@drawable/bg_head_portrait"
-            android:layout_toLeftOf="@id/iv_into"
+            android:layout_toLeftOf="@id/iv_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:civ_border_width="1dp"

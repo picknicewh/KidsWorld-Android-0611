@@ -51,8 +51,8 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         classlist.add("一(3)班");
         popWindow = new ChooseClassPopWindow(this,classlist);
         tv_classname.setOnClickListener(this);
-
     }
+
     private void setViewAction(){
         iv_lift.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +76,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             }
         });
     }
+
    public void setClassname(String classname){
        tv_classname.setText(classname);
    }
