@@ -37,7 +37,7 @@ public class OkHttps<T> {
     private static OkHttpUtils httpUtils;
     public static PostRequest postRequest;
     //ServerConfigManager.SERVER_IP;
-    private static String uri_host="http://";
+    private static String uri_host=ServerConfigManager.SERVER_IP;
     private static OkHttpUtils getInstance() {
         if(null==httpUtils){
             OkHttpUtils.getInstance().getOkHttpClient();

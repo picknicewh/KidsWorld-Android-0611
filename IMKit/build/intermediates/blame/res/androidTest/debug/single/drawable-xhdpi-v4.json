@@ -28,12 +28,12 @@
         "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\drawable-xhdpi-v4\\abc_scrubber_control_to_pressed_mtrl_000.png"
     },
     {
-        "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\abc_switch_track_mtrl_alpha.9.png",
-        "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\drawable-xhdpi-v4\\abc_switch_track_mtrl_alpha.9.png"
-    },
-    {
         "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_volume_3.png",
         "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_volume_3.png"
+    },
+    {
+        "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\abc_switch_track_mtrl_alpha.9.png",
+        "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\drawable-xhdpi-v4\\abc_switch_track_mtrl_alpha.9.png"
     },
     {
         "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_notice_point.png",
@@ -68,36 +68,36 @@
         "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ed_pub_service_search_hover.9.png"
     },
     {
-        "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f47b.png",
-        "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f47b.png"
-    },
-    {
         "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_keyboard_selected.png",
         "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_keyboard_selected.png"
+    },
+    {
+        "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f47b.png",
+        "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f47b.png"
     },
     {
         "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_camera_normal.png",
         "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_camera_normal.png"
     },
     {
-        "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_picture_normal.png",
-        "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_picture_normal.png"
-    },
-    {
         "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_receive_voice_one.png",
         "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_receive_voice_one.png"
+    },
+    {
+        "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_picture_normal.png",
+        "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_picture_normal.png"
     },
     {
         "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_voice_normal.png",
         "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_voice_normal.png"
     },
     {
-        "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_bg_text_hover.9.png",
-        "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_bg_text_hover.9.png"
-    },
-    {
         "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_bubble_no_left.9.png",
         "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ic_bubble_no_left.9.png"
+    },
+    {
+        "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_bg_text_hover.9.png",
+        "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_bg_text_hover.9.png"
     },
     {
         "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f33b.png",
@@ -208,12 +208,12 @@
         "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f60c.png"
     },
     {
-        "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\abc_btn_radio_to_on_mtrl_015.png",
-        "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\drawable-xhdpi-v4\\abc_btn_radio_to_on_mtrl_015.png"
-    },
-    {
         "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_conversation_newmsg.png",
         "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_conversation_newmsg.png"
+    },
+    {
+        "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\abc_btn_radio_to_on_mtrl_015.png",
+        "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\drawable-xhdpi-v4\\abc_btn_radio_to_on_mtrl_015.png"
     },
     {
         "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f611.png",

@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.EncryptUtil;
 import net.hunme.baselibrary.util.G;
 import net.hunme.login.mode.CharacterSeleteVo;
 
@@ -28,7 +29,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
-
     }
 
     private void initView(){
@@ -57,16 +57,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         Map<String,Object>map=new HashMap<>();
         map.put("accountId",username);
-        map.put("password",password);
-//        OkHttps.init().setClass(result).sendPost();
-//        Type type= new TypeToken<Result>(){}.getType();
+        map.put("password", EncryptUtil.encodeMD5String(password));
         Type type =new TypeToken<Result<CharacterSeleteVo>>(){}.getType();
-        OkHttps.sendPost(type,"www.baidu.com",map,this);
+        OkHttps.sendPost(type,appLogin,map,this);
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-
         Result<CharacterSeleteVo> result= (Result<CharacterSeleteVo>) date;
         G.showToast(this,result.getCode());
     }

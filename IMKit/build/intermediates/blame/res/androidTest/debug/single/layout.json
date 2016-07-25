@@ -92,16 +92,16 @@
         "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_information_notification_message.xml"
     },
     {
-        "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_layout.xml",
-        "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_action_menu_layout.xml"
+        "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_public_service_input_menu_item.xml",
+        "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_public_service_input_menu_item.xml"
     },
     {
         "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_public_service_input_menus.xml",
         "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_public_service_input_menus.xml"
     },
     {
-        "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_public_service_input_menu_item.xml",
-        "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_public_service_input_menu_item.xml"
+        "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_layout.xml",
+        "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_action_menu_layout.xml"
     },
     {
         "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_popup_menu_item_layout.xml",
@@ -128,12 +128,12 @@
         "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_wi_text_btn.xml"
     },
     {
-        "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_wi_input.xml",
-        "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_wi_input.xml"
-    },
-    {
         "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_view_list_nav_layout.xml",
         "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_action_bar_view_list_nav_layout.xml"
+    },
+    {
+        "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_wi_input.xml",
+        "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_wi_input.xml"
     },
     {
         "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_fr_messagelist.xml",
@@ -144,12 +144,12 @@
         "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_wi_block_popup.xml"
     },
     {
-        "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_part_time.xml",
-        "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\notification_template_part_time.xml"
-    },
-    {
         "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_public_service_multi_rich_content_message.xml",
         "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_public_service_multi_rich_content_message.xml"
+    },
+    {
+        "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_part_time.xml",
+        "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\notification_template_part_time.xml"
     },
     {
         "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_fr_public_service_inf.xml",
@@ -256,12 +256,12 @@
         "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_picprev_activity.xml"
     },
     {
-        "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_fr_conversation.xml",
-        "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_fr_conversation.xml"
-    },
-    {
         "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_simple.xml",
         "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_screen_simple.xml"
+    },
+    {
+        "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_fr_conversation.xml",
+        "source": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_fr_conversation.xml"
     },
     {
         "merged": "E:\\AndroidStuiodProject\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_public_service_input_menus.xml",
@@ -292,12 +292,12 @@
         "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_group_conversation.xml"
     },
     {
-        "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_part_chronometer.xml",
-        "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\notification_template_part_chronometer.xml"
-    },
-    {
         "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
         "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
+    },
+    {
+        "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_part_chronometer.xml",
+        "source": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\notification_template_part_chronometer.xml"
     },
     {
         "merged": "E:\\workSpace\\KidsWorld\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_app_service_conversation.xml",
