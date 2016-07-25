@@ -109,7 +109,20 @@ public class UserMessage {
         editor.commit();
     }
 
-    public String getTyId(){
+    public String getTsId(){
         return  spf.getString("tsId","");
+    }
+
+    /**
+     * 用户身份
+     * @param type 1 学生 0 老师  2 班主任
+     */
+    public void setType(String type){
+        editor.putString("type",type);
+        editor.commit();
+    }
+
+    public String getType(){
+        return spf.getString("type","");
     }
 }

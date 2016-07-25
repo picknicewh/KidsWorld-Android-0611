@@ -11,17 +11,25 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.reflect.TypeToken;
 import com.pizidea.imagepicker.AndroidImagePicker;
 import com.pizidea.imagepicker.bean.ImageItem;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.OkHttpListener;
+import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.status.R;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.adapter.GridAlbumAdapter;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 作者： wh
@@ -31,7 +39,7 @@ import java.util.List;
  * 附加注释：
  * 主要接口：
  */
-public class PublishStatusActivity extends BaseActivity implements View.OnClickListener{
+public class PublishStatusActivity extends BaseActivity implements View.OnClickListener, OkHttpListener {
     /**
      * 文字的内容
      */
@@ -51,6 +59,15 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 选择的内容
      */
     private TextView tv_permitchoose;
+    private final String DYNAMIC ="/dynamic/issueDynamic.do";
+    /**
+     * 发布类型
+     */
+    private String dynamicType;
+    /**
+     * 可见范围
+     */
+    private String dynamicVisicty="1";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,14 +90,17 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         switch (type){
             case StatusPublishPopWindow.WORDS:
                 setCententTitle("发布文字");
+                dynamicType="3";
                 break;
             case StatusPublishPopWindow.PICTURE:
                 setCententTitle("发布图片");
                 goSelectImager();
                 showPhoto();
+                dynamicType="1";
                 break;
             case StatusPublishPopWindow.VEDIO:
                 setCententTitle("发布视频");
+                dynamicType="2";
                 break;
         }
     }
@@ -147,8 +167,12 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         switch (requestCode) {
             case ChoosePermitActivity.CHOOSE_PERMIT:
                 if (data!=null){
-                    String permit =  data.getStringExtra("permit");
+                    String permit = data.getStringExtra("permit");
                     tv_permitchoose.setText(permit);
+                    if(permit.equals("班级空间"))
+                        dynamicVisicty="1";
+                    else
+                        dynamicVisicty="2";
                 }
                 break;
         }
@@ -161,6 +185,20 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             intent.setClass(this,ChoosePermitActivity.class);
             intent.putExtra("permit",tv_permitchoose.getText().toString());
             startActivityForResult(intent,ChoosePermitActivity.CHOOSE_PERMIT);
+        }else if(viewId==R.id.tv_subtitle){
+            String dyContent=et_content.getText().toString().trim();
+            if(G.isEmteny(dyContent)&&dynamicType.equals("3")){
+                G.showToast(this,"发布的内容不能为空");
+                return;
+            }
+            UserMessage um=UserMessage.getInstance(this);
+            Map<String,Object>map=new HashMap<>();
+            map.put("tsId",um.getTsId());
+            map.put("dynamicType",dynamicType);
+            map.put("text",dyContent);
+            map.put("dynamicVisicty",dynamicVisicty);
+            Type type =new TypeToken<Result<String>>(){}.getType();
+            OkHttps.sendPost(type,DYNAMIC,map,this);
         }
     }
 
@@ -182,6 +220,24 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 }
             }
         });
+    }
+
+    @Override
+    public void onSuccess(String uri, Object date) {
+        if(DYNAMIC.equals(uri)){
+            Result<String>result= (Result<String>) date;
+            if(result.isSuccess()){
+                G.showToast(this,"发布成功!");
+                finish();
+            }else{
+                G.showToast(this,"发布失败，请稍后再试!");
+            }
+        }
+    }
+
+    @Override
+    public void onError(String uri, String error) {
+        G.showToast(this,"发布失败，请检测网络!");
     }
 }
 
