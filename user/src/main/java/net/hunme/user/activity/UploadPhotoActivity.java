@@ -1,5 +1,6 @@
 package net.hunme.user.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,8 +12,10 @@ import android.widget.TextView;
 import com.pizidea.imagepicker.AndroidImagePicker;
 import com.pizidea.imagepicker.bean.ImageItem;
 
+import net.hunme.baselibrary.activity.PermissionsActivity;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.user.R;
 import net.hunme.user.adapter.GridAlbumAdapter;
 
@@ -36,11 +39,19 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     private TextView tv_album_name;
     private ArrayList<String> albumNameList;
     public static int position=0;
-    public static final int TAKE_PICTURE = 0x000000;
     private static final int Album_NAME_SELECT=1111;
     private GridAlbumAdapter mAdapter;
     private List<ImageItem> itemList;
     //https://github.com/jeasonlzy0216/ImagePicker
+    //权限返回码
+    private static final int  REQUEST_CODE = 0;
+    // 访问相册所需的全部权限
+    static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
+    // 权限检测器
+    private PermissionsChecker mPermissionsChecker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +68,7 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initDate(){
+        mPermissionsChecker = new PermissionsChecker(this);
         G.initDisplaySize(this);
         itemList=new ArrayList<>();
         mAdapter=new GridAlbumAdapter(itemList,this);
@@ -65,6 +77,11 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i ==itemList.size()) {
+                    //检查是否有权限访问相册 ，没有的话弹框需要用户授权
+                    if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+                        PermissionsActivity.startActivityForResult(UploadPhotoActivity.this, REQUEST_CODE, PERMISSIONS);
+                        return;
+                    }
                     AndroidImagePicker.getInstance().pickMulti(UploadPhotoActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
                         @Override
                         public void onImagePickComplete(List<ImageItem> items) {
@@ -114,6 +131,12 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
         switch (requestCode) {
             case Album_NAME_SELECT:
                 tv_album_name.setText(albumNameList.get(position));
+                break;
+            case REQUEST_CODE:
+                //检测到没有授取权限 关闭页面
+                if(resultCode == PermissionsActivity.PERMISSIONS_DENIED){
+                    finish();
+                }
                 break;
         }
     }
