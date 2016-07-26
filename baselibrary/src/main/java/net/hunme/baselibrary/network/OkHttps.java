@@ -1,7 +1,6 @@
 package net.hunme.baselibrary.network;
 
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.lzy.okhttputils.OkHttpUtils;
@@ -10,12 +9,10 @@ import com.lzy.okhttputils.callback.AbsCallback;
 import com.lzy.okhttputils.model.HttpParams;
 import com.lzy.okhttputils.request.PostRequest;
 
-import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.util.EncryptUtil;
 import net.hunme.baselibrary.util.G;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -75,7 +72,7 @@ public class OkHttps<T> {
 
         //进行网络请求
         postRequest= getInstance()
-                .post(ServerConfigManager.SERVER_IP+uri);
+                .post(uri_host+uri);
         doInternet(type,uri,getParams(map),okHttpListener);
     }
 
@@ -128,20 +125,20 @@ public class OkHttps<T> {
                     .execute(new AbsCallback<Object>(){
                         @Override
                         public Object parseNetworkResponse(Response response) throws Exception {
-                            String value="{\"code\":\"123\",\"data\":{},\"msec\":\"133\",\"sign\":\"455\"}";
-                            Log.i("TAGFFF",response.body().string());
-                            return new Gson().fromJson(response.body().toString(),type);
+                            String value=response.body().string();
+                            G.log(value+"----------");
+                            return new Gson().fromJson(value,type);
                         }
 
                         @Override
                         public void onResponse(boolean isFromCache, Object o, Request request, @Nullable Response response) {
-                            Result result= (Result) o;
-                            Map<String,Object>map=new HashMap<>();
-                            map.put("data",result.getData());
+//                            Result result= (Result) o;
+//                            Map<String,Object>map=new HashMap<>();
+//                            map.put("data",result.getData());
                             //验签
-                            boolean isSuccess=EncryptUtil.verify(map,result.getMsec(),result.getSign());
+//                            boolean isSuccess=EncryptUtil.verify(map,result.getMsec(),result.getSign());
 //                            if(isSuccess)
-                                okHttpListener.onSuccess(uri,result);
+                                okHttpListener.onSuccess(uri,o);
 //                            else
 //                                okHttpListener.onError(uri,"非法访问");
                         }
@@ -178,8 +175,8 @@ public class OkHttps<T> {
             Map.Entry<String, Object> entry = iterator.next();
             params.put(entry.getKey(), entry.getValue().toString());
         }
-        params.put("msec",msec);
-        params.put("sign",sign);
+//        params.put("msec",msec);
+//        params.put("sign",sign);
         G.log("-----sign---------"+sign);
         G.log("-----msec---------"+msec);
         return  params;

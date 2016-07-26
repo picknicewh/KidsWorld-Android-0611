@@ -18,7 +18,7 @@
         <activity android:name=".activity.AlbumSelectActivity" />
         <activity android:name=".activity.UDynamicsActivity" />
         <activity android:name=".activity.UCollectionActivity" />
-        <activity android:name=".activity.UserChooseActivity" />
+        <activity android:name="net.hunme.login.UserChooseActivity" />
         <activity android:name=".activity.SystemInfoActivity" />
         <activity android:name=".activity.AdviceActivity" />
         <activity android:name=".activity.PhoneNumberActivity" />

@@ -13,11 +13,12 @@ import com.pizidea.imagepicker.UilImgLoader;
 import com.pizidea.imagepicker.bean.ImageItem;
 
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.user.R;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+
 
 /**
  * ================================================

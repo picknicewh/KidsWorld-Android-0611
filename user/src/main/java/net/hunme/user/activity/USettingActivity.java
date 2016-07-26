@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.login.UserChooseActivity;
 import net.hunme.user.R;
 import net.hunme.user.util.MyAlertDialog;
 

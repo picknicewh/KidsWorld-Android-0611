@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.login.LoginActivity;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * ================================================
@@ -25,9 +27,9 @@ public class UserAction {
      * @param context 上下文对象
      */
     public static void isGoLogin(Activity activity,Context context){
-        if (G.isEmteny(UserMessage.getInstance(context).getLoginName())){
+//        if (G.isEmteny(UserMessage.getInstance(context).getLoginName())){
             activity.startActivity(new Intent(context, LoginActivity.class));
-        }
+//        }
     }
 
     /**
@@ -43,7 +45,7 @@ public class UserAction {
      */
     public static void saveUserMessage(Context context, String loginName, String userName,
                                          String holdImgUrl, String className, String schoolName,
-                                       String ryId, String tsId){
+                                       String ryId, String tsId,String type){
         UserMessage um =UserMessage.getInstance(context);
         um.setLoginName(loginName);
         um.setUserName(userName);
@@ -52,5 +54,15 @@ public class UserAction {
         um.setSchoolName(schoolName);
         um.setRyId(ryId);
         um.setTsId(tsId);
+        um.setType(type);
     }
+
+    private static List<Activity> activityList = new LinkedList<Activity>();
+    public static void exit() {
+        for (Activity activity : activityList) {
+            activity.finish();
+        }
+        System.exit(0);
+    }
+
 }

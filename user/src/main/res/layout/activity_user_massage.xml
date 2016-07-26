@@ -31,8 +31,8 @@
             android:src="@mipmap/ic_arrow_right"
             android:layout_alignParentRight="true"/>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_into"
+        <net.hunme.baselibrary.widget.CircleImageView
+            android:id="@+id/cv_head"
             android:background="@drawable/bg_head_portrait"
             android:layout_toLeftOf="@id/iv_right"
             android:layout_width="wrap_content"
@@ -65,6 +65,7 @@
                 android:text="姓名"/>
 
             <TextView
+                android:id="@+id/tv_name"
                 android:layout_gravity="center"
                 android:textSize="@dimen/ts_medium"
                 android:layout_width="wrap_content"
@@ -78,6 +79,7 @@
             android:background="@color/line_gray"/>
 
         <LinearLayout
+            android:id="@+id/ll_sex"
             android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
@@ -93,11 +95,20 @@
                 android:text="性别"/>
 
             <TextView
+                style="@style/TextStyleBase"
+                android:padding="@dimen/space"
+                android:id="@+id/tv_sex"
                 android:layout_gravity="center"
                 android:textSize="@dimen/ts_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="男"/>
+                android:text="未知"/>
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_arrow_right"/>
         </LinearLayout>
 
         <View
@@ -106,6 +117,7 @@
             android:background="@color/line_gray"/>
 
         <LinearLayout
+            android:id="@+id/ll_sign"
             android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
@@ -121,6 +133,8 @@
                 android:text="签名"/>
 
             <TextView
+                android:id="@+id/tv_sign"
+                android:padding="@dimen/space"
                 android:layout_gravity="center"
                 style="@style/TextStyleBase"
                 android:layout_width="wrap_content"
@@ -128,7 +142,6 @@
                 android:text="还没有想好啊"/>
 
             <ImageView
-                android:layout_marginLeft="@dimen/space"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -158,8 +171,8 @@
                 android:text="班级"/>
 
             <TextView
+                android:id="@+id/tv_classname"
                 android:layout_gravity="center"
-                style="@style/TextStyleBase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="苗苗班"/>
@@ -186,8 +199,8 @@
                 android:text="学校"/>
 
             <TextView
+                android:id="@+id/tv_schoolname"
                 android:layout_gravity="center"
-                style="@style/TextStyleBase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="恒镁幼儿园"/>

@@ -36,7 +36,6 @@ public class UserMessage {
         editor.putString("loginName",loginName);
         editor.commit();
     }
-
     public String getLoginName(){
         return  spf.getString("loginName","");
     }
@@ -48,7 +47,6 @@ public class UserMessage {
         editor.putString("userName",userName);
         editor.commit();
     }
-
     public String getUserName(){
         return  spf.getString("userName","");
     }
@@ -60,7 +58,6 @@ public class UserMessage {
         editor.putString("holdImgUrl",holdImgUrl);
         editor.commit();
     }
-
     public String getHoldImgUrl(){
         return  spf.getString("holdImgUrl","");
     }
@@ -72,7 +69,6 @@ public class UserMessage {
         editor.putString("className",className);
         editor.commit();
     }
-
     public String getClassName(){
         return  spf.getString("className","");
     }
@@ -84,7 +80,6 @@ public class UserMessage {
         editor.putString("schoolName",schoolName);
         editor.commit();
     }
-
     public String getSchoolName(){
         return  spf.getString("schoolName","");
     }
@@ -96,7 +91,6 @@ public class UserMessage {
         editor.putString("ryId",ryId);
         editor.commit();
     }
-
     public String getRyId(){
         return  spf.getString("ryId","");
     }
@@ -108,7 +102,6 @@ public class UserMessage {
         editor.putString("tsId",tsId);
         editor.commit();
     }
-
     public String getTsId(){
         return  spf.getString("tsId","");
     }
@@ -121,8 +114,42 @@ public class UserMessage {
         editor.putString("type",type);
         editor.commit();
     }
-
     public String getType(){
         return spf.getString("type","");
     }
+
+    /**
+     * @param sex 用户性别
+     */
+    public void setSex(String sex){
+        editor.putString("sex",sex);
+        editor.commit();
+    }
+    public String getSex(){
+        return  spf.getString("sex","未知");
+    }
+
+    /**
+     * @param userSign  用户签名
+     */
+    public void setUserSign(String userSign){
+        editor.putString("userSign",userSign);
+        editor.commit();
+    }
+    public String getUserSign(){
+        return spf.getString("userSign","还没有想好啊");
+    }
+
+    /**
+     *  用户登录信息缓存
+     * @param jsonCache 用户信息（包含多重身份）
+     */
+    public void setUserMessagejsonCache(String jsonCache){
+        editor.putString("jsonCache",jsonCache);
+        editor.commit();
+    }
+    public String getUserMessageJsonCache(){
+        return spf.getString("jsonCache","");
+    }
+
 }

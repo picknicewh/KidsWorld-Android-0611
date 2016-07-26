@@ -1,15 +1,34 @@
 package net.hunme.user.activity;
 
+import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.google.gson.reflect.TypeToken;
 import com.pizidea.imagepicker.AndroidImagePicker;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.OkHttpListener;
+import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.UserMessage;
+import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.user.R;
+import net.hunme.user.util.MyAlertDialog;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * ================================================
  * 作    者：ZLL
@@ -20,19 +39,50 @@ import net.hunme.user.R;
  * 主要接口：
  * ================================================
  */
-public class UMassageActivity extends BaseActivity implements View.OnClickListener {
+public class UMassageActivity extends BaseActivity implements View.OnClickListener, OkHttpListener {
     private RelativeLayout rl_userMessage;
-    private ImageView iv_into;
+    private LinearLayout ll_sex;
+    private LinearLayout ll_sign;
+    private CircleImageView cv_head;
+    private TextView tv_name;
+    private TextView tv_sex;
+    private TextView tv_sign;
+    private TextView tv_classname;
+    private TextView tv_schoolname;
+    private UserMessage um;
+    private final String SETSIGN="/appUser/setSign.do";
+    private String sign;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_massage);
         initView();
+        initData();
     }
+
     private void initView(){
         rl_userMessage=$(R.id.rl_userMessage);
-        iv_into=$(R.id.iv_into);
+        cv_head=$(R.id.cv_head);
+        tv_name=$(R.id.tv_name);
+        tv_sex =$(R.id.tv_sex);
+        tv_sign=$(R.id.tv_sign);
+        tv_classname=$(R.id.tv_classname);
+        tv_schoolname=$(R.id.tv_schoolname);
+        ll_sex=$(R.id.ll_sex);
+        ll_sign=$(R.id.ll_sign);
         rl_userMessage.setOnClickListener(this);
+        ll_sex.setOnClickListener(this);
+        ll_sign.setOnClickListener(this);
+    }
+
+    private void initData(){
+        um=UserMessage.getInstance(this);
+//        cv_head.setImageResource();
+        tv_name.setText(um.getUserName());
+        tv_sex.setText(um.getSex());
+        tv_sign.setText(um.getUserSign());
+        tv_classname.setText(um.getClassName());
+        tv_schoolname.setText(um.getSchoolName());
     }
     @Override
     protected void setToolBar() {
@@ -50,9 +100,101 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
                 public void onImageCropComplete(Bitmap bmp, float ratio) {
 //                    Log.i(TAG,"=====onImageCropComplete (get bitmap="+bmp.toString());
 //                    ivCrop.setVisibility(View.VISIBLE);
-                    iv_into.setImageBitmap(bmp);
+                    cv_head.setImageBitmap(bmp);
                 }
             });
+        }else if(viewID==R.id.ll_sex){
+            showSexDialog();
+        }else if(viewID==R.id.ll_sign){
+            showSignDialog();
         }
+    }
+
+    /**
+     * 性别选择框
+     */
+    public void showSexDialog(){
+        View view= LayoutInflater.from(this).inflate(R.layout.alertdialog_select_sex,null);
+        final AlertDialog alertDialog= MyAlertDialog.getDialog(view,this,1);
+        final RadioButton rb_boy= (RadioButton) view.findViewById(R.id.rb_boy);
+        final RadioButton rb_girl= (RadioButton) view.findViewById(R.id.rb_girl);
+        if(um.getSex().equals("女"))
+            rb_girl.setChecked(true);
+        else
+            rb_boy.setChecked(true);
+        rb_boy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                um.setSex(rb_boy.getText().toString());
+                tv_sex.setText(um.getSex());
+                alertDialog.dismiss();
+            }
+        });
+        rb_girl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                um.setSex(rb_girl.getText().toString());
+                tv_sex.setText(um.getSex());
+                alertDialog.dismiss();
+            }
+        });
+    }
+
+    public void showSignDialog(){
+        //获取View
+        final View dialogView = LayoutInflater.from(this).inflate(R.layout.alertdialog_add_album, null);
+        //获取弹框
+        final AlertDialog alertDialog =MyAlertDialog.getDialog(dialogView,this,1);
+        Button alertCancel= (Button) dialogView.findViewById(R.id.b_cancel);
+        Button alertConfirm= (Button) dialogView.findViewById(R.id.b_confirm);
+        final EditText etAlbumName= (EditText) dialogView.findViewById(R.id.et_album_name);
+        etAlbumName.setHint("请输入签名");
+        etAlbumName.setFocusable(true);
+        etAlbumName.setFocusableInTouchMode(true);
+        etAlbumName.requestFocus();
+        //取消
+        alertCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        //确定
+        alertConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String sign=etAlbumName.getText().toString();
+                if (!G.isEmteny(sign)) {
+                    userSignSubmit(sign);
+                }
+                alertDialog.dismiss();
+            }
+        });
+    }
+
+    public void userSignSubmit(String userSign){
+        Map<String,Object>map=new HashMap<>();
+        map.put("tsId",um.getTsId());
+        map.put("sign",userSign);
+        Type type=new TypeToken<Result<String>>(){}.getType();
+        OkHttps.sendPost(type,SETSIGN,map,this);
+    }
+
+    @Override
+    public void onSuccess(String uri, Object date) {
+        if(SETSIGN.equals(uri)){
+            Result<String> result= (Result<String>) date;
+            if(result.isSuccess()){
+                um.setUserSign(sign);
+                tv_sign.setText(um.getUserSign());
+            }else{
+                G.showToast(this,"提交数据失败，请重试！");
+            }
+        }
+    }
+
+    @Override
+    public void onError(String uri, String error) {
+        G.showToast(this,"提交数据失败，请检查网络后再试！");
     }
 }

@@ -11,11 +11,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.user.R;
 import net.hunme.user.util.Bimp;
 import net.hunme.user.util.FileUtils;
 
 import java.io.IOException;
+
 
 /**
  * ================================================
@@ -83,7 +85,7 @@ public class GridAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.image = (ImageView) convertView
                     .findViewById(R.id.item_grida_image);
-            holder.clv_delete= (ImageView) convertView.findViewById(R.id.clv_delete);
+            holder.clv_delete= (CircleImageView) convertView.findViewById(R.id.clv_delete);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -113,7 +115,7 @@ public class GridAdapter extends BaseAdapter {
 
     public class ViewHolder {
         public ImageView image;
-        public ImageView clv_delete;
+        public CircleImageView clv_delete;
     }
 
     Handler handler = new Handler() {

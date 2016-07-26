@@ -1,0 +1,53 @@
+package net.hunme.user.util;
+
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+/**
+ * ================================================
+ * 作    者：ZLL
+ * 时    间：2016/7/26
+ * 描    述：系统消息数据库帮助类
+ * 版    本：
+ * 修订历史：
+ * 主要接口：
+ * ================================================
+ */
+public class SystemInfoDbHelp {
+    /**
+     * 插入数据
+     */
+    public static  void insert(SQLiteDatabase db, String values){
+
+        String sql="insert into user (usertype) values ('"+values+"')";
+        db.execSQL(sql);
+    }
+
+    /**
+     * 查询数据
+     */
+    public static boolean select(SQLiteDatabase db, String values){
+        String sql="select * from user where usertype = "+"'"+values+"'";
+        Cursor localCursor= db.rawQuery(sql,null);
+        db.close();
+        if (localCursor.getColumnCount()==0){
+            Log.i("TAG",localCursor.getColumnCount()+"");
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 删除所有
+     * @param db
+     */
+    public static void delete(SQLiteDatabase db){
+        String sql="delete from user";
+        db.execSQL(sql);
+
+        String sqls = "DELETE FROM sqlite_sequence";
+        db.execSQL(sqls);
+
+    }
+}

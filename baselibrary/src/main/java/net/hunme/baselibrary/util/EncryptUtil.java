@@ -2,6 +2,7 @@ package net.hunme.baselibrary.util;
 
 import com.google.gson.Gson;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -82,24 +83,41 @@ public class EncryptUtil {
 	}
 
 	/**
-	 * BASE64解密
-	 *
-	 * @param key
+	 * Base64加密
+	 * @param str
 	 * @return
-	 * @throws Exception
-	 */
-	public static byte[] decryptBASE64(String key) throws Exception {
-		return (new BASE64Decoder()).decodeBuffer(key);
+     */
+	public static String getBase64(String str) {
+		byte[] b = null;
+		String s = null;
+		try {
+			b = str.getBytes("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		if (b != null) {
+			s = new BASE64Encoder().encode(b);
+		}
+		return s;
 	}
 
 	/**
-	 * BASE64加密
-	 *
-	 * @param key
+	 * Base64解密
+	 * @param s
 	 * @return
-	 * @throws Exception
-	 */
-	public static String encryptBASE64(byte[] key) {
-		return (new BASE64Encoder()).encodeBuffer(key);
+     */
+	public static String getFromBase64(String s) {
+		byte[] b = null;
+		String result = null;
+		if (s != null) {
+			BASE64Decoder decoder = new BASE64Decoder();
+			try {
+				b = decoder.decodeBuffer(s);
+				result = new String(b, "utf-8");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 }
