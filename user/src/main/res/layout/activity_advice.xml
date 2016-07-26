@@ -15,10 +15,11 @@
         android:hint="请输入您的宝贵意见或建议"
         android:inputType="textMultiLine"
         android:minLines="8"
+        android:layout_margin="@dimen/space"
         android:padding="@dimen/space_x2" />
 
     <Button
-        android:onClick="submit"
+        android:id="@+id/b_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"

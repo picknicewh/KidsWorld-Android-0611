@@ -81,6 +81,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickClose();
         setSubTitle("发送");
+        setSubTitleOnClickListener(this);
     }
     /**
      * 显示不同值传过来界面的状态
@@ -191,9 +192,8 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 G.showToast(this,"发布的内容不能为空");
                 return;
             }
-            UserMessage um=UserMessage.getInstance(this);
             Map<String,Object>map=new HashMap<>();
-            map.put("tsId",um.getTsId());
+            map.put("tsId",UserMessage.getInstance(this).getTsId());
             map.put("dynamicType",dynamicType);
             map.put("text",dyContent);
             map.put("dynamicVisicty",dynamicVisicty);

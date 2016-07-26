@@ -13,10 +13,8 @@
         android:src="@mipmap/ic_test01" >
     </ImageView>
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <net.hunme.baselibrary.widget.CircleImageView
         android:id="@+id/clv_delete"
-        app:civ_border_width="1dp"
-        app:civ_border_color="@color/green"
         android:layout_alignRight="@id/item_grida_image"
         android:layout_width="20dp"
         android:layout_height="20dp"

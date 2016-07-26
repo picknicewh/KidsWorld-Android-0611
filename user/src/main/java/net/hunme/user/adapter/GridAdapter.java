@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.user.R;
 import net.hunme.user.util.Bimp;
 import net.hunme.user.util.FileUtils;
 
 import java.io.IOException;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * ================================================

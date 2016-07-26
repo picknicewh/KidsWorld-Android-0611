@@ -56,9 +56,9 @@ public class PhotoAdapter extends BaseAdapter {
         }
         viewHold= (ViewHold) view.getTag();
         if(null!=photoList){
-            viewHold.photo.setImageBitmap(photoList.get(i).getPhotoBitmap());
-            viewHold.photoName.setText(photoList.get(i).getPhotoName());
-            viewHold.photoNumber.setText(photoList.get(i).getPhotoNumber());
+//            viewHold.photo.setImageBitmap(photoList.get(i).getPhotoBitmap());
+            viewHold.photoName.setText(photoList.get(i).getFlickrName());
+            viewHold.photoNumber.setText(photoList.get(i).getFlickrSize());
         }
         return view;
     }

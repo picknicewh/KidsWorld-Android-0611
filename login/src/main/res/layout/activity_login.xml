@@ -27,6 +27,7 @@
             android:background="@color/white"
             />
         <EditText
+            android:inputType="textPassword"
             android:id="@+id/ed_password"
             android:layout_margin="@dimen/space_x1.5"
             android:padding="@dimen/space"

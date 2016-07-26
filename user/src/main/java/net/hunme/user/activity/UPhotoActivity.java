@@ -2,7 +2,6 @@ package net.hunme.user.activity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +10,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.gson.reflect.TypeToken;
+
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.OkHttpListener;
+import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.user.R;
 import net.hunme.user.adapter.PhotoAdapter;
 import net.hunme.user.mode.PhotoVo;
 import net.hunme.user.util.MyAlertDialog;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 /**
  * ================================================
  * 作    者：ZLL
@@ -30,10 +39,15 @@ import java.util.List;
  * 主要接口：
  * ================================================
  */
-public class UPhotoActivity extends BaseActivity implements View.OnClickListener {
+public class UPhotoActivity extends BaseActivity implements View.OnClickListener, OkHttpListener {
     private ListView lv_photo;
     private PhotoAdapter adapter;
     private List<PhotoVo>photoList; //用户相册实体类 list
+    private UserMessage um;
+    /**
+     * 获取我的相册
+     */
+    private String MYFlICKR="/appUser/myFlickr.do";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +69,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initDate(){
+        um=UserMessage.getInstance(this);
         photoList=new ArrayList<>();
         adapter=new PhotoAdapter(photoList,this);
         lv_photo.setAdapter(adapter);
@@ -62,6 +77,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
             photoList.add(TestDate());
         }
         adapter.notifyDataSetChanged();
+//        getMyPhoto(um.getTsId());
         lv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -70,12 +86,12 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
         });
     }
 
-    //测试数据
+//    //测试数据
     private PhotoVo TestDate(){
         PhotoVo photoVo=new PhotoVo();
-        photoVo.setPhotoBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_test01));
-        photoVo.setPhotoName("掠天之翼");
-        photoVo.setPhotoNumber("共15张");
+//        photoVo.setPhotoBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_test01));
+        photoVo.setFlickrName("掠天之翼");
+        photoVo.setFlickrSize("共15张");
         return  photoVo;
     }
 
@@ -109,14 +125,39 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
                         G.showToast(UPhotoActivity.this,"相册名不能为空");
                         return;
                     }
-                    PhotoVo photoVo=new PhotoVo();
-                    photoVo.setPhotoBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_test01));
-                    photoVo.setPhotoName(albumName);
-                    photoList.add(0,photoVo);
+//                    PhotoVo photoVo=new PhotoVo();
+//                    photoVo.setPhotoBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_test01));
+//                    photoVo.setPhotoName(albumName);
+//                    photoList.add(0,photoVo);
                     adapter.notifyDataSetChanged();
                     alertDialog.dismiss();
                 }
             });
         }
+    }
+
+    private void getMyPhoto(String tsId){
+        Map<String,Object> map=new HashMap<>();
+        map.put("tsId",um.getTsId());
+        Type type=new TypeToken<Result<List<PhotoVo>>>(){}.getType();
+        OkHttps.sendPost(type,MYFlICKR,map,this);
+    }
+
+    @Override
+    public void onSuccess(String uri, Object date) {
+        if(MYFlICKR.equals(uri)){
+            Result<List<PhotoVo>> result= (Result<List<PhotoVo>>) date;
+            if(result.isSuccess()){
+                photoList=result.getData();
+                adapter.notifyDataSetChanged();
+            }else{
+                G.showToast(this,"数据获取失败，请稍后再试！");
+            }
+        }
+    }
+
+    @Override
+    public void onError(String uri, String error) {
+        G.showToast(this,"数据获取失败，请检查网络再试！");
     }
 }

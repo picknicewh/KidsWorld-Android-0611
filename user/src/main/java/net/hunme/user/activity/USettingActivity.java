@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.login.UserChooseActivity;
 import net.hunme.user.R;
 import net.hunme.user.util.MyAlertDialog;
 
