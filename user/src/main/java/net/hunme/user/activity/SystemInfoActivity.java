@@ -1,7 +1,9 @@
 package net.hunme.user.activity;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -58,9 +60,10 @@ public class SystemInfoActivity extends BaseActivity implements OkHttpListener {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 SQLiteDatabase db = infoDb.getWritableDatabase();
                 SystemInfoDbHelp.insert(db,messageList.get(i).getContent()+messageList.get(i).getDate());
-                db.close();
+               // db.close();
             }
         });
+
     }
 
     private void getMessageDate(String tsId){
@@ -93,6 +96,7 @@ public class SystemInfoActivity extends BaseActivity implements OkHttpListener {
         for (int i=0;i<100;i++){
             vo.setContent(i*10+"");
             vo.setDate(i+"");
+
             messageList.add(vo);
         }
         return messageList;

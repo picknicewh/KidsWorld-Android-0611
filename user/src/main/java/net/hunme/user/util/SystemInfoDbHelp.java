@@ -2,7 +2,6 @@ package net.hunme.user.util;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 /**
  * ================================================
@@ -19,7 +18,6 @@ public class SystemInfoDbHelp {
      * 插入数据
      */
     public static  void insert(SQLiteDatabase db, String values){
-
         String sql="insert into user (usertype) values ('"+values+"')";
         db.execSQL(sql);
     }
@@ -28,6 +26,12 @@ public class SystemInfoDbHelp {
      * 查询数据
      */
     public static boolean select(SQLiteDatabase db, String values){
+        Cursor cursor = db.rawQuery("select * from user where usertype = "+"'"+values+"'",null);
+        while (cursor.moveToNext()){
+            return true;
+        }
+        return false;
+      /*
         String sql="select * from user where usertype = "+"'"+values+"'";
         Cursor localCursor= db.rawQuery(sql,null);
         db.close();
@@ -35,7 +39,10 @@ public class SystemInfoDbHelp {
             Log.i("TAG",localCursor.getColumnCount()+"");
             return true;
         }
-        return false;
+        return false;*/
+
+
+
     }
 
     /**
