@@ -17,7 +17,7 @@
         android:id="@+id/rl_openclass"
         android:background="@color/white"
         android:layout_marginBottom="@dimen/space_x2"
-        android:padding="@dimen/space_x2"
+        android:padding="@dimen/space_x1.5"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -30,7 +30,7 @@
         <TextView
             android:layout_toRightOf="@id/iv_openclass"
             android:layout_marginLeft="@dimen/space"
-            android:text="开发课堂"
+            android:text="开放课堂"
             android:textSize="@dimen/ts_large"
             android:layout_gravity="center"
             android:layout_width="match_parent"
@@ -44,7 +44,7 @@
     <RelativeLayout
         android:id="@+id/rl_check"
         android:background="@color/white"
-        android:padding="@dimen/space_x2"
+        android:padding="@dimen/space_x1.5"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -77,7 +77,7 @@
         android:id="@+id/rl_leave"
         android:layout_marginBottom="@dimen/space_x2"
         android:background="@color/white"
-        android:padding="@dimen/space_x2"
+        android:padding="@dimen/space_x1.5"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -104,7 +104,7 @@
     <RelativeLayout
         android:id="@+id/rl_info"
         android:background="@color/white"
-        android:padding="@dimen/space_x2"
+        android:padding="@dimen/space_x1.5"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -136,7 +136,7 @@
     <RelativeLayout
         android:id="@+id/rl_food"
         android:background="@color/white"
-        android:padding="@dimen/space_x2"
+        android:padding="@dimen/space_x1.5"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -168,7 +168,7 @@
     <RelativeLayout
         android:id="@+id/rl_arrangement"
         android:background="@color/white"
-        android:padding="@dimen/space_x2"
+        android:padding="@dimen/space_x1.5"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

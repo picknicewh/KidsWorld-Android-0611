@@ -78,6 +78,7 @@ public class WebViewActivity extends BaseActivity {
             }
         });
     }
+
     /**
      * 交互配置
      * @param  webView
@@ -102,7 +103,7 @@ public class WebViewActivity extends BaseActivity {
         webSetting.setAllowContentAccess(true);
         webSetting.setAllowFileAccessFromFileURLs(true);
         webSetting.setAllowUniversalAccessFromFileURLs(true);
-        webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);/// 默认使用缓存
+        webSetting.setCacheMode(WebSettings.LOAD_DEFAULT);/// 默认使用缓存
         webView.addJavascriptInterface(this, "change_nb");  //设置本地调用对象及其接口
     }
 
@@ -136,5 +137,6 @@ public class WebViewActivity extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 
 }
