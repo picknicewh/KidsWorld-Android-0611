@@ -1,22 +1,26 @@
 package net.hunme.user.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.pizidea.imagepicker.AndroidImagePicker;
+import com.pizidea.imagepicker.bean.ImageItem;
+
+import net.hunme.baselibrary.activity.PermissionsActivity;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.user.R;
-import net.hunme.user.adapter.GridAdapter;
-import net.hunme.user.util.Bimp;
+import net.hunme.user.adapter.GridAlbumAdapter;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -32,13 +36,22 @@ import java.util.ArrayList;
 public class UploadPhotoActivity extends BaseActivity implements View.OnClickListener {
     private GridView gv_photo;
     private LinearLayout ll_selcet_photoname;
-    private GridAdapter adapter;
     private TextView tv_album_name;
     private ArrayList<String> albumNameList;
     public static int position=0;
-    public static final int TAKE_PICTURE = 0x000000;
     private static final int Album_NAME_SELECT=1111;
+    private GridAlbumAdapter mAdapter;
+    private List<ImageItem> itemList;
     //https://github.com/jeasonlzy0216/ImagePicker
+    //权限返回码
+    private static final int  REQUEST_CODE = 0;
+    // 访问相册所需的全部权限
+    static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
+    // 权限检测器
+    private PermissionsChecker mPermissionsChecker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,34 +68,34 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initDate(){
+        mPermissionsChecker = new PermissionsChecker(this);
         G.initDisplaySize(this);
-        adapter=new GridAdapter(this);
-        adapter.update();
-        gv_photo.setAdapter(adapter);
+        itemList=new ArrayList<>();
+        mAdapter=new GridAlbumAdapter(itemList,this);
+        gv_photo.setAdapter(mAdapter);
         gv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == Bimp.bmp.size()) {
-//                    Intent intent = new Intent(Intent.ACTION_PICK,
-//                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                    startActivityForResult(intent, RESULT_LOAD_IMAGE);
-                    Intent intent = new Intent(UploadPhotoActivity.this,
-                            AlbumActivity.class);
-                    startActivityForResult(intent,TAKE_PICTURE);
-//                    if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
-//                        PermissionsActivity.startActivityForResult(UploadPhotoActivity.this, REQUEST_CODE, PERMISSIONS);
-//                        return;
-//                    }
-//                    AndroidImagePicker.getInstance().pickMulti(UploadPhotoActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
-//                        @Override
-//                        public void onImagePickComplete(List<ImageItem> items) {
-//                            if(items != null && items.size() > 0){
-////                                Log.i(TAG,"=====selected："+items.get(0).path);
-////                                mAdapter.clear();
-////                                mAdapter.addAll(items);
-//                            }
-//                        }
-//                    });
+                if (i ==itemList.size()) {
+                    //检查是否有权限访问相册 ，没有的话弹框需要用户授权
+                    if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+                        PermissionsActivity.startActivityForResult(UploadPhotoActivity.this, REQUEST_CODE, PERMISSIONS);
+                        return;
+                    }
+                    AndroidImagePicker.getInstance().pickMulti(UploadPhotoActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
+                        @Override
+                        public void onImagePickComplete(List<ImageItem> items) {
+                            if(items != null && items.size() > 0){
+                                for(ImageItem item:items){
+                                    G.log("选择了===="+item.path);
+                                    if(itemList.size()<9){
+                                        itemList.add(item);
+                                    }
+                                }
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -114,29 +127,18 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Bimp.bmp.clear();
-    }
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case TAKE_PICTURE:
-                if (Bimp.tempSelectBitmap.size() < 9 && resultCode == -1) {
-                    File file = new File(Environment.getExternalStorageDirectory()
-                            + "/myimage/", String.valueOf(System.currentTimeMillis())
-                            + ".jpg");
-                    Bimp.tempSelectBitmap.add(file.getPath());
-                }
-                adapter.update();
-                adapter.notifyDataSetChanged();
-                break;
             case Album_NAME_SELECT:
                 tv_album_name.setText(albumNameList.get(position));
                 break;
+            case REQUEST_CODE:
+                //检测到没有授取权限 关闭页面
+                if(resultCode == PermissionsActivity.PERMISSIONS_DENIED){
+                    finish();
+                }
+                break;
         }
     }
-
 
 }

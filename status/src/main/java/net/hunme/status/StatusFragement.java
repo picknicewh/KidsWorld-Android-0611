@@ -1,22 +1,15 @@
 package net.hunme.status;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
-import net.hunme.baselibrary.util.G;
-import net.hunme.baselibrary.util.MWebChromeClient;
-import net.hunme.baselibrary.util.MWebViewClient;
 import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.status.widget.ChooseClassPopWindow;
 import net.hunme.status.widget.StatusPublishPopWindow;
@@ -64,7 +57,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         classlist.add("一(3)班");
         popWindow = new ChooseClassPopWindow(this,classlist);
         tv_classname.setOnClickListener(this);
-
     }
     /**
      * 交互配置
@@ -92,6 +84,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         webSetting.setAllowUniversalAccessFromFileURLs(true);
         webSetting.setCacheMode(WebSettings.LOAD_DEFAULT);/// 默认使用缓存
     }
+
     private void setViewAction(){
         iv_lift.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +108,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             }
         });
     }
+
    public void setClassname(String classname){
        tv_classname.setText(classname);
    }

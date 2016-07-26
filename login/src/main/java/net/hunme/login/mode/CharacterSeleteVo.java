@@ -23,7 +23,7 @@ public class CharacterSeleteVo{
         this.jsonList = jsonList;
     }
 
-    class characterSelete {
+    public class characterSelete {
         private String tsId;   //角色ID
         private String img;    //用户头像URL
         private String name;   //用户名称

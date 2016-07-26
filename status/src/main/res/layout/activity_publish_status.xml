@@ -62,9 +62,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_x0.5"
-        android:horizontalSpacing="20dp"
+        android:horizontalSpacing="@dimen/space"
         android:numColumns="4"
-        android:scrollbars="none"
-        android:verticalSpacing="20dp"/>
+        android:scrollbars="none" />
 
 </LinearLayout>

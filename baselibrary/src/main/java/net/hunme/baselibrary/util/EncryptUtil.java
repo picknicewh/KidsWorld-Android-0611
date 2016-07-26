@@ -7,12 +7,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
+import Decoder.BASE64Decoder;
+import Decoder.BASE64Encoder;
 
 
 public class EncryptUtil {
 	/**
 	 * 用MD5算法进行加密
-	 * 
+	 *
 	 * @param str
 	 *            需要加密的字符串
 	 * @return MD5加密后的结果
@@ -23,7 +25,7 @@ public class EncryptUtil {
 
 	/**
 	 * 用SHA算法进行加密
-	 * 
+	 *
 	 * @param str
 	 *            需要加密的字符串
 	 * @return SHA加密后的结果
@@ -50,7 +52,7 @@ public class EncryptUtil {
 
 	/**
 	 * 加签
-	 * 
+	 *
 	 * @param map Map参数（向服务端接口传递参数通过map传进来）
 	 * @param msec 当前时间毫秒数
 	 * @return 加密后的密钥
@@ -68,8 +70,8 @@ public class EncryptUtil {
 	 * @param map 服务端返回date 字段用MAP包起来
 	 * @param msec 服务端返回当前毫秒数
 	 * @param sign 服务端返回签名
-     * @return true通过 false 非法访问
-     */
+	 * @return true通过 false 非法访问
+	 */
 	public static boolean verify(Map<String, Object> map, String msec, String sign) {
 		String dataSign = getSign(map, msec);
 		if (dataSign.equals(sign)) {
@@ -77,5 +79,27 @@ public class EncryptUtil {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * BASE64解密
+	 *
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] decryptBASE64(String key) throws Exception {
+		return (new BASE64Decoder()).decodeBuffer(key);
+	}
+
+	/**
+	 * BASE64加密
+	 *
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public static String encryptBASE64(byte[] key) {
+		return (new BASE64Encoder()).encodeBuffer(key);
 	}
 }
