@@ -21,6 +21,18 @@ public class GroupMemberBean {
 	 * 联系人的userid
 	 */
 	private String userid;
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+	/**
+	 * 头像地址
+	 */
+	private String img;
 	public String getName() {
 		return name;
 	}

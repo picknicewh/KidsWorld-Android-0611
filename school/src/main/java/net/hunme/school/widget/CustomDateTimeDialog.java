@@ -81,16 +81,20 @@ public class CustomDateTimeDialog extends Dialog implements View.OnClickListener
      * wheelView字体大小
      */
     private int textSize;
-
+    /**
+     * 开始还是结束标记
+     */
+    private int flag;
     public CustomDateTimeDialog(LeaveAskActivity context) {
         super(context);
         this.context = context;
         // TODO Auto-generated constructor stub
     }
 
-    public CustomDateTimeDialog(LeaveAskActivity context, int theme) {
+    public CustomDateTimeDialog(LeaveAskActivity context, int theme,int flag) {
         super(context, theme);
         this.context = context;
+        this.flag = flag;
     }
 
 
@@ -163,8 +167,8 @@ public class CustomDateTimeDialog extends Dialog implements View.OnClickListener
         wv_minute = (NumericWheelView) view.findViewById(R.id.wv_minute);
         b_confirm = (Button) view.findViewById(R.id.b_confirm);
         b_cancle = (Button) view.findViewById(R.id.b_cancel);
-//        b_confirm.setOnClickListener(this);
-//        b_cancle.setOnClickListener(this);
+       b_confirm.setOnClickListener(this);
+        b_cancle.setOnClickListener(this);
     }
 
     /**
@@ -214,7 +218,7 @@ public class CustomDateTimeDialog extends Dialog implements View.OnClickListener
         if (viewid == R.id.b_confirm) {
             setCalendar();
             long millis = calendar.getTimeInMillis();
-            context.setDateTextView(millis);
+            context.setDateTextView(millis,flag);
             dismiss();
         } else if (viewid == R.id.b_cancel) {
             cancel();

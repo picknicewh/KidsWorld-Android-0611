@@ -9,10 +9,12 @@ import com.lzy.okhttputils.callback.AbsCallback;
 import com.lzy.okhttputils.model.HttpParams;
 import com.lzy.okhttputils.request.PostRequest;
 
+import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.util.EncryptUtil;
 import net.hunme.baselibrary.util.G;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -125,8 +127,8 @@ public class OkHttps<T> {
                     .execute(new AbsCallback<Object>(){
                         @Override
                         public Object parseNetworkResponse(Response response) throws Exception {
-                            String value=response.body().string();
-                            G.log(value+"----------");
+                            String value="{\"code\":\"123\",\"data\":{},\"msec\":\"133\",\"sign\":\"455\"}";
+                            //response.body().toString();
                             return new Gson().fromJson(value,type);
                         }
 

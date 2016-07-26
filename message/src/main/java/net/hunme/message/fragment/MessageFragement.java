@@ -10,16 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.message.MessageApplication;
 import net.hunme.message.R;
+import net.hunme.message.activity.ClassActivity;
 import net.hunme.message.activity.ParentActivity;
 import net.hunme.message.activity.SearchActivity;
 import net.hunme.message.ronglistener.MyConversationBehaviorListener;
-
-import java.util.List;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
@@ -42,15 +40,15 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     /**
      * 班级
      */
-    private LinearLayout ll_class;
+    private ImageView iv_class;
     /**
      * 老师
      */
-    private LinearLayout ll_teacher;
+    private ImageView iv_teacher;
     /**
      * 家长
      */
-    private LinearLayout ll_parent;
+    private ImageView iv_parent;
     /**
      * 保存的用户名
      */
@@ -73,16 +71,17 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     }
    private  void init(View v){
        iv_search = $(v,R.id.iv_search);
-        ll_class = $(v,R.id.ll_class);
-        ll_teacher = $(v,R.id.ll_teacher);
-        ll_parent = $(v,R.id.ll_parent);
+        iv_class = $(v,R.id.iv_class);
+        iv_teacher = $(v,R.id.iv_teacher);
+        iv_parent = $(v,R.id.iv_parent);
         initframent();
-        ll_parent.setOnClickListener(this);
-        ll_teacher.setOnClickListener(this);
-        ll_class.setOnClickListener(this);
+        iv_parent.setOnClickListener(this);
+        iv_teacher.setOnClickListener(this);
+        iv_class.setOnClickListener(this);
        iv_search.setOnClickListener(this);
 
    }
+
     /**
      *获取聊天列表
      */
@@ -167,13 +166,14 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
-        if (v.getId()==R.id.ll_class){
-
-        }else if (v.getId()==R.id.ll_teacher){
+        if (v.getId()==R.id.iv_class){
+            intent.setClass(getActivity(), ClassActivity.class);
+            startActivity(intent);
+        }else if (v.getId()==R.id.iv_teacher){
             intent.setClass(getActivity(), ParentActivity.class);
             intent.putExtra("title","教师");
             startActivity(intent);
-        }else if (v.getId()==R.id.ll_parent){
+        }else if (v.getId()==R.id.iv_parent){
             intent.setClass(getActivity(), ParentActivity.class);
             intent.putExtra("title","家长");
             startActivity(intent);
@@ -197,25 +197,6 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
                }
         }
     };
-    /**
-     * 创建班级的讨论组
-     *
-     * @param name 班级的姓名
-     * @param userids 班级所有的用户id
-     */
-    private void createDiscuss(final String name, List<String> userids ){
 
-        if (RongIM.getInstance()!=null){
-            RongIM.getInstance().createDiscussion(name, userids, new RongIMClient.CreateDiscussionCallback() {
-                @Override
-                public void onSuccess(String groupId) {
-                    RongIM.getInstance().startDiscussionChat(getActivity(), groupId, name);
-               }
-                @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {
 
-                }
-            });
-        }
-    }
 }
