@@ -6,17 +6,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.widget.NavigationBar;
-
-import net.hunme.school.activity.ArrangmentActivity;
-import net.hunme.school.activity.CheckActivity;
-import net.hunme.school.activity.FoodListActivity;
-import net.hunme.school.activity.InformActivity;
-import net.hunme.school.activity.LeaveActivity;
 import net.hunme.school.activity.OpenClassActivity;
+import net.hunme.school.activity.WebViewActivity;
+
 import butterknife.ButterKnife;
 
 /**
@@ -35,27 +31,55 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     /**
      * 开放课堂
      */
-    private LinearLayout ll_openclass;
+    private RelativeLayout rl_openclass;
     /**
      *考勤
      */
-    private LinearLayout ll_check;
+    private RelativeLayout rl_check;
     /**
      * 请假
      */
-    private LinearLayout ll_leave;
+    private RelativeLayout rl_leave;
     /**
      * 通知
      */
-    private LinearLayout ll_inform;
+    private RelativeLayout rl_inform;
     /**
      * 食谱
      */
-    private LinearLayout ll_food;
+    private RelativeLayout rl_food;
     /**
      * 课程安排
      */
-    private LinearLayout ll_arrangement;
+    private RelativeLayout rl_arrangement;
+    /**
+     * 基本url
+     */
+    private static final String baseurl = "http://192.168.5.57:8080/space1/#/";
+    /**
+     * 考勤
+     */
+    private  static final String CHECK = "checkOnclass";
+    /**
+     * 课程安排
+     */
+    private  static final String ARRANGE = "courseArr";
+    /**
+     * 食谱
+     */
+    private  static final String FOODLIST = "recipes";
+    /**
+     * 通知
+     */
+    private  static final String INFORM = "notice";
+    /**
+     * 请假
+     */
+    private  static final String LEAVE = "askForlv";
+    /**
+     * 考勤
+     */
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,37 +90,60 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     }
     private  void init(View v){
         navigationBar = $(v,R.id.nb_school);
-        navigationBar.setTitle("学校");
-        ll_openclass = $(v,R.id.ll_openclass);
-        ll_check = $(v,R.id.ll_check);
-        ll_leave = $(v,R.id.ll_leave);
-        ll_inform = $(v,R.id.ll_info);
-        ll_food = $(v,R.id.ll_food);
-        ll_arrangement = $(v,R.id.ll_arrangement);
-        ll_openclass.setOnClickListener(this);
-        ll_check.setOnClickListener(this);
-        ll_leave.setOnClickListener(this);
-        ll_inform.setOnClickListener(this);
-        ll_food.setOnClickListener(this);
-        ll_arrangement.setOnClickListener(this);
+        navigationBar.setTitle("园所");
+        rl_openclass = $(v,R.id.rl_openclass);
+        rl_check = $(v,R.id.rl_check);
+        rl_leave = $(v,R.id.rl_leave);
+        rl_inform = $(v,R.id.rl_info);
+        rl_food = $(v,R.id.rl_food);
+        rl_arrangement = $(v,R.id.rl_arrangement);
+        rl_openclass.setOnClickListener(this);
+        rl_check.setOnClickListener(this);
+        rl_leave.setOnClickListener(this);
+        rl_inform.setOnClickListener(this);
+        rl_food.setOnClickListener(this);
+        rl_arrangement.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         Intent intent = new Intent();
-        if (view.getId()==R.id.ll_openclass){
+        if (view.getId()==R.id.rl_openclass){
             intent.setClass(getActivity(), OpenClassActivity.class);
-        }else if (view.getId()==R.id.ll_check){
-            intent.setClass(getActivity(), CheckActivity.class);
-        }else if (view.getId()==R.id.ll_leave){
-            intent.setClass(getActivity(), LeaveActivity.class);
-        }else if (view.getId()==R.id.ll_info){
-            intent.setClass(getActivity(), InformActivity.class);
-        }else if (view.getId()==R.id.ll_food){
-            intent.setClass(getActivity(), FoodListActivity.class);
-        }else if (view.getId()==R.id.ll_arrangement){
-            intent.setClass(getActivity(), ArrangmentActivity.class);
+        }else if (view.getId()==R.id.rl_check){
+            intent.setClass(getActivity(), WebViewActivity.class);
+            intent.putExtra("url", geturl(CHECK));
+            intent.putExtra("title","考勤");
+        }else if (view.getId()==R.id.rl_leave){
+            intent.setClass(getActivity(), WebViewActivity.class);
+            intent.putExtra("url",geturl(LEAVE));
+            intent.putExtra("title","请假");
+        }else if (view.getId()==R.id.rl_info){
+            intent.setClass(getActivity(), WebViewActivity.class);
+            intent.putExtra("url",geturl(INFORM));
+            intent.putExtra("title","通知");
+            intent.putExtra("rightTitle","发布");
+        }else if (view.getId()==R.id.rl_food){
+            intent.setClass(getActivity(), WebViewActivity.class);
+            intent.putExtra("url",geturl(FOODLIST));
+            intent.putExtra("title","食谱");
+        }else if (view.getId()==R.id.rl_arrangement){
+            intent.setClass(getActivity(), WebViewActivity.class);
+            intent.putExtra("url",geturl(ARRANGE));
+            intent.putExtra("title","课程安排");
+            intent.putExtra("rightTitle","发布");
         }
         startActivity(intent);
+    }
+    private String  geturl(String type){
+        String url = null;
+     switch (type){
+         case CHECK:url = baseurl+CHECK;break;
+         case LEAVE:url = baseurl+LEAVE;break;
+         case INFORM:url = baseurl+INFORM;break;
+         case FOODLIST:url = baseurl+FOODLIST;break;
+         case ARRANGE:url = baseurl+ARRANGE;break;
+     }
+        return  url;
     }
 }

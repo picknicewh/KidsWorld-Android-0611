@@ -12,135 +12,185 @@
         android:background="@color/line_gray"
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_gray"/>
-    <LinearLayout
-        android:id="@+id/ll_openclass"
+    <RelativeLayout
+        android:layout_marginTop="@dimen/space_x2"
+        android:id="@+id/rl_openclass"
         android:background="@color/white"
         android:layout_marginBottom="@dimen/space_x2"
-        android:padding="@dimen/space"
+        android:padding="@dimen/space_x2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
        <ImageView
-           android:src="@mipmap/teacher"
-           android:layout_width="50dp"
-           android:layout_height="50dp" />
+           android:layout_centerVertical="true"
+           android:id="@+id/iv_openclass"
+           android:src="@mipmap/ic_openclass"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
         <TextView
+            android:layout_toRightOf="@id/iv_openclass"
             android:layout_marginLeft="@dimen/space"
             android:text="开发课堂"
             android:textSize="@dimen/ts_large"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/ll_check"
+         <TextView
+             android:layout_alignParentRight="true"
+             android:text="正在直播"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_check"
         android:background="@color/white"
-        android:padding="@dimen/space"
+        android:padding="@dimen/space_x2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:src="@mipmap/teacher"
-            android:layout_width="50dp"
-            android:layout_height="50dp"  />
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_check"
+            android:src="@mipmap/ic_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"  />
         <TextView
+            android:layout_toRightOf="@id/iv_check"
             android:layout_marginLeft="@dimen/space"
             android:text="考勤"
             android:textSize="@dimen/ts_large"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
+        <TextView
+            android:layout_alignParentRight="true"
+            android:text="09:18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
     <View
         android:layout_marginLeft="@dimen/space"
         android:background="@color/line_gray"
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_gray"/>
-    <LinearLayout
-        android:id="@+id/ll_leave"
+    <RelativeLayout
+        android:id="@+id/rl_leave"
         android:layout_marginBottom="@dimen/space_x2"
         android:background="@color/white"
-        android:padding="@dimen/space"
+        android:padding="@dimen/space_x2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:src="@mipmap/teacher"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_askleave"
+            android:src="@mipmap/ic_askleave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <TextView
+            android:layout_toRightOf="@id/iv_askleave"
             android:layout_marginLeft="@dimen/space"
             android:text="请假"
             android:textSize="@dimen/ts_large"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/ll_info"
+        <TextView
+            android:layout_alignParentRight="true"
+            android:text="昨天"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_info"
         android:background="@color/white"
-        android:padding="@dimen/space"
+        android:padding="@dimen/space_x2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:src="@mipmap/teacher"
-            android:layout_width="50dp"
-            android:layout_height="50dp"  />
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_inform"
+            android:src="@mipmap/ic_inform"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"  />
         <TextView
+            android:layout_toRightOf="@id/iv_inform"
             android:layout_marginLeft="@dimen/space"
             android:text="通知"
             android:textSize="@dimen/ts_large"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
+        <TextView
+            android:layout_alignParentRight="true"
+            android:text="星期五"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
     <View
         android:layout_marginLeft="@dimen/space"
         android:background="@color/line_gray"
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_gray"/>
-    <LinearLayout
-        android:id="@+id/ll_food"
+    <RelativeLayout
+        android:id="@+id/rl_food"
         android:background="@color/white"
-        android:padding="@dimen/space"
+        android:padding="@dimen/space_x2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:src="@mipmap/teacher"
-            android:layout_width="50dp"
-            android:layout_height="50dp"  />
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_food"
+            android:src="@mipmap/ic_foodlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"  />
         <TextView
+            android:layout_toRightOf="@id/iv_food"
             android:layout_marginLeft="@dimen/space"
             android:text="食谱"
             android:textSize="@dimen/ts_large"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
+        <TextView
+            android:layout_alignParentRight="true"
+            android:text="13/7/10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
     <View
         android:layout_marginLeft="@dimen/space"
         android:background="@color/line_gray"
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_gray"/>
-    <LinearLayout
-        android:id="@+id/ll_arrangement"
+    <RelativeLayout
+        android:id="@+id/rl_arrangement"
         android:background="@color/white"
-        android:padding="@dimen/space"
+        android:padding="@dimen/space_x2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:src="@mipmap/teacher"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_arrangement"
+            android:src="@mipmap/ic_causearr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <TextView
+            android:layout_toRightOf="@id/iv_arrangement"
             android:layout_marginLeft="@dimen/space"
             android:text="课程安排"
             android:textSize="@dimen/ts_large"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/ic_arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 </LinearLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.hunme.user.activity.ModifyPhoneActivity">
+    <EditText
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="@dimen/space"
+        android:background="@drawable/password_selecter"
+        android:id="@+id/et_mp_phone"
+        android:layout_marginLeft="@dimen/space_x2"
+        android:layout_marginRight="@dimen/space_x2"
+        android:padding="@dimen/space_x1.5"
+        android:layout_width="match_parent"
+        android:hint="输入手机号"
+        android:textColorHint="@color/pgrey"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_margin="@dimen/space_x2"
+        android:layout_marginTop="@dimen/space_x2"
+        android:id="@+id/b_mp_finish"
+        android:text="完成"
+        android:textColor="@color/white"
+        android:textSize="@dimen/ts_xx_large"
+        android:background="@drawable/conform_selecter"
+        android:padding="@dimen/space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

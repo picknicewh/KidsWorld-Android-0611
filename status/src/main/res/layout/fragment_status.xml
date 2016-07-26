@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
+
         android:paddingRight="@dimen/space"
         android:paddingLeft="@dimen/space_x2"
         android:layout_width="match_parent"
@@ -14,14 +16,26 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true" />
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <TextView
             android:text="苗苗班"
             android:textColor="@color/white"
             android:id="@+id/tv_classname"
             android:textSize="@dimen/ts_xx_large"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space"
+            android:src="@mipmap/ic_popdown"
+            android:id="@+id/iv_popdown"
+            android:layout_width="15dp"
+            android:layout_height="15dp" />
+        </LinearLayout>
 
         <ImageView
             android:padding="@dimen/space"
@@ -32,5 +46,8 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_new_message"/>
     </RelativeLayout>
-
-</RelativeLayout>
+   <WebView
+       android:id="@+id/wv_status"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"/>
+</LinearLayout>

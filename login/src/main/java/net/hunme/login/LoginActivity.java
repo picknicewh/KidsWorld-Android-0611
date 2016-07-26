@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
+        isGoLogin();
 
     }
 
@@ -51,22 +52,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void isGoLogin(){
         String username=ed_username.getText().toString().trim();
         String password=ed_password.getText().toString().trim();
-        if(G.isEmteny(username)||G.isEmteny(password)){
+        /*if(G.isEmteny(username)||G.isEmteny(password)){
             G.showToast(this,"账号密码不能为空");
             return;
-        }
+        }*/
         Map<String,Object>map=new HashMap<>();
-        map.put("accountId",username);
-        map.put("password",password);
+        map.put("accountId","123456789");
+        map.put("password","123456");
 //        OkHttps.init().setClass(result).sendPost();
 //        Type type= new TypeToken<Result>(){}.getType();
         Type type =new TypeToken<Result<CharacterSeleteVo>>(){}.getType();
-        OkHttps.sendPost(type,"www.baidu.com",map,this);
+        OkHttps.sendPost(type,appLogin,map,this);
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-
         Result<CharacterSeleteVo> result= (Result<CharacterSeleteVo>) date;
         G.showToast(this,result.getCode());
     }

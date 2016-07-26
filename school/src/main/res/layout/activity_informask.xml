@@ -108,6 +108,7 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"/>
     <EditText
+        android:id="@+id/et_cause"
         android:layout_marginTop="@dimen/space"
         android:background="@color/white"
         android:paddingLeft="@dimen/space_x2"

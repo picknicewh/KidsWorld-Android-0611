@@ -28,18 +28,18 @@
             android:id="@+id/iv_call"
             android:layout_width="wrap_content"
             android:layout_centerVertical="true"
-            android:src="@mipmap/call"
+            android:src="@mipmap/ic_call_con"
             android:layout_marginRight="50dp"
             android:textColor="@color/white"
             android:layout_height="wrap_content" />
         <ImageView
             android:layout_alignParentRight="true"
             android:id="@+id/iv_detail"
-            android:layout_width="40dp"
+            android:layout_width="wrap_content"
             android:layout_centerVertical="true"
-            android:src="@mipmap/person_detail"
+            android:src="@mipmap/ic_person"
             android:textColor="@color/white"
-            android:layout_height="40dp" />
+            android:layout_height="wrap_content" />
     </RelativeLayout>
     <fragment
         android:id="@+id/conversation"

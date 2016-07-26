@@ -59,17 +59,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content">
            <ImageView
-               android:layout_centerInParent="true"
+               android:layout_marginRight="@dimen/space_x2"
+               android:layout_alignParentRight="true"
                android:id="@+id/iv_pcall"
-               android:src="@mipmap/call"
-               android:layout_width="30dp"
-               android:layout_height="30dp" />
+               android:src="@mipmap/ic_call"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
             <ImageView
+
                 android:layout_alignParentRight="true"
                 android:id="@+id/iv_pmessage"
-                android:src="@mipmap/message"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:src="@mipmap/ic_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
     </LinearLayout>
     <View

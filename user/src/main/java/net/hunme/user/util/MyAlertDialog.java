@@ -19,7 +19,7 @@ import net.hunme.user.R;
  */
 public class MyAlertDialog {
 
-    public static AlertDialog getDialog(View view, Activity activity) {
+    public static AlertDialog getDialog(View view, Activity activity,int flag) {
         AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
         alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
@@ -28,7 +28,13 @@ public class MyAlertDialog {
         WindowManager.LayoutParams params =
                 alertDialog.getWindow().getAttributes();
         params.width = (int) (display.getWidth() * 0.8);
-        params.height=display.getHeight()/4;
+        if (flag==1){
+
+            params.height=display.getHeight()/4;
+        }else {
+            params.height=WindowManager.LayoutParams.WRAP_CONTENT;
+        }
+
         params.flags = WindowManager. LayoutParams.FLAG_DIM_BEHIND;
         alertDialog.getWindow().setAttributes(params);
         alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.fillet_pop);

@@ -1,6 +1,7 @@
 package net.hunme.baselibrary.network;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.lzy.okhttputils.OkHttpUtils;
@@ -74,7 +75,7 @@ public class OkHttps<T> {
 
         //进行网络请求
         postRequest= getInstance()
-                .post(uri_host+uri);
+                .post(ServerConfigManager.SERVER_IP+uri);
         doInternet(type,uri,getParams(map),okHttpListener);
     }
 
@@ -128,8 +129,8 @@ public class OkHttps<T> {
                         @Override
                         public Object parseNetworkResponse(Response response) throws Exception {
                             String value="{\"code\":\"123\",\"data\":{},\"msec\":\"133\",\"sign\":\"455\"}";
-                            //response.body().toString();
-                            return new Gson().fromJson(value,type);
+                            Log.i("TAGFFF",response.body().string());
+                            return new Gson().fromJson(response.body().toString(),type);
                         }
 
                         @Override

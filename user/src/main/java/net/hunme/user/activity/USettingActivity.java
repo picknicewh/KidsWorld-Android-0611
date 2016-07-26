@@ -3,11 +3,14 @@ package net.hunme.user.activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.user.R;
@@ -91,10 +94,11 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
             intent.setClass(this,UpdateMessageActivity.class);
             startActivity(intent);
         }else if (viewID==R.id.ll_changephone){
-            Intent intent = new Intent();
+          /*  Intent intent = new Intent();
             intent.putExtra("type","phone");
             intent.setClass(this,UpdateMessageActivity.class);
-            startActivity(intent);
+            startActivity(intent);*/
+            showPhoneialog();
         }else if (viewID==R.id.ll_systeminfo){
             Intent intent = new Intent();
             intent.setClass(this,SystemInfoActivity.class);
@@ -114,7 +118,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
      */
     private void showAlertDialog(final int flag) {
         View coupons_view = LayoutInflater.from(this).inflate(R.layout.alertdialog_message, null);
-        final AlertDialog alertDialog= MyAlertDialog.getDialog(coupons_view,this);
+        final AlertDialog alertDialog= MyAlertDialog.getDialog(coupons_view,this,1);
         Button pop_notrigst = (Button) coupons_view.findViewById(R.id.pop_notrigst);
         Button pop_mastrigst = (Button) coupons_view.findViewById(R.id.pop_mastrigst);
         TextView pop_title =  (TextView) coupons_view.findViewById(R.id.tv_poptitle);
@@ -150,6 +154,39 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
             }
         });
     }
-
+    /**
+     * 修改手机号对话框
+     */
+    private void showPhoneialog() {
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_modifyphone, null);
+        final AlertDialog alertDialog=MyAlertDialog.getDialog(view,this,0);
+        Button bt_conform = (Button) view.findViewById(R.id.bt_dg_conform);
+        Button bt_cancel = (Button) view.findViewById(R.id.bt_dg_cancel);
+          EditText et_password = (EditText) view.findViewById(R.id.et_dg_password);
+        final String password = et_password.getText().toString();
+        bt_conform.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent();
+                if (TextUtils.isEmpty(password)){
+                    Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
+                    return;
+                }else if (password.equals("123465")){
+                    Toast.makeText(getApplicationContext(),"输入密码不正确",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                intent.putExtra("phone",password);
+                intent.setClass(USettingActivity.this,ModifyPhoneActivity.class);
+                startActivity(intent);
+                alertDialog.dismiss();
+            }
+        });
+        bt_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+    }
 
 }

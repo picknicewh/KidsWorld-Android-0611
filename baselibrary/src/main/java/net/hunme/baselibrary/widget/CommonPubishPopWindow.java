@@ -59,7 +59,7 @@ public abstract class CommonPubishPopWindow extends PopupWindow implements View.
         this.setContentView(conentView);
         //设置SignPopupWindow弹出窗体的高
         int height =  context.getWindow().getWindowManager().getDefaultDisplay().getHeight();
-        this.setHeight(height- G.dp2px(context,80));
+        this.setHeight(height- G.dp2px(context,75));
         //设置SignPopupWindow弹出窗体的宽
         this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         //设置SignPopupWindow弹出窗体可点击

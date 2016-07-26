@@ -27,7 +27,7 @@ public class ChooseClassPopWindow extends PopupWindow {
     private StatusFragement statusFragement;
     private View conentView;
     private ListView lv_classchoose;
-   private ChooseClassAdapter adapter;
+    private ChooseClassAdapter adapter;
     private List<String> classlist ;
     public  ChooseClassPopWindow(StatusFragement statusFragement,List<String> classlist){
         this.statusFragement = statusFragement;

@@ -17,8 +17,6 @@ import net.hunme.user.util.FileUtils;
 
 import java.io.IOException;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 /**
  * ================================================
  * 作    者：ZLL
@@ -85,7 +83,7 @@ public class GridAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.image = (ImageView) convertView
                     .findViewById(R.id.item_grida_image);
-            holder.clv_delete= (CircleImageView) convertView.findViewById(R.id.clv_delete);
+            holder.clv_delete= (ImageView) convertView.findViewById(R.id.clv_delete);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -115,7 +113,7 @@ public class GridAdapter extends BaseAdapter {
 
     public class ViewHolder {
         public ImageView image;
-        public CircleImageView clv_delete;
+        public ImageView clv_delete;
     }
 
     Handler handler = new Handler() {

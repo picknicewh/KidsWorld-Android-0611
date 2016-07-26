@@ -6,9 +6,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
+import net.hunme.baselibrary.network.OkHttpListener;
+import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.message.R;
+import net.hunme.message.bean.RyUserInfor;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.rong.imkit.RongIM;
 
@@ -20,7 +32,7 @@ import io.rong.imkit.RongIM;
  * 附加注释：
  * 主要接口：
  */
-public class PersonDetailActivity  extends BaseActivity implements View.OnClickListener{
+public class PersonDetailActivity  extends BaseActivity implements View.OnClickListener, OkHttpListener {
     /**
      * 电话
      */
@@ -91,8 +103,18 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
         username = intent.getStringExtra("name");
         userid = intent.getStringExtra("userid");
         tv_pname.setText(username);
+        //getUserInfor(userid);
     }
+    /**
+     * 获取用户详情
+     */
+    private void  getUserInfor(String userid){
+        Map<String,Object> param = new HashMap<>();
+        param.put("tsId",userid);
+        Type  type = new  TypeToken<Result<RyUserInfor>>(){}.getType();
+        OkHttps.sendPost(type, Apiurl.MESSAGE_GETDETAIL,param,this);
 
+    }
     @Override
     public void onClick(View v) {
         String phone = tv_phone.getText().toString();
@@ -106,5 +128,20 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
                 RongIM.getInstance().startPrivateChat(this,userid,username);
             }
         }
+    }
+
+    @Override
+    public void onSuccess(String uri, Object date) {
+        RyUserInfor ryUserInfor = (RyUserInfor) date;
+        tv_school.setText(ryUserInfor.getSchoolName());
+        tv_role.setText(ryUserInfor.getTs_name());
+        tv_phone.setText(ryUserInfor.getPhone());
+        tv_class.setText(ryUserInfor.getClassName());
+      //  iv_phead.setImageResource();
+    }
+
+    @Override
+    public void onError(String uri, String error) {
+        Toast.makeText(PersonDetailActivity.this,error,Toast.LENGTH_SHORT).show();
     }
 }

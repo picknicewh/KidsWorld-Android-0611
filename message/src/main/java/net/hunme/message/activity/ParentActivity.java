@@ -10,18 +10,30 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
+import net.hunme.baselibrary.network.OkHttpListener;
+import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.message.R;
 import net.hunme.message.adapter.ContractAdapter;
+import net.hunme.message.bean.GroupJson;
 import net.hunme.message.bean.GroupMemberBean;
+import net.hunme.message.bean.MemberJson;
 import net.hunme.message.util.CharacterParser;
 import net.hunme.message.util.PinyinComparator;
 import net.hunme.message.widget.SideBar;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
@@ -34,7 +46,7 @@ import io.rong.imlib.model.Conversation;
  * 附加注释：通过传递不同的联系人列表分别显示老师，家长两个页面
  * 主要接口：
  */
-public class ParentActivity extends BaseActivity implements SectionIndexer {
+public class ParentActivity extends BaseActivity implements SectionIndexer,OkHttpListener {
 
     /**
      * 教师列表view
@@ -85,6 +97,10 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
      */
     private List<String> userids;
     private List<GroupMemberBean> groupMemberBeanList;
+    /**
+     * 标题
+     */
+    private String title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,11 +111,13 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
 
     @Override
     protected void setToolBar() {
-
+        setLiftImage(R.mipmap.ic_arrow_lift);
+        title = getIntent().getStringExtra("title");
+        setCententTitle(title);
+        setLiftOnClickClose();
     }
     private void init(){
-        setLiftImage(R.mipmap.ic_arrow_lift);
-        setCententTitle(getIntent().getStringExtra("title"));
+      //  getfriendinfor(title);
         lv_parent = $(R.id.lv_parent);
         tv_noparent = $(R.id.tv_no_parent);
         tv_title_cat = $(R.id.tv_title_cat);
@@ -156,6 +174,23 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
         groupMemberBeanList.add(groupMemberBean);
 
     }
+
+    /**
+     * 获取所有所有好友信息
+     */
+    private  void getfriendinfor(String title){
+        Map<String,Object> params = new HashMap<>();
+        params.put("tsId","1001");
+        //1=群，2=老师，3=家长
+        if (title.equals("教师")){
+            params.put("type","2");
+        }else {
+            params.put("type","3");
+        }
+        Type type =new TypeToken<Result<GroupJson>>(){}.getType();
+        OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this);
+    }
+
     private void initList() {
         initdata();
         SourceDateList = filledData(groupMemberBeanList);
@@ -164,7 +199,6 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
         //  adapter.isCrateGroup(createGroup);
         lv_parent.setAdapter(adapter);
         //isSelected = adapter.getIsSelected();
-
         // 设置右侧触摸监听
         sb_parent.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
             @Override
@@ -259,7 +293,6 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
 
         }
         return mSortList;
-
     }
     @Override
     public Object[] getSections() {
@@ -285,6 +318,43 @@ public class ParentActivity extends BaseActivity implements SectionIndexer {
             }
         }
         return -1;
+    }
+   private void setFriendList(List<GroupJson> groupJsonList, List<GroupMemberBean> groupMemberList){
+       List<MemberJson> memberJsons = groupJsonList.get(0).getMenberList();
+       for (int i = 0;i<memberJsons.size();i++){
+           MemberJson memberJson = memberJsons.get(0);
+           GroupMemberBean groupMemberBean = MemberJsonnTGroupMember(memberJson);
+           groupMemberList.add(groupMemberBean);
+       }
+   }
+    private GroupMemberBean MemberJsonnTGroupMember(MemberJson memberJson){
+        GroupMemberBean groupMember =null;
+        groupMember.setName(memberJson.getTsName());
+        groupMember.setUserid(memberJson.getTsId());
+        groupMember.setImg(memberJson.getImg());
+        // 汉字转换成拼音
+        String pinyin = characterParser.getSelling(memberJson.getTsName());
+        String sortString = pinyin.substring(0, 1).toUpperCase();
+        // 正则表达式，判断首字母是否是英文字母
+        if (sortString.matches("[A-Z]")) {
+            groupMember.setSortLetters(sortString.toUpperCase());
+        } else {
+            groupMember.setSortLetters("#");
+        }
+        return groupMember;
+    }
+    @Override
+    public void onSuccess(String uri, Object date) {
+        List<GroupJson> groupJsonList = (List<GroupJson>) date;
+        if (groupJsonList!=null||groupJsonList.size()!=0){
+            setFriendList(groupJsonList,SourceDateList);
+        }
+    }
+
+    @Override
+    public void onError(String uri, String error) {
+        Log.i("TAG",error);
+        Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
     }
 }
 

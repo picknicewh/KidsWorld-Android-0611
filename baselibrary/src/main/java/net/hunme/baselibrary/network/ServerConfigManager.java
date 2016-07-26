@@ -23,7 +23,7 @@ public class ServerConfigManager {
 	/**
 	 * 主服务器地址
 	 */
-	public static final String SERVER_IP = "http://zhu.hunme.net:8080/KidsWorld";
+	public static final String SERVER_IP = "http://192.168.1.200:8080/KidsWorld";
 //   public static final String SERVER_IP="https://slave.openhunme.com";
 
 }

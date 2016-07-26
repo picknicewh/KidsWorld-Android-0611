@@ -1,5 +1,6 @@
 package net.hunme.user.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +15,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     private EditText et_password;
     private Button b_finish;
     private TextView tv_time;
-
+    private String phone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +39,9 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initData(){
-        String type=getIntent().getStringExtra("type");
+        Intent intent  =getIntent();
+        String type=intent.getStringExtra("type");
+        phone = intent.getStringExtra("phone");
         if("pw".equals(type)){
             setCententTitle("修改密码");
             et_password.setHint("请输入你的密码");

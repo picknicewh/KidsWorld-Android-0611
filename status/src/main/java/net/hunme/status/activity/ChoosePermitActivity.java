@@ -65,10 +65,8 @@ public class ChoosePermitActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View view) {
         int viewId =view.getId();
         if (viewId==R.id.rb_allroom){
-         //   Log.i("TAGG",rb_allroom.getText().toString());
             choose(rb_allroom.getText().toString());
         }else if (viewId==R.id.rb_classroom) {
-           // Log.i("TAGG",rb_classroom.getText().toString());
             choose(rb_classroom.getText().toString());
         }
     }

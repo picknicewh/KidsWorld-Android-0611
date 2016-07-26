@@ -7,15 +7,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
-import net.hunme.discovery.util.MWebChromeClient;
-import net.hunme.discovery.util.MWebViewClient;
+import net.hunme.baselibrary.util.MWebChromeClient;
+import net.hunme.baselibrary.util.MWebViewClient;
+
+import java.io.File;
+
 
 /**
  * 作者： wh
@@ -27,22 +27,6 @@ import net.hunme.discovery.util.MWebViewClient;
  */
 public class DiscoveryFragement extends BaseFragement implements View.OnClickListener{
     /**
-     * 左边的显示
-     */
-    public TextView tv_left;
-    /**
-     * 左边的图片
-     */
-    public ImageView iv_left;
-    /**
-     * 中间的标题
-     */
-    public TextView tv_title;
-    /**
-     * 右边显示
-     */
-    public TextView tv_right;
-    /**
      * webview
      */
     private WebView webView;
@@ -50,19 +34,34 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_discovery,null);
+        clearCacheFolder(getActivity().getCacheDir(), System.currentTimeMillis());//删除此时之前的缓存.
         init(view);
         return view;
     }
+    private int clearCacheFolder(File dir, long numDays) {
+           int deletedFiles = 0;
+           if (dir!= null && dir.isDirectory()) {
+                   try {
+                          for (File child:dir.listFiles()) {
+                                  if (child.isDirectory()) {
+                                        deletedFiles += clearCacheFolder(child, numDays);
+                                   }
+                             if (child.lastModified() < numDays) {
+                                 if (child.delete()) {
+                                          deletedFiles++;
+                                              }
+                                     }
+                              }
+                     } catch(Exception e) {
+                         e.printStackTrace();
+                     }
+           }
+            return deletedFiles;}
+
     private  void init(View v){
-        tv_left = $(v,R.id.tv_left);
-        tv_right = $(v,R.id.tv_right);
-        tv_title = $(v,R.id.tv_dtitle);
-        iv_left = $(v,R.id.iv_left);
         webView = $(v,R.id.wv_discovery);
-        webView.loadUrl("file:///android_asset/discovery/paradise/index.html#/paradiseHome");
         interactive(webView);
-        tv_right.setOnClickListener(this);
-        tv_left.setOnClickListener(this);
+        webView.loadUrl("http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/paradiseHome");
       //  getActivity().onKeyDown(KeyEvent.KEYCODE_BACK,)
     //    getActivity().onKeyDown(KeyEvent.KEYCODE_BACK,new KeyDowmEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_BACK));
     }
@@ -91,37 +90,15 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         webSetting.setAllowFileAccessFromFileURLs(true);
         webSetting.setAllowUniversalAccessFromFileURLs(true);
         webSetting.setCacheMode(WebSettings.LOAD_DEFAULT);/// 默认使用缓存
+
+        webSetting.setDatabaseEnabled(true); // 应用可以有数据库
+        String dbPath = this.getActivity().getDir("database", Context.MODE_PRIVATE).getPath();
+        webSetting.setDatabasePath(dbPath);
+
     }
+
+
     @Override
     public void onClick(View view) {
-        if (view.getId()==R.id.tv_left){
-            webView.loadUrl("javascript:goChildMusic_Origin()");
-        }else if (view.getId()==R.id.tv_right){}
-    }
-    /**
-     * 设置导航栏
-    */
-    @JavascriptInterface
-    public void  setToolbar(final String LeftTitle,final String centerTitle,final String RightTitle){
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (LeftTitle==null){
-                    tv_left.setVisibility(View.GONE);
-                    iv_left.setVisibility(View.VISIBLE);
-                }else {
-                    tv_left.setVisibility(View.VISIBLE);
-                    iv_left.setVisibility(View.GONE);
-                    tv_left.setText(LeftTitle);
-                }
-                tv_title.setText(centerTitle);
-                if (RightTitle==null){
-                    tv_right.setVisibility(View.GONE);
-                }else {
-                    tv_right.setVisibility(View.VISIBLE);
-                    tv_right.setText(RightTitle);
-                }
-            }
-        });
-    }
+}
 }
