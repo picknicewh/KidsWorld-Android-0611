@@ -1,5 +1,6 @@
 package net.hunme.school.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -43,6 +44,7 @@ public class WebViewActivity extends BaseActivity {
      * flag
      */
     private int flag=0;
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +126,6 @@ public class WebViewActivity extends BaseActivity {
                 }
             }
         });
-
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +15,14 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.util.MWebChromeClient;
 import net.hunme.baselibrary.util.MWebViewClient;
+
+import java.io.File;
 
 
 /**
@@ -30,6 +34,72 @@ import net.hunme.baselibrary.util.MWebViewClient;
  * 主要接口：
  */
 public class DiscoveryFragement extends BaseFragement implements View.OnClickListener{
+
+    private WebView webView;
+    /**
+     * 首页
+     */
+    private static  final String HOME = "home";
+    /**
+     * 幼儿教育
+     */
+    private static  final  String CHILDSTORY= "childStory";
+    /**
+     *幼儿课堂
+     */
+    private static final  String CHILDCLASS = "childClass";
+    /**
+     *咨询教育
+     */
+    private static final  String CONSULT = "consult";
+    /**
+     * 安全教育
+     */
+    private static final  String SAFEED = "safeed";
+    /**
+     *教育咨询详情
+     */
+    private static final  String CONSULTDETAIL = "consultDetail";
+    /**
+     * 搜索
+     */
+    private static final String SEARCH = "search";
+    /**
+     * 搜索课程
+     */
+    private static final String SEARCH_CAUSRE = "search_cause";
+    /**
+     * 搜索音乐
+     */
+    private static final String SEARCH_MUSIC = "search_music";
+    /**
+     * 搜索咨询
+     */
+    private static final String SEARCH_CON = "search_con";
+    /**
+     * 播放记录
+     */
+    private static final String PLAY_HISTORY = "play_history";
+    /**
+     * 视频
+     */
+    private static final String VEDIO = "video";
+    /**
+     * 音乐播放
+     */
+    private static final String MEDIAPLAYING = "mediaplaying";
+    /**
+     * 幼儿听听
+     */
+    private static final String MEDIAPLAY = "mediaplay";
+    /**
+     * 幼儿听听首页
+     */
+    private static final String MEDIAPLAYDEATIL = "mediaplaydetail";
+    /**
+     * 导航栏
+     */
+    private RelativeLayout rl_discovery;
     /**
      * 左边图片
      */
@@ -45,12 +115,13 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
     /**
      * webview
      */
-    private WebView webView;
-    @SuppressLint("JavascriptInterface")
+
+
+    @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_discovery,null);
-      //  clearCacheFolder(getActivity().getCacheDir(), System.currentTimeMillis());//删除此时之前的缓存.
+        clearCacheFolder(getActivity().getCacheDir(), System.currentTimeMillis());//删除此时之前的缓存.
         init(view);
         return view;
     }
@@ -72,8 +143,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
             }
         });
     }
-
-  /*  private int clearCacheFolder(File dir, long numDays) {
+    private int clearCacheFolder(File dir, long numDays) {
            int deletedFiles = 0;
            if (dir!= null && dir.isDirectory()) {
                    try {
@@ -92,16 +162,24 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                      }
            }
             return deletedFiles;}
-*/
     private  void init(View v){
         iv_left = $(v,R.id.iv_dleft);
         tv_title = $(v,R.id.tv_dtitle);
         iv_right = $(v,R.id.iv_dright);
         webView = $(v,R.id.wv_discovery);
+        rl_discovery = $(v,R.id.rl_discovery);
         interactive(webView);
-        webView.loadUrl("http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/paradiseHome");
+        final String url = "http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/paradiseHome";
+        webView.loadUrl(url);
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
+        iv_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+                webView.goBack();
+            }
+        });
     }
      /**
      * 交互配置
@@ -117,7 +195,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         webSetting.setDefaultTextEncodingName("utf-8"); //设置编码
         webSetting.setJavaScriptEnabled(true); //支持js
         webView.setBackgroundColor(Color.argb(0, 0, 0, 0)); //设置背景颜色 透明
-        webView.addJavascriptInterface(this, "change_nb");  //设置本地调用对象及其接口
+        webView.addJavascriptInterface(this, "change_tb");  //设置本地调用对象及其接口
         webSetting.setDomStorageEnabled(true);//使用localStorage则必须打开
         webSetting.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小
         String appCacheDir = getActivity().getDir("cache", Context.MODE_PRIVATE).getPath();//缓存的地址
@@ -129,25 +207,119 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         webSetting.setAllowUniversalAccessFromFileURLs(true);
         webSetting.setCacheMode(WebSettings.LOAD_DEFAULT);/// 默认使用缓存
         webSetting.setDatabaseEnabled(true); // 应用可以有数据库
-        String dbPath = this.getActivity().getDir("database", Context.MODE_PRIVATE).getPath();
-        webSetting.setDatabasePath(dbPath);
-
     }
     /**
      * 设置导航栏
      */
+
     @JavascriptInterface
-    public void  setToolbar(final String left,final String ContentTitle,final String right){
+    public void  setToolBar(final String view){
+        Log.i("TAGGG",HOME);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (left!=null){
-
+                Log.i("TAGGG",HOME);
+                switch (view){
+                    case HOME:
+                        Log.i("TAGGG",HOME);
+                        iv_left.setImageResource(R.mipmap.ic_search);
+                        tv_title.setText("园所");
+                        iv_right.setImageResource(R.mipmap.ic_history);
+                        rl_discovery.setVisibility(View.VISIBLE);
+                        break;
+                    case CHILDSTORY:
+                        Log.i("TAGGG",CHILDSTORY);
+                        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                        tv_title.setText("幼儿故事");
+                        iv_right.setImageResource(R.mipmap.search);
+                        rl_discovery.setVisibility(View.VISIBLE);
+                        break;
+                    case CHILDCLASS:
+                        Log.i("TAGGG",CHILDCLASS);
+                        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                        tv_title.setText("幼儿课堂");
+                        iv_right.setImageResource(R.mipmap.ic_search);
+                        rl_discovery.setVisibility(View.VISIBLE);
+                        break;
+                    case CONSULT:
+                        Log.i("TAGGG",CONSULT);
+                        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                        tv_title.setText("教育资讯");
+                        iv_right.setImageResource(R.mipmap.ic_search);
+                        rl_discovery.setVisibility(View.VISIBLE);
+                        break;
+                    case SAFEED:
+                        Log.i("TAGGG",SAFEED);
+                        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                        tv_title.setText("安全教育");
+                        iv_right.setVisibility(View.GONE);
+                        rl_discovery.setVisibility(View.VISIBLE);
+                        break;
+                    case CONSULTDETAIL:
+                        Log.i("TAGGG",CONSULTDETAIL);
+                        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                        tv_title.setText("教育资讯");
+                        iv_right.setVisibility(View.GONE);
+                        rl_discovery.setVisibility(View.VISIBLE);
+                        break;
+                    case SEARCH:
+                        Log.i("TAGGG",SEARCH);
+                        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                        tv_title.setText("搜索");
+                        iv_right.setImageResource(R.mipmap.ic_search);
+                        rl_discovery.setVisibility(View.VISIBLE);
+                        break;
+                    case VEDIO:
+                        Log.i("TAGGG",SEARCH);
+                        rl_discovery.setVisibility(View.GONE);
+                        break;
+                    case MEDIAPLAY: Log.i("TAGGG",MEDIAPLAY);
+                        iv_left.setImageResource(R.mipmap.ic_search);
+                        tv_title.setText("幼儿听听");
+                        iv_right.setImageResource(R.mipmap.search);
+                        rl_discovery.setVisibility(View.VISIBLE);
+                        break;
+                    case MEDIAPLAYDEATIL:
+                        Log.i("TAGGG",MEDIAPLAYDEATIL);
+                        rl_discovery.setVisibility(View.VISIBLE);
+                        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                        tv_title.setText("幼儿听听");
+                        iv_right.setVisibility(View.GONE);
+                        break;
+                    case MEDIAPLAYING:
+                        Log.i("TAGGG",MEDIAPLAYING);
+                        rl_discovery.setVisibility(View.VISIBLE);
+                        iv_left.setVisibility(View.GONE);
+                        tv_title.setText("音乐播放");
+                        iv_right.setVisibility(View.GONE);
+                        break;
+                    case SEARCH_CAUSRE:
+                        Log.i("TAGGG",SEARCH_CAUSRE);
+                        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                        tv_title.setText("搜索课程");
+                        iv_right.setVisibility(View.GONE);
+                        rl_discovery.setVisibility(View.VISIBLE);
+                    case SEARCH_MUSIC:
+                        Log.i("TAGGG",SEARCH_MUSIC);
+                        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                        tv_title.setText("搜索音乐");
+                        iv_right.setVisibility(View.GONE);
+                        rl_discovery.setVisibility(View.VISIBLE);
+                    case SEARCH_CON:
+                        Log.i("TAGGG",SEARCH_CON);
+                        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                        tv_title.setText("搜索资讯");
+                        iv_right.setVisibility(View.GONE);
+                        rl_discovery.setVisibility(View.VISIBLE);
+                    case PLAY_HISTORY:
+                        Log.i("TAGGG",PLAY_HISTORY);
+                        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                        tv_title.setText("安全教育");
+                        iv_right.setVisibility(View.GONE);
+                        rl_discovery.setVisibility(View.VISIBLE);
                 }
-                tv_title.setText(ContentTitle);
             }
         });
-
     }
 
     @Override
