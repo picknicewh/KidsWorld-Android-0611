@@ -3,6 +3,7 @@ package net.hunme.kidsworld.util;
 import android.app.Application;
 
 import net.hunme.baselibrary.BaseLibrary;
+import net.hunme.login.LoginApplication;
 import net.hunme.message.MessageApplication;
 
 import cn.jpush.android.api.JPushInterface;
@@ -28,5 +29,6 @@ public class HunmeApplication extends Application {
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);     		// 初始化 JPush
         MessageApplication.initMessage(this);//初始化消息中的信息
+        LoginApplication.initLogin(this);//初始化消息中的信息
     }
 }

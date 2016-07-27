@@ -1,8 +1,10 @@
 package net.hunme.login;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,12 +25,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, OkHttpListener {
     private EditText ed_username;
     private EditText ed_password;
     private Button b_login;
     private final String APPLOGIN="/app/login.do";
     private String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,5 +123,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //        }
 //        return super.dispatchKeyEvent(event);
 //    }
+    /**
+     * 建立与融云服务器的连接
+     *
+     * @param token
+     */
+    private void connect(String token) {
+        if (getApplicationInfo().packageName.equals(LoginApplication.getCurProcessName(this))) {
 
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+                @Override
+                public void onTokenIncorrect() {}
+                @Override
+                public void onSuccess(String userid) {
+                    if (RongIM.getInstance() != null) {
+                        Log.i("wang","userid:"+userid);
+                        RongIM.getInstance().setCurrentUserInfo(new UserInfo(userid, username, Uri.parse("portrait")));
+                        RongIM.getInstance().setMessageAttachedUserInfo(true);
+                    }
+                }
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {}
+            });
+        }
+    }
 }

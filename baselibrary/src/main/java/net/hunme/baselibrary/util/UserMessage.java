@@ -92,7 +92,7 @@ public class UserMessage {
         editor.commit();
     }
     public String getRyId(){
-        return  spf.getString("ryId","");
+        return  spf.getString("ryId","V5tYQjjmYQGGUT5RP9YyZ0bso9ndFkPYvochz2Gw7s692q5Oy6+dsfcJT13ag45+j9HeWAqVtz/T0ApFSaea8Q==");
     }
 
     /**
