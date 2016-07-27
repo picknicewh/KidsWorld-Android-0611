@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="net.hunme.school.activity.PublishInformActivity">
+    <EditText
+        android:id="@+id/et_icontent"
+        android:paddingTop="@dimen/space"
+        android:paddingLeft="@dimen/space"
+        android:layout_width="match_parent"
+        android:hint="请输入通知内容"
+        android:gravity="left"
+        android:background="@color/white"
+        android:layout_height="200dp" />
+    <RelativeLayout
+        android:id="@+id/ll_permitchoose"
+        android:padding="@dimen/space"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/main_green"
+                android:text="班级空间和校园空间"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+           <ImageView
+               android:layout_centerVertical="true"
+               android:layout_alignParentRight="true"
+               android:src="@mipmap/ic_arrow_right"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+</LinearLayout>

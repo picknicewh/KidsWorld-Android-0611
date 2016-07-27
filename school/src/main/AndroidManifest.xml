@@ -9,7 +9,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.OpenClassActivity" />
         <activity android:name=".activity.LeaveAskActivity" />
-        <activity android:name=".activity.WebViewActivity"></activity>
+        <activity android:name=".activity.WebViewActivity" />
+        <activity android:name=".activity.PublishInformActivity" />
+        <activity android:name=".activity.PublishinfoChooseActivity"></activity>
     </application>
 
 </manifest>

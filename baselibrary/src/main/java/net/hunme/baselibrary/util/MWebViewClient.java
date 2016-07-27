@@ -40,7 +40,7 @@ public class MWebViewClient extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         // 使用自己的WebView组件来响应Url加载事件，而不是使用默认浏览器器加载页面
-        webView.loadUrl(url);
+         webView.loadUrl(url);
         // 记得消耗掉这个事件。给不知道的朋友再解释一下，Android中返回True的意思就是到此为止,
         // 事件就会不会冒泡传递了，我们称之为消耗掉
         return true;
@@ -64,7 +64,7 @@ public class MWebViewClient extends WebViewClient {
     @Override
     public void onLoadResource(WebView view, String url) {
 //      Toast.makeText(context, "WebViewClient.onLoadResource", Toast.LENGTH_SHORT).show();
-       // Log.i("WebActivity", "正在加载页面.....");
+        Log.i("WebActivity", "正在加载页面.....");
         super.onLoadResource(view, url);
     }
 

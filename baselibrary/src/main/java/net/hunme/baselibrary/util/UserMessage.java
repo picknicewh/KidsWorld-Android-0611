@@ -59,7 +59,7 @@ public class UserMessage {
         editor.commit();
     }
     public String getUserName(){
-        return  spf.getString("userName","");
+        return  spf.getString("userName","大幂幂");
     }
 
     /**
@@ -70,7 +70,7 @@ public class UserMessage {
         editor.commit();
     }
     public String getHoldImgUrl(){
-        return  spf.getString("holdImgUrl","");
+        return  spf.getString("holdImgUrl","http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png");
     }
 
     /**
@@ -114,7 +114,7 @@ public class UserMessage {
         editor.commit();
     }
     public String getTsId(){
-        return  spf.getString("tsId","");
+        return  spf.getString("tsId","1001");
     }
 
     /**

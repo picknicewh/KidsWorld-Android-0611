@@ -3,7 +3,6 @@ package net.hunme.message.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,16 +47,6 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
      */
     private ImageView iv_parent;
     /**
-     * 保存的用户名
-     */
-    private String username;
-    /**
-     * userId
-     */
-    private String userId;
-
-    private String portrait;
-    /**
      * 用户信息
      */
     private  UserMessage userMessage;
@@ -65,7 +54,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, null);
         init(view);
-        setNoreadMessage();
+
         // 设置点击头像监听事件
         RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
         return view;
@@ -81,15 +70,13 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         iv_class.setOnClickListener(this);
         iv_search.setOnClickListener(this);
         userMessage = new UserMessage(getActivity());
-        username = userMessage.getUserName();
-        userId = userMessage.getTsId();
-        portrait = userMessage.getHoldImgUrl();
    }
 
     /**
      *获取聊天列表
      */
     private void  initframent(){
+      //  connect(userMessage.getRyId());
         ConversationListFragment fragment = new ConversationListFragment();
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
@@ -104,22 +91,6 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         transaction.commit();
     }
 
-
-    /**
-     * 未读消息监听
-     */
-   private void setNoreadMessage(){
-       Handler handler = new Handler();
-       final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
-               Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
-               Conversation.ConversationType.PUBLIC_SERVICE};
-       handler.postDelayed(new Runnable() {
-           @Override
-           public void run() {
-               RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener,conversationTypes);
-           }
-       }, 500);
-   }
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
@@ -139,20 +110,4 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
             startActivity(intent);
         }
     }
-    /**
-     * 发送广播通知改变主界面的圆点的显示状态
-     */
-    public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.OnReceiveUnreadCountChangedListener() {
-        @Override
-        public void onMessageIncreased(int count) {
-                Intent intent = new Intent();
-                intent.setAction("net.hunme.message.showdos");
-                intent.putExtra("count",count);
-               if (getActivity()!=null){
-                  getActivity().sendBroadcast(intent);
-               }
-        }
-    };
-
-
 }

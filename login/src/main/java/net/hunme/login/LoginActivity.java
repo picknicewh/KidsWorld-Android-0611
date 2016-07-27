@@ -3,7 +3,6 @@ package net.hunme.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -108,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         G.showToast(this,"登录失败，请检查您的网络");
     }
 
-    public boolean dispatchKeyEvent(KeyEvent event) {
+  /*  public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
 //            UserAction.exit();
             Intent startMain = new Intent(Intent.ACTION_MAIN);
@@ -119,6 +118,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return false;
         }
         return super.dispatchKeyEvent(event);
-    }
+    }*/
 
 }

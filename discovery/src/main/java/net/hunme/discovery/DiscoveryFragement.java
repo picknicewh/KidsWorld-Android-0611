@@ -22,8 +22,6 @@ import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.util.MWebChromeClient;
 import net.hunme.baselibrary.util.MWebViewClient;
 
-import java.io.File;
-
 
 /**
  * 作者： wh
@@ -56,19 +54,15 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
     /**
      * webview
      */
-    private String page  ;
+    private String page ;
 
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_discovery,null);
-        clearCacheFolder(getActivity().getCacheDir(), System.currentTimeMillis());//删除此时之前的缓存.
         init(view);
         return view;
     }
-
-
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -81,31 +75,12 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                    // webView.goBack();   //这方法没用的哦
                     getActivity().getSupportFragmentManager().popBackStack("gifPageTwoFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    return true;
+
+                   return true;
                 }
                 return false;
             }
         });
-    }
-    private int clearCacheFolder(File dir, long numDays) {
-           int deletedFiles = 0;
-           if (dir!= null && dir.isDirectory()) {
-                   try {
-                          for (File child:dir.listFiles()) {
-                                  if (child.isDirectory()) {
-                                        deletedFiles += clearCacheFolder(child, numDays);
-                                   }
-                             if (child.lastModified() < numDays) {
-                                 if (child.delete()) {
-                                          deletedFiles++;
-                                              }
-                                     }
-                              }
-                     } catch(Exception e) {
-                         e.printStackTrace();
-                     }
-           }
-            return deletedFiles;
     }
     private  void init(View v){
         iv_left = $(v,R.id.iv_dleft);
@@ -118,13 +93,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         webView.loadUrl(url);
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
-        iv_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-                webView.goBack();
-            }
-        });
     }
      /**
      * 交互配置
@@ -141,95 +109,102 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         webSetting.setJavaScriptEnabled(true); //支持js
         webView.setBackgroundColor(Color.argb(0, 0, 0, 0)); //设置背景颜色 透明
         webView.addJavascriptInterface(this, "change_tb");  //设置本地调用对象及其接口
-        webSetting.setDomStorageEnabled(true);//使用localStorage则必须打开
-        webSetting.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小
-        String appCacheDir = getActivity().getDir("cache", Context.MODE_PRIVATE).getPath();//缓存的地址
-        webSetting.setAppCachePath(appCacheDir);//设置缓存地址
-        webSetting.setAllowFileAccess(true); // 可以读取文件缓存(manifest生效)
-        webSetting.setAppCacheEnabled(true);
-        webSetting.setAllowContentAccess(true);
-        webSetting.setAllowFileAccessFromFileURLs(true);
-        webSetting.setAllowUniversalAccessFromFileURLs(true);
-        webSetting.setCacheMode(WebSettings.LOAD_DEFAULT);/// 默认使用缓存
-        webSetting.setDatabaseEnabled(true); // 应用可以有数据库
+        initWebView(webView);
+    }
+    private void initWebView(WebView mWebView) {
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小
+        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);  //设置 缓存模式
+        webSettings.setDomStorageEnabled(true);  // 开启 DOM storage API 功能
+        webSettings.setDatabaseEnabled(true);  //开启 database storage API 功能
+        String appCacheDir =getActivity().getDir("cache", Context.MODE_PRIVATE).getPath();//缓存的地址
+        webSettings.setDatabasePath(appCacheDir); //设置数据库缓存路径
+        webSettings.setAppCachePath(appCacheDir);   //设置  Application Caches 缓存目录
+        webSettings.setAppCacheEnabled(true);  //开启 Application Caches 功能
+    }
+
+
+    /**
+     * 设置导航栏标题
+     */
+    @JavascriptInterface
+    public  void  setClassCauseTitle(int title){
+        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+        tv_title.setText(title);
+        tv_title.setVisibility(View.VISIBLE);
+        iv_right.setVisibility(View.GONE);
+        rl_discovery.setVisibility(View.VISIBLE);
     }
     /**
      * 设置导航栏
      */
-
     @JavascriptInterface
     public void  setToolBar(final String view){
-        Log.i("TAGGG",Constant.HOME);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.i("TAGGG",Constant.HOME);
+
                 switch (view){
                     case Constant.HOME:
-                        Log.i("TAGGG",Constant.HOME);
-                        iv_left.setImageResource(R.mipmap.search);
-                        tv_title.setText("园所");
-                        iv_right.setImageResource(R.mipmap.ic_history);
+                        iv_left.setImageResource(R.mipmap.ic_history);
+                        tv_title.setText("乐园");
+                        tv_title.setVisibility(View.VISIBLE);
+                        iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
                         rl_discovery.setVisibility(View.VISIBLE);
-                        tv_title.setVisibility(View.VISIBLE);
                         page = Constant.HOME;
                         break;
                     case Constant.CHILDSTORY:
-                        Log.i("TAGGG",Constant.CHILDSTORY);
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("幼儿故事");
-                        iv_right.setImageResource(R.mipmap.search);
+                        tv_title.setVisibility(View.VISIBLE);
+                        iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
                         rl_discovery.setVisibility(View.VISIBLE);
-                        tv_title.setVisibility(View.VISIBLE);
                         page = Constant.CHILDSTORY;
                         break;
                     case Constant.CHILDCLASS:
-                        Log.i("TAGGG",Constant.CHILDCLASS);
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("幼儿课堂");
+                        tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
                         rl_discovery.setVisibility(View.VISIBLE);
-                        page = Constant.CHILDSTORY;
+                        page = Constant.CHILDCLASS;
                         break;
                     case Constant.CONSULT:
-                        Log.i("TAGGG",Constant.CONSULT);
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("教育资讯");
+                        tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
                         rl_discovery.setVisibility(View.VISIBLE);
-                        tv_title.setVisibility(View.VISIBLE);
                         page = Constant.CONSULT;
                         break;
                     case Constant.SAFEED:
-                        Log.i("TAGGG",Constant.SAFEED);
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("安全教育");
+                        tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
                         rl_discovery.setVisibility(View.VISIBLE);
-                        tv_title.setVisibility(View.VISIBLE);
                         page = Constant.SAFEED;
                         break;
                     case Constant.CONSULTDETAIL:
-                        Log.i("TAGGG",Constant.CONSULTDETAIL);
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("教育资讯");
+                        tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
                         rl_discovery.setVisibility(View.VISIBLE);
-                        tv_title.setVisibility(View.VISIBLE);
                         page = Constant.CONSULTDETAIL;
                         break;
                     case Constant.SEARCH:
-                        Log.i("TAGGG",Constant.SEARCH);
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("搜索");
+                        tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
                         rl_discovery.setVisibility(View.VISIBLE);
-                        tv_title.setVisibility(View.VISIBLE);
                         page = Constant.SEARCH;
                         break;
                     case Constant.VEDIO:
@@ -237,65 +212,59 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                         rl_discovery.setVisibility(View.GONE);
                         page = Constant.VEDIO;
                         break;
-                    case Constant.MEDIAPLAY: Log.i("TAGGG",Constant.MEDIAPLAY);
-                        iv_left.setImageResource(R.mipmap.ic_search);
+                    case Constant.MEDIAPLAY:
+                        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("幼儿听听");
-                        iv_right.setImageResource(R.mipmap.search);
+                        tv_title.setVisibility(View.VISIBLE);
+                        iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
                         rl_discovery.setVisibility(View.VISIBLE);
-                        tv_title.setVisibility(View.VISIBLE);
                         page = Constant.MEDIAPLAY;
                         break;
                     case Constant.MEDIAPLAYDEATIL:
-                        Log.i("TAGGG",Constant.MEDIAPLAYDEATIL);
-                        rl_discovery.setVisibility(View.VISIBLE);
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("幼儿听听");
+                        tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
                         page = Constant.MEDIAPLAYDEATIL;
-                        tv_title.setVisibility(View.VISIBLE);
-
+                        rl_discovery.setVisibility(View.VISIBLE);
                         break;
                     case Constant.MEDIAPLAYING:
-                        Log.i("TAGGG",Constant.MEDIAPLAYING);
-                        rl_discovery.setVisibility(View.VISIBLE);
-                        iv_left.setVisibility(View.GONE);
+                        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                        iv_right.setVisibility(View.GONE);
                         tv_title.setVisibility(View.GONE);
-                        iv_right.setImageResource(R.mipmap.ic_arrow_lift);
+                        rl_discovery.setVisibility(View.VISIBLE);
                         page = Constant.MEDIAPLAYING;
                         break;
                     case Constant.SEARCH_CAUSRE:
-                        Log.i("TAGGG",Constant.SEARCH_CAUSRE);
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("搜索课程");
+                        tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
                         rl_discovery.setVisibility(View.VISIBLE);
-                        tv_title.setVisibility(View.VISIBLE);
                         page = Constant.SEARCH_CAUSRE;
+                        break;
                     case Constant.SEARCH_MUSIC:
-                        Log.i("TAGGG",Constant.SEARCH_MUSIC);
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("搜索音乐");
+                        tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
                         rl_discovery.setVisibility(View.VISIBLE);
-                        tv_title.setVisibility(View.VISIBLE);
                         page = Constant.SEARCH_MUSIC;
                         break;
                     case Constant.SEARCH_CON:
-                        Log.i("TAGGG",Constant.SEARCH_CON);
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("搜索资讯");
-                        iv_right.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
+                        iv_right.setVisibility(View.GONE);
                         rl_discovery.setVisibility(View.VISIBLE);
                         page = Constant.SEARCH_CON;
                         break;
                     case Constant.PLAY_HISTORY:
-                        Log.i("TAGGG",Constant.PLAY_HISTORY);
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("播放记录");
-                        iv_right.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
+                        iv_right.setVisibility(View.GONE);
                         rl_discovery.setVisibility(View.VISIBLE);
                         page = Constant.PLAY_HISTORY;
                         break;
@@ -309,23 +278,28 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         int viewId = view.getId();
         if (viewId==R.id.iv_dleft){
              if (page.equals(Constant.HOME)){
-                 webView.loadUrl("javascript:goSearch_Origin()");
-            }
+                 webView.loadUrl("javascript:goHistory_Origin()");
+            }else {
+                 webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+                 webView.goBack();
+             }
         }else if (viewId==R.id.iv_dright){
+            Log.i("page",page);
            switch (page){
                case Constant.CHILDCLASS:
                    webView.loadUrl("javascript:goSearchVideo_Origin()");
                    break;
-               case Constant.MEDIAPLAYDEATIL:
+               case Constant.MEDIAPLAY:
                    webView.loadUrl("javascript:goSearchAudio_Origin()");
                    break;
                case Constant.CONSULT:
                    webView.loadUrl("javascript:goSearchInf_Origin()");
                    break;
                case  Constant.HOME:
-                   webView.loadUrl("javascript:goHistory_Origin()");
+                   webView.loadUrl("javascript:goSearch_Origin()");
                    break;
            }
         }
     }
+
 }

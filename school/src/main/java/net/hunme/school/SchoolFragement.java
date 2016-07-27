@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
 
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.widget.NavigationBar;
-import net.hunme.school.activity.OpenClassActivity;
 import net.hunme.school.activity.WebViewActivity;
 
 import butterknife.ButterKnife;
@@ -55,30 +54,31 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     /**
      * 基本url
      */
-    private static final String baseurl = "http://192.168.5.57:8080/space1/#/";
+    public static final String baseurl = "http://192.168.5.57:8080/space1/#/";
     /**
      * 考勤
      */
-    private  static final String CHECK = "checkOnclass";
+    public  static final String CHECK = "checkOnclass";
     /**
      * 课程安排
      */
-    private  static final String ARRANGE = "courseArr";
+    public  static final String ARRANGE = "courseArr";
     /**
      * 食谱
      */
-    private  static final String FOODLIST = "recipes";
+    public  static final String FOODLIST = "recipes";
     /**
      * 通知
      */
-    private  static final String INFORM = "notice";
+    public  static final String INFORM = "noticeRead";
     /**
      * 请假
      */
-    private  static final String LEAVE = "askForlv";
+    public  static final String LEAVE = "askForlv";
     /**
-     * 考勤
+     * 开放课堂
      */
+    public  static final String OPENCLASS = "openClass";
 
     @Nullable
     @Override
@@ -109,11 +109,13 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     public void onClick(View view) {
         Intent intent = new Intent();
         if (view.getId()==R.id.rl_openclass){
-            intent.setClass(getActivity(), OpenClassActivity.class);
+            intent.setClass(getActivity(), WebViewActivity.class);
+            intent.putExtra("url", geturl(OPENCLASS));
+            intent.putExtra("title","开放课堂");
         }else if (view.getId()==R.id.rl_check){
             intent.setClass(getActivity(), WebViewActivity.class);
             intent.putExtra("url", geturl(CHECK));
-            intent.putExtra("title","考勤");
+            intent.putExtra("title","选择班级");
         }else if (view.getId()==R.id.rl_leave){
             intent.setClass(getActivity(), WebViewActivity.class);
             intent.putExtra("url",geturl(LEAVE));
@@ -122,7 +124,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             intent.setClass(getActivity(), WebViewActivity.class);
             intent.putExtra("url",geturl(INFORM));
             intent.putExtra("title","通知");
-            intent.putExtra("rightTitle","发布");
+            intent.putExtra("rightTitle","发布通知");
         }else if (view.getId()==R.id.rl_food){
             intent.setClass(getActivity(), WebViewActivity.class);
             intent.putExtra("url",geturl(FOODLIST));
@@ -138,6 +140,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     private String  geturl(String type){
         String url = null;
      switch (type){
+         case OPENCLASS:url = baseurl+ OPENCLASS ;break;
          case CHECK:url = baseurl+CHECK;break;
          case LEAVE:url = baseurl+LEAVE;break;
          case INFORM:url = baseurl+INFORM;break;

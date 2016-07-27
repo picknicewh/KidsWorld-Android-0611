@@ -86,11 +86,15 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
     @Override
     public void onSuccess(String uri, Object date) {
         Log.i("TAG",date+"");
-        List<GroupJson> groupJsonList = (List<GroupJson>) date;
-        if (groupJsonList!=null||groupJsonList.size()!=0){
-            setlistview(groupJsonList);
+        Result<List<GroupJson>> data = (Result<List<GroupJson>>) date;
+        if (data.isSuccess()){
+            List<GroupJson> groupJsonList =data.getData();
+            if (groupJsonList!=null||groupJsonList.size()!=0){
+                setlistview(groupJsonList);
+            }
+        }else {
+           // setlistview();
         }
-
     }
 
     @Override
