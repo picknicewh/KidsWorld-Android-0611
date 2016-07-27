@@ -115,7 +115,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
      */
     public void showSexDialog(){
         View view= LayoutInflater.from(this).inflate(R.layout.alertdialog_select_sex,null);
-        final AlertDialog alertDialog= MyAlertDialog.getDialog(view,this,1);
+        final AlertDialog alertDialog= MyAlertDialog.getDialog(view,this,0);
         final RadioButton rb_boy= (RadioButton) view.findViewById(R.id.rb_boy);
         final RadioButton rb_girl= (RadioButton) view.findViewById(R.id.rb_girl);
         if(um.getSex().equals("女"))

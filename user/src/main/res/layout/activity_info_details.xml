@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="net.hunme.user.activity.InfoDetailsActivity">
+        <TextView
+            android:id="@+id/tv_title"
+            android:padding="@dimen/space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ts_xx_large"
+            android:textColor="@color/black"
+            android:text="7月28日05点停机维护公告"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextStyleBase"
+            android:text="2016-07-27 18:54:53"/>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:padding="@dimen/space"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextStyleBase"
+            android:text="尊敬的DNF用户：
+
+    为了给各位勇士带来更优质的游戏体验，进一步加强游戏的安全性，我们将于7月28(周四)05:00-09:00对所有大区进行停机维护，整个维护过程预计需要4个小时，因开机顺序以及数据维护内容差异，部分大区会提前开放。因停机给大家带来的不便，我们深表歉意。
+
+    维护期间，欢迎进入DNF官方论坛（http://dnf.gamebbs.qq.com/），官方微博（http://t.qq.com/dnf ）参与讨论更新内容以及相关精彩活动。
+
+    停机时间：7月28日(周四)05:00-09:00
+
+    更新方式：所有大区
+
+　 更新内容：
+
+　　勇士大战僵尸 强化券等你拿！   查看详情>>>
+
+　　七夕鹊桥来相会 即可得勇士装备   查看详情>>>
+
+　　签到运动会 周周签到得豪礼！   查看详情>>>
+
+　　超值助威礼包 为中国健儿加油！   查看详情>>>"/>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="net.hunme.user.activity.ProvsionActivity">
+    <LinearLayout
+        android:padding="@dimen/space"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/TextStyleBase"
+            android:gravity="center"
+            android:text="幼儿天地服务使用协议"/>
+        <TextView
+            android:id="@+id/tv_provsion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/TextStyleBase" />
+    </LinearLayout>
+</ScrollView>
+

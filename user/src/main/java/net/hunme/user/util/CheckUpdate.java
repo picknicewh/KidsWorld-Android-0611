@@ -105,7 +105,8 @@ public class CheckUpdate implements OkHttpListener {
 		// 判断SD卡是否存在，并且是否具有读写权限
 		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 			// 获得存储卡的路径
-			mSavePath = Environment.getExternalStorageDirectory().toString() + "/download";
+			mSavePath = Environment.getExternalStorageDirectory().toString() + "/ChatFile";
+//			mSavePath=StorageUtils.getOwnCacheDirectory(context, "ChatFile");
 		}
 	}
 
@@ -228,8 +229,8 @@ public class CheckUpdate implements OkHttpListener {
      */
 	private void setDownLodaProgress(long currentSize,long totalSize,float progress,long networkSpeed){
 		pb_dowmload.setMax((int) totalSize);
-		pb_dowmload.setProgress((int) currentSize);
-		tv_progress_percent.setText((int)(progress*100)+"%--"+(int)(networkSpeed/1000)+"KB/s");
+		pb_dowmload.setProgress((int) currentSize);//(int)(networkSpeed/1000)+"KB/s"
+		tv_progress_percent.setText((int)(progress*100)+"%--"+CacheHelp.getFormatSize(networkSpeed));
 	}
 
 	/**

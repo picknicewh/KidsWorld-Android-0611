@@ -2,20 +2,41 @@ package net.hunme.user.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.reflect.TypeToken;
+
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.OkHttpListener;
+import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.FormValidation;
+import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.user.R;
 
-public class UpdateMessageActivity extends BaseActivity implements View.OnClickListener {
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
+
+public class UpdateMessageActivity extends BaseActivity implements View.OnClickListener, OkHttpListener {
     private EditText et_heckNumber;
     private EditText et_password;
     private Button b_finish;
     private TextView tv_time;
-    private String phone;
+    private TextView tv_cp_number;
+    private UserMessage um;
+    private TextView tv_type;
+    private final String VALIDATECODE="/appUser/validateCode.do";
+    private final String UPDATEPASSWORD="/appUser/updataPassword.do";
+    private final String UPDATEPHONE="/appUser/updataPhone.do";
+    private String type;
+    private MyCount myCount;
+    private boolean isSubmitDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +49,6 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickClose();
-        setCententTitle("修改密码");
     }
 
     private void initView(){
@@ -36,26 +56,151 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
         et_password=$(R.id.et_password);
         b_finish=$(R.id.b_finish);
         tv_time=$(R.id.tv_time);
+        tv_cp_number=$(R.id.tv_cp_number);
+        tv_type=$(R.id.tv_type);
+        b_finish.setOnClickListener(this);
+        tv_time.setOnClickListener(this);
+//        b_finish.setEnabled(false);
     }
 
     private void initData(){
+        um=UserMessage.getInstance(this);
+        myCount=new MyCount(60000,1000);
         Intent intent  =getIntent();
-        String type=intent.getStringExtra("type");
-        phone = intent.getStringExtra("phone");
+        type=intent.getStringExtra("type");
+        isSubmitDate=false;
         if("pw".equals(type)){
+            type="2";
             setCententTitle("修改密码");
             et_password.setHint("请输入你的密码");
             b_finish.setText("完成");
         }else{
+            type="1";
             setCententTitle("修改手机号");
             et_password.setHint("请输入你的新号码");
             b_finish.setText("确定");
+            tv_type.setVisibility(View.GONE);
+            tv_cp_number.setVisibility(View.GONE);
+            et_heckNumber.setVisibility(View.GONE);
+            tv_time.setVisibility(View.GONE);
+        }
+        tv_cp_number.setText("+86 "+um.getLoginName());
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId()==R.id.tv_time){
+//            getValidateCode(type,um.getLoginName());
+            tv_time.setEnabled(false);
+            tv_type.setText("我们已经发送短信验证码到你的手机");
+            myCount.start();
+        }else if(view.getId()==R.id.b_finish){
+            if(type.equals("1")&&!isSubmitDate){
+                String phoneNumber=et_password.getText().toString().trim();
+                if(!FormValidation.isMobileNO(phoneNumber)){
+                    G.showToast(UpdateMessageActivity.this,"手机号码不符合规范");
+                    return;
+                }
+                isSubmitDate=true;
+//                getValidateCode(type,phoneNumber);
+                et_heckNumber.setVisibility(View.VISIBLE);
+                et_password.setVisibility(View.GONE);
+                G.log("----我被点击了----1------");
+            }else{
+                String code=et_heckNumber.getText().toString().trim();
+                String value=et_password.getText().toString().trim();
+                if(G.isEmteny(code)||G.isEmteny(value)){
+                    G.showToast(this,"提交的数据不能为空");
+                    return;
+                }
+                updateMessage(type,"",code,value);
+                G.log("----我被点击了-----2-----");
+            }
+
+        }
+    }
+
+    /**
+     * 获取验证码
+     * @param type
+     */
+    private void getValidateCode(String type,String phoneNumber){
+        Map<String,Object>map=new HashMap<>();
+        map.put("phone",um.getLoginName());
+        map.put("type",type);
+        Type mtype=new TypeToken<Result<String>>(){}.getType();
+        OkHttps.sendPost(mtype,VALIDATECODE,map,this);
+    }
+
+    /**
+     * 更新信息
+     * @param type 类型 1是更新手机号 2是更新密码
+     * @param sign 密钥 有服务端提供来源请求的验证码接口
+     * @param code 验证码
+     * @param value 更新的值
+     */
+    private void updateMessage(String type,String sign,String code,String value){
+        String key="";
+        String url="";
+        if(type.equals("1")){
+            key="phone";
+            url=UPDATEPHONE;
+        } else{
+            key="password";
+            url=UPDATEPASSWORD;
+        }
+        Map<String,Object>map=new HashMap<>();
+        map.put(key,value);
+        map.put("validateCode",code);
+        map.put("sign",sign);
+        Type mtype=new TypeToken<Result<String>>(){}.getType();
+        OkHttps.sendPost(mtype,url,map,this);
+    }
+
+    @Override
+    public void onSuccess(String uri, Object date) {
+        if(VALIDATECODE.equals(uri)){
+            tv_time.setEnabled(true);
+            //验证码
+//            b_finish.setEnabled(true);
+        }else if(UPDATEPHONE.equals(uri)){
+            //修改手机号码
+        }else if(UPDATEPASSWORD.equals(uri)){
+            //修改密码
         }
 
     }
 
     @Override
-    public void onClick(View view) {
-
+    public void onError(String uri, String error) {
+        if(VALIDATECODE.equals(uri)){
+            tv_time.setEnabled(true);
+            //验证码
+        }else if(UPDATEPHONE.equals(uri)){
+            //修改手机号码
+        }else if(UPDATEPASSWORD.equals(uri)){
+            //修改密码
+        }
     }
+
+    /**
+     * 一个倒计时的内部类
+     */
+    private final class MyCount extends CountDownTimer {
+        public MyCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish() {
+            tv_time.setEnabled(true);
+            tv_time.setText("获取验证码");
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            tv_time.setText("重新获取(" + millisUntilFinished / 1000 + ")秒");
+        }
+    }
+
 }

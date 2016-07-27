@@ -8,7 +8,7 @@
     tools:context=".activity.UserActivity">
 
     <LinearLayout
-        android:layout_marginTop="@dimen/space_x0.5"
+        android:layout_marginTop="@dimen/space"
         android:background="@drawable/layout_selecter"
         android:id="@+id/ll_userMassage"
         android:padding="@dimen/space"
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="龙马"
-                android:textSize="@dimen/ts_large"
+                android:textSize="@dimen/ts_xx_large"
                 style="@style/TextStyleBase" />
 
             <TextView
