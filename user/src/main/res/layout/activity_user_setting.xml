@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
-            android:layout_marginTop="@dimen/space_x0.5"
+            android:layout_marginTop="@dimen/space"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -226,6 +226,7 @@
         </LinearLayout>
     </ScrollView>
     <TextView
+        android:id="@+id/tv_provsion"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:padding="@dimen/space_x2"

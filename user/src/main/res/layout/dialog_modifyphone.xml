@@ -24,6 +24,7 @@
         android:gravity="center" />
 
     <EditText
+        android:inputType="textPassword"
         android:id="@+id/et_dg_password"
         android:padding="@dimen/space"
         android:background="@drawable/password_selecter"

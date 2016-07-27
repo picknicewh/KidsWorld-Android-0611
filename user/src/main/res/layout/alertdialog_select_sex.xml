@@ -15,6 +15,7 @@
             android:padding="@dimen/space_x2"
             android:checked="true"
             android:text="男"
+            android:textSize="@dimen/ts_x_large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <View
@@ -23,6 +24,7 @@
             android:layout_height="@dimen/line_gray"/>
 
         <RadioButton
+            android:textSize="@dimen/ts_x_large"
             android:id="@+id/rb_girl"
             android:padding="@dimen/space_x2"
             android:text="女"

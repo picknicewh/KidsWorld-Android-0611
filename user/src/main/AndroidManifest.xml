@@ -23,7 +23,9 @@
         <activity android:name=".activity.AdviceActivity" />
         <activity android:name=".activity.PhoneNumberActivity" />
         <activity android:name=".activity.UpdateMessageActivity" />
-        <activity android:name=".activity.ModifyPhoneActivity"></activity>
+        <activity android:name=".activity.ModifyPhoneActivity" />
+        <activity android:name=".activity.ProvsionActivity" />
+        <activity android:name=".activity.InfoDetailsActivity"></activity>
     </application>
 
 </manifest>

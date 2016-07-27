@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.login.LoginActivity;
 
@@ -27,15 +28,14 @@ public class UserAction {
      * @param context 上下文对象
      */
     public static void isGoLogin(Activity activity,Context context){
-//        if (G.isEmteny(UserMessage.getInstance(context).getLoginName())){
+        if (G.isEmteny(UserMessage.getInstance(context).getLoginName())){
             activity.startActivity(new Intent(context, LoginActivity.class));
-//        }
+        }
     }
 
     /**
      * 保存用户信息
      * @param context 上下文对象
-     * @param loginName 登录名
      * @param userName 用户名
      * @param holdImgUrl 用户头像url
      * @param className 班级名字
