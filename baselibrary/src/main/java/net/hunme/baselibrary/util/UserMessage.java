@@ -41,6 +41,17 @@ public class UserMessage {
     }
 
     /**
+     * @param password 用户密码
+     */
+    public void setPassword(String password){
+        editor.putString("password",password);
+        editor.commit();
+    }
+    public String getPassword(){
+        return spf.getString("password","");
+    }
+    
+    /**
      * @param userName  用户名字
      */
     public void setUserName(String userName){
@@ -150,6 +161,10 @@ public class UserMessage {
     }
     public String getUserMessageJsonCache(){
         return spf.getString("jsonCache","");
+    }
+
+    public void clean(){
+        editor.clear().commit();
     }
 
 }

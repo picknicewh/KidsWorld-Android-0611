@@ -13,8 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.util.UserMessage;
+import net.hunme.login.LoginActivity;
 import net.hunme.login.UserChooseActivity;
 import net.hunme.user.R;
+import net.hunme.user.util.CheckUpdate;
 import net.hunme.user.util.MyAlertDialog;
 
 /**
@@ -53,6 +56,22 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
      * 清除缓存
      */
     private LinearLayout ll_cleancache;
+    /**
+     * 版本更新
+     */
+    private LinearLayout ll_checkupadte;
+    /**
+     * 手机号码
+     */
+    private TextView tv_phone;
+    /**
+     * 缓存值
+     */
+    private TextView tv_cache;
+    /**
+     * 版本号
+     */
+    private TextView tv_version;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,19 +87,21 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
         setCententTitle("账户设置");
         setSubTitle("切换");
     }
-    private  void  initView(){
+    private void initView(){
         ll_changepass = $(R.id.ll_changepasswd);
         ll_changephone = $(R.id.ll_changephone);
         ll_systeminfo = $(R.id.ll_systeminfo);
         ll_callback = $(R.id.ll_callback);
         ll_cleancache = $(R.id.ll_cleancache);
         ll_exit = $(R.id.ll_exit);
+        ll_checkupadte=$(R.id.ll_checkupadte);
         ll_exit.setOnClickListener(this);
         ll_cleancache.setOnClickListener(this);
         ll_changephone.setOnClickListener(this);
         ll_changepass.setOnClickListener(this);
         ll_systeminfo.setOnClickListener(this);
         ll_callback.setOnClickListener(this);
+        ll_checkupadte.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
@@ -112,6 +133,9 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
             showAlertDialog(1);
         }else if (viewID==R.id.ll_cleancache){
             showAlertDialog(0);
+        }else if(viewID==R.id.ll_checkupadte){
+            String url="http://apkegg.mumayi.com/cooperation/2016/06/17/101/1013262/doupocangqiong_V1.4.1_mumayi_64934.apk";
+            new CheckUpdate(this).Testdate("1",url);
         }
     }
     /**
@@ -139,13 +163,17 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
                 Intent intent = new Intent(USettingActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);*/
-                if(flag==1)
+                if(flag==1){
                     //退出账号
+                    UserMessage.getInstance(USettingActivity.this).clean();
+                    Intent intent=new Intent(USettingActivity.this,LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     finish();
-                else
+                } else{
                     //清除缓存
                     alertDialog.dismiss();
-
+                }
             }
         });
         pop_notrigst.setOnClickListener(new View.OnClickListener() {
@@ -163,16 +191,16 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
         final AlertDialog alertDialog=MyAlertDialog.getDialog(view,this,0);
         Button bt_conform = (Button) view.findViewById(R.id.bt_dg_conform);
         Button bt_cancel = (Button) view.findViewById(R.id.bt_dg_cancel);
-          EditText et_password = (EditText) view.findViewById(R.id.et_dg_password);
-        final String password = et_password.getText().toString();
+        final EditText et_password = (EditText) view.findViewById(R.id.et_dg_password);
         bt_conform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 Intent intent = new Intent();
+                String password = et_password.getText().toString();
                 if (TextUtils.isEmpty(password)){
                     Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
                     return;
-                }else if (password.equals("123465")){
+                }else if (password.equals(UserMessage.getInstance(USettingActivity.this).getPassword())){
                     Toast.makeText(getApplicationContext(),"输入密码不正确",Toast.LENGTH_SHORT).show();
                     return;
                 }

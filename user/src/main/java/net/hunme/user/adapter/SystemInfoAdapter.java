@@ -58,12 +58,14 @@ public class SystemInfoAdapter extends BaseAdapter {
             new ViewHold(view);
         }
         hold= (ViewHold) view.getTag();
+
         MessageVo vo=messageList.get(i);
         hold.tv_date.setText(vo.getDate());
         hold.tv_content.setText(vo.getContent());
         SQLiteDatabase db=SystemInfoActivity.infoDb.getReadableDatabase();
         boolean type = SystemInfoDbHelp.select(db, vo.getContent()+vo.getDate());
-        if(!type){
+        vo.setRead(type);
+        if(!vo.isRead()){
             hold.tv_date.setTextColor(Color.BLACK);
             hold.tv_content.setTextColor(Color.BLACK);
         }

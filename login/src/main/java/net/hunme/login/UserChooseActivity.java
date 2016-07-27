@@ -48,7 +48,7 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
                 adapter.setSelectPosition(i);
                 CharacterSeleteVo data=seleteList.get(i);
                 //通过用户选择身份保存用户信息
-                    UserAction.saveUserMessage(UserChooseActivity.this,um.getLoginName(),data.getName(),
+                    UserAction.saveUserMessage(UserChooseActivity.this,data.getName(),
                             data.getImg(),data.getClassName(),data.getSchoolName(),
                             data.getRyId(),data.getTsId(),data.getType());
                 selectUserSubmit(data.getTsId());
@@ -70,7 +70,7 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
         if(G.isEmteny(um.getUserName())){
             // 如果用户没有点击选择默认选择第一个身份
             CharacterSeleteVo data=seleteList.get(0);
-            UserAction.saveUserMessage(UserChooseActivity.this,um.getLoginName(),data.getName(),
+            UserAction.saveUserMessage(UserChooseActivity.this,data.getName(),
                     data.getImg(),data.getClassName(),data.getSchoolName(),
                     data.getRyId(),data.getTsId(),data.getType());
             selectUserSubmit(data.getTsId());

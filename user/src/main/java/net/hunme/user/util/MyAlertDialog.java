@@ -18,7 +18,7 @@ import net.hunme.user.R;
  * 主要接口：.
  */
 public class MyAlertDialog {
-    public static AlertDialog getDialog(View view, Activity activity,int flag) {
+    public static AlertDialog getDialog(View view, Activity activity, int flag) {
         AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
         alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
@@ -32,7 +32,6 @@ public class MyAlertDialog {
         }else {
             params.height=WindowManager.LayoutParams.WRAP_CONTENT;
         }
-
         params.flags = WindowManager. LayoutParams.FLAG_DIM_BEHIND;
         alertDialog.getWindow().setAttributes(params);
         alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.fillet_pop);

@@ -83,13 +83,14 @@
             android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/item_height"
             android:orientation="horizontal">
 
             <ImageView
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher"/>
+                android:src="@mipmap/ic_collection"/>
 
             <TextView
                 android:padding="@dimen/space"
@@ -109,7 +110,7 @@
         </LinearLayout>
 
         <View
-            android:layout_marginLeft="80dp"
+            android:layout_marginLeft="50dp"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/line_gray"/>
@@ -119,13 +120,14 @@
             android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/item_height"
             android:orientation="horizontal">
 
             <ImageView
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher"/>
+                android:src="@mipmap/ic_dynamic"/>
 
             <TextView
                 android:padding="@dimen/space"
@@ -151,13 +153,14 @@
         android:layout_marginTop="@dimen/space"
         android:padding="@dimen/space"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/item_height"
         android:orientation="horizontal">
 
         <ImageView
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/ic_photo"/>
 
         <TextView
             android:padding="@dimen/space"
@@ -189,13 +192,14 @@
             android:background="@drawable/layout_selecter"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/item_height"
             android:orientation="horizontal">
 
             <ImageView
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher"/>
+                android:src="@mipmap/ic_my"/>
 
             <TextView
                 android:padding="@dimen/space"
