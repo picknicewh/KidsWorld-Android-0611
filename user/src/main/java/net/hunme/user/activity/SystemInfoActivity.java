@@ -1,5 +1,6 @@
 package net.hunme.user.activity;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -63,6 +64,7 @@ public class SystemInfoActivity extends BaseActivity implements OkHttpListener {
                     SQLiteDatabase wdb = infoDb.getWritableDatabase();
                     SystemInfoDbHelp.insert(wdb,value);
                 }
+                startActivity(new Intent(SystemInfoActivity.this,InfoDetailsActivity.class));
             }
         });
 
