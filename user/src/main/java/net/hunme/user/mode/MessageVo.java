@@ -14,7 +14,7 @@ public class MessageVo {
     private String title;
     private String date;
     private String content;
-
+    private boolean isRead;
     public String getTitle() {
         return title;
     }
@@ -37,5 +37,13 @@ public class MessageVo {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
     }
 }

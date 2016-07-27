@@ -43,11 +43,10 @@ public class UserAction {
      * @param ryId 融云通讯ID
      * @param tsId 用户ID 用户唯一标识
      */
-    public static void saveUserMessage(Context context, String loginName, String userName,
-                                         String holdImgUrl, String className, String schoolName,
+    public static void saveUserMessage(Context context, String userName, String holdImgUrl,
+                                       String className, String schoolName,
                                        String ryId, String tsId,String type){
         UserMessage um =UserMessage.getInstance(context);
-        um.setLoginName(loginName);
         um.setUserName(userName);
         um.setHoldImgUrl(holdImgUrl);
         um.setClassName(className);
@@ -55,6 +54,12 @@ public class UserAction {
         um.setRyId(ryId);
         um.setTsId(tsId);
         um.setType(type);
+    }
+
+    public static void saveLoginMessage(Context context,String loginName,String passWord){
+        UserMessage um =UserMessage.getInstance(context);
+        um.setLoginName(loginName);
+        um.setPassword(passWord);
     }
 
     private static List<Activity> activityList = new LinkedList<Activity>();

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_update_message"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:text="检测到有新的版本，需要更新吗？"
+        android:textColor="@color/black"
+        android:padding="@dimen/space"
+        android:gravity="center" />
+
+    <RelativeLayout
+        android:id="@+id/rl_dowmload"
+        android:visibility="gone"
+        android:padding="@dimen/space_x2"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical" >
+
+        <ProgressBar
+            android:layout_centerInParent="true"
+            android:id="@+id/pb_download"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_alignLeft="@id/pb_download"
+            android:layout_below="@id/pb_download"
+            android:id="@+id/tv_progress_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space"
+            android:text="0%--0kb/s" />
+
+        <TextView
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/tv_apk_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="正在更新，请勿关闭页面..." />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/b_cancel"
+            android:textSize="@dimen/ts_x_large"
+            android:layout_width="0dp"
+            android:background="#00000000"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_green"
+            android:text="取消" />
+
+        <View
+            android:layout_width="@dimen/line_gray"
+            android:layout_height="match_parent"
+            android:background="@color/line_gray"
+            />
+
+        <Button
+            android:background="#00000000"
+            android:id="@+id/b_confirm"
+            android:textSize="@dimen/ts_x_large"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_green"
+            android:text="确认"
+            />
+    </LinearLayout>
+</LinearLayout>

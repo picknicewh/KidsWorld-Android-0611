@@ -1,9 +1,7 @@
 package net.hunme.user.activity;
 
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -51,16 +49,20 @@ public class SystemInfoActivity extends BaseActivity implements OkHttpListener {
     private void initView(){
         lv_systeminfo=$(R.id.lv_systeminfo);
         messageList=new ArrayList<>();
-        adapter=new SystemInfoAdapter(testDate(),this);
+        adapter=new SystemInfoAdapter(messageList,this);
         lv_systeminfo.setAdapter(adapter);
+        testDate();
 //        getMessageDate(UserMessage.getInstance(this).getTsId());
         infoDb=new SystemInfoDb(this);//创建数据库
         lv_systeminfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                SQLiteDatabase db = infoDb.getWritableDatabase();
-                SystemInfoDbHelp.insert(db,messageList.get(i).getContent()+messageList.get(i).getDate());
-               // db.close();
+                String value=messageList.get(i).getContent()+messageList.get(i).getDate();
+                SQLiteDatabase rdb=infoDb.getReadableDatabase();
+                if(!SystemInfoDbHelp.select(rdb,value)){
+                    SQLiteDatabase wdb = infoDb.getWritableDatabase();
+                    SystemInfoDbHelp.insert(wdb,value);
+                }
             }
         });
 
@@ -91,14 +93,13 @@ public class SystemInfoActivity extends BaseActivity implements OkHttpListener {
         G.showToast(this,"消息获取失败，请检查网络再试！");
     }
 
-    private List<MessageVo> testDate(){
-        MessageVo vo=new MessageVo();
+    private void testDate(){
         for (int i=0;i<100;i++){
+            MessageVo vo=new MessageVo();
             vo.setContent(i*10+"");
             vo.setDate(i+"");
-
             messageList.add(vo);
         }
-        return messageList;
+        adapter.notifyDataSetChanged();
     }
 }
