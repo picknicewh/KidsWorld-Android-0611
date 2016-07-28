@@ -12,6 +12,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:src="@mipmap/ic_test01"
             android:id="@+id/iv_photo_itme"
             android:layout_width="140dp"
             android:layout_height="100dp"

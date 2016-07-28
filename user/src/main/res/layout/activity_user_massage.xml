@@ -35,10 +35,9 @@
             android:id="@+id/cv_head"
             android:background="@drawable/bg_head_portrait"
             android:layout_toLeftOf="@id/iv_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:civ_border_width="1dp"
-            app:civ_border_color="#ffffff"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="centerCrop"
             android:src="@mipmap/ic_test01" />
     </RelativeLayout>
 
@@ -96,7 +95,7 @@
 
             <TextView
                 style="@style/TextStyleBase"
-                android:padding="@dimen/space"
+                android:layout_marginRight="@dimen/space"
                 android:id="@+id/tv_sex"
                 android:layout_gravity="center"
                 android:textSize="@dimen/ts_x_large"
@@ -133,8 +132,8 @@
                 android:text="签名"/>
 
             <TextView
+                android:layout_marginRight="@dimen/space"
                 android:id="@+id/tv_sign"
-                android:padding="@dimen/space"
                 android:layout_gravity="center"
                 style="@style/TextStyleBase"
                 android:layout_width="wrap_content"

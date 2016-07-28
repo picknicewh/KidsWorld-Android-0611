@@ -12,8 +12,10 @@ import com.lzy.okhttputils.request.PostRequest;
 import net.hunme.baselibrary.util.EncryptUtil;
 import net.hunme.baselibrary.util.G;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,7 +43,7 @@ public class OkHttps<T> {
             OkHttpUtils.getInstance().getOkHttpClient();
             httpUtils =OkHttpUtils.getInstance()
 //                    .setCertificates("")          // 自签名https的证书，可变参数，可以设置多个
-                    .debug("OkHttpUtils")                                              //是否打开调试
+                    .debug("OkHttpUtils")//是否打开调试
                     .setConnectTimeout(OkHttpUtils.DEFAULT_MILLISECONDS)               //全局的连接超时时间
                     .setReadTimeOut(OkHttpUtils.DEFAULT_MILLISECONDS)                  //全局的读取超时时间
                     .setWriteTimeOut(OkHttpUtils.DEFAULT_MILLISECONDS);
@@ -77,6 +79,30 @@ public class OkHttps<T> {
     }
 
     /**
+     * 上传文件
+     * @param type
+     * @param uri
+     * @param map
+     * @param filelist
+     * @param okHttpListener
+     */
+    public static void sendPost(Type type, final String uri, Map<String, Object> map, List<File> filelist, final OkHttpListener okHttpListener) {
+        if(null==uri||okHttpListener==null) {
+            G.log("参数或者访问地址为空");
+            return;
+        }
+        //进行网络请求
+        postRequest= getInstance()
+                .post(uri_host+uri);
+//                .addFileParams("KEY",filelist);
+        for (int i=0;i<filelist.size();i++){
+            postRequest.params(i+"",filelist.get(i));
+        }
+        G.log(filelist.size()+"-----------");
+        doInternet(type,uri,getParams(map),okHttpListener);
+    }
+
+    /**
      * 带缓存的请求
      * @param uri 请求地址
      * @param map  请求参数
@@ -84,7 +110,7 @@ public class OkHttps<T> {
      * @param cacheMode   缓存模式
      * @param cacheKey  缓存名
      */
-    public static void sendPost(final String uri, Map<String,Object> map,
+    public static void sendPost(Type type,final String uri, Map<String,Object> map,
                           final OkHttpListener okHttpListener, int cacheMode, String cacheKey) {
         if(null==uri||okHttpListener==null) {
             G.log("参数或者访问地址为空");
@@ -117,7 +143,7 @@ public class OkHttps<T> {
                 .post(uri_host+uri)
                 .cacheMode(mode)
                 .cacheKey(cacheKey);
-//        doInternet(uri,getParams(map),okHttpListener);
+        doInternet(type,uri,getParams(map),okHttpListener);
     }
 
     private static void doInternet(final Type type, final String uri, HttpParams params, final OkHttpListener okHttpListener){
@@ -150,6 +176,12 @@ public class OkHttps<T> {
                                 okHttpListener.onError(uri,response.networkResponse().toString());
                             else
                                 okHttpListener.onError(uri,e.toString());
+                        }
+
+                        @Override
+                        public void upProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
+                            super.upProgress(currentSize, totalSize, progress, networkSpeed);
+                            G.log("--------------"+networkSpeed+"---------------"+totalSize);
                         }
                     });
     }

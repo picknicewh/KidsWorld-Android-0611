@@ -10,7 +10,6 @@ import android.widget.ImageView;
 
 import com.pizidea.imagepicker.ImgLoader;
 import com.pizidea.imagepicker.UilImgLoader;
-import com.pizidea.imagepicker.bean.ImageItem;
 
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.widget.CircleImageView;
@@ -31,10 +30,10 @@ import java.util.List;
  * ================================================
  */
 public class GridAlbumAdapter extends BaseAdapter {
-    private List<ImageItem> imageItems;
+    private List<String> imageItems;
     private Context context;
     private ImgLoader presenter;
-    public GridAlbumAdapter(List<ImageItem> imageItems, Context context) {
+    public GridAlbumAdapter(List<String> imageItems, Context context) {
         this.imageItems = imageItems;
         this.context = context;
         presenter = new UilImgLoader();
@@ -68,15 +67,15 @@ public class GridAlbumAdapter extends BaseAdapter {
         holder = (ViewHolder) convertView.getTag();
 
         if (position == imageItems.size()) {
-            holder.image.setImageBitmap(BitmapFactory.decodeResource(
-                    context.getResources(), R.mipmap.ic_unfocused));
+            holder.image.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_unfocused));
             holder.clv_delete.setVisibility(View.GONE);
-            if (position == 9) {
+            holder.image.setVisibility(View.VISIBLE);
+            if (position >= 9) {
                 holder.image.setVisibility(View.GONE);
             }
         } else {
             holder.clv_delete.setVisibility(View.VISIBLE);
-            getBitmapData(holder.image,imageItems.get(position).path);
+            getBitmapData(holder.image,imageItems.get(position));
         }
 
         holder.clv_delete.setOnClickListener(new View.OnClickListener() {

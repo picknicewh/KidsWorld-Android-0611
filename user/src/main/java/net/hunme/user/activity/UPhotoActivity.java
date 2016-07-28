@@ -81,7 +81,9 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
         lv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startActivity(new Intent(UPhotoActivity.this,UploadPhotoActivity.class));
+                Intent intent=new Intent(UPhotoActivity.this,AlbumDetailsActivity.class);
+                intent.putExtra("flickrId",photoList.get(i).getFlickrId());
+                startActivity(intent);
             }
         });
     }

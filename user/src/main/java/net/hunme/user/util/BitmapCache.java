@@ -1,18 +1,16 @@
 package net.hunme.user.util;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Handler;
-import android.text.TextUtils;
-import android.util.Log;
-import android.widget.ImageView;
+import android.os.Environment;
 
-import net.hunme.user.activity.AlbumActivity;
-
-import java.lang.ref.SoftReference;
-import java.util.HashMap;
-import java.util.concurrent.Executors;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * ================================================
@@ -24,116 +22,73 @@ import java.util.concurrent.Executors;
  * 主要接口：
  * ================================================
  */
-public class BitmapCache extends Activity {
+public class BitmapCache {
+    // 根据路径获得图片并压缩，返回bitmap用于显示
+    public static Bitmap getSmallBitmap(String filePath) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, options);
 
-	public Handler h = new Handler();
-	public final String TAG = getClass().getSimpleName();
-	private HashMap<String, SoftReference<Bitmap>> imageCache = new HashMap<String, SoftReference<Bitmap>>();
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, 480, 800);
 
-	public void put(String path, Bitmap bmp) {
-		if (!TextUtils.isEmpty(path) && bmp != null) {
-			imageCache.put(path, new SoftReference<Bitmap>(bmp));
-		}
-	}
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
 
-	/**
-	 *  将图片转化成略缩图 并显示图片
-	 * @param iv 显示图片空间 imageView
-	 * @param thumbPath 小图路径
-	 * @param sourcePath 原图路径
-     * @param callback 返回对象
+        return BitmapFactory.decodeFile(filePath, options);
+    }
+
+    //计算图片的缩放值
+    public static int calculateInSampleSize(BitmapFactory.Options options,int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            final int heightRatio = Math.round((float) height/ (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+        return inSampleSize;
+    }
+
+    /**
+     * 压缩图片到指定位置(默认JPG格式)
+     *
+     * @param bitmap       需要压缩的图片
+     * @param compressPath 生成文件路径(例如: /storage/imageCache/1.jpg)
+     * @param quality      图片质量，0~100
+     * @return if true,保存成功
      */
-	public void displayBmp(final ImageView iv, final String thumbPath,
-						   final String sourcePath, final ImageCallback callback) {
-		if (TextUtils.isEmpty(thumbPath) && TextUtils.isEmpty(sourcePath)) {
-			Log.e(TAG, "no paths pass in");
-			return;
-		}
-
-		final String path; //图片路径
-		final boolean isThumbPath; //是否做过处理（也可以认为是否第一次加载这张图）
-		if (!TextUtils.isEmpty(thumbPath)) {
-			path = thumbPath;
-			isThumbPath = true;
-		} else if (!TextUtils.isEmpty(sourcePath)) {
-			path = sourcePath;
-			isThumbPath = false;
-		} else {
-			// iv.setImageBitmap(null);
-			return;
-		}
-
-		if (imageCache.containsKey(path)) {
-			SoftReference<Bitmap> reference = imageCache.get(path);
-			Bitmap bmp = reference.get();
-			if (bmp != null) {
-				if (callback != null) {
-					callback.imageLoad(iv, bmp, sourcePath);
-				}
-				iv.setImageBitmap(bmp);
-				Log.d(TAG, "hit cache");
-				return;
-			}
-		}
-//		iv.setImageBitmap(null);
-		Executors.newFixedThreadPool(5).execute(new Runnable() {
-			Bitmap thumb;
-			@Override
-			public void run() {
-				try {
-					if (isThumbPath) {
-						thumb = BitmapFactory.decodeFile(thumbPath);
-						if (thumb == null) {
-							thumb = Bimp.revitionImageSize(sourcePath);
-						}
-					} else {
-						thumb = Bimp.revitionImageSize(sourcePath);
-					}
-				} catch (Exception e) {
-
-				}
-				if (thumb == null) {
-					thumb = AlbumActivity.bimap;
-				}
-				put(path, thumb);
-				if (callback != null) {
-					h.post(new Runnable() {
-						@Override
-						public void run() {
-							callback.imageLoad(iv, thumb, sourcePath);
-						}
-					});
-				}
-			}
-		});
-
-	}
-
-//	public Bitmap revitionImageSize(String path) throws IOException {
-//		BufferedInputStream in = new BufferedInputStream(new FileInputStream(
-//				new File(path)));
-//		BitmapFactory.Options options = new BitmapFactory.Options();
-//		options.inJustDecodeBounds = true;
-//		BitmapFactory.decodeStream(in, null, options);
-//		in.close();
-//		int i = 0;
-//		Bitmap bitmap = null;
-//		while (true) {
-//			if ((options.outWidth >> i <= 256)
-//					&& (options.outHeight >> i <= 256)) {
-//				in = new BufferedInputStream(
-//						new FileInputStream(new File(path)));
-//				options.inSampleSize = (int) Math.pow(2.0D, i);
-//				options.inJustDecodeBounds = false;
-//				bitmap = BitmapFactory.decodeStream(in, null, options);
-//				break;
-//			}
-//			i += 1;
-//		}
-//		return bitmap;
-//	}
-
-	public interface ImageCallback {
-		 void imageLoad(ImageView imageView, Bitmap bitmap, Object... params);
-	}
+    public static boolean compressBiamp(Bitmap bitmap, String compressPath, int quality) {
+        FileOutputStream stream = null;
+        try {
+            stream = new FileOutputStream(new File(compressPath));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream);// (0-100)压缩文件
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                stream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+    private static List<File> files;
+    public static List<File> getFileList(List<String>pathList){
+        String path=Environment.getExternalStorageDirectory().toString() + "/ChatFile/";
+        files=new ArrayList<>();
+        for (String s:pathList){
+            String compressPath = path+ new Date().getTime()+".jpg";
+            Bitmap bitmap=BitmapFactory.decodeFile(s);
+           boolean isCache= compressBiamp(bitmap,compressPath,50);
+            if(isCache){
+                files.add(new File(compressPath));
+            }
+        }
+     return  files;
+    }
 }
