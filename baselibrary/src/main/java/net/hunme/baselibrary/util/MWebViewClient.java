@@ -40,15 +40,15 @@ public class MWebViewClient extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         // 使用自己的WebView组件来响应Url加载事件，而不是使用默认浏览器器加载页面
-         webView.loadUrl(url);
+        webView.loadUrl(url);
         // 记得消耗掉这个事件。给不知道的朋友再解释一下，Android中返回True的意思就是到此为止,
         // 事件就会不会冒泡传递了，我们称之为消耗掉
         return true;
     }
-
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         Log.i("WebActivity", "页面加载开始");
+
         super.onPageStarted(view, url, favicon);
     }
 
@@ -57,6 +57,7 @@ public class MWebViewClient extends WebViewClient {
         Log.i("WebActivity", "页面加载完成");
         super.onPageFinished(view, url);
     }
+
 
     /**
      * 在加载页面资源时会调用，每一个资源（比如图片）的加载都会调用一次。
