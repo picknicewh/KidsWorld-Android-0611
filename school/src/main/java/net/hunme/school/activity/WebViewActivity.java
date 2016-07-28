@@ -1,24 +1,21 @@
 package net.hunme.school.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
-import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MWebChromeClient;
 import net.hunme.baselibrary.util.MWebViewClient;
+import net.hunme.baselibrary.widget.MyViewView;
 import net.hunme.school.R;
 import net.hunme.school.SchoolFragement;
 
@@ -39,7 +36,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
     /**
      * 网页
      */
-    private WebView wv_totle;
+    private MyViewView webView;
     /**
      * url地址
      */
@@ -48,10 +45,6 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
      * 左边的title
      */
     private String rightTitle;
-    /**
-     * flag
-     */
-    private int flag=0;
     /**
      * 加载动画
      */
@@ -62,11 +55,11 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
         initData();
-        G.clearCacheFolder(getCacheDir(),System.currentTimeMillis());
+      //  G.clearCacheFolder(getCacheDir(),System.currentTimeMillis());
     }
 
     private void  initData(){
-        wv_totle = $(R.id.wv_totle);
+        webView = $(R.id.wv_totle);
         iv_left = $(R.id.iv_left);
         tv_title = $(R.id.tv_title);
         tv_right = $(R.id.tv_subtitle);
@@ -78,11 +71,8 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
             tv_right.setText(rightTitle);
         }
         url = intent.getStringExtra("url");
-        interactive(wv_totle);
+        setWebView();
         Log.i("FFF",getCacheDir().lastModified()+"");
-
-        wv_totle.loadUrl(url);
-
     }
     @Override
     protected void setToolBar() {
@@ -93,50 +83,20 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
         setLiftOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (url.equals(wv_totle.getUrl())){
+                if (url.equals(webView.getUrl())){
                     finish();
                 }else {
-                    wv_totle.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-                    wv_totle.goBack();
+                    webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+                    webView.goBack();
                 }
             }
         });
     }
-
-    /**
-     * 交互配置
-     * @param  webView
-     */
-    private  void interactive(WebView webView){
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setUseWideViewPort(true);
-        WebSettings webSetting = webView.getSettings();
+    private void  setWebView(){
+        webView.addJavascriptInterface(this, "change_ngb");  //设置本地调用对象及其接口
         webView.setWebViewClient(new MWebViewClient(webView,this));
         webView.setWebChromeClient(new MWebChromeClient(this,ll_loading,webView));
-        webSetting.setDefaultTextEncodingName("utf-8"); //设置编码
-        webSetting.setJavaScriptEnabled(true); //支持js
-        webView.setBackgroundColor(Color.argb(0, 0, 0, 0)); //设置背景颜色 透明
-        webView.addJavascriptInterface(this, "change_tb");  //设置本地调用对象及其接口
-        webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
-        webSetting.setUseWideViewPort(true);//支持插件
-        initWebView(webView);
-    }
-    /**
-     * 缓存设置
-     * @param  mWebView
-     */
-    private void initWebView(WebView mWebView) {
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小
-        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);  //设置 缓存模式
-        webSettings.setDomStorageEnabled(true);  // 开启 DOM storage API 功能
-        webSettings.setDatabaseEnabled(true);  //开启 database storage API 功能
-        String appCacheDir = getDir("cache", Context.MODE_PRIVATE).getPath();//缓存的地址
-        webSettings.setDatabasePath(appCacheDir); //设置数据库缓存路径
-        webSettings.setAppCachePath(appCacheDir);   //设置  Application Caches 缓存目录
-        webSettings.setAppCacheEnabled(true);  //开启 Application Caches 功能
+        webView.loadUrl(url);
     }
     /**
      * 设置导航栏
@@ -159,10 +119,10 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && wv_totle.canGoBack()) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
             // 返回上一页面
-                wv_totle.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-                wv_totle.goBack();
+            webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+            webView.goBack();
             return true;
         }
         return super.onKeyDown(keyCode, event);

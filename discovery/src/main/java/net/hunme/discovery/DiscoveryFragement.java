@@ -1,8 +1,6 @@
 package net.hunme.discovery;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -13,15 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
+import net.hunme.baselibrary.util.Constant;
 import net.hunme.baselibrary.util.MWebChromeClient;
 import net.hunme.baselibrary.util.MWebViewClient;
+import net.hunme.baselibrary.widget.MyViewView;
 
 
 /**
@@ -34,7 +33,7 @@ import net.hunme.baselibrary.util.MWebViewClient;
  */
 public class DiscoveryFragement extends BaseFragement implements View.OnClickListener{
 
-    private WebView webView;
+    private MyViewView webView;
     /**
      * 导航栏
      */
@@ -92,58 +91,31 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         webView = $(v,R.id.wv_discovery);
         rl_discovery = $(v,R.id.rl_discovery);
         ll_loading = $(v,R.id.ll_loading);
-        interactive(webView);
-        webView.loadUrl(url);
+        setWebView();
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
     }
-     /**
-     * 交互配置
-     * @param  webView
-     */
-    private  void interactive(WebView webView){
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setUseWideViewPort(true);
-        WebSettings webSetting = webView.getSettings();
+    private void  setWebView(){
+        webView.addJavascriptInterface(this, "change_tb");  //设置本地调用对象及其接口
         webView.setWebViewClient(new MWebViewClient(webView,getActivity()));
         webView.setWebChromeClient(new MWebChromeClient(getActivity(),ll_loading,webView));
-        webSetting.setDefaultTextEncodingName("utf-8"); //设置编码
-        webSetting.setJavaScriptEnabled(true); //支持js
-        webView.setBackgroundColor(Color.argb(0, 0, 0, 0)); //设置背景颜色 透明
-        webView.addJavascriptInterface(this, "change_tb");  //设置本地调用对象及其接口
-        webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
-        webSetting.setUseWideViewPort(true);//支持插件
-        initWebView(webView);
+        webView.loadUrl(url);
     }
-    /**
-     * 缓存设置
-     * @param  mWebView
-     */
-    private void initWebView(WebView mWebView) {
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小
-        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);  //设置 缓存模式
-        webSettings.setDomStorageEnabled(true);  // 开启 DOM storage API 功能
-        webSettings.setDatabaseEnabled(true);  //开启 database storage API 功能
-        String appCacheDir =getActivity().getDir("cache", Context.MODE_PRIVATE).getPath();//缓存的地址
-        webSettings.setDatabasePath(appCacheDir); //设置数据库缓存路径
-        webSettings.setAppCachePath(appCacheDir);   //设置  Application Caches 缓存目录
-        webSettings.setAppCacheEnabled(true);  //开启 Application Caches 功能
-    }
-
-
     /**
      * 设置导航栏标题
      */
     @JavascriptInterface
-    public  void  setClassCauseTitle(int title){
-        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
-        tv_title.setText(title);
-        tv_title.setVisibility(View.VISIBLE);
-        iv_right.setVisibility(View.GONE);
-        rl_discovery.setVisibility(View.VISIBLE);
+    public  void  setClassCauseTitle(final String title){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                tv_title.setText(title);
+                tv_title.setVisibility(View.VISIBLE);
+                iv_right.setVisibility(View.GONE);
+            }
+        });
+
     }
     /**
      * 设置导航栏
@@ -161,7 +133,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
-                        rl_discovery.setVisibility(View.VISIBLE);
                         page = Constant.HOME;
                         break;
                     case Constant.CHILDSTORY:
@@ -170,7 +141,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
-                        rl_discovery.setVisibility(View.VISIBLE);
                         page = Constant.CHILDSTORY;
                         break;
                     case Constant.CHILDCLASS:
@@ -179,7 +149,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
-                        rl_discovery.setVisibility(View.VISIBLE);
+
                         page = Constant.CHILDCLASS;
                         break;
                     case Constant.CONSULT:
@@ -188,7 +158,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
-                        rl_discovery.setVisibility(View.VISIBLE);
+
                         page = Constant.CONSULT;
                         break;
                     case Constant.SAFEED:
@@ -196,7 +166,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                         tv_title.setText("安全教育");
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
-                        rl_discovery.setVisibility(View.VISIBLE);
+
                         page = Constant.SAFEED;
                         break;
                     case Constant.CONSULTDETAIL:
@@ -204,7 +174,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                         tv_title.setText("教育资讯");
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
-                        rl_discovery.setVisibility(View.VISIBLE);
+
                         page = Constant.CONSULTDETAIL;
                         break;
                     case Constant.SEARCH:
@@ -213,12 +183,14 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
-                        rl_discovery.setVisibility(View.VISIBLE);
+
                         page = Constant.SEARCH;
                         break;
                     case Constant.VEDIO:
-                        Log.i("TAGGG",Constant.SEARCH);
-                        rl_discovery.setVisibility(View.GONE);
+                        iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                        iv_right.setVisibility(View.GONE);
+                        tv_title.setVisibility(View.GONE);
+
                         page = Constant.VEDIO;
                         break;
                     case Constant.MEDIAPLAY:
@@ -227,7 +199,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
-                        rl_discovery.setVisibility(View.VISIBLE);
                         page = Constant.MEDIAPLAY;
                         break;
                     case Constant.MEDIAPLAYDEATIL:
@@ -236,13 +207,11 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
                         page = Constant.MEDIAPLAYDEATIL;
-                        rl_discovery.setVisibility(View.VISIBLE);
                         break;
                     case Constant.MEDIAPLAYING:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         iv_right.setVisibility(View.GONE);
                         tv_title.setVisibility(View.GONE);
-                        rl_discovery.setVisibility(View.VISIBLE);
                         page = Constant.MEDIAPLAYING;
                         break;
                     case Constant.SEARCH_CAUSRE:
@@ -250,7 +219,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                         tv_title.setText("搜索课程");
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
-                        rl_discovery.setVisibility(View.VISIBLE);
                         page = Constant.SEARCH_CAUSRE;
                         break;
                     case Constant.SEARCH_MUSIC:
@@ -258,7 +226,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                         tv_title.setText("搜索音乐");
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
-                        rl_discovery.setVisibility(View.VISIBLE);
                         page = Constant.SEARCH_MUSIC;
                         break;
                     case Constant.SEARCH_CON:
@@ -266,7 +233,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                         tv_title.setText("搜索资讯");
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
-                        rl_discovery.setVisibility(View.VISIBLE);
                         page = Constant.SEARCH_CON;
                         break;
                     case Constant.PLAY_HISTORY:
@@ -274,7 +240,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                         tv_title.setText("播放记录");
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
-                        rl_discovery.setVisibility(View.VISIBLE);
                         page = Constant.PLAY_HISTORY;
                         break;
                 }

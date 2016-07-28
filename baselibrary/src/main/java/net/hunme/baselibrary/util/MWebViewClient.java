@@ -45,7 +45,6 @@ public class MWebViewClient extends WebViewClient {
         // 事件就会不会冒泡传递了，我们称之为消耗掉
         return true;
     }
-
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         Log.i("WebActivity", "页面加载开始");

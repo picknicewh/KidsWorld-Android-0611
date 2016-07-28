@@ -25,19 +25,21 @@ public class MWebChromeClient  extends WebChromeClient {
      * 加载动画
      */
     private LinearLayout ll_loading;
+
     private  int flag;
     public MWebChromeClient(Activity context,LinearLayout ll_loading,WebView webView) {
         super();
         this.context = context;
         this.ll_loading  = ll_loading;
         if (!G.isNetworkConnected(context)) {
-            // 清缓存
             webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
             flag = 0;
+            ll_loading.setVisibility(View.GONE);
         } else {
             flag = 1;
         }
     }
+
 
     @Override
     public void onProgressChanged(WebView view, int newProgress) {

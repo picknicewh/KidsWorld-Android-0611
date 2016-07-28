@@ -19,6 +19,9 @@ import net.hunme.message.fragment.MessageFragement;
 import net.hunme.school.SchoolFragement;
 import net.hunme.status.StatusFragement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -99,11 +102,12 @@ public class MainActivity extends JPushBaseActivity {
      * 用户头像地址
      */
     private String portrait;
-
     /**
      * 标记位
      */
     private int flag = 0;
+
+    private List<Fragment> fragmentList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +118,7 @@ public class MainActivity extends JPushBaseActivity {
         initJPushConfiguration();
         connect(userMessage.getRyId());
         setNoreadMessage();
+
     }
 
     /**
@@ -126,12 +131,22 @@ public class MainActivity extends JPushBaseActivity {
         messageFragement = new MessageFragement();
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+      /*
         transaction.replace(R.id.content, statusFragement);
-        transaction.commit();
+        transaction.commit();*/
         userMessage  = new UserMessage(this);
         userId = userMessage.getTsId();
         username  = userMessage.getUserName();
         portrait = userMessage.getHoldImgUrl();
+        fragmentList = new ArrayList<>();
+        fragmentList.add(statusFragement);
+        fragmentList.add(schoolFragement);
+        fragmentList.add(discoveryFragement);
+        fragmentList.add(messageFragement);
+        for (int i = 0 ; i <fragmentList.size() ;i++){
+            transaction.add(R.id.content, fragmentList.get(i));
+        }
+        showview(flag,transaction);
     }
 
     @Override
@@ -146,10 +161,8 @@ public class MainActivity extends JPushBaseActivity {
     @OnClick({R.id.ll_status, R.id.ll_school, R.id.ll_discovery, R.id.ll_message})
     public void onClick(View view) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        Fragment fragment = null;
         switch (view.getId()) {
             case R.id.ll_status:
-                fragment = statusFragement;
                 tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
                 tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
                 tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
@@ -158,9 +171,9 @@ public class MainActivity extends JPushBaseActivity {
                 ivDiscovery.setImageResource(R.mipmap.discovery);
                 ivMessage.setImageResource(R.mipmap.message);
                 ivStatus.setImageResource(R.mipmap.status_p);
+                flag=0;
                 break;
             case R.id.ll_school:
-                fragment = schoolFragement;
                 tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
                 tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
                 tvSchool.setTextColor(getResources().getColor(R.color.main_green));
@@ -169,9 +182,9 @@ public class MainActivity extends JPushBaseActivity {
                 ivDiscovery.setImageResource(R.mipmap.discovery);
                 ivMessage.setImageResource(R.mipmap.message);
                 ivStatus.setImageResource(R.mipmap.status);
+                flag=1;
                 break;
             case R.id.ll_discovery:
-                fragment = discoveryFragement;
                 tvDiscovery.setTextColor(getResources().getColor(R.color.main_green));
                 tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
                 tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
@@ -180,10 +193,9 @@ public class MainActivity extends JPushBaseActivity {
                 ivDiscovery.setImageResource(R.mipmap.discovery_p);
                 ivMessage.setImageResource(R.mipmap.message);
                 ivStatus.setImageResource(R.mipmap.status);
-
+                flag=2;
                 break;
             case R.id.ll_message:
-                fragment = messageFragement;
                 tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
                 tvMessage.setTextColor(getResources().getColor(R.color.main_green));
                 tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
@@ -192,13 +204,25 @@ public class MainActivity extends JPushBaseActivity {
                 ivDiscovery.setImageResource(R.mipmap.discovery);
                 ivMessage.setImageResource(R.mipmap.message_p);
                 ivStatus.setImageResource(R.mipmap.status);
+                flag=3;
                 break;
+          }
+              showview(flag,transaction);
+
+    }
+    /**
+     显示隐藏界面
+     */
+    private void showview(int flag,FragmentTransaction transaction){
+        for (int i = 0; i<fragmentList.size();i++){
+            if (flag==i){
+                transaction.show(fragmentList.get(flag));
+            }else {
+
+                transaction.hide(fragmentList.get(i));
+            }
         }
-
-            transaction.replace(R.id.content, fragment);
-            transaction.commit();
-
-
+        transaction.commit();
     }
     @Override
     protected void onDestroy() {

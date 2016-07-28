@@ -35,7 +35,7 @@
    <include
        android:id="@+id/ll_loading"
        layout="@layout/loadwebview"/>
-   <WebView
+   <net.hunme.baselibrary.widget.MyViewView
        android:id="@+id/wv_discovery"
        android:layout_width="match_parent"
        android:layout_height="match_parent"

@@ -1,4 +1,4 @@
-package net.hunme.discovery;
+package net.hunme.baselibrary.util;
 
 /**
  * 作者： Administrator
@@ -69,4 +69,8 @@ public class Constant {
      * 幼儿听听首页
      */
     public static final String MEDIAPLAYDEATIL = "mediaplaydetail";
+    /**
+     * 收藏
+     */
+    public static final String  COLLECT = "collect";
 }
