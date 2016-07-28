@@ -59,7 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content">
            <ImageView
-               android:layout_marginRight="@dimen/space_x2"
+               android:layout_marginRight="40dp"
                android:layout_alignParentRight="true"
                android:id="@+id/iv_pcall"
                android:src="@mipmap/ic_call"

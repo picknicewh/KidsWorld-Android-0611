@@ -1,18 +1,19 @@
 package net.hunme.kidsworld;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.discovery.DiscoveryFragement;
+import net.hunme.kidsworld.util.HunmeApplication;
 import net.hunme.login.util.UserAction;
 import net.hunme.message.fragment.MessageFragement;
 import net.hunme.school.SchoolFragement;
@@ -21,6 +22,10 @@ import net.hunme.status.StatusFragement;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 import main.jpushlibrary.JPush.JPushBaseActivity;
 
 /**
@@ -77,11 +82,28 @@ public class MainActivity extends JPushBaseActivity {
     TextView tvMessage;
     @Bind(R.id.iv_message)
     ImageView ivMessage;
-    /**
-     * 通讯未读消息个数接收广播
-     */
-    private ShwoMessageReceiver mBroadcastReceiver;
 
+    /**
+     * 用户信息
+     */
+    private UserMessage userMessage;
+    /**
+     * 保存的用户名
+     */
+    private String username;
+    /**
+     * 用户的userId
+     */
+    private String userId;
+    /**
+     * 用户头像地址
+     */
+    private String portrait;
+
+    /**
+     * 标记位
+     */
+    private int flag = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,8 +111,9 @@ public class MainActivity extends JPushBaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         init();
-        registerBoradcastReceiver();
         initJPushConfiguration();
+        connect(userMessage.getRyId());
+        setNoreadMessage();
     }
 
     /**
@@ -105,7 +128,16 @@ public class MainActivity extends JPushBaseActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.content, statusFragement);
         transaction.commit();
-        mBroadcastReceiver = new ShwoMessageReceiver();
+        userMessage  = new UserMessage(this);
+        userId = userMessage.getTsId();
+        username  = userMessage.getUserName();
+        portrait = userMessage.getHoldImgUrl();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setNoreadMessage();
     }
 
     /**
@@ -148,6 +180,7 @@ public class MainActivity extends JPushBaseActivity {
                 ivDiscovery.setImageResource(R.mipmap.discovery_p);
                 ivMessage.setImageResource(R.mipmap.message);
                 ivStatus.setImageResource(R.mipmap.status);
+            //    flag= 1;
                 break;
             case R.id.ll_message:
                 fragment = messageFragement;
@@ -161,47 +194,72 @@ public class MainActivity extends JPushBaseActivity {
                 ivStatus.setImageResource(R.mipmap.status);
                 break;
         }
-        transaction.replace(R.id.content, fragment);
-        transaction.commit();
+
+            transaction.replace(R.id.content, fragment);
+            transaction.commit();
+
+
     }
-
-    /**
-     * 注册广播
-     */
-    public void registerBoradcastReceiver() {
-        IntentFilter myIntentFilter = new IntentFilter();
-        myIntentFilter.addAction(SHOWDOS);
-        registerReceiver(mBroadcastReceiver, myIntentFilter);
-    }
-
-    /**
-     * 对消息的圆点处理广播
-     */
-    private class ShwoMessageReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(SHOWDOS)) {
-                int count = intent.getIntExtra("count", 0);
-                if (count > 0) {
-                    tvMeaasgeDos.setVisibility(View.VISIBLE);
-                } else {
-                    tvMeaasgeDos.setVisibility(View.GONE);
-                }
-            }
-        }
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mBroadcastReceiver != null) {
-            unregisterReceiver(mBroadcastReceiver);
+    }
+    /**
+     * 建立与融云服务器的连接
+     *
+     * @param token
+     */
+    private void connect(String token) {
+
+        if (getApplicationInfo().packageName.equals(HunmeApplication.getCurProcessName(this))) {
+
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+                @Override
+                public void onTokenIncorrect() {Log.d("LoginActivity", "--onTokenIncorrect");}
+                /**
+                 * 连接融云成功
+                 * @param userid 当前 token
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    if (RongIM.getInstance() != null) {
+                        RongIM.getInstance().setCurrentUserInfo(new UserInfo(userid, username, Uri.parse(portrait)));
+                        RongIM.getInstance().setMessageAttachedUserInfo(true);
+                    }
+                }
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {Log.d("LoginActivity", "--onError" + errorCode);}
+            });
         }
     }
-
-
-
+    /**
+    * 未读消息监听
+    */
+    private void setNoreadMessage(){
+        Handler handler = new Handler();
+        final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
+                Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
+                Conversation.ConversationType.PUBLIC_SERVICE};
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener,conversationTypes);
+            }
+        }, 500);
+    }
+    /**
+     * 发送广播通知改变主界面的圆点的显示状态
+     */
+    public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.OnReceiveUnreadCountChangedListener() {
+        @Override
+        public void onMessageIncreased(int count) {
+            if (count > 0) {
+                tvMeaasgeDos.setVisibility(View.VISIBLE);
+            } else {
+                tvMeaasgeDos.setVisibility(View.GONE);
+            }
+        }
+    };
 }
 
 

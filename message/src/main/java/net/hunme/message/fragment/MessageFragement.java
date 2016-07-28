@@ -3,16 +3,14 @@ package net.hunme.message.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import net.hunme.baselibrary.base.BaseFragement;
-import net.hunme.message.MessageApplication;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.activity.ClassActivity;
 import net.hunme.message.activity.ParentActivity;
@@ -21,7 +19,6 @@ import net.hunme.message.ronglistener.MyConversationBehaviorListener;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -50,21 +47,14 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
      */
     private ImageView iv_parent;
     /**
-     * 保存的用户名
+     * 用户信息
      */
-    private String username;
-    /**
-     * userId
-     */
-    private String userId;
-
-    private String portrait;
-
+    private  UserMessage userMessage;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, null);
         init(view);
-        setNoreadMessage();
+
         // 设置点击头像监听事件
         RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
         return view;
@@ -78,16 +68,15 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         iv_parent.setOnClickListener(this);
         iv_teacher.setOnClickListener(this);
         iv_class.setOnClickListener(this);
-       iv_search.setOnClickListener(this);
-
+        iv_search.setOnClickListener(this);
+        userMessage = new UserMessage(getActivity());
    }
 
     /**
      *获取聊天列表
      */
     private void  initframent(){
-        connect("V5tYQjjmYQGGUT5RP9YyZ0bso9ndFkPYvochz2Gw7s692q5Oy6+dsfcJT13ag45+j9HeWAqVtz/T0ApFSaea8Q==");
-        Log.i("TAFGG","cfdfefdfedfdf");
+      //  connect(userMessage.getRyId());
         ConversationListFragment fragment = new ConversationListFragment();
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
@@ -102,67 +91,6 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         transaction.commit();
     }
 
-    /**
-     * 建立与融云服务器的连接
-     *
-     * @param token
-     */
-    private void connect(String token) {
-
-        if (getActivity().getApplicationInfo().packageName.equals(MessageApplication.getCurProcessName(getActivity()))) {
-
-            /**
-             * IMKit SDK调用第二步,建立与服务器的连接
-             */
-            RongIM.connect(token, new RongIMClient.ConnectCallback() {
-
-                /**
-                 * Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token
-                 */
-                @Override
-                public void onTokenIncorrect() {
-                    Log.d("LoginActivity", "--onTokenIncorrect");
-                }
-
-                /**
-                 * 连接融云成功
-                 * @param userid 当前 token
-                 */
-                @Override
-                public void onSuccess(String userid) {
-                    if (RongIM.getInstance() != null) {
-                      /*  Log.i("wang","userid:"+userid);
-                        RongIM.getInstance().setCurrentUserInfo(new UserInfo(userid, username, Uri.parse(portrait)));
-                        RongIM.getInstance().setMessageAttachedUserInfo(true);*/
-                    }
-                }
-                /**
-                 * 连接融云失败
-                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
-                 */
-                @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {
-
-                    Log.d("LoginActivity", "--onError" + errorCode);
-                }
-            });
-        }
-    }
-    /**
-     * 未读消息监听
-     */
-   private void setNoreadMessage(){
-       Handler handler = new Handler();
-       final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
-               Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
-               Conversation.ConversationType.PUBLIC_SERVICE};
-       handler.postDelayed(new Runnable() {
-           @Override
-           public void run() {
-               RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener,conversationTypes);
-           }
-       }, 500);
-   }
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
@@ -182,21 +110,4 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
             startActivity(intent);
         }
     }
-    /**
-     * 发送广播通知改变主界面的圆点的显示状态
-     */
-    public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.OnReceiveUnreadCountChangedListener() {
-        @Override
-        public void onMessageIncreased(int count) {
-                Intent intent = new Intent();
-                intent.setAction("net.hunme.message.showdos");
-                intent.putExtra("count",count);
-               Log.i("TAFFG",count+"");
-               if (getActivity()!=null){
-                  getActivity().sendBroadcast(intent);
-               }
-        }
-    };
-
-
 }

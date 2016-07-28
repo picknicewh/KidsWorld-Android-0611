@@ -132,12 +132,15 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
 
     @Override
     public void onSuccess(String uri, Object date) {
-        RyUserInfor ryUserInfor = (RyUserInfor) date;
-        tv_school.setText(ryUserInfor.getSchoolName());
-        tv_role.setText(ryUserInfor.getTs_name());
-        tv_phone.setText(ryUserInfor.getPhone());
-        tv_class.setText(ryUserInfor.getClassName());
-      //  iv_phead.setImageResource();
+        Result<RyUserInfor> UserInfor = (Result<RyUserInfor>) date;
+        if (UserInfor.isSuccess()){
+            RyUserInfor ryUserInfor= UserInfor.getData();
+            tv_school.setText(ryUserInfor.getSchoolName());
+            tv_role.setText(ryUserInfor.getTs_name());
+            tv_phone.setText(ryUserInfor.getPhone());
+            tv_class.setText(ryUserInfor.getClassName());
+            //  iv_phead.setImageResource(); 
+        }
     }
 
     @Override

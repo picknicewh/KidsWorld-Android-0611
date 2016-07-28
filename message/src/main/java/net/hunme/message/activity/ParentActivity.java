@@ -117,7 +117,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         setLiftOnClickClose();
     }
     private void init(){
-      //  getfriendinfor(title);
+       // getfriendinfor(title);
         lv_parent = $(R.id.lv_parent);
         tv_noparent = $(R.id.tv_no_parent);
         tv_title_cat = $(R.id.tv_title_cat);
@@ -177,6 +177,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
 
     /**
      * 获取所有所有好友信息
+     * @param  title 标题
      */
     private  void getfriendinfor(String title){
         Map<String,Object> params = new HashMap<>();
@@ -190,7 +191,9 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         Type type =new TypeToken<Result<GroupJson>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this);
     }
-
+    /**
+     * 显示列表
+     */
     private void initList() {
         initdata();
         SourceDateList = filledData(groupMemberBeanList);
@@ -319,6 +322,11 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         }
         return -1;
     }
+    /**
+     * 设置好友列表
+     * @param  groupJsonList 数据列表
+     * @param  groupMemberList
+     */
    private void setFriendList(List<GroupJson> groupJsonList, List<GroupMemberBean> groupMemberList){
        List<MemberJson> memberJsons = groupJsonList.get(0).getMenberList();
        for (int i = 0;i<memberJsons.size();i++){
@@ -327,6 +335,10 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
            groupMemberList.add(groupMemberBean);
        }
    }
+    /**
+     * 将MemberJson转换成GroupMemberBean
+     * @param  memberJson 实体类
+     */
     private GroupMemberBean MemberJsonnTGroupMember(MemberJson memberJson){
         GroupMemberBean groupMember =null;
         groupMember.setName(memberJson.getTsName());
@@ -345,9 +357,16 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
     }
     @Override
     public void onSuccess(String uri, Object date) {
-        List<GroupJson> groupJsonList = (List<GroupJson>) date;
-        if (groupJsonList!=null||groupJsonList.size()!=0){
-            setFriendList(groupJsonList,SourceDateList);
+        Result<List<GroupJson>> data = (Result<List<GroupJson>>) date;
+        if (data.isSuccess()){
+            List<GroupJson>  groupJsonList = data.getData();
+            if (groupJsonList!=null||groupJsonList.size()!=0){
+                setFriendList(groupJsonList,groupMemberBeanList);
+                initList();
+            }
+        }else {
+            initdata();
+            initList();
         }
     }
 

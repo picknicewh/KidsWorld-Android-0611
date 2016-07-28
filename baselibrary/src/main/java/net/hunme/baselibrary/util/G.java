@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import java.io.File;
+
 /**
  * ================================================
  * 作    者： ZLL
@@ -107,5 +109,46 @@ public class G {
             return true;
         }
         return  false;
+    }
+    /**
+     * 删除缓存
+     */
+    public static int clearCacheFolder(File dir, long numDays) {
+        int deletedFiles = 0;
+        if (dir!= null && dir.isDirectory()) {
+            try {
+                for (File child:dir.listFiles()) {
+                    if (child.isDirectory()) {
+                        deletedFiles += clearCacheFolder(child, numDays);
+                    }
+                    if (child.lastModified() < numDays) {
+                        if (child.delete()) {
+                            deletedFiles++;
+                        }
+                    }
+                }
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return deletedFiles;
+    }
+    /**
+     * 清除WebView缓存
+     */
+    public static void clearWebViewCache(Context context){
+        //清理Webview缓存数据库
+        try {
+            context.deleteDatabase("webview.db");
+            context.deleteDatabase("webviewCache.db");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //WebView 缓存文件
+        File appCacheDir = context.getDir("cache", Context.MODE_PRIVATE);
+        //删除webview 缓存 缓存目录
+        if(appCacheDir.exists()){
+            context.deleteFile(appCacheDir.getAbsolutePath());
+        }
     }
 }

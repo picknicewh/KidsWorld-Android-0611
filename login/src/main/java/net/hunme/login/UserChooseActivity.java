@@ -40,21 +40,24 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
         Type type =new TypeToken<List<CharacterSeleteVo>>(){}.getType();
         seleteList= new Gson().fromJson(um.getUserMessageJsonCache(),type);
         lv_user_choose=$(R.id.lv_user_choose);
-        adapter=new UserChooseAdapter(this,seleteList);
-        lv_user_choose.setAdapter(adapter);
-        lv_user_choose.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                adapter.setSelectPosition(i);
-                CharacterSeleteVo data=seleteList.get(i);
-                //通过用户选择身份保存用户信息
+        if (seleteList.size()!=0){
+            adapter=new UserChooseAdapter(this,seleteList);
+            lv_user_choose.setAdapter(adapter);
+            lv_user_choose.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    adapter.setSelectPosition(i);
+                    CharacterSeleteVo data=seleteList.get(i);
+                    //通过用户选择身份保存用户信息
                     UserAction.saveUserMessage(UserChooseActivity.this,data.getName(),
                             data.getImg(),data.getClassName(),data.getSchoolName(),
                             data.getRyId(),data.getTsId(),data.getType());
-                selectUserSubmit(data.getTsId());
-                finish();
-            }
-        });
+                    selectUserSubmit(data.getTsId());
+                    finish();
+                }
+            });
+        }
+
     }
 
     @Override

@@ -43,6 +43,7 @@ public class MWebChromeClient  extends WebChromeClient {
     @Override
     public boolean onJsConfirm(WebView view, String url, String message,
                                JsResult result) {
+        result.confirm();
         return super.onJsConfirm(view, url, message, result);
     }
 
