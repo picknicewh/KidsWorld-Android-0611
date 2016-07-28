@@ -1,7 +1,6 @@
 package net.hunme.user.adapter;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.mode.SystemInformVo;
 import net.hunme.user.R;
-import net.hunme.user.activity.SystemInfoActivity;
-import net.hunme.user.mode.MessageVo;
-import net.hunme.user.util.SystemInfoDbHelp;
 
 import java.util.List;
 
@@ -28,26 +25,26 @@ import java.util.List;
  */
 public class SystemInfoAdapter extends BaseAdapter {
     private Context context;
-    private List<MessageVo>messageList;
+    private List<SystemInformVo> systemInformVoList;
 
-    public SystemInfoAdapter(List<MessageVo> messageList, Context context) {
-        this.messageList = messageList;
+    public SystemInfoAdapter(List<SystemInformVo> systemInformVoList, Context context) {
+        this.systemInformVoList = systemInformVoList;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return messageList.size();
+        return systemInformVoList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return i;
+        return systemInformVoList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
@@ -59,26 +56,32 @@ public class SystemInfoAdapter extends BaseAdapter {
         }
         hold= (ViewHold) view.getTag();
 
-        MessageVo vo=messageList.get(i);
-        hold.tv_date.setText(vo.getDate());
+        SystemInformVo vo=systemInformVoList.get(i);
+        hold.tv_date.setText(vo.getTime());
         hold.tv_content.setText(vo.getContent());
-        SQLiteDatabase db=SystemInfoActivity.infoDb.getReadableDatabase();
-        boolean type = SystemInfoDbHelp.select(db, vo.getContent()+vo.getDate());
-        vo.setRead(type);
-        if(!vo.isRead()){
+        hold.tv_title.setText(vo.getTitle());
+         int flag = vo.getFlag();
+        if(flag==1){
             hold.tv_date.setTextColor(Color.BLACK);
             hold.tv_content.setTextColor(Color.BLACK);
+            hold.tv_title.setTextColor(Color.BLACK);
+        }else {
+            hold.tv_date.setTextColor(context.getResources().getColor(R.color.default_grey));
+            hold.tv_content.setTextColor(context.getResources().getColor(R.color.default_grey));
+            hold.tv_title.setTextColor(context.getResources().getColor(R.color.default_grey));
         }
         return view;
     }
 
     class ViewHold{
+        TextView tv_title;
         TextView tv_date;
         TextView tv_content;
 
         public ViewHold(View view) {
             tv_date= (TextView) view.findViewById(R.id.tv_date);
             tv_content= (TextView) view.findViewById(R.id.tv_content);
+            tv_title = (TextView)view.findViewById(R.id.tv_stitle) ;
             view.setTag(this);
         }
     }

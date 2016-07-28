@@ -3,6 +3,7 @@ package net.hunme.user.activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -11,14 +12,15 @@ import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.mode.SystemInformVo;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.SystemInfomDb;
+import net.hunme.baselibrary.util.SystemInfomDbHelp;
 import net.hunme.user.R;
 import net.hunme.user.adapter.SystemInfoAdapter;
 import net.hunme.user.mode.MessageVo;
-import net.hunme.user.util.SystemInfoDb;
-import net.hunme.user.util.SystemInfoDbHelp;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -28,15 +30,30 @@ import java.util.Map;
 
 public class SystemInfoActivity extends BaseActivity implements OkHttpListener {
     private ListView lv_systeminfo;
-    private List<MessageVo>messageList;
+   // private List<MessageVo>messageList;
     private SystemInfoAdapter adapter;
     private final String SYSTEMESSAGE="/appUser/systemMessages.do";
-    public static SystemInfoDb infoDb;
-
+    /**
+     * 系统消息数据创建类
+     */
+    private SystemInfomDb infoDb;
+    /**
+     * 数据库
+     */
+    private SQLiteDatabase db;
+    /**
+     * 数据库--修改类
+     */
+    private SystemInfomDbHelp dbHelp;
+    /**
+     * 系统消息列表数据
+     */
+    private List<SystemInformVo> systemInformVoList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_system_info);
+        initdata();
         initView();
     }
 
@@ -46,28 +63,69 @@ public class SystemInfoActivity extends BaseActivity implements OkHttpListener {
         setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickClose();
     }
+    /**
+     * 初始化数据库数据
+     */
+    private void  initdata(){
+        infoDb = new SystemInfomDb(this);
+        db = infoDb.getWritableDatabase();
+        dbHelp = SystemInfomDbHelp.getinstance();
+        systemInformVoList  =new ArrayList<>();
+        insert();
+        systemInformVoList = dbHelp.getSystemInformVo(db);
+    }
 
+    @Override
+    protected void onResume() {
+        Log.i("TAGG","==============onResume==================");
+        db = infoDb.getWritableDatabase();
+        dbHelp = SystemInfomDbHelp.getinstance();
+        systemInformVoList = dbHelp.getSystemInformVo(db);
+        adapter=new SystemInfoAdapter(systemInformVoList,this);
+        lv_systeminfo.setAdapter(adapter);
+        super.onResume();
+    }
+
+
+    /**
+     * 模拟插入数据
+     */
+    private  void  insert(){
+        if (dbHelp.isEmpty(db)){
+            dbHelp.insert(db,"标题一","这是第一条通知的内容哦！","10:38",1);
+            dbHelp.insert(db,"标题二","这是第二条通知的内容哦！","20:50",1);
+            dbHelp.insert(db,"标题三","这是第三条通知的内容哦！","昨天",1);
+            dbHelp.insert(db,"标题四","这是第四条通知的内容哦！","星期三",1);
+            dbHelp.insert(db,"标题五","这是第五条通知的内容哦！","7/24",1);
+            dbHelp.insert(db,"标题六","这是第六条通知的内容哦！","7/25",1);
+        }/*else {
+            dbHelp.delete(db);
+        }*/
+
+    }
     private void initView(){
         lv_systeminfo=$(R.id.lv_systeminfo);
-        messageList=new ArrayList<>();
-        adapter=new SystemInfoAdapter(messageList,this);
+      //  messageList=new ArrayList<>();
+        adapter=new SystemInfoAdapter(systemInformVoList,this);
         lv_systeminfo.setAdapter(adapter);
-        testDate();
+     //   testDate();
 //        getMessageDate(UserMessage.getInstance(this).getTsId());
-        infoDb=new SystemInfoDb(this);//创建数据库
+       // infoDb=new SystemInfoDb(this);//创建数据库
         lv_systeminfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String value=messageList.get(i).getContent()+messageList.get(i).getDate();
-                SQLiteDatabase rdb=infoDb.getReadableDatabase();
-                if(!SystemInfoDbHelp.select(rdb,value)){
+              //  String value=messageList.get(i).getContent()+messageList.get(i).getDate();
+              //  SQLiteDatabase rdb=infoDb.getReadableDatabase();
+              /*  if(!SystemInfoDbHelp.select(rdb,value)){
                     SQLiteDatabase wdb = infoDb.getWritableDatabase();
                     SystemInfoDbHelp.insert(wdb,value);
-                }
+                }*/
+               SystemInformVo systemInformVo  = systemInformVoList.get(i);
+                dbHelp.update(db,systemInformVo.getId(),0);
+                adapter.notifyDataSetChanged();
                 startActivity(new Intent(SystemInfoActivity.this,InfoDetailsActivity.class));
             }
         });
-
     }
 
     private void getMessageDate(String tsId){
@@ -80,9 +138,9 @@ public class SystemInfoActivity extends BaseActivity implements OkHttpListener {
     @Override
     public void onSuccess(String uri, Object date) {
         if(SYSTEMESSAGE.equals(uri)){
-            Result<List<MessageVo>>result= (Result<List<MessageVo>>) date;
+            Result<List<SystemInformVo>>result= (Result<List<SystemInformVo>>) date;
             if(result.isSuccess()){
-                messageList=result.getData();
+                systemInformVoList=result.getData();
                 adapter.notifyDataSetChanged();
             }else {
                 G.showToast(this,"消息获取失败，请稍后再试！");
@@ -95,7 +153,7 @@ public class SystemInfoActivity extends BaseActivity implements OkHttpListener {
         G.showToast(this,"消息获取失败，请检查网络再试！");
     }
 
-    private void testDate(){
+  /*  private void testDate(){
         for (int i=0;i<100;i++){
             MessageVo vo=new MessageVo();
             vo.setContent(i*10+"");
@@ -104,4 +162,5 @@ public class SystemInfoActivity extends BaseActivity implements OkHttpListener {
         }
         adapter.notifyDataSetChanged();
     }
+*/
 }
