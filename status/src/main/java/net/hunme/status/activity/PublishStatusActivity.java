@@ -24,6 +24,7 @@ import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.status.R;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.adapter.GridAlbumAdapter;
+import net.hunme.user.util.BitmapCache;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -51,7 +52,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     private TextView tv_count;
     private GridView gv_photo;
     private GridAlbumAdapter mAdapter;
-    private List<ImageItem> itemList;
+    private List<String> itemList;
     /**
      * 选择可见范围
      */
@@ -201,10 +202,11 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             Type type =new TypeToken<Result<String>>(){}.getType();
             if(itemList.size()>1){
                 List<File>list=new ArrayList<>();
-                for (int i=0;i<itemList.size()-1;i++){
-                    G.log(itemList.get(i).path+"-----------------文件地址");
-                    list.add(new File(itemList.get(i).path));
-                }
+                list= BitmapCache.getFileList(itemList);
+//                for (int i=0;i<itemList.size();i++){
+//                    G.log(itemList.get(i)+"-----------------文件地址");
+//                    list.add(new File(itemList.get(i)));
+//                }
                 OkHttps.sendPost(type,DYNAMIC,map,list,this);
             }else{
                 OkHttps.sendPost(type,DYNAMIC,map,this);
@@ -223,7 +225,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                     for(ImageItem item:items){
                         G.log("选择了===="+item.path);
                         if(itemList.size()<9){
-                            itemList.add(item);
+                            itemList.add(item.path);
                         }
                     }
                     mAdapter.notifyDataSetChanged();

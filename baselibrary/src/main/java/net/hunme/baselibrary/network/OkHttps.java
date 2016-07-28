@@ -93,8 +93,11 @@ public class OkHttps<T> {
         }
         //进行网络请求
         postRequest= getInstance()
-                .post(uri_host+uri)
-                .addFileParams("KEY",filelist);
+                .post(uri_host+uri);
+//                .addFileParams("KEY",filelist);
+        for (int i=0;i<filelist.size();i++){
+            postRequest.params(i+"",filelist.get(i));
+        }
         G.log(filelist.size()+"-----------");
         doInternet(type,uri,getParams(map),okHttpListener);
     }

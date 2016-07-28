@@ -10,8 +10,9 @@
         android:id="@+id/gv_photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_x0.5"
-        android:horizontalSpacing="@dimen/space"
+        android:padding="@dimen/space"
+        android:horizontalSpacing="@dimen/space_x0.5"
+        android:verticalSpacing="@dimen/space_x0.5"
         android:numColumns="4"
         android:scrollbars="none" />
 

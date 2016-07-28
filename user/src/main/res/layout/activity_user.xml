@@ -26,6 +26,7 @@
                 android:layout_height="70dp"
                 android:src="@mipmap/ic_test01"
                 app:civ_border_width="1dp"
+                android:scaleType="centerCrop"
                 app:civ_border_color="#ffffff"/>
 
             <TextView
@@ -93,8 +94,7 @@
                 android:src="@mipmap/ic_collection"/>
 
             <TextView
-                android:padding="@dimen/space"
-                android:layout_marginLeft="@dimen/space"
+                android:layout_marginLeft="@dimen/space_x2"
                 android:layout_gravity="center"
                 style="@style/TextStyleBase"
                 android:layout_width="0dp"
@@ -130,8 +130,7 @@
                 android:src="@mipmap/ic_dynamic"/>
 
             <TextView
-                android:padding="@dimen/space"
-                android:layout_marginLeft="@dimen/space"
+                android:layout_marginLeft="@dimen/space_x2"
                 android:layout_gravity="center"
                 style="@style/TextStyleBase"
                 android:layout_width="0dp"
@@ -163,8 +162,7 @@
             android:src="@mipmap/ic_photo"/>
 
         <TextView
-            android:padding="@dimen/space"
-            android:layout_marginLeft="@dimen/space"
+            android:layout_marginLeft="@dimen/space_x2"
             android:layout_gravity="center"
             style="@style/TextStyleBase"
             android:layout_width="0dp"
@@ -202,8 +200,7 @@
                 android:src="@mipmap/ic_my"/>
 
             <TextView
-                android:padding="@dimen/space"
-                android:layout_marginLeft="@dimen/space"
+                android:layout_marginLeft="@dimen/space_x2"
                 android:layout_gravity="center"
                 style="@style/TextStyleBase"
                 android:layout_width="0dp"

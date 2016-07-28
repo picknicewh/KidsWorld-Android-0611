@@ -37,6 +37,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     private String type;
     private MyCount myCount;
     private boolean isSubmitDate;
+    private String Sign;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +114,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
                     G.showToast(this,"提交的数据不能为空");
                     return;
                 }
-                updateMessage(type,"",code,value);
+                updateMessage(type,Sign,code,value);
                 G.log("----我被点击了-----2-----");
             }
 
@@ -161,6 +162,12 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     public void onSuccess(String uri, Object date) {
         if(VALIDATECODE.equals(uri)){
             tv_time.setEnabled(true);
+            Result<String>result= (Result<String>) date;
+            if(result.isSuccess()){
+                Sign=result.getSign();
+            }else{
+                G.showToast(this,"验证码获取失败，请稍后再试！");
+            }
             //验证码
 //            b_finish.setEnabled(true);
         }else if(UPDATEPHONE.equals(uri)){
@@ -175,6 +182,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     public void onError(String uri, String error) {
         if(VALIDATECODE.equals(uri)){
             tv_time.setEnabled(true);
+            G.showToast(this,"验证码获取失败，请检查网络重试！");
             //验证码
         }else if(UPDATEPHONE.equals(uri)){
             //修改手机号码

@@ -3,6 +3,7 @@ package net.hunme.user.activity;
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -23,10 +24,15 @@ import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.user.R;
+import net.hunme.user.util.BitmapCache;
 import net.hunme.user.util.MyAlertDialog;
 
+import java.io.File;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,6 +57,8 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     private TextView tv_schoolname;
     private UserMessage um;
     private final String SETSIGN="/appUser/setSign.do";
+    private final String AVATAR="/appUser/setAvatar.do";
+    private String path;
     private String sign;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +91,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
         tv_sign.setText(um.getUserSign());
         tv_classname.setText(um.getClassName());
         tv_schoolname.setText(um.getSchoolName());
+        path= Environment.getExternalStorageDirectory().toString() + "/ChatFile/";
     }
     @Override
     protected void setToolBar() {
@@ -95,12 +104,17 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         int viewID=v.getId();
         if(viewID==R.id.rl_userMessage){
-            AndroidImagePicker.getInstance().pickAndCrop(UMassageActivity.this, true, 150, new AndroidImagePicker.OnImageCropCompleteListener() {
+            AndroidImagePicker.getInstance().pickAndCrop(UMassageActivity.this, true, 200, new AndroidImagePicker.OnImageCropCompleteListener() {
                 @Override
                 public void onImageCropComplete(Bitmap bmp, float ratio) {
 //                    Log.i(TAG,"=====onImageCropComplete (get bitmap="+bmp.toString());
 //                    ivCrop.setVisibility(View.VISIBLE);
+                    path=path+ new Date().getTime()+".jpg";
                     cv_head.setImageBitmap(bmp);
+                    BitmapCache.compressBiamp(bmp,path,100);
+                    List<File> files=new ArrayList<>();
+                    files.add(new File(path));
+                    userAvatarSubmit(files);
                 }
             });
         }else if(viewID==R.id.ll_sex){
@@ -172,6 +186,10 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
+    /**
+     * 提交用户个性签名
+     * @param userSign
+     */
     public void userSignSubmit(String userSign){
         Map<String,Object>map=new HashMap<>();
         map.put("tsId",um.getTsId());
@@ -180,21 +198,34 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
         OkHttps.sendPost(type,SETSIGN,map,this);
     }
 
+    private void userAvatarSubmit(List<File>list){
+        Map<String,Object>map=new HashMap<>();
+        map.put("tsId",um.getTsId());
+        Type type=new TypeToken<Result<String>>(){}.getType();
+        OkHttps.sendPost(type,AVATAR,map,list,this);
+    }
+
     @Override
     public void onSuccess(String uri, Object date) {
+        Result<String> result= (Result<String>) date;
         if(SETSIGN.equals(uri)){
-            Result<String> result= (Result<String>) date;
             if(result.isSuccess()){
                 um.setUserSign(sign);
                 tv_sign.setText(um.getUserSign());
             }else{
-                G.showToast(this,"提交数据失败，请重试！");
+                G.showToast(this,"数据提交失败，请重试！");
+            }
+        }else if(AVATAR.equals(uri)){
+            if(result.isSuccess()){
+                G.showToast(this,"头像修改成功");
+            }else{
+                G.showToast(this,"数据提交失败，请重试！");
             }
         }
     }
 
     @Override
     public void onError(String uri, String error) {
-        G.showToast(this,"提交数据失败，请检查网络后再试！");
+        G.showToast(this,"数据提交失败，请检查网络后再试！");
     }
 }

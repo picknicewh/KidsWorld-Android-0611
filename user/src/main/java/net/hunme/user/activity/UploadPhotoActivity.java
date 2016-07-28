@@ -1,6 +1,5 @@
 package net.hunme.user.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,10 +11,8 @@ import android.widget.TextView;
 import com.pizidea.imagepicker.AndroidImagePicker;
 import com.pizidea.imagepicker.bean.ImageItem;
 
-import net.hunme.baselibrary.activity.PermissionsActivity;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.util.G;
-import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.user.R;
 import net.hunme.user.adapter.GridAlbumAdapter;
 
@@ -41,17 +38,19 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     public static int position=0;
     private static final int Album_NAME_SELECT=1111;
     private GridAlbumAdapter mAdapter;
-    private List<ImageItem> itemList;
+    private List<String> itemList;
     //https://github.com/jeasonlzy0216/ImagePicker
     //权限返回码
-    private static final int  REQUEST_CODE = 0;
+//    private static final int  REQUEST_CODE = 0;
     // 访问相册所需的全部权限
-    static final String[] PERMISSIONS = new String[]{
-            Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
-            Manifest.permission.READ_EXTERNAL_STORAGE
-    };
+//    static final String[] PERMISSIONS = new String[]{
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
+//            Manifest.permission.READ_EXTERNAL_STORAGE
+//    };
     // 权限检测器
-    private PermissionsChecker mPermissionsChecker;
+//    private PermissionsChecker mPermissionsChecker;
+
+//    private List<String> addPhotoList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,8 +67,9 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initDate(){
-        mPermissionsChecker = new PermissionsChecker(this);
+//        mPermissionsChecker = new PermissionsChecker(this);
         G.initDisplaySize(this);
+//        addPhotoList =new ArrayList<>();
         itemList=new ArrayList<>();
         mAdapter=new GridAlbumAdapter(itemList,this);
         gv_photo.setAdapter(mAdapter);
@@ -78,27 +78,15 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i ==itemList.size()) {
                     //检查是否有权限访问相册 ，没有的话弹框需要用户授权
-                    if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
-                        PermissionsActivity.startActivityForResult(UploadPhotoActivity.this, REQUEST_CODE, PERMISSIONS);
-                        return;
-                    }
-                    AndroidImagePicker.getInstance().pickMulti(UploadPhotoActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
-                        @Override
-                        public void onImagePickComplete(List<ImageItem> items) {
-                            if(items != null && items.size() > 0){
-                                for(ImageItem item:items){
-                                    G.log("选择了===="+item.path);
-                                    if(itemList.size()<9){
-                                        itemList.add(item);
-                                    }
-                                }
-                                mAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    });
+//                    if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+//                        PermissionsActivity.startActivityForResult(UploadPhotoActivity.this, REQUEST_CODE, PERMISSIONS);
+//                        return;
+//                    }
+                    getPhotos();
                 }
             }
         });
+        getPhotos();//立即跳转到图片选择页面
         albumNameList=new ArrayList<>();
         albumNameList.add("默认相册");
         albumNameList.add("相册一");
@@ -132,13 +120,29 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
             case Album_NAME_SELECT:
                 tv_album_name.setText(albumNameList.get(position));
                 break;
-            case REQUEST_CODE:
-                //检测到没有授取权限 关闭页面
-                if(resultCode == PermissionsActivity.PERMISSIONS_DENIED){
-                    finish();
-                }
-                break;
+//            case REQUEST_CODE:
+//                //检测到没有授取权限 关闭页面
+//                if(resultCode == PermissionsActivity.PERMISSIONS_DENIED){
+//                    finish();
+//                }
+//                break;
         }
     }
 
+    private void getPhotos(){
+        AndroidImagePicker.getInstance().pickMulti(UploadPhotoActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
+            @Override
+            public void onImagePickComplete(List<ImageItem> items) {
+                if(items != null && items.size() > 0){
+                    for(ImageItem item:items){
+                        G.log("选择了===="+item.path);
+                        if(itemList.size()<9){
+                            itemList.add(item.path);
+                        }
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
 }
