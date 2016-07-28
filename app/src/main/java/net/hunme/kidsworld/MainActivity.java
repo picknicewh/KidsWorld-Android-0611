@@ -180,7 +180,7 @@ public class MainActivity extends JPushBaseActivity {
                 ivDiscovery.setImageResource(R.mipmap.discovery_p);
                 ivMessage.setImageResource(R.mipmap.message);
                 ivStatus.setImageResource(R.mipmap.status);
-            //    flag= 1;
+
                 break;
             case R.id.ll_message:
                 fragment = messageFragement;

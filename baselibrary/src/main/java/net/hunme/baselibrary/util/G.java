@@ -2,6 +2,8 @@ package net.hunme.baselibrary.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -109,6 +111,20 @@ public class G {
             return true;
         }
         return  false;
+    }
+    /**
+     * 判断网络是否连接
+     *
+     */
+    public static boolean isNetworkConnected(Context context) {
+        if (context != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+            if (mNetworkInfo != null) {
+                return mNetworkInfo.isAvailable();
+            }
+        }
+        return false;
     }
     /**
      * 删除缓存

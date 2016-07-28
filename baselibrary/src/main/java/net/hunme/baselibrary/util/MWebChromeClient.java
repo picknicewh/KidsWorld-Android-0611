@@ -1,12 +1,14 @@
 package net.hunme.baselibrary.util;
 
 import android.app.Activity;
-import android.content.Context;
+import android.view.View;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
 
 /**
  * 作者： Administrator
@@ -18,11 +20,37 @@ import android.webkit.WebView;
  */
 public class MWebChromeClient  extends WebChromeClient {
 
-    private Context context;
-
-    public MWebChromeClient(Context context) {
+    private Activity context;
+    /**
+     * 加载动画
+     */
+    private LinearLayout ll_loading;
+    private  int flag;
+    public MWebChromeClient(Activity context,LinearLayout ll_loading,WebView webView) {
         super();
         this.context = context;
+        this.ll_loading  = ll_loading;
+        if (!G.isNetworkConnected(context)) {
+            // 清缓存
+            webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+            flag = 0;
+        } else {
+            flag = 1;
+        }
+    }
+
+    @Override
+    public void onProgressChanged(WebView view, int newProgress) {
+        super.onProgressChanged(view, newProgress);
+        if (flag==1){
+            if (newProgress == 100 ) {
+                ll_loading.setVisibility(View.GONE);
+
+            }else {
+                ll_loading.setVisibility(View.VISIBLE);
+
+            }
+        }
     }
 
     // 处理Alert事件

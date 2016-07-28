@@ -12,6 +12,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
@@ -51,7 +52,10 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
      * flag
      */
     private int flag=0;
-
+    /**
+     * 加载动画
+     */
+    private LinearLayout ll_loading;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
         iv_left = $(R.id.iv_left);
         tv_title = $(R.id.tv_title);
         tv_right = $(R.id.tv_subtitle);
+        ll_loading = $(R.id.ll_loading);
         Intent intent = getIntent();
         rightTitle  =intent.getStringExtra("rightTitle");
         if (rightTitle!=null){
@@ -107,23 +112,31 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setUseWideViewPort(true);
         WebSettings webSetting = webView.getSettings();
-        webView.setWebViewClient(new MWebViewClient(webView));
-        webView.setWebChromeClient(new MWebChromeClient(this));
+        webView.setWebViewClient(new MWebViewClient(webView,this));
+        webView.setWebChromeClient(new MWebChromeClient(this,ll_loading,webView));
         webSetting.setDefaultTextEncodingName("utf-8"); //设置编码
         webSetting.setJavaScriptEnabled(true); //支持js
-        webView.addJavascriptInterface(this, "change_ngb");  //设置本地调用对象及其接口
         webView.setBackgroundColor(Color.argb(0, 0, 0, 0)); //设置背景颜色 透明
-        webSetting.setDomStorageEnabled(true);//使用localStorage则必须打开
-        webSetting.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小
-        String appCacheDir =getDir("cache", Context.MODE_PRIVATE).getPath();//缓存的地址
-        webSetting.setAppCachePath(appCacheDir);//设置缓存地址
-        webSetting.setAllowFileAccess(true); // 可以读取文件缓存(manifest生效)
-        webSetting.setAppCacheEnabled(true);
-        webSetting.setAllowContentAccess(true);
-        webSetting.setAllowFileAccessFromFileURLs(true);
-        webSetting.setAllowUniversalAccessFromFileURLs(true);
-        webSetting.setCacheMode(WebSettings.LOAD_DEFAULT);/// 默认使用缓存
-
+        webView.addJavascriptInterface(this, "change_tb");  //设置本地调用对象及其接口
+        webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webSetting.setUseWideViewPort(true);//支持插件
+        initWebView(webView);
+    }
+    /**
+     * 缓存设置
+     * @param  mWebView
+     */
+    private void initWebView(WebView mWebView) {
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小
+        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);  //设置 缓存模式
+        webSettings.setDomStorageEnabled(true);  // 开启 DOM storage API 功能
+        webSettings.setDatabaseEnabled(true);  //开启 database storage API 功能
+        String appCacheDir = getDir("cache", Context.MODE_PRIVATE).getPath();//缓存的地址
+        webSettings.setDatabasePath(appCacheDir); //设置数据库缓存路径
+        webSettings.setAppCachePath(appCacheDir);   //设置  Application Caches 缓存目录
+        webSettings.setAppCacheEnabled(true);  //开启 Application Caches 功能
     }
     /**
      * 设置导航栏

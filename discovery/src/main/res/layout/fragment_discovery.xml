@@ -32,8 +32,15 @@
           android:layout_width="20dp"
           android:layout_height="20dp" />
    </RelativeLayout>
+   <include
+       android:id="@+id/ll_loading"
+       layout="@layout/loadwebview"/>
    <WebView
        android:id="@+id/wv_discovery"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"/>
+       android:layout_height="match_parent"
+       android:layout_x="0.0dip"
+       android:layout_y="0.0dip"
+       />
+
 </LinearLayout>

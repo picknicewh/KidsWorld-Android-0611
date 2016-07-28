@@ -15,6 +15,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,7 +35,6 @@ import net.hunme.baselibrary.util.MWebViewClient;
 public class DiscoveryFragement extends BaseFragement implements View.OnClickListener{
 
     private WebView webView;
-
     /**
      * 导航栏
      */
@@ -55,7 +55,11 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      * webview
      */
     private String page ;
-
+    /**
+     * 加载动画
+     */
+    private LinearLayout ll_loading;
+   private  static   final String url = "http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/paradiseHome";
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +67,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         init(view);
         return view;
     }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -88,8 +91,8 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         iv_right = $(v,R.id.iv_dright);
         webView = $(v,R.id.wv_discovery);
         rl_discovery = $(v,R.id.rl_discovery);
+        ll_loading = $(v,R.id.ll_loading);
         interactive(webView);
-        final String url = "http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/paradiseHome";
         webView.loadUrl(url);
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
@@ -103,14 +106,20 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setUseWideViewPort(true);
         WebSettings webSetting = webView.getSettings();
-        webView.setWebViewClient(new MWebViewClient(webView));
-        webView.setWebChromeClient(new MWebChromeClient(getActivity()));
+        webView.setWebViewClient(new MWebViewClient(webView,getActivity()));
+        webView.setWebChromeClient(new MWebChromeClient(getActivity(),ll_loading,webView));
         webSetting.setDefaultTextEncodingName("utf-8"); //设置编码
         webSetting.setJavaScriptEnabled(true); //支持js
         webView.setBackgroundColor(Color.argb(0, 0, 0, 0)); //设置背景颜色 透明
         webView.addJavascriptInterface(this, "change_tb");  //设置本地调用对象及其接口
+        webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webSetting.setUseWideViewPort(true);//支持插件
         initWebView(webView);
     }
+    /**
+     * 缓存设置
+     * @param  mWebView
+     */
     private void initWebView(WebView mWebView) {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小

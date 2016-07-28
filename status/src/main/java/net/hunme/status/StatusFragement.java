@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
@@ -34,15 +35,35 @@ import java.util.List;
  * 主要接口：
  */
 public class StatusFragement extends BaseFragement implements View.OnClickListener{
+    /**
+     * 头像
+     */
     private CircleImageView iv_lift;
+    /**
+     * 发布说说按钮
+     */
     private ImageView iv_right;
+    /**
+     * 班级的名字
+     */
     private TextView tv_classname;
+    /**
+     * 班级列表
+     */
     private List<String> classlist ;
+    /**
+     * 选择班级弹窗
+     */
     private ChooseClassPopWindow popWindow;
     /**
      * 显示html5
      */
     private WebView webView;
+    /**
+     * 加载动画
+     */
+    private LinearLayout ll_loading;
+    private static  final  String url = "http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_status, null);
@@ -55,8 +76,9 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         iv_right=$(view,R.id.iv_right);
         tv_classname=$(view,R.id.tv_classname);
         webView = $(view,R.id.wv_status);
+        ll_loading = $(view,R.id.ll_loading);
         interactive(webView);
-        webView.loadUrl("http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html");
+        webView.loadUrl(url);
         setViewAction();
         classlist = new ArrayList<>();
         classlist.add("一(1)班");
@@ -74,24 +96,35 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setUseWideViewPort(true);
         WebSettings webSetting = webView.getSettings();
-        webView.setWebViewClient(new MWebViewClient(webView));
-        webView.setWebChromeClient(new MWebChromeClient(getActivity()));
+        webView.setWebViewClient(new MWebViewClient(webView,getActivity()));
+        webView.setWebChromeClient(new MWebChromeClient(getActivity(),ll_loading,webView));
         webSetting.setDefaultTextEncodingName("utf-8"); //设置编码
         webSetting.setJavaScriptEnabled(true); //支持js
         webView.setBackgroundColor(Color.argb(0, 0, 0, 0)); //设置背景颜色 透明
-        webView.addJavascriptInterface(this, "change_nb");  //设置本地调用对象及其接口
-        webSetting.setDomStorageEnabled(true);//使用localStorage则必须打开
-        webSetting.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小
-        String appCacheDir = getActivity().getDir("cache", Context.MODE_PRIVATE).getPath();//缓存的地址
-        webSetting.setAppCachePath(appCacheDir);//设置缓存地址
-        webSetting.setAllowFileAccess(true); // 可以读取文件缓存(manifest生效)
-        webSetting.setAppCacheEnabled(true);
-        webSetting.setAllowContentAccess(true);
-        webSetting.setAllowFileAccessFromFileURLs(true);
-        webSetting.setAllowUniversalAccessFromFileURLs(true);
-        webSetting.setCacheMode(WebSettings.LOAD_DEFAULT);/// 默认使用缓存
+        webView.addJavascriptInterface(this, "change_tb");  //设置本地调用对象及其接口
+        webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webSetting.setUseWideViewPort(true);//支持插件
+        initWebView(webView);
     }
-
+    /**
+     * 缓存设置
+     * @param  mWebView
+     */
+    private void initWebView(WebView mWebView) {
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小
+        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);  //设置 缓存模式
+        webSettings.setDomStorageEnabled(true);  // 开启 DOM storage API 功能
+        webSettings.setDatabaseEnabled(true);  //开启 database storage API 功能
+        String appCacheDir =getActivity().getDir("cache", Context.MODE_PRIVATE).getPath();//缓存的地址
+        webSettings.setDatabasePath(appCacheDir); //设置数据库缓存路径
+        webSettings.setAppCachePath(appCacheDir);   //设置  Application Caches 缓存目录
+        webSettings.setAppCacheEnabled(true);  //开启 Application Caches 功能
+    }
+    /**
+     * 设置选择弹窗
+     */
     private void setViewAction(){
         iv_lift.setOnClickListener(new View.OnClickListener() {
             @Override

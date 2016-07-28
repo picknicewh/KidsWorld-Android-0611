@@ -46,6 +46,9 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_new_message"/>
     </RelativeLayout>
+    <include
+        android:id="@+id/ll_loading"
+        layout="@layout/loadwebview"/>
    <WebView
        android:id="@+id/wv_status"
        android:layout_width="match_parent"
