@@ -68,9 +68,9 @@ public class GridAlbumAdapter extends BaseAdapter {
         holder = (ViewHolder) convertView.getTag();
 
         if (position == imageItems.size()) {
-            holder.image.setImageBitmap(BitmapFactory.decodeResource(
-                    context.getResources(), R.mipmap.ic_unfocused));
+            holder.image.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_unfocused));
             holder.clv_delete.setVisibility(View.GONE);
+            holder.image.setVisibility(View.VISIBLE);
             if (position == 9) {
                 holder.image.setVisibility(View.GONE);
             }

@@ -25,6 +25,7 @@ import net.hunme.status.R;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.adapter.GridAlbumAdapter;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -198,7 +199,16 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             map.put("text",dyContent);
             map.put("dynamicVisicty",dynamicVisicty);
             Type type =new TypeToken<Result<String>>(){}.getType();
-            OkHttps.sendPost(type,DYNAMIC,map,this);
+            if(itemList.size()>1){
+                List<File>list=new ArrayList<>();
+                for (int i=0;i<itemList.size()-1;i++){
+                    G.log(itemList.get(i).path+"-----------------文件地址");
+                    list.add(new File(itemList.get(i).path));
+                }
+                OkHttps.sendPost(type,DYNAMIC,map,list,this);
+            }else{
+                OkHttps.sendPost(type,DYNAMIC,map,this);
+            }
         }
     }
 

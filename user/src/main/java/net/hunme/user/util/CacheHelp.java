@@ -1,9 +1,15 @@
 package net.hunme.user.util;
 
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * ================================================
@@ -118,6 +124,66 @@ public class CacheHelp {
         BigDecimal result4 = new BigDecimal(teraBytes);
         return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString()
                 + "TB";
+    }
+
+
+//    public static String creatDestFile(String path,String Imagepath){
+//        File destDir = new File(path);
+//        if (!destDir.exists()) {
+//            destDir.mkdirs();
+//        }
+//        saveMyBitmap(path, BitmapFactory.decodeFile(Imagepath));
+//        G.log("------path----"+path);
+//        return path;
+//    }
+
+    private void saveFile(List<File>list,String path){
+        for (int i=0;i<list.size();i++){
+            File files=list.get(i);
+            try {
+                FileInputStream fis=new FileInputStream(files);
+                File file = new File(path + "/"+Math.random()*100+".jpg");
+                if(!file.exists()){
+                    file.createNewFile();
+                    FileOutputStream fos=new FileOutputStream(file);
+                    int read=fis.read();
+                    byte[] b=new byte[1024];
+                    while (read!=-1){
+                        fos.write(read);
+                        read=fis.read();
+                    }
+                    fos.flush();
+                    fos.close();
+                    fis.close();
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 保存文件到指定的路径下面
+     * @param bitmap
+     */
+    private static void saveMyBitmap(String path, Bitmap bitmap) {
+        File f = new File(path + Math.random()*100 + ".png");
+        FileOutputStream fOut = null;
+        try {
+            f.createNewFile();
+            fOut = new FileOutputStream(f);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 
 }
