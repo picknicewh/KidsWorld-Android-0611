@@ -72,7 +72,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
         }
         url = intent.getStringExtra("url");
         setWebView();
-        Log.i("FFF",getCacheDir().lastModified()+"");
+        setSubTitleOnClickListener(this);
     }
     @Override
     protected void setToolBar() {
@@ -132,8 +132,13 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.tv_subtitle){
+            Log.i("TAGGG","sdaasasasa");
             if (url.contains(SchoolFragement.INFORM)){
+                Log.i("TAGGG","sdaasasasa");
                 Intent intent = new Intent(this,PublishInformActivity.class);
+                startActivity(intent);
+            }else if (url.contains(SchoolFragement.LEAVE)){
+                Intent intent = new Intent(this,LeaveAskActivity.class);
                 startActivity(intent);
             }
         }

@@ -15,7 +15,7 @@
         android:background="@color/white"
         android:layout_height="200dp" />
     <RelativeLayout
-        android:id="@+id/ll_permitchoose"
+        android:id="@+id/rl_permitchoose"
         android:padding="@dimen/space"
         android:background="@color/white"
         android:orientation="horizontal"

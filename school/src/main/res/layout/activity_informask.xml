@@ -91,10 +91,8 @@
             android:textSize="@dimen/ts_large"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
-        <Spinner
+        <TextView
 
-            android:id="@+id/sp_eat"
-            android:entries="@array/eat"
             android:layout_weight="1"
             android:text="不用餐"
             android:textColor="@color/black"

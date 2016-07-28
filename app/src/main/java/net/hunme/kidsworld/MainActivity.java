@@ -131,9 +131,6 @@ public class MainActivity extends JPushBaseActivity {
         messageFragement = new MessageFragement();
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-      /*
-        transaction.replace(R.id.content, statusFragement);
-        transaction.commit();*/
         userMessage  = new UserMessage(this);
         userId = userMessage.getTsId();
         username  = userMessage.getUserName();
@@ -154,7 +151,6 @@ public class MainActivity extends JPushBaseActivity {
         super.onResume();
         setNoreadMessage();
     }
-
     /**
      * 通过点击事件改变tab
      */
