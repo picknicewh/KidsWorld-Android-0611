@@ -120,6 +120,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             intent.setClass(getActivity(), WebViewActivity.class);
             intent.putExtra("url",geturl(LEAVE));
             intent.putExtra("title","请假");
+            intent.putExtra("rightTitle","我要请假");
         }else if (view.getId()==R.id.rl_info){
             intent.setClass(getActivity(), WebViewActivity.class);
             intent.putExtra("url",geturl(INFORM));

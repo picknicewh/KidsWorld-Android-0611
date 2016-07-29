@@ -17,14 +17,12 @@ import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.school.R;
-import net.hunme.school.bean.TsJson;
 import net.hunme.school.widget.CustomDateTimeDialog;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -118,6 +116,7 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
         sp_name.setAdapter(adapter);
         startDateTimeDialog = new CustomDateTimeDialog(LeaveAskActivity.this,R.style.MyDialog,1);
         endDateTimeDialog = new CustomDateTimeDialog(LeaveAskActivity.this,R.style.MyDialog,0);
+        setSubTitleOnClickListener(this);
     }
     /**
      * 设置选择时间
@@ -142,7 +141,6 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
         ll_end = $(R.id.ll_iendtime);
         tv_end = $(R.id.tv_iendtime);
         tv_start = $(R.id.tv_istarttime);
-        sp_eat = $(R.id.sp_eat);
         sp_name = $(R.id.sp_name);
         et_cause = $(R.id.et_cause);
         ll_end.setOnClickListener(this);
@@ -186,7 +184,7 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
                 endDateTimeDialog.show();
             }
         }else if (viewID==R.id.tv_subtitle){
-
+            subLeaveAsk();
         }
     }
     /**
@@ -195,24 +193,26 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
     private void subLeaveAsk(){
         Map<String,Object> params = new HashMap<>();
         //提交角色ID
-        params.put("tsId","");
+        params.put("tsId","123456");
         //需要请假人员角色ID
-        params.put("leaveTsId","");
+        params.put("leaveTsId","123456");
         params.put("endDate",endDate);
         params.put("startDate",starDate);
         //1=早餐，2=中餐，3=晚餐 多选时，用英文逗号分隔
-        params.put("diningStatus","");
+        params.put("diningStatus","1");
         params.put("cause",et_cause.getText().toString());
-        Type type = new TypeToken<Result<TsJson>>(){}.getType();
+        Type type = new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type,Apiurl.SCHOOL_SUBLEAVE,params,this);
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-        List<TsJson> tsJsonList = (List<TsJson>) date;
-        if(tsJsonList!=null||tsJsonList.size()!=0){
-            Toast.makeText(LeaveAskActivity.this,"提交成功！",Toast.LENGTH_SHORT).show();
+           Result< String> data = (Result<String>) date;
+        if (data.isSuccess()){
+            String result  = data.getData();
+            Toast.makeText(LeaveAskActivity.this,result,Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override

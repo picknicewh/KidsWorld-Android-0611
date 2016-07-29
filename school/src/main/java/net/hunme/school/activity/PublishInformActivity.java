@@ -3,14 +3,14 @@ package net.hunme.school.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.school.R;
 
 public class PublishInformActivity extends BaseActivity implements View.OnClickListener {
 
-    private LinearLayout ll_permitchoose;
+    private RelativeLayout rl_permitchoose;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,8 +18,8 @@ public class PublishInformActivity extends BaseActivity implements View.OnClickL
         initdata();
     }
     private void  initdata(){
-        ll_permitchoose = $(R.id.ll_permitchoose);
-        ll_permitchoose.setOnClickListener(this);
+        rl_permitchoose = $(R.id.rl_permitchoose);
+        rl_permitchoose.setOnClickListener(this);
     }
     @Override
     protected void setToolBar() {
@@ -31,8 +31,8 @@ public class PublishInformActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        if (view.getId()==R.id.ll_permitchoose){
-            Intent intent = new Intent(this,PublishInformActivity.class);
+        if (view.getId()==R.id.rl_permitchoose){
+            Intent intent = new Intent(this,PublishinfoChooseActivity.class);
             startActivity(intent);
         }
     }

@@ -5,19 +5,46 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="net.hunme.school.activity.PublishinfoChooseActivity">
-    <CheckBox
-        android:id="@+id/cb_all"
-        android:text="全校"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <CheckBox
-        android:id="@+id/cb_grade"
-        android:text="小班一"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <CheckBox
-        android:id="@+id/cb_class"
-        android:text="小班二"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <RadioGroup
+        android:id="@+id/rg_room"
+        android:padding="@dimen/space_x2"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RadioButton
+            android:id="@+id/rb_all"
+            android:padding="@dimen/space_x2"
+            android:checked="true"
+            android:text="全校"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <View
+            android:background="@color/line_gray"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_gray"/>
+
+        <RadioButton
+            android:id="@+id/rb_classone"
+            android:padding="@dimen/space_x2"
+            android:text="小一班"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:background="@color/line_gray"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_gray"/>
+        <RadioButton
+            android:id="@+id/rb_classtwo"
+            android:padding="@dimen/space_x2"
+            android:text="小班二"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:background="@color/line_gray"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_gray"/>
+    </RadioGroup>
 </LinearLayout>
