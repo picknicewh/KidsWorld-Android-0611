@@ -20,7 +20,7 @@
           android:id="@+id/tv_dtitle"
           android:layout_centerInParent="true"
           android:text="乐园"
-          android:textSize="@dimen/ts_x_large"
+          android:textSize="@dimen/ts_xx_large"
           android:textColor="@color/white"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content" />

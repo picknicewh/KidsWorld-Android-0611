@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.hunme.login.UserChooseActivity">
+    tools:context="net.hunme.login.UserChooseActivity"
+    android:background="@color/bg_layout">
     <ListView
         android:id="@+id/lv_user_choose"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </ListView>
 
 </LinearLayout>

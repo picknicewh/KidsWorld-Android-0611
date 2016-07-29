@@ -37,7 +37,7 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
     /**
      * 加载地址
      */
-    private static final  String url = "http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/collect";
+    private static final String url = "http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/collect";
     /**
      * webview
      */

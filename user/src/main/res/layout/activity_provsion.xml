@@ -3,9 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/bg_layout"
     tools:context="net.hunme.user.activity.ProvsionActivity">
     <LinearLayout
-        android:padding="@dimen/space"
+        android:layout_marginLeft="@dimen/space"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -1,5 +1,6 @@
 package net.hunme.baselibrary;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
@@ -13,6 +14,8 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ================================================
@@ -25,10 +28,31 @@ import java.io.File;
  * ================================================
  */
 public class BaseLibrary {
-
+    private static List<Activity> activitys = null;
     public static void initializer(Application application){
         OkHttpUtils.init(application);
         initImageLoader(application);
+        activitys=new ArrayList<>();
+    }
+
+    // 添加Activity到容器中
+    public static void addActivity(Activity activity) {
+        if (activitys != null && activitys.size() > 0) {
+            if(!activitys.contains(activity)){
+                activitys.add(activity);
+            }
+        }else{
+            activitys.add(activity);
+        }
+    }
+    // 遍历所有Activity并finish
+    public static void exit() {
+        if (activitys != null && activitys.size() > 0) {
+            for (Activity activity : activitys) {
+                activity.finish();
+            }
+        }
+        System.exit(0);
     }
 
     //图片缓存

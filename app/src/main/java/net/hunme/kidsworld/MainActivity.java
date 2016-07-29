@@ -40,6 +40,7 @@ import main.jpushlibrary.JPush.JPushBaseActivity;
  * 主要接口：
  */
 public class MainActivity extends JPushBaseActivity {
+    private static final String SHOWDOS = "net.hunme.message.showdos";
     /**
      * 通讯圆点
      */
@@ -107,11 +108,10 @@ public class MainActivity extends JPushBaseActivity {
     private int flag = 0;
 
     private List<Fragment> fragmentList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UserAction.isGoLogin(MainActivity.this, this);
+        UserAction.isGoLogin(MainActivity.this,this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         init();
@@ -151,104 +151,48 @@ public class MainActivity extends JPushBaseActivity {
         super.onResume();
         setNoreadMessage();
     }
-
     /**
      * 通过点击事件改变tab
      */
     @OnClick({R.id.ll_status, R.id.ll_school, R.id.ll_discovery, R.id.ll_message})
     public void onClick(View view) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        hideAllFragments(transaction);
         switch (view.getId()) {
             case R.id.ll_status:
-                tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
-                tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
-                tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
-                tvStatus.setTextColor(getResources().getColor(R.color.main_green));
-                ivSchool.setImageResource(R.mipmap.school);
-                ivDiscovery.setImageResource(R.mipmap.discovery);
-                ivMessage.setImageResource(R.mipmap.message);
-                ivStatus.setImageResource(R.mipmap.status_p);
-                flag = 0;
+                flag=0;
                 break;
             case R.id.ll_school:
-                tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
-                tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
-                tvSchool.setTextColor(getResources().getColor(R.color.main_green));
-                tvStatus.setTextColor(getResources().getColor(R.color.default_grey));
-                ivSchool.setImageResource(R.mipmap.school_p);
-                ivDiscovery.setImageResource(R.mipmap.discovery);
-                ivMessage.setImageResource(R.mipmap.message);
-                ivStatus.setImageResource(R.mipmap.status);
-                flag = 1;
+                flag=1;
                 break;
             case R.id.ll_discovery:
-                tvDiscovery.setTextColor(getResources().getColor(R.color.main_green));
-                tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
-                tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
-                tvStatus.setTextColor(getResources().getColor(R.color.default_grey));
-                ivSchool.setImageResource(R.mipmap.school);
-                ivDiscovery.setImageResource(R.mipmap.discovery_p);
-                ivMessage.setImageResource(R.mipmap.message);
-                ivStatus.setImageResource(R.mipmap.status);
                 flag = 2;
                 break;
             case R.id.ll_message:
-                tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
-                tvMessage.setTextColor(getResources().getColor(R.color.main_green));
-                tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
-                tvStatus.setTextColor(getResources().getColor(R.color.default_grey));
-                ivSchool.setImageResource(R.mipmap.school);
-                ivDiscovery.setImageResource(R.mipmap.discovery);
-                ivMessage.setImageResource(R.mipmap.message_p);
-                ivStatus.setImageResource(R.mipmap.status);
-                flag = 3;
+                flag=3;
                 break;
         }
-        showview(flag, transaction);
+        setBaseBar(flag);
+        showview(flag,transaction);
 
     }
-
     /**
-     * 显示隐藏所以得界面
-     *
-     * @param transaction 页面选择器
+     显示隐藏界面
      */
-    private void hideAllFragments(FragmentTransaction transaction) {
-        for (int i = 0; i < fragmentList.size(); i++) {
-            if (fragmentList.get(i) != null) {
+    private void showview(int flag,FragmentTransaction transaction){
+        for (int i = 0; i<fragmentList.size();i++){
+            if (flag==i){
+                transaction.show(fragmentList.get(flag));
+            }else {
+
                 transaction.hide(fragmentList.get(i));
             }
         }
         transaction.commit();
     }
-
-
-    /**
-     * 显示隐藏界面
-     *
-     * @param flag        页面标记
-     * @param transaction 页面选择器
-     */
-    private void showview(int flag, FragmentTransaction transaction) {
-        for (int i = 0; i < fragmentList.size(); i++) {
-            if (fragmentList != null) {
-                if (flag == i) {
-                    transaction.show(fragmentList.get(flag));
-                } else {
-
-                    transaction.hide(fragmentList.get(i));
-                }
-            }
-        }
-        transaction.commit();
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
-
     /**
      * 建立与融云服务器的连接
      *
@@ -260,10 +204,7 @@ public class MainActivity extends JPushBaseActivity {
 
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
                 @Override
-                public void onTokenIncorrect() {
-                    Log.d("LoginActivity", "--onTokenIncorrect");
-                }
-
+                public void onTokenIncorrect() {Log.d("LoginActivity", "--onTokenIncorrect");}
                 /**
                  * 连接融云成功
                  * @param userid 当前 token
@@ -275,19 +216,15 @@ public class MainActivity extends JPushBaseActivity {
                         RongIM.getInstance().setMessageAttachedUserInfo(true);
                     }
                 }
-
                 @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {
-                    Log.d("LoginActivity", "--onError" + errorCode);
-                }
+                public void onError(RongIMClient.ErrorCode errorCode) {Log.d("LoginActivity", "--onError" + errorCode);}
             });
         }
     }
-
     /**
-     * 未读消息监听
-     */
-    private void setNoreadMessage() {
+    * 未读消息监听
+    */
+    private void setNoreadMessage(){
         Handler handler = new Handler();
         final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
                 Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
@@ -295,11 +232,10 @@ public class MainActivity extends JPushBaseActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener, conversationTypes);
+                RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener,conversationTypes);
             }
         }, 500);
     }
-
     /**
      * 发送广播通知改变主界面的圆点的显示状态
      */
@@ -313,6 +249,39 @@ public class MainActivity extends JPushBaseActivity {
             }
         }
     };
+
+    /**
+     *  设置底部颜色状态
+     * @param chooseType
+     */
+    private void setBaseBar(int chooseType){
+        tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
+        tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
+        tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
+        tvStatus.setTextColor(getResources().getColor(R.color.default_grey));
+        ivSchool.setImageResource(R.mipmap.school);
+        ivDiscovery.setImageResource(R.mipmap.discovery);
+        ivMessage.setImageResource(R.mipmap.message);
+        ivStatus.setImageResource(R.mipmap.status);
+        switch (chooseType){
+            case 0:
+                tvStatus.setTextColor(getResources().getColor(R.color.main_green));
+                ivStatus.setImageResource(R.mipmap.status_p);
+                break;
+            case 1:
+                tvSchool.setTextColor(getResources().getColor(R.color.main_green));
+                ivSchool.setImageResource(R.mipmap.school_p);
+                break;
+            case 2:
+                tvDiscovery.setTextColor(getResources().getColor(R.color.main_green));
+                ivDiscovery.setImageResource(R.mipmap.discovery_p);
+                break;
+            case 3:
+                tvMessage.setTextColor(getResources().getColor(R.color.main_green));
+                ivMessage.setImageResource(R.mipmap.message_p);
+                break;
+        }
+    }
 
     /**
      * 通过判断这个fragment对象，如果属于我们的FragmentTabX类并且该类还未被实例化过，
