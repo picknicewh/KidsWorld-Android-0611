@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_layout">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -64,7 +65,6 @@
                     <TextView
                         android:id="@+id/tv_phone"
                         android:layout_gravity="center"
-                        style="@style/TextStyleBase"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="158*****456"/>
@@ -127,7 +127,6 @@
                     <TextView
                         android:id="@+id/tv_cache"
                         android:layout_gravity="center"
-                        style="@style/TextStyleBase"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="53MB"/>
@@ -193,7 +192,6 @@
                     <TextView
                         android:id="@+id/tv_version"
                         android:layout_gravity="center"
-                        style="@style/TextStyleBase"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="已是最新"/>

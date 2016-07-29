@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:textSize="@dimen/ts_xxx_large" />
+        android:textSize="@dimen/ts_xx_large" />
 
     <LinearLayout
         android:paddingRight="@dimen/space"
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="@dimen/ts_x_large" />
+            android:textSize="@dimen/ts_large" />
 
         <ImageView
             android:padding="@dimen/space"

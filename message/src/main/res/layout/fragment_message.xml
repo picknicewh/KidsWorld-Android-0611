@@ -12,7 +12,7 @@
         <TextView
             android:layout_centerInParent="true"
             android:text="通讯"
-            android:textSize="@dimen/ts_x_large"
+            android:textSize="@dimen/ts_xx_large"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

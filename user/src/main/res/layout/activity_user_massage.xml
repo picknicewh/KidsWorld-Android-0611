@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="@color/bg_layout"
     tools:context=".activity.UMassageActivity">
 
     <RelativeLayout
@@ -64,7 +64,6 @@
                 android:text="姓名"/>
 
             <TextView
-                style="@style/TextStyleBase"
                 android:id="@+id/tv_name"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -94,20 +93,12 @@
                 android:text="性别"/>
 
             <TextView
-                style="@style/TextStyleBase"
-                android:layout_marginRight="@dimen/space"
                 android:id="@+id/tv_sex"
                 android:layout_gravity="center"
-                android:textSize="@dimen/ts_x_large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="未知"/>
 
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_arrow_right"/>
         </LinearLayout>
 
         <View
@@ -135,7 +126,6 @@
                 android:layout_marginRight="@dimen/space"
                 android:id="@+id/tv_sign"
                 android:layout_gravity="center"
-                style="@style/TextStyleBase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="还没有想好啊"/>
@@ -170,7 +160,6 @@
                 android:text="班级"/>
 
             <TextView
-                style="@style/TextStyleBase"
                 android:id="@+id/tv_classname"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -199,7 +188,6 @@
                 android:text="学校"/>
 
             <TextView
-                style="@style/TextStyleBase"
                 android:id="@+id/tv_schoolname"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"

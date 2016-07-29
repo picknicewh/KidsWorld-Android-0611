@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/bg_layout"
     tools:context=".activity.UserActivity">
 
     <LinearLayout
@@ -53,12 +54,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="龙马"
-                android:textSize="@dimen/ts_xx_large"
+                android:textSize="@dimen/ts_large"
                 style="@style/TextStyleBase" />
 
             <TextView
                 android:id="@+id/tv_address"
-                style="@style/TextStyleBase"
                 android:layout_marginTop="@dimen/space"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
                 android:src="@mipmap/ic_collection"/>
 
             <TextView
-                android:layout_marginLeft="@dimen/space_x2"
+                android:layout_marginLeft="@dimen/space"
                 android:layout_gravity="center"
                 style="@style/TextStyleBase"
                 android:layout_width="0dp"
@@ -111,7 +111,7 @@
         </LinearLayout>
 
         <View
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="40dp"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/line_gray"/>
@@ -131,7 +131,7 @@
                 android:src="@mipmap/ic_dynamic"/>
 
             <TextView
-                android:layout_marginLeft="@dimen/space_x2"
+                android:layout_marginLeft="@dimen/space"
                 android:layout_gravity="center"
                 style="@style/TextStyleBase"
                 android:layout_width="0dp"
@@ -164,7 +164,7 @@
             android:src="@mipmap/ic_photo"/>
 
         <TextView
-            android:layout_marginLeft="@dimen/space_x2"
+            android:layout_marginLeft="@dimen/space"
             android:layout_gravity="center"
             android:gravity="center_vertical"
             style="@style/TextStyleBase"
@@ -203,7 +203,7 @@
                 android:src="@mipmap/ic_my"/>
 
             <TextView
-                android:layout_marginLeft="@dimen/space_x2"
+                android:layout_marginLeft="@dimen/space"
                 android:layout_gravity="center"
                 style="@style/TextStyleBase"
                 android:layout_width="0dp"

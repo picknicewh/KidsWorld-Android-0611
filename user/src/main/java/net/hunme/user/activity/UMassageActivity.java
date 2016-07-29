@@ -58,8 +58,8 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     private UserMessage um;
     private final String SETSIGN="/appUser/setSign.do";
     private final String AVATAR="/appUser/setAvatar.do";
-    private String path;
-    private String sign;
+    private String path;//选择头像保存地址
+    private String sign; //用户个性签名
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +79,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
         ll_sex=$(R.id.ll_sex);
         ll_sign=$(R.id.ll_sign);
         rl_userMessage.setOnClickListener(this);
-        ll_sex.setOnClickListener(this);
+//        ll_sex.setOnClickListener(this);
         ll_sign.setOnClickListener(this);
     }
 
@@ -118,7 +118,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
                 }
             });
         }else if(viewID==R.id.ll_sex){
-            showSexDialog();
+//            showSexDialog();
         }else if(viewID==R.id.ll_sign){
             showSignDialog();
         }
@@ -177,10 +177,12 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
         alertConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String sign=etAlbumName.getText().toString();
-                if (!G.isEmteny(sign)) {
-                    userSignSubmit(sign);
+                sign=etAlbumName.getText().toString();
+                if (G.isEmteny(sign)) {
+                   G.showToast(UMassageActivity.this,"签名不能为空");
+                    return;
                 }
+                userSignSubmit(sign);
                 alertDialog.dismiss();
             }
         });

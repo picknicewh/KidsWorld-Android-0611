@@ -70,7 +70,7 @@ public class NavigationBar extends RelativeLayout implements View.OnClickListene
         TextView view = new TextView(context);
         // set text
         view.setText(text);
-        view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         view.setTextColor(Color.WHITE);
         setView(view, false, 0, TAG_MIDDLE_TITLE);
     }
