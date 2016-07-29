@@ -70,9 +70,11 @@ public class GridAlbumAdapter extends BaseAdapter {
             if (position >= 9) {
                 holder.image.setVisibility(View.GONE);
             }
+            G.log("*-------1--------*"+position);
         } else {
             holder.clv_delete.setVisibility(View.VISIBLE);
             getBitmapData(holder.image,imageItems.get(position));
+            G.log("*-------2--------*"+position);
         }
 
         holder.clv_delete.setOnClickListener(new View.OnClickListener() {
