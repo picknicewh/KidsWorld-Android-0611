@@ -80,7 +80,7 @@
             <TextView
 
                 android:id="@+id/tv_school"
-                android:text="学校"
+                android:text="园所"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

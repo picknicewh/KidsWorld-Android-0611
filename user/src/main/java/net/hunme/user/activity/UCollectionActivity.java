@@ -64,7 +64,6 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
         iv_right = $(R.id.iv_right);
         tv_title = $(R.id.tv_title);
         from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,this);
-        page = from.getPage();
         setWebView();
     }
     @Override
@@ -90,68 +89,6 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
         webView.loadUrl(url);
     }
 
-   /* *//**
-     * 设置导航栏
-     *//*
-    @JavascriptInterface
-    public void  setMyToolbar(final String view){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                switch (view){
-                    case Constant.CHILDSTORY:
-                        setLiftImage(R.mipmap.ic_arrow_lift);
-                        setCententTitle("幼儿故事");
-                        page = Constant.CHILDSTORY;
-                        break;
-                    case Constant.CHILDCLASS:
-                        setLiftImage(R.mipmap.ic_arrow_lift);
-                        setCententTitle("幼儿课堂");
-                        page = Constant.CHILDCLASS;
-                        break;
-                    case Constant.CONSULT:
-                        setLiftImage(R.mipmap.ic_arrow_lift);
-                        setCententTitle("教育资讯");
-                        page = Constant.CONSULT;
-                        break;
-                    case Constant.SAFEED:
-                        setLiftImage(R.mipmap.ic_arrow_lift);
-                        setCententTitle("安全教育");
-                        page = Constant.SAFEED;
-                        break;
-                    case Constant.CONSULTDETAIL:
-                        setLiftImage(R.mipmap.ic_arrow_lift);
-                        setCententTitle("教育资讯");
-                        page = Constant.CONSULTDETAIL;
-                        break;
-                    case Constant.VEDIO:
-                        setLiftImage(R.mipmap.ic_arrow_lift);
-                        page = Constant.VEDIO;
-                        break;
-                    case Constant.MEDIAPLAY:
-                        setLiftImage(R.mipmap.ic_arrow_lift);
-                        setCententTitle("幼儿听听");
-                        page = Constant.MEDIAPLAY;
-                        break;
-                    case Constant.MEDIAPLAYDEATIL:
-                        setLiftImage(R.mipmap.ic_arrow_lift);
-                        setCententTitle("幼儿听听");
-                         page = Constant.MEDIAPLAYDEATIL;
-                    case Constant.COLLECT:
-                        setLiftImage(R.mipmap.ic_arrow_lift);
-                        setCententTitle("收藏");
-                        page = Constant.COLLECT;
-                        break;
-                    case Constant.MEDIAPLAYING:
-                        setLiftImage(R.mipmap.ic_arrow_lift);
-                        page = Constant.MEDIAPLAYING;
-                        break;
-                }
-                Log.i("TAGGG",page);
-            }
-
-        });
-    }*/
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {

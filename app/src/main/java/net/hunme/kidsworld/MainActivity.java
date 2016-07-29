@@ -40,7 +40,6 @@ import main.jpushlibrary.JPush.JPushBaseActivity;
  * 主要接口：
  */
 public class MainActivity extends JPushBaseActivity {
-    private static final String SHOWDOS = "net.hunme.message.showdos";
     /**
      * 通讯圆点
      */
@@ -108,10 +107,11 @@ public class MainActivity extends JPushBaseActivity {
     private int flag = 0;
 
     private List<Fragment> fragmentList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UserAction.isGoLogin(MainActivity.this,this);
+        UserAction.isGoLogin(MainActivity.this, this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         init();
@@ -131,19 +131,19 @@ public class MainActivity extends JPushBaseActivity {
         messageFragement = new MessageFragement();
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        userMessage  = new UserMessage(this);
+        userMessage = new UserMessage(this);
         userId = userMessage.getTsId();
-        username  = userMessage.getUserName();
+        username = userMessage.getUserName();
         portrait = userMessage.getHoldImgUrl();
         fragmentList = new ArrayList<>();
         fragmentList.add(statusFragement);
         fragmentList.add(schoolFragement);
         fragmentList.add(discoveryFragement);
         fragmentList.add(messageFragement);
-        for (int i = 0 ; i <fragmentList.size() ;i++){
+        for (int i = 0; i < fragmentList.size(); i++) {
             transaction.add(R.id.content, fragmentList.get(i));
         }
-        showview(flag,transaction);
+        showview(flag, transaction);
     }
 
     @Override
@@ -151,12 +151,14 @@ public class MainActivity extends JPushBaseActivity {
         super.onResume();
         setNoreadMessage();
     }
+
     /**
      * 通过点击事件改变tab
      */
     @OnClick({R.id.ll_status, R.id.ll_school, R.id.ll_discovery, R.id.ll_message})
     public void onClick(View view) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+        hideAllFragments(transaction);
         switch (view.getId()) {
             case R.id.ll_status:
                 tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
@@ -167,7 +169,7 @@ public class MainActivity extends JPushBaseActivity {
                 ivDiscovery.setImageResource(R.mipmap.discovery);
                 ivMessage.setImageResource(R.mipmap.message);
                 ivStatus.setImageResource(R.mipmap.status_p);
-                flag=0;
+                flag = 0;
                 break;
             case R.id.ll_school:
                 tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
@@ -178,7 +180,7 @@ public class MainActivity extends JPushBaseActivity {
                 ivDiscovery.setImageResource(R.mipmap.discovery);
                 ivMessage.setImageResource(R.mipmap.message);
                 ivStatus.setImageResource(R.mipmap.status);
-                flag=1;
+                flag = 1;
                 break;
             case R.id.ll_discovery:
                 tvDiscovery.setTextColor(getResources().getColor(R.color.main_green));
@@ -189,7 +191,7 @@ public class MainActivity extends JPushBaseActivity {
                 ivDiscovery.setImageResource(R.mipmap.discovery_p);
                 ivMessage.setImageResource(R.mipmap.message);
                 ivStatus.setImageResource(R.mipmap.status);
-                flag=2;
+                flag = 2;
                 break;
             case R.id.ll_message:
                 tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
@@ -200,30 +202,53 @@ public class MainActivity extends JPushBaseActivity {
                 ivDiscovery.setImageResource(R.mipmap.discovery);
                 ivMessage.setImageResource(R.mipmap.message_p);
                 ivStatus.setImageResource(R.mipmap.status);
-                flag=3;
+                flag = 3;
                 break;
-          }
-              showview(flag,transaction);
+        }
+        showview(flag, transaction);
 
     }
-    /**
-     显示隐藏界面
-     */
-    private void showview(int flag,FragmentTransaction transaction){
-        for (int i = 0; i<fragmentList.size();i++){
-            if (flag==i){
-                transaction.show(fragmentList.get(flag));
-            }else {
 
+    /**
+     * 显示隐藏所以得界面
+     *
+     * @param transaction 页面选择器
+     */
+    private void hideAllFragments(FragmentTransaction transaction) {
+        for (int i = 0; i < fragmentList.size(); i++) {
+            if (fragmentList.get(i) != null) {
                 transaction.hide(fragmentList.get(i));
             }
         }
         transaction.commit();
     }
+
+
+    /**
+     * 显示隐藏界面
+     *
+     * @param flag        页面标记
+     * @param transaction 页面选择器
+     */
+    private void showview(int flag, FragmentTransaction transaction) {
+        for (int i = 0; i < fragmentList.size(); i++) {
+            if (fragmentList != null) {
+                if (flag == i) {
+                    transaction.show(fragmentList.get(flag));
+                } else {
+
+                    transaction.hide(fragmentList.get(i));
+                }
+            }
+        }
+        transaction.commit();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
+
     /**
      * 建立与融云服务器的连接
      *
@@ -235,7 +260,10 @@ public class MainActivity extends JPushBaseActivity {
 
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
                 @Override
-                public void onTokenIncorrect() {Log.d("LoginActivity", "--onTokenIncorrect");}
+                public void onTokenIncorrect() {
+                    Log.d("LoginActivity", "--onTokenIncorrect");
+                }
+
                 /**
                  * 连接融云成功
                  * @param userid 当前 token
@@ -247,15 +275,19 @@ public class MainActivity extends JPushBaseActivity {
                         RongIM.getInstance().setMessageAttachedUserInfo(true);
                     }
                 }
+
                 @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {Log.d("LoginActivity", "--onError" + errorCode);}
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    Log.d("LoginActivity", "--onError" + errorCode);
+                }
             });
         }
     }
+
     /**
-    * 未读消息监听
-    */
-    private void setNoreadMessage(){
+     * 未读消息监听
+     */
+    private void setNoreadMessage() {
         Handler handler = new Handler();
         final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
                 Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
@@ -263,10 +295,11 @@ public class MainActivity extends JPushBaseActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener,conversationTypes);
+                RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener, conversationTypes);
             }
         }, 500);
     }
+
     /**
      * 发送广播通知改变主界面的圆点的显示状态
      */
@@ -280,6 +313,26 @@ public class MainActivity extends JPushBaseActivity {
             }
         }
     };
+
+    /**
+     * 通过判断这个fragment对象，如果属于我们的FragmentTabX类并且该类还未被实例化过，
+     * 则将Activity的成员变量mFragmentTabX指向该fragment对象，
+     * 这样就可以在原来的fragment对象上操作add/show/hide，因此不会有重叠现象
+     */
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+        if (statusFragement == null && fragment instanceof StatusFragement) {
+            statusFragement = (StatusFragement) fragment;
+        } else if (schoolFragement == null && fragment instanceof SchoolFragement) {
+            schoolFragement = (SchoolFragement) fragment;
+        } else if (discoveryFragement == null && fragment instanceof SchoolFragement) {
+            schoolFragement = (SchoolFragement) fragment;
+        } else if (messageFragement == null && fragment instanceof MessageFragement) {
+            messageFragement = (MessageFragement) fragment;
+        }
+    }
+
 }
 
 

@@ -61,6 +61,10 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
      */
     private LinearLayout ll_loading;
     private static  final  String url = "http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html";
+    /**
+     * 班级选择
+     */
+    private LinearLayout ll_classchoose;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_status, null);
@@ -73,6 +77,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         tv_classname = $(view, R.id.tv_classname);
         webView = $(view, R.id.wv_status);
         ll_loading = $(view, R.id.ll_loading);
+        ll_classchoose = $(view,R.id.ll_classchoose);
         setWebView();
         setViewAction();
         classlist = new ArrayList<>();
@@ -80,7 +85,8 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         classlist.add("一(2)班");
         classlist.add("一(3)班");
         popWindow = new ChooseClassPopWindow(this, classlist);
-        tv_classname.setOnClickListener(this);
+   //    tv_classname.setOnClickListener(this);
+        ll_classchoose.setOnClickListener(this);
     }
 
     private void  setWebView(){
@@ -123,7 +129,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
-        if (viewId==R.id.tv_classname){
+        if (viewId==R.id.ll_classchoose){
             int[] location = new int[2];
             view.getLocationOnScreen(location);
             G.initDisplaySize(getActivity());

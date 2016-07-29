@@ -18,13 +18,20 @@ import net.hunme.baselibrary.R;
  * 主要接口：
  */
 public class WebCommonPageFrom {
+
+    /**
+     * 左边图片
+     */
     private ImageView iv_left;
+    /**
+     * 中间文字
+     */
     private TextView tv_title;
+    /**
+     * 右边图片
+     */
     private ImageView iv_right;
     private Activity activity;
-
-
-    private String page;
     public WebCommonPageFrom(ImageView iv_left,TextView tv_title,ImageView iv_right,Activity activity){
         this.iv_left = iv_left;
         this.tv_title = tv_title;
@@ -33,6 +40,7 @@ public class WebCommonPageFrom {
     }
     /**
      * 设置导航栏
+     * @param view 不同的界面
      */
     @JavascriptInterface
     public void  setToolBar(final String view) {
@@ -46,8 +54,6 @@ public class WebCommonPageFrom {
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
-                        page = Constant.HOME;
-                        setPage(page);
                         break;
                     case Constant.CHILDSTORY:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
@@ -55,8 +61,6 @@ public class WebCommonPageFrom {
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
-                        page = Constant.CHILDSTORY;
-                        setPage(page);
                         break;
                     case Constant.CHILDCLASS:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
@@ -64,8 +68,6 @@ public class WebCommonPageFrom {
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
-                        page = Constant.CHILDCLASS;
-                        setPage(page);
                         break;
                     case Constant.CONSULT:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
@@ -73,24 +75,18 @@ public class WebCommonPageFrom {
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
-                        page = Constant.CONSULT;
-                        setPage(page);
                         break;
                     case Constant.SAFEED:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("安全教育");
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
-                        page = Constant.SAFEED;
-                        setPage(page);
                         break;
                     case Constant.CONSULTDETAIL:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("教育资讯");
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
-                        page = Constant.CONSULTDETAIL;
-                        setPage(page);
                         break;
                     case Constant.SEARCH:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
@@ -98,15 +94,11 @@ public class WebCommonPageFrom {
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
-                        page = Constant.SEARCH;
-                        setPage(page);
                         break;
                     case Constant.VEDIO:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         iv_right.setVisibility(View.GONE);
                         tv_title.setVisibility(View.GONE);
-                        page = Constant.VEDIO;
-                        setPage(page);
                         break;
                     case Constant.MEDIAPLAY:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
@@ -114,60 +106,47 @@ public class WebCommonPageFrom {
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
-                        page = Constant.MEDIAPLAY;
-                        setPage(page);
                         break;
                     case Constant.MEDIAPLAYDEATIL:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("幼儿听听");
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
-                        page = Constant.MEDIAPLAYDEATIL;
-                        setPage(page);
                         break;
                     case Constant.MEDIAPLAYING:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         iv_right.setVisibility(View.GONE);
                         tv_title.setVisibility(View.GONE);
-                        page = Constant.MEDIAPLAYING;
-                        setPage(page);
                         break;
                     case Constant.SEARCH_CAUSRE:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("搜索课程");
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
-                        page = Constant.SEARCH_CAUSRE;
-                        setPage(page);
                         break;
                     case Constant.SEARCH_MUSIC:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("搜索音乐");
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
-                        page = Constant.SEARCH_MUSIC;
-                        setPage(page);
                         break;
                     case Constant.SEARCH_CON:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("搜索资讯");
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
-                        page = Constant.SEARCH_CON;
-                        setPage(page);
                         break;
                     case Constant.PLAY_HISTORY:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("播放记录");
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
-                        page = Constant.PLAY_HISTORY;
-                        setPage(page);
+                        break;
                     case Constant.COLLECT:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
-                        tv_title.setText("收藏");
-                        page = Constant.COLLECT;
-                        setPage(page);
+                        tv_title.setText("我的收藏");
+                        tv_title.setVisibility(View.VISIBLE);
+                        iv_right.setVisibility(View.GONE);
                         break;
                 }
             }
@@ -187,14 +166,6 @@ public class WebCommonPageFrom {
                 iv_right.setVisibility(View.GONE);
             }
         });
-    }
-    @JavascriptInterface
-    public void setPage(String page) {
-        this.page = page;
-    }
-
-    public String getPage() {
-        return page;
     }
 
 }
