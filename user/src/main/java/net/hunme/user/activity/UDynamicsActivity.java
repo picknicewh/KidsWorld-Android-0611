@@ -1,8 +1,12 @@
 package net.hunme.user.activity;
 
 import android.os.Bundle;
+import android.widget.LinearLayout;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.util.MWebChromeClient;
+import net.hunme.baselibrary.util.MWebViewClient;
+import net.hunme.baselibrary.widget.MyViewView;
 import net.hunme.user.R;
 /**
  * ================================================
@@ -15,13 +19,35 @@ import net.hunme.user.R;
  * ================================================
  */
 public class UDynamicsActivity extends BaseActivity {
-
+    /**
+     * 加载页面动画
+     */
+    private LinearLayout ll_loading;
+    /**
+     * 加载地址
+     */
+    private static final  String url = "http://192.168.1.179:8787/web/kidsWorld/space/view/myDynamic.html";
+    /**
+     * webview
+     */
+    private MyViewView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_dynamics);
+        initview();
     }
-
+    private void initview(){
+        ll_loading = $(R.id.ll_loading);
+        webView = $(R.id.wv_status);
+        setWebView();
+    }
+    private void  setWebView(){
+       // webView.addJavascriptInterface(this, "change_tob");  //设置本地调用对象及其接口
+        webView.setWebViewClient(new MWebViewClient(webView,this));
+        webView.setWebChromeClient(new MWebChromeClient(this,ll_loading,webView));
+        webView.loadUrl(url);
+    }
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);

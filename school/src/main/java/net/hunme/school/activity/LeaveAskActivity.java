@@ -204,7 +204,6 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
         Type type = new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type,Apiurl.SCHOOL_SUBLEAVE,params,this);
     }
-
     @Override
     public void onSuccess(String uri, Object date) {
            Result< String> data = (Result<String>) date;
