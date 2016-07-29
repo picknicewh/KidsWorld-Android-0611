@@ -1,5 +1,6 @@
 package net.hunme.status.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 import com.pizidea.imagepicker.AndroidImagePicker;
 import com.pizidea.imagepicker.bean.ImageItem;
 
+import net.hunme.baselibrary.activity.PermissionsActivity;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
@@ -25,6 +27,7 @@ import net.hunme.status.R;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.adapter.GridAlbumAdapter;
 import net.hunme.user.util.BitmapCache;
+import net.hunme.user.util.PermissionUtils;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -70,6 +73,11 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 可见范围
      */
     private String dynamicVisicty="1";
+    // 访问相册所需的全部权限
+    private final String[] PERMISSIONS = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,8 +186,16 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                         dynamicVisicty="2";
                 }
                 break;
+            case PermissionUtils.REQUEST_CODE:
+                //检测到没有授取权限 关闭页面
+                if(resultCode == PermissionsActivity.PERMISSIONS_DENIED){
+                    G.showToast(this,"权限没有授取，本次操作取消，请到权限中心授权");
+                }
+                break;
+
         }
     }
+
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
@@ -218,6 +234,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 前往获取图片
      */
     private void goSelectImager(){
+        PermissionUtils.getPermission(this,PERMISSIONS);
         AndroidImagePicker.getInstance().pickMulti(PublishStatusActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
             @Override
             public void onImagePickComplete(List<ImageItem> items) {
@@ -251,5 +268,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     public void onError(String uri, String error) {
         G.showToast(this,"发布失败，请检测网络!");
     }
+
 }
 

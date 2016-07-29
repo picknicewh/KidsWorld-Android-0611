@@ -91,7 +91,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.tv_time){
-//            getValidateCode(type,um.getLoginName());
+            getValidateCode(type,um.getLoginName());
             tv_time.setEnabled(false);
             tv_type.setText("我们已经发送短信验证码到你的手机");
             myCount.start();
@@ -160,9 +160,9 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onSuccess(String uri, Object date) {
+        Result<String>result= (Result<String>) date;
         if(VALIDATECODE.equals(uri)){
             tv_time.setEnabled(true);
-            Result<String>result= (Result<String>) date;
             if(result.isSuccess()){
                 Sign=result.getSign();
             }else{
@@ -172,8 +172,14 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
 //            b_finish.setEnabled(true);
         }else if(UPDATEPHONE.equals(uri)){
             //修改手机号码
+            if(result.isSuccess()){
+                G.showToast(this,"手机号码修改成功");
+            }
         }else if(UPDATEPASSWORD.equals(uri)){
             //修改密码
+            if(result.isSuccess()){
+                G.showToast(this,"密码修改成功");
+            }
         }
 
     }

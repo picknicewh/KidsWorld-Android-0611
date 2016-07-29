@@ -1,7 +1,6 @@
 package net.hunme.user.adapter;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import com.pizidea.imagepicker.ImgLoader;
 import com.pizidea.imagepicker.UilImgLoader;
 
 import net.hunme.baselibrary.util.G;
-import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.user.R;
 
 import java.util.List;
@@ -65,9 +63,8 @@ public class GridAlbumAdapter extends BaseAdapter {
             new ViewHolder(convertView);
         }
         holder = (ViewHolder) convertView.getTag();
-
-        if (position == imageItems.size()) {
-            holder.image.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_unfocused));
+        if (position >= imageItems.size()) {
+            holder.image.setImageResource( R.mipmap.ic_unfocused);
             holder.clv_delete.setVisibility(View.GONE);
             holder.image.setVisibility(View.VISIBLE);
             if (position >= 9) {
@@ -85,16 +82,18 @@ public class GridAlbumAdapter extends BaseAdapter {
                 notifyDataSetChanged();
             }
         });
+
         return convertView;
     }
 
     public class ViewHolder {
         public ImageView image;
-        public CircleImageView clv_delete;
+        public ImageView clv_delete;
 
         public ViewHolder(View view) {
             image = (ImageView) view.findViewById(R.id.item_grida_image);
-            clv_delete= (CircleImageView) view.findViewById(R.id.clv_delete);
+            clv_delete= (ImageView) view.findViewById(R.id.clv_delete);
+            clv_delete.setImageResource(R.mipmap.ic_delete_test);
             view.setTag(this);
         }
     }

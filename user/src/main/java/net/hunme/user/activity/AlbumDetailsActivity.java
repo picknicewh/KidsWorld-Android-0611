@@ -33,7 +33,8 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
     // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
-            Manifest.permission.READ_EXTERNAL_STORAGE
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {

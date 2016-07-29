@@ -11,11 +11,10 @@
         android:src="@mipmap/ic_test01" >
     </ImageView>
 
-    <net.hunme.baselibrary.widget.CircleImageView
+    <ImageView
         android:id="@+id/clv_delete"
         android:layout_alignRight="@id/item_grida_image"
         android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@mipmap/ic_delete" />
+        android:layout_height="20dp" />
 
 </RelativeLayout>
