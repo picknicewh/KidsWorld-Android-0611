@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.UDynamicsActivity">
-
-</RelativeLayout>
+    <include
+        android:id="@+id/ll_loading"
+        layout="@layout/loadwebview"/>
+    <net.hunme.baselibrary.widget.MyViewView
+        android:layerType="software"
+        android:id="@+id/wv_status"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

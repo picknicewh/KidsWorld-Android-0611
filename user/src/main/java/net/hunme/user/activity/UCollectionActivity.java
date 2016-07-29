@@ -2,17 +2,18 @@ package net.hunme.user.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.util.Constant;
 import net.hunme.baselibrary.util.MWebChromeClient;
 import net.hunme.baselibrary.util.MWebViewClient;
+import net.hunme.baselibrary.util.WebCommonPageFrom;
 import net.hunme.baselibrary.widget.MyViewView;
 import net.hunme.user.R;
 /**
@@ -26,6 +27,9 @@ import net.hunme.user.R;
  * ================================================
  */
 public class UCollectionActivity extends BaseActivity implements View.OnClickListener {
+    private ImageView iv_left;
+    private TextView tv_title;
+    private ImageView iv_right;
     /**
      * 加载页面动画
      */
@@ -42,6 +46,10 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
      * 页面
      */
     private String page;
+    /**
+     * web借口类
+     */
+    private WebCommonPageFrom from;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +60,11 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
     private void initview(){
         ll_loading = $(R.id.ll_loading);
         webView = $(R.id.wv_collection);
+        iv_left =$(R.id.iv_left);
+        iv_right = $(R.id.iv_right);
+        tv_title = $(R.id.tv_title);
+        from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,this);
+        page = from.getPage();
         setWebView();
     }
     @Override
@@ -61,11 +74,9 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
          setLiftOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                 if (page.equals(Constant.COLLECT)){
-                     Log.i("TAGGG","cccccccccccc");
+                 if (webView.getUrl().contains(Constant.COLLECT)){
                      finish();
                  }else {
-                     Log.i("TAGGG","BBBBBBBBBBBBBB");
                      webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
                      webView.goBack();
                  }
@@ -73,17 +84,15 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
          });
     }
     private void  setWebView(){
-        webView.addJavascriptInterface(this, "change_tob");  //设置本地调用对象及其接口
+        webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
         webView.setWebViewClient(new MWebViewClient(webView,this));
         webView.setWebChromeClient(new MWebChromeClient(this,ll_loading,webView));
         webView.loadUrl(url);
     }
-    /**
+
+   /* *//**
      * 设置导航栏
-     */
-    /**
-     * 设置导航栏
-     */
+     *//*
     @JavascriptInterface
     public void  setMyToolbar(final String view){
         runOnUiThread(new Runnable() {
@@ -142,7 +151,7 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
             }
 
         });
-    }
+    }*/
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
@@ -159,10 +168,8 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
         int viewId =view.getId();
         if (viewId==R.id.iv_left){
             if (page.equals(Constant.COLLECT)){
-                Log.i("TAGGG","cccccccccccc");
               finish();
             }else {
-                Log.i("TAGGG","BBBBBBBBBBBBBB");
                 webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
                 webView.goBack();
             }
