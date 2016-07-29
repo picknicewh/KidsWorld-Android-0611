@@ -5,16 +5,26 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <FrameLayout
+   <!-- <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1" />-->
+
+    <net.hunme.baselibrary.widget.NoScrollViewPager
+        android:id="@+id/vp_main"
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:flipInterval="30"
+      />
+
     <View
         android:layout_gravity="bottom"
         android:background="@color/gray"
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_gray" />
+
     <LinearLayout
         android:padding="@dimen/space_x0.5"
         android:orientation="horizontal"
@@ -22,7 +32,6 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <LinearLayout
             android:layout_weight="1"
             android:id="@+id/ll_status"
@@ -80,7 +89,7 @@
             <TextView
 
                 android:id="@+id/tv_school"
-                android:text="学校"
+                android:text="园所"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -149,5 +158,4 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

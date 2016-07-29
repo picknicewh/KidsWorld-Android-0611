@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +15,7 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.school.R;
 import net.hunme.school.widget.CustomDateTimeDialog;
 
@@ -47,19 +47,11 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
     /**
      * 姓名
      */
-    private Spinner sp_name;
-    /**
-     * 用餐
-     */
-    private Spinner sp_eat;
+    private TextView tv_name;
     /**
      * 事由
      */
     private EditText et_cause;
-    /**
-     *班级人员列表
-     */
-    private  String[] student = new String[]{"王小二","刘德华","吴亦凡","吴用","周磊","鹿晗","郑爽","大幂幂","吴彦祖","刘诗诗"};
     /**
      * 适配器
      */
@@ -92,6 +84,10 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
      * 日期格式
      */
     private SimpleDateFormat format2;
+    /**
+     * 用户信息
+     */
+    private UserMessage message;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,16 +103,15 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
       setSubTitle("完成");
     }
     private void initdata(){
+        tv_name.setText(message.getUserName());
         format = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
         format2 = new SimpleDateFormat("yyyy-MM-dd");
         String currentTime = format.format(new Date(System.currentTimeMillis()));
         tv_start.setText(currentTime);
         tv_end.setText("请选择时间");
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,student);
-        sp_name.setAdapter(adapter);
         startDateTimeDialog = new CustomDateTimeDialog(LeaveAskActivity.this,R.style.MyDialog,1);
         endDateTimeDialog = new CustomDateTimeDialog(LeaveAskActivity.this,R.style.MyDialog,0);
-        setSubTitleOnClickListener(this);
+
     }
     /**
      * 设置选择时间
@@ -141,10 +136,12 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
         ll_end = $(R.id.ll_iendtime);
         tv_end = $(R.id.tv_iendtime);
         tv_start = $(R.id.tv_istarttime);
-        sp_name = $(R.id.sp_name);
+        tv_name = $(R.id.tv_name);
         et_cause = $(R.id.et_cause);
         ll_end.setOnClickListener(this);
         ll_start.setOnClickListener(this);
+        setSubTitleOnClickListener(this);
+        message = UserMessage.getInstance(this);
         initdata();
     }
     /**

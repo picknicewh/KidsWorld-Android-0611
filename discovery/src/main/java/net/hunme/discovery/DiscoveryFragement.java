@@ -44,10 +44,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      */
     private ImageView iv_right;
     /**
-     * webview
-     */
-    private String page ;
-    /**
      * 加载动画
      */
     private LinearLayout ll_loading;
@@ -88,7 +84,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         webView = $(v,R.id.wv_discovery);
         ll_loading = $(v,R.id.ll_loading);
         from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,getActivity());
-        page = from.getPage();
         setWebView();
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
