@@ -30,13 +30,13 @@ public class SystemInfomDbHelp {
      * 插入数据
      */
     public  void insert(SQLiteDatabase db, String title, String content, String time, int flag) {
-        String sql = "insert into user" + "( title,content,time,flag) values('"+title+"','" + content + "','" + time + "'," + flag + ")";
+        String sql = "insert into user" + "(title,content,time,flag) values ('"+title+"','" + content + "','" + time + "'," + flag + ")";
         db.execSQL(sql);
     }
     /**
      * 查询所有数据数据,获取列表信息
      */
-    public  List<SystemInformVo>   getSystemInformVo(SQLiteDatabase db){
+    public  List<SystemInformVo> getSystemInformVo(SQLiteDatabase db){
         List<SystemInformVo> informVoList = new ArrayList<>();
         Cursor cursor = db.rawQuery("select * from user",null);
         int idindex  = cursor.getColumnIndex("uid");
@@ -57,6 +57,7 @@ public class SystemInfomDbHelp {
             systemInformVo.setFlag(flag);
             systemInformVo.setContent(content);
             informVoList.add(systemInformVo);
+            G.log(title+"---------rrr");
         }
         return informVoList;
     }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 
+import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.R;
 import net.hunme.baselibrary.util.ToolBarHelper;
 
@@ -35,6 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BaseLibrary.addActivity(this);
     }
 
     @Override

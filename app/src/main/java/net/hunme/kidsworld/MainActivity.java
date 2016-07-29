@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.discovery.DiscoveryFragement;
 import net.hunme.kidsworld.util.HunmeApplication;
@@ -111,6 +112,7 @@ public class MainActivity extends JPushBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BaseLibrary.addActivity(this);
         UserAction.isGoLogin(MainActivity.this,this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -118,7 +120,6 @@ public class MainActivity extends JPushBaseActivity {
         initJPushConfiguration();
         connect(userMessage.getRyId());
         setNoreadMessage();
-
     }
 
     /**
@@ -163,51 +164,20 @@ public class MainActivity extends JPushBaseActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         switch (view.getId()) {
             case R.id.ll_status:
-                tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
-                tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
-                tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
-                tvStatus.setTextColor(getResources().getColor(R.color.main_green));
-                ivSchool.setImageResource(R.mipmap.school);
-                ivDiscovery.setImageResource(R.mipmap.discovery);
-                ivMessage.setImageResource(R.mipmap.message);
-                ivStatus.setImageResource(R.mipmap.status_p);
                 flag=0;
                 break;
             case R.id.ll_school:
-                tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
-                tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
-                tvSchool.setTextColor(getResources().getColor(R.color.main_green));
-                tvStatus.setTextColor(getResources().getColor(R.color.default_grey));
-                ivSchool.setImageResource(R.mipmap.school_p);
-                ivDiscovery.setImageResource(R.mipmap.discovery);
-                ivMessage.setImageResource(R.mipmap.message);
-                ivStatus.setImageResource(R.mipmap.status);
                 flag=1;
                 break;
             case R.id.ll_discovery:
-                tvDiscovery.setTextColor(getResources().getColor(R.color.main_green));
-                tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
-                tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
-                tvStatus.setTextColor(getResources().getColor(R.color.default_grey));
-                ivSchool.setImageResource(R.mipmap.school);
-                ivDiscovery.setImageResource(R.mipmap.discovery_p);
-                ivMessage.setImageResource(R.mipmap.message);
-                ivStatus.setImageResource(R.mipmap.status);
                 flag=2;
                 break;
             case R.id.ll_message:
-                tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
-                tvMessage.setTextColor(getResources().getColor(R.color.main_green));
-                tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
-                tvStatus.setTextColor(getResources().getColor(R.color.default_grey));
-                ivSchool.setImageResource(R.mipmap.school);
-                ivDiscovery.setImageResource(R.mipmap.discovery);
-                ivMessage.setImageResource(R.mipmap.message_p);
-                ivStatus.setImageResource(R.mipmap.status);
                 flag=3;
                 break;
-          }
-              showview(flag,transaction);
+        }
+        setBaseBar(flag);
+        showview(flag,transaction);
 
     }
     /**
@@ -257,8 +227,8 @@ public class MainActivity extends JPushBaseActivity {
         }
     }
     /**
-    * 未读消息监听
-    */
+     * 未读消息监听
+     */
     private void setNoreadMessage(){
         Handler handler = new Handler();
         final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
@@ -284,6 +254,39 @@ public class MainActivity extends JPushBaseActivity {
             }
         }
     };
+
+    /**
+     *  设置底部颜色状态
+     * @param chooseType
+     */
+    private void setBaseBar(int chooseType){
+        tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
+        tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
+        tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
+        tvStatus.setTextColor(getResources().getColor(R.color.default_grey));
+        ivSchool.setImageResource(R.mipmap.school);
+        ivDiscovery.setImageResource(R.mipmap.discovery);
+        ivMessage.setImageResource(R.mipmap.message);
+        ivStatus.setImageResource(R.mipmap.status);
+        switch (chooseType){
+            case 0:
+                tvStatus.setTextColor(getResources().getColor(R.color.main_green));
+                ivStatus.setImageResource(R.mipmap.status_p);
+                break;
+            case 1:
+                tvSchool.setTextColor(getResources().getColor(R.color.main_green));
+                ivSchool.setImageResource(R.mipmap.school_p);
+                break;
+            case 2:
+                tvDiscovery.setTextColor(getResources().getColor(R.color.main_green));
+                ivDiscovery.setImageResource(R.mipmap.discovery_p);
+                break;
+            case 3:
+                tvMessage.setTextColor(getResources().getColor(R.color.main_green));
+                ivMessage.setImageResource(R.mipmap.message_p);
+                break;
+        }
+    }
 }
 
 
