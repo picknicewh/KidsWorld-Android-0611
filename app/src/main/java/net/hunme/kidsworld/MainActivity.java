@@ -1,20 +1,24 @@
 package net.hunme.kidsworld;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
+import net.hunme.baselibrary.widget.NoScrollViewPager;
 import net.hunme.discovery.DiscoveryFragement;
+import net.hunme.kidsworld.util.ConnectionChangeReceiver;
 import net.hunme.kidsworld.util.HunmeApplication;
-import net.hunme.login.util.UserAction;
+import net.hunme.kidsworld.util.MyViewPagerAdapter;
 import net.hunme.message.fragment.MessageFragement;
 import net.hunme.school.SchoolFragement;
 import net.hunme.status.StatusFragement;
@@ -40,7 +44,8 @@ import main.jpushlibrary.JPush.JPushBaseActivity;
  * 主要接口：
  */
 public class MainActivity extends JPushBaseActivity {
-    private static final String SHOWDOS = "net.hunme.message.showdos";
+    @Bind(R.id.vp_main)
+    NoScrollViewPager viewPager;
     /**
      * 通讯圆点
      */
@@ -108,47 +113,67 @@ public class MainActivity extends JPushBaseActivity {
     private int flag = 0;
 
     private List<Fragment> fragmentList;
+    /**
+     * 有无网络请求
+     */
+    ConnectionChangeReceiver myReceiver;
+
+    /**
+     *
+     */
+     public  static  boolean isconnect;
+    /**
+     *
+     */
+    public  static int count;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UserAction.isGoLogin(MainActivity.this,this);
+      //  UserAction.isGoLogin(MainActivity.this,this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        init();
+        initViewpager();
+        //初始激光推送配置信息
         initJPushConfiguration();
-        connect(userMessage.getRyId());
-        setNoreadMessage();
-
-    }
-
-    /**
-     * 初始化数据
-     */
-    private void init() {
-        statusFragement = new StatusFragement();
-        schoolFragement = new SchoolFragement();
-        discoveryFragement = new DiscoveryFragement();
-        messageFragement = new MessageFragement();
-        fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        userMessage = new UserMessage(this);
-        userId = userMessage.getTsId();
-        username = userMessage.getUserName();
-        portrait = userMessage.getHoldImgUrl();
-        fragmentList = new ArrayList<>();
-        fragmentList.add(statusFragement);
-        fragmentList.add(schoolFragement);
-        fragmentList.add(discoveryFragement);
-        fragmentList.add(messageFragement);
-        for (int i = 0; i < fragmentList.size(); i++) {
-            transaction.add(R.id.content, fragmentList.get(i));
+        //如果网络连接时，连接融云
+        if (G.isNetworkConnected(this)){
+            connect(userMessage.getRyId());
+            setNoreadMessage();
         }
-        showview(flag, transaction);
-    }
+        registerReceiver();
+        initCount();
 
+    }
+    /**
+     * 初始化viewpager
+     */
+   private void  initViewpager(){
+       userMessage = new UserMessage(this);
+       userId = userMessage.getTsId();
+       username = userMessage.getUserName();
+       portrait = userMessage.getHoldImgUrl();
+       statusFragement = new StatusFragement();
+       schoolFragement = new SchoolFragement();
+       discoveryFragement = new DiscoveryFragement();
+       messageFragement = new MessageFragement();
+       fragmentManager = getSupportFragmentManager();
+       fragmentList = new ArrayList<>();
+       fragmentList.add(statusFragement);
+       fragmentList.add(schoolFragement);
+       fragmentList.add(discoveryFragement);
+       fragmentList.add(messageFragement);
+       MyViewPagerAdapter adapter = new MyViewPagerAdapter(fragmentManager,fragmentList);
+       viewPager.setAdapter(adapter);
+       viewPager .setOffscreenPageLimit(3);
+       viewPager.setPagingEnabled(false);
+   }
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i("TAG","=================onResume===================");
+        if (G.isNetworkConnected(this)){
+            initViewpager();
+        }
         setNoreadMessage();
     }
     /**
@@ -156,42 +181,33 @@ public class MainActivity extends JPushBaseActivity {
      */
     @OnClick({R.id.ll_status, R.id.ll_school, R.id.ll_discovery, R.id.ll_message})
     public void onClick(View view) {
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
         switch (view.getId()) {
-            case R.id.ll_status:
-                flag=0;
-                break;
-            case R.id.ll_school:
-                flag=1;
-                break;
-            case R.id.ll_discovery:
-                flag = 2;
-                break;
-            case R.id.ll_message:
-                flag=3;
-                break;
+            case R.id.ll_status:flag=0;break;
+            case R.id.ll_school:flag=1;break;
+            case R.id.ll_discovery:flag=2;break;
+            case R.id.ll_message:flag=3;break;
         }
+        if (isconnect && count%2==0){
+            initViewpager();
+            connect(userMessage.getRyId());
+            count=1;
+        }
+        viewPager.setCurrentItem(flag,false);
         setBaseBar(flag);
-        showview(flag,transaction);
-
     }
     /**
-     显示隐藏界面
+     * 注册广播
      */
-    private void showview(int flag,FragmentTransaction transaction){
-        for (int i = 0; i<fragmentList.size();i++){
-            if (flag==i){
-                transaction.show(fragmentList.get(flag));
-            }else {
-
-                transaction.hide(fragmentList.get(i));
-            }
-        }
-        transaction.commit();
+    private  void registerReceiver(){
+        IntentFilter filter=new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        myReceiver=new ConnectionChangeReceiver();
+        this.registerReceiver(myReceiver, filter);
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        this.unregisterReceiver(myReceiver);
+        Log.i("TAG","=================onDestroy===================");
     }
     /**
      * 建立与融云服务器的连接
@@ -282,26 +298,20 @@ public class MainActivity extends JPushBaseActivity {
                 break;
         }
     }
-
     /**
-     * 通过判断这个fragment对象，如果属于我们的FragmentTabX类并且该类还未被实例化过，
-     * 则将Activity的成员变量mFragmentTabX指向该fragment对象，
-     * 这样就可以在原来的fragment对象上操作add/show/hide，因此不会有重叠现象
+     * 如果count的值为0时表示一进来就是断网的，此时点击tab重新连接加载viewpager
+     * 如果count的值是为1时表示有网络状态，一进来就已经加载刷新数据了，不需要重新加载
+     * 如果count的值为2时表示断了一次网络再次连接网络，此时要重新加载数据
+     * 初始化是否有网络的值，如果进应用程序时时断网的设置此时的count值为-1(因为如果断网的话监听到断网，此时
+     * count会加1)
      */
-    @Override
-    public void onAttachFragment(Fragment fragment) {
-        super.onAttachFragment(fragment);
-        if (statusFragement == null && fragment instanceof StatusFragement) {
-            statusFragement = (StatusFragement) fragment;
-        } else if (schoolFragement == null && fragment instanceof SchoolFragement) {
-            schoolFragement = (SchoolFragement) fragment;
-        } else if (discoveryFragement == null && fragment instanceof SchoolFragement) {
-            schoolFragement = (SchoolFragement) fragment;
-        } else if (messageFragement == null && fragment instanceof MessageFragement) {
-            messageFragement = (MessageFragement) fragment;
+    private void  initCount(){
+        if (G.isNetworkConnected(this)){
+           count=1;
+        }else {
+            count=-1;
         }
     }
-
 }
 
 
