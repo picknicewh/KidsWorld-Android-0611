@@ -38,6 +38,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     private MyCount myCount;
     private boolean isSubmitDate;
     private String Sign;
+    private String value;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,20 +103,20 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
                     G.showToast(UpdateMessageActivity.this,"手机号码不符合规范");
                     return;
                 }
-                isSubmitDate=true;
                 getValidateCode(type,phoneNumber);
-                et_heckNumber.setVisibility(View.VISIBLE);
-                et_password.setVisibility(View.GONE);
             }else{
                 String code=et_heckNumber.getText().toString().trim();
-                String value=et_password.getText().toString().trim();
+                 value=et_password.getText().toString().trim();
                 if(G.isEmteny(code)||G.isEmteny(value)){
                     G.showToast(this,"提交的数据不能为空");
                     return;
                 }
-                updateMessage(type,Sign,code,value);
+                if(type.equals("1")){
+                    updatePhone(Sign,code,value);
+                }else{
+                    updatePassword(Sign,code,value);
+                }
             }
-
         }
     }
 
@@ -133,27 +134,33 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
 
     /**
      * 更新信息
-     * @param type 类型 1是更新手机号 2是更新密码
      * @param sign 密钥 有服务端提供来源请求的验证码接口
      * @param code 验证码
      * @param value 更新的值
      */
-    private void updateMessage(String type,String sign,String code,String value){
-        String key="";
-        String url="";
-        if(type.equals("1")){
-            key="phone";
-            url=UPDATEPHONE;
-        } else{
-            key="password";
-            url=UPDATEPASSWORD;
-        }
+    private void updatePassword(String sign, String code, String value){
         Map<String,Object>map=new HashMap<>();
-        map.put(key,value);
-        map.put("validateCode",code);
+        map.put("password",value);
+        map.put("code",code);
         map.put("sign",sign);
         Type mtype=new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(mtype,url,map,this);
+        OkHttps.sendPost(mtype,UPDATEPASSWORD,map,this);
+    }
+
+    /**
+     *
+     * @param sign 密钥 有服务端提供来源请求的验证码接口
+     * @param code 验证码
+     * @param newPhone 新号码
+     */
+    private void updatePhone(String sign,String code,String newPhone){
+        Map<String,Object>map=new HashMap<>();
+        map.put("newPhone",newPhone);
+        map.put("code",code);
+        map.put("sign",sign);
+        map.put("phone",um.getLoginName());
+        Type mtype=new TypeToken<Result<String>>(){}.getType();
+        OkHttps.sendPost(mtype,UPDATEPHONE,map,this);
     }
 
     @Override
@@ -161,15 +168,25 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
         Result<String>result= (Result<String>) date;
         if(VALIDATECODE.equals(uri)){
             tv_time.setEnabled(true);
-            Sign=result.getSign();
             //验证码
+            Sign=result.getSign();
+            if(type.equals("1")&&!isSubmitDate){
+                isSubmitDate=true;
+                et_heckNumber.setVisibility(View.VISIBLE);
+                et_password.setVisibility(View.GONE);
+            }
             b_finish.setEnabled(true);
+            G.showToast(this,"验证码已发送你的手机请注意查收！");
         }else if(UPDATEPHONE.equals(uri)){
             //修改手机号码
             G.showToast(this,"手机号码修改成功");
+            um.setLoginName(value);
+            finish();
         }else if(UPDATEPASSWORD.equals(uri)){
             //修改密码
             G.showToast(this,"密码修改成功");
+            um.setPassword(value);
+            finish();
         }
     }
 

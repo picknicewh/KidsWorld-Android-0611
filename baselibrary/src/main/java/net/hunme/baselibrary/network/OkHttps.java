@@ -41,7 +41,7 @@ public class OkHttps<T> {
     private static OkHttpUtils httpUtils;
     public static PostRequest postRequest;
     //ServerConfigManager.SERVER_IP;
-    private static boolean isUnSuccess; //服务端返回状态
+    private static boolean isSuccess; //服务端返回状态
     private static String uri_host=ServerConfigManager.SERVER_IP;
     private static final String ERRORPROMPT="与服务器连接异常，请检查网络后重试！";
     private static OkHttpUtils getInstance() {
@@ -159,11 +159,12 @@ public class OkHttps<T> {
                         String value=response.body().string();
                         G.log(value+"----------");
                         JSONObject jsonObject = new JSONObject(value);
-                        isUnSuccess ="1".equals(jsonObject.getString("code"));
-                        if(isUnSuccess)
-                            return new Gson().fromJson(value,new TypeToken<Result<String>>(){}.getType());
-                        else
+                        isSuccess ="0".equals(jsonObject.getString("code"));
+                        if(isSuccess)
                             return new Gson().fromJson(value,type);
+                        else
+                            return new Gson().fromJson(value,new TypeToken<Result<String>>(){}.getType());
+
                     }
 
                     @Override
@@ -174,10 +175,10 @@ public class OkHttps<T> {
                         //验签
 //                            boolean isSuccess=EncryptUtil.verify(map,result.getMsec(),result.getSign());
 //                            if(isSuccess)
-                        if(isUnSuccess)
-                            okHttpListener.onError(uri,((Result<String>)o).getData());
-                        else
+                        if(isSuccess)
                             okHttpListener.onSuccess(uri,o);
+                        else
+                            okHttpListener.onError(uri,((Result<String>)o).getData());
 //                            else
 //                               okHttpListener.onError(uri,"非法访问");
                     }
@@ -216,11 +217,12 @@ public class OkHttps<T> {
         while (iterator.hasNext()) {
             Map.Entry<String, Object> entry = iterator.next();
             params.put(entry.getKey(), entry.getValue().toString());
+            G.log(entry.getKey()+"-----请求参数-------"+entry.getValue());
         }
 //        params.put("msec",msec);
 //        params.put("sign",sign);
-        G.log("-----sign---------"+sign);
-        G.log("-----msec---------"+msec);
+//        G.log("-----sign---------"+sign);
+//        G.log("-----msec---------"+msec);
         return  params;
     }
 
