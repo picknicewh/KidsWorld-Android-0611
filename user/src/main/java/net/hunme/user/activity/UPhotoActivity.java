@@ -149,17 +149,13 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
     public void onSuccess(String uri, Object date) {
         if(MYFlICKR.equals(uri)){
             Result<List<PhotoVo>> result= (Result<List<PhotoVo>>) date;
-            if(result.isSuccess()){
-                photoList=result.getData();
-                adapter.notifyDataSetChanged();
-            }else{
-                G.showToast(this,"数据获取失败，请稍后再试！");
-            }
+            photoList=result.getData();
+            adapter.notifyDataSetChanged();
         }
     }
 
     @Override
     public void onError(String uri, String error) {
-        G.showToast(this,"数据获取失败，请检查网络再试！");
+        G.showToast(this,error);
     }
 }

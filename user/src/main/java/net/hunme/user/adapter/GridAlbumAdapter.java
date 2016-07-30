@@ -1,22 +1,19 @@
 package net.hunme.user.adapter;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.pizidea.imagepicker.ImgLoader;
-import com.pizidea.imagepicker.UilImgLoader;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
+import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.util.G;
-import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.user.R;
 
 import java.util.List;
-
 
 
 /**
@@ -32,11 +29,9 @@ import java.util.List;
 public class GridAlbumAdapter extends BaseAdapter {
     private List<String> imageItems;
     private Context context;
-    private ImgLoader presenter;
     public GridAlbumAdapter(List<String> imageItems, Context context) {
         this.imageItems = imageItems;
         this.context = context;
-        presenter = new UilImgLoader();
     }
 
     @Override
@@ -44,7 +39,7 @@ public class GridAlbumAdapter extends BaseAdapter {
         if(imageItems.size()==9){
             return  9;
         }
-        return (imageItems.size()+1);
+        return imageItems.size()+1;
     }
 
     @Override
@@ -65,17 +60,18 @@ public class GridAlbumAdapter extends BaseAdapter {
             new ViewHolder(convertView);
         }
         holder = (ViewHolder) convertView.getTag();
-
-        if (position == imageItems.size()) {
-            holder.image.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_unfocused));
+        G.log(position+"----------------");
+        if (position < imageItems.size()) {
+            holder.clv_delete.setVisibility(View.VISIBLE);
+            getBitmapData(holder.image,imageItems.get(position));
+        } else {
+            ImageLoader.getInstance().displayImage("drawable://" + R.drawable.ic_unfocused,
+                    holder.image);
             holder.clv_delete.setVisibility(View.GONE);
             holder.image.setVisibility(View.VISIBLE);
             if (position >= 9) {
                 holder.image.setVisibility(View.GONE);
             }
-        } else {
-            holder.clv_delete.setVisibility(View.VISIBLE);
-            getBitmapData(holder.image,imageItems.get(position));
         }
 
         holder.clv_delete.setOnClickListener(new View.OnClickListener() {
@@ -85,22 +81,24 @@ public class GridAlbumAdapter extends BaseAdapter {
                 notifyDataSetChanged();
             }
         });
+
         return convertView;
     }
 
-    public class ViewHolder {
+    private  class ViewHolder {
         public ImageView image;
-        public CircleImageView clv_delete;
+        public ImageView clv_delete;
 
         public ViewHolder(View view) {
             image = (ImageView) view.findViewById(R.id.item_grida_image);
-            clv_delete= (CircleImageView) view.findViewById(R.id.clv_delete);
+            clv_delete= (ImageView) view.findViewById(R.id.clv_delete);
+            clv_delete.setImageResource(R.mipmap.ic_delete_test);
             view.setTag(this);
         }
     }
 
     private void getBitmapData(ImageView imageView ,String imagePath){
-        presenter.onPresentImage(imageView,imagePath,G.px2dp(context,800));
+        ImageCache.imageLoader("file://"+imagePath,imageView);
     }
 
 }

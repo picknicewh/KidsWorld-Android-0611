@@ -66,18 +66,13 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onSuccess(String uri, Object date) {
         if(FEEDBACK.equals(uri)){
-            Result<String>result= (Result<String>) date;
-            if (result.isSuccess()){
-                G.showToast(this,"数据提交成功，感谢亲的反馈！");
-                finish();
-            }else {
-                G.showToast(this,"数据提交失败，请稍后提交！");
-            }
+            G.showToast(this,"数据提交成功，感谢亲的反馈！");
+            finish();
         }
     }
 
     @Override
     public void onError(String uri, String error) {
-        G.showToast(this,"数据提交失败，请检查网络！");
+        G.showToast(this,error);
     }
 }

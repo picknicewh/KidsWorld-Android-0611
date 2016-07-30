@@ -1,5 +1,6 @@
 package net.hunme.user.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import net.hunme.baselibrary.util.SystemInfomDb;
 import net.hunme.baselibrary.util.SystemInfomDbHelp;
 import net.hunme.user.R;
 import net.hunme.user.adapter.SystemInfoAdapter;
+import net.hunme.user.util.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,9 @@ public class SystemInfoActivity extends BaseActivity {
      * 系统消息列表数据
      */
     private List<SystemInformVo> systemInformVoList;
+    private final String[] PERMISSIONS = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +61,7 @@ public class SystemInfoActivity extends BaseActivity {
      * 初始化数据库数据
      */
     private void initdata(){
+        PermissionUtils.getPermission(this,PERMISSIONS);
         infoDb = new SystemInfomDb(this);
         dbHelp = SystemInfomDbHelp.getinstance();
         //测试数据

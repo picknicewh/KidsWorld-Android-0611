@@ -211,23 +211,15 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     public void onSuccess(String uri, Object date) {
         Result<String> result= (Result<String>) date;
         if(SETSIGN.equals(uri)){
-            if(result.isSuccess()){
-                um.setUserSign(sign);
-                tv_sign.setText(um.getUserSign());
-            }else{
-                G.showToast(this,"数据提交失败，请重试！");
-            }
+            um.setUserSign(sign);
+            tv_sign.setText(um.getUserSign());
         }else if(AVATAR.equals(uri)){
-            if(result.isSuccess()){
-                G.showToast(this,"头像修改成功");
-            }else{
-                G.showToast(this,"数据提交失败，请重试！");
-            }
+            G.showToast(this,"头像修改成功");
         }
     }
 
     @Override
     public void onError(String uri, String error) {
-        G.showToast(this,"数据提交失败，请检查网络后再试！");
+        G.showToast(this,error);
     }
 }

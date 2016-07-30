@@ -202,7 +202,6 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
                     //退出账号
                     UserMessage.getInstance(USettingActivity.this).clean();
                     Intent intent = new Intent(USettingActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
                 } else {
