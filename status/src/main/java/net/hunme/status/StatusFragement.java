@@ -90,7 +90,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     }
 
     private void  setWebView(){
-        webView.addJavascriptInterface(this, "change");  //设置本地调用对象及其接口
+        webView.addJavascriptInterface(this, "choose_class");  //设置本地调用对象及其接口
         webView.setWebViewClient(new MWebViewClient(webView,getActivity()));
         webView.setWebChromeClient(new MWebChromeClient(getActivity(),ll_loading,webView));
         webView.loadUrl(url);

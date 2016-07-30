@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -16,6 +17,7 @@ import android.webkit.WebView;
  * 主要接口：
  */
 public class MyViewView extends WebView {
+    private static final String APP_CACHE_DIRNAME = "/webcache"; // web缓存目录
     private Context context;
 
     public MyViewView(Context context) {
@@ -40,24 +42,23 @@ public class MyViewView extends WebView {
      * 交互配置
      * @param
      */
-    private  void interactive(){
+    public   void interactive(){
         WebSettings webSettings = getSettings();//支持插件
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setUseWideViewPort(true);
         webSettings.setDefaultTextEncodingName("utf-8"); //设置编码
         webSettings.setJavaScriptEnabled(true); //支持js
         setBackgroundColor(Color.argb(0, 0, 0, 0)); //设置背景颜色 透明
-        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSettings.setUseWideViewPort(true);
        // setWebViewClient(new MWebViewClient(this,context));
-        initWebView();
+        initWebView(webSettings);
     }
     /**
      * 缓存设置
      */
-    private void initWebView() {
-        WebSettings webSettings =getSettings();
-        webSettings.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小
+    public void initWebView(WebSettings webSettings) {
+        Log.i("TTTTT","sssssssssssssssssssssssssssss");
+       webSettings.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小
         webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);  //设置 缓存模式
         webSettings.setDomStorageEnabled(true);  // 开启 DOM storage API 功能
@@ -65,6 +66,6 @@ public class MyViewView extends WebView {
         String appCacheDir = context.getDir("cache", Context.MODE_PRIVATE).getPath();//缓存的地storage API 功能址
         webSettings.setDatabasePath(appCacheDir); //设置数据库缓存路径
         webSettings.setAppCachePath(appCacheDir);   //设置  Application Caches 缓存目录
-        webSettings.setAppCacheEnabled(true);  //开启 Application Caches 功能
+        webSettings.setAppCacheEnabled(true);  //开启 Application Caches 功能*/
     }
 }

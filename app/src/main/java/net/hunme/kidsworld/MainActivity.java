@@ -171,9 +171,6 @@ public class MainActivity extends JPushBaseActivity {
     protected void onResume() {
         super.onResume();
         Log.i("TAG","=================onResume===================");
-        if (G.isNetworkConnected(this)){
-            initViewpager();
-        }
         setNoreadMessage();
     }
     /**
@@ -196,7 +193,7 @@ public class MainActivity extends JPushBaseActivity {
         setBaseBar(flag);
     }
     /**
-     * 注册广播
+     * 注册监听网络广播广播
      */
     private  void registerReceiver(){
         IntentFilter filter=new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);

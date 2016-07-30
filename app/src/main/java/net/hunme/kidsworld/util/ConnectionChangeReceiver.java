@@ -7,7 +7,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import net.hunme.baselibrary.util.G;
 import net.hunme.kidsworld.MainActivity;
 
 /**
@@ -25,7 +24,6 @@ public class ConnectionChangeReceiver extends BroadcastReceiver {
         ConnectivityManager connectivityManager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mobNetInfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         NetworkInfo  wifiNetInfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
         if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
             MainActivity.isconnect = false;
             //断网
@@ -33,7 +31,6 @@ public class ConnectionChangeReceiver extends BroadcastReceiver {
         }else {
             //连上网络
             MainActivity.isconnect = true;
-            //改变背景或者 处理网络的全局变量
         }
         Log.i("TAG",+MainActivity.count+"===============");
     }
