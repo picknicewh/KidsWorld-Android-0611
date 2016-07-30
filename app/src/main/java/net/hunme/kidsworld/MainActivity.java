@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.NoScrollViewPager;
@@ -19,6 +20,7 @@ import net.hunme.discovery.DiscoveryFragement;
 import net.hunme.kidsworld.util.ConnectionChangeReceiver;
 import net.hunme.kidsworld.util.HunmeApplication;
 import net.hunme.kidsworld.util.MyViewPagerAdapter;
+import net.hunme.login.util.UserAction;
 import net.hunme.message.fragment.MessageFragement;
 import net.hunme.school.SchoolFragement;
 import net.hunme.status.StatusFragement;
@@ -129,7 +131,8 @@ public class MainActivity extends JPushBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  UserAction.isGoLogin(MainActivity.this,this);
+        UserAction.isGoLogin(MainActivity.this,this);
+        BaseLibrary.addActivity(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initViewpager();

@@ -3,14 +3,18 @@ package net.hunme.baselibrary.network;
 import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
 import com.lzy.okhttputils.callback.AbsCallback;
 import com.lzy.okhttputils.model.HttpParams;
 import com.lzy.okhttputils.request.PostRequest;
 
+import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.util.EncryptUtil;
 import net.hunme.baselibrary.util.G;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -37,7 +41,9 @@ public class OkHttps<T> {
     private static OkHttpUtils httpUtils;
     public static PostRequest postRequest;
     //ServerConfigManager.SERVER_IP;
+    private static boolean isUnSuccess; //服务端返回状态
     private static String uri_host=ServerConfigManager.SERVER_IP;
+    private static final String ERRORPROMPT="与服务器连接异常，请检查网络后重试！";
     private static OkHttpUtils getInstance() {
         if(null==httpUtils){
             OkHttpUtils.getInstance().getOkHttpClient();
@@ -111,7 +117,7 @@ public class OkHttps<T> {
      * @param cacheKey  缓存名
      */
     public static void sendPost(Type type,final String uri, Map<String,Object> map,
-                          final OkHttpListener okHttpListener, int cacheMode, String cacheKey) {
+                                final OkHttpListener okHttpListener, int cacheMode, String cacheKey) {
         if(null==uri||okHttpListener==null) {
             G.log("参数或者访问地址为空");
             return;
@@ -138,7 +144,6 @@ public class OkHttps<T> {
                 mode=CacheMode.FIRST_CACHE_THEN_REQUEST;
                 break;
         }
-
         postRequest=getInstance()
                 .post(uri_host+uri)
                 .cacheMode(mode)
@@ -147,43 +152,48 @@ public class OkHttps<T> {
     }
 
     private static void doInternet(final Type type, final String uri, HttpParams params, final OkHttpListener okHttpListener){
-            postRequest.params(params)
-                    .execute(new AbsCallback<Object>(){
-                        @Override
-                        public Object parseNetworkResponse(Response response) throws Exception {
-                            String value=response.body().string();
-                            G.log(value+"----------");
+        postRequest.params(params)
+                .execute(new AbsCallback<Object>(){
+                    @Override
+                    public Object parseNetworkResponse(Response response) throws Exception {
+                        String value=response.body().string();
+                        G.log(value+"----------");
+                        JSONObject jsonObject = new JSONObject(value);
+                        isUnSuccess ="1".equals(jsonObject.getString("code"));
+                        if(isUnSuccess)
+                            return new Gson().fromJson(value,new TypeToken<Result<String>>(){}.getType());
+                        else
                             return new Gson().fromJson(value,type);
-                        }
+                    }
 
-                        @Override
-                        public void onResponse(boolean isFromCache, Object o, Request request, @Nullable Response response) {
+                    @Override
+                    public void onResponse(boolean isFromCache, Object o, Request request, @Nullable Response response) {
 //                            Result result= (Result) o;
 //                            Map<String,Object>map=new HashMap<>();
 //                            map.put("data",result.getData());
-                            //验签
+                        //验签
 //                            boolean isSuccess=EncryptUtil.verify(map,result.getMsec(),result.getSign());
 //                            if(isSuccess)
-                                okHttpListener.onSuccess(uri,o);
+                        if(isUnSuccess)
+                            okHttpListener.onError(uri,((Result<String>)o).getData());
+                        else
+                            okHttpListener.onSuccess(uri,o);
 //                            else
 //                               okHttpListener.onError(uri,"非法访问");
-                        }
+                    }
 
-                        @Override
-                        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                            super.onError(isFromCache, call, response, e);
-                            if(null==e)
-                                okHttpListener.onError(uri,response.networkResponse().toString());
-                            else
-                                okHttpListener.onError(uri,e.toString());
-                        }
+                    @Override
+                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                        super.onError(isFromCache, call, response, e);
+                        okHttpListener.onError(uri,ERRORPROMPT);
+                    }
 
-                        @Override
-                        public void upProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
-                            super.upProgress(currentSize, totalSize, progress, networkSpeed);
-                            G.log("--------------"+networkSpeed+"---------------"+totalSize);
-                        }
-                    });
+                    @Override
+                    public void upProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
+                        super.upProgress(currentSize, totalSize, progress, networkSpeed);
+                        G.log("--------------"+networkSpeed+"---------------"+totalSize);
+                    }
+                });
     }
 
     /**

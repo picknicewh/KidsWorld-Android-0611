@@ -82,32 +82,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onSuccess(String uri, Object date) {
         if(APPLOGIN.equals(uri)){
             b_login.setEnabled(true);
+
             Result<List<CharacterSeleteVo>> result= (Result<List<CharacterSeleteVo>>) date;
             List<CharacterSeleteVo> seleteList=result.getData();
             //将用户信息json串保存起来，提供用户多个身份选择
             UserMessage.getInstance(this).setUserMessagejsonCache(new Gson().toJson(seleteList));
-            if(result.isSuccess()){
 //                if(result.getData().size()>1){
-              startActivity(new Intent(this,UserChooseActivity.class));
-              UserAction.saveLoginMessage(this,username,password);
+            startActivity(new Intent(this,UserChooseActivity.class));
+            UserAction.saveLoginMessage(this,username,password);
 //                }else{
 //                    CharacterSeleteVo data=seleteList.get(0);
 //                    UserAction.saveUserMessage(this,username,data.getName(),
 //                            data.getImg(),data.getClassName(),data.getSchoolName(),
 //                            data.getRyId(),data.getTsId(),data.getType());
 //                }
-                finish();
-            }else{
-                G.showToast(this,"登录失败，你输入的账号或者密码不符");
-            }
+            finish();
+
         }
     }
 
     @Override
     public void onError(String uri, String error) {
-        G.log(error);
         b_login.setEnabled(true);
-        G.showToast(this,"登录失败，请检查您的网络");
+        G.showToast(this,error);
     }
 
    public boolean dispatchKeyEvent(KeyEvent event) {

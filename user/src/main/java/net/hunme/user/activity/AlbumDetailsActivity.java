@@ -79,18 +79,14 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
     public void onSuccess(String uri, Object date) {
         if(FILCKR.equals(uri)){
             Result<List<String>> result= (Result<List<String>>) date;
-            if(result.isSuccess()){
-                itemList= result.getData();
-                adapter.notifyDataSetChanged();
-            }else {
-                G.showToast(this,"数据获取失败，请稍后再试！");
-            }
+            itemList= result.getData();
+            adapter.notifyDataSetChanged();
         }
     }
 
     @Override
     public void onError(String uri, String error) {
-        G.showToast(this,"数据获取失败，请检查网络再试！");
+        G.showToast(this,error);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -6,10 +6,9 @@
     android:orientation="vertical"
     tools:context="net.hunme.user.activity.UploadPhotoActivity">
     <GridView
-        android:layout_alignParentBottom="true"
         android:id="@+id/gv_photo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="@dimen/space"
         android:horizontalSpacing="@dimen/space_x0.5"
         android:verticalSpacing="@dimen/space_x0.5"

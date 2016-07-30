@@ -91,7 +91,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.tv_time){
-            getValidateCode(type,um.getLoginName());
+            getValidateCode(type,"15158835049");
             tv_time.setEnabled(false);
             tv_type.setText("我们已经发送短信验证码到你的手机");
             myCount.start();
@@ -103,10 +103,9 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
                     return;
                 }
                 isSubmitDate=true;
-//                getValidateCode(type,phoneNumber);
+                getValidateCode(type,phoneNumber);
                 et_heckNumber.setVisibility(View.VISIBLE);
                 et_password.setVisibility(View.GONE);
-                G.log("----我被点击了----1------");
             }else{
                 String code=et_heckNumber.getText().toString().trim();
                 String value=et_password.getText().toString().trim();
@@ -115,7 +114,6 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
                     return;
                 }
                 updateMessage(type,Sign,code,value);
-                G.log("----我被点击了-----2-----");
             }
 
         }
@@ -127,7 +125,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
      */
     private void getValidateCode(String type,String phoneNumber){
         Map<String,Object>map=new HashMap<>();
-        map.put("phone",um.getLoginName());
+        map.put("phone",phoneNumber);
         map.put("type",type);
         Type mtype=new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(mtype,VALIDATECODE,map,this);
@@ -163,38 +161,21 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
         Result<String>result= (Result<String>) date;
         if(VALIDATECODE.equals(uri)){
             tv_time.setEnabled(true);
-            if(result.isSuccess()){
-                Sign=result.getSign();
-            }else{
-                G.showToast(this,"验证码获取失败，请稍后再试！");
-            }
+            Sign=result.getSign();
             //验证码
-//            b_finish.setEnabled(true);
+            b_finish.setEnabled(true);
         }else if(UPDATEPHONE.equals(uri)){
             //修改手机号码
-            if(result.isSuccess()){
-                G.showToast(this,"手机号码修改成功");
-            }
+            G.showToast(this,"手机号码修改成功");
         }else if(UPDATEPASSWORD.equals(uri)){
             //修改密码
-            if(result.isSuccess()){
-                G.showToast(this,"密码修改成功");
-            }
+            G.showToast(this,"密码修改成功");
         }
-
     }
 
     @Override
     public void onError(String uri, String error) {
-        if(VALIDATECODE.equals(uri)){
-            tv_time.setEnabled(true);
-            G.showToast(this,"验证码获取失败，请检查网络重试！");
-            //验证码
-        }else if(UPDATEPHONE.equals(uri)){
-            //修改手机号码
-        }else if(UPDATEPASSWORD.equals(uri)){
-            //修改密码
-        }
+        G.showToast(this,error);
     }
 
     /**

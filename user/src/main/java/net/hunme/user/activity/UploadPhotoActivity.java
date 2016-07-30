@@ -144,5 +144,6 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
                 }
             }
         });
+        return;
     }
 }
