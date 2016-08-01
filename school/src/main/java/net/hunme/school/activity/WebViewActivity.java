@@ -135,7 +135,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
             Log.i("TAGGG","sdaasasasa");
             if (url.contains(SchoolFragement.INFORM)){
                 Log.i("TAGGG","sdaasasasa");
-                Intent intent = new Intent(this,PublishInformActivity.class);
+                Intent intent = new Intent(this,PublishActivity.class);
                 startActivity(intent);
             }else if (url.contains(SchoolFragement.LEAVE)){
                 Intent intent = new Intent(this,LeaveAskActivity.class);

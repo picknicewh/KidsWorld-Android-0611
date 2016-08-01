@@ -1,4 +1,4 @@
-package net.hunme.user.util;
+package net.hunme.baselibrary.util;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,11 +14,11 @@ import android.database.sqlite.SQLiteOpenHelper;
  * 主要接口：
  * ================================================
  */
-public class SystemInfoDb extends SQLiteOpenHelper {
-    private static final String DB_NAME = "systeminfo.db"; //数据库名称
+public class PublishDb extends SQLiteOpenHelper {
+    private static final String DB_NAME = "publish.db"; //数据库名称
     private static final int version = 1; //数据库版本
-    private static final String TABLENAME = "user";//表名
-    public SystemInfoDb(Context context) {
+    private static final String TABLENAME = "publish";//表名
+    public PublishDb(Context context) {
         super(context, DB_NAME, null, version);
     }
 
@@ -27,7 +27,7 @@ public class SystemInfoDb extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql="create table " +TABLENAME+
                 " (uid integer primary key autoincrement," +
-                "usertype varchar(50))";
+                "messageid varchar(50))";
         db.execSQL(sql);
     }
 

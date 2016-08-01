@@ -14,7 +14,6 @@
         <activity android:name=".activity.USettingActivity" />
         <activity android:name=".activity.UPhotoActivity" />
         <activity android:name=".activity.UploadPhotoActivity" />
-        <activity android:name=".activity.AlbumActivity" />
         <activity android:name=".activity.AlbumSelectActivity" />
         <activity android:name=".activity.UDynamicsActivity" />
         <activity android:name=".activity.UCollectionActivity" />
