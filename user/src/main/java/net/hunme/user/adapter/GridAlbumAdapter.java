@@ -92,7 +92,7 @@ public class GridAlbumAdapter extends BaseAdapter {
         public ViewHolder(View view) {
             image = (ImageView) view.findViewById(R.id.item_grida_image);
             clv_delete= (ImageView) view.findViewById(R.id.clv_delete);
-            clv_delete.setImageResource(R.mipmap.ic_delete);
+            clv_delete.setImageResource(R.mipmap.ic_delete_photo);
             view.setTag(this);
         }
     }
