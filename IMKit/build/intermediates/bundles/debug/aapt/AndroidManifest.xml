@@ -44,6 +44,19 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <intent-filter>
+                <data
+                    android:host="*"
+                    android:scheme="http" />
+                <data
+                    android:host="*"
+                    android:scheme="https" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
         </activity>
         <activity
             android:name="io.rong.imkit.widget.provider.TakingPicturesActivity"
@@ -52,6 +65,10 @@
         <activity
             android:name="io.rong.imkit.activity.PicturePagerActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name="io.rong.imkit.mention.MemberMentionedActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <!-- 必选： SDK 核心功能 -->
         <service
@@ -96,7 +113,7 @@
         <!-- imlib config begin -->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="cpj2xarljlktn" />
+            android:value="n19jmcy59f1q9" />
 
         <service
             android:name="io.rong.imlib.ipc.RongService"

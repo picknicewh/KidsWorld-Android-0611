@@ -19,6 +19,7 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.adapter.ContractAdapter;
 import net.hunme.message.bean.GroupJson;
@@ -134,7 +135,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         groupMemberBeanList = new ArrayList<>();
         GroupMemberBean groupMemberBean1 = new GroupMemberBean();
         groupMemberBean1.setName("王小二");
-        groupMemberBean1.setUserid("1001");
+        groupMemberBean1.setUserid("a1254acba95840a59f30b0d9b82c51ea");
         groupMemberBeanList.add(groupMemberBean1);
         GroupMemberBean groupMemberBean2 = new GroupMemberBean();
         groupMemberBean2.setName("刘德华");
@@ -181,7 +182,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      */
     private  void getfriendinfor(String title){
         Map<String,Object> params = new HashMap<>();
-        params.put("tsId","1001");
+        params.put("tsId",UserMessage.getInstance(this).getTsId());
         //1=群，2=老师，3=家长
         if (title.equals("教师")){
             params.put("type","2");
@@ -208,7 +209,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
             public void onTouchingLetterChanged(String s) {
                 // 该字母首次出现的位置
                 int position = adapter.getPositionForSection(s.charAt(0));
-                Log.i("TAVGF",position+"");
+            //    Log.i("TAVGF",position+"");
                 if (position != -1) {
                     lv_parent.setSelection(position);
                 }
@@ -220,7 +221,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 if (RongIM.getInstance()!=null){
-                    Log.i("TDDAG", SourceDateList.get(position).getUserid());
+                 //   Log.i("TDDAG", SourceDateList.get(position).getUserid());
                     RongIM.getInstance().startConversation(
                             ParentActivity.this, Conversation.ConversationType.PRIVATE,
                            SourceDateList.get(position).getUserid(),SourceDateList.get(position).getName());

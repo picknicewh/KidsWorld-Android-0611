@@ -4,12 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/7/28
  * 名称：
  * 版本说明：
@@ -17,7 +16,6 @@ import android.webkit.WebView;
  * 主要接口：
  */
 public class MyViewView extends WebView {
-    private static final String APP_CACHE_DIRNAME = "/webcache"; // web缓存目录
     private Context context;
 
     public MyViewView(Context context) {
@@ -57,8 +55,7 @@ public class MyViewView extends WebView {
      * 缓存设置
      */
     public void initWebView(WebSettings webSettings) {
-        Log.i("TTTTT","sssssssssssssssssssssssssssss");
-       webSettings.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小
+        webSettings.setAppCacheMaxSize(1024*1024*8);//设置缓冲大小
         webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);  //设置 缓存模式
         webSettings.setDomStorageEnabled(true);  // 开启 DOM storage API 功能
@@ -67,5 +64,7 @@ public class MyViewView extends WebView {
         webSettings.setDatabasePath(appCacheDir); //设置数据库缓存路径
         webSettings.setAppCachePath(appCacheDir);   //设置  Application Caches 缓存目录
         webSettings.setAppCacheEnabled(true);  //开启 Application Caches 功能*/
+        webSettings.setAllowFileAccess(true);
+        webSettings.setAppCacheEnabled(true);
     }
 }

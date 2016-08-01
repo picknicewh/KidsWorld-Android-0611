@@ -185,6 +185,7 @@ public class OkHttps<T> {
                     @Override
                     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                         super.onError(isFromCache, call, response, e);
+
                         okHttpListener.onError(uri,ERRORPROMPT);
                     }
 

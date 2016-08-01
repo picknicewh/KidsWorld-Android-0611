@@ -139,8 +139,11 @@ public class MainActivity extends JPushBaseActivity {
         //初始激光推送配置信息
         initJPushConfiguration();
         //如果网络连接时，连接融云
+        //:
+        Log.i("TAGDDG",userMessage.getRyId());
         if (G.isNetworkConnected(this)){
-            connect(userMessage.getRyId());
+            Log.i("TAGG",userMessage.getRyId());
+            connect(UserMessage.getInstance(this).getRyId());
             setNoreadMessage();
         }
         registerReceiver();
@@ -189,6 +192,7 @@ public class MainActivity extends JPushBaseActivity {
         }
         if (isconnect && count%2==0){
             initViewpager();
+            Log.i("EWRFEW",(userMessage.getRyId()));
             connect(userMessage.getRyId());
             count=1;
         }
@@ -220,7 +224,7 @@ public class MainActivity extends JPushBaseActivity {
 
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
                 @Override
-                public void onTokenIncorrect() {Log.d("LoginActivity", "--onTokenIncorrect");}
+                public void onTokenIncorrect() {Log.i("LoginActivity", "--onTokenIncorrect");}
                 /**
                  * 连接融云成功
                  * @param userid 当前 token
@@ -228,12 +232,13 @@ public class MainActivity extends JPushBaseActivity {
                 @Override
                 public void onSuccess(String userid) {
                     if (RongIM.getInstance() != null) {
+
                         RongIM.getInstance().setCurrentUserInfo(new UserInfo(userid, username, Uri.parse(portrait)));
                         RongIM.getInstance().setMessageAttachedUserInfo(true);
                     }
                 }
                 @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {Log.d("LoginActivity", "--onError" + errorCode);}
+                public void onError(RongIMClient.ErrorCode errorCode) {Log.i("LoginActivity", "--onError" + errorCode);}
             });
         }
     }

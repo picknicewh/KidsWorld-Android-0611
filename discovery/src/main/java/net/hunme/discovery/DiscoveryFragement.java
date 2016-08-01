@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
-import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MWebChromeClient;
 import net.hunme.baselibrary.util.MWebViewClient;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
@@ -32,7 +30,7 @@ import net.hunme.baselibrary.widget.MyViewView;
  */
 public class DiscoveryFragement extends BaseFragement implements View.OnClickListener{
 
-    private MyViewView webView;
+    private   MyViewView webView;
     /**
      * 左边图片
      */
@@ -54,11 +52,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      */
     private WebCommonPageFrom from;
 
-    /**
-     * 加载动画
-     */
-    private LinearLayout ll_discovery;
-    private  static   final String url = "http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/paradiseHome";
+   private  static   final String url = "http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/paradiseHome";
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,7 +60,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         init(view);
         return view;
     }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -78,7 +71,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                    // webView.goBack();   //这方法没用的哦
                     getActivity().getSupportFragmentManager().popBackStack("gifPageTwoFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
                    return true;
                 }
                 return false;
@@ -91,12 +83,11 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         iv_right = $(v,R.id.iv_dright);
         webView = $(v,R.id.wv_discovery);
         ll_loading = $(v,R.id.ll_loading);
-        ll_discovery = $(v,R.id.ll_discovery);
+
         from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,getActivity());
         setWebView();
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
-       ll_discovery.setOnClickListener(this);
     }
     private void  setWebView(){
         webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
@@ -124,11 +115,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                 webView.loadUrl("javascript:goSearchInf_Origin()");
             }else if (url.contains("paradiseHome")){
                 webView.loadUrl("javascript:goSearch_Origin()");
-            }
-        }else if (viewId ==R.id.ll_discovery){
-            if (!G.isNetworkConnected(getActivity())){
-                Log.i("TAggg","DSDSDSDSDSDSADASD");
-                webView.reload();
             }
         }
     }

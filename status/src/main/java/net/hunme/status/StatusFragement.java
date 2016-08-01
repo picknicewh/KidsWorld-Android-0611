@@ -95,6 +95,9 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         webView.setWebChromeClient(new MWebChromeClient(getActivity(),ll_loading,webView));
         webView.loadUrl(url);
     }
+    public void setClassname(String classname){
+        tv_classname.setText(classname);
+    }
     /**
      * 设置选择弹窗
      */
@@ -121,10 +124,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             }
         });
     }
-
-   public void setClassname(String classname){
-       tv_classname.setText(classname);
-   }
 
     @Override
     public void onClick(View view) {

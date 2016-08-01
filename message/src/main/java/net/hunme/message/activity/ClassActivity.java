@@ -14,6 +14,7 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.adapter.ClassAdapter;
 import net.hunme.message.bean.GroupJson;
@@ -46,6 +47,7 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
      * 数据集合
      */
     private List<GroupJson> classlist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +77,7 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
      */
     private  void getClassinfor(){
         Map<String,Object> params = new HashMap<>();
-        params.put("tsId","1001");
+        params.put("tsId", UserMessage.getInstance(this).getTsId());
         //1=群，2=老师，3=家长
         params.put("type","1");
         Type type =new TypeToken<Result<GroupJson>>(){}.getType();
