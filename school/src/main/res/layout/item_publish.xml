@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <net.hunme.baselibrary.widget.CircleImageView
+        android:layout_margin="@dimen/space"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/lv_holad"
+        android:src="@mipmap/ic_test01"/>
+
+    <RelativeLayout
+        android:layout_marginRight="@dimen/space"
+        android:layout_marginTop="@dimen/space"
+        android:layout_marginBottom="@dimen/space"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ts_x_large"
+            android:text="王小二"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_date"
+            android:text="18:25"
+            android:textSize="@dimen/ts_medium"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_marginTop="@dimen/space_x0.5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ts_large"
+            android:text=" 近期接到部分win10系统的用户反馈，在登陆游戏中会弹出警告码为（20,80002400,215）或（20,80001000,56）的弹框，且该弹窗无法关闭，导致游戏无法正常进行。经过紧急定位确认，微软最新发布的win10 1607版本，对签名机制进行了变更，导致与大部分游戏、部分应用程序有所冲突。经过测试验证，《地下城与勇士》也会受到影响。"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_below="@id/tv_title"/>
+    </RelativeLayout>
+
+</LinearLayout>

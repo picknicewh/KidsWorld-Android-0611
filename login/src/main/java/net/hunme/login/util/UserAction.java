@@ -30,6 +30,7 @@ public class UserAction {
     public static void isGoLogin(Activity activity,Context context){
         if (G.isEmteny(UserMessage.getInstance(context).getLoginName())){
             activity.startActivity(new Intent(context, LoginActivity.class));
+            return;
         }
     }
 

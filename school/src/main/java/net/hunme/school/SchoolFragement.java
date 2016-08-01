@@ -10,9 +10,8 @@ import android.widget.RelativeLayout;
 
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.widget.NavigationBar;
+import net.hunme.school.activity.PublishActivity;
 import net.hunme.school.activity.WebViewActivity;
-
-import butterknife.ButterKnife;
 
 /**
  * 作者： Administrator
@@ -84,11 +83,10 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_school, null);
-        ButterKnife.bind(this, view);
         init(view);
         return view;
     }
-    private  void init(View v){
+    private void init(View v){
         navigationBar = $(v,R.id.nb_school);
         navigationBar.setTitle("园所");
         rl_openclass = $(v,R.id.rl_openclass);
@@ -122,10 +120,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             intent.putExtra("title","请假");
             intent.putExtra("rightTitle","我要请假");
         }else if (view.getId()==R.id.rl_info){
-            intent.setClass(getActivity(), WebViewActivity.class);
-            intent.putExtra("url",geturl(INFORM));
-            intent.putExtra("title","通知");
-            intent.putExtra("rightTitle","发布通知");
+            intent.setClass(getActivity(), PublishActivity.class);
         }else if (view.getId()==R.id.rl_food){
             intent.setClass(getActivity(), WebViewActivity.class);
             intent.putExtra("url",geturl(FOODLIST));

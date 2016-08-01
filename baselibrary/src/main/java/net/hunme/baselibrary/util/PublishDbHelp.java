@@ -1,4 +1,4 @@
-package net.hunme.user.util;
+package net.hunme.baselibrary.util;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,12 +13,12 @@ import android.database.sqlite.SQLiteDatabase;
  * 主要接口：
  * ================================================
  */
-public class SystemInfoDbHelp {
+public class PublishDbHelp {
     /**
      * 插入数据
      */
     public static  void insert(SQLiteDatabase db, String values){
-        String sql="insert into user (usertype) values ('"+values+"')";
+        String sql="insert into publish (messageid) values ('"+values+"')";
         db.execSQL(sql);
     }
 
@@ -26,7 +26,7 @@ public class SystemInfoDbHelp {
      * 查询数据
      */
     public static boolean select(SQLiteDatabase db, String values){
-        Cursor cursor = db.rawQuery("select * from user where usertype = "+"'"+values+"'",null);
+        Cursor cursor = db.rawQuery("select * from publish where messageid = "+"'"+values+"'",null);
         while (cursor.moveToNext()){
             return true;
         }
@@ -50,7 +50,7 @@ public class SystemInfoDbHelp {
      * @param db
      */
     public static void delete(SQLiteDatabase db){
-        String sql="delete from user";
+        String sql="delete from publish";
         db.execSQL(sql);
 
         String sqls = "DELETE FROM sqlite_sequence";

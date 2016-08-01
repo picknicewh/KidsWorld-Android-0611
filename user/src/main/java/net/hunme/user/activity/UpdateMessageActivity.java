@@ -92,7 +92,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.tv_time){
-            getValidateCode(type,"15158835049");
+            getValidateCode(type,um.getLoginName());
             tv_time.setEnabled(false);
             tv_type.setText("我们已经发送短信验证码到你的手机");
             myCount.start();

@@ -17,9 +17,11 @@ public class UserMessage {
     private SharedPreferences spf;
     private SharedPreferences.Editor editor;
     private static UserMessage userMessage;
+    private Context context;
     public UserMessage(Context context) {
         spf=context.getSharedPreferences("USER",Context.MODE_PRIVATE);
         editor=spf.edit();
+        this.context=context;
     }
 
     public static UserMessage getInstance(Context context){
@@ -164,7 +166,27 @@ public class UserMessage {
     }
 
     public void clean(){
+        cleanPublishDb();
         editor.clear().commit();
+    }
+
+    /**
+     * 清空系统消息数据库
+     */
+    public void cleanPublishDb(){
+        PublishDbHelp.delete(new PublishDb(context).getReadableDatabase());
+    }
+
+    /**
+     * 通知最后一条记录的时间
+     * @param dateTime
+     */
+    public void setPublishDateTime(String dateTime){
+        editor.putString("dateTime",dateTime);
+        editor.commit();
+    }
+    public String getPublishDateTime(){
+        return  spf.getString("dateTime","2016-07-01 00:00:00");
     }
 
 }

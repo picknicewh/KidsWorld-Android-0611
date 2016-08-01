@@ -44,6 +44,7 @@ public class ChooseClassPopWindow extends PopupWindow {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 statusFragement.setClassname(classlist.get(position));
+                statusFragement.setWebView(position);
                 dismiss();
             }
         });
@@ -53,7 +54,7 @@ public class ChooseClassPopWindow extends PopupWindow {
         //设置SignPopupWindow的View
         this.setContentView(conentView);
         //设置SignPopupWindow弹出窗体的高
-        this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        this.setHeight(300);
         //设置SignPopupWindow弹出窗体的宽
         this.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         //设置SignPopupWindow弹出窗体可点击
