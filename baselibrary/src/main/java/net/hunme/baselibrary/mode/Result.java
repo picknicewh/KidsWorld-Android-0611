@@ -1,5 +1,7 @@
 package net.hunme.baselibrary.mode;
 
+import java.io.Serializable;
+
 /**
  * ================================================
  * 作    者：ZLL
@@ -10,7 +12,7 @@ package net.hunme.baselibrary.mode;
  * 主要接口：
  * ================================================
  */
-public class Result<T> {
+public class Result<T> implements Serializable {
     private T data;      //返回数据
 
     private String sign;  //签名
