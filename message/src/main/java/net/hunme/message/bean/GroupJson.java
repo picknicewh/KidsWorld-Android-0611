@@ -12,6 +12,12 @@ import java.util.List;
  */
 public class GroupJson {
     /**
+     * groupName : 苗苗班
+     * ryId : 298f1648653840fdaa6c396830025af5
+     * classId : 298f1648653840fdaa6c396830025af5
+     * menberList : null
+     */
+    /**
      * 群主名字
      */
     private String groupName;
@@ -27,6 +33,7 @@ public class GroupJson {
      *群成员
      */
     private List<MemberJson> menberList;
+
     public String getGroupName() {
         return groupName;
     }
@@ -58,6 +65,5 @@ public class GroupJson {
     public void setMenberList(List<MemberJson> menberList) {
         this.menberList = menberList;
     }
-
 
 }

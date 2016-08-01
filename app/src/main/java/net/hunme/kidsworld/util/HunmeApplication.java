@@ -1,8 +1,6 @@
 package net.hunme.kidsworld.util;
 
-import android.app.ActivityManager;
 import android.app.Application;
-import android.content.Context;
 
 import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.util.G;
@@ -27,33 +25,12 @@ public class HunmeApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        RongIM.init(this,"x4vkb1qpvvggk");//初始化消息中的信息
         BaseLibrary.initializer(this);
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);     		// 初始化 JPush
-        RongIM.init(this);//初始化消息中的信息
     }
-    /**
-     * 获得当前进程的名字
-     *
-     * @param context
-     * @return 进程号
-     */
-    public static String getCurProcessName(Context context) {
 
-        int pid = android.os.Process.myPid();
-
-        ActivityManager activityManager = (ActivityManager) context
-                .getSystemService(Context.ACTIVITY_SERVICE);
-
-        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager
-                .getRunningAppProcesses()) {
-
-            if (appProcess.pid == pid) {
-                return appProcess.processName;
-            }
-        }
-        return null;
-    }
 
     @Override
     public void onTerminate() {

@@ -3,6 +3,7 @@ package net.hunme.message.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -102,7 +103,9 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
         Intent intent = getIntent();
         username = intent.getStringExtra("name");
         userid = intent.getStringExtra("userid");
+
         tv_pname.setText(username);
+        getUserInfor(userid);
         //getUserInfor(userid);
     }
     /**

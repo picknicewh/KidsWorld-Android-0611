@@ -8,6 +8,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
@@ -48,6 +49,12 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     adapter.setSelectPosition(i);
                     CharacterSeleteVo data=seleteList.get(i);
+                    //与融云进行连接
+                    String image = data.getImg();
+                    if (image==null){
+                        image = "http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png";
+                    }
+                     BaseLibrary.connect(data.getRyId(),UserChooseActivity.this,data.getName(),image);
                     //通过用户选择身份保存用户信息
                     UserAction.saveUserMessage(UserChooseActivity.this,data.getName(),
                             data.getImg(),data.getClassName(),data.getSchoolName(),

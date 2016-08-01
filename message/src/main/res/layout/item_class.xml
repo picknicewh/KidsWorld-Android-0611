@@ -4,7 +4,15 @@
     android:layout_height="match_parent">
   <TextView
       android:id="@+id/tv_class"
-      android:layout_width="wrap_content"
+      android:padding="@dimen/space_x2"
+      android:text="苗苗班"
+      android:textColor="@color/black"
+      android:textSize="@dimen/ts_x_large"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content" />
-
+    <View
+        android:paddingLeft="@dimen/space_x2"
+        android:background="@color/line_gray"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_gray"/>
 </LinearLayout>

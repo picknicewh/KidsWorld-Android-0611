@@ -2,7 +2,6 @@ package net.hunme.kidsworld;
 
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -18,7 +17,6 @@ import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.NoScrollViewPager;
 import net.hunme.discovery.DiscoveryFragement;
 import net.hunme.kidsworld.util.ConnectionChangeReceiver;
-import net.hunme.kidsworld.util.HunmeApplication;
 import net.hunme.kidsworld.util.MyViewPagerAdapter;
 import net.hunme.login.util.UserAction;
 import net.hunme.message.fragment.MessageFragement;
@@ -32,9 +30,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
 import main.jpushlibrary.JPush.JPushBaseActivity;
 
 /**
@@ -139,11 +135,9 @@ public class MainActivity extends JPushBaseActivity {
         //初始激光推送配置信息
         initJPushConfiguration();
         //如果网络连接时，连接融云
-        //:
         Log.i("TAGDDG",userMessage.getRyId());
         if (G.isNetworkConnected(this)){
-            Log.i("TAGG",userMessage.getRyId());
-            connect(UserMessage.getInstance(this).getRyId());
+        BaseLibrary.connect(userMessage.getRyId(),MainActivity.this,userMessage.getUserName(),userMessage.getHoldImgUrl());
             setNoreadMessage();
         }
         registerReceiver();
@@ -176,6 +170,7 @@ public class MainActivity extends JPushBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        initViewpager();
         Log.i("TAG","=================onResume===================");
         setNoreadMessage();
     }
@@ -192,8 +187,7 @@ public class MainActivity extends JPushBaseActivity {
         }
         if (isconnect && count%2==0){
             initViewpager();
-            Log.i("EWRFEW",(userMessage.getRyId()));
-            connect(userMessage.getRyId());
+            BaseLibrary.connect(userMessage.getRyId(),this,userMessage.getUserName(),userMessage.getHoldImgUrl());
             count=1;
         }
         viewPager.setCurrentItem(flag,false);
@@ -213,35 +207,7 @@ public class MainActivity extends JPushBaseActivity {
         this.unregisterReceiver(myReceiver);
         Log.i("TAG","=================onDestroy===================");
     }
-    /**
-     * 建立与融云服务器的连接
-     *
-     * @param token
-     */
-    private void connect(String token) {
 
-        if (getApplicationInfo().packageName.equals(HunmeApplication.getCurProcessName(this))) {
-
-            RongIM.connect(token, new RongIMClient.ConnectCallback() {
-                @Override
-                public void onTokenIncorrect() {Log.i("LoginActivity", "--onTokenIncorrect");}
-                /**
-                 * 连接融云成功
-                 * @param userid 当前 token
-                 */
-                @Override
-                public void onSuccess(String userid) {
-                    if (RongIM.getInstance() != null) {
-
-                        RongIM.getInstance().setCurrentUserInfo(new UserInfo(userid, username, Uri.parse(portrait)));
-                        RongIM.getInstance().setMessageAttachedUserInfo(true);
-                    }
-                }
-                @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {Log.i("LoginActivity", "--onError" + errorCode);}
-            });
-        }
-    }
     /**
     * 未读消息监听
     */

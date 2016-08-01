@@ -81,7 +81,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      * 汉字转换成拼音的类
      */
     private CharacterParser characterParser;
-    private List<GroupMemberBean> SourceDateList;
+    private List<GroupMemberBean> groupMemberBeanList;
 
     /**
      * 根据拼音来排列ListView里面的数据类
@@ -97,7 +97,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      * 用户id
      */
     private List<String> userids;
-    private List<GroupMemberBean> groupMemberBeanList;
+
     /**
      * 标题
      */
@@ -107,7 +107,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent);
         init();
-        initList();
+       // initList();
     }
 
     @Override
@@ -118,7 +118,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         setLiftOnClickClose();
     }
     private void init(){
-       // getfriendinfor(title);
+        getfriendinfor(getIntent().getStringExtra("title"));
         lv_parent = $(R.id.lv_parent);
         tv_noparent = $(R.id.tv_no_parent);
         tv_title_cat = $(R.id.tv_title_cat);
@@ -127,7 +127,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         sb_parent = $(R.id.sb_parent);
         characterParser = CharacterParser.getInstance();
         pinyinComparator = new PinyinComparator();
-        SourceDateList = new ArrayList<>();
+        groupMemberBeanList = new ArrayList<>();
         sb_parent.setTextView(tv_dialog_parent);
         setLiftOnClickClose();
     }
@@ -189,20 +189,16 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         }else {
             params.put("type","3");
         }
-        Type type =new TypeToken<Result<GroupJson>>(){}.getType();
+        Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this);
     }
     /**
      * 显示列表
      */
     private void initList() {
-        initdata();
-        SourceDateList = filledData(groupMemberBeanList);
-        Collections.sort(SourceDateList, pinyinComparator);
-        adapter = new ContractAdapter(this, SourceDateList);
-        //  adapter.isCrateGroup(createGroup);
+        Collections.sort(groupMemberBeanList, pinyinComparator);
+        adapter = new ContractAdapter(this, groupMemberBeanList);
         lv_parent.setAdapter(adapter);
-        //isSelected = adapter.getIsSelected();
         // 设置右侧触摸监听
         sb_parent.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
             @Override
@@ -224,7 +220,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
                  //   Log.i("TDDAG", SourceDateList.get(position).getUserid());
                     RongIM.getInstance().startConversation(
                             ParentActivity.this, Conversation.ConversationType.PRIVATE,
-                           SourceDateList.get(position).getUserid(),SourceDateList.get(position).getName());
+                           groupMemberBeanList.get(position).getUserid(),groupMemberBeanList.get(position).getName());
 
                 }
             }
@@ -244,7 +240,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
                             .getLayoutParams();
                     params.topMargin = 0;
                     ll_title.setLayoutParams(params);
-                    tv_title_cat.setText(SourceDateList.get(
+                    tv_title_cat.setText(groupMemberBeanList.get(
                             getPositionForSection(section)).getSortLetters());
                 }
                 if (nextSecPosition == firstVisibleItem + 1) {
@@ -271,33 +267,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         });
 
     }
-    /**
-     * 为ListView填充数据
-     *
-     * @param date
-     * @return
-     */
-    private List<GroupMemberBean> filledData(List<GroupMemberBean> date) {
-        List<GroupMemberBean> mSortList = new ArrayList<GroupMemberBean>();
-        for (int i = 0; i < date.size(); i++) {
-            GroupMemberBean sortModel = new GroupMemberBean();
-            sortModel.setUserid(date.get(i).getUserid());
-            sortModel.setName(date.get(i).getName());
-            // 汉字转换成拼音
-            String pinyin = characterParser.getSelling(date.get(i).getName());
-            String sortString = pinyin.substring(0, 1).toUpperCase();
-            // 正则表达式，判断首字母是否是英文字母
-            if (sortString.matches("[A-Z]")) {
-                sortModel.setSortLetters(sortString.toUpperCase());
-            } else {
-                sortModel.setSortLetters("#");
-            }
 
-            mSortList.add(sortModel);
-
-        }
-        return mSortList;
-    }
     @Override
     public Object[] getSections() {
         return null;
@@ -307,15 +277,15 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      * 根据ListView的当前位置获取分类的首字母的Char ascii值
      */
     public int getSectionForPosition(int position) {
-        return SourceDateList.get(position).getSortLetters().charAt(0);
+        return groupMemberBeanList.get(position).getSortLetters().charAt(0);
     }
 
     /**
      * 根据分类的首字母的Char ascii值获取其第一次出现该首字母的位置
      */
     public int getPositionForSection(int section) {
-        for (int i = 0; i < SourceDateList.size(); i++) {
-            String sortStr = SourceDateList.get(i).getSortLetters();
+        for (int i = 0; i < groupMemberBeanList.size(); i++) {
+            String sortStr = groupMemberBeanList.get(i).getSortLetters();
             char firstChar = sortStr.toUpperCase().charAt(0);
             if (firstChar == section) {
                 return i;
@@ -326,14 +296,14 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
     /**
      * 设置好友列表
      * @param  groupJsonList 数据列表
-     * @param  groupMemberList
      */
-   private void setFriendList(List<GroupJson> groupJsonList, List<GroupMemberBean> groupMemberList){
+   private void setFriendList(List<GroupJson> groupJsonList){
        List<MemberJson> memberJsons = groupJsonList.get(0).getMenberList();
+    //   Log.i("TAFFF",memberJsons.size()+"=================");
        for (int i = 0;i<memberJsons.size();i++){
-           MemberJson memberJson = memberJsons.get(0);
+           MemberJson memberJson = memberJsons.get(i);
            GroupMemberBean groupMemberBean = MemberJsonnTGroupMember(memberJson);
-           groupMemberList.add(groupMemberBean);
+           groupMemberBeanList.add(groupMemberBean);
        }
    }
     /**
@@ -341,7 +311,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      * @param  memberJson 实体类
      */
     private GroupMemberBean MemberJsonnTGroupMember(MemberJson memberJson){
-        GroupMemberBean groupMember =null;
+        GroupMemberBean groupMember =new GroupMemberBean();
         groupMember.setName(memberJson.getTsName());
         groupMember.setUserid(memberJson.getTsId());
         groupMember.setImg(memberJson.getImg());
@@ -362,7 +332,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         if (data.isSuccess()){
             List<GroupJson>  groupJsonList = data.getData();
             if (groupJsonList!=null||groupJsonList.size()!=0){
-                setFriendList(groupJsonList,groupMemberBeanList);
+                setFriendList(groupJsonList);
                 initList();
             }
         }else {

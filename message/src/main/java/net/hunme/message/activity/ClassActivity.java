@@ -43,10 +43,6 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
      * 适配器
      */
     private ClassAdapter adapter;
-    /**
-     * 数据集合
-     */
-    private List<GroupJson> classlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +64,9 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
         lv_class.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                RongIM.getInstance().startGroupChat(ClassActivity.this,groupJsons.get(i).getClassId(),groupJsons.get(i).getGroupName());
+                if (RongIM.getInstance()!=null){
+                    RongIM.getInstance().startGroupChat(ClassActivity.this,groupJsons.get(i).getClassId(),groupJsons.get(i).getGroupName());
+                }
             }
         });
     }
@@ -78,9 +76,10 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
     private  void getClassinfor(){
         Map<String,Object> params = new HashMap<>();
         params.put("tsId", UserMessage.getInstance(this).getTsId());
+        Log.i("TAFFFF",UserMessage.getInstance(this).getTsId());
         //1=群，2=老师，3=家长
-        params.put("type","1");
-        Type type =new TypeToken<Result<GroupJson>>(){}.getType();
+        params.put("type",1);
+        Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
         OkHttps.sendPost(type,Apiurl.MESSAGE_GETGTOUP,params,this);
 
     }
@@ -89,14 +88,11 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
     public void onSuccess(String uri, Object date) {
         Log.i("TAG",date+"");
         Result<List<GroupJson>> data = (Result<List<GroupJson>>) date;
-        if (data.isSuccess()){
-            List<GroupJson> groupJsonList =data.getData();
-            if (groupJsonList!=null||groupJsonList.size()!=0){
-                setlistview(groupJsonList);
-            }
-        }else {
-           // setlistview();
+        List<GroupJson> groupJsonList =data.getData();
+        if (groupJsonList!=null||groupJsonList.size()!=0){
+            setlistview(groupJsonList);
         }
+
     }
 
     @Override

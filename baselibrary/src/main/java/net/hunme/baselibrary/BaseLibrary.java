@@ -1,8 +1,11 @@
 package net.hunme.baselibrary;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 
 import com.lzy.okhttputils.OkHttpUtils;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -16,6 +19,10 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * ================================================
@@ -32,6 +39,7 @@ public class BaseLibrary {
     public static void initializer(Application application){
         OkHttpUtils.init(application);
         initImageLoader(application);
+        RongIM.init(application);
         activitys=new ArrayList<>();
     }
 
@@ -80,5 +88,56 @@ public class BaseLibrary {
                 .build();
         // 全局初始化此配置
         ImageLoader.getInstance().init(config);
+    }
+    /**
+     * 获得当前进程的名字
+     *
+     * @param context
+     * @return 进程号
+     */
+    public static String getCurProcessName(Context context) {
+
+        int pid = android.os.Process.myPid();
+
+        ActivityManager activityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager
+                .getRunningAppProcesses()) {
+
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
+    }
+    /**
+     * 建立与融云服务器的连接
+     *
+     * @param token
+     */
+    public static void connect(String token, Activity activity, final String username, final String portrait) {
+
+        if (activity.getApplicationInfo().packageName.equals(BaseLibrary.getCurProcessName(activity))) {
+
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+                @Override
+                public void onTokenIncorrect() {
+                    Log.i("LoginActivity", "--onTokenIncorrect");}
+                /**
+                 * 连接融云成功
+                 * @param userid 当前 token
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    if (RongIM.getInstance() != null) {
+                        RongIM.getInstance().setCurrentUserInfo(new UserInfo(userid, username, Uri.parse(portrait)));
+                        RongIM.getInstance().setMessageAttachedUserInfo(true);
+                    }
+                }
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {Log.i("LoginActivity", "--onError" + errorCode);}
+            });
+        }
     }
 }

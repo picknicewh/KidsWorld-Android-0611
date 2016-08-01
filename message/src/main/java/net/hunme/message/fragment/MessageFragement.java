@@ -71,17 +71,15 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         iv_search.setOnClickListener(this);
         userMessage = new UserMessage(getActivity());
    }
-
     /**
      *获取聊天列表
      */
     private void  initframent(){
-      //  connect(userMessage.getRyId());
         ConversationListFragment fragment = new ConversationListFragment();
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
-                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "true")//设置群组会话聚合显示
+                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话聚合显示
                 .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")//设置讨论组会话非聚合显示
                 .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//设置系统会话非聚合显示
                 .build();

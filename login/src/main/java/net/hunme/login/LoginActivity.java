@@ -82,13 +82,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onSuccess(String uri, Object date) {
         if(APPLOGIN.equals(uri)){
             b_login.setEnabled(true);
-
             Result<List<CharacterSeleteVo>> result= (Result<List<CharacterSeleteVo>>) date;
             List<CharacterSeleteVo> seleteList=result.getData();
             //将用户信息json串保存起来，提供用户多个身份选择
             UserMessage.getInstance(this).setUserMessagejsonCache(new Gson().toJson(seleteList));
 //                if(result.getData().size()>1){
-            startActivity(new Intent(this,UserChooseActivity.class));
+          /*  if (seleteList.size()==1){
+                CharacterSeleteVo characterSeleteVo = seleteList.get(0);
+                String image = characterSeleteVo.getImg();
+                if (image==null){
+                    image = "http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png";
+                }
+                BaseLibrary.connect(characterSeleteVo.getRyId(),this,characterSeleteVo.getName(),image);
+            }else {*/
+                startActivity(new Intent(this,UserChooseActivity.class));
+        //0  }
             UserAction.saveLoginMessage(this,username,password);
 //                }else{
 //                    CharacterSeleteVo data=seleteList.get(0);
