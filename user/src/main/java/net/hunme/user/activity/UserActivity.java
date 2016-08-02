@@ -81,9 +81,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        UserMessage um=UserMessage.getInstance(this);
-        tv_name.setText(um.getUserName());
-        tv_address.setText(um.getSchoolName()+"-"+um.getClassName());
+         initData();
     }
 
     @Override

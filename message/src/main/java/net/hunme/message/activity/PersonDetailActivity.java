@@ -3,7 +3,6 @@ package net.hunme.message.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -106,7 +105,6 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
 
         tv_pname.setText(username);
         getUserInfor(userid);
-        //getUserInfor(userid);
     }
     /**
      * 获取用户详情
@@ -139,10 +137,9 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
         if (UserInfor.isSuccess()){
             RyUserInfor ryUserInfor= UserInfor.getData();
             tv_school.setText(ryUserInfor.getSchoolName());
-            tv_role.setText(ryUserInfor.getTs_name());
+            tv_role.setText(ryUserInfor.getTsName());
             tv_phone.setText(ryUserInfor.getPhone());
             tv_class.setText(ryUserInfor.getClassName());
-            //  iv_phead.setImageResource(); 
         }
     }
 

@@ -18,7 +18,7 @@
             android:id="@+id/tv_pname"
             android:layout_marginTop="@dimen/space"
             android:layout_marginBottom="@dimen/space_x2"
-            android:text="大幂幂"
+
             android:textColor="@color/black"
             android:textSize="@dimen/ts_large"
             android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
             <TextView
                 android:layout_marginTop="@dimen/space"
                 android:id="@+id/tv_phone"
-                android:text="13735484622"
+
                 android:textColor="@color/black"
                 android:textSize="@dimen/ts_large"
                 android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
         <TextView
             android:layout_marginTop="@dimen/space"
             android:id="@+id/tv_school"
-            android:text="杭州行知幼儿园"
+
             android:textColor="@color/black"
             android:textSize="@dimen/ts_large"
             android:layout_width="wrap_content"
@@ -114,7 +114,6 @@
         <TextView
             android:layout_marginTop="@dimen/space"
             android:id="@+id/tv_pclass"
-            android:text="苗苗班"
             android:textColor="@color/black"
             android:textSize="@dimen/ts_large"
             android:layout_width="wrap_content"

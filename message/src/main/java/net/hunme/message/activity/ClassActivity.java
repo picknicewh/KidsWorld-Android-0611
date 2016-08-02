@@ -1,5 +1,6 @@
 package net.hunme.message.activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
+import io.rong.imkit.model.GroupUserInfo;
+import io.rong.imlib.model.Group;
 
 /**
  * 作者： wh
@@ -61,11 +64,26 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
         lv_class = $(R.id.lv_class);
         adapter = new ClassAdapter(this,groupJsons);
         lv_class.setAdapter(adapter);
+
         lv_class.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                GroupJson groupJson = groupJsons.get(i);
+                final String classId = groupJson.getClassId();
+                final String groupName = groupJson.getGroupName();
                 if (RongIM.getInstance()!=null){
-                    RongIM.getInstance().startGroupChat(ClassActivity.this,groupJsons.get(i).getClassId(),groupJsons.get(i).getGroupName());
+                    RongIM.getInstance().startGroupChat(ClassActivity.this,classId,groupName);
+                    RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
+                        @Override
+                        public Group getGroupInfo(String s) {
+                            if (s.equals(classId)){
+                                Group group = new Group(classId,groupName, Uri.parse(""));
+                                return group;
+                            }
+                            return null;
+                        }
+                    },true);
+                    RongIM.getInstance().refreshGroupUserInfoCache(new GroupUserInfo(classId,groupName,groupName));
                 }
             }
         });

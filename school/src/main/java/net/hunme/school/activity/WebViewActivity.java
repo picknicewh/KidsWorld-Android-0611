@@ -132,9 +132,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.tv_subtitle){
-            Log.i("TAGGG","sdaasasasa");
             if (url.contains(SchoolFragement.INFORM)){
-                Log.i("TAGGG","sdaasasasa");
                 Intent intent = new Intent(this,PublishActivity.class);
                 startActivity(intent);
             }else if (url.contains(SchoolFragement.LEAVE)){

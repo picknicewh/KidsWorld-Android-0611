@@ -17,7 +17,7 @@ public class RyUserInfor {
     /**
      * 手机号
      */
-    private String ts_name;
+    private String tsName;
     /**
      *角色ID
      */
@@ -46,12 +46,13 @@ public class RyUserInfor {
      *融云通讯ID
      */
     private String ryId;
-    public String getTs_name() {
-        return ts_name;
+
+    public String getTsName() {
+        return tsName;
     }
 
-    public void setTs_name(String ts_name) {
-        this.ts_name = ts_name;
+    public void setTsName(String tsName) {
+        this.tsName = tsName;
     }
 
     public String getSchoolName() {

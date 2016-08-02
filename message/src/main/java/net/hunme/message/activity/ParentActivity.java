@@ -1,5 +1,6 @@
 package net.hunme.message.activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +39,7 @@ import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * 作者： wh
@@ -107,7 +109,6 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent);
         init();
-       // initList();
     }
 
     @Override
@@ -131,51 +132,6 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         sb_parent.setTextView(tv_dialog_parent);
         setLiftOnClickClose();
     }
-    private void initdata(){
-        groupMemberBeanList = new ArrayList<>();
-        GroupMemberBean groupMemberBean1 = new GroupMemberBean();
-        groupMemberBean1.setName("王小二");
-        groupMemberBean1.setUserid("a1254acba95840a59f30b0d9b82c51ea");
-        groupMemberBeanList.add(groupMemberBean1);
-        GroupMemberBean groupMemberBean2 = new GroupMemberBean();
-        groupMemberBean2.setName("刘德华");
-        groupMemberBean2.setUserid("1002");
-        groupMemberBeanList.add(groupMemberBean2);
-        GroupMemberBean groupMemberBean3 = new GroupMemberBean();
-        groupMemberBean3.setName("吴亦凡");
-        groupMemberBean3.setUserid("1003");
-        groupMemberBeanList.add(groupMemberBean3);
-        GroupMemberBean groupMemberBean4 = new GroupMemberBean();
-        groupMemberBean4.setName("吴用");
-        groupMemberBean4.setUserid("1001");
-        groupMemberBeanList.add(groupMemberBean4);
-        GroupMemberBean groupMemberBean5 = new GroupMemberBean();
-        groupMemberBean5.setName("周磊");
-        groupMemberBean5.setUserid("1005");
-        groupMemberBeanList.add(groupMemberBean5);
-        GroupMemberBean groupMemberBean6 = new GroupMemberBean();
-        groupMemberBean6.setName("鹿晗");
-        groupMemberBean6.setUserid("1006");
-        groupMemberBeanList.add(groupMemberBean6);
-        GroupMemberBean groupMemberBean7 = new GroupMemberBean();
-        groupMemberBean7.setName("郑爽");
-        groupMemberBean7.setUserid("1007");
-        groupMemberBeanList.add(groupMemberBean7);
-        GroupMemberBean groupMemberBean8 = new GroupMemberBean();
-        groupMemberBean8.setName("大幂幂");
-        groupMemberBean8.setUserid("1008");
-        groupMemberBeanList.add(groupMemberBean8);
-        GroupMemberBean groupMemberBean9 = new GroupMemberBean();
-        groupMemberBean9.setName("吴彦祖");
-        groupMemberBean9.setUserid("1009");
-        groupMemberBeanList.add(groupMemberBean9);
-        GroupMemberBean groupMemberBean = new GroupMemberBean();
-        groupMemberBean.setName("刘诗诗");
-        groupMemberBean.setUserid("1100");
-        groupMemberBeanList.add(groupMemberBean);
-
-    }
-
     /**
      * 获取所有所有好友信息
      * @param  title 标题
@@ -215,13 +171,26 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                if (RongIM.getInstance()!=null){
+                                    final int position, long id) {
+                GroupMemberBean bean = groupMemberBeanList.get(position);
+                 final String uid  = bean.getUserid();
+                 String image = bean.getImg();
+                  if (image==null){
+                    image = "http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png";
+                  }
+                 final  String name = bean.getName();
+                  if (RongIM.getInstance()!=null){
                  //   Log.i("TDDAG", SourceDateList.get(position).getUserid());
-                    RongIM.getInstance().startConversation(
-                            ParentActivity.this, Conversation.ConversationType.PRIVATE,
-                           groupMemberBeanList.get(position).getUserid(),groupMemberBeanList.get(position).getName());
-
+                    RongIM.getInstance().startConversation(ParentActivity.this, Conversation.ConversationType.PRIVATE, uid,name);
+                    final String finalImage = image;
+                    RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+                        @Override
+                        public UserInfo getUserInfo(String userId) {
+                             UserInfo userInfo =new UserInfo(uid,name, Uri.parse(finalImage));
+                            return  userInfo;
+                        }
+                    }, true);
+                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(uid, name, Uri.parse(image)));
                 }
             }
         });
@@ -265,7 +234,6 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
                 lastFirstVisibleItem = firstVisibleItem;
             }
         });
-
     }
 
     @Override
@@ -299,7 +267,6 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      */
    private void setFriendList(List<GroupJson> groupJsonList){
        List<MemberJson> memberJsons = groupJsonList.get(0).getMenberList();
-    //   Log.i("TAFFF",memberJsons.size()+"=================");
        for (int i = 0;i<memberJsons.size();i++){
            MemberJson memberJson = memberJsons.get(i);
            GroupMemberBean groupMemberBean = MemberJsonnTGroupMember(memberJson);
@@ -335,9 +302,6 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
                 setFriendList(groupJsonList);
                 initList();
             }
-        }else {
-            initdata();
-            initList();
         }
     }
 

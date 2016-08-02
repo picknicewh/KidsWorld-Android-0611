@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.widget.NavigationBar;
@@ -107,9 +108,10 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     public void onClick(View view) {
         Intent intent = new Intent();
         if (view.getId()==R.id.rl_openclass){
-            intent.setClass(getActivity(), WebViewActivity.class);
+        /*    intent.setClass(getActivity(), WebViewActivity.class);
             intent.putExtra("url", geturl(OPENCLASS));
-            intent.putExtra("title","开放课堂");
+            intent.putExtra("title","开放课堂");*/
+            Toast.makeText(getActivity(),"暂未开通此功能！",Toast.LENGTH_SHORT).show();
         }else if (view.getId()==R.id.rl_check){
             intent.setClass(getActivity(), WebViewActivity.class);
             intent.putExtra("url", geturl(CHECK));
@@ -131,7 +133,9 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             intent.putExtra("title","课程安排");
             intent.putExtra("rightTitle","发布");
         }
-        startActivity(intent);
+        if (view.getId()!=R.id.rl_openclass){
+            startActivity(intent);
+        }
     }
     private String  geturl(String type){
         String url = null;

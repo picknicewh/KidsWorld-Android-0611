@@ -84,7 +84,7 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         showview(mconversationType);
     }
     private void  showview(Conversation.ConversationType mconversationType){
-         if (mconversationType.equals(Conversation.ConversationType.DISCUSSION)){
+         if (mconversationType.equals(Conversation.ConversationType.GROUP)){
              iv_call.setVisibility(View.GONE);
              iv_detail.setVisibility(View.GONE);
          }else if (mconversationType.equals(Conversation.ConversationType.PRIVATE)){
