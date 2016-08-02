@@ -80,6 +80,14 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        UserMessage um=UserMessage.getInstance(this);
+        tv_name.setText(um.getUserName());
+        tv_address.setText(um.getSchoolName()+"-"+um.getClassName());
+    }
+
+    @Override
     public void onClick(View v) {
         int viewId=v.getId();
         if(viewId==R.id.ll_userMassage){

@@ -150,7 +150,6 @@
 
             </FrameLayout>
             <TextView
-
                 android:id="@+id/tv_message"
                 android:text="通讯"
                 android:layout_gravity="center"

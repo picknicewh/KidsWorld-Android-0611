@@ -29,6 +29,7 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
     private UserMessage um;
     private List<CharacterSeleteVo> seleteList;
     private final String SELECTUSER="/app/selectUser.do";
+    public static  int flag = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,7 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
                             data.getImg(),data.getClassName(),data.getSchoolName(),
                             data.getRyId(),data.getTsId(),data.getType());
                     selectUserSubmit(data.getTsId());
+                    flag=1;
                     finish();
                 }
             });

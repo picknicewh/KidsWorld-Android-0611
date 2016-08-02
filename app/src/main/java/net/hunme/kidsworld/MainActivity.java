@@ -18,6 +18,7 @@ import net.hunme.baselibrary.widget.NoScrollViewPager;
 import net.hunme.discovery.DiscoveryFragement;
 import net.hunme.kidsworld.util.ConnectionChangeReceiver;
 import net.hunme.kidsworld.util.MyViewPagerAdapter;
+import net.hunme.login.UserChooseActivity;
 import net.hunme.login.util.UserAction;
 import net.hunme.message.fragment.MessageFragement;
 import net.hunme.school.SchoolFragement;
@@ -139,9 +140,11 @@ public class MainActivity extends JPushBaseActivity {
         if (G.isNetworkConnected(this)){
         BaseLibrary.connect(userMessage.getRyId(),MainActivity.this,userMessage.getUserName(),userMessage.getHoldImgUrl());
             setNoreadMessage();
+
         }
         registerReceiver();
         initCount();
+        Log.i("TAFFFG","=================onCreate===================");
 
     }
     /**
@@ -170,8 +173,19 @@ public class MainActivity extends JPushBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initViewpager();
-        Log.i("TAG","=================onResume===================");
+        if (UserChooseActivity.flag==1){
+            initViewpager();
+            UserChooseActivity.flag=0;
+        }
+
+        Log.i("TAFFFG","=================onResume===================");
+       /* if (RongIM.getInstance()!=null) {
+            if (userMessage != null) {
+                Log.i("TRER",userMessage.getTsId()+"======getTsId=========");
+                Log.i("TRER",userMessage.getUserName()+"======getUserName=========");
+                RongIM.getInstance().refreshUserInfoCache(new UserInfo(userMessage.getTsId(), userMessage.getUserName(), Uri.parse(userMessage.getHoldImgUrl())));
+            }
+        }*/
         setNoreadMessage();
     }
     /**
@@ -267,7 +281,9 @@ public class MainActivity extends JPushBaseActivity {
                 tvMessage.setTextColor(getResources().getColor(R.color.main_green));
                 ivMessage.setImageResource(R.mipmap.message_p);
                 break;
+
         }
+        UserChooseActivity.flag=0;
     }
     /**
      * 如果count的值为0时表示一进来就是断网的，此时点击tab重新连接加载viewpager

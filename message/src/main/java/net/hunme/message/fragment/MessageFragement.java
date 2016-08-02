@@ -53,6 +53,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, null);
+
         init(view);
 
         // 设置点击头像监听事件
@@ -74,7 +75,8 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     /**
      *获取聊天列表
      */
-    private void  initframent(){
+    public void  initframent(){
+
         ConversationListFragment fragment = new ConversationListFragment();
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
