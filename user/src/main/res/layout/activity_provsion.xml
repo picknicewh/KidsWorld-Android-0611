@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             style="@style/TextStyleBase"
+            android:textSize="@dimen/ts_x_large"
             android:gravity="center"
             android:text="幼儿天地服务使用协议"/>
         <TextView

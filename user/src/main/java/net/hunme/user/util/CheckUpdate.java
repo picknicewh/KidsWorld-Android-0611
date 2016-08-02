@@ -99,23 +99,17 @@ public class CheckUpdate implements OkHttpListener {
 	 * 提示框
 	 */
 	private AlertDialog dialog;
-	public CheckUpdate(Activity activity) {
+	private boolean isPrompt;
+	public CheckUpdate(Activity activity,boolean isPrompt) {
 		this.context = activity;;
 		this.activity=activity;
+		this.isPrompt=isPrompt;
 		// 判断SD卡是否存在，并且是否具有读写权限
 		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 			// 获得存储卡的路径
 			mSavePath = Environment.getExternalStorageDirectory().toString() + "/ChatFile";
-//			mSavePath=StorageUtils.getOwnCacheDirectory(context, "ChatFile");
 		}
-	}
 
-	/**
-	 * 检测软件更新
-	 * updateType 0==点击了版本更新触发的更新 1==进入app自动检查更新的更新
-	 */
-	public void checkUpdate(int updateType) {
-		this.updateType = updateType;
 		if(NetWorkUitls.isNetworkAvailable(context)){
 			checkUpdate();
 		}else if(updateType==0) {
@@ -135,21 +129,19 @@ public class CheckUpdate implements OkHttpListener {
     public void onSuccess(String uri, Object date) {
         if (uri.equals(UPDATESYSTEM)){
             Result<CheckUpadteVo> result= (Result<CheckUpadteVo>) date;
-            if(result.isSuccess()&&!G.isEmteny(result.getData().getUrl())){
+            if(!G.isEmteny(result.getData().getUrl())){
                 downLoadURL = result.getData().getUrl();
                 version = result.getData().getVersions();
 				showDownLoadDialog();
             }else{
-				G.showToast(context, "您已经是最新版本");
+				if(isPrompt) G.showToast(context, "您已经是最新版本");
 			}
         }
     }
 
     @Override
     public void onError(String uri, String error) {
-        if(updateType==0) {
-            G.showToast(context, "查询失败，请检查网络！");
-        }
+		if(isPrompt) G.showToast(context, "您已经是最新版本");
     }
 
     private void downLoadAPK(){
@@ -213,10 +205,8 @@ public class CheckUpdate implements OkHttpListener {
      */
 	private void bttonCancel(boolean isCancel){
 		if(isCancel){
-			b_cancel.setEnabled(false);
 			b_confirm.setEnabled(false);
 		}else {
-			b_cancel.setEnabled(true);
 			b_confirm.setEnabled(true);
 		}
 	}
@@ -248,23 +238,7 @@ public class CheckUpdate implements OkHttpListener {
 		return true;
 	}
 
-//	/**
-//	 * 安装意图
-//	 */
-//	private Intent installIntent;
-//
-//	private Intent getInstallIntent() {
-//		if (installIntent != null) {
-//			return installIntent;
-//		}
-//		File apkfile = new File(mSavePath, "幼儿天地" + MD5Utils.encode(version) + ".apk");
-//		installIntent = new Intent(Intent.ACTION_VIEW);
-//		installIntent.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
-//		return installIntent;
-//	}
-
 	public void Testdate(String visonCode,String downLoadURL){
-		//http://apkegg.mumayi.com/cooperation/2016/06/17/101/1013262/doupocangqiong_V1.4.1_mumayi_64934.apk
 		this.downLoadURL = downLoadURL;
 		this.version = visonCode;
 		showDownLoadDialog();

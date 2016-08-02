@@ -29,4 +29,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile files('lib/sun.misc.BASE64Decoder.jar')
     compile project(':IMKit')
+    compile project(':CordovaLib')
 }

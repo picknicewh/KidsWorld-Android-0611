@@ -26,7 +26,7 @@ public class UDynamicsActivity extends BaseActivity {
     /**
      * 加载地址
      */
-    private static final  String url = "http://192.168.1.179:8787/web/kidsWorld/space/view/myDynamic.html";
+    private static final  String url = "";
     /**
      * webview
      */

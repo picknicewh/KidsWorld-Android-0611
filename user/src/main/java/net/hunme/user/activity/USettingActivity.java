@@ -172,8 +172,8 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
         } else if (viewID == R.id.ll_cleancache) {
             showAlertDialog(0);
         } else if (viewID == R.id.ll_checkupadte) {
-            String url = "http://apkegg.mumayi.com/cooperation/2016/06/17/101/1013262/doupocangqiong_V1.4.1_mumayi_64934.apk";
-            new CheckUpdate(this).Testdate("1", url);
+//            String url = "http://apkegg.mumayi.com/cooperation/2016/06/17/101/1013262/doupocangqiong_V1.4.1_mumayi_64934.apk";
+            new CheckUpdate(this,true);
         }else if(viewID==R.id.tv_provsion){
             startActivity(new Intent(this,ProvsionActivity.class));
         }

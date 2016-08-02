@@ -34,7 +34,6 @@
                 android:id="@+id/tv_id"
                 android:text="学"
                 android:gravity="center"
-                android:background="@drawable/user_study_selecter"
                 android:textColor="@color/white"
                 android:layout_width="20dp"
                 android:layout_height="20dp"

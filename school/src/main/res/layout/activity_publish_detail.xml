@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/ts_large"
-            android:text=" 近期接到部分win10系统的用户反馈，在登陆游戏中会弹出警告码为（20,80002400,215）或（20,80001000,56）的弹框，且该弹窗无法关闭，导致游戏无法正常进行。经过紧急定位确认，微软最新发布的win10 1607版本，对签名机制进行了变更，导致与大部分游戏、部分应用程序有所冲突。经过测试验证，《地下城与勇士》也会受到影响。"
+            android:text="PhoneGap/Cordova是一个专业的移动应用开发框架，是一个全面的WEB APP开发的框架，提供了以WEB形式来访问终端设备的API的功能。这对于采用WEB APP进行开发者来说是个福音，这可以避免了原生开发的某些功能。Cordova 只是个原生外壳，app的内核是一个完整的webapp，需要调用的原生功能将以原生插件的形式实现，以暴露js接口的方式调用。"
             android:layout_below="@id/tv_title"/>
     </RelativeLayout>
 

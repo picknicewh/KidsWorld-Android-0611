@@ -32,6 +32,7 @@ public class PublishActivity extends BaseActivity implements OkHttpListener {
     private List<PublishVo> publishList;
     public static PublishDb db;
     private final String MESSAGE="/school/message.do";
+    private UserMessage um;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +46,7 @@ public class PublishActivity extends BaseActivity implements OkHttpListener {
 
     private void initDate(){
         db=new PublishDb(this);
+        um=UserMessage.getInstance(this);
         publishList=new ArrayList<>();
         adapter=new PublishAdapter(this,publishList);
         lv_publish.setAdapter(adapter);
@@ -53,8 +55,10 @@ public class PublishActivity extends BaseActivity implements OkHttpListener {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent(PublishActivity.this,PublishDetailActivity.class);
 //                intent.putExtra("publish",publishList.get(i));
-                PublishDbHelp.insert(db.getWritableDatabase(),publishList.get(i).getMessageId());
-                publishList.get(i).setRead(true);
+                if(!PublishDbHelp.select(db.getReadableDatabase(),publishList.get(i).getMessageId()+um.getTsId())){
+                    PublishDbHelp.insert(db.getWritableDatabase(),publishList.get(i).getMessageId()+um.getTsId());
+                    publishList.get(i).setRead(true);
+                }
                 startActivityForResult(intent,0);
             }
         });
@@ -79,7 +83,7 @@ public class PublishActivity extends BaseActivity implements OkHttpListener {
                 for (PublishVo p:publishList){
                     //所有未读的插入数据库
                     if(!p.isRead()){
-                        PublishDbHelp.insert(db.getWritableDatabase(),p.getMessageId());
+                        PublishDbHelp.insert(db.getWritableDatabase(),p.getMessageId()+um.getTsId());
                         p.setRead(true);
                     }
                 }
@@ -113,7 +117,7 @@ public class PublishActivity extends BaseActivity implements OkHttpListener {
         List<PublishVo> publishVos=((Result<List<PublishVo>>)date).getData();
         for (int i=0;i<publishVos.size();i++){
             PublishVo vo=new PublishVo();
-            boolean isRead= PublishDbHelp.select(PublishActivity.db.getReadableDatabase(),vo.getMessageId());
+            boolean isRead= PublishDbHelp.select(PublishActivity.db.getReadableDatabase(),vo.getMessageId()+um.getTsId());
             if(!isRead)
                 //将未读信息排在最前列
                 publishList.add(0,vo);
@@ -133,10 +137,10 @@ public class PublishActivity extends BaseActivity implements OkHttpListener {
         for (int i=0;i<10;i++){
             PublishVo vo=new PublishVo();
             vo.setDateTime("2016-08-01");
-            vo.setMessage("近期接到部分win10系统的用户反馈，在登陆游戏中会弹出警告码为（20,80002400,215）或（20,80001000,56）的弹框，且该弹窗无法关闭，导致游戏无法正常进行。经过紧急定位确认，微软最新发布的win10 1607版本，对签名机制进行了变更，导致与大部分游戏、部分应用程序有所冲突。经过测试验证，《地下城与勇士》也会受到影响。");
+            vo.setMessage("PhoneGap/Cordova是一个专业的移动应用开发框架，是一个全面的WEB APP开发的框架，提供了以WEB形式来访问终端设备的API的功能。这对于采用WEB APP进行开发者来说是个福音，这可以避免了原生开发的某些功能。Cordova 只是个原生外壳，app的内核是一个完整的webapp，需要调用的原生功能将以原生插件的形式实现，以暴露js接口的方式调用。");
             vo.setTsName("DNF");
             vo.setMessageId(i+"");
-            boolean isRead= PublishDbHelp.select(PublishActivity.db.getReadableDatabase(),vo.getMessageId());
+            boolean isRead= PublishDbHelp.select(PublishActivity.db.getReadableDatabase(),vo.getMessageId()+um.getTsId());
             if(!isRead)
                 publishList.add(0,vo);
             else

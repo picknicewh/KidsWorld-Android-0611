@@ -80,15 +80,11 @@ public class PublishAdapter extends BaseAdapter {
         }
 
          public void setTextColor(boolean isRead){
-             if(!isRead){
-                 tv_title.setTextColor(Color.BLACK);
+             if(!isRead)
                  tv_content.setTextColor(Color.BLACK);
-                 tv_date.setTextColor(Color.BLACK);
-             }else{
-                 tv_title.setTextColor(Color.parseColor("#a9a9a9"));
+             else
                  tv_content.setTextColor(Color.parseColor("#a9a9a9"));
-                 tv_date.setTextColor(Color.parseColor("#a9a9a9"));
-             }
+
          }
     }
 }

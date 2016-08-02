@@ -30,6 +30,8 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_id;
     private TextView tv_name;
     private TextView tv_address;
+    private final String MYCOLLECTION="http://192.168.5.136:8989/webSVN/kidsWorld/paradise/index.html#/collect";
+    private final String MYDYNAMICS="http://192.168.1.179:8787/web/kidsWorld/space/view/myDynamic.html";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,15 +67,12 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     private void initData(){
         UserMessage um=UserMessage.getInstance(this);
 //        cv_portrait.setImageResource();  头像暂时无法获取
-        if("0".equals(um.getType())){
-            tv_id.setText("师");
-            tv_id.setBackgroundResource(R.drawable.user_teach_selecter);
-        }else if("1".equals(um.getType())){
+        if("1".equals(um.getType())){
             tv_id.setText("学");
             tv_id.setBackgroundResource(R.drawable.user_study_selecter);
-        }else if("2".equals(um.getType())){
-            tv_id.setText("校");
-            tv_id.setBackgroundResource(R.drawable.user_director_selectet);
+        }else{
+           tv_id.setText("师");
+           tv_id.setBackgroundResource(R.drawable.user_teach_selecter);
         }
         tv_name.setText(um.getUserName());
         tv_address.setText(um.getSchoolName()+"-"+um.getClassName());
@@ -90,16 +89,24 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         int viewId=v.getId();
+        Intent intent=null;
         if(viewId==R.id.ll_userMassage){
-            startActivity(new Intent(UserActivity.this,UMassageActivity.class));
+            intent=new Intent(UserActivity.this,UMassageActivity.class);
         }else if(viewId==R.id.ll_usersetting){
-            startActivity(new Intent(UserActivity.this,USettingActivity.class));
+            intent=new Intent(UserActivity.this,USettingActivity.class);
         }else if(viewId==R.id.ll_myphoto){
-            startActivity(new Intent(UserActivity.this,UPhotoActivity.class));
+            intent=new Intent(UserActivity.this,UPhotoActivity.class);
         }else if(viewId==R.id.ll_mycollection){
-            startActivity(new Intent(UserActivity.this,UCollectionActivity.class));
+            intent=new Intent(UserActivity.this,HMDroidGap.class);
+            intent.putExtra("loadUrl",MYCOLLECTION);
+            intent.putExtra("title","我的收藏");
         }else if(viewId==R.id.ll_mydynamics){
-            startActivity(new Intent(UserActivity.this,UDynamicsActivity.class));
+            intent=new Intent(UserActivity.this,HMDroidGap.class);
+            intent.putExtra("loadUrl",MYDYNAMICS);
+            intent.putExtra("title","我的动态");
+        }
+        if(null!=intent){
+            startActivity(intent);
         }
     }
 }

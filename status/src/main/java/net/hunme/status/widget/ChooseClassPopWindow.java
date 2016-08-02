@@ -54,7 +54,7 @@ public class ChooseClassPopWindow extends PopupWindow {
         //设置SignPopupWindow的View
         this.setContentView(conentView);
         //设置SignPopupWindow弹出窗体的高
-        this.setHeight(300);
+        this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         //设置SignPopupWindow弹出窗体的宽
         this.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         //设置SignPopupWindow弹出窗体可点击

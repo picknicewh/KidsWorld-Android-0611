@@ -160,9 +160,8 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
 //            int[] location = new int[2];
 //            view.getLocationOnScreen(location);
             G.initDisplaySize(getActivity());
-            int xPos =G.size.W/2-150;
-            G.log(popWindow.getWidth()+"----");
-            popWindow.showAsDropDown(rl_toolbar,xPos,-10);
+            int xPos =G.size.W/2-(popWindow.getContentView().getWidth())/2;
+            popWindow.showAsDropDown(rl_toolbar,xPos,-G.dp2px(getActivity(),10));
             popWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {

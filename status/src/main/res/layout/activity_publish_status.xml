@@ -4,16 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <EditText
+        android:background="@color/white"
         android:id="@+id/et_pcontent"
         android:paddingTop="@dimen/space"
         android:paddingLeft="@dimen/space"
         android:layout_width="match_parent"
         android:hint="请输入文字内容"
         android:gravity="left"
-        android:background="@color/white"
         android:layout_height="200dp" />
     <LinearLayout
         android:background="@color/white"
+       android:padding="@dimen/space"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -37,7 +38,6 @@
             android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content">
-
             <TextView
                 android:drawablePadding="@dimen/space_x0.5"
                 android:drawableLeft="@mipmap/ic_status_data"
@@ -50,12 +50,6 @@
         </LinearLayout>
     </LinearLayout>
 
-     <View
-         android:layout_marginTop="@dimen/space_x2"
-         android:background="@color/line_gray"
-         android:layout_width="match_parent"
-         android:layout_height="@dimen/line_gray"/>
-
     <GridView
         android:layout_alignParentBottom="true"
         android:id="@+id/gv_photo"
@@ -63,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_x0.5"
         android:horizontalSpacing="@dimen/space"
+        android:verticalSpacing="@dimen/space"
         android:numColumns="4"
         android:scrollbars="none" />
 

@@ -63,16 +63,21 @@ public class UserChooseAdapter extends BaseAdapter {
         if(i==selectPosition){
             changItemImage(view,i);
         }
-        if("0".equals(selete.getType())){
-            hold.tv_id.setText("师");
-            hold.tv_id.setBackgroundResource(R.drawable.user_teach_selecter);
-        }else if("1".equals(selete.getType())){
+//        if("0".equals(selete.getType())){
+//            hold.tv_id.setText("师");
+//            hold.tv_id.setBackgroundResource(R.drawable.user_teach_selecter);
+//        }else
+        if("1".equals(selete.getType())){
             hold.tv_id.setText("学");
             hold.tv_id.setBackgroundResource(R.drawable.user_study_selecter);
-        }else if("2".equals(selete.getType())){
-            hold.tv_id.setText("校");
-            hold.tv_id.setBackgroundResource(R.drawable.user_director_selectet);
+        }else{
+            hold.tv_id.setText("师");
+            hold.tv_id.setBackgroundResource(R.drawable.user_teach_selecter);
         }
+//        }else if("2".equals(selete.getType())){
+//            hold.tv_id.setText("校");
+//            hold.tv_id.setBackgroundResource(R.drawable.user_director_selectet);
+//        }
         return view;
     }
 
