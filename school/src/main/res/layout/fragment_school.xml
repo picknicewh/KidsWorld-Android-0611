@@ -31,8 +31,10 @@
             style="@style/TextStyleBase"
             android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#cccccc"/>
         <TextView
+            android:textColor="#cccccc"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:text="正在直播"

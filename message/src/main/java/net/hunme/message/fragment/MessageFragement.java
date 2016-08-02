@@ -15,9 +15,7 @@ import net.hunme.message.R;
 import net.hunme.message.activity.ClassActivity;
 import net.hunme.message.activity.ParentActivity;
 import net.hunme.message.activity.SearchActivity;
-import net.hunme.message.ronglistener.MyConversationBehaviorListener;
 
-import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
 
@@ -53,11 +51,9 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, null);
-
         init(view);
-
         // 设置点击头像监听事件
-        RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
+       // RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
         return view;
     }
    private  void init(View v){
@@ -82,8 +78,6 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
                 .appendPath("conversationlist")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
                 .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话聚合显示
-                .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")//设置讨论组会话非聚合显示
-                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//设置系统会话非聚合显示
                 .build();
         fragment.setUri(uri);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
