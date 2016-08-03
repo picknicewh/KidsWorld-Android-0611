@@ -49,7 +49,9 @@ public class UDynamicsActivity extends BaseActivity implements View.OnClickListe
         webView = $(R.id.wv_status);
         rl_nonetwork = $(R.id.rl_nonetwork);
         rl_nonetwork.setOnClickListener(this);
-        setviewShow();
+        rl_nonetwork.setVisibility(View.GONE);
+        setWebView();
+      //  setviewShow();
 
     }
     /**

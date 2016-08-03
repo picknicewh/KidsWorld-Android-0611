@@ -27,8 +27,8 @@ public class SchoolPublishPopWindow extends CommonPubishPopWindow {
 
         }else if (view.getId()== net.hunme.baselibrary.R.id.iv_photo){
 
-        }else if (view.getId()== net.hunme.baselibrary.R.id.iv_move){
+        }/*else if (view.getId()== net.hunme.baselibrary.R.id.iv_move){
 
-        }
+        }*/
     }
 }

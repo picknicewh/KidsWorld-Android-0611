@@ -21,7 +21,6 @@ import net.hunme.school.R;
 import net.hunme.school.SchoolFragement;
 
 public class WebViewActivity extends BaseActivity implements View.OnClickListener{
-
     /**
      * 左边的图片
      */
@@ -71,13 +70,15 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
         ll_loading = $(R.id.ll_loading);
         rl_nonetwork = $(R.id.rl_nonetwork);
         rl_nonetwork.setOnClickListener(this);
+        rl_nonetwork.setVisibility(View.GONE);
         Intent intent = getIntent();
         rightTitle  =intent.getStringExtra("rightTitle");
         if (rightTitle!=null){
             tv_right.setText(rightTitle);
         }
         url = intent.getStringExtra("url");
-        setviewShow();
+       // setviewShow();
+        setWebView();
         setSubTitleOnClickListener(this);
     }
     /**

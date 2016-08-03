@@ -94,7 +94,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
      */
     private RelativeLayout rl_nonetwork;
 
-
     /**
      * 选择的班级position
      */

@@ -71,8 +71,10 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
         tv_title = $(R.id.tv_title);
         from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,this);
         rl_nonetwork = $(R.id.rl_nonetwork);
+        rl_nonetwork.setVisibility(View.GONE);
         rl_nonetwork.setOnClickListener(this);
-        setviewShow();
+        setWebView();
+      //  setviewShow();
     }
     @Override
     protected void setToolBar() {
