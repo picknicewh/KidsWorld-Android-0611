@@ -1,25 +1,26 @@
 package net.hunme.school.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import net.hunme.baselibrary.base.BaseActivity;
-import net.hunme.baselibrary.util.MWebChromeClient;
-import net.hunme.baselibrary.util.MWebViewClient;
-import net.hunme.baselibrary.widget.MyViewView;
+import net.hunme.baselibrary.util.G;
 import net.hunme.school.R;
 import net.hunme.school.SchoolFragement;
 
-public class WebViewActivity extends BaseActivity implements View.OnClickListener{
+import org.apache.cordova.CordovaActivity;
+import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.CordovaWebViewImpl;
+import org.apache.cordova.engine.SystemWebChromeClient;
+import org.apache.cordova.engine.SystemWebView;
+import org.apache.cordova.engine.SystemWebViewEngine;
+
+public class WebViewActivity extends CordovaActivity implements View.OnClickListener{
 
     /**
      * 左边的图片
