@@ -1,6 +1,6 @@
 package net.hunme.message.activity;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,8 +38,6 @@ import java.util.List;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
-import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * 作者： wh
@@ -94,7 +92,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
     /**
      * 适配器
      */
-   private ContractAdapter adapter;
+    private ContractAdapter adapter;
     /**
      * 用户id
      */
@@ -146,7 +144,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
             params.put("type","3");
         }
         Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this);
+        OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this,2,"contract");
     }
     /**
      * 显示列表
@@ -161,7 +159,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
             public void onTouchingLetterChanged(String s) {
                 // 该字母首次出现的位置
                 int position = adapter.getPositionForSection(s.charAt(0));
-            //    Log.i("TAVGF",position+"");
+                //    Log.i("TAVGF",position+"");
                 if (position != -1) {
                     lv_parent.setSelection(position);
                 }
@@ -173,24 +171,19 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
             public void onItemClick(AdapterView<?> parent, View view,
                                     final int position, long id) {
                 GroupMemberBean bean = groupMemberBeanList.get(position);
-                 final String uid  = bean.getUserid();
-                 String image = bean.getImg();
-                  if (image==null){
+                final String uid  = bean.getUserid();
+                String image = bean.getImg();
+                if (image==null){
                     image = "http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png";
-                  }
-                 final  String name = bean.getName();
-                  if (RongIM.getInstance()!=null){
-                 //   Log.i("TDDAG", SourceDateList.get(position).getUserid());
-                    RongIM.getInstance().startConversation(ParentActivity.this, Conversation.ConversationType.PRIVATE, uid,name);
-                    final String finalImage = image;
-                    RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-                        @Override
-                        public UserInfo getUserInfo(String userId) {
-                             UserInfo userInfo =new UserInfo(uid,name, Uri.parse(finalImage));
-                            return  userInfo;
-                        }
-                    }, true);
-                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(uid, name, Uri.parse(image)));
+                }
+                final  String name = bean.getName();
+                if (RongIM.getInstance()!=null){
+                    Intent intent  = new Intent(ParentActivity.this,PersonDetailActivity.class);
+                    intent.putExtra("targetId",uid);
+                    intent.putExtra("title",name);
+                    startActivity(intent);
+                    //   Log.i("TDDAG", SourceDateList.get(position).getUserid());
+                    //  RongIM.getInstance().startConversation(ParentActivity.this, Conversation.ConversationType.PRIVATE, uid,name);
                 }
             }
         });
@@ -265,14 +258,14 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      * 设置好友列表
      * @param  groupJsonList 数据列表
      */
-   private void setFriendList(List<GroupJson> groupJsonList){
-       List<MemberJson> memberJsons = groupJsonList.get(0).getMenberList();
-       for (int i = 0;i<memberJsons.size();i++){
-           MemberJson memberJson = memberJsons.get(i);
-           GroupMemberBean groupMemberBean = MemberJsonnTGroupMember(memberJson);
-           groupMemberBeanList.add(groupMemberBean);
-       }
-   }
+    private void setFriendList(List<GroupJson> groupJsonList){
+        List<MemberJson> memberJsons = groupJsonList.get(0).getMenberList();
+        for (int i = 0;i<memberJsons.size();i++){
+            MemberJson memberJson = memberJsons.get(i);
+            GroupMemberBean groupMemberBean = MemberJsonnTGroupMember(memberJson);
+            groupMemberBeanList.add(groupMemberBean);
+        }
+    }
     /**
      * 将MemberJson转换成GroupMemberBean
      * @param  memberJson 实体类
@@ -296,12 +289,10 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
     @Override
     public void onSuccess(String uri, Object date) {
         Result<List<GroupJson>> data = (Result<List<GroupJson>>) date;
-        if (data.isSuccess()){
-            List<GroupJson>  groupJsonList = data.getData();
-            if (groupJsonList!=null||groupJsonList.size()!=0){
-                setFriendList(groupJsonList);
-                initList();
-            }
+        List<GroupJson>  groupJsonList = data.getData();
+        if (groupJsonList!=null||groupJsonList.size()!=0){
+            setFriendList(groupJsonList);
+            initList();
         }
     }
 

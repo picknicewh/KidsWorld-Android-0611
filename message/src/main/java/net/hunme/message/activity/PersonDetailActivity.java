@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
@@ -23,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * 作者： wh
@@ -73,6 +75,10 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
      * 用户id
      */
     private String userid;
+    /**
+     * 头像地址
+     */
+    private String image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,8 +106,8 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
         iv_pcall.setOnClickListener(this);
         iv_pmessage.setOnClickListener(this);
         Intent intent = getIntent();
-        username = intent.getStringExtra("name");
-        userid = intent.getStringExtra("userid");
+        username = intent.getStringExtra("title");
+        userid = intent.getStringExtra("targetId");
         tv_pname.setText(username);
         getUserInfor(userid);
     }
@@ -126,6 +132,14 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
         }else if (v.getId()==R.id.iv_pmessage){
             if (RongIM.getInstance()!=null){
                 RongIM.getInstance().startPrivateChat(this,userid,username);
+                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+                    @Override
+                    public UserInfo getUserInfo(String userId) {
+                        UserInfo userInfo =new UserInfo(userid,username, Uri.parse(image));
+                        return  userInfo;
+                    }
+                }, true);
+                RongIM.getInstance().refreshUserInfoCache(new UserInfo(userid, username, Uri.parse(image)));
             }
         }
     }
@@ -140,9 +154,10 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
             tv_role.setText(ryUserInfor.getTsName());
             tv_phone.setText(ryUserInfor.getPhone());
             tv_class.setText(ryUserInfor.getClassName());
+            image = ryUserInfor.getImg();
+            ImageCache.imageLoader(ryUserInfor.getImg(),iv_phead);
         }
     }
-
     @Override
     public void onError(String uri, String error) {
         Toast.makeText(PersonDetailActivity.this,error,Toast.LENGTH_SHORT).show();

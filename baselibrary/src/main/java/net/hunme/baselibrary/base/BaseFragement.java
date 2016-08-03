@@ -68,7 +68,7 @@ public class BaseFragement extends Fragment implements CordovaInterface {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (webView.getPluginManager() != null) {
+        if (null!=webView&&webView.getPluginManager() != null) {
             webView.getPluginManager().onDestroy();
         }
     }
