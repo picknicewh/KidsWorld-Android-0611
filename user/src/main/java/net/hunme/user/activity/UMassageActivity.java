@@ -56,7 +56,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     private TextView tv_classname;
     private TextView tv_schoolname;
     private UserMessage um;
-    private final String SETSIGN="/appUser/setSign.do";
+    private final String SETSIGN="/appUser/setSignature.do";
     private final String AVATAR="/appUser/setAvatar.do";
     private String path;//选择头像保存地址
     private String sign; //用户个性签名
@@ -195,7 +195,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     public void userSignSubmit(String userSign){
         Map<String,Object>map=new HashMap<>();
         map.put("tsId",um.getTsId());
-        map.put("sign",userSign);
+        map.put("signature",userSign);
         Type type=new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type,SETSIGN,map,this);
     }
@@ -213,6 +213,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
         if(SETSIGN.equals(uri)){
             um.setUserSign(sign);
             tv_sign.setText(um.getUserSign());
+            G.showToast(this,"签名修改成功");
         }else if(AVATAR.equals(uri)){
             G.showToast(this,"头像修改成功");
         }

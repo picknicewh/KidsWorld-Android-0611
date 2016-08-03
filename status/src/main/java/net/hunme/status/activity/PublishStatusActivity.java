@@ -78,6 +78,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
+    public static boolean isReleaseSuccess=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -258,11 +259,13 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             }else{
                 G.showToast(this,"发布失败，请稍后再试!");
             }
+            isReleaseSuccess=true;
         }
     }
 
     @Override
     public void onError(String uri, String error) {
+        isReleaseSuccess=false;
         G.showToast(this,"发布失败，请检测网络!");
     }
 

@@ -1,5 +1,6 @@
 package net.hunme.status;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -22,6 +23,7 @@ import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
+import net.hunme.status.activity.PublishStatusActivity;
 import net.hunme.status.mode.DynamicVo;
 import net.hunme.status.widget.ChooseClassPopWindow;
 import net.hunme.status.widget.StatusPublishPopWindow;
@@ -76,7 +78,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     /**
      * 动态uri地址
      */
-    private static final String url = "http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html?class=2";//&
+    private static final String url = "http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html?";//&
     /**
      * 班级选择
      */
@@ -92,6 +94,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     private List<DynamicVo> dynamicList;
     private RelativeLayout rl_toolbar;
     private SystemWebView webView;
+    @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.fragment_status, null);
@@ -118,12 +121,11 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     public void setWebView(int position){
         webView.addJavascriptInterface(this, "change");  //设置本地调用对象及其接口
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),ll_loading));
-        getWebView(webView).loadUrl(url+"&groupId="+dynamicList.get(position).getGroupId()
-                +"&groupName="+dynamicList.get(position).getGroupName()
-                +"&groupType="+dynamicList.get(position).getGroupType());
-        G.log("loadUrl====="+url+"&groupId="+dynamicList.get(position).getGroupId()
-                +"&groupName="+dynamicList.get(position).getGroupName()
-                +"&groupType="+dynamicList.get(position).getGroupType());
+        getWebView(webView).loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
+                +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName());
+
+        G.log("loadUrl====="+url+"groupId="+dynamicList.get(position).getGroupId()
+                +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId());
     }
     /**
      * 设置选择弹窗
@@ -162,8 +164,16 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         if (viewId==R.id.ll_classchoose){
             G.initDisplaySize(getActivity());
             int xPos = G.size.W/2-(popWindow.getContentView().getWidth())/2;
-            G.log(G.size.W/2+"----------------"+popWindow.getContentView().getWidth()/2);
             popWindow.showAsDropDown(rl_toolbar,xPos,-G.dp2px(getActivity(),10));
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(PublishStatusActivity.isReleaseSuccess) {
+            PublishStatusActivity.isReleaseSuccess = false;
+            webView.loadUrl("javascript:pulldownRefresh()");
         }
     }
 
@@ -171,6 +181,9 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
      * 获取班级列表
      */
     private void getDynamicHead(){
+        if(G.isEmteny(um.getTsId())){
+            return;
+        }
         Map<String,Object>map=new HashMap<>();
         map.put("tsId", um.getTsId());
         Type type=new TypeToken<Result<List<DynamicVo>>>(){}.getType();
@@ -199,7 +212,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     }
     @Override
     public void onError(String uri, String error) {
-        G.showToast(getActivity(),error);
+//        G.showToast(getActivity(),error);
     }
-
 }

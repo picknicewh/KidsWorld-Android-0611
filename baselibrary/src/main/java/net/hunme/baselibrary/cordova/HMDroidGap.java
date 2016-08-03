@@ -1,5 +1,6 @@
 package net.hunme.baselibrary.cordova;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -24,6 +25,7 @@ public class HMDroidGap extends CordovaActivity {
     private LinearLayout ll_loading;
     private TextView tv_title;
     private TextView tv_subtitle;
+    @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,4 +1,4 @@
-package net.hunme.user.activity;
+package net.hunme.baselibrary.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.hunme.baselibrary.R;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
@@ -17,7 +18,6 @@ import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.FormValidation;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
-import net.hunme.user.R;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -86,7 +86,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
             et_heckNumber.setVisibility(View.GONE);
             tv_time.setVisibility(View.GONE);
         }
-        tv_cp_number.setText("+86 "+um.getLoginName());
+        tv_cp_number.setText("+86 "+getIntent().getStringExtra("phoneNumber"));
     }
 
     @Override
