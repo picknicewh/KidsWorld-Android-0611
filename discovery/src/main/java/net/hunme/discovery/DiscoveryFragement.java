@@ -1,5 +1,6 @@
 package net.hunme.discovery;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -10,15 +11,15 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
-import net.hunme.baselibrary.cordova.CordovaInterfaceImpl;
-import net.hunme.baselibrary.cordova.MySystemWebView;
+import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.MWebChromeClient;
+import net.hunme.baselibrary.util.MWebViewClient;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
-
-import org.apache.cordova.engine.SystemWebView;
-import org.apache.cordova.engine.SystemWebViewEngine;
+import net.hunme.baselibrary.widget.MyViewView;
 
 
 /**
@@ -31,7 +32,7 @@ import org.apache.cordova.engine.SystemWebViewEngine;
  */
 public class DiscoveryFragement extends BaseFragement implements View.OnClickListener{
 
-    private SystemWebView webView;
+    private   MyViewView webView;
     /**
      * 左边图片
      */
@@ -52,17 +53,18 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      * web接口类
      */
     private WebCommonPageFrom from;
-
-   private static final String url = "http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/paradiseHome";
-
+    /**
+     * 没有网络时显示内容
+     */
+    private RelativeLayout rl_nonetwork;
+   private  static   final String url = "http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/paradiseHome";
+    @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        LayoutInflater localInflater = inflater.cloneInContext(new CordovaInterfaceImpl(getActivity(), this));
-        View view = localInflater.inflate(R.layout.fragment_discovery, null);
+        View view = inflater.inflate(R.layout.fragment_discovery,null);
         init(view);
         return view;
     }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -84,20 +86,32 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         iv_left = $(v,R.id.iv_dleft);
         tv_title = $(v,R.id.tv_dtitle);
         iv_right = $(v,R.id.iv_dright);
-        webView = $(v,R.id.cordovaWebView);
+        webView = $(v,R.id.wv_discovery);
         ll_loading = $(v,R.id.ll_loading);
+        rl_nonetwork = $(v,R.id.rl_nonetwork);
+        rl_nonetwork.setOnClickListener(this);
         from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,getActivity());
-        setWebView();
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
+        setviewShow();
     }
-
+    /**
+     * 设置有无网络时候显示状态
+     */
+    private void setviewShow(){
+        setWebView();
+        if (!G.isNetworkConnected(getActivity())){
+            rl_nonetwork.setVisibility(View.VISIBLE);
+        }else {
+            rl_nonetwork.setVisibility(View.GONE);
+        }
+    }
     private void  setWebView(){
         webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
-        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),ll_loading));
-        getWebView(webView).loadUrl(url);
+        webView.setWebViewClient(new MWebViewClient(webView,getActivity()));
+        webView.setWebChromeClient(new MWebChromeClient(getActivity(),ll_loading,webView));
+        webView.loadUrl(url);
     }
-
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
@@ -119,7 +133,8 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
             }else if (url.contains("paradiseHome")){
                 webView.loadUrl("javascript:goSearch_Origin()");
             }
+        }else if (viewId==R.id.rl_nonetwork){
+            setviewShow();
         }
     }
-
 }

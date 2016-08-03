@@ -45,9 +45,9 @@ public class StatusPublishPopWindow extends CommonPubishPopWindow {
         }else if (view.getId()==  R.id.iv_photo){
            // intent.setClass(context,)
             intent.putExtra("type",PICTURE);
-        }else if (view.getId()==  R.id.iv_move){
+        }/*else if (view.getId()==  R.id.iv_move){
             intent.putExtra("type",VEDIO);
-        }
+        }*/
         context.startActivity(intent);
         dismiss();
     }

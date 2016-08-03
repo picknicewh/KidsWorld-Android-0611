@@ -43,13 +43,12 @@ public abstract class CommonPubishPopWindow extends PopupWindow implements View.
     private void initview(){
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         conentView = inflater.inflate(R.layout.dialog_inform, null);
-
         iv_text= (ImageView) conentView.findViewById(R.id.iv_text);
         iv_photo= (ImageView) conentView.findViewById(R.id.iv_photo);
-        iv_move= (ImageView) conentView.findViewById(R.id.iv_move);
+     //   iv_move= (ImageView) conentView.findViewById(R.id.iv_move);
         iv_text.setOnClickListener(this);
         iv_photo.setOnClickListener(this);
-        iv_move.setOnClickListener(this);
+    //    iv_move.setOnClickListener(this);
 
     }
 

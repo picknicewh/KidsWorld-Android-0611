@@ -152,10 +152,12 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         });
     }
 
-   public void setClassname(String classname){
+    public void setClassname(String classname){
        tv_classname.setText(classname);
    }
-
+    public void setPosition(int position) {
+        this.position = position;
+    }
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
@@ -197,7 +199,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             setWebView(0);
         }
     }
-
     @Override
     public void onError(String uri, String error) {
         G.showToast(getActivity(),error);

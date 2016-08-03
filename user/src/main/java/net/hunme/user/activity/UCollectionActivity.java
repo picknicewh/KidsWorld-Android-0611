@@ -7,10 +7,12 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.util.Constant;
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MWebChromeClient;
 import net.hunme.baselibrary.util.MWebViewClient;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
@@ -48,9 +50,13 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
      */
     private String page;
     /**
-     * web借口类
+     * web接口类
      */
     private WebCommonPageFrom from;
+    /**
+     * 没有网络时显示内容
+     */
+    private RelativeLayout rl_nonetwork;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +71,11 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
         iv_right = $(R.id.iv_right);
         tv_title = $(R.id.tv_title);
         from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,this);
+        rl_nonetwork = $(R.id.rl_nonetwork);
+        rl_nonetwork.setVisibility(View.GONE);
+        rl_nonetwork.setOnClickListener(this);
         setWebView();
+      //  setviewShow();
     }
     @Override
     protected void setToolBar() {
@@ -89,7 +99,17 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
         webView.setWebChromeClient(new MWebChromeClient(this,ll_loading,webView));
         webView.loadUrl(url);
     }
-
+    /**
+     * 设置有无网络时候显示状态
+     */
+    private void setviewShow(){
+        setWebView();
+        if (!G.isNetworkConnected(this)){
+            rl_nonetwork.setVisibility(View.VISIBLE);
+        }else {
+            rl_nonetwork.setVisibility(View.GONE);
+        }
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
@@ -111,6 +131,8 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
                 webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
                 webView.goBack();
             }
+        }else if (view.getId()==R.id.rl_nonetwork){
+            setviewShow();
         }
     }
 }

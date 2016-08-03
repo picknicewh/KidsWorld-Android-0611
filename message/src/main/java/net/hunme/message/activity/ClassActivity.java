@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
-import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imlib.model.Group;
 
 /**
@@ -83,7 +82,8 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
                             return null;
                         }
                     },true);
-                    RongIM.getInstance().refreshGroupUserInfoCache(new GroupUserInfo(classId,groupName,groupName));
+                    RongIM.getInstance().refreshGroupInfoCache(new Group(classId,groupName, Uri.parse("")));
+                   // RongIM.getInstance().refreshGroupUserInfoCache(new GroupUserInfo(classId,groupName,groupName));
                 }
             }
         });
