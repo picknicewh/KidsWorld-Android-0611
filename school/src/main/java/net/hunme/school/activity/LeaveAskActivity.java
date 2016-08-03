@@ -2,7 +2,6 @@ package net.hunme.school.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -52,10 +51,7 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
      * 事由
      */
     private EditText et_cause;
-    /**
-     * 适配器
-     */
-    private ArrayAdapter<String> adapter;
+
     /**
      *开始时间选择控件
      */
@@ -105,9 +101,10 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
     private void initdata(){
         tv_name.setText(message.getUserName());
         format = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
-        format2 = new SimpleDateFormat("yyyy-MM-dd");
+        format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String currentTime = format.format(new Date(System.currentTimeMillis()));
         tv_start.setText(currentTime);
+        starDate = format2.format(new Date(System.currentTimeMillis()));
         tv_end.setText("请选择时间");
         startDateTimeDialog = new CustomDateTimeDialog(LeaveAskActivity.this,R.style.MyDialog,1);
         endDateTimeDialog = new CustomDateTimeDialog(LeaveAskActivity.this,R.style.MyDialog,0);
@@ -117,10 +114,6 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
      * 设置选择时间
      */
     public void setDateTextView(long millis,int flag) {
-        if (millis > System.currentTimeMillis()) {
-            millis = System.currentTimeMillis();
-            Toast.makeText(this, "日期不能设置超过未来的日子哦！", Toast.LENGTH_LONG).show();
-        }
         Date date = new Date(millis);
         String datestr = format.format(date);
         if (flag==1){
@@ -189,10 +182,15 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
      */
     private void subLeaveAsk(){
         Map<String,Object> params = new HashMap<>();
+        if (et_cause.getText().toString()==null || endDate==null){
+            Toast.makeText(this,"填写的数据不能为空哦！",Toast.LENGTH_SHORT).show();
+            return;
+        }
         //提交角色ID
-        params.put("tsId","123456");
+        UserMessage userMessage = UserMessage.getInstance(this);
+        params.put("tsId", userMessage.getTsId());
         //需要请假人员角色ID
-        params.put("leaveTsId","123456");
+        params.put("leaveTsId",userMessage.getTsId());
         params.put("endDate",endDate);
         params.put("startDate",starDate);
         //1=早餐，2=中餐，3=晚餐 多选时，用英文逗号分隔
@@ -204,11 +202,11 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onSuccess(String uri, Object date) {
            Result< String> data = (Result<String>) date;
-        if (data.isSuccess()){
+          if (data.isSuccess()){
             String result  = data.getData();
             Toast.makeText(LeaveAskActivity.this,result,Toast.LENGTH_SHORT).show();
-        }
-
+            finish();
+          }
     }
 
     @Override

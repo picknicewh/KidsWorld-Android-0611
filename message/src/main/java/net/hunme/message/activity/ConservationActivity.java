@@ -50,6 +50,10 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
      */
     private String name;
     /**
+     * 聊天用户id
+     */
+    private String image;
+    /**
      *当前的会话类型
      */
     private Conversation.ConversationType mconversationType;
@@ -77,7 +81,7 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         iv_detail.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         Intent intent = getIntent();
-       targetId = intent.getData().getQueryParameter("targetId");
+        targetId = intent.getData().getQueryParameter("targetId");
         name = intent.getData().getQueryParameter("title");
         tv_name.setText(name);
         mconversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));

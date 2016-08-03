@@ -111,6 +111,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         getWebView(webView).loadUrl(url);
     }
 
+
     @Override
     public void onClick(View view) {
         int viewId = view.getId();

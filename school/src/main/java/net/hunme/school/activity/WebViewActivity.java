@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.school.R;
 import net.hunme.school.SchoolFragement;
 
@@ -38,7 +39,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
     /**
      * 网页
      */
-    private SystemWebView webView;
+    public static SystemWebView webView;
     /**
      * 加载动画
      */
@@ -54,7 +55,8 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         super.init();
         launchUrl=getIntent().getStringExtra("loadUrl");
         G.log("loaduri-----"+launchUrl);
-        loadUrl(launchUrl);
+        loadUrl(launchUrl+"?TsId="+ UserMessage.getInstance(this).getTsId());
+        //Log.i("TAFF",UserMessage.getInstance(this).getTsId()+"==============getTsId");
         initData();
       //  G.clearCacheFolder(getCacheDir(),System.currentTimeMillis());
     }
@@ -90,7 +92,12 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
             }
         });
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (webView.getUrl().contains(SchoolFragement.INFORM))
+            webView.loadUrl("javascript:getData()");
+    }
     @Override
     protected CordovaWebView makeWebView() {
         webView = (SystemWebView) findViewById(R.id.cordovaWebView);

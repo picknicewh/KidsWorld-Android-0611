@@ -1,5 +1,6 @@
 package net.hunme.message.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * 附加注释：
  * 主要接口：
  */
-public class GroupJson {
+public class GroupJson implements Serializable {
     /**
      * groupName : 苗苗班
      * ryId : 298f1648653840fdaa6c396830025af5

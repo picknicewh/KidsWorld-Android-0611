@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.message.R;
 import net.hunme.message.bean.GroupMemberBean;
 
@@ -72,7 +73,7 @@ public class ContractAdapter extends BaseAdapter implements SectionIndexer {
 			viewHolder.tvLetter.setVisibility(View.GONE);
 		}
 		viewHolder.tvTitle.setText(this.list.get(position).getName());
-		viewHolder.ivimage.setImageResource(R.mipmap.person);
+		ImageCache.imageLoader(list.get(position).getImg(),viewHolder.ivimage);
 		return view;
 	}
 
