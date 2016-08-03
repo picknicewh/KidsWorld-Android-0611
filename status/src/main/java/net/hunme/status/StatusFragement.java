@@ -89,6 +89,16 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
      */
     private List<DynamicVo> dynamicList;
     private RelativeLayout rl_toolbar;
+    /**
+     * 没有网络时显示内容
+     */
+    private RelativeLayout rl_nonetwork;
+
+
+    /**
+     * 选择的班级position
+     */
+    private int position;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_status, null);
@@ -104,6 +114,8 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         ll_loading = $(view, R.id.ll_loading);
         ll_classchoose = $(view,R.id.ll_classchoose);
         rl_toolbar=$(view,R.id.rl_toolbar);
+        rl_nonetwork = $(view,R.id.rl_nonetwork);
+        rl_nonetwork.setOnClickListener(this);
         um=UserMessage.getInstance(getActivity());
         setViewAction();
         classlist = new ArrayList<>();
@@ -111,8 +123,15 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
 //        classlist.add("一(2)班");
 //        classlist.add("一(3)班");
         getDynamicHead();
+        setViewShow();
     }
-
+    private void setViewShow(){
+        if (!G.isNetworkConnected(getActivity())){
+            rl_nonetwork.setVisibility(View.VISIBLE);
+        }else {
+            rl_nonetwork.setVisibility(View.GONE);
+        }
+    }
     public void setWebView(int position){
         webView.addJavascriptInterface(this, "change");  //设置本地调用对象及其接口
         webView.setWebViewClient(new MWebViewClient(webView,getActivity()));
@@ -149,10 +168,12 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         });
     }
 
-   public void setClassname(String classname){
+    public void setClassname(String classname){
        tv_classname.setText(classname);
    }
-
+    public void setPosition(int position) {
+        this.position = position;
+    }
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
@@ -171,9 +192,11 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
                     }
                 }
             });
+        }else if (viewId ==R.id.rl_nonetwork){
+            setWebView(position);
+            setViewShow();
         }
     }
-
     private void getDynamicHead(){
         Map<String,Object>map=new HashMap<>();
         map.put("tsId", um.getTsId());
@@ -193,9 +216,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         if(dynamicList.size()>0){
             setWebView(0);
         }
-
     }
-
     @Override
     public void onError(String uri, String error) {
         G.showToast(getActivity(),error);

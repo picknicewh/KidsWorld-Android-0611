@@ -102,7 +102,6 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
         Intent intent = getIntent();
         username = intent.getStringExtra("name");
         userid = intent.getStringExtra("userid");
-
         tv_pname.setText(username);
         getUserInfor(userid);
     }
@@ -134,6 +133,7 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
     @Override
     public void onSuccess(String uri, Object date) {
         Result<RyUserInfor> UserInfor = (Result<RyUserInfor>) date;
+       // Log.i("TAGGG",UserInfor.getData()+"=============data=============");
         if (UserInfor.isSuccess()){
             RyUserInfor ryUserInfor= UserInfor.getData();
             tv_school.setText(ryUserInfor.getSchoolName());

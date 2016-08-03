@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MWebChromeClient;
 import net.hunme.baselibrary.util.MWebViewClient;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
@@ -51,7 +53,10 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      * web接口类
      */
     private WebCommonPageFrom from;
-
+    /**
+     * 没有网络时显示内容
+     */
+    private RelativeLayout rl_nonetwork;
    private  static   final String url = "http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/paradiseHome";
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
@@ -83,11 +88,23 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         iv_right = $(v,R.id.iv_dright);
         webView = $(v,R.id.wv_discovery);
         ll_loading = $(v,R.id.ll_loading);
-
+        rl_nonetwork = $(v,R.id.rl_nonetwork);
+        rl_nonetwork.setOnClickListener(this);
         from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,getActivity());
-        setWebView();
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
+        setviewShow();
+    }
+    /**
+     * 设置有无网络时候显示状态
+     */
+    private void setviewShow(){
+        setWebView();
+        if (!G.isNetworkConnected(getActivity())){
+            rl_nonetwork.setVisibility(View.VISIBLE);
+        }else {
+            rl_nonetwork.setVisibility(View.GONE);
+        }
     }
     private void  setWebView(){
         webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
@@ -116,7 +133,8 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
             }else if (url.contains("paradiseHome")){
                 webView.loadUrl("javascript:goSearch_Origin()");
             }
+        }else if (viewId==R.id.rl_nonetwork){
+            setviewShow();
         }
     }
-
 }

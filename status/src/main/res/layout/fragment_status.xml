@@ -48,6 +48,9 @@
             android:src="@mipmap/ic_new_message"/>
     </RelativeLayout>
     <include
+        android:id="@+id/rl_nonetwork"
+        layout="@layout/nonetwork"/>
+    <include
         android:id="@+id/ll_loading"
         layout="@layout/loadwebview"/>
    <net.hunme.baselibrary.widget.MyViewView

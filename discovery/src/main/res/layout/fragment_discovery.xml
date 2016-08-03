@@ -34,6 +34,9 @@
           android:layout_height="20dp" />
    </RelativeLayout>
    <include
+       android:id="@+id/rl_nonetwork"
+       layout="@layout/nonetwork"/>
+   <include
        android:id="@+id/ll_loading"
        layout="@layout/loadwebview"/>
    <net.hunme.baselibrary.widget.MyViewView

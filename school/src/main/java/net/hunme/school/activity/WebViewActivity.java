@@ -3,16 +3,17 @@ package net.hunme.school.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MWebChromeClient;
 import net.hunme.baselibrary.util.MWebViewClient;
 import net.hunme.baselibrary.widget.MyViewView;
@@ -49,6 +50,10 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
      * 加载动画
      */
     private LinearLayout ll_loading;
+    /**
+     * 没有网络时显示内容
+    */
+    private RelativeLayout rl_nonetwork;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +69,27 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
         tv_title = $(R.id.tv_title);
         tv_right = $(R.id.tv_subtitle);
         ll_loading = $(R.id.ll_loading);
+        rl_nonetwork = $(R.id.rl_nonetwork);
+        rl_nonetwork.setOnClickListener(this);
         Intent intent = getIntent();
         rightTitle  =intent.getStringExtra("rightTitle");
         if (rightTitle!=null){
-            Log.i("TRF",rightTitle);
             tv_right.setText(rightTitle);
         }
         url = intent.getStringExtra("url");
-        setWebView();
+        setviewShow();
         setSubTitleOnClickListener(this);
+    }
+    /**
+     * 设置有无网络时候显示状态
+     */
+    private void setviewShow(){
+        setWebView();
+        if (!G.isNetworkConnected(this)){
+            rl_nonetwork.setVisibility(View.VISIBLE);
+        }else {
+            rl_nonetwork.setVisibility(View.GONE);
+        }
     }
     @Override
     protected void setToolBar() {
@@ -139,6 +156,8 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
                 Intent intent = new Intent(this,LeaveAskActivity.class);
                 startActivity(intent);
             }
+        }else if (view.getId()==R.id.rl_nonetwork){
+            setviewShow();
         }
     }
 }
