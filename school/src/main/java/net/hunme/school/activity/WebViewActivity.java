@@ -7,6 +7,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.util.G;
@@ -42,6 +43,10 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
      * 加载动画
      */
     private LinearLayout ll_loading;
+    /**
+     * 没网络时显示
+     */
+    private RelativeLayout rl_nonetwork;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +65,8 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         ll_loading = (LinearLayout) findViewById(R.id.ll_loading);
         tv_subtitle= (TextView) findViewById(R.id.tv_subtitle);
         tv_subtitle.setOnClickListener(this);
+      /*  rl_nonetwork=(RelativeLayout)findViewById(R.id.rl_nonetwork);
+        rl_nonetwork.setOnClickListener(this);*/
         setToolBar();
     }
 

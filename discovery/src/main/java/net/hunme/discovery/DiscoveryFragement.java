@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.cordova.CordovaInterfaceImpl;
 import net.hunme.baselibrary.cordova.MySystemWebView;
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
 
 import org.apache.cordova.engine.SystemWebView;
@@ -52,7 +54,10 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      * web接口类
      */
     private WebCommonPageFrom from;
-
+    /**
+     * 没网络时显示
+     */
+    private RelativeLayout rl_nonetwork;
    private static final String url = "http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/paradiseHome";
 
     @Override
@@ -86,12 +91,22 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         iv_right = $(v,R.id.iv_dright);
         webView = $(v,R.id.cordovaWebView);
         ll_loading = $(v,R.id.ll_loading);
+        rl_nonetwork= $(v,R.id.rl_nonetwork);
+        rl_nonetwork.setOnClickListener(this);
         from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,getActivity());
-        setWebView();
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
+       // setShowView();
+        setWebView();
     }
-
+     private  void  setShowView(){
+         setWebView();
+         if (G.isNetworkConnected(getActivity())){
+             rl_nonetwork.setVisibility(View.GONE);
+         }else {
+             rl_nonetwork.setVisibility(View.VISIBLE);
+         }
+     }
     private void  setWebView(){
         webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),ll_loading));
@@ -119,6 +134,8 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
             }else if (url.contains("paradiseHome")){
                 webView.loadUrl("javascript:goSearch_Origin()");
             }
+        }else if (viewId==R.id.rl_nonetwork){
+            setShowView();
         }
     }
 
