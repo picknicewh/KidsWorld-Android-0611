@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.login.mode.CharacterSeleteVo;
 
@@ -59,7 +60,15 @@ public class UserChooseAdapter extends BaseAdapter {
 //        hold.cv_head.setImageResource("");  头像暂时无法获取
         CharacterSeleteVo selete=seleteList.get(i);
         hold.tv_name.setText(selete.getName());
-        hold.tv_address.setText(selete.getSchoolName()+"  "+selete.getClassName());
+        String clsssName=selete.getClassName();
+        String schoolName= selete.getSchoolName();
+        if(G.isEmteny(clsssName)){
+            clsssName="";
+        }
+        if(G.isEmteny(schoolName)){
+            schoolName="";
+        }
+        hold.tv_address.setText(schoolName+" "+clsssName);
         if(i==selectPosition){
             changItemImage(view,i);
         }

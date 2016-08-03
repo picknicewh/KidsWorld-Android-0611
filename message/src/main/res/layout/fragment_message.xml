@@ -31,7 +31,6 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/iv_class"
             android:gravity="center"
@@ -93,7 +92,7 @@
     <View
         android:background="@color/line_gray"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/line_gray"/>
+        android:layout_height="0.5dp"/>
     <FrameLayout
         android:id="@+id/rong_content"
         android:layout_width="match_parent"

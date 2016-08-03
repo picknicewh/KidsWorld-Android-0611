@@ -50,8 +50,13 @@
     <include
         android:id="@+id/ll_loading"
         layout="@layout/loadwebview"/>
-   <net.hunme.baselibrary.widget.MyViewView
-       android:id="@+id/wv_status"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"/>
+   <!--<net.hunme.baselibrary.widget.MyViewView-->
+       <!--android:id="@+id/wv_status"-->
+       <!--android:layout_width="match_parent"-->
+       <!--android:layout_height="match_parent"/>-->
+    <org.apache.cordova.engine.SystemWebView
+        android:id="@+id/cordovaWebView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </org.apache.cordova.engine.SystemWebView>
 </LinearLayout>

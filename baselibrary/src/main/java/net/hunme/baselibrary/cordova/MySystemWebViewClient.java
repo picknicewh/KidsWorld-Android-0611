@@ -1,35 +1,36 @@
-package net.hunme.baselibrary.util;
+package net.hunme.baselibrary.cordova;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.util.Log;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
-import net.hunme.baselibrary.widget.MyViewView;
+import org.apache.cordova.engine.SystemWebViewClient;
+import org.apache.cordova.engine.SystemWebViewEngine;
 
 /**
- * 作者： Administrator
- * 时间： 2016/7/20
- * 名称：
- * 版本说明：
- * 附加注释：
+ * ================================================
+ * 作    者：ZLL
+ * 时    间：2016/8/2
+ * 描    述：
+ * 版    本：
+ * 修订历史：
  * 主要接口：
+ * ================================================
  */
-public class MWebViewClient extends WebViewClient {
-
-    private MyViewView webView;
+public class MySystemWebViewClient extends SystemWebViewClient {
+    private WebView webView;
     private Context context;
-
-    public MWebViewClient(MyViewView webView) {
-        super();
-        this.webView = webView;
+    public MySystemWebViewClient(SystemWebViewEngine parentEngine) {
+        super(parentEngine);
     }
 
-    public MWebViewClient(MyViewView webView, Context context) {
-        super();
+
+    public MySystemWebViewClient(SystemWebViewEngine parentEngine,WebView webView, Context context) {
+        super(parentEngine);
         this.webView = webView;
         this.context = context;
 
@@ -39,14 +40,21 @@ public class MWebViewClient extends WebViewClient {
      * 在点击请求的是链接是才会调用，
      * 重写此方法返回true表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边。
      */
+//    @Override
+//    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//        // 使用自己的WebView组件来响应Url加载事件，而不是使用默认浏览器器加载页面
+//        view.loadUrl(url);
+//        // 记得消耗掉这个事件。给不知道的朋友再解释一下，Android中返回True的意思就是到此为止,
+//        // 事件就会不会冒泡传递了，我们称之为消耗掉
+//        return true;
+//    }
+
     @Override
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        // 使用自己的WebView组件来响应Url加载事件，而不是使用默认浏览器器加载页面
-        webView.loadUrl(url);
-        // 记得消耗掉这个事件。给不知道的朋友再解释一下，Android中返回True的意思就是到此为止,
-        // 事件就会不会冒泡传递了，我们称之为消耗掉
+    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+        webView.loadUrl(request.getUrl().toString());
         return true;
     }
+
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         Log.i("WebActivity", "页面加载开始");

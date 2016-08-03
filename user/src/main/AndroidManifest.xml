@@ -26,7 +26,7 @@
         <activity android:name=".activity.ProvsionActivity" />
         <activity android:name=".activity.InfoDetailsActivity" />
         <activity android:name=".activity.AlbumDetailsActivity" />
-        <activity android:name=".activity.HMDroidGap"></activity>
+        <activity android:name="net.hunme.baselibrary.cordova.HMDroidGap"></activity>
     </application>
 
 </manifest>

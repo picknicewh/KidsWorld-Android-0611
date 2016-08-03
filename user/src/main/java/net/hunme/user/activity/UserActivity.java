@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.cordova.HMDroidGap;
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.user.R;
@@ -37,7 +39,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         initView();
-        initData();
+//        initData();
     }
 
     @Override
@@ -75,6 +77,10 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
            tv_id.setBackgroundResource(R.drawable.user_teach_selecter);
         }
         tv_name.setText(um.getUserName());
+        if(G.isEmteny(um.getClassName())){
+            tv_address.setText(um.getSchoolName());
+            return;
+        }
         tv_address.setText(um.getSchoolName()+"-"+um.getClassName());
     }
 

@@ -1,4 +1,4 @@
-package net.hunme.user.activity;
+package net.hunme.baselibrary.cordova;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.R;
 import net.hunme.baselibrary.util.G;
-import net.hunme.user.R;
 
 import org.apache.cordova.CordovaActivity;
 import org.apache.cordova.CordovaWebView;
@@ -23,6 +23,7 @@ public class HMDroidGap extends CordovaActivity {
     private SystemWebView webView;
     private LinearLayout ll_loading;
     private TextView tv_title;
+    private TextView tv_subtitle;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,8 @@ public class HMDroidGap extends CordovaActivity {
         iv_left= (ImageView) findViewById(R.id.iv_left);
         tv_title= (TextView) findViewById(R.id.tv_title);
         ll_loading = (LinearLayout) findViewById(R.id.ll_loading);
-        tv_title.setText(getIntent().getStringExtra("title"));
+        tv_subtitle= (TextView) findViewById(R.id.tv_subtitle);
+        setTabBarText();
         iv_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,6 +49,15 @@ public class HMDroidGap extends CordovaActivity {
                 }
             }
         });
+    }
+
+    private void setTabBarText(){
+        tv_title.setText(getIntent().getStringExtra("title"));
+        String subTitle=getIntent().getStringExtra("subTitle");
+        if(!G.isEmteny(subTitle)) {
+            tv_subtitle.setText(subTitle);
+            tv_subtitle.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package net.hunme.discovery;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -14,10 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
-import net.hunme.baselibrary.util.MWebChromeClient;
-import net.hunme.baselibrary.util.MWebViewClient;
+import net.hunme.baselibrary.cordova.CordovaInterfaceImpl;
+import net.hunme.baselibrary.cordova.MySystemWebView;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
-import net.hunme.baselibrary.widget.MyViewView;
+
+import org.apache.cordova.engine.SystemWebView;
+import org.apache.cordova.engine.SystemWebViewEngine;
 
 
 /**
@@ -30,7 +31,7 @@ import net.hunme.baselibrary.widget.MyViewView;
  */
 public class DiscoveryFragement extends BaseFragement implements View.OnClickListener{
 
-    private   MyViewView webView;
+    private SystemWebView webView;
     /**
      * 左边图片
      */
@@ -52,14 +53,16 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      */
     private WebCommonPageFrom from;
 
-   private  static   final String url = "http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/paradiseHome";
-    @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
+   private static final String url = "http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/paradiseHome";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_discovery,null);
+        LayoutInflater localInflater = inflater.cloneInContext(new CordovaInterfaceImpl(getActivity(), this));
+        View view = localInflater.inflate(R.layout.fragment_discovery, null);
         init(view);
         return view;
     }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -81,20 +84,20 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         iv_left = $(v,R.id.iv_dleft);
         tv_title = $(v,R.id.tv_dtitle);
         iv_right = $(v,R.id.iv_dright);
-        webView = $(v,R.id.wv_discovery);
+        webView = $(v,R.id.cordovaWebView);
         ll_loading = $(v,R.id.ll_loading);
-
         from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,getActivity());
         setWebView();
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
     }
+
     private void  setWebView(){
         webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
-        webView.setWebViewClient(new MWebViewClient(webView,getActivity()));
-        webView.setWebChromeClient(new MWebChromeClient(getActivity(),ll_loading,webView));
-        webView.loadUrl(url);
+        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),ll_loading));
+        getWebView(webView).loadUrl(url);
     }
+
     @Override
     public void onClick(View view) {
         int viewId = view.getId();

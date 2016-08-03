@@ -37,7 +37,6 @@
             android:textColor="#cccccc"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:text="正在直播"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>

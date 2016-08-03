@@ -44,6 +44,7 @@ public class OkHttps<T> {
     private static boolean isSuccess; //服务端返回状态
     private static String uri_host=ServerConfigManager.SERVER_IP;
     private static final String ERRORPROMPT="与服务器连接异常，请检查网络后重试！";
+    private static boolean isSendError;
     private static OkHttpUtils getInstance() {
         if(null==httpUtils){
             OkHttpUtils.getInstance().getOkHttpClient();
@@ -157,9 +158,9 @@ public class OkHttps<T> {
                     @Override
                     public Object parseNetworkResponse(Response response) throws Exception {
                         String value=response.body().string();
-                        G.log(value+"----------");
                         JSONObject jsonObject = new JSONObject(value);
                         isSuccess ="0".equals(jsonObject.getString("code"));
+                        isSendError=false;
                         if(isSuccess)
                             return new Gson().fromJson(value,type);
                         else
@@ -178,6 +179,7 @@ public class OkHttps<T> {
                         if(isSuccess)
                             okHttpListener.onSuccess(uri,o);
                         else
+                            if(!isSendError)
                             okHttpListener.onError(uri,((Result<String>)o).getData());
 //                            else
 //                               okHttpListener.onError(uri,"非法访问");
@@ -187,6 +189,7 @@ public class OkHttps<T> {
                     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                         super.onError(isFromCache, call, response, e);
                         okHttpListener.onError(uri,ERRORPROMPT);
+                        isSendError=true;
                     }
 
                     @Override

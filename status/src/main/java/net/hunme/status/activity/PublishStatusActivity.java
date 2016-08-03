@@ -192,7 +192,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                     G.showToast(this,"权限没有授取，本次操作取消，请到权限中心授权");
                 }
                 break;
-
         }
     }
 
@@ -206,25 +205,23 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             startActivityForResult(intent,ChoosePermitActivity.CHOOSE_PERMIT);
         }else if(viewId==R.id.tv_subtitle){
             String dyContent=et_content.getText().toString().trim();
-            if(G.isEmteny(dyContent)&&dynamicType.equals("3")){
+            if(G.isEmteny(dyContent)&&dynamicType.equals("3")||dynamicType.equals("1")&&itemList.size()<2){
                 G.showToast(this,"发布的内容不能为空");
                 return;
             }
             Map<String,Object>map=new HashMap<>();
             map.put("tsId",UserMessage.getInstance(this).getTsId());
-            map.put("dynamicType",dynamicType);
             map.put("text",dyContent);
             map.put("dynamicVisicty",dynamicVisicty);
             Type type =new TypeToken<Result<String>>(){}.getType();
-            if(itemList.size()>1){
-                List<File>list=new ArrayList<>();
-                list= BitmapCache.getFileList(itemList);
-//                for (int i=0;i<itemList.size();i++){
-//                    G.log(itemList.get(i)+"-----------------文件地址");
-//                    list.add(new File(itemList.get(i)));
-//                }
+            if(dynamicType.equals("1")&&itemList.size()>1){
+                List<File>list= BitmapCache.getFileList(itemList);
+                dynamicType="1";
+                map.put("dynamicType",dynamicType);
                 OkHttps.sendPost(type,DYNAMIC,map,list,this);
             }else{
+                dynamicType="3";
+                map.put("dynamicType",dynamicType);
                 OkHttps.sendPost(type,DYNAMIC,map,this);
             }
         }

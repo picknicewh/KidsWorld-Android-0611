@@ -87,7 +87,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_setting);
         initView();
-        initDate();
+//        initDate();
     }
 
     @Override
@@ -143,6 +143,12 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
             e.printStackTrace();
         }
         tv_version.setText("V"+PackageUtils.getVersionName(this));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initDate();
     }
 
     @Override

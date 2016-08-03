@@ -54,7 +54,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     /**
      * 基本url
      */
-    public static final String baseurl = "http://192.168.5.57:8080/space1/#/";
+    public static final String baseurl = "http://192.168.1.134:8080/kidsWorld/school/#/";
     /**
      * 考勤
      */
@@ -66,7 +66,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     /**
      * 食谱
      */
-    public  static final String FOODLIST = "recipes";
+    public  static final String FOODLIST = "foodList";
     /**
      * 通知
      */
@@ -114,24 +114,24 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             Toast.makeText(getActivity(),"暂未开通此功能！",Toast.LENGTH_SHORT).show();
         }else if (view.getId()==R.id.rl_check){
             intent.setClass(getActivity(), WebViewActivity.class);
-            intent.putExtra("url", geturl(CHECK));
+            intent.putExtra("loadUrl", geturl(CHECK));
             intent.putExtra("title","选择班级");
         }else if (view.getId()==R.id.rl_leave){
             intent.setClass(getActivity(), WebViewActivity.class);
-            intent.putExtra("url",geturl(LEAVE));
+            intent.putExtra("loadUrl",geturl(LEAVE));
             intent.putExtra("title","请假");
-            intent.putExtra("rightTitle","我要请假");
+            intent.putExtra("subTitle","我要请假");
         }else if (view.getId()==R.id.rl_info){
             intent.setClass(getActivity(), PublishActivity.class);
         }else if (view.getId()==R.id.rl_food){
             intent.setClass(getActivity(), WebViewActivity.class);
-            intent.putExtra("url",geturl(FOODLIST));
+            intent.putExtra("loadUrl",geturl(FOODLIST));
             intent.putExtra("title","食谱");
         }else if (view.getId()==R.id.rl_arrangement){
             intent.setClass(getActivity(), WebViewActivity.class);
-            intent.putExtra("url",geturl(ARRANGE));
+            intent.putExtra("loadUrl",geturl(ARRANGE));
             intent.putExtra("title","课程安排");
-            intent.putExtra("rightTitle","发布");
+            intent.putExtra("subTitle","发布");
         }
         if (view.getId()!=R.id.rl_openclass){
             startActivity(intent);

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.HMDroidGap">
+    tools:context=".cordova.HMDroidGap">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -26,6 +26,17 @@
             android:textSize="@dimen/ts_xx_large"
             android:text="我的收藏"
             android:layout_gravity="center"/>
+        <TextView
+            android:visibility="gone"
+            android:padding="@dimen/space_x1.5"
+            android:id="@+id/tv_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ts_large"
+            android:text="121"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
     </RelativeLayout>
     <include
         android:id="@+id/ll_loading"

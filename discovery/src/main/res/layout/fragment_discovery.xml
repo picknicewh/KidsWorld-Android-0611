@@ -7,10 +7,10 @@
    <RelativeLayout
        android:id="@+id/rl_discovery"
        android:background="@color/colorAccent"
-       android:padding="@dimen/space"
        android:layout_width="match_parent"
        android:layout_height="50dp">
       <ImageView
+          android:padding="@dimen/space_x1.5"
           android:layout_alignParentLeft="true"
           android:id="@+id/iv_dleft"
           android:src="@mipmap/ic_history"
@@ -26,23 +26,29 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content" />
       <ImageView
+          android:padding="@dimen/space_x1.5"
           android:id="@+id/iv_dright"
           android:src="@mipmap/ic_search"
           android:layout_alignParentRight="true"
           android:layout_centerVertical="true"
-          android:layout_width="20dp"
-          android:layout_height="20dp" />
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
    </RelativeLayout>
    <include
        android:id="@+id/ll_loading"
        layout="@layout/loadwebview"/>
-   <net.hunme.baselibrary.widget.MyViewView
-       android:layerType="software"
-       android:id="@+id/wv_discovery"
+   <!--<net.hunme.baselibrary.widget.MyViewView-->
+       <!--android:layerType="software"-->
+       <!--android:id="@+id/wv_discovery"-->
+       <!--android:layout_width="match_parent"-->
+       <!--android:layout_height="match_parent"-->
+       <!--android:layout_x="0.0dip"-->
+       <!--android:layout_y="0.0dip"-->
+       <!--/>-->
+   <org.apache.cordova.engine.SystemWebView
+       android:id="@+id/cordovaWebView"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:layout_x="0.0dip"
-       android:layout_y="0.0dip"
-       />
+       android:layout_height="match_parent">
+   </org.apache.cordova.engine.SystemWebView>
 
 </LinearLayout>
