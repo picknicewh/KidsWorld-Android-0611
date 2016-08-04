@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
@@ -19,6 +21,7 @@ import com.pizidea.imagepicker.bean.ImageItem;
 import net.hunme.baselibrary.activity.PermissionsActivity;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
@@ -53,6 +56,9 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      *文字的长度
      */
     private TextView tv_count;
+    /**
+     * 显示
+     */
     private GridView gv_photo;
     private GridAlbumAdapter mAdapter;
     private List<String> itemList;
@@ -73,6 +79,14 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 可见范围
      */
     private String dynamicVisicty="1";
+    /**
+     * 来源 school 来自发布课程，status发布动态
+     */
+    private String source;
+    /**
+     * 限制内容
+     */
+    private RelativeLayout rl_restrict;
     // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
@@ -83,7 +97,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_status);
         initView();
-        showView(getIntent().getIntExtra("type",-1));
+
     }
 
     @Override
@@ -124,8 +138,19 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         gv_photo =$(R.id.gv_photo);
         tv_permitchoose =  $(R.id.tv_permitchoose);
         ll_permitchoose = $(R.id.ll_permitchoose);
+        rl_restrict = $(R.id.rl_restrict);
         ll_permitchoose.setOnClickListener(this);
         setEditContent();
+        source = getIntent().getStringExtra("from");
+        if (source.equals("status")){
+            rl_restrict.setVisibility(View.VISIBLE);
+            showView(getIntent().getIntExtra("type",-1));
+        }else if (source.equals("school")){
+            rl_restrict.setVisibility(View.GONE);
+            setCententTitle("发布课程");
+            goSelectImager();
+            showPhoto();
+        }
     }
 
     /**
@@ -204,23 +229,34 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             intent.putExtra("permit",tv_permitchoose.getText().toString());
             startActivityForResult(intent,ChoosePermitActivity.CHOOSE_PERMIT);
         }else if(viewId==R.id.tv_subtitle){
-            publishstatus();
+            String dyContent=et_content.getText().toString().trim();
+            if (source.equals("status")){
+                publishstatus(dyContent);
+            }else if (source.equals("school")){
+                publishcaurse(dyContent);
+            }
         }
     }
     /**
      * 发布课程
      */
     private void publishcaurse(String dyContent){
+        if (G.isEmteny(dyContent) || itemList.size()<1){
+            G.showToast(this,"发布的内容不能为空");
+            return;
+        }
         Map<String,Object>map=new HashMap<>();
         map.put("tsId",UserMessage.getInstance(this).getTsId());
-        map.put("text",dyContent);
+        map.put("content",dyContent);
+        Type type =new TypeToken<Result<String>>(){}.getType();
+        List<File>list= BitmapCache.getFileList(itemList);
+        OkHttps.sendPost(type, Apiurl.SCHOOL_PUBLISHCAURSE,map,list,this);
     }
     /**
      * 发布状态
      */
-    private void publishstatus(){
-        String dyContent=et_content.getText().toString().trim();
-        if(G.isEmteny(dyContent)&&dynamicType.equals("3")||dynamicType.equals("1")&&itemList.size()<2){
+    private void publishstatus(String dyContent){
+        if(G.isEmteny(dyContent)&&dynamicType.equals("3")||dynamicType.equals("1")&&itemList.size()<1){
             G.showToast(this,"发布的内容不能为空");
             return;
         }
@@ -252,20 +288,22 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 if(items != null && items.size() > 0){
                     for(ImageItem item:items){
                         G.log("选择了===="+item.path);
-                        if (getIntent().getStringExtra("from").equals("status")){
+                        if (source.equals("status")){
                             if(itemList.size()<9){
                                 itemList.add(item.path);
                             }
-                        }else if (getIntent().getStringExtra("from").equals("school")){
-                            if(itemList.size()<3){
+                        }else if (source.equals("school")){
+                            if(itemList.size()<1){
                                 itemList.add(item.path);
                             }
+                            Log.i("TGGG",itemList.size()+"===============");
                         }
                     }
                     mAdapter.notifyDataSetChanged();
                 }
             }
         });
+
     }
 
     @Override
@@ -278,12 +316,24 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             }else{
                 G.showToast(this,"发布失败，请稍后再试!");
             }
+        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
+            Result<String>result= (Result<String>) date;
+            if(result.isSuccess()){
+                G.showToast(this,"发布成功!");
+                finish();
+            }else{
+                G.showToast(this,"发布失败，请稍后再试!");
+            }
         }
     }
 
     @Override
     public void onError(String uri, String error) {
-        G.showToast(this,"发布失败，请检测网络!");
+        if (DYNAMIC.equals(uri)){
+            G.showToast(this,"发布失败，请检测网络!");
+        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
+            G.showToast(this,error);
+        }
     }
 
 }

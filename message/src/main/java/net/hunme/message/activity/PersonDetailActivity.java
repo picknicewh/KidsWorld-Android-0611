@@ -118,7 +118,7 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
         Map<String,Object> param = new HashMap<>();
         param.put("tsId",userid);
         Type  type = new  TypeToken<Result<RyUserInfor>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.MESSAGE_GETDETAIL,param,this);
+        OkHttps.sendPost(type, Apiurl.MESSAGE_GETDETAIL,param,this,2,"contract");
 
     }
     @Override

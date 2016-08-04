@@ -92,6 +92,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     private List<DynamicVo> dynamicList;
     private RelativeLayout rl_toolbar;
     private SystemWebView webView;
+    private  int xPos=0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.fragment_status, null);
@@ -132,7 +133,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         iv_lift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), UserActivity.class));
+                getActivity().startActivity(new Intent(getActivity(), UserActivity.class));
             }
         });
         iv_right.setOnClickListener(new View.OnClickListener() {
@@ -161,9 +162,9 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         int viewId = view.getId();
         if (viewId==R.id.ll_classchoose){
             G.initDisplaySize(getActivity());
-            int xPos = G.size.W/2-(popWindow.getContentView().getWidth())/2;
+            int xPos = G.size.W/2-G.dp2px(getActivity(),75);
             G.log(G.size.W/2+"----------------"+popWindow.getContentView().getWidth()/2);
-            popWindow.showAsDropDown(rl_toolbar,xPos,-G.dp2px(getActivity(),10));
+            popWindow.showAsDropDown(rl_toolbar,xPos,-G.dp2px(getActivity(),0));
         }
     }
 

@@ -24,4 +24,8 @@ public class Apiurl {
      * 提交请假申请
      */
     public static final String SCHOOL_SUBLEAVE = "/school/subLeave.do" ;
+    /**
+     * 发布课程
+     */
+    public static final String SCHOOL_PUBLISHCAURSE = "/school/setSyllabus.do" ;
 }
