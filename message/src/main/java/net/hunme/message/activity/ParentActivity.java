@@ -144,7 +144,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
             params.put("type","3");
         }
         Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this,2,"contract");
+        OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this,2,"CONTRAT");
     }
     /**
      * 显示列表
@@ -254,6 +254,9 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      */
     private void setFriendList(List<GroupJson> groupJsonList){
         List<MemberJson> memberJsons = groupJsonList.get(0).getMenberList();
+        if(null==memberJsons){
+            return;
+        }
         for (int i = 0;i<memberJsons.size();i++){
             MemberJson memberJson = memberJsons.get(i);
             GroupMemberBean groupMemberBean = MemberJsonnTGroupMember(memberJson);

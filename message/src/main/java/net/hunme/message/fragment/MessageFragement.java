@@ -99,7 +99,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         fragment.setUri(uri);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.rong_content, fragment);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 
     @Override
@@ -130,7 +130,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         //1=群，2=老师，3=家长
         params.put("type",1);
         Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this,2,"contract");
+        OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this,2,"GETGTOUP");
     }
     @Override
     public void onSuccess(String uri, Object date) {
@@ -153,9 +153,9 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
                                 return null;
                             }
                         },true);
-                        RongIM.getInstance().refreshGroupInfoCache(new Group(classId,groupName, Uri.parse("")));
+                        RongIM.getInstance().refreshGroupInfoCache(new Group(classId, groupName, Uri.parse("")));
                     }
-                }
+                 }
             }
         }
     }
