@@ -56,10 +56,16 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
                         image = "http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png";
                     }
                      BaseLibrary.connect(data.getRyId(),UserChooseActivity.this,data.getName(),image);
+                    String sex;
+                    if(data.getSex()==1){
+                        sex="男";
+                    }else{
+                        sex="女";
+                    }
                     //通过用户选择身份保存用户信息
                     UserAction.saveUserMessage(UserChooseActivity.this,data.getName(),
                             data.getImg(),data.getClassName(),data.getSchoolName(),
-                            data.getRyId(),data.getTsId(),data.getType());
+                            data.getRyId(),data.getTsId(),data.getType(),sex,data.getSignature());
                     selectUserSubmit(data.getTsId());
                     flag=1;
                     finish();
@@ -82,9 +88,15 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
         if(G.isEmteny(um.getUserName())){
             // 如果用户没有点击选择默认选择第一个身份
             CharacterSeleteVo data=seleteList.get(0);
+            String sex;
+            if(data.getSex()==1){
+                sex="男";
+            }else{
+                sex="女";
+            }
             UserAction.saveUserMessage(UserChooseActivity.this,data.getName(),
                     data.getImg(),data.getClassName(),data.getSchoolName(),
-                    data.getRyId(),data.getTsId(),data.getType());
+                    data.getRyId(),data.getTsId(),data.getType(),sex,data.getSignature());
             selectUserSubmit(data.getTsId());
         }
     }

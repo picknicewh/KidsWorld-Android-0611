@@ -140,7 +140,6 @@ public class MainActivity extends JPushBaseActivity {
         if (G.isNetworkConnected(this)){
         BaseLibrary.connect(userMessage.getRyId(),MainActivity.this,userMessage.getUserName(),userMessage.getHoldImgUrl());
             setNoreadMessage();
-
         }
         registerReceiver();
         initCount();

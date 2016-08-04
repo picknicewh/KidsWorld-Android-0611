@@ -46,7 +46,7 @@ public class UserAction {
      */
     public static void saveUserMessage(Context context, String userName, String holdImgUrl,
                                        String className, String schoolName,
-                                       String ryId, String tsId,String type){
+                                       String ryId, String tsId,String type,String sex,String signature){
         UserMessage um =UserMessage.getInstance(context);
         um.setUserName(userName);
         um.setHoldImgUrl(holdImgUrl);
@@ -55,6 +55,8 @@ public class UserAction {
         um.setRyId(ryId);
         um.setTsId(tsId);
         um.setType(type);
+        um.setSex(sex);
+        um.setUserSign(signature);
     }
 
     public static void saveLoginMessage(Context context,String loginName,String passWord){

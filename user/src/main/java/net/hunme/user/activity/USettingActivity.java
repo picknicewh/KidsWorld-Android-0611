@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
+import net.hunme.baselibrary.activity.UpdateMessageActivity;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
@@ -161,6 +162,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
         } else if (viewID == R.id.ll_changepasswd) {
             Intent intent = new Intent();
             intent.putExtra("type", "pw");
+            intent.putExtra("phoneNumber",um.getLoginName());
             intent.setClass(this, UpdateMessageActivity.class);
             startActivity(intent);
         } else if (viewID == R.id.ll_changephone) {

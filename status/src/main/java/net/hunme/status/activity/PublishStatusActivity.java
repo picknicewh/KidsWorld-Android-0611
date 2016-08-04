@@ -92,12 +92,13 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
+    public static boolean isReleaseSuccess=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_status);
         initView();
-
+        showView(getIntent().getIntExtra("type",-1));
     }
 
     @Override
@@ -241,22 +242,16 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 发布课程
      */
     private void publishcaurse(String dyContent){
-        if (G.isEmteny(dyContent) || itemList.size()<1){
-            G.showToast(this,"发布的内容不能为空");
-            return;
-        }
         Map<String,Object>map=new HashMap<>();
         map.put("tsId",UserMessage.getInstance(this).getTsId());
-        map.put("content",dyContent);
-        Type type =new TypeToken<Result<String>>(){}.getType();
-        List<File>list= BitmapCache.getFileList(itemList);
-        OkHttps.sendPost(type, Apiurl.SCHOOL_PUBLISHCAURSE,map,list,this);
+        map.put("text",dyContent);
     }
     /**
      * 发布状态
      */
-    private void publishstatus(String dyContent){
-        if(G.isEmteny(dyContent)&&dynamicType.equals("3")||dynamicType.equals("1")&&itemList.size()<1){
+    private void publishstatus(){
+        String dyContent=et_content.getText().toString().trim();
+        if(G.isEmteny(dyContent)&&dynamicType.equals("3")||dynamicType.equals("1")&&itemList.size()<2){
             G.showToast(this,"发布的内容不能为空");
             return;
         }
@@ -324,6 +319,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             }else{
                 G.showToast(this,"发布失败，请稍后再试!");
             }
+            isReleaseSuccess=true;
         }
     }
 
@@ -334,6 +330,8 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
             G.showToast(this,error);
         }
+        isReleaseSuccess=false;
+        G.showToast(this,"发布失败，请检测网络!");
     }
 
 }

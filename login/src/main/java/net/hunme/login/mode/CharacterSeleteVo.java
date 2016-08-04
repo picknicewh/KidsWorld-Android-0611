@@ -20,6 +20,8 @@ public class CharacterSeleteVo implements Serializable{
     private String className;   //班级名称 当type=0时，此字段为空
     private String type;       //1=学生，0=老师
     private String ryId;      // 融云通讯ID（token）
+    private Integer sex;     //性别 1=男 0=女
+    private String signature; // 个性签名
 
     public String getTsId() {
         return tsId;
@@ -75,5 +77,21 @@ public class CharacterSeleteVo implements Serializable{
 
     public void setRyId(String ryId) {
         this.ryId = ryId;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 }

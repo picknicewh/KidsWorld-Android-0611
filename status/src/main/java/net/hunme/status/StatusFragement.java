@@ -92,7 +92,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     private List<DynamicVo> dynamicList;
     private RelativeLayout rl_toolbar;
     private SystemWebView webView;
-    private  int xPos=0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.fragment_status, null);
@@ -133,7 +132,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         iv_lift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().startActivity(new Intent(getActivity(), UserActivity.class));
+                startActivity(new Intent(getActivity(), UserActivity.class));
             }
         });
         iv_right.setOnClickListener(new View.OnClickListener() {
@@ -168,10 +167,23 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(PublishStatusActivity.isReleaseSuccess) {
+            PublishStatusActivity.isReleaseSuccess = false;
+            webView.loadUrl("javascript:pulldownRefresh()");
+        }
+        ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
+    }
+
     /**
      * 获取班级列表
      */
     private void getDynamicHead(){
+        if(G.isEmteny(um.getTsId())){
+            return;
+        }
         Map<String,Object>map=new HashMap<>();
         map.put("tsId", um.getTsId());
         Type type=new TypeToken<Result<List<DynamicVo>>>(){}.getType();
@@ -200,7 +212,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     }
     @Override
     public void onError(String uri, String error) {
-        G.showToast(getActivity(),error);
+//        G.showToast(getActivity(),error);
     }
 
 }

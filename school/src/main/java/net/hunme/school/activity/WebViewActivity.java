@@ -1,14 +1,15 @@
 package net.hunme.school.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.util.G;
@@ -46,10 +47,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
      * 加载动画
      */
     private LinearLayout ll_loading;
-    /**
-     * 没网络时显示
-     */
-    private RelativeLayout rl_nonetwork;
+    @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +108,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
     protected CordovaWebView makeWebView() {
         webView = (SystemWebView) findViewById(R.id.cordovaWebView);
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView)));
+        webView.addJavascriptInterface(this, "change_ngb");  //设置本地调用对象及其接口
         return new CordovaWebViewImpl(new SystemWebViewEngine(webView));
     }
 
@@ -134,6 +133,24 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         }
     }
 
+    /**
+     * 设置导航栏
+     */
+    @JavascriptInterface
+    public void  setNavigationbar(final String ContentTitle,final String RightTitle){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tv_title.setText(ContentTitle);
+                if (RightTitle==null){
+                    tv_subtitle.setVisibility(View.GONE);
+                }else {
+                    tv_subtitle.setVisibility(View.VISIBLE);
+                    tv_subtitle.setText(RightTitle);
+                }
+            }
+        });
+    }
 
     @Override
     public void onClick(View view) {

@@ -7,15 +7,18 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.BaseLibrary;
+import net.hunme.baselibrary.activity.UpdateMessageActivity;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.EncryptUtil;
+import net.hunme.baselibrary.util.FormValidation;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.login.mode.CharacterSeleteVo;
@@ -33,6 +36,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private final String APPLOGIN="/app/login.do";
     private String username;
     private String password;
+    private TextView tv_unpassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +48,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void initView(){
         ed_username= (EditText) findViewById(R.id.ed_username);
         ed_password= (EditText) findViewById(R.id.ed_password);
+        tv_unpassword= (TextView) findViewById(R.id.tv_unpassword);
         b_login= (Button) findViewById(R.id.b_login);
         b_login.setOnClickListener(this);
+        tv_unpassword.setOnClickListener(this);
     }
 
     @Override
@@ -53,6 +59,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         int i = view.getId();
         if (i ==R.id.b_login) {
             isGoLogin();
+        }else if(i==R.id.tv_unpassword){
+            String phoneNumber=ed_username.getText().toString();
+            if (!FormValidation.isMobileNO(phoneNumber)){
+                G.showToast(this,"请先输入正确的手机号码");
+                return;
+            }
+            Intent intent = new Intent();
+            intent.putExtra("type", "pw");
+            intent.putExtra("phoneNumber",phoneNumber);
+            intent.setClass(this, UpdateMessageActivity.class);
+            startActivity(intent);
         }
     }
 

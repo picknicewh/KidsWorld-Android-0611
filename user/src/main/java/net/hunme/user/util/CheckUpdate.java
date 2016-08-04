@@ -70,7 +70,7 @@ public class CheckUpdate implements OkHttpListener {
 	/**
 	 * 版本更新地址
 	 */
-	private final String UPDATESYSTEM="/appUser/systemMessages.do";
+	private final String UPDATESYSTEM="/appUser/getVersion.do";
 	/**
 	 * app名字
 	 */
@@ -119,9 +119,9 @@ public class CheckUpdate implements OkHttpListener {
 
     public void checkUpdate() {
         Map<String, Object> map = new HashMap<>();
-        map.put("versions", String.valueOf(PackageUtils.getVersionCode(context)));
-        map.put("system","Android");
-        Type type= new TypeToken< Result<CheckUpadteVo>>(){}.getType();
+        map.put("version", String.valueOf(PackageUtils.getVersionCode(context)));
+        map.put("system","2");
+        Type type= new TypeToken<Result<CheckUpadteVo>>(){}.getType();
         OkHttps.sendPost(type,UPDATESYSTEM,map,this);
     }
 
@@ -129,8 +129,8 @@ public class CheckUpdate implements OkHttpListener {
     public void onSuccess(String uri, Object date) {
         if (uri.equals(UPDATESYSTEM)){
             Result<CheckUpadteVo> result= (Result<CheckUpadteVo>) date;
-            if(!G.isEmteny(result.getData().getUrl())){
-                downLoadURL = result.getData().getUrl();
+            if(!G.isEmteny(result.getData().getUpdateurl())){
+                downLoadURL = result.getData().getUpdateurl();
                 version = result.getData().getVersions();
 				showDownLoadDialog();
             }else{

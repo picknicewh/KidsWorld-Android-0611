@@ -11,22 +11,48 @@ package net.hunme.user.mode;
  * ================================================
  */
 public class CheckUpadteVo {
-    private String versions;
-    private String Url;
-
+    private String version;
+    private String id;
+    private String system;
+    private String updateurl;
+    private String createtime;
     public String getVersions() {
-        return versions;
+        return version;
     }
 
     public void setVersions(String versions) {
-        this.versions = versions;
+        this.version = versions;
     }
 
-    public String getUrl() {
-        return Url;
+    public String getId() {
+        return id;
     }
 
-    public void setUrl(String url) {
-        Url = url;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getSystem() {
+        return system;
+    }
+
+    public void setSystem(String system) {
+        this.system = system;
+    }
+
+    public String getUpdateurl() {
+        return updateurl;
+    }
+
+    public void setUpdateurl(String updateurl) {
+        this.updateurl = updateurl;
+    }
+
+    public String getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
     }
 }

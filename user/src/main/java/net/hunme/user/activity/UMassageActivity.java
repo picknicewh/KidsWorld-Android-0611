@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import com.pizidea.imagepicker.AndroidImagePicker;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
@@ -56,7 +57,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     private TextView tv_classname;
     private TextView tv_schoolname;
     private UserMessage um;
-    private final String SETSIGN="/appUser/setSign.do";
+    private final String SETSIGN="/appUser/setSignature.do";
     private final String AVATAR="/appUser/setAvatar.do";
     private String path;//选择头像保存地址
     private String sign; //用户个性签名
@@ -85,7 +86,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
 
     private void initData(){
         um=UserMessage.getInstance(this);
-//        cv_head.setImageResource();
+        ImageCache.imageLoader(um.getHoldImgUrl(),cv_head);
         tv_name.setText(um.getUserName());
         tv_sex.setText(um.getSex());
         tv_sign.setText(um.getUserSign());
@@ -110,10 +111,9 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
 //                    Log.i(TAG,"=====onImageCropComplete (get bitmap="+bmp.toString());
 //                    ivCrop.setVisibility(View.VISIBLE);
                     path=path+ new Date().getTime()+".jpg";
-                    cv_head.setImageBitmap(bmp);
-                    BitmapCache.compressBiamp(bmp,path,100);
+                    BitmapCache.compressBiamp(bmp,path,100);//压缩图片到该路径 path
                     List<File> files=new ArrayList<>();
-                    files.add(new File(path));
+                    files.add(new File(path));//从该路径拿到图片
                     userAvatarSubmit(files);
                 }
             });
@@ -195,7 +195,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     public void userSignSubmit(String userSign){
         Map<String,Object>map=new HashMap<>();
         map.put("tsId",um.getTsId());
-        map.put("sign",userSign);
+        map.put("signature",userSign);
         Type type=new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type,SETSIGN,map,this);
     }
@@ -209,11 +209,16 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onSuccess(String uri, Object date) {
-        Result<String> result= (Result<String>) date;
         if(SETSIGN.equals(uri)){
             um.setUserSign(sign);
             tv_sign.setText(um.getUserSign());
+            G.showToast(this,"签名修改成功");
         }else if(AVATAR.equals(uri)){
+            Result<String> result= (Result<String>) date;
+//            um.setHoldImgUrl(result.getData());
+            //测试数据
+            um.setHoldImgUrl("file://"+path);
+            ImageCache.imageLoader(um.getHoldImgUrl(),cv_head);
             G.showToast(this,"头像修改成功");
         }
     }
