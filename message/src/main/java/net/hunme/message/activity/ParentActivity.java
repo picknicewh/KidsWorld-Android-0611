@@ -172,18 +172,12 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
                                     final int position, long id) {
                 GroupMemberBean bean = groupMemberBeanList.get(position);
                 final String uid  = bean.getUserid();
-                String image = bean.getImg();
-                if (image==null){
-                    image = "http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png";
-                }
                 final  String name = bean.getName();
                 if (RongIM.getInstance()!=null){
                     Intent intent  = new Intent(ParentActivity.this,PersonDetailActivity.class);
                     intent.putExtra("targetId",uid);
                     intent.putExtra("title",name);
                     startActivity(intent);
-                    //   Log.i("TDDAG", SourceDateList.get(position).getUserid());
-                    //  RongIM.getInstance().startConversation(ParentActivity.this, Conversation.ConversationType.PRIVATE, uid,name);
                 }
             }
         });
@@ -296,7 +290,6 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
                 initList();
             }
         }
-
     }
 
     @Override

@@ -3,7 +3,6 @@ package net.hunme.school.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -55,7 +54,6 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         super.init();
         launchUrl=getIntent().getStringExtra("loadUrl");
         loadUrl(launchUrl);
-        Log.i("RTTT",launchUrl);
         initData();
       //  G.clearCacheFolder(getCacheDir(),System.currentTimeMillis());
     }

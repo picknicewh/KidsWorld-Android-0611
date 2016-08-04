@@ -77,7 +77,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         iv_class = $(v,R.id.iv_class);
         iv_teacher = $(v,R.id.iv_teacher);
         iv_parent = $(v,R.id.iv_parent);
-        userMessage = new UserMessage(getActivity());
+        userMessage = UserMessage.getInstance(getActivity());
         getGroupList(userMessage.getTsId());
         initframent();
         iv_parent.setOnClickListener(this);

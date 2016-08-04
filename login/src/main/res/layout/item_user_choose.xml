@@ -9,8 +9,8 @@
         android:id="@+id/cv_head"
         android:src="@mipmap/person"
         android:padding="@dimen/space_x2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
 
     <RelativeLayout
         android:paddingLeft="@dimen/space"
@@ -50,7 +50,6 @@
     <ImageView
         android:id="@+id/iv_choose"
         android:padding="@dimen/space"
-        android:layout_gravity="center"
         android:src="@mipmap/ic_choose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
