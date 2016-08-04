@@ -205,26 +205,40 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             intent.putExtra("permit",tv_permitchoose.getText().toString());
             startActivityForResult(intent,ChoosePermitActivity.CHOOSE_PERMIT);
         }else if(viewId==R.id.tv_subtitle){
-            String dyContent=et_content.getText().toString().trim();
-            if(G.isEmteny(dyContent)&&dynamicType.equals("3")||dynamicType.equals("1")&&itemList.size()<2){
-                G.showToast(this,"发布的内容不能为空");
-                return;
-            }
-            Map<String,Object>map=new HashMap<>();
-            map.put("tsId",UserMessage.getInstance(this).getTsId());
-            map.put("text",dyContent);
-            map.put("dynamicVisicty",dynamicVisicty);
-            Type type =new TypeToken<Result<String>>(){}.getType();
-            if(dynamicType.equals("1")&&itemList.size()>1){
-                List<File>list= BitmapCache.getFileList(itemList);
-                dynamicType="1";
-                map.put("dynamicType",dynamicType);
-                OkHttps.sendPost(type,DYNAMIC,map,list,this);
-            }else{
-                dynamicType="3";
-                map.put("dynamicType",dynamicType);
-                OkHttps.sendPost(type,DYNAMIC,map,this);
-            }
+            publishstatus();
+        }
+    }
+    /**
+     * 发布课程
+     */
+    private void publishcaurse(String dyContent){
+        Map<String,Object>map=new HashMap<>();
+        map.put("tsId",UserMessage.getInstance(this).getTsId());
+        map.put("text",dyContent);
+    }
+    /**
+     * 发布状态
+     */
+    private void publishstatus(){
+        String dyContent=et_content.getText().toString().trim();
+        if(G.isEmteny(dyContent)&&dynamicType.equals("3")||dynamicType.equals("1")&&itemList.size()<2){
+            G.showToast(this,"发布的内容不能为空");
+            return;
+        }
+        Map<String,Object>map=new HashMap<>();
+        map.put("tsId",UserMessage.getInstance(this).getTsId());
+        map.put("text",dyContent);
+        map.put("dynamicVisicty",dynamicVisicty);
+        Type type =new TypeToken<Result<String>>(){}.getType();
+        if(dynamicType.equals("1")&&itemList.size()>1){
+            List<File>list= BitmapCache.getFileList(itemList);
+            dynamicType="1";
+            map.put("dynamicType",dynamicType);
+            OkHttps.sendPost(type,DYNAMIC,map,list,this);
+        }else{
+            dynamicType="3";
+            map.put("dynamicType",dynamicType);
+            OkHttps.sendPost(type,DYNAMIC,map,this);
         }
     }
 
@@ -239,8 +253,14 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 if(items != null && items.size() > 0){
                     for(ImageItem item:items){
                         G.log("选择了===="+item.path);
-                        if(itemList.size()<9){
-                            itemList.add(item.path);
+                        if (getIntent().getStringExtra("from").equals("status")){
+                            if(itemList.size()<9){
+                                itemList.add(item.path);
+                            }
+                        }else if (getIntent().getStringExtra("from").equals("school")){
+                            if(itemList.size()<3){
+                                itemList.add(item.path);
+                            }
                         }
                     }
                     mAdapter.notifyDataSetChanged();

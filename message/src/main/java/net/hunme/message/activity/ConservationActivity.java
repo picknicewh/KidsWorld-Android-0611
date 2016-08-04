@@ -108,8 +108,8 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         }else if (v.getId()==R.id.iv_detail){
             Intent intent = new Intent();
             intent.setClass(this,PersonDetailActivity.class);
-            intent.putExtra("name",name);
-            intent.putExtra("userid",targetId);
+            intent.putExtra("title",name);
+            intent.putExtra("targetId",targetId);
             startActivity(intent);
         }
     }

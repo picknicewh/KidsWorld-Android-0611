@@ -3,6 +3,7 @@ package net.hunme.school.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -15,6 +16,8 @@ import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.school.R;
 import net.hunme.school.SchoolFragement;
+import net.hunme.status.activity.PublishStatusActivity;
+import net.hunme.status.widget.StatusPublishPopWindow;
 
 import org.apache.cordova.CordovaActivity;
 import org.apache.cordova.CordovaWebView;
@@ -53,8 +56,9 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         super.init();
         launchUrl=getIntent().getStringExtra("loadUrl");
         G.log("loaduri-----"+launchUrl);
-        loadUrl(launchUrl+"?TsId="+ UserMessage.getInstance(this).getTsId());
-        //Log.i("TAFF",UserMessage.getInstance(this).getTsId()+"==============getTsId");
+        loadUrl(launchUrl+ "?TsId="+UserMessage.getInstance(this).getTsId());
+
+        Log.i("TAGGG",launchUrl+ "?TsId="+UserMessage.getInstance(this).getTsId());
         initData();
       //  G.clearCacheFolder(getCacheDir(),System.currentTimeMillis());
     }
@@ -65,8 +69,8 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         ll_loading = (LinearLayout) findViewById(R.id.ll_loading);
         tv_subtitle= (TextView) findViewById(R.id.tv_subtitle);
         tv_subtitle.setOnClickListener(this);
-      /*  rl_nonetwork=(RelativeLayout)findViewById(R.id.rl_nonetwork);
-        rl_nonetwork.setOnClickListener(this);*/
+       // rl_nonetwork=(RelativeLayout)findViewById(R.id.rl_nonetwork);
+       // rl_nonetwork.setOnClickListener(this);
         setToolBar();
     }
 
@@ -93,9 +97,11 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
     @Override
     public void onResume() {
         super.onResume();
-        if (webView.getUrl().contains(SchoolFragement.INFORM))
+        if (webView.getUrl().contains(SchoolFragement.INFORM)){
             webView.loadUrl("javascript:getData()");
+        }
     }
+
     @Override
     protected CordovaWebView makeWebView() {
         webView = (SystemWebView) findViewById(R.id.cordovaWebView);
@@ -152,6 +158,11 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
                 startActivity(intent);
             }else if (launchUrl.contains(SchoolFragement.LEAVE)){
                 Intent intent = new Intent(this,LeaveAskActivity.class);
+                startActivity(intent);
+            }else if (launchUrl.contains(SchoolFragement.ARRANGE)){
+                Intent intent = new Intent(this,PublishStatusActivity.class);
+                intent.putExtra("type", StatusPublishPopWindow.PICTURE);
+                intent.putExtra("from","school");
                 startActivity(intent);
             }
         }
