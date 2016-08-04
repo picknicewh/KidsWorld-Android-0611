@@ -215,9 +215,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
             G.showToast(this,"签名修改成功");
         }else if(AVATAR.equals(uri)){
             Result<String> result= (Result<String>) date;
-//            um.setHoldImgUrl(result.getData());
-            //测试数据
-            um.setHoldImgUrl("file://"+path);
+            um.setHoldImgUrl( result.getData());
             ImageCache.imageLoader(um.getHoldImgUrl(),cv_head);
             G.showToast(this,"头像修改成功");
         }

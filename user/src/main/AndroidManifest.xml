@@ -20,9 +20,7 @@
         <activity android:name="net.hunme.login.UserChooseActivity" />
         <activity android:name=".activity.SystemInfoActivity" />
         <activity android:name=".activity.AdviceActivity" />
-        <activity android:name=".activity.PhoneNumberActivity" />
         <activity android:name="net.hunme.baselibrary.activity.UpdateMessageActivity" />
-        <activity android:name=".activity.ModifyPhoneActivity" />
         <activity android:name=".activity.ProvsionActivity" />
         <activity android:name=".activity.InfoDetailsActivity" />
         <activity android:name=".activity.AlbumDetailsActivity" />

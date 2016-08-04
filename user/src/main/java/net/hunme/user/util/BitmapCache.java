@@ -84,7 +84,7 @@ public class BitmapCache {
         for (String s:pathList){
             String compressPath = path+ new Date().getTime()+".jpg";
             Bitmap bitmap=BitmapFactory.decodeFile(s);
-           boolean isCache= compressBiamp(bitmap,compressPath,50);
+           boolean isCache= compressBiamp(bitmap,compressPath,70);
             if(isCache){
                 files.add(new File(compressPath));
             }

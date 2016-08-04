@@ -8,16 +8,26 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.reflect.TypeToken;
 import com.pizidea.imagepicker.AndroidImagePicker;
 import com.pizidea.imagepicker.bean.ImageItem;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.OkHttpListener;
+import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.user.R;
 import net.hunme.user.adapter.GridAlbumAdapter;
+import net.hunme.user.util.BitmapCache;
 
+import java.io.File;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -30,7 +40,7 @@ import java.util.List;
  * 主要接口：
  * ================================================
  */
-public class UploadPhotoActivity extends BaseActivity implements View.OnClickListener {
+public class UploadPhotoActivity extends BaseActivity implements View.OnClickListener, OkHttpListener {
     private GridView gv_photo;
     private LinearLayout ll_selcet_photoname;
     private TextView tv_album_name;
@@ -39,18 +49,13 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     private static final int Album_NAME_SELECT=1111;
     private GridAlbumAdapter mAdapter;
     private List<String> itemList;
-    //https://github.com/jeasonlzy0216/ImagePicker
-    //权限返回码
-//    private static final int  REQUEST_CODE = 0;
-    // 访问相册所需的全部权限
-//    static final String[] PERMISSIONS = new String[]{
-//            Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
-//            Manifest.permission.READ_EXTERNAL_STORAGE
-//    };
-    // 权限检测器
-//    private PermissionsChecker mPermissionsChecker;
-
-//    private List<String> addPhotoList;
+    private String UPLOADPHOTO="/appUser/uploadPhoto.do";
+    /**
+     * 上传图片的状态
+     * 如果为true 表示图片上传成功 返回到相册详情的时候 需要重新获取相片 并刷新
+     * 反之 不需要刷新
+     */
+    public static boolean isUploadSuccess=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,9 +72,7 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initDate(){
-//        mPermissionsChecker = new PermissionsChecker(this);
         G.initDisplaySize(this);
-//        addPhotoList =new ArrayList<>();
         itemList=new ArrayList<>();
         mAdapter=new GridAlbumAdapter(itemList,this);
         gv_photo.setAdapter(mAdapter);
@@ -77,11 +80,6 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i ==itemList.size()) {
-                    //检查是否有权限访问相册 ，没有的话弹框需要用户授权
-//                    if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
-//                        PermissionsActivity.startActivityForResult(UploadPhotoActivity.this, REQUEST_CODE, PERMISSIONS);
-//                        return;
-//                    }
                     getPhotos();
                 }
             }
@@ -107,8 +105,15 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View view) {
         int viewId=view.getId();
         if(viewId==R.id.tv_subtitle){
-
+            //上传图片
+            if(itemList.size()<1){
+                G.showToast(this,"上传图片不能为空");
+                return;
+            }
+            List<File>list= BitmapCache.getFileList(itemList);
+            uploadPhoto(list);
         }else if(viewId==R.id.ll_selcet_photoname){
+            //选择相册上传  现在没有了
             Intent intent=new Intent(this, AlbumSelectActivity.class);
             intent.putStringArrayListExtra("namelist",albumNameList);
             startActivityForResult(intent,Album_NAME_SELECT);
@@ -120,15 +125,12 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
             case Album_NAME_SELECT:
                 tv_album_name.setText(albumNameList.get(position));
                 break;
-//            case REQUEST_CODE:
-//                //检测到没有授取权限 关闭页面
-//                if(resultCode == PermissionsActivity.PERMISSIONS_DENIED){
-//                    finish();
-//                }
-//                break;
         }
     }
 
+    /**
+     * 跳转到选择本地图片页面
+     */
     private void getPhotos(){
         AndroidImagePicker.getInstance().pickMulti(UploadPhotoActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
             @Override
@@ -145,5 +147,29 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
             }
         });
         return;
+    }
+
+    /**
+     * 上传图片到目标相册
+     */
+    private void uploadPhoto(List<File> fileList){
+        Map<String,Object>map=new HashMap<>();
+        map.put("tsId", UserMessage.getInstance(this).getTsId());
+        map.put("flickrId",AlbumDetailsActivity.flickrId);
+        Type type=new TypeToken<Result<String>>(){}.getType();
+        OkHttps.sendPost(type,UPLOADPHOTO,map,fileList,this);
+    }
+
+    @Override
+    public void onSuccess(String uri, Object date) {
+        G.showToast(this,"图片上传成功");
+        isUploadSuccess=true;
+        finish();
+    }
+
+    @Override
+    public void onError(String uri, String error) {
+        G.showToast(this,error);
+        isUploadSuccess=false;
     }
 }

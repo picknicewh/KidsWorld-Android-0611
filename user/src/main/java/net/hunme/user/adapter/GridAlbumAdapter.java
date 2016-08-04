@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.hunme.baselibrary.image.ImageCache;
-import net.hunme.baselibrary.util.G;
 import net.hunme.user.R;
 
 import java.util.List;
@@ -60,7 +59,6 @@ public class GridAlbumAdapter extends BaseAdapter {
             new ViewHolder(convertView);
         }
         holder = (ViewHolder) convertView.getTag();
-        G.log(position+"----------------");
         if (position < imageItems.size()) {
             holder.clv_delete.setVisibility(View.VISIBLE);
             getBitmapData(holder.image,imageItems.get(position));

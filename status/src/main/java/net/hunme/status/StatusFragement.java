@@ -178,7 +178,14 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         super.onResume();
         if(PublishStatusActivity.isReleaseSuccess) {
             PublishStatusActivity.isReleaseSuccess = false;
-            webView.loadUrl("javascript:pulldownRefresh()");
+
+//            new Handler().postDelayed(new Runnable(){
+//                public void run() {
+//                    //显示dialog
+                    webView.loadUrl("javascript:pulldownRefresh()");
+            G.log("");
+//                }
+//            }, 10000);
         }
         ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
     }

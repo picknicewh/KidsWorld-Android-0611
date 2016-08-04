@@ -11,40 +11,58 @@ package net.hunme.user.mode;
  * ================================================
  */
 public class PhotoVo {
-    private String flickrName;    //相册名称
-    private String flickrSize;   // 相册相片张数
-    private String imgUrl;       //相册相片张数
-    private String flickrId;     //相册ID
+    private String id;       //相册ID
+    private String ts_id;     //角色ID
+    private String name;        //相册名称
+    private String createtime;  //创建时间
+    private String url;       //首张图片地址
+    private String count;
 
-    public String getFlickrName() {
-        return flickrName;
+    public String getId() {
+        return id;
     }
 
-    public void setFlickrName(String flickrName) {
-        this.flickrName = flickrName;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getFlickrSize() {
-        return flickrSize;
+    public String getTs_id() {
+        return ts_id;
     }
 
-    public void setFlickrSize(String flickrSize) {
-        this.flickrSize = flickrSize;
+    public void setTs_id(String ts_id) {
+        this.ts_id = ts_id;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getName() {
+        return name;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getFlickrId() {
-        return flickrId;
+    public String getCreatetime() {
+        return createtime;
     }
 
-    public void setFlickrId(String flickrId) {
-        this.flickrId = flickrId;
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
     }
 }

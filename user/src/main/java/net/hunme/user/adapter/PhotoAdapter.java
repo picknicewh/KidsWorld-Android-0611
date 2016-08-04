@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.user.R;
 import net.hunme.user.mode.PhotoVo;
 
@@ -56,9 +57,9 @@ public class PhotoAdapter extends BaseAdapter {
         }
         viewHold= (ViewHold) view.getTag();
         if(null!=photoList){
-//            viewHold.photo.setImageBitmap(photoList.get(i).getPhotoBitmap());
-            viewHold.photoName.setText(photoList.get(i).getFlickrName());
-            viewHold.photoNumber.setText(photoList.get(i).getFlickrSize());
+            ImageCache.imageLoader(photoList.get(i).getUrl(),viewHold.photo);
+            viewHold.photoName.setText(photoList.get(i).getName());
+            viewHold.photoNumber.setText(photoList.get(i).getCount()+"张");
         }
         return view;
     }

@@ -17,6 +17,7 @@ import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.user.R;
 import net.hunme.user.adapter.AlbumDetailsAdapter;
+import net.hunme.user.mode.Photodetail;
 import net.hunme.user.util.PermissionUtils;
 
 import java.lang.reflect.Type;
@@ -30,6 +31,7 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
     private List<String>itemList;
     private AlbumDetailsAdapter adapter;
     private final String FILCKR="/appUser/flickr.do";
+    public static String flickrId;//相册ID
     // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
@@ -54,6 +56,7 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
             public void onClick(View view) {
                 PermissionUtils.getPermission(AlbumDetailsActivity.this,PERMISSIONS);
                 Intent intent=new Intent(AlbumDetailsActivity.this,UploadPhotoActivity.class);
+                intent.putExtra("flickrId",flickrId);
                 startActivity(intent);
             }
         });
@@ -64,22 +67,28 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
         itemList=new ArrayList<>();
         adapter=new AlbumDetailsAdapter(this,itemList);
         gv_photo.setAdapter(adapter);
-//        getPhotoMessage(getIntent().getStringExtra("flickrId"));
+        flickrId=getIntent().getStringExtra("flickrId");
+        getPhotoMessage(flickrId);
     }
 
     private void getPhotoMessage(String flickrId){
         Map<String,Object> map=new HashMap<>();
         map.put("tsId", UserMessage.getInstance(this).getTsId());
         map.put("flickrId",flickrId);
-        Type type=new TypeToken<Result<List<String>>>(){}.getType();
+        map.put("pageSize",100);
+        map.put("pageNumber",1);
+        Type type=new TypeToken<Result<List<Photodetail>>>(){}.getType();
         OkHttps.sendPost(type,FILCKR,map,this);
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
         if(FILCKR.equals(uri)){
-            Result<List<String>> result= (Result<List<String>>) date;
-            itemList= result.getData();
+            Result<List<Photodetail>> result= (Result<List<Photodetail>>) date;
+            itemList.clear();
+            for (Photodetail p:result.getData()){
+                itemList.add(p.getImgurl());
+            }
             adapter.notifyDataSetChanged();
         }
     }
@@ -87,6 +96,14 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
     @Override
     public void onError(String uri, String error) {
         G.showToast(this,error);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(UploadPhotoActivity.isUploadSuccess){
+            getPhotoMessage(flickrId);
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

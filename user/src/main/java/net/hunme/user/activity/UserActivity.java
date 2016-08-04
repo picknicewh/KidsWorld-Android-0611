@@ -107,7 +107,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
             intent.putExtra("title","我的收藏");
         }else if(viewId==R.id.ll_mydynamics){
             intent=new Intent(UserActivity.this,HMDroidGap.class);
-            intent.putExtra("loadUrl",MYDYNAMICS);
+            intent.putExtra("loadUrl",MYDYNAMICS+"?tsId="+UserMessage.getInstance(this).getTsId());
             intent.putExtra("title","我的动态");
         }
         if(null!=intent){

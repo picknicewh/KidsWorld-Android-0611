@@ -176,11 +176,12 @@ public class OkHttps<T> {
                         //验签
 //                            boolean isSuccess=EncryptUtil.verify(map,result.getMsec(),result.getSign());
 //                            if(isSuccess)
-                        if(isSuccess||response.cacheResponse().isSuccessful())
-                            okHttpListener.onSuccess(uri,o);
-                        else
+
+                            if(isSuccess||isFromCache)
+                                okHttpListener.onSuccess(uri,o);
+                            else
                             if(!isSendError)
-                            okHttpListener.onError(uri,((Result<String>)o).getData());
+                                okHttpListener.onError(uri,((Result<String>)o).getData());
 //                            else
 //                               okHttpListener.onError(uri,"非法访问");
                     }

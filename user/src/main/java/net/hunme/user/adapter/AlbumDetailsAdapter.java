@@ -38,8 +38,7 @@ public class AlbumDetailsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-//        return imagePath.size();
-        return 30;
+        return imagePath.size();
     }
 
     @Override
