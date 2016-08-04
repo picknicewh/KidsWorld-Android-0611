@@ -9,7 +9,7 @@
         android:padding="@dimen/space"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
-    <RelativeLayout
+    <!--<RelativeLayout
         android:layout_marginTop="@dimen/space"
         android:id="@+id/rl_openclass"
         android:background="@drawable/layout_selecter"
@@ -39,7 +39,7 @@
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+    </RelativeLayout>-->
     <LinearLayout
         android:layout_marginTop="@dimen/space"
         android:layout_width="match_parent"

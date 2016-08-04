@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.widget.NavigationBar;
@@ -30,7 +29,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     /**
      * 开放课堂
      */
-    private RelativeLayout rl_openclass;
+ //   private RelativeLayout rl_openclass;
     /**
      *考勤
      */
@@ -90,13 +89,13 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     private void init(View v){
         navigationBar = $(v,R.id.nb_school);
         navigationBar.setTitle("园所");
-        rl_openclass = $(v,R.id.rl_openclass);
+      //  rl_openclass = $(v,R.id.rl_openclass);
         rl_check = $(v,R.id.rl_check);
         rl_leave = $(v,R.id.rl_leave);
         rl_inform = $(v,R.id.rl_info);
         rl_food = $(v,R.id.rl_food);
         rl_arrangement = $(v,R.id.rl_arrangement);
-        rl_openclass.setOnClickListener(this);
+     //   rl_openclass.setOnClickListener(this);
         rl_check.setOnClickListener(this);
         rl_leave.setOnClickListener(this);
         rl_inform.setOnClickListener(this);
@@ -107,12 +106,13 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     @Override
     public void onClick(View view) {
         Intent intent = new Intent();
+         /*
         if (view.getId()==R.id.rl_openclass){
-        /*    intent.setClass(getActivity(), WebViewActivity.class);
+        *//*    intent.setClass(getActivity(), WebViewActivity.class);
             intent.putExtra("url", geturl(OPENCLASS));
-            intent.putExtra("title","开放课堂");*/
+            intent.putExtra("title","开放课堂");*//*
             Toast.makeText(getActivity(),"暂未开通此功能！",Toast.LENGTH_SHORT).show();
-        }else if (view.getId()==R.id.rl_check){
+        }else*/ if (view.getId()==R.id.rl_check){
             intent.setClass(getActivity(), WebViewActivity.class);
             intent.putExtra("loadUrl", geturl(CHECK));
             intent.putExtra("title","选择班级");
@@ -133,9 +133,8 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             intent.putExtra("title","课程安排");
             intent.putExtra("subTitle","发布");
         }
-        if (view.getId()!=R.id.rl_openclass){
-            startActivity(intent);
-        }
+        startActivity(intent);
+
     }
     private String  geturl(String type){
         String url = null;
