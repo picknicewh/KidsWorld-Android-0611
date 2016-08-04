@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -98,7 +97,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_status);
         initView();
-        showView(getIntent().getIntExtra("type",-1));
     }
 
     @Override
@@ -242,16 +240,22 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 发布课程
      */
     private void publishcaurse(String dyContent){
+        if (G.isEmteny(dyContent) || itemList.size()<1){
+            G.showToast(this,"发布的内容不能为空");
+            return;
+        }
         Map<String,Object>map=new HashMap<>();
         map.put("tsId",UserMessage.getInstance(this).getTsId());
-        map.put("text",dyContent);
+        map.put("content",dyContent);
+        Type type =new TypeToken<Result<String>>(){}.getType();
+        List<File>list= BitmapCache.getFileList(itemList);
+        OkHttps.sendPost(type, Apiurl.SCHOOL_PUBLISHCAURSE,map,list,this);
     }
     /**
      * 发布状态
      */
-    private void publishstatus(){
-        String dyContent=et_content.getText().toString().trim();
-        if(G.isEmteny(dyContent)&&dynamicType.equals("3")||dynamicType.equals("1")&&itemList.size()<2){
+    private void publishstatus(String dyContent){
+        if(G.isEmteny(dyContent)&&dynamicType.equals("3")||dynamicType.equals("1")&&itemList.size()<1){
             G.showToast(this,"发布的内容不能为空");
             return;
         }
@@ -291,7 +295,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                             if(itemList.size()<1){
                                 itemList.add(item.path);
                             }
-                            Log.i("TGGG",itemList.size()+"===============");
                         }
                     }
                     mAdapter.notifyDataSetChanged();

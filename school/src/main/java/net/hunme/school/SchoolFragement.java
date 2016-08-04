@@ -149,6 +149,5 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
          case ARRANGE:url = url+ARRANGE;break;
      }
         return  url;
-       // Log.i("TAGGG",url);
     }
 }

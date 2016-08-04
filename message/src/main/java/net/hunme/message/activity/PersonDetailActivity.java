@@ -79,6 +79,7 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
      * 头像地址
      */
     private String image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,16 +148,20 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
     @Override
     public void onSuccess(String uri, Object date) {
         Result<RyUserInfor> UserInfor = (Result<RyUserInfor>) date;
-       // Log.i("TAGGG",UserInfor.getData()+"=============data=============");
-        if (UserInfor.isSuccess()){
-            RyUserInfor ryUserInfor= UserInfor.getData();
-            tv_school.setText(ryUserInfor.getSchoolName());
-            tv_role.setText(ryUserInfor.getTsName());
-            tv_phone.setText(ryUserInfor.getPhone());
-            tv_class.setText(ryUserInfor.getClassName());
-            image = ryUserInfor.getImg();
-            ImageCache.imageLoader(ryUserInfor.getImg(),iv_phead);
+        if (UserInfor!=null){
+            if (UserInfor.isSuccess()){
+                RyUserInfor ryUserInfor= UserInfor.getData();
+                tv_school.setText(ryUserInfor.getSchoolName());
+                tv_role.setText(ryUserInfor.getTsName());
+                tv_phone.setText(ryUserInfor.getPhone());
+                tv_class.setText(ryUserInfor.getClassName());
+                image = ryUserInfor.getImg();
+
+                ImageCache.imageLoader(ryUserInfor.getImg(),iv_phead);
+            }
         }
+       // Log.i("TAGGG",UserInfor.getData()+"=============data=============");
+
     }
     @Override
     public void onError(String uri, String error) {
