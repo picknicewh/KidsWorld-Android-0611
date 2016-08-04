@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.cordova.HMDroidGap;
+import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
@@ -67,8 +68,8 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initData(){
-        UserMessage um=UserMessage.getInstance(this);
-//        cv_portrait.setImageResource();  头像暂时无法获取
+        UserMessage um = UserMessage.getInstance(this);
+        ImageCache.imageLoader(um.getHoldImgUrl(),cv_portrait);
         if("1".equals(um.getType())){
             tv_id.setText("学");
             tv_id.setBackgroundResource(R.drawable.user_study_selecter);

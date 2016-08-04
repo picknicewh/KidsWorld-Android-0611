@@ -11,17 +11,17 @@ package net.hunme.user.mode;
  * ================================================
  */
 public class CheckUpadteVo {
-    private String versions;
+    private String version;
     private String id;
     private String system;
     private String updateurl;
     private String createtime;
     public String getVersions() {
-        return versions;
+        return version;
     }
 
     public void setVersions(String versions) {
-        this.versions = versions;
+        this.version = versions;
     }
 
     public String getId() {

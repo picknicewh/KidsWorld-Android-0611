@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.pizidea.imagepicker.ImgLoader;
 import com.pizidea.imagepicker.UilImgLoader;
 
+import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.util.G;
 import net.hunme.user.R;
 
@@ -59,6 +60,7 @@ public class AlbumDetailsAdapter extends BaseAdapter {
             new ViewHolder(view);
         }
         holder= (ViewHolder) view.getTag();
+        ImageCache.imageLoader(imagePath.get(i),holder.image);
 //        getBitmapData(holder.image,imagePath.get(i));
         return view;
     }

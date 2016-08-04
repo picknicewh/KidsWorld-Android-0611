@@ -17,9 +17,11 @@ import com.google.gson.reflect.TypeToken;
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.cordova.CordovaInterfaceImpl;
 import net.hunme.baselibrary.cordova.MySystemWebView;
+import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.DateUtil;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
@@ -34,6 +36,7 @@ import org.apache.cordova.engine.SystemWebViewEngine;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,10 +125,12 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         webView.addJavascriptInterface(this, "change");  //设置本地调用对象及其接口
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),ll_loading));
         getWebView(webView).loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
-                +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName());
+                +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
+                +"&clickTime="+ DateUtil.formatDateTime(new Date()));
 
         G.log("loadUrl====="+url+"groupId="+dynamicList.get(position).getGroupId()
-                +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId());
+                +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
+        +"&clickTime="+ DateUtil.formatDateTime(new Date()));
     }
     /**
      * 设置选择弹窗
@@ -175,6 +180,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             PublishStatusActivity.isReleaseSuccess = false;
             webView.loadUrl("javascript:pulldownRefresh()");
         }
+        ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
     }
 
     /**

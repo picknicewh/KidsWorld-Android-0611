@@ -1,5 +1,7 @@
 package net.hunme.message.bean;
 
+import java.io.Serializable;
+
 /**
  * 作者： Administrator
  * 时间： 2016/7/25
@@ -8,7 +10,7 @@ package net.hunme.message.bean;
  * 附加注释：
  * 主要接口：
  */
-public class MemberJson {
+public class MemberJson implements Serializable{
     /**
      * 用户id
      */

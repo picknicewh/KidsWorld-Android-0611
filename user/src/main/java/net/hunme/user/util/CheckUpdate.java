@@ -121,7 +121,7 @@ public class CheckUpdate implements OkHttpListener {
         Map<String, Object> map = new HashMap<>();
         map.put("version", String.valueOf(PackageUtils.getVersionCode(context)));
         map.put("system","2");
-        Type type= new TypeToken< Result<CheckUpadteVo>>(){}.getType();
+        Type type= new TypeToken<Result<CheckUpadteVo>>(){}.getType();
         OkHttps.sendPost(type,UPDATESYSTEM,map,this);
     }
 

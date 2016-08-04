@@ -176,7 +176,7 @@ public class OkHttps<T> {
                         //验签
 //                            boolean isSuccess=EncryptUtil.verify(map,result.getMsec(),result.getSign());
 //                            if(isSuccess)
-                        if(isSuccess)
+                        if(isSuccess||response.cacheResponse().isSuccessful())
                             okHttpListener.onSuccess(uri,o);
                         else
                             if(!isSendError)
