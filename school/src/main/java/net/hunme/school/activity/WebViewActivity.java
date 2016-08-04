@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.util.G;
-import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.school.R;
 import net.hunme.school.SchoolFragement;
 import net.hunme.status.activity.PublishStatusActivity;
@@ -55,10 +54,8 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         setContentView(R.layout.activity_hm_droidgap);
         super.init();
         launchUrl=getIntent().getStringExtra("loadUrl");
-        G.log("loaduri-----"+launchUrl);
-        loadUrl(launchUrl+ "?TsId="+UserMessage.getInstance(this).getTsId());
-
-        Log.i("TAGGG",launchUrl+ "?TsId="+UserMessage.getInstance(this).getTsId());
+        loadUrl(launchUrl);
+        Log.i("RTTT",launchUrl);
         initData();
       //  G.clearCacheFolder(getCacheDir(),System.currentTimeMillis());
     }
@@ -94,11 +91,16 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
             }
         });
     }
+
     @Override
-    public void onResume() {
-        super.onResume();
-        if (webView.getUrl().contains(SchoolFragement.INFORM)){
-            webView.loadUrl("javascript:getData()");
+    public void onRestart() {
+        super.onRestart();
+         int index =  webView.getUrl().lastIndexOf("/");
+         String url =  webView.getUrl().substring(0,index)+ webView.getUrl().substring(index+1);
+        if (webView.getUrl().contains(SchoolFragement.LEAVE)){
+            webView.loadUrl(url);
+        }else if (webView.getUrl().contains(SchoolFragement.ARRANGE)){
+            webView.loadUrl(url);
         }
     }
 

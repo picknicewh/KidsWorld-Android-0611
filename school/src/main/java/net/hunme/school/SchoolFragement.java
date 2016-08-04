@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import net.hunme.baselibrary.base.BaseFragement;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.NavigationBar;
 import net.hunme.school.activity.PublishActivity;
 import net.hunme.school.activity.WebViewActivity;
@@ -53,7 +54,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     /**
      * 基本url
      */
-    public static final String baseurl = "http://192.168.1.134:8080/kidsWorld/school/#/";
+    public static final String baseurl = "http://192.168.1.134:8080/kidsWorld/school/index.html?";
     /**
      * 考勤
      */
@@ -137,14 +138,15 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
 
     }
     private String  geturl(String type){
-        String url = null;
+
+        String url = baseurl+"TsId="+ UserMessage.getInstance(getActivity()).getTsId()+"#";
      switch (type){
-         case OPENCLASS:url = baseurl+ OPENCLASS ;break;
-         case CHECK:url = baseurl+CHECK;break;
-         case LEAVE:url = baseurl+LEAVE;break;
-         case INFORM:url = baseurl+INFORM;break;
-         case FOODLIST:url = baseurl+FOODLIST;break;
-         case ARRANGE:url = baseurl+ARRANGE;break;
+         case OPENCLASS:url =url+OPENCLASS ;break;
+         case CHECK:url = url+CHECK;break;
+         case LEAVE:url = url+LEAVE;break;
+         case INFORM:url = url+INFORM;break;
+         case FOODLIST:url = url+FOODLIST;break;
+         case ARRANGE:url = url+ARRANGE;break;
      }
         return  url;
     }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.ronglistener.MySendMessageListener;
 
@@ -57,7 +58,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
      *当前的会话类型
      */
     private Conversation.ConversationType mconversationType;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +102,8 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         if (v.getId()==R.id.iv_cback){
             finish();
         }else if (v.getId()==R.id.iv_call){
-            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:13850734494"));
+            Uri phoneUri =  Uri.parse("tel:"+Uri.parse(UserMessage.getInstance(this).getLoginName()));
+            Intent intent = new Intent(Intent.ACTION_DIAL,phoneUri);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }else if (v.getId()==R.id.iv_detail){

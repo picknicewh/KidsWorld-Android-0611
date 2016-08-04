@@ -289,11 +289,14 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
     @Override
     public void onSuccess(String uri, Object date) {
         Result<List<GroupJson>> data = (Result<List<GroupJson>>) date;
-        List<GroupJson>  groupJsonList = data.getData();
-        if (groupJsonList!=null||groupJsonList.size()!=0){
-            setFriendList(groupJsonList);
-            initList();
+        if (data!=null){
+            List<GroupJson>  groupJsonList = data.getData();
+            if (groupJsonList!=null||groupJsonList.size()!=0){
+                setFriendList(groupJsonList);
+                initList();
+            }
         }
+
     }
 
     @Override

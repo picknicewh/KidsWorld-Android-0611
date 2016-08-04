@@ -98,19 +98,19 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
         //1=群，2=老师，3=家长
         params.put("type",1);
         Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
-        OkHttps.sendPost(type,Apiurl.MESSAGE_GETGTOUP,params,this);
-
+        OkHttps.sendPost(type,Apiurl.MESSAGE_GETGTOUP,params,this,2,"contract");
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
         Log.i("TAG",date+"");
         Result<List<GroupJson>> data = (Result<List<GroupJson>>) date;
-        List<GroupJson> groupJsonList =data.getData();
-        if (groupJsonList!=null||groupJsonList.size()!=0){
-            setlistview(groupJsonList);
+        if (data!=null){
+            List<GroupJson> groupJsonList =data.getData();
+            if (groupJsonList!=null||groupJsonList.size()!=0){
+                setlistview(groupJsonList);
+            }
         }
-
     }
 
     @Override
