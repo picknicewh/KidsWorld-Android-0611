@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>乐园</title>
+    <link rel="stylesheet" href="../common/ionic/css/ionic.css">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body ng-app="app" class="hideTitleBar">
+    <!--<ion-nav-bar class="nav-title-slide-ios7" align-title="center"></ion-nav-bar> class="hideTitleBar"-->
+    <ion-nav-view></ion-nav-view>
+    <!-- common:js -->
+    <script src="../common/ionic/js/ionic.bundle.min.js"></script>
+    <script src="../common/jquery/jquery.js"></script>
+    <script src="../common/jquery/store.min.js"></script>
+    <!-- app:js -->
+    <script src="js/app.js"></script>
+
+    <script src="js/constants/constants.js"></script>
+    <script src="js/directives/directives.js"></script>
+    <script src="js/filters/filters.js"></script>
+
+    <script src="js/services/services.js"></script>
+    <script src="js/services/AjaxService.js"></script>
+    <script src="js/services/WebService.js"></script>
+    <script src="js/services/CommonService.js"></script>
+
+    <script src="js/controllers/controllers.js"></script>
+    <script src="js/controllers/ParadiseHomeCtrl.js"></script>
+    <script src="js/controllers/SearchCtrl.js"></script>
+    <script src="js/controllers/Search_AudioCtrl.js"></script>
+    <script src="js/controllers/Search_VideoCtrl.js"></script>
+    <script src="js/controllers/Search_InfCtrl.js"></script>
+    <script src="js/controllers/CollectCtrl.js"></script>
+    <script src="js/controllers/HistoryCtrl.js"></script>
+    <script src="js/controllers/ChildClassCtrl.js"></script>
+    <script src="js/controllers/ChildClass_SortCtrl.js"></script>
+    <script src="js/controllers/ChildMusicCtrl.js"></script>
+    <script src="js/controllers/ChildMusic_SortCtrl.js"></script>
+    <script src="js/controllers/VideoPlayCtrl.js"></script>
+    <script src="js/controllers/AudioPlayCtrl.js"></script>
+    <script src="js/controllers/EduInformationCtrl.js"></script>
+    <script src="js/controllers/EduInformation_DetailCtrl.js"></script>
+
+    <script type="text/javascript">
+      <!-- 判断平台，android为0，ios为1，其他为2-->
+      var platFlag=testPlat();
+      var tsIdLogin=getUrlParam('tsId');
+      function testPlat(){
+        var u = navigator.userAgent;
+        if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){ //android终端
+          return 0;
+        }else if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){ //ios终端
+          return 1;
+        }else{
+          return 2;
+        }
+      };
+      //获取Url后参数
+      function getUrlParam(name){
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r!=null) return decodeURI(r[2]); return null;
+      }
+      //测试IOS
+//      function testios(){
+//        alert("调到了ios");
+//      }
+      //跳转到播放历史页面
+      function goHistory_Origin(){
+        window.location.href = '#/history';
+      }
+      //跳转到搜索页面
+      function goSearch_Origin(){
+        window.location.href = '#/search';
+      }
+      //跳转到搜索课程页面
+      function goSearchVideo_Origin(){
+        window.location.href = '#/search_Video';
+      }
+      //跳转到搜索音乐页面
+      function goSearchAudio_Origin(){
+        window.location.href = '#/search_Audio';
+      }
+      //跳转到搜索资讯页面
+      function goSearchInf_Origin(){
+        window.location.href = '#/search_Inf';
+      }
+    </script>
+
+  </body>
+</html>

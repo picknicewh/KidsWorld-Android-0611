@@ -10,26 +10,22 @@ import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.base.BaseActivity;
-import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
-import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.login.mode.CharacterSeleteVo;
 import net.hunme.login.util.UserAction;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class UserChooseActivity extends BaseActivity implements OkHttpListener {
     private ListView lv_user_choose;
     private UserChooseAdapter adapter;
     private UserMessage um;
     private List<CharacterSeleteVo> seleteList;
-    private final String SELECTUSER="/app/selectUser.do";
-    public static  int flag = 0;
+    public static int flag = 0;
+    private CharacterSeleteVo data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,30 +45,11 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     adapter.setSelectPosition(i);
-                    CharacterSeleteVo data=seleteList.get(i);
-                    //与融云进行连接
-                    String image = data.getImg();
-                    if (image==null){
-                        image = "http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png";
-                    }
-                     BaseLibrary.connect(data.getRyId(),UserChooseActivity.this,data.getName(),image);
-                    String sex;
-                    if(data.getSex()==1){
-                        sex="男";
-                    }else{
-                        sex="女";
-                    }
-                    //通过用户选择身份保存用户信息
-                    UserAction.saveUserMessage(UserChooseActivity.this,data.getName(),
-                            data.getImg(),data.getClassName(),data.getSchoolName(),
-                            data.getRyId(),data.getTsId(),data.getType(),sex,data.getSignature());
-                    selectUserSubmit(data.getTsId());
-                    flag=1;
-                    finish();
+                    data=seleteList.get(i);
+                    LoginActivity.selectUserSubmit(data.getTsId(),UserChooseActivity.this);
                 }
             });
         }
-
     }
 
     @Override
@@ -82,43 +59,44 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
         setCententTitle("选择账号");
     }
 
+
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
         if(G.isEmteny(um.getUserName())){
             // 如果用户没有点击选择默认选择第一个身份
             CharacterSeleteVo data=seleteList.get(0);
-            String sex;
-            if(data.getSex()==1){
-                sex="男";
-            }else{
-                sex="女";
-            }
-            UserAction.saveUserMessage(UserChooseActivity.this,data.getName(),
-                    data.getImg(),data.getClassName(),data.getSchoolName(),
-                    data.getRyId(),data.getTsId(),data.getType(),sex,data.getSignature());
-            selectUserSubmit(data.getTsId());
+            LoginActivity.selectUserSubmit(data.getTsId(),this);
         }
     }
 
-    //用户选择提交用户ID
-    public void selectUserSubmit(String tsid){
-        Map<String,Object>map=new HashMap<>();
-        map.put("tsId",tsid);
-        Type type =new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(type,SELECTUSER,map,this);
-    }
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if(SELECTUSER.equals(uri)){
-            Result<String> result= (Result<String>) date;
-            G.log(result.getData());
+        //与融云进行连接
+        String image = data.getImg();
+        if (image==null){
+            image = "http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png";
         }
+        BaseLibrary.connect(data.getRyId(),UserChooseActivity.this,data.getName(),image);
+        String sex;
+        if(data.getSex()==1){
+            sex="男";
+        }else{
+            sex="女";
+        }
+        //通过用户选择身份保存用户信息
+        UserAction.saveUserMessage(UserChooseActivity.this,data.getName(),
+                data.getImg(),data.getClassName(),data.getSchoolName(),
+                data.getRyId(),data.getTsId(),data.getType(),sex,data.getSignature());
+        G.KisTyep.isChooseId=true;
+        flag=1;
+        finish();
+        G.log("用户选择身份成功----");
     }
 
     @Override
     public void onError(String uri, String error) {
-        G.log(uri);
+        G.showToast(this,"身份选择失败，请重新选择");
     }
 }

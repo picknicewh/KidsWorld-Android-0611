@@ -37,6 +37,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String username;
     private String password;
     private TextView tv_unpassword;
+    private static final String SELECTUSER="/app/selectUser.do";
+    private CharacterSeleteVo data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +97,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         OkHttps.sendPost(type,APPLOGIN,map,this);
     }
 
+    //用户选择提交用户ID
+    public static void selectUserSubmit(String tsid, OkHttpListener listener){
+        Map<String,Object>map=new HashMap<>();
+        map.put("tsId",tsid);
+        Type type =new TypeToken<Result<String>>(){}.getType();
+        OkHttps.sendPost(type,SELECTUSER,map,listener);
+    }
+
+
     @Override
     public void onSuccess(String uri, Object date) {
         if(APPLOGIN.equals(uri)){
@@ -103,26 +114,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             List<CharacterSeleteVo> seleteList=result.getData();
             //将用户信息json串保存起来，提供用户多个身份选择
             UserMessage.getInstance(this).setUserMessagejsonCache(new Gson().toJson(seleteList));
-//                if(result.getData().size()>1){
-          /*  if (seleteList.size()==1){
-                CharacterSeleteVo characterSeleteVo = seleteList.get(0);
-                String image = characterSeleteVo.getImg();
-                if (image==null){
-                    image = "http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png";
-                }
-                BaseLibrary.connect(characterSeleteVo.getRyId(),this,characterSeleteVo.getName(),image);
-            }else {*/
+//            if(result.getData().size()>1){
                 startActivity(new Intent(this,UserChooseActivity.class));
-        //0  }
+                finish();
+//            }else{
+//                data=seleteList.get(0);
+//                selectUserSubmit(data.getTsId(),this);
+//            }
             UserAction.saveLoginMessage(this,username,password);
-//                }else{
-//                    CharacterSeleteVo data=seleteList.get(0);
-//                    UserAction.saveUserMessage(this,username,data.getName(),
-//                            data.getImg(),data.getClassName(),data.getSchoolName(),
-//                            data.getRyId(),data.getTsId(),data.getType());
-//                }
+        }else if(SELECTUSER.equals(uri)){
+            String sex;
+            if(data.getSex()==1){
+                sex="男";
+            }else{
+                sex="女";
+            }
+            UserAction.saveUserMessage(this,data.getName(),
+                    data.getImg(),data.getClassName(),data.getSchoolName(),
+                    data.getRyId(),data.getTsId(),data.getType(),sex,data.getSignature());
+            G.KisTyep.isChooseId=true;
             finish();
-
+            G.log("用户选择身份成功----");
         }
     }
 
@@ -132,8 +144,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         G.showToast(this,error);
     }
 
-   public boolean dispatchKeyEvent(KeyEvent event) {
-       //监听返回按钮
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        //监听返回按钮
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             BaseLibrary.exit();
             finish();

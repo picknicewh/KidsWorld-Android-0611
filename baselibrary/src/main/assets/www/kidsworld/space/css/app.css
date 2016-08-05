@@ -1,0 +1,244 @@
+/**
+ * Created by wangjb on 2016-7-11.
+ * 
+ */
+body {font-family:"黑体","宋体", arial;}
+/*html {
+        font-size : 20px;
+    }
+    @media only screen and (min-width: 401px){
+        html {
+            font-size: 25px !important;
+        }
+    }
+    @media only screen and (min-width: 428px){
+        html {
+            font-size: 26.75px !important;
+        }
+    }
+    @media only screen and (min-width: 481px){
+        html {
+            font-size: 30px !important; 
+        }
+    }
+    @media only screen and (min-width: 569px){
+        html {
+            font-size: 35px !important; 
+        }
+    }
+    @media only screen and (min-width: 641px){
+        html {
+            font-size: 40px !important; 
+        }
+    }*/
+/*body {background-color:white;}*/
+ul li {margin:0; padding:0; list-sytle:none}
+
+/*主页面-头部及头部二级菜单样式*/
+.mui-tab-label{
+    position:relative;
+}
+.mui-badge.app-badge{
+    z-index:-1;
+    position:absolute;
+    top:-5px;
+    margin-left: -3px;
+    padding: 1px 5px;
+}
+.mui-icon.mui-pull-left img{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+}
+.mui-bar-popover {
+    width: 30%;
+}
+/*分享页面-头部及头部二级菜单样式*/
+.app-mainBox{
+    padding:10px 10px;
+    position:relative;
+    /*padding-top: 10px;*/
+}
+.app-leftIn{
+    width:50px;
+    position:absolute;
+    left:8px;
+    top:10px;
+}
+.app-leftIn span.mui-badge{
+    z-index:1;
+    margin-left:-12px;
+    padding: 2px;
+    top: 26px;
+}
+.app-rigthIn{
+    margin-left:60px;
+    /*padding-bottom:16px;*/
+    border-bottom:1px solid #ccc;
+}
+.app-photo img{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+}
+.app-rigthIn .app-name{
+    /*font-family:"黑体","宋体", arial;*/
+    /*font-weight:bold;*/
+    padding-bottom:5px;
+    color: #8cc329;
+}
+.app-rigthIn .app-content .text{
+    /*font-family:"黑体","宋体", arial;*/
+    font-size:13px;
+    color: #494949;
+}
+.app-rigthIn .app-time{
+    font-family:"宋体", arial;
+    font-size:13px;
+    color:#a0a0a0;
+}
+ul.image2 {
+	padding-left: 0;
+    margin: 0;
+    padding-bottom: 10px;
+}
+ul.image2 li {
+	display: inline-block;
+	padding-right: 4px;
+}
+ul.image2 li img{
+	width: 3.2rem;
+	height: 3.2rem;
+}
+.popup {
+    display: inline-block;
+    color: #FFFFFF;
+	background-color: #535353;
+	float: right;
+	line-height: 2em;
+	border-radius: 4px;
+	margin-right: 6px;
+	margin-top: -6px;
+	padding-right: 8px;
+	padding-left: 8px;
+}
+.hidden {
+	visibility: hidden;
+}
+.popup span{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+div.names {
+	position: relative;
+	background-color: #f3f3f3;
+    color: #5a6e97;
+    font-weight: bolder;
+    font-size: 12px;
+    padding-left: 10px;
+    margin-bottom: 8px;
+}
+.admires span {
+	padding-right: 2px;
+	
+}
+/*.hidden{display: none;}*/
+.app-photo span.mui-badge {
+	border-radius: 4px;
+	background-color: #efb607;
+}
+.app-photo span.mui-badge.back-green {
+	background-color: #8EC500;
+}
+
+div.app-control {
+    font-size: 0.6rem;
+    /*padding-top: 10px;*/
+    padding-bottom: 6px;
+}
+.names span.name {
+	    padding-left: 8px;
+    padding-right: 8px;
+}
+.wrap-list {
+     position: relative; 
+     margin-top: 0px; 
+    margin-bottom: 0;
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    list-style: none;
+    background-color: #fff;
+    
+}
+.section-left {
+    width: 60px;
+    position: absolute;
+    /* left: 0; */
+    /* top: 0; */
+}
+.section-right {
+    margin-left: 60px;
+    /*padding-bottom: 16px;*/
+    border-bottom: 1px solid #ccc;
+}
+ul.image li img {
+    width: 3.6rem;
+    height: 3.6rem;
+}
+ul.image {
+    padding-left: 0;
+}
+div.app-content ul li {
+    margin: 0;
+    padding: 0 2px;
+    /*list-sytle: none;*/
+    display: inline-block;
+}
+.title-green  {
+	color: #8ec500;
+}
+.padding-left {
+	padding-left: 4px;
+}
+.popup img, .names img, .heart-gray img{
+	width: 16px;
+    height: 14px;
+	vertical-align: middle;
+	
+}
+.video-width {
+	width: 8rem;
+}
+span.label-font {
+    font-size: 14px;
+    color: #a0a0a0;
+}
+span.time {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #494949;
+}
+span.time2 {
+    font-size: 0.4rem;
+    color: #494949;
+}
+.content-top {
+	margin-top: 30px;
+}
+div.content-top .text {
+    font-size: 16px;
+    color: #494949;
+    padding-bottom: 10px;
+}
+.names span.top {/*小三角*/
+	position: absolute;
+    width: 0px;
+    height: 0px;
+    line-height: 0px;
+    border-bottom: 6px solid #f3f3f3;
+    border-left: 6px solid #fff;
+    border-right: 6px solid #fff;
+    left: 12px;
+    top: -6px;
+}

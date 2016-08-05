@@ -328,7 +328,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 //            isReleaseSuccess=true;
 //        }
         G.showToast(this,"发布成功!");
-        isReleaseSuccess=true;
+        G.KisTyep.isReleaseSuccess=true;
         finish();
     }
 
@@ -339,7 +339,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 //        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
             G.showToast(this,error);
 //        }
-        isReleaseSuccess=false;
+        G.KisTyep.isReleaseSuccess=false;
         G.showToast(this,"发布失败，请检测网络!");
     }
 

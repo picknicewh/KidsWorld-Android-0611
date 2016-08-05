@@ -40,7 +40,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         initView();
-//        initData();
+        initData();
     }
 
     @Override
@@ -88,7 +88,10 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-         initData();
+        //用户选择好了身份立即刷新数据
+        if(G.KisTyep.isChooseId){
+            initData();
+        }
     }
 
     @Override

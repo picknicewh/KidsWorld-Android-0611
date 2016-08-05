@@ -57,7 +57,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      * 没网络时显示
      */
   //  private RelativeLayout rl_nonetwork;
-   private static final String url = "http://192.168.5.136:8989/webSVN/kidsWorld/paradise/#/paradiseHome";
+   private static final String url = "file:///android_asset/www/kidsworld/paradise/index.html?";
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

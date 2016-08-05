@@ -216,8 +216,9 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
                     CacheHelp.deleteFolderFile(Environment.getExternalStorageDirectory().toString() + "/ChatFile",true);
                     tv_cache.setText("暂无缓存");
                     //清除缓存
-                    alertDialog.dismiss();
+//                    alertDialog.dismiss();
                 }
+                alertDialog.dismiss();
             }
         });
         pop_notrigst.setOnClickListener(new View.OnClickListener() {
