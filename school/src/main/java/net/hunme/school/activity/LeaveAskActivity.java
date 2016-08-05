@@ -15,6 +15,7 @@ import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.UserMessage;
+import net.hunme.baselibrary.widget.LoadingDialog;
 import net.hunme.school.R;
 import net.hunme.school.widget.CustomDateTimeDialog;
 
@@ -84,6 +85,8 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
      * 用户信息
      */
     private UserMessage message;
+    private LoadingDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +111,7 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
         tv_end.setText("请选择时间");
         startDateTimeDialog = new CustomDateTimeDialog(LeaveAskActivity.this,R.style.MyDialog,1);
         endDateTimeDialog = new CustomDateTimeDialog(LeaveAskActivity.this,R.style.MyDialog,0);
-
+        dialog = new LoadingDialog(this,R.style.LoadingDialogTheme);
     }
     /**
      * 设置选择时间
@@ -198,10 +201,12 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
         params.put("cause",et_cause.getText().toString());
         Type type = new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type,Apiurl.SCHOOL_SUBLEAVE,params,this);
+        dialog.show();
     }
     @Override
     public void onSuccess(String uri, Object date) {
            Result< String> data = (Result<String>) date;
+           dialog.dismiss();
           if (data.isSuccess()){
             String result  = data.getData();
             Toast.makeText(LeaveAskActivity.this,result,Toast.LENGTH_SHORT).show();
@@ -211,6 +216,7 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onError(String uri, String error) {
+        dialog.dismiss();
         Toast.makeText(LeaveAskActivity.this,error,Toast.LENGTH_SHORT).show();
     }
 }

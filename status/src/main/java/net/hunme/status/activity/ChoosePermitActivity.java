@@ -16,7 +16,7 @@ import net.hunme.status.R;
  * 附加注释：
  * 主要接口：
  */
-public class ChoosePermitActivity extends BaseActivity implements View.OnClickListener {
+public class  ChoosePermitActivity extends BaseActivity implements View.OnClickListener {
     public  static  final  int CHOOSE_PERMIT = 2;
     /**
      * 班级空间和校园空间

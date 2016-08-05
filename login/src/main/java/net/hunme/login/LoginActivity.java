@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String username;
     private String password;
     private TextView tv_unpassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         b_login= (Button) findViewById(R.id.b_login);
         b_login.setOnClickListener(this);
         tv_unpassword.setOnClickListener(this);
+      //  dialog.setLodingText("登陆中....");
     }
 
     @Override
@@ -93,11 +95,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         map.put("password", EncryptUtil.getBase64(password+"hunme"+(int)(Math.random()*900)+100));
         Type type =new TypeToken<Result<List<CharacterSeleteVo>>>(){}.getType();
         OkHttps.sendPost(type,APPLOGIN,map,this);
+
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
         if(APPLOGIN.equals(uri)){
+
             b_login.setEnabled(true);
             Result<List<CharacterSeleteVo>> result= (Result<List<CharacterSeleteVo>>) date;
             List<CharacterSeleteVo> seleteList=result.getData();

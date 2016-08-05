@@ -18,6 +18,7 @@ import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
+import net.hunme.baselibrary.widget.LoadingDialog;
 import net.hunme.user.R;
 import net.hunme.user.adapter.GridAlbumAdapter;
 import net.hunme.user.util.BitmapCache;
@@ -48,8 +49,9 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     public static int position=0;
     private static final int Album_NAME_SELECT=1111;
     private GridAlbumAdapter mAdapter;
-    private List<String> itemList;
+    private ArrayList<String> itemList;
     private String UPLOADPHOTO="/appUser/uploadPhoto.do";
+    private LoadingDialog dialog;
     /**
      * 上传图片的状态
      * 如果为true 表示图片上传成功 返回到相册详情的时候 需要重新获取相片 并刷新
@@ -69,6 +71,7 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
         ll_selcet_photoname=$(R.id.ll_selcet_photoname);
         tv_album_name=$(R.id.tv_album_name);
         ll_selcet_photoname.setOnClickListener(this);
+        dialog = new LoadingDialog(this,R.style.LoadingDialogTheme);
     }
 
     private void initDate(){
@@ -158,10 +161,12 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
         map.put("flickrId",AlbumDetailsActivity.flickrId);
         Type type=new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type,UPLOADPHOTO,map,fileList,this);
+        dialog.show();
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
+        dialog.dismiss();
         G.showToast(this,"图片上传成功");
         isUploadSuccess=true;
         finish();
@@ -169,6 +174,7 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onError(String uri, String error) {
+        dialog.dismiss();
         G.showToast(this,error);
         isUploadSuccess=false;
     }

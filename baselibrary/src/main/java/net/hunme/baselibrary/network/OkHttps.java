@@ -1,6 +1,7 @@
 package net.hunme.baselibrary.network;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -104,6 +105,7 @@ public class OkHttps<T> {
 //                .addFileParams("KEY",filelist);
         for (int i=0;i<filelist.size();i++){
             postRequest.params(i+"",filelist.get(i));
+            Log.i("TAFFF",i+""+filelist.get(i));
         }
         G.log(filelist.size()+"-----------");
         doInternet(type,uri,getParams(map),okHttpListener);

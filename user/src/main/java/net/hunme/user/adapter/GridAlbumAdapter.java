@@ -12,7 +12,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.user.R;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 /**
@@ -26,9 +26,9 @@ import java.util.List;
  * ================================================
  */
 public class GridAlbumAdapter extends BaseAdapter {
-    private List<String> imageItems;
+    private ArrayList<String> imageItems;
     private Context context;
-    public GridAlbumAdapter(List<String> imageItems, Context context) {
+    public GridAlbumAdapter(ArrayList<String> imageItems, Context context) {
         this.imageItems = imageItems;
         this.context = context;
     }

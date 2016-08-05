@@ -1,6 +1,7 @@
 package net.hunme.user.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.util.G;
 import net.hunme.user.R;
 
-import java.util.List;
+import java.util.ArrayList;
+
+import main.picturesee.util.ImagePagerActivity;
 
 /**
  * ================================================
@@ -28,9 +31,9 @@ import java.util.List;
  */
 public class AlbumDetailsAdapter extends BaseAdapter {
     private Context context;
-    private List<String>imagePath;
+    private ArrayList<String>imagePath;
     private ImgLoader presenter;
-    public AlbumDetailsAdapter(Context context, List<String> imagePath) {
+    public AlbumDetailsAdapter(Context context, ArrayList<String> imagePath) {
         this.context = context;
         this.imagePath = imagePath;
         presenter = new UilImgLoader();
@@ -52,7 +55,7 @@ public class AlbumDetailsAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
         if(view==null){
             view= LayoutInflater.from(context).inflate(R.layout.item_album_details,null);
@@ -60,10 +63,23 @@ public class AlbumDetailsAdapter extends BaseAdapter {
         }
         holder= (ViewHolder) view.getTag();
         ImageCache.imageLoader(imagePath.get(i),holder.image);
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageBrower(i,imagePath);
+            }
+        });
 //        getBitmapData(holder.image,imagePath.get(i));
         return view;
     }
+    protected void imageBrower(int position, ArrayList<String> urls2) {
 
+        Intent intent = new Intent(context, ImagePagerActivity.class);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+        intent.putExtra("source","net");
+        context.startActivity(intent);
+    }
     class ViewHolder {
         public ImageView image;
 

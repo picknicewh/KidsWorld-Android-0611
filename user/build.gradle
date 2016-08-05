@@ -25,4 +25,5 @@ dependencies {
     //圆形图片
     compile project(':imagepickerModule')
     compile project(':login')
+    compile project(':picturesee')
 }

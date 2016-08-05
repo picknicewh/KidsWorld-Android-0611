@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -38,6 +39,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import main.picturesee.util.ImagePagerActivity;
+
 /**
  * 作者： wh
  * 时间： 2016/7/19
@@ -60,7 +63,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      */
     private GridView gv_photo;
     private GridAlbumAdapter mAdapter;
-    private List<String> itemList;
+    private ArrayList<String> itemList;
     /**
      * 选择可见范围
      */
@@ -193,11 +196,19 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == itemList.size()) {
                     goSelectImager();
+                }else {
+                    imageBrower(i,itemList);
                 }
             }
         });
     }
-
+    private void imageBrower(int position, ArrayList<String> urls2) {
+        Intent intent = new Intent(this, ImagePagerActivity.class);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+        intent.putExtra("source","local");
+        startActivity(intent);
+    }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case ChoosePermitActivity.CHOOSE_PERMIT:
@@ -263,12 +274,14 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         map.put("tsId",UserMessage.getInstance(this).getTsId());
         map.put("text",dyContent);
         map.put("dynamicVisicty",dynamicVisicty);
+       // Log.i("TAGFF","tsId:"+UserMessage.getInstance(this).getTsId());
         Type type =new TypeToken<Result<String>>(){}.getType();
         if(dynamicType.equals("1")&&itemList.size()>1){
             List<File>list= BitmapCache.getFileList(itemList);
             dynamicType="1";
             map.put("dynamicType",dynamicType);
             OkHttps.sendPost(type,DYNAMIC,map,list,this);
+            Log.i("RRRRR",map+"");
         }else{
             dynamicType="3";
             map.put("dynamicType",dynamicType);

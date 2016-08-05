@@ -1,0 +1,36 @@
+package net.hunme.baselibrary.widget;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.os.Bundle;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import net.hunme.baselibrary.R;
+
+/**
+ * 作者： wh
+ * 时间： 2016/8/5
+ * 名称：加载
+ * 版本说明：
+ * 附加注释：
+ * 主要接口：
+ */
+public class LoadingDialog extends Dialog {
+
+    private TextView tv;
+    public LoadingDialog(Context context) {
+        super(context);
+    }
+
+    public LoadingDialog(Context context, int themeResId) {
+        super(context, themeResId);
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.dialog_loading);
+        LinearLayout linearLayout = (LinearLayout)this.findViewById(R.id.LinearLayout);
+        linearLayout.getBackground().setAlpha(210);
+    }
+}

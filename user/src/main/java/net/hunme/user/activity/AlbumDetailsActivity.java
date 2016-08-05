@@ -28,7 +28,7 @@ import java.util.Map;
 
 public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener {
     private GridView gv_photo;
-    private List<String>itemList;
+    private ArrayList<String>itemList;
     private AlbumDetailsAdapter adapter;
     private final String FILCKR="/appUser/flickr.do";
     public static String flickrId;//相册ID
