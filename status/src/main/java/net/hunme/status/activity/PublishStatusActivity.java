@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -40,8 +39,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import main.picturesee.util.ImagePagerActivity;
 
 /**
  * 作者： wh
@@ -145,7 +142,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         ll_permitchoose = $(R.id.ll_permitchoose);
         rl_restrict = $(R.id.rl_restrict);
         ll_permitchoose.setOnClickListener(this);
-        dialog  = new LoadingDialog(this,R.style.LoadingDialogTheme);
         setEditContent();
         source = getIntent().getStringExtra("from");
         if (source.equals("status")){
@@ -249,7 +245,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             }else if (source.equals("school")){
                 publishcaurse(dyContent);
             }
-            dialog.show();
         }
     }
     /**
@@ -279,14 +274,12 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         map.put("tsId",UserMessage.getInstance(this).getTsId());
         map.put("text",dyContent);
         map.put("dynamicVisicty",dynamicVisicty);
-       // Log.i("TAGFF","tsId:"+UserMessage.getInstance(this).getTsId());
         Type type =new TypeToken<Result<String>>(){}.getType();
         if(dynamicType.equals("1")&&itemList.size()>0){
             List<File>list= BitmapCache.getFileList(itemList);
             dynamicType="1";
             map.put("dynamicType",dynamicType);
             OkHttps.sendPost(type,DYNAMIC,map,list,this);
-            Log.i("RRRRR",map+"");
         }else{
             dynamicType="3";
             map.put("dynamicType",dynamicType);
@@ -344,9 +337,8 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 //            }
 //            isReleaseSuccess=true;
 //        }
-        dialog.dismiss();
         G.showToast(this,"发布成功!");
-        isReleaseSuccess=true;
+        G.KisTyep.isReleaseSuccess=true;
         finish();
     }
 
@@ -357,8 +349,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 //        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
             G.showToast(this,error);
 //        }
-        dialog.dismiss();
-        isReleaseSuccess=false;
+        G.KisTyep.isReleaseSuccess=false;
         G.showToast(this,"发布失败，请检测网络!");
     }
 

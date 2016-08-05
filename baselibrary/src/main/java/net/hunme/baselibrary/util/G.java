@@ -167,4 +167,12 @@ public class G {
             context.deleteFile(appCacheDir.getAbsolutePath());
         }
     }
+
+    public static class KisTyep{
+        public static  boolean isChooseId=false;  //是否选中身份 用切换用户后刷新数据
+
+        public static boolean isReleaseSuccess=false;  //是否成功发布动态 用户刷新数据
+
+        public static  boolean isUpadteHold=false;   //是否修改用户头像
+    }
 }

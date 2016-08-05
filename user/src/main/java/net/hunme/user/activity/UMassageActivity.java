@@ -241,6 +241,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
                 RongIM.getInstance().setMessageAttachedUserInfo(true);
             }
             ImageCache.imageLoader(um.getHoldImgUrl(),cv_head);
+            G.KisTyep.isUpadteHold=true;
             G.showToast(this,"头像修改成功");
         }
     }

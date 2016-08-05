@@ -1,0 +1,63 @@
+<ion-view title="搜索资讯">
+    <ion-nav-bar class="nav-title-slide-ios7" align-title="center"></ion-nav-bar>
+    <ion-nav-buttons side="left">
+        <span class="button ion-chevron-left"  ng-click="goBack()"></span>
+    </ion-nav-buttons>
+    <!--搜索框-->
+    <div class="search">
+        <div class="inbox">
+            <img class="search_icon" src="images/icon/search_icon.png" />
+            <input type="text" placeholder="请输入关键字" class="filter" ng-model="keyWord" ng-focus="inputFocus()" ng-blur="inputBlur()"/>
+            <img class="clear_icon" src="images/icon/clear_icon.png" ng-click="reset()" />
+        </div>
+        <button class="button" ng-click="search()" ng-disabled="!keyWord">
+            搜索
+        </button>
+    </div>
+    <!--搜索记录-->
+    <div class="hisBox" ng-show="showHisBox==1||inputFocusing==1">
+        <ul class="hisList">
+            <li  ng-repeat="item_searchHis in items_searchHis | filter:{'searchHis':keyWord} " ng-click="quickSearch(item_searchHis.searchHis)">{{ item_searchHis.searchHis }}</li>
+        </ul>
+    </div>
+    <!--搜索结果-->
+    <ion-content class="searchContent singleSearch" ng-show="showResultBox==1" ng-click="hideHisBox()">
+        <!--教育资讯-->
+        <div class="InfCntBox">
+            <div class="InfItem" ng-repeat="item_inf in items_inf" ng-click="showInfDet(item_inf)">
+                <div class="InfItemImg">
+                    <img src="images/temp/recItem01.png" />
+                </div>
+                <div class="InfItemBrief">
+                    <div class="InfTitle">
+                        南苏丹的中国女医生：当地中国人已在8个点紧急集结
+                    </div>
+                    <div class="InftAbout">
+                        <span>中国青年报</span>
+                        <span>3阅读</span>
+                    </div>
+                </div>
+            </div>
+            <!--接后台-->
+            <!--<div class="InfItemImg">-->
+            <!--<img src="{{ item_inf.imgUrl }}" />-->
+            <!--</div>-->
+            <!--<div class="InfItemBrief">-->
+            <!--<div class="InfTitle">-->
+            <!--{{ item_inf.name }}-->
+            <!--</div>-->
+            <!--<div class="InftAbout">-->
+            <!--<span>中国青年报</span>-->
+            <!--<span>{{ item_inf.pv | numberTo4 }}阅读</span>-->
+            <!--</div>-->
+            <!--</div>-->
+        </div>
+        <!--加载更多-->
+        <div class="loadMoreBox">
+            <span class="loadMore" ng-show="loadState==0" ng-click="loadMoreData()">查看更多</span>
+            <span class="moreIcon" ng-show="loadState==0" ng-click="loadMoreData()"></span>
+            <ion-spinner icon="bubbles" class="spinner-balanced loading" ng-show="loadState==1"></ion-spinner>
+            <span class="loadEnd" ng-show="loadState==2">没有更多数据了</span>
+        </div>
+    </ion-content>
+</ion-view>
