@@ -301,7 +301,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 }
             }
         });
-
     }
 
     @Override
@@ -337,6 +336,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             G.showToast(this,error);
 //        }
         isReleaseSuccess=false;
+        G.showToast(this,"发布失败，请检测网络!");
     }
 
 }

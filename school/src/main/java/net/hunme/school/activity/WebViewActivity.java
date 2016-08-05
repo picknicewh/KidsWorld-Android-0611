@@ -54,10 +54,9 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         setContentView(R.layout.activity_hm_droidgap);
         super.init();
         launchUrl=getIntent().getStringExtra("loadUrl");
+        Log.i("TAGG",launchUrl);
         loadUrl(launchUrl);
-        Log.i("RTTT",launchUrl);
         initData();
-      //  G.clearCacheFolder(getCacheDir(),System.currentTimeMillis());
     }
 
     private void  initData(){
@@ -135,6 +134,8 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
 
     /**
      * 设置导航栏
+     * @param  ContentTitle 中间标题
+     * @param  RightTitle 右边标题
      */
     @JavascriptInterface
     public void  setNavigationbar(final String ContentTitle,final String RightTitle){

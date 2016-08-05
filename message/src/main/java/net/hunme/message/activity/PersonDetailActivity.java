@@ -119,7 +119,7 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
         Map<String,Object> param = new HashMap<>();
         param.put("tsId",userid);
         Type  type = new  TypeToken<Result<RyUserInfor>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.MESSAGE_GETDETAIL,param,this,2,"contract");
+        OkHttps.sendPost(type, Apiurl.MESSAGE_GETDETAIL,param,this,2,"contract_person");
 
     }
     @Override
@@ -156,11 +156,9 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
                 tv_phone.setText(ryUserInfor.getPhone());
                 tv_class.setText(ryUserInfor.getClassName());
                 image = ryUserInfor.getImg();
-
                 ImageCache.imageLoader(ryUserInfor.getImg(),iv_phead);
             }
         }
-       // Log.i("TAGGG",UserInfor.getData()+"=============data=============");
 
     }
     @Override

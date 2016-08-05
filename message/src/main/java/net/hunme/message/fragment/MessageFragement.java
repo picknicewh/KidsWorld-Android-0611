@@ -22,7 +22,6 @@ import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.activity.ClassActivity;
 import net.hunme.message.activity.ParentActivity;
-import net.hunme.message.activity.SearchActivity;
 import net.hunme.message.bean.GroupJson;
 
 import java.lang.reflect.Type;
@@ -47,7 +46,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     /**
      * 搜索
      */
-    private ImageView iv_search;
+  //  private ImageView iv_search;
     /**
      * 班级
      */
@@ -72,18 +71,22 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
        // RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
         return view;
     }
+    /**
+     * 初始化view
+     * @param  v
+     */
    private  void init(View v){
-       iv_search = $(v,R.id.iv_search);
+     //  iv_search = $(v,R.id.iv_search);
         iv_class = $(v,R.id.iv_class);
         iv_teacher = $(v,R.id.iv_teacher);
         iv_parent = $(v,R.id.iv_parent);
-        userMessage = new UserMessage(getActivity());
+        userMessage = UserMessage.getInstance(getActivity());
         getGroupList(userMessage.getTsId());
         initframent();
         iv_parent.setOnClickListener(this);
         iv_teacher.setOnClickListener(this);
         iv_class.setOnClickListener(this);
-        iv_search.setOnClickListener(this);
+     //   iv_search.setOnClickListener(this);
 
    }
     /**
@@ -116,13 +119,14 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
             intent.setClass(getActivity(), ParentActivity.class);
             intent.putExtra("title","家长");
             startActivity(intent);
-        }else if (v.getId()==R.id.iv_search){
+        }/*else if (v.getId()==R.id.iv_search){
             intent.setClass(getActivity(), SearchActivity.class);
             startActivity(intent);
-        }
+        }*/
     }
     /**
      * 获取所有班级信息
+     * @param tsid
      */
     private  void getGroupList(String tsid){
         Map<String,Object> params = new HashMap<>();
