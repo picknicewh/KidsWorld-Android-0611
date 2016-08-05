@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.school.R;
 import net.hunme.school.bean.PublishVo;
 
@@ -57,10 +58,10 @@ public class PublishAdapter extends BaseAdapter {
         }
         PublishVo vo=publishList.get(i);
         viewHold= (ViewHold) view.getTag();
-//        viewHold.lv_holad.setImageResource(vo.getImgUrl());
+        ImageCache.imageLoader(vo.getImgUrl(),viewHold.lv_holad);
         viewHold.tv_title.setText(vo.getTsName());
         viewHold.tv_content.setText(vo.getMessage());
-        viewHold.tv_date.setText(vo.getDateTime());
+        viewHold.tv_date.setText(vo.getDateTime().substring(0,10));
         viewHold.setTextColor(vo.isRead());
         return view;
     }
@@ -84,7 +85,6 @@ public class PublishAdapter extends BaseAdapter {
                  tv_content.setTextColor(Color.BLACK);
              else
                  tv_content.setTextColor(Color.parseColor("#a9a9a9"));
-
          }
     }
 }

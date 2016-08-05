@@ -81,11 +81,11 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         iv_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (webView.canGoBack()){
+                if (launchUrl.equals(webView.getUrl())){
+                    finish();
+                }else {
                     webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
                     webView.goBack();
-                }else {
-                    finish();
                 }
             }
         });

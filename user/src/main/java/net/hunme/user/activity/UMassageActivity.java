@@ -1,5 +1,6 @@
 package net.hunme.user.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -17,17 +18,20 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.pizidea.imagepicker.AndroidImagePicker;
 
+import net.hunme.baselibrary.activity.PermissionsActivity;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.user.R;
 import net.hunme.user.util.BitmapCache;
 import net.hunme.user.util.MyAlertDialog;
+import net.hunme.user.util.PermissionUtils;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -65,6 +69,11 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     private final String AVATAR="/appUser/setAvatar.do";
     private String path;//选择头像保存地址
     private String sign; //用户个性签名
+    // 访问相册所需的全部权限
+    private final String[] PERMISSIONS = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +118,10 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         int viewID=v.getId();
         if(viewID==R.id.rl_userMessage){
+            if(new PermissionsChecker(this).lacksPermissions(PERMISSIONS)){
+                PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
+                return;
+            }
             AndroidImagePicker.getInstance().pickAndCrop(UMassageActivity.this, true, 200, new AndroidImagePicker.OnImageCropCompleteListener() {
                 @Override
                 public void onImageCropComplete(Bitmap bmp, float ratio) {

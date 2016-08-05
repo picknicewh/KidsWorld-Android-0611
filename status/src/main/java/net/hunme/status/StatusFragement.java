@@ -20,6 +20,7 @@ import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.DateUtil;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
@@ -34,6 +35,7 @@ import org.apache.cordova.engine.SystemWebViewEngine;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,9 +78,12 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
      */
     private LinearLayout ll_loading;
     /**
-     * 动态uri地址
+     * 动态uri地址  loadUrlStr = "file:///android_asset/www/sdk/view/index_android.html#/open-prepare";
+     *
+     http://zhu.hunme.net:8080/KidsWorld/space/view/dynamic.html
+     http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html?
      */
-    private static final String url = "http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html?class=2";//&
+    private static final String url = "http://zhu.hunme.net:8080/KidsWorld/space/view/dynamic.html?";//&
     /**
      * 班级选择
      */
@@ -120,12 +125,13 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     public void setWebView(int position){
         webView.addJavascriptInterface(this, "change");  //设置本地调用对象及其接口
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),ll_loading));
-        getWebView(webView).loadUrl(url+"&groupId="+dynamicList.get(position).getGroupId()
-                +"&groupName="+dynamicList.get(position).getGroupName()
-                +"&groupType="+dynamicList.get(position).getGroupType());
-        G.log("loadUrl====="+url+"&groupId="+dynamicList.get(position).getGroupId()
-                +"&groupName="+dynamicList.get(position).getGroupName()
-                +"&groupType="+dynamicList.get(position).getGroupType());
+        getWebView(webView).loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
+                +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
+                +"&clickTime="+ DateUtil.formatDateTime(new Date()));
+
+        G.log("loadUrl====="+url+"groupId="+dynamicList.get(position).getGroupId()
+                +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
+        +"&clickTime="+ DateUtil.formatDateTime(new Date()));
     }
     /**
      * 设置选择弹窗
@@ -179,7 +185,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
 //                public void run() {
 //                    //显示dialog
                     webView.loadUrl("javascript:pulldownRefresh()");
-            G.log("");
 //                }
 //            }, 10000);
         }
@@ -190,6 +195,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
      * 获取班级列表
      */
     private void getDynamicHead(){
+        G.log(um.getTsId()+"------------------");
         if(G.isEmteny(um.getTsId())){
             return;
         }

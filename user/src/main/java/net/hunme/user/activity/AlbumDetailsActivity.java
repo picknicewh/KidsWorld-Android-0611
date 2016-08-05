@@ -14,6 +14,7 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.user.R;
 import net.hunme.user.adapter.AlbumDetailsAdapter;
@@ -54,7 +55,10 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
         setSubTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PermissionUtils.getPermission(AlbumDetailsActivity.this,PERMISSIONS);
+                if(new PermissionsChecker(AlbumDetailsActivity.this).lacksPermissions(PERMISSIONS)){
+                    PermissionsActivity.startActivityForResult(AlbumDetailsActivity.this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
+                    return;
+                }
                 Intent intent=new Intent(AlbumDetailsActivity.this,UploadPhotoActivity.class);
                 intent.putExtra("flickrId",flickrId);
                 startActivity(intent);

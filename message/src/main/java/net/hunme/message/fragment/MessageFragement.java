@@ -18,6 +18,7 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.activity.ClassActivity;
@@ -129,6 +130,10 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
      * @param tsid
      */
     private  void getGroupList(String tsid){
+        if(G.isEmteny(tsid)){
+            //用户没登录或者退出账号 打开App无需去请求
+            return;
+        }
         Map<String,Object> params = new HashMap<>();
         params.put("tsId", tsid);
         //1=群，2=老师，3=家长

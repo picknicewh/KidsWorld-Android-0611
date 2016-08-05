@@ -25,6 +25,7 @@ import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.status.R;
 import net.hunme.status.widget.StatusPublishPopWindow;
@@ -276,7 +277,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         map.put("dynamicVisicty",dynamicVisicty);
        // Log.i("TAGFF","tsId:"+UserMessage.getInstance(this).getTsId());
         Type type =new TypeToken<Result<String>>(){}.getType();
-        if(dynamicType.equals("1")&&itemList.size()>1){
+        if(dynamicType.equals("1")&&itemList.size()>0){
             List<File>list= BitmapCache.getFileList(itemList);
             dynamicType="1";
             map.put("dynamicType",dynamicType);
@@ -288,12 +289,15 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             OkHttps.sendPost(type,DYNAMIC,map,this);
         }
     }
-
     /**
      * 前往获取图片
      */
     private void goSelectImager(){
-        PermissionUtils.getPermission(this,PERMISSIONS);
+//        getPermission(this,PERMISSIONS);
+        if(new PermissionsChecker(this).lacksPermissions(PERMISSIONS)){
+            PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
+            return;
+        }
         AndroidImagePicker.getInstance().pickMulti(PublishStatusActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
             @Override
             public void onImagePickComplete(List<ImageItem> items) {
@@ -318,35 +322,38 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if(DYNAMIC.equals(uri)){
-            Result<String>result= (Result<String>) date;
-            if(result.isSuccess()){
-                G.showToast(this,"发布成功!");
-                finish();
-            }else{
-                G.showToast(this,"发布失败，请稍后再试!");
-            }
-        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
-            Result<String>result= (Result<String>) date;
-            if(result.isSuccess()){
-                G.showToast(this,"发布成功!");
-                finish();
-            }else{
-                G.showToast(this,"发布失败，请稍后再试!");
-            }
-            isReleaseSuccess=true;
-        }
+//        if(DYNAMIC.equals(uri)){
+//            Result<String>result= (Result<String>) date;
+//            if(result.isSuccess()){
+//                G.showToast(this,"发布成功!");
+//                finish();
+//            }else{
+//                G.showToast(this,"发布失败，请稍后再试!");
+//            }
+//        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
+//            Result<String>result= (Result<String>) date;
+//            if(result.isSuccess()){
+//                G.showToast(this,"发布成功!");
+//                finish();
+//            }else{
+//                G.showToast(this,"发布失败，请稍后再试!");
+//            }
+//            isReleaseSuccess=true;
+//        }
+        G.showToast(this,"发布成功!");
+        isReleaseSuccess=true;
+        finish();
     }
 
     @Override
     public void onError(String uri, String error) {
-        if (DYNAMIC.equals(uri)){
-            G.showToast(this,"发布失败，请检测网络!");
-        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
+//        if (DYNAMIC.equals(uri)){
+//            G.showToast(this,"发布失败，请检测网络!");
+//        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
             G.showToast(this,error);
-        }
+//        }
         isReleaseSuccess=false;
-       // G.showToast(this,"发布失败，请检测网络!");
+        G.showToast(this,"发布失败，请检测网络!");
     }
 
 }

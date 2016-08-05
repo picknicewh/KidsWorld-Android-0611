@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.school.R;
 import net.hunme.school.bean.PublishVo;
 
@@ -18,7 +19,7 @@ public class PublishDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_detail);
         initView();
-//        initDate();
+        initDate();
     }
 
     @Override
@@ -37,9 +38,9 @@ public class PublishDetailActivity extends BaseActivity {
 
     private void initDate(){
         PublishVo vo= (PublishVo) getIntent().getSerializableExtra("publish");
-//        lv_holad.setImageResource(vo.getImgUrl());
+        ImageCache.imageLoader(vo.getImgUrl(),lv_holad);
         tv_title.setText(vo.getTsName());
-        tv_date.setText(vo.getDateTime());
+        tv_date.setText(vo.getDateTime().substring(0,11));
         tv_content.setText(vo.getMessage());
     }
 }
