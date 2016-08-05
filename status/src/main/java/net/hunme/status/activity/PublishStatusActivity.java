@@ -27,6 +27,7 @@ import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
+import net.hunme.baselibrary.widget.LoadingDialog;
 import net.hunme.status.R;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.adapter.GridAlbumAdapter;
@@ -90,6 +91,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 限制内容
      */
     private RelativeLayout rl_restrict;
+    private LoadingDialog dialog;
     // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
@@ -143,6 +145,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         ll_permitchoose = $(R.id.ll_permitchoose);
         rl_restrict = $(R.id.rl_restrict);
         ll_permitchoose.setOnClickListener(this);
+        dialog  = new LoadingDialog(this,R.style.LoadingDialogTheme);
         setEditContent();
         source = getIntent().getStringExtra("from");
         if (source.equals("status")){
@@ -246,6 +249,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             }else if (source.equals("school")){
                 publishcaurse(dyContent);
             }
+            dialog.show();
         }
     }
     /**
@@ -340,6 +344,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 //            }
 //            isReleaseSuccess=true;
 //        }
+        dialog.dismiss();
         G.showToast(this,"发布成功!");
         isReleaseSuccess=true;
         finish();
@@ -352,6 +357,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 //        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
             G.showToast(this,error);
 //        }
+        dialog.dismiss();
         isReleaseSuccess=false;
         G.showToast(this,"发布失败，请检测网络!");
     }
