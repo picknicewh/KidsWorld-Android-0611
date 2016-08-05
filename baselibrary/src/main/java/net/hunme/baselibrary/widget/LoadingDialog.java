@@ -18,7 +18,8 @@ import net.hunme.baselibrary.R;
  */
 public class LoadingDialog extends Dialog {
 
-    private TextView tv;
+    private static TextView tv_prompt;
+    private static LoadingDialog dialog;
     public LoadingDialog(Context context) {
         super(context);
     }
@@ -31,6 +32,19 @@ public class LoadingDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_loading);
         LinearLayout linearLayout = (LinearLayout)this.findViewById(R.id.LinearLayout);
+        tv_prompt= (TextView) this.findViewById(R.id.tv_prompt);
         linearLayout.getBackground().setAlpha(210);
     }
+
+    public static LoadingDialog getInstance(Context context){
+        if(null==dialog){
+            dialog=new LoadingDialog(context,R.style.LoadingDialogTheme);
+        }
+        return dialog;
+    }
+
+    public static void setLoadingText(String text){
+        tv_prompt.setText(text);
+    }
+
 }

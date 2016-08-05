@@ -141,7 +141,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
         Map<String,Object> map=new HashMap<>();
         map.put("tsId",um.getTsId());
         Type type=new TypeToken<Result<List<PhotoVo>>>(){}.getType();
-        OkHttps.sendPost(type,MYFlICKR,map,this);
+        OkHttps.sendPost(type,MYFlICKR,map,this,2,CREATEEFILCK);
     }
 
     /**
@@ -155,6 +155,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
         Type type=new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type,CREATEEFILCK,map,this);
     }
+
     @Override
     public void onSuccess(String uri, Object date) {
         if(MYFlICKR.equals(uri)){

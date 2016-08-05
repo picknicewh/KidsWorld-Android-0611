@@ -82,7 +82,7 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
         map.put("pageSize",100);
         map.put("pageNumber",1);
         Type type=new TypeToken<Result<List<Photodetail>>>(){}.getType();
-        OkHttps.sendPost(type,FILCKR,map,this);
+        OkHttps.sendPost(type,FILCKR,map,this,2,FILCKR);
     }
 
     @Override

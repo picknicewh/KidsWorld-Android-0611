@@ -40,6 +40,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import main.picturesee.util.ImagePagerActivity;
+
 /**
  * 作者： wh
  * 时间： 2016/7/19
@@ -94,7 +96,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
-    public static boolean isReleaseSuccess=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,6 +154,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             goSelectImager();
             showPhoto();
         }
+        dialog=new LoadingDialog(this,R.style.LoadingDialogTheme);
     }
 
     /**
@@ -276,6 +278,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         map.put("dynamicVisicty",dynamicVisicty);
         Type type =new TypeToken<Result<String>>(){}.getType();
         if(dynamicType.equals("1")&&itemList.size()>0){
+            dialog.show();
             List<File>list= BitmapCache.getFileList(itemList);
             dynamicType="1";
             map.put("dynamicType",dynamicType);
@@ -339,6 +342,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 //        }
         G.showToast(this,"发布成功!");
         G.KisTyep.isReleaseSuccess=true;
+       dialog.dismiss();
         finish();
     }
 
@@ -350,7 +354,8 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             G.showToast(this,error);
 //        }
         G.KisTyep.isReleaseSuccess=false;
-        G.showToast(this,"发布失败，请检测网络!");
+//        G.showToast(this,"发布失败，请检测网络!");
+        dialog.dismiss();
     }
 
 }

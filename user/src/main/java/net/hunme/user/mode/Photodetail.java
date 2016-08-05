@@ -1,5 +1,7 @@
 package net.hunme.user.mode;
 
+import java.io.Serializable;
+
 /**
  * ================================================
  * 作    者：ZLL
@@ -10,7 +12,7 @@ package net.hunme.user.mode;
  * 主要接口：
  * ================================================
  */
-public class Photodetail {
+public class Photodetail implements Serializable{
     private String id;
     private String myphotoid;
     private String imgurl;
