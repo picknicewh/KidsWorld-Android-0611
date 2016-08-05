@@ -37,6 +37,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String username;
     private String password;
     private TextView tv_unpassword;
+    private static final String SELECTUSER="/app/selectUser.do";
+    private CharacterSeleteVo data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
