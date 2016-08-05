@@ -10,11 +10,9 @@ import android.widget.TextView;
 
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
-import net.hunme.message.ronglistener.MySendMessageListener;
 
 import java.util.Locale;
 
-import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -62,10 +60,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conservation);
-        if (RongIM.getInstance() != null) {
-            //设置自己发出的消息监听器。
-            RongIM.getInstance().setSendMessageListener(new MySendMessageListener());
-        }
         initView();
 
     }

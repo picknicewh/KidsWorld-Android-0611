@@ -3,6 +3,7 @@ package net.hunme.school.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -53,9 +54,9 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         setContentView(R.layout.activity_hm_droidgap);
         super.init();
         launchUrl=getIntent().getStringExtra("loadUrl");
+        Log.i("TAGG",launchUrl);
         loadUrl(launchUrl);
         initData();
-      //  G.clearCacheFolder(getCacheDir(),System.currentTimeMillis());
     }
 
     private void  initData(){
@@ -133,6 +134,8 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
 
     /**
      * 设置导航栏
+     * @param  ContentTitle 中间标题
+     * @param  RightTitle 右边标题
      */
     @JavascriptInterface
     public void  setNavigationbar(final String ContentTitle,final String RightTitle){

@@ -98,7 +98,7 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
         //1=群，2=老师，3=家长
         params.put("type",1);
         Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
-        OkHttps.sendPost(type,Apiurl.MESSAGE_GETGTOUP,params,this,2,"contract");
+        OkHttps.sendPost(type,Apiurl.MESSAGE_GETGTOUP,params,this,2,"contract_class");
     }
 
     @Override

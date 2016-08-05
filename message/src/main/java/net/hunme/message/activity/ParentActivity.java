@@ -135,16 +135,19 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      * @param  title 标题
      */
     private  void getfriendinfor(String title){
+        String dbname;
         Map<String,Object> params = new HashMap<>();
         params.put("tsId",UserMessage.getInstance(this).getTsId());
         //1=群，2=老师，3=家长
         if (title.equals("教师")){
             params.put("type","2");
+            dbname  = "contract_teacher";
         }else {
             params.put("type","3");
+            dbname  = "contract_parent";
         }
         Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this,2,"CONTRAT");
+        OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this,2,dbname);
     }
     /**
      * 显示列表
@@ -159,7 +162,6 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
             public void onTouchingLetterChanged(String s) {
                 // 该字母首次出现的位置
                 int position = adapter.getPositionForSection(s.charAt(0));
-                //    Log.i("TAVGF",position+"");
                 if (position != -1) {
                     lv_parent.setSelection(position);
                 }
