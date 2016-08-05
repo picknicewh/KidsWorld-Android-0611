@@ -50,7 +50,6 @@ public class StatusPublishPopWindow extends CommonPubishPopWindow {
             intent.putExtra("type",VEDIO);
         }*/
         intent.putExtra("from","status");
-
         context.startActivity(intent);
         dismiss();
     }

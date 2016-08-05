@@ -264,7 +264,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         map.put("text",dyContent);
         map.put("dynamicVisicty",dynamicVisicty);
         Type type =new TypeToken<Result<String>>(){}.getType();
-        if(dynamicType.equals("1")&&itemList.size()>1){
+        if(dynamicType.equals("1")&&itemList.size()>0){
             List<File>list= BitmapCache.getFileList(itemList);
             dynamicType="1";
             map.put("dynamicType",dynamicType);
@@ -306,35 +306,37 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if(DYNAMIC.equals(uri)){
-            Result<String>result= (Result<String>) date;
-            if(result.isSuccess()){
-                G.showToast(this,"发布成功!");
-                finish();
-            }else{
-                G.showToast(this,"发布失败，请稍后再试!");
-            }
-        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
-            Result<String>result= (Result<String>) date;
-            if(result.isSuccess()){
-                G.showToast(this,"发布成功!");
-                finish();
-            }else{
-                G.showToast(this,"发布失败，请稍后再试!");
-            }
-            isReleaseSuccess=true;
-        }
+//        if(DYNAMIC.equals(uri)){
+//            Result<String>result= (Result<String>) date;
+//            if(result.isSuccess()){
+//                G.showToast(this,"发布成功!");
+//                finish();
+//            }else{
+//                G.showToast(this,"发布失败，请稍后再试!");
+//            }
+//        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
+//            Result<String>result= (Result<String>) date;
+//            if(result.isSuccess()){
+//                G.showToast(this,"发布成功!");
+//                finish();
+//            }else{
+//                G.showToast(this,"发布失败，请稍后再试!");
+//            }
+//            isReleaseSuccess=true;
+//        }
+        G.showToast(this,"发布成功!");
+        isReleaseSuccess=true;
+        finish();
     }
 
     @Override
     public void onError(String uri, String error) {
-        if (DYNAMIC.equals(uri)){
-            G.showToast(this,"发布失败，请检测网络!");
-        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
+//        if (DYNAMIC.equals(uri)){
+//            G.showToast(this,"发布失败，请检测网络!");
+//        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
             G.showToast(this,error);
-        }
+//        }
         isReleaseSuccess=false;
-        G.showToast(this,"发布失败，请检测网络!");
     }
 
 }
