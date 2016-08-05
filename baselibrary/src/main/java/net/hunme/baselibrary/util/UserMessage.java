@@ -61,7 +61,7 @@ public class UserMessage {
         editor.commit();
     }
     public String getUserName(){
-        return  spf.getString("userName","大幂幂");
+        return  spf.getString("userName","");
     }
 
     /**
@@ -116,7 +116,7 @@ public class UserMessage {
         editor.commit();
     }
     public String getTsId(){
-        return  spf.getString("tsId","1001");
+        return  spf.getString("tsId","");
     }
 
     /**

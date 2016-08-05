@@ -79,8 +79,11 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     private LinearLayout ll_loading;
     /**
      * 动态uri地址  loadUrlStr = "file:///android_asset/www/sdk/view/index_android.html#/open-prepare";
+     *
+     http://zhu.hunme.net:8080/KidsWorld/space/view/dynamic.html
+     http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html?
      */
-    private static final String url = "http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html?";//&
+    private static final String url = "http://zhu.hunme.net:8080/KidsWorld/space/view/dynamic.html?";//&
     /**
      * 班级选择
      */
@@ -192,6 +195,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
      * 获取班级列表
      */
     private void getDynamicHead(){
+        G.log(um.getTsId()+"------------------");
         if(G.isEmteny(um.getTsId())){
             return;
         }

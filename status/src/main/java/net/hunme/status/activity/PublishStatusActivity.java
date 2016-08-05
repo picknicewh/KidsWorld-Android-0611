@@ -24,6 +24,7 @@ import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.status.R;
 import net.hunme.status.widget.StatusPublishPopWindow;
@@ -275,12 +276,15 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             OkHttps.sendPost(type,DYNAMIC,map,this);
         }
     }
-
     /**
      * 前往获取图片
      */
     private void goSelectImager(){
-        PermissionUtils.getPermission(this,PERMISSIONS);
+//        getPermission(this,PERMISSIONS);
+        if(new PermissionsChecker(this).lacksPermissions(PERMISSIONS)){
+            PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
+            return;
+        }
         AndroidImagePicker.getInstance().pickMulti(PublishStatusActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
             @Override
             public void onImagePickComplete(List<ImageItem> items) {

@@ -298,8 +298,6 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
 
     @Override
     public void destroy() {
-        webView.chromeClient.destroyLastDialog();
-        webView.destroy();
         // unregister the receiver
         if (receiver != null) {
             try {
@@ -308,5 +306,7 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
                 Log.e(TAG, "Error unregistering configuration receiver: " + e.getMessage(), e);
             }
         }
+        webView.chromeClient.destroyLastDialog();
+        webView.destroy();
     }
 }
