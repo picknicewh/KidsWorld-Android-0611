@@ -1,0 +1,15 @@
+<ion-view>
+    <ion-nav-bar class="bar-tf">
+        <ion-nav-back-button class="btt-col" ng-click="goBack()">
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content class="school-bg">
+        <div class="dis-list" ng-repeat="item in items">
+            <a class="item item-avatar dis-class"   ng-click="goSearch()" style="padding: 19px">
+                <span class="checkOnclass-left">{{ item.id }}</span>
+                <span class="signTo"><i class="signTo-fill">补签到</i></span>
+                <span class="dibu-second"></span>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,55 @@
+<ion-view title="请假">
+    <!--<ion-nav-bar class="bar-tf">-->
+        <!--<ion-nav-back-button class="btt-col">-->
+        <!--</ion-nav-back-button>-->
+    <!--</ion-nav-bar>-->
+    <!--<ion-nav-buttons side="right">-->
+        <!--<button class="button-stable button-clear" style="color: white">我要请假</button>-->
+    <!--</ion-nav-buttons>-->
+    <ion-content>
+        <div class="list">
+        <ul>
+            <li ng-repeat="item in items">
+            <div  class="askForlv-top">
+                <span class="askForlv-app">请假申请</span>
+                <span class="notify-time">{{item.creationTime | dataToday}}</span>
+                <div class="askForlv-dis">
+                    <span class="askForlv-name-dis">姓名:<i>{{item.tsName}}</i></span>
+                    <span>时间:<i>{{item.startDate | dataToMinute }}至</i></span>
+                    <span style="margin-left: 38px;margin-top: 5px"><i>{{item.endDate | dataToMinute }}</i></span>
+                    <span class="askForlv-ill-dis">理由:<i>{{item.cause}}</i></span>
+                    <span class="askForlv-line"></span>
+                </div>
+            </div>
+            </li>
+            <!--<li>-->
+                <!--<div  class="askForlv-top">-->
+                    <!--<span class="askForlv-app">请假申请</span>-->
+                    <!--<div class="askForlv-agr-side"><i class="askForlv-agr">已批准</i></div>-->
+                    <!--<span class="notify-time">2016-07-11</span>-->
+                    <!--<div class="askForlv-dis">-->
+                        <!--<span class="askForlv-name-dis">姓名:<i>周助</i></span>-->
+                        <!--<span>时间:<i>2016-07-11 08:30 至</i></span>-->
+                        <!--<span style="margin-left: 38px;margin-top: 5px"><i>2016-07-12  16:30</i></span>-->
+                        <!--<span class="askForlv-ill-dis">理由:<i>生病</i></span>-->
+                        <!--<span class="askForlv-line"></span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<div  class="askForlv-top">-->
+                    <!--<span class="askForlv-app">请假申请</span>-->
+                    <!--<div class="askForlv-unagr-side"><i class="askForlv-unagr">未批准</i></div>-->
+                    <!--<span class="notify-time">2016-07-11</span>-->
+                    <!--<div class="askForlv-dis">-->
+                        <!--<span class="askForlv-name-dis">姓名:<i>周助</i></span>-->
+                        <!--<span>时间:<i>2016-07-11 08:30 至</i></span>-->
+                        <!--<span style="margin-left: 38px;margin-top: 5px"><i>2016-07-12  16:30</i></span>-->
+                        <!--<span class="askForlv-ill-dis">理由:<i>生病</i></span>-->
+                        <!--<span class="askForlv-line"></span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</li>-->
+        </ul>
+        </div>
+    </ion-content>

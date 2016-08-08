@@ -33,8 +33,8 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_id;
     private TextView tv_name;
     private TextView tv_address;
-    private final String MYCOLLECTION="http://192.168.5.136:8989/webSVN/kidsWorld/paradise/index.html#/collect";
-    private final String MYDYNAMICS="http://192.168.1.179:8787/web/kidsWorld/space/view/myDynamic.html";
+    private final String MYCOLLECTION="file:///android_asset/www/kidsworld/paradise/index.html#/collect";
+    private final String MYDYNAMICS="file:///android_asset/www/kidsworld/space/view/myDynamic.html";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +89,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         //用户选择好了身份立即刷新数据
-        if(G.KisTyep.isChooseId){
+        if(G.KisTyep.isChooseId||G.KisTyep.isUpadteHold){
             initData();
         }
     }

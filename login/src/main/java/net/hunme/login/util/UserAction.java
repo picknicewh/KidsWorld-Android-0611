@@ -1,6 +1,7 @@
 package net.hunme.login.util;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
@@ -59,18 +60,39 @@ public class UserAction {
         um.setUserSign(signature);
     }
 
+    /**
+     * 保存用户登录名和密码
+     * @param context
+     * @param loginName
+     * @param passWord
+     */
     public static void saveLoginMessage(Context context,String loginName,String passWord){
         UserMessage um =UserMessage.getInstance(context);
         um.setLoginName(loginName);
         um.setPassword(passWord);
     }
 
+    /**
+     *  关闭所有的activity
+     */
     private static List<Activity> activityList = new LinkedList<Activity>();
     public static void exit() {
         for (Activity activity : activityList) {
             activity.finish();
         }
         System.exit(0);
+    }
+
+    /**
+     * 前往主页面
+     * @param activity
+     */
+    public static void goMainActivity(Activity activity){
+        ComponentName componetName = new ComponentName("net.hunme.kidsworld","net.hunme.kidsworld.MainActivity");
+        Intent intent = new Intent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setComponent(componetName);
+        activity.startActivity(intent);
     }
 
 }

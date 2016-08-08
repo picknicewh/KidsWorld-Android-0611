@@ -15,6 +15,7 @@ import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.EncryptUtil;
 import net.hunme.baselibrary.util.FormValidation;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
@@ -140,7 +141,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
      */
     private void updatePassword(String sign, String code, String value){
         Map<String,Object>map=new HashMap<>();
-        map.put("password",value);
+        map.put("password", EncryptUtil.getBase64(value+"hunme"+(int)(Math.random()*900)+100));
         map.put("code",code);
         map.put("sign",sign);
         Type mtype=new TypeToken<Result<String>>(){}.getType();

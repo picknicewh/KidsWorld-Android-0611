@@ -1,0 +1,55 @@
+<ion-view>
+    <ion-content class="">
+           <!--<input type="date">-->
+           <!--<input type="date">-->
+           <!--<input type="text" id="datepicker">-->
+           <!--<ionic-datepicker date="currentDate" min="minDate" max="maxDate" callback="datePickerCallback">-->
+               <!--<button class="button button-block button-positive">{{ currentDate | date:'MMMM/dd/yyyy' }}</button>-->
+           <!--</ionic-datepicker>-->
+               <onezone-datepicker datepicker-object="onezoneDatepicker">
+        <button class="button button-block button-outline button-positive show-onezone-datepicker">
+            <i class="icon ion-calendar"></i>{{onezoneDatepicker.date | date:'yyyy年 MM月 dd日'}}
+        </button>
+    </onezone-datepicker>
+           <!--<input name="test" id="tests" class="demo-test-date demo-test-datetime demo-test-time demo-test-credit" readonly="">-->
+           <!--<span ng-click="showPopup()"><i class="icon ion-calendar"></i></span>-->
+           <!--<span>2016-07-07</span>-->
+           <!--<span>星期五</span>-->
+        <div class="list  no-break">
+
+            <a class="item item-thumbnail-left footer-line" ng-click="goSearch()">
+                <img src="http://www.runoob.com/try/demo_source/blue-album.jpg">
+                <h2>早餐</h2>
+                <p>Blue Album</p>
+            </a>
+
+            <a class="item item-thumbnail-left footer-line" ng-click="goSearch()" ng-repeat="item in items">
+                <img src="{{(item.cookUrl)[0] }}">
+                <h2>{{item.dinnerTime }}</h2>
+                <p>{{item.cookName}}</p>
+            </a>
+
+            <!--<a class="item item-thumbnail-left footer-line" href="#">-->
+                <!--<img src="http://www.runoob.com/try/demo_source/siamese-dream.jpg">-->
+                <!--<h2>午餐</h2>-->
+                <!--<p>Siamese Dream</p>-->
+            <!--</a>-->
+
+            <!--<a class="item item-thumbnail-left footer-line" href="#">-->
+                <!--<img src="http://www.runoob.com/try/demo_source/nevermind.jpg">-->
+                <!--<h2>晚餐</h2>-->
+                <!--<p>Nevermindfjdshfiokfhahi按甲方的女方家的刷卡缴费</p>-->
+            <!--</a>-->
+            <!--<a ng-repeat="item in items" class="item item-thumbnail-left" href="#">-->
+                <!--&lt;!&ndash;<img src="{{items.cookUrl}}">&ndash;&gt;-->
+                <!--<img src=""/>-->
+                <!--<h2>{{items.dinnerTime}}</h2>-->
+                <!--<p>{{items.cookName}}</p>-->
+            <!--</a>-->
+
+
+        </div>
+
+
+    </ion-content>
+</ion-view>

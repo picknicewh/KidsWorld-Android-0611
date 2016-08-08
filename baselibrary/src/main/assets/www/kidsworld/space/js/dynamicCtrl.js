@@ -4,23 +4,25 @@
  * */
 var url = "http://zhu.hunme.net:8080/KidsWorld";
 //页面参数
-/*var imgIndex = 2,   
+var imgIndex = 2,
     urlNow = window.location.href,
     tsId = getQueryString("tsId"),
     groupId = getQueryString("groupId"),
     groupType = getQueryString("groupType"),
     firstTime = getQueryString("clickTime"),//第一次请求的时间
-    refreshTime = null;
-    myName = getQueryString("myName");*/
+    refreshTime = null,
+    myName = getQueryString("myName");
+    alert(myName+"-------"+tsId+"----------"+groupType);
+
     
- var imgIndex = 2,   
-    urlNow = window.location.href,
-    tsId = "81c5dc8725044e629cf524a3222cd818",
-    groupId = "298f1648653840fdaa6c396830025af5",
-    groupType = 1,
-    firstTime = "2016-08-05 11:35:00",//第一次请求的时间
-    refreshTime = null;
-    myName = "海燕";
+// var imgIndex = 2,
+//    urlNow = window.location.href,
+//    tsId = "81c5dc8725044e629cf524a3222cd818",
+//    groupId = "298f1648653840fdaa6c396830025af5",
+//    groupType = 1,
+//    firstTime = "2016-08-05 11:35:00",//第一次请求的时间
+//    refreshTime = null;
+//    myName = "海燕";
 
     	
 	//点击事件

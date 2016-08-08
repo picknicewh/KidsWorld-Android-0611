@@ -91,6 +91,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      */
     private RelativeLayout rl_restrict;
     private LoadingDialog dialog;
+    private TextView tv_subtilte;
     // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
@@ -142,6 +143,8 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         tv_permitchoose =  $(R.id.tv_permitchoose);
         ll_permitchoose = $(R.id.ll_permitchoose);
         rl_restrict = $(R.id.rl_restrict);
+        tv_subtilte=$(R.id.tv_subtitle);
+        tv_subtilte.setOnClickListener(this);
         ll_permitchoose.setOnClickListener(this);
         setEditContent();
         source = getIntent().getStringExtra("from");
@@ -241,6 +244,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             intent.putExtra("permit",tv_permitchoose.getText().toString());
             startActivityForResult(intent,ChoosePermitActivity.CHOOSE_PERMIT);
         }else if(viewId==R.id.tv_subtitle){
+            tv_subtilte.setEnabled(false);
             String dyContent=et_content.getText().toString().trim();
             if (source.equals("status")){
                 publishstatus(dyContent);
@@ -255,6 +259,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     private void publishcaurse(String dyContent){
         if (G.isEmteny(dyContent) || itemList.size()<1){
             G.showToast(this,"发布的内容不能为空");
+            tv_subtilte.setEnabled(true);
             return;
         }
         Map<String,Object>map=new HashMap<>();
@@ -268,8 +273,9 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 发布状态
      */
     private void publishstatus(String dyContent){
-        if(G.isEmteny(dyContent)&&dynamicType.equals("3")||dynamicType.equals("1")&&itemList.size()<1){
+        if(G.isEmteny(dyContent)&&dynamicType.equals("3")||dynamicType.equals("1")&&itemList.size()<1&&G.isEmteny(dyContent)){
             G.showToast(this,"发布的内容不能为空");
+            tv_subtilte.setEnabled(true);
             return;
         }
         Map<String,Object>map=new HashMap<>();
@@ -340,6 +346,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 //            }
 //            isReleaseSuccess=true;
 //        }
+        tv_subtilte.setEnabled(true);
         G.showToast(this,"发布成功!");
         G.KisTyep.isReleaseSuccess=true;
        dialog.dismiss();
@@ -353,9 +360,11 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 //        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
             G.showToast(this,error);
 //        }
+        tv_subtilte.setEnabled(true);
         G.KisTyep.isReleaseSuccess=false;
 //        G.showToast(this,"发布失败，请检测网络!");
         dialog.dismiss();
+
     }
 
 }

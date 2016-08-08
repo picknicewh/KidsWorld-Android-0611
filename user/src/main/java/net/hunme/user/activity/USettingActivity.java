@@ -158,6 +158,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
         if (viewID == R.id.tv_subtitle) {
             Intent intent = new Intent();
             intent.setClass(this, UserChooseActivity.class);
+            intent.putExtra("type",true);
             startActivity(intent);
         } else if (viewID == R.id.ll_changepasswd) {
             Intent intent = new Intent();

@@ -1,0 +1,16 @@
+div.head {
+    text-align: center;
+    line-height: 50px;
+    background-color: #b6b6b6;
+    font-size: 20px;
+}
+div.head span {
+    padding-right: 10px;
+}
+.no-break .item p{
+    white-space: normal;
+    padding-top: 12px;
+}
+.has-border a{
+    border-bottom: 1px solid #737272;
+}

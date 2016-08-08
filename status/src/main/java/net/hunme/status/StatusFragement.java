@@ -129,7 +129,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         getWebView(webView).loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
                 +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
                 +"&clickTime="+ DateUtil.formatDateTime(new Date()));
-
         G.log("loadUrl====="+url+"groupId="+dynamicList.get(position).getGroupId()
                 +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
         +"&clickTime="+ DateUtil.formatDateTime(new Date()));

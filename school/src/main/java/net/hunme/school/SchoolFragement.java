@@ -54,7 +54,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     /**
      * 基本url
      */
-    public static final String baseurl = "http://192.168.1.134:8080/kidsWorld/school/index.html?";
+    public static final String baseurl = "file:///android_asset/www/kidsworld/school/index.html?";
     /**
      * 考勤
      */

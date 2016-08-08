@@ -70,6 +70,7 @@ public class BaseFragement extends Fragment implements CordovaInterface {
         super.onDestroy();
         if (null!=webView&&webView.getPluginManager() != null) {
             webView.getPluginManager().onDestroy();
+            webView.handleDestroy();
         }
     }
 
