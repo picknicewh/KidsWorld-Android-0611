@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.school.R;
 import net.hunme.school.SchoolFragement;
 import net.hunme.status.activity.PublishStatusActivity;
@@ -58,7 +59,9 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         loadUrl(launchUrl);
         initData();
     }
-
+    /**
+     * 初始化数据
+     */
     private void  initData(){
         iv_left= (ImageView) findViewById(R.id.iv_left);
         tv_title= (TextView) findViewById(R.id.tv_title);
@@ -69,7 +72,9 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
        // rl_nonetwork.setOnClickListener(this);
         setToolBar();
     }
-
+    /**
+     * 是在导航栏
+     */
     private void setToolBar() {
         tv_title.setText(getIntent().getStringExtra("title"));
         String subTitle=getIntent().getStringExtra("subTitle");
@@ -77,7 +82,13 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
             tv_subtitle.setText(subTitle);
             tv_subtitle.setVisibility(View.VISIBLE);
         }
-
+        if (launchUrl.contains(SchoolFragement.ARRANGE)){
+            if (UserMessage.getInstance(this).getType().equals("2")){
+                tv_subtitle.setVisibility(View.VISIBLE);
+            }else {
+                tv_subtitle.setVisibility(View.GONE);
+            }
+        }
         iv_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,6 +107,8 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         super.onRestart();
          int index =  webView.getUrl().lastIndexOf("/");
          String url =  webView.getUrl().substring(0,index)+ webView.getUrl().substring(index+1);
+     //   String url =  webView.getUrl();
+        Log.i("TAGFGG",url);
         if (webView.getUrl().contains(SchoolFragement.LEAVE)){
             webView.loadUrl(url);
         }else if (webView.getUrl().contains(SchoolFragement.ARRANGE)){
@@ -125,6 +138,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
+
             if (newProgress == 100 )
                 ll_loading.setVisibility(View.GONE);
             else

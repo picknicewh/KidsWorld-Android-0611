@@ -46,10 +46,6 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
      */
     private MyViewView webView;
     /**
-     * 页面
-     */
-    private String page;
-    /**
      * web接口类
      */
     private WebCommonPageFrom from;
@@ -125,7 +121,7 @@ public class UCollectionActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View view) {
         int viewId =view.getId();
         if (viewId==R.id.iv_left){
-            if (page.equals(Constant.COLLECT)){
+            if (webView.getUrl().equals(Constant.COLLECT)){
               finish();
             }else {
                 webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);

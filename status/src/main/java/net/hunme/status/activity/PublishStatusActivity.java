@@ -143,6 +143,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         ll_permitchoose = $(R.id.ll_permitchoose);
         rl_restrict = $(R.id.rl_restrict);
         ll_permitchoose.setOnClickListener(this);
+        dialog = new LoadingDialog(this,R.style.LoadingDialogTheme);
         setEditContent();
         source = getIntent().getStringExtra("from");
         if (source.equals("status")){
@@ -204,6 +205,11 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             }
         });
     }
+    /**
+     * 照片页面
+     * @param position
+     * @param urls2
+     */
     private void imageBrower(int position, ArrayList<String> urls2) {
         Intent intent = new Intent(this, ImagePagerActivity.class);
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
@@ -247,10 +253,12 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             }else if (source.equals("school")){
                 publishcaurse(dyContent);
             }
+            dialog.show();
         }
     }
     /**
      * 发布课程
+     * @param dyContent
      */
     private void publishcaurse(String dyContent){
         if (G.isEmteny(dyContent) || itemList.size()<1){
@@ -266,6 +274,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     }
     /**
      * 发布状态
+     * @param dyContent
      */
     private void publishstatus(String dyContent){
         if(G.isEmteny(dyContent)&&dynamicType.equals("3")||dynamicType.equals("1")&&itemList.size()<1){
@@ -340,6 +349,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 //            }
 //            isReleaseSuccess=true;
 //        }
+        dialog.dismiss();
         G.showToast(this,"发布成功!");
         G.KisTyep.isReleaseSuccess=true;
        dialog.dismiss();
@@ -348,6 +358,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onError(String uri, String error) {
+        dialog.dismiss();
 //        if (DYNAMIC.equals(uri)){
 //            G.showToast(this,"发布失败，请检测网络!");
 //        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){

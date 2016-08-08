@@ -48,7 +48,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
      * 获取我的相册
      */
     private String MYFlICKR="/appUser/myFlickr.do";
-    /**
+     /**
      * 新建相册
      */
     private String CREATEEFILCK="/appUser/createFlickr.do";
