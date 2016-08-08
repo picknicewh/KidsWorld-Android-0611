@@ -190,6 +190,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
 
     /**
      * 退出提示框
+     * @param  flag
      */
     private void showAlertDialog(final int flag) {
         View coupons_view = LayoutInflater.from(this).inflate(R.layout.alertdialog_message, null);

@@ -85,4 +85,5 @@ public class UDynamicsActivity extends BaseActivity implements View.OnClickListe
             setviewShow();
         }
     }
+
 }

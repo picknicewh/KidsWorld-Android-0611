@@ -96,7 +96,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
        // setShowView();
-        setWebView();
+       setWebView();
     }
      private  void  setShowView(){
          setWebView();
@@ -110,6 +110,9 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),ll_loading));
         getWebView(webView).loadUrl(url);
+        if (!webView.getUrl().contains("paradiseHome")){
+            ll_loading.setVisibility(View.GONE);
+        }
     }
 
 

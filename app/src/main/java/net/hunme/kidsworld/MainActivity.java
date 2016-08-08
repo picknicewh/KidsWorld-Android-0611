@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -115,15 +114,8 @@ public class MainActivity extends JPushBaseActivity {
     /**
      * 有无网络请求
      */
-    ConnectionChangeReceiver myReceiver;
-
-    /**
-     *
-     */
-     public  static  boolean isconnect;
-    /**
-     *
-     */
+    private ConnectionChangeReceiver myReceiver;
+    public  static  boolean isconnect;
     public  static int count;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,14 +128,13 @@ public class MainActivity extends JPushBaseActivity {
         //初始激光推送配置信息
         initJPushConfiguration();
         //如果网络连接时，连接融云
-        Log.i("TAGDDG",userMessage.getRyId());
+      //  Log.i("TAGDDG",userMessage.getRyId());
         if (G.isNetworkConnected(this)){
         BaseLibrary.connect(userMessage.getRyId(),MainActivity.this,userMessage.getUserName(),userMessage.getHoldImgUrl());
             setNoreadMessage();
         }
         registerReceiver();
         initCount();
-        Log.i("TAFFFG","=================onCreate===================");
 
     }
     /**
@@ -177,7 +168,6 @@ public class MainActivity extends JPushBaseActivity {
             UserChooseActivity.flag=0;
         }
 
-        Log.i("TAFFFG","=================onResume===================");
        /* if (RongIM.getInstance()!=null) {
             if (userMessage != null) {
                 Log.i("TRER",userMessage.getTsId()+"======getTsId=========");
@@ -218,7 +208,7 @@ public class MainActivity extends JPushBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         this.unregisterReceiver(myReceiver);
-        Log.i("TAG","=================onDestroy===================");
+       // Log.i("TAG","=================onDestroy===================");
     }
 
     /**

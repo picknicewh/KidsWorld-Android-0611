@@ -2,6 +2,7 @@ package net.hunme.user.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import net.hunme.baselibrary.util.G;
 import net.hunme.user.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import main.picturesee.util.ImagePagerActivity;
 
@@ -63,17 +65,36 @@ public class AlbumDetailsAdapter extends BaseAdapter {
         }
         holder= (ViewHolder) view.getTag();
         ImageCache.imageLoader(imagePath.get(i),holder.image);
+        Log.i("TAGGG",imagePath.get(0));
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageBrower(i,imagePath);
+                imageBrower(i,getimagepath(imagePath));
             }
         });
 //        getBitmapData(holder.image,imagePath.get(i));
         return view;
     }
-    protected void imageBrower(int position, ArrayList<String> urls2) {
+    /**
+     * 把缩略图转换成为原图
+     */
+    private ArrayList<String> getimagepath(List<String> itemList){
+        ArrayList<String> imagepath = new ArrayList<>();
+        for (int i = 0 ; i<itemList.size();i++){
+            String pathurl = itemList.get(i);
+            int index = itemList.get(i).lastIndexOf("/");
+            String path = pathurl.substring(0,index-2)+pathurl.substring(index,pathurl.length());
+            imagepath.add(path);
+        }
+        return imagepath;
 
+    }
+    /**
+     * 浏览照片
+     * @param  position
+     * @param  urls2
+     */
+    protected void imageBrower(int position, ArrayList<String> urls2) {
         Intent intent = new Intent(context, ImagePagerActivity.class);
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
@@ -82,7 +103,6 @@ public class AlbumDetailsAdapter extends BaseAdapter {
     }
     class ViewHolder {
         public ImageView image;
-
         public ViewHolder(View view) {
             image = (ImageView) view.findViewById(R.id.iv_image);
             view.setTag(this);
