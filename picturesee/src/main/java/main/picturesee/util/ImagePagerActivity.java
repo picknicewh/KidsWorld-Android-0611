@@ -39,6 +39,9 @@ public class ImagePagerActivity extends FragmentActivity {
 
 		CharSequence text = getString(R.string.viewpager_indicator, 1, mPager.getAdapter().getCount());
 		indicator.setText(text);
+		if (getIntent().getStringExtra("source").equals("message")){
+			indicator.setText("");
+		}
 		// 更新下标
 		mPager.setOnPageChangeListener(new OnPageChangeListener() {
 
@@ -54,6 +57,9 @@ public class ImagePagerActivity extends FragmentActivity {
 			public void onPageSelected(int arg0) {
 				CharSequence text = getString(R.string.viewpager_indicator, arg0 + 1, mPager.getAdapter().getCount());
 				indicator.setText(text);
+				if (getIntent().getStringExtra("source").equals("message")){
+					indicator.setText("");
+				}
 			}
 
 		});

@@ -1,12 +1,16 @@
 package net.hunme.message.ronglistener;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+
+import java.util.ArrayList;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
+import main.picturesee.util.ImagePagerActivity;
 
 /**
  * 作者： wh
@@ -28,10 +32,15 @@ public class MyConversationBehaviorListener  implements RongIM.ConversationBehav
      */
     @Override
     public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo) {
-
-        return false;
+        Intent intent = new Intent(context, ImagePagerActivity.class);
+        ArrayList<String> urls = new ArrayList<>();
+        urls.add(userInfo.getPortraitUri().toString());
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
+        intent.putExtra("source","message");
+        context.startActivity(intent);
+        return true;
     }
-
     /**
      * 当长按用户头像后执行。
      *

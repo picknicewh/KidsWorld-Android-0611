@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -232,12 +233,13 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
             G.showToast(this,"签名修改成功");
         }else if(AVATAR.equals(uri)){
             Result<String> result= (Result<String>) date;
-//            um.setHoldImgUrl(result.getData());
+            Log.i("TGGGG",result.getData());
+             //um.setHoldImgUrl(result.getData());
             //测试数据
             um.setHoldImgUrl("file://"+path);
             //修改头像成功后，设置当前融云的用户头像
             if (RongIM.getInstance() != null) {
-                RongIM.getInstance().setCurrentUserInfo(new UserInfo(um.getTsId(), um.getUserName(), Uri.parse(um.getHoldImgUrl())));
+                RongIM.getInstance().setCurrentUserInfo(new UserInfo(um.getTsId(), um.getUserName(), Uri.parse(result.getData())));
                 RongIM.getInstance().setMessageAttachedUserInfo(true);
             }
             ImageCache.imageLoader(um.getHoldImgUrl(),cv_head);
