@@ -1,11 +1,15 @@
 package net.hunme.status;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -96,6 +100,9 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
      */
     private List<DynamicVo> dynamicList;
     private RelativeLayout rl_toolbar;
+    private SystemWebView webView;
+    private int position = 0;
+    private  MyJpushReceiver myReceiver;
     private CordovaWebView cordovaWebView;
     private ProgressBar pb_web;
     @Override
@@ -123,9 +130,14 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         setViewAction();
         getDynamicHead();
         ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
+        registerReceiver();
     }
-
+    public void setPosition(int position){
+        this.position = position;
+    }
     public void setWebView(int position){
+        webView.addJavascriptInterface(this,"showDos");
+        getWebView(webView).loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
         cordovaWebView.loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
                 +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
                 +"&clickTime="+ DateUtil.formatDateTime(new Date()));
@@ -194,7 +206,12 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
         }
     }
-
+    @JavascriptInterface
+    public void setStatus(){
+        Intent myIntent = new Intent("net.hunme.kidsworld.MyStatusDosShowReceiver");
+        myIntent.putExtra("count",0);
+        getActivity().sendBroadcast(myIntent);
+    }
     /**
      * 获取班级列表
      */
@@ -235,5 +252,39 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
 //        G.showToast(getActivity(),error);
         G.KisTyep.isChooseId=false;
     }
-
+    /**
+    * 注册监听网络广播广播
+    */
+    private  void registerReceiver(){
+        IntentFilter filter=new IntentFilter(MyJpushReceiver.SHOWSTAUSDOL);
+        myReceiver=new MyJpushReceiver();
+        getActivity().registerReceiver(myReceiver, filter);
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getActivity().unregisterReceiver(myReceiver);
+    }
+    class MyJpushReceiver extends BroadcastReceiver {
+        public static final String SHOWSTAUSDOL = "net.hunme.status.showstatusdos";
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(SHOWSTAUSDOL)) {
+                Bundle bundle = intent.getExtras();
+                String messagetype = bundle.getString("messagetype");
+                String schoolid = bundle.getString("schoolid");
+                String classid = bundle.getString("classid");
+                String groupId = dynamicList.get(position).getGroupId();
+                if (messagetype.equals("1")) {
+                     Intent myIntent = new Intent("net.hunme.kidsworld.MyStatusDosShowReceiver");
+                    if (schoolid.equals("") && classid.equals(groupId) ||classid.equals("")&&classid.equals(groupId)) {
+                        myIntent.putExtra("count",1);
+                    } else{
+                        myIntent.putExtra("count",0);
+                    }
+                    context.sendBroadcast(myIntent);
+                }
+            }
+        }
+    }
 }

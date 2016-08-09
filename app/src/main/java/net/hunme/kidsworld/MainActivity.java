@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.util.G;
@@ -26,6 +28,7 @@ import net.hunme.status.StatusFragement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -311,6 +314,46 @@ public class MainActivity extends JPushBaseActivity {
 //        }
 //        return super.dispatchKeyEvent(event);
 //    }
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            //这里处理逻辑代码
+            if (isQuit) {
+                // 这是两次点击以后
+                timer.cancel();
+                BaseLibrary.exit();
+            } else {
+                isQuit = true;
+                Toast.makeText(this.getApplicationContext(), "再按一次退出财富锦囊",Toast.LENGTH_SHORT).show();
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        isQuit = false;
+                    }
+                };
+                timer.schedule(task, 2000);
+            }
+            return false;
+        }
+        return super.dispatchKeyEvent(event);
+    }
+ private class  MyStatusDosShowReceiver extends BroadcastReceiver {
+     public static final String STATUSDOSHOW = "net.hunme.kidsworld.MyStatusDosShowReceiver";
+     @Override
+     public void onReceive(Context context, Intent intent) {
+         Log.i("Tdddd",intent.getAction());
+         if (intent.getAction().equals(STATUSDOSHOW)){
+             Bundle bundle = intent.getExtras();
+
+             if (bundle.getInt("count",0)==1){
+                 tvStatusDos.setVisibility(View.VISIBLE);
+                 Log.i("Tdddd","cccccccccccccccccccccccccccc");
+             }else {
+                 tvStatusDos.setVisibility(View.GONE);
+                 Log.i("Tdddd","dddddddddDDDDDDDDDDDDDDDDDD");
+             }
+         }
+     }
+  }
 }
 
 
