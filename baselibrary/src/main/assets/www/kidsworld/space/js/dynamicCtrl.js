@@ -13,7 +13,6 @@ var imgIndex = 2,
     groupId = getQueryString("groupId"),
     groupType = getQueryString("groupType"),
     firstTime = getQueryString("clickTime"),//第一次请求的时间
-//  refreshTime = null,
     dynamicId = null,
     myName = getQueryString("myName");
     
@@ -22,10 +21,10 @@ var imgIndex = 2,
     tsId = "81c5dc8725044e629cf524a3222cd818",
     groupId = "298f1648653840fdaa6c396830025af5",
     groupType = 1,
-    firstTime = "2016-08-08 11:35:00",//第一次请求的时间
+    firstTime = "2016-08-09 9:35:00",//第一次请求的时间
     dynamicId = null,
-    myName = "周龙龙";*/
-
+    myName = "周龙龙";
+*/
     
 
 	
@@ -74,11 +73,10 @@ var imgIndex = 2,
        });
 	} else if(islike == 2 && likecnt == 0) {
 
-//		$this.parent().siblings('div#names').css('display', 'none');
+
 		$this.parent().data('islike', 1);
 		$this.parent().data('likecnt', likecnt + 1);
 		$this.children('span#thumb').text('取消');
-//		$this.parent().siblings('div#names').css('display', 'block');
 		$this.parent().siblings('div#names').append('<span class="name" value=' + myName + '>' + myName + '</span>');
 		$this.parent().siblings('div#names').show();
 		$this.data('show', 0).hide();
@@ -139,7 +137,8 @@ mui.init({
 	}
 });
 //日期格式转换
- Date.prototype.Format = function (fmt) {
+
+    Date.prototype.Format = function (fmt) {
     var o = {
         "M+": this.getMonth() + 1, //月份 
         "d+": this.getDate(), //日 
@@ -153,7 +152,8 @@ mui.init({
     for (var k in o)
     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
-}
+	}
+
 // Date.Format("yyyy-MM-dd hh:mm:ss");//调用
  
 /**
@@ -198,6 +198,7 @@ function pulldownRefresh() {
 					//下拉刷新，新纪录插到最前面
 					table.insertBefore(li, table.firstChild);
 			    }
+	        	showDos.setStatus();
         	}
         	
         	
@@ -235,9 +236,10 @@ function pullupRefresh() {
         
          $.post(url + '/dynamic/getDynamic.do', data, 
         function(response){ 
-        	if(response.code == "0" && response.data != null){
-        	var resultData = response.data;
-        	if(resultData.length != pageSize){
+        	if(response.code == "0" && response.data.length != 0){
+        	var resultData = response.data,
+        	    dataLen = resultData.length;
+        	if(dataLen != pageSize){
         		pageflag = false;
         	}
         	
@@ -245,7 +247,7 @@ function pullupRefresh() {
 //      	alert(dynamicId);
 //      	pageCount = response.pageCount;//初次请求，返回总页数
         	
-        	for(var i = 0; i < resultData.length; i++) {
+        	for(var i = 0; i < dataLen; i++) {
 				var li = document.createElement('div');
 				li.className = 'app-mainBox';
 				li.innerHTML = generateHtml(resultData[i]);
@@ -277,13 +279,14 @@ function generateHtml(arr) {//此处arr不是数组
 	tmpHtml += '<div class="text">' + arr.text + '</div>';
 	//如果有图片
 	    if(arr.dynamicType ==1 && arr.imgUrl.length != 0){
-	    	var imgHtml = "";
-	    	var imgArr = arr.imgUrl;
+	    	var imgHtml = "",
+	    	     imgArr = arr.imgUrl,
+	    	     imgLen = imgArr.length;
 
-            if(imgArr.length == 1){
-            	imgHtml += '<li><img src="' + imgArr[1] + '" class="oneImg" data-preview-src="' + imgArr[1].replace(/\/s/,"") + '" data-preview-group="' + imgIndex + '"/></li>';
+            if(imgLen == 1){
+            	imgHtml += '<li><img src="' + imgArr[0] + '" class="oneImg" data-preview-src="' + imgArr[0].replace(/\/s/,"") + '" data-preview-group="' + imgIndex + '"/></li>';
             }else {
-		    	for(var j = 0; j < imgArr.length; j++){
+		    	for(var j = 0; j < imgLen; j++){
 		    		imgHtml += '<li><img src="' + imgArr[j] + '" data-preview-src="' + imgArr[j].replace(/\/s/,"") + '" data-preview-group="' + imgIndex + '"/></li>';
 		    	}
 	    	}
@@ -297,7 +300,8 @@ function generateHtml(arr) {//此处arr不是数组
     tmpHtml += '<div class="app-control" data-islike=' + arr.isAgree + ' data-likecnt=' + arr.list.length;
     tmpHtml += ' data-dynamicid=' + arr.dynamicId + '>';
 	tmpHtml += '<span class="app-time">' + (new Date(arr.createTime)).Format("yyyy-MM-dd") + '</span>';
-	tmpHtml += '<img src="../images/more.png" class="mui-pull-right" id="more" style="width:20px;"/>';
+//	tmpHtml += '<img src="../images/more.png" class="mui-pull-right" id="more" style="width:20px;"/>';
+    tmpHtml += '<span class="mui-pull-right" id="more"><img src="../images/more.png"  style="width:20px;"/></span>';
 	tmpHtml += '<a  class="item dy_like_btn_v3 popup" id="popup" href="javascript:;" data-show="0" style="display: none;">';
 	tmpHtml += '<img src="../images/heart.png"/><span id="thumb">' +((arr.isAgree == 2)?"赞":"取消")+'</span></a></div>';
 	
@@ -305,7 +309,7 @@ function generateHtml(arr) {//此处arr不是数组
 		 names = arr.list;
 		tmpHtml += '<div class="names" id="names"><span class="top"></span><img src="../images/lightHeart.png" width="20px" height="18px">';
 		
-		for(var n = 0; n < names.length; n++){
+		for(var n = 0, namesLen = names.length; n < namesLen; n++){
 			tmpHtml += '<span class="name" value=' + names[n] + '>' + names[n] + '</span>';
 		}
 	}else{

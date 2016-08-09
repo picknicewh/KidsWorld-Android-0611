@@ -2,6 +2,7 @@
  * Created by yanghy on 2016-7-11.
  *
  * */
+//var url = "http://192.168.1.200:8080/KidsWorld";
 var url = "http://zhu.hunme.net:8080/KidsWorld";
 //图片预览
 mui.previewImage();	
@@ -9,6 +10,7 @@ mui.previewImage();
 var imgIndex = 2,
     pageflag = true,
     pageIndex = 1,
+//  tsId = "81c5dc8725044e629cf524a3222cd818",
     tsId = getQueryString("tsId"),
     pageSize = 15;
 
@@ -47,21 +49,25 @@ $('.mui-scroll').on('tap','#del', function(event) {
 var count = 0;
 
 function generateHtml(arr) {
-	var tmpHtml = "";
+	var tmpHtml = "",
+	    createTime = new Date(arr.createTime);
 	tmpHtml += '<div class="section-left">';
-    tmpHtml += '<span class="time" id="time">' + getDay(arr.createTime) + '</span>';
-    tmpHtml += '<span class="time2">' + getMonth(arr.createTime) + '</span></div>';
+    tmpHtml += '<span class="time" id="time">' + createTime.getDay() + '</span>';
+    tmpHtml += '<span class="time2">' + getMonth(createTime.getMonth()) + '</span></div>';
 	tmpHtml += '<div class="section-right"><div class="app-content content-top">';
 	tmpHtml += '<div class="text">' + arr.text +'</div>';
 	//如果有图片
-
+//	    if(arr.dynamicType ==1 && arr.imgUrl.length != 0){
 	    if(arr.imgUrl !== null && arr.imgUrl.length != 0){
 	    	var imgHtml = "";
 	    	var imgArr = arr.imgUrl;
+	    	//创建一个ul，然后往ul里放图片li
+//	    	var ul = document.createElement('ul');
+//			ul.className = 'image2';
 	    	for(var j = 0; j < imgArr.length; j++){
 	    		imgHtml += '<li><img src="' + imgArr[j] + '" data-preview-src="' + imgArr[j].replace(/\/s/,"") + '" data-preview-group="' + imgIndex + '"/></li>';
 	    	}
-
+//	    	ul.innerHTML = imgHtml;
 	        tmpHtml += '<ul class="image2">' + imgHtml + '</ul>';
 	    	imgIndex++;		
 	    }
@@ -71,6 +77,7 @@ function generateHtml(arr) {
 	if(arr.list.length > 0){
 		tmpHtml += '<div class="mui-pull-right heart-gray" style="display: inline-block;"><img src="../images/heart.png"/><span class="padding-left label-font">' + arr.list.length + '</span></div>';
 	}
+//	tmpHtml += '<div class="mui-pull-right names" style="display: inline-block;" hidden><img src="../images/heart.png"/><span class="padding-left">3</span></div>';
 	tmpHtml += '</div>';
 
 	return tmpHtml;
@@ -98,7 +105,8 @@ function pullupRefresh() {
 	        	if(resultData.length != pageSize){
 	        		pageflag = false;
 	        	}
-
+//	        	pageCount = response.pageCount;//初次请求，返回总页数
+	//      	mui('#pullrefresh').pullRefresh().endPullupToRefresh(()); //参数为true代表没有更多数据了。
 	        	for(var i = 0; i < resultData.length; i++) {
 					var li = document.createElement('div');
 					li.className = 'app-mainBox';
@@ -114,6 +122,7 @@ function pullupRefresh() {
 }
 
 //确认消息弹窗
+//document.getElementById("del").addEventListener('tap', function() {
 	$('.mui-scroll').on('tap','#del', function(event) {
 	      
 				var btnArray = ['取消', '删除'];
@@ -173,50 +182,50 @@ if(mui.os.plus) {
 })(document, window);
 
 //获取天，2016-07-29 13:33:04-----13 七月
-var getDay = function (date){
+/*var getDay = function (date){
 	var day = ((date.split(" "))[0].split("-"))[2];
 	
 	return day;
-}
+}*/
 //获取月份
-var getMonth = function (date){
-	var month = ((date.split(" "))[0].split("-"))[1];
+var getMonth = function (month){
+//	var month = ((date.split(" "))[0].split("-"))[1];
 	var monthStr = "";
 	switch (month){
-		case "01":
+		case 1:
 		    monthStr = "一月";
 			break;
-		case "02":
+		case 2:
 		    monthStr = "二月";
 			break;
-		case "03":
+		case 3:
 		    monthStr = "三月";
 			break;
-		case "04":
+		case 4:
 		    monthStr = "四月";
 			break;
-		case "05":
+		case 5:
 		    monthStr = "五月";
 			break;
-		case "06":
+		case 6:
 		    monthStr = "六月";
 			break;
-		case "07":
+		case 7:
 		    monthStr = "七月";
 			break;
-		case "08":
+		case 8:
 		    monthStr = "八月";
 			break;
-		case "09":
+		case 9:
 		    monthStr = "九月";
 			break;
-		case "10":
+		case 10:
 		    monthStr = "十月";
 			break;
-		case "11":
+		case 11:
 		    monthStr = "十一月";
 			break;
-		case "12":
+		case 12:
 		    monthStr = "十二月";
 			break;
 		default:

@@ -31,6 +31,7 @@ public class LoadingDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_loading);
+        this.setCancelable(false);
         LinearLayout linearLayout = (LinearLayout)this.findViewById(R.id.LinearLayout);
         tv_prompt= (TextView) this.findViewById(R.id.tv_prompt);
         linearLayout.getBackground().setAlpha(210);

@@ -9,7 +9,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.util.G;
@@ -43,10 +43,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
      * 网页
      */
     public static SystemWebView webView;
-    /**
-     * 加载动画
-     */
-    private LinearLayout ll_loading;
+    private ProgressBar pb_web;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +61,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
     private void  initData(){
         iv_left= (ImageView) findViewById(R.id.iv_left);
         tv_title= (TextView) findViewById(R.id.tv_title);
-        ll_loading = (LinearLayout) findViewById(R.id.ll_loading);
+        pb_web = (ProgressBar) findViewById(R.id.pb_web);
         tv_subtitle= (TextView) findViewById(R.id.tv_subtitle);
         tv_subtitle.setOnClickListener(this);
        // rl_nonetwork=(RelativeLayout)findViewById(R.id.rl_nonetwork);
@@ -139,9 +136,12 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
             super.onProgressChanged(view, newProgress);
 
             if (newProgress == 100 )
-                ll_loading.setVisibility(View.GONE);
-            else
-                ll_loading.setVisibility(View.VISIBLE);
+                pb_web.setVisibility(View.GONE);
+            else{
+                pb_web.setVisibility(View.VISIBLE);
+                pb_web.setProgress(newProgress);
+            }
+
         }
     }
 

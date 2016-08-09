@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -75,10 +76,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
      */
 //    private MyViewView webView;
     /**
-     * 加载动画
-     */
-    private LinearLayout ll_loading;
-    /**
      * 动态uri地址  loadUrlStr = "file:///android_asset/www/sdk/view/index_android.html#/open-prepare";
      *
      http://zhu.hunme.net:8080/KidsWorld/space/view/dynamic.html
@@ -100,6 +97,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     private List<DynamicVo> dynamicList;
     private RelativeLayout rl_toolbar;
     private CordovaWebView cordovaWebView;
+    private ProgressBar pb_web;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.fragment_status, null);
@@ -114,12 +112,11 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         iv_right = $(view, R.id.iv_right);
         tv_classname = $(view, R.id.tv_classname);
         SystemWebView webView = $(view, R.id.cordovaWebView);
-        ll_loading = $(view, R.id.ll_loading);
         ll_classchoose = $(view,R.id.ll_classchoose);
         rl_toolbar=$(view,R.id.rl_toolbar);
-
+        pb_web=$(view,R.id.pb_web);
         webView.addJavascriptInterface(this, "change");  //设置本地调用对象及其接口
-        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),ll_loading));
+        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web));
         cordovaWebView=getWebView(webView);
         um=UserMessage.getInstance(getActivity());
         classlist = new ArrayList<>();
@@ -174,7 +171,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             G.initDisplaySize(getActivity());
             int xPos = G.size.W/2-G.dp2px(getActivity(),75);
             G.log(G.size.W/2+"----------------"+popWindow.getContentView().getWidth()/2);
-            popWindow.showAsDropDown(rl_toolbar,xPos,-G.dp2px(getActivity(),0));
+            popWindow.showAsDropDown(rl_toolbar,xPos,-G.dp2px(getActivity(),10));
         }
     }
 
