@@ -110,10 +110,10 @@ angular.module('app.controllers')
     }
     //搜索结果控制
     $scope.showInfDet= function ( item ) {
-        $state.go('eduInformation_Detail',{ resourceid:'aa' });
-        //$state.go('eduInformation_Detail',{ resourceid:item.resourceid });
+        //$state.go('eduInformation_Detail',{ resourceid:'aa' });
+        $state.go('eduInformation_Detail',{ resourceid:item.id });
     };
 
 
 
-})
+});

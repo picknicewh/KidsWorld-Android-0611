@@ -1,12 +1,16 @@
 package net.hunme.status.activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -27,6 +31,7 @@ import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.LoadingDialog;
+import net.hunme.user.util.MyAlertDialog;
 import net.hunme.status.R;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.adapter.GridAlbumAdapter;
@@ -107,9 +112,18 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
-        setLiftOnClickClose();
         setSubTitle("发送");
         setSubTitleOnClickListener(this);
+        setLiftOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!G.isEmteny(et_content.getText().toString().trim())||dynamicType.equals("1")&&itemList.size()>1){
+                    getExitPrompt();
+                }else{
+                    finish();
+                }
+            }
+        });
     }
     /**
      * 显示不同值传过来界面的状态
@@ -365,6 +379,44 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 //        G.showToast(this,"发布失败，请检测网络!");
         dialog.dismiss();
 
+    }
+
+    /**
+     * 退出提示
+     */
+    private void getExitPrompt(){
+        View coupons_view = LayoutInflater.from(this).inflate(R.layout.alertdialog_message, null);
+        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this, 1);
+        Button b_notrigst = (Button) coupons_view.findViewById(R.id.pop_notrigst);
+        Button b_mastrigst = (Button) coupons_view.findViewById(R.id.pop_mastrigst);
+        TextView pop_title = (TextView) coupons_view.findViewById(R.id.tv_poptitle);
+        b_mastrigst.setText("确认退出");
+        pop_title.setText("是否放弃本次编辑？");
+        b_notrigst.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        b_mastrigst.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if(!G.isEmteny(et_content.getText().toString().trim())||dynamicType.equals("1")&&itemList.size()>1){
+                getExitPrompt();
+            }else{
+                finish();
+            }
+        }
+        return super.dispatchKeyEvent(event);
     }
 
 }

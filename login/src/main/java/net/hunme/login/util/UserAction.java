@@ -9,9 +9,6 @@ import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.login.LoginActivity;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * ================================================
  * 作    者：ZLL
@@ -70,17 +67,6 @@ public class UserAction {
         UserMessage um =UserMessage.getInstance(context);
         um.setLoginName(loginName);
         um.setPassword(passWord);
-    }
-
-    /**
-     *  关闭所有的activity
-     */
-    private static List<Activity> activityList = new LinkedList<Activity>();
-    public static void exit() {
-        for (Activity activity : activityList) {
-            activity.finish();
-        }
-        System.exit(0);
     }
 
     /**

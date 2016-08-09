@@ -112,4 +112,4 @@ angular.module('app.controllers')
         //$state.go('videoPlay',{ themeid:item.themeid,resourceid:item.resourceid });
         $state.go('videoPlay',{ themeid:item.themeid,resourceid:item.id });
     };
-})
+});

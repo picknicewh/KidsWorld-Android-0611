@@ -57,4 +57,4 @@ angular.module('app.controllers')
             $ionicScrollDelegate.resize();
         });
     }
-})
+});

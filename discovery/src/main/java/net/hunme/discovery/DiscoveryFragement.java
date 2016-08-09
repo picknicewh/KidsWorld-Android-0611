@@ -16,6 +16,8 @@ import android.widget.TextView;
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.cordova.CordovaInterfaceImpl;
 import net.hunme.baselibrary.cordova.MySystemWebView;
+import net.hunme.baselibrary.network.ServerConfigManager;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
 
 import org.apache.cordova.engine.SystemWebView;
@@ -57,7 +59,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      * 没网络时显示
      */
   //  private RelativeLayout rl_nonetwork;
-   private static final String url = "file:///android_asset/www/kidsworld/paradise/index.html?";
+   private static final String url = ServerConfigManager.WEB_IP+"/paradise/index.html";
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -109,7 +111,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
     private void  setWebView(){
         webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),ll_loading));
-        getWebView(webView).loadUrl(url);
+        getWebView(webView).loadUrl(url+"?tsId="+ UserMessage.getInstance(getActivity()).getTsId());
         if (!webView.getUrl().contains("paradiseHome")){
             ll_loading.setVisibility(View.GONE);
         }

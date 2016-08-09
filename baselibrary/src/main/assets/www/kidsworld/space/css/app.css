@@ -242,3 +242,9 @@ div.content-top .text {
     left: 12px;
     top: -6px;
 }
+ul.image2 li img.oneImg {
+	width: auto;
+	height: auto;
+	max-width: 160px;
+	max-height: 160px;
+}

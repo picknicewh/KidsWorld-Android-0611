@@ -214,4 +214,4 @@ angular.module('app.controllers')
     };
 
 
-})
+});

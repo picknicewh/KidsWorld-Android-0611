@@ -2,12 +2,14 @@ package net.hunme.baselibrary.util;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.R;
+import net.hunme.baselibrary.cordova.HMDroidGap;
 
 /**
  * 作者： Administrator
@@ -168,4 +170,11 @@ public class WebCommonPageFrom {
         });
     }
 
+    @JavascriptInterface
+    public void setWebLoading(String url){
+        Intent intent=new Intent(activity,HMDroidGap.class);
+        intent.putExtra("loadUrl",url);
+        intent.putExtra("title","我的收藏");
+        activity.startActivity(intent);
+    }
 }

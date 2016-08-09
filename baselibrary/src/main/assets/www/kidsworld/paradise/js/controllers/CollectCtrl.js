@@ -29,7 +29,7 @@ angular.module('app.controllers')
     };
     $scope.showInfDet= function ( item ) {
         //$state.go('eduInformation_Detail',{ resourceid:'aa' });
-        $state.go('eduInformation_Detail',{ resourceid:item.resourceid });
+        $state.go('eduInformation_Detail',{ resourceid:item.id });
     };
 
     //搜索操作
@@ -118,4 +118,4 @@ angular.module('app.controllers')
 
 
 
-})
+});
