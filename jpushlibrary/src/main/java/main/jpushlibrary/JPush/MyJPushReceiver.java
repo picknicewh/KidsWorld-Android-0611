@@ -35,28 +35,28 @@ public class MyJPushReceiver extends BroadcastReceiver {
             Log.d(TAG, "[MyJPushReceiver] 接收Registration Id : " + regId);
             //  sendRegistrationId(regId,context);
         } else if (intent.getAction().equals(JPushInterface.ACTION_MESSAGE_RECEIVED)) {
-            Log.i(TAG, "[MyJPushReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
+            Log.i(TAG, "[MyJPushReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
             String content = bundle.getString(JPushInterface.EXTRA_MESSAGE);
             String title = bundle.getString(JPushInterface.EXTRA_TITLE);
             String messageId = bundle.getString(JPushInterface.EXTRA_MSG_ID);
             Log.i("TAG", "content=========" + content + "title===========" + title + "messageId===========" + messageId );
-            String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+            String message = bundle.getString(JPushInterface.EXTRA_EXTRA);
+          //  接收到推送下来的自定义消息: {"messagetype":"1","schoolid":"","classid":"298f1648653840fdaa6c396830025af5"}
             try {
-                JSONObject Object = new JSONObject(message);
-                String value = Object.getString("value");
-                JSONObject jsonObject = new JSONObject(value);
-                String type = (String) jsonObject.get("type");
-                String note = (String) jsonObject.get("note");
-                String url = (String) jsonObject.get("url");
-                String kind = (String) jsonObject.get("kind");
+                JSONObject jsonObject = new JSONObject(message);
+                String messagetype = (String) jsonObject.get("messagetype");
+                String schoolid = (String) jsonObject.get("schoolid");
+                String classid = (String) jsonObject.get("classid");
+                Intent myintent = new Intent("net.hunme.status.showstatusdos");
+                myintent.putExtra("messagetype",messagetype);
+                myintent.putExtra("schoolid",schoolid);
+                myintent.putExtra("classid",classid);
+                context.sendBroadcast(myintent);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            //  receivingNotification(bundle,context);
         } else if (intent.getAction().equals(JPushInterface.ACTION_NOTIFICATION_RECEIVED)) {
-
             Log.i(TAG, "[MyJPushReceiver] 接收到推送下来的通知");
-
         } else if (intent.getAction().equals(JPushInterface.ACTION_NOTIFICATION_OPENED)) {
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
             Log.i(TAG, "[MyJPushReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));

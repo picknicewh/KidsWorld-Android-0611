@@ -1,11 +1,15 @@
 package net.hunme.kidsworld;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -120,6 +124,10 @@ public class MainActivity extends JPushBaseActivity {
      */
     public  static  boolean isconnect;
     public  static int count;
+    /**
+     * 显示动态红点
+     */
+    private  MyStatusDosShowReceiver MyStatusDosShowReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,22 +205,24 @@ public class MainActivity extends JPushBaseActivity {
         IntentFilter filter=new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         myReceiver=new ConnectionChangeReceiver();
         this.registerReceiver(myReceiver, filter);
+
+        IntentFilter dfilter = new IntentFilter(MyStatusDosShowReceiver.STATUSDOSHOW);
+        MyStatusDosShowReceiver = new MyStatusDosShowReceiver();
+        this.registerReceiver(MyStatusDosShowReceiver,dfilter);
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         this.unregisterReceiver(myReceiver);
-       // Log.i("TAG","=================onDestroy===================");
+        this.unregisterReceiver(MyStatusDosShowReceiver);
     }
-
     /**
     * 未读消息监听
     */
     private void setNoreadMessage(){
         Handler handler = new Handler();
-        final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
-                Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
-                Conversation.ConversationType.PUBLIC_SERVICE};
+        final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE,
+                Conversation.ConversationType.GROUP};
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -282,6 +292,24 @@ public class MainActivity extends JPushBaseActivity {
             count=-1;
         }
     }
+ private class  MyStatusDosShowReceiver extends BroadcastReceiver {
+     public static final String STATUSDOSHOW = "net.hunme.kidsworld.MyStatusDosShowReceiver";
+     @Override
+     public void onReceive(Context context, Intent intent) {
+         Log.i("Tdddd",intent.getAction());
+         if (intent.getAction().equals(STATUSDOSHOW)){
+             Bundle bundle = intent.getExtras();
+
+             if (bundle.getInt("count",0)==1){
+                 tvStatusDos.setVisibility(View.VISIBLE);
+                 Log.i("Tdddd","cccccccccccccccccccccccccccc");
+             }else {
+                 tvStatusDos.setVisibility(View.GONE);
+                 Log.i("Tdddd","dddddddddDDDDDDDDDDDDDDDDDD");
+             }
+         }
+     }
+  }
 }
 
 
