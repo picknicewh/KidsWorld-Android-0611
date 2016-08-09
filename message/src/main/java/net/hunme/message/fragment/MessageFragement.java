@@ -24,6 +24,7 @@ import net.hunme.message.R;
 import net.hunme.message.activity.ClassActivity;
 import net.hunme.message.activity.ParentActivity;
 import net.hunme.message.bean.GroupJson;
+import net.hunme.message.ronglistener.MyConversationBehaviorListener;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -69,7 +70,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_message, null);
         init(view);
         // 设置点击头像监听事件
-       // RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
+        RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
         return view;
     }
     /**
@@ -151,13 +152,13 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
                     for (int i = 0 ;i<groupJsonList.size();i++){
                         GroupJson groupJson = groupJsonList.get(i);
                         final String classId = groupJson.getClassId();
-                        final String groupName = groupJson.getGroupName();
-                        RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
-                            @Override
-                            public Group getGroupInfo(String s) {
-                                if (s.equals(classId)){
-                                    Group group = new Group(classId,groupName, Uri.parse(""));
-                                    return group;
+                                    final String groupName = groupJson.getGroupName();
+                                    RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
+                                        @Override
+                                        public Group getGroupInfo(String s) {
+                                            if (s.equals(classId)){
+                                                Group group = new Group(classId,groupName, Uri.parse(""));
+                                                return group;
                                 }
                                 return null;
                             }

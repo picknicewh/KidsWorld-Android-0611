@@ -112,6 +112,8 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         getWebView(webView).loadUrl(url);
         if (!webView.getUrl().contains("paradiseHome")){
             ll_loading.setVisibility(View.GONE);
+        }else {
+            ll_loading.setVisibility(View.VISIBLE);
         }
     }
 

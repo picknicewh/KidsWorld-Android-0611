@@ -27,7 +27,6 @@ import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
 
 public class WebViewActivity extends CordovaActivity implements View.OnClickListener{
-
     /**
      * 左边的图片
      */
@@ -55,7 +54,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         setContentView(R.layout.activity_hm_droidgap);
         super.init();
         launchUrl=getIntent().getStringExtra("loadUrl");
-        Log.i("TAGG",launchUrl);
+       // Log.i("TAGG",launchUrl);
         loadUrl(launchUrl);
         initData();
     }
@@ -107,7 +106,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         super.onRestart();
          int index =  webView.getUrl().lastIndexOf("/");
          String url =  webView.getUrl().substring(0,index)+ webView.getUrl().substring(index+1);
-     //   String url =  webView.getUrl();
+        //   String url =  webView.getUrl();
         Log.i("TAGFGG",url);
         if (webView.getUrl().contains(SchoolFragement.LEAVE)){
             webView.loadUrl(url);

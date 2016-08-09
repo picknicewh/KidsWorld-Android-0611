@@ -49,13 +49,14 @@ public class MyJPushReceiver extends BroadcastReceiver {
                 String note = (String) jsonObject.get("note");
                 String url = (String) jsonObject.get("url");
                 String kind = (String) jsonObject.get("kind");
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             //  receivingNotification(bundle,context);
         } else if (intent.getAction().equals(JPushInterface.ACTION_NOTIFICATION_RECEIVED)) {
+
             Log.i(TAG, "[MyJPushReceiver] 接收到推送下来的通知");
+
         } else if (intent.getAction().equals(JPushInterface.ACTION_NOTIFICATION_OPENED)) {
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
             Log.i(TAG, "[MyJPushReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));

@@ -88,7 +88,6 @@ public class MainActivity extends JPushBaseActivity {
     TextView tvMessage;
     @Bind(R.id.iv_message)
     ImageView ivMessage;
-
     /**
      * 用户信息
      */
@@ -115,6 +114,10 @@ public class MainActivity extends JPushBaseActivity {
      * 有无网络请求
      */
     private ConnectionChangeReceiver myReceiver;
+    /**
+     *
+     判断网络是否连接
+     */
     public  static  boolean isconnect;
     public  static int count;
     @Override
@@ -126,11 +129,10 @@ public class MainActivity extends JPushBaseActivity {
         ButterKnife.bind(this);
         initViewpager();
         //初始激光推送配置信息
-        initJPushConfiguration();
+        initJPushConfiguration(UserMessage.getInstance(this).getLoginName(),"tag");
         //如果网络连接时，连接融云
-      //  Log.i("TAGDDG",userMessage.getRyId());
         if (G.isNetworkConnected(this)){
-        BaseLibrary.connect(userMessage.getRyId(),MainActivity.this,userMessage.getUserName(),userMessage.getHoldImgUrl());
+            BaseLibrary.connect(userMessage.getRyId(),MainActivity.this,userMessage.getUserName(),userMessage.getHoldImgUrl());
             setNoreadMessage();
         }
         registerReceiver();
@@ -167,14 +169,6 @@ public class MainActivity extends JPushBaseActivity {
             initViewpager();
             UserChooseActivity.flag=0;
         }
-
-       /* if (RongIM.getInstance()!=null) {
-            if (userMessage != null) {
-                Log.i("TRER",userMessage.getTsId()+"======getTsId=========");
-                Log.i("TRER",userMessage.getUserName()+"======getUserName=========");
-                RongIM.getInstance().refreshUserInfoCache(new UserInfo(userMessage.getTsId(), userMessage.getUserName(), Uri.parse(userMessage.getHoldImgUrl())));
-            }
-        }*/
         setNoreadMessage();
     }
     /**
