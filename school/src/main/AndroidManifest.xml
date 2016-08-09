@@ -6,11 +6,21 @@
         android:allowBackup="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.OpenClassActivity" />
-        <activity android:name=".activity.LeaveAskActivity" />
-        <activity android:name=".activity.WebViewActivity" />
-        <activity android:name=".activity.PublishActivity" />
-        <activity android:name=".activity.PublishDetailActivity"></activity>
+        <activity
+            android:name=".activity.OpenClassActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.LeaveAskActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.WebViewActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.PublishActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.PublishDetailActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

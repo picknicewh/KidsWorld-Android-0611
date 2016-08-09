@@ -2,7 +2,6 @@ package net.hunme.user.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +64,6 @@ public class AlbumDetailsAdapter extends BaseAdapter {
         }
         holder= (ViewHolder) view.getTag();
         ImageCache.imageLoader(imagePath.get(i),holder.image);
-        Log.i("TAGGG",imagePath.get(0));
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

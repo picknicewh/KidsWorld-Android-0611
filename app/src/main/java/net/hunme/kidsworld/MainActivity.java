@@ -1,18 +1,17 @@
 package net.hunme.kidsworld;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.util.G;
@@ -29,6 +28,8 @@ import net.hunme.status.StatusFragement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -128,6 +129,11 @@ public class MainActivity extends JPushBaseActivity {
      * 显示动态红点
      */
     private  MyStatusDosShowReceiver MyStatusDosShowReceiver;
+    /**
+     * 是否连续点击了两次返回键
+     */
+    private boolean isQuit = false;
+    private Timer timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,7 +151,7 @@ public class MainActivity extends JPushBaseActivity {
         }
         registerReceiver();
         initCount();
-
+        timer=new Timer();
     }
     /**
      * 初始化viewpager
@@ -291,6 +297,29 @@ public class MainActivity extends JPushBaseActivity {
         }else {
             count=-1;
         }
+    }
+
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            //这里处理逻辑代码
+            if (isQuit) {
+                // 这是两次点击以后
+                timer.cancel();
+                BaseLibrary.exit();
+            } else {
+                isQuit = true;
+                Toast.makeText(this.getApplicationContext(), "再按一次退出财富锦囊",Toast.LENGTH_SHORT).show();
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        isQuit = false;
+                    }
+                };
+                timer.schedule(task, 2000);
+            }
+            return false;
+        }
+        return super.dispatchKeyEvent(event);
     }
  private class  MyStatusDosShowReceiver extends BroadcastReceiver {
      public static final String STATUSDOSHOW = "net.hunme.kidsworld.MyStatusDosShowReceiver";

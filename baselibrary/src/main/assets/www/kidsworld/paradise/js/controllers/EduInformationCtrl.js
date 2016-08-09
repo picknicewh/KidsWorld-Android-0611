@@ -45,8 +45,8 @@ angular.module('app.controllers')
         };
         //控制
         $scope.showInfDet= function ( item ) {
-            $state.go('eduInformation_Detail',{ resourceid:'aa' });
-            //$state.go('eduInformation_Detail',{ resourceid:item.resourceid });
+            //$state.go('eduInformation_Detail',{ resourceid:'aa' });
+            $state.go('eduInformation_Detail',{ resourceid:item.id });
         };
         //控制-加载更多
         $scope.loadMoreData=function(){
@@ -55,7 +55,7 @@ angular.module('app.controllers')
         };
         //根据页码查询推荐内容
         $scope.loadDataByPageNumber=function(pageNumber){
-            var res = WebService.getContent( tsIdLogin,5,4,pageNumber);
+            var res = WebService.getContent( tsIdLogin,2,6,pageNumber,201);
             $scope.loadState=1;
             res.$promise.then(function(response) {
                 if(pageNumber=1){
@@ -63,12 +63,14 @@ angular.module('app.controllers')
                 }
                 var data=response.data.data;
                 var length=data.length;
-                if(length<=0) {
+                $scope.loadState=0;
+                if(length<6) {
                     $scope.loadState=2;
-                    return;
+                    if(length<=0){
+                        return;
+                    }
                 }
                 $scope.items_inf=$scope.items_inf.concat(data);
-                $scope.loadState=0;
                 $ionicScrollDelegate.resize();
             });
         }
@@ -93,8 +95,8 @@ angular.module('app.controllers')
         };
         //控制
         $scope.showInfDet= function ( item ) {
-            $state.go('eduInformation_Detail',{ resourceid:'aa' });
-            //$state.go('eduInformation_Detail',{ resourceid:item.resourceid });
+            //$state.go('eduInformation_Detail',{ resourceid:'aa' });
+            $state.go('eduInformation_Detail',{ resourceid:item.id });
         };
         //控制-加载更多
         $scope.loadMoreData=function(){
@@ -103,7 +105,7 @@ angular.module('app.controllers')
         };
         //根据页码查询推荐内容
         $scope.loadDataByPageNumber=function(pageNumber){
-            var res = WebService.getContent( tsIdLogin,5,4,pageNumber);
+            var res = WebService.getContent( tsIdLogin,2,6,pageNumber,202);
             $scope.loadState=1;
             res.$promise.then(function(response) {
                 if(pageNumber=1){
@@ -111,12 +113,14 @@ angular.module('app.controllers')
                 }
                 var data=response.data.data;
                 var length=data.length;
-                if(length<=0) {
+                $scope.loadState=0;
+                if(length<6) {
                     $scope.loadState=2;
-                    return;
+                    if(length<=0){
+                        return;
+                    }
                 }
                 $scope.items_inf=$scope.items_inf.concat(data);
-                $scope.loadState=0;
                 $ionicScrollDelegate.resize();
             });
         }
@@ -141,8 +145,8 @@ angular.module('app.controllers')
         };
         //控制
         $scope.showInfDet= function ( item ) {
-            $state.go('eduInformation_Detail',{ resourceid:'aa' });
-            //$state.go('eduInformation_Detail',{ resourceid:item.resourceid });
+            //$state.go('eduInformation_Detail',{ resourceid:'aa' });
+            $state.go('eduInformation_Detail',{ resourceid:item.id });
         };
         //控制-加载更多
         $scope.loadMoreData=function(){
@@ -151,7 +155,7 @@ angular.module('app.controllers')
         };
         //根据页码查询推荐内容
         $scope.loadDataByPageNumber=function(pageNumber){
-            var res = WebService.getContent( tsIdLogin,5,4,pageNumber);
+            var res = WebService.getContent( tsIdLogin,2,6,pageNumber,203);
             $scope.loadState=1;
             res.$promise.then(function(response) {
                 if(pageNumber=1){
@@ -159,12 +163,14 @@ angular.module('app.controllers')
                 }
                 var data=response.data.data;
                 var length=data.length;
-                if(length<=0) {
+                $scope.loadState=0;
+                if(length<6) {
                     $scope.loadState=2;
-                    return;
+                    if(length<=0){
+                        return;
+                    }
                 }
                 $scope.items_inf=$scope.items_inf.concat(data);
-                $scope.loadState=0;
                 $ionicScrollDelegate.resize();
             });
         }
@@ -189,8 +195,8 @@ angular.module('app.controllers')
         };
         //控制
         $scope.showInfDet= function ( item ) {
-            $state.go('eduInformation_Detail',{ resourceid:'aa' });
-            //$state.go('eduInformation_Detail',{ resourceid:item.resourceid });
+            //$state.go('eduInformation_Detail',{ resourceid:'aa' });
+            $state.go('eduInformation_Detail',{ resourceid:item.id });
         };
         //控制-加载更多
         $scope.loadMoreData=function(){
@@ -199,7 +205,7 @@ angular.module('app.controllers')
         };
         //根据页码查询推荐内容
         $scope.loadDataByPageNumber=function(pageNumber){
-            var res = WebService.getContent( tsIdLogin,5,4,pageNumber);
+            var res = WebService.getContent( tsIdLogin,2,6,pageNumber,204);
             $scope.loadState=1;
             res.$promise.then(function(response) {
                 if(pageNumber=1){
@@ -207,13 +213,15 @@ angular.module('app.controllers')
                 }
                 var data=response.data.data;
                 var length=data.length;
-                if(length<=0) {
+                $scope.loadState=0;
+                if(length<6) {
                     $scope.loadState=2;
-                    return;
+                    if(length<=0){
+                        return;
+                    }
                 }
                 $scope.items_inf=$scope.items_inf.concat(data);
-                $scope.loadState=0;
                 $ionicScrollDelegate.resize();
             });
         }
-    })
+    });

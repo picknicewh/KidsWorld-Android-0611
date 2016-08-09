@@ -57,7 +57,11 @@ public class PhotoAdapter extends BaseAdapter {
         }
         viewHold= (ViewHold) view.getTag();
         if(null!=photoList){
-            ImageCache.imageLoader(photoList.get(i).getUrl(),viewHold.photo);
+            if(null==photoList.get(i).getUrl()){
+                viewHold.photo.setImageResource(R.mipmap.ic_album_cover);
+            }else{
+                ImageCache.imageLoader(photoList.get(i).getUrl(),viewHold.photo);
+            }
             viewHold.photoName.setText(photoList.get(i).getName());
             viewHold.photoNumber.setText(photoList.get(i).getCount()+"张");
         }

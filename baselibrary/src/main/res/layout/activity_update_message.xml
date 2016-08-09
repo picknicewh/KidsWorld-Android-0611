@@ -30,6 +30,7 @@
         android:id="@+id/et_heckNumber"
         android:layout_width="match_parent"
         android:hint="请输入你的验证码"
+        android:inputType="phone"
         android:textColorHint="@color/pgrey"
         android:layout_gravity="center"
         android:layout_height="wrap_content" />

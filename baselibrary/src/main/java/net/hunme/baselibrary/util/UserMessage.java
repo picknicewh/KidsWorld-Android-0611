@@ -3,6 +3,8 @@ package net.hunme.baselibrary.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import net.hunme.baselibrary.R;
+
 /**
  * ================================================
  * 作    者：ZLL
@@ -72,7 +74,7 @@ public class UserMessage {
         editor.commit();
     }
     public String getHoldImgUrl(){
-        return  spf.getString("holdImgUrl","http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png");
+        return  spf.getString("holdImgUrl","drawable://" + R.drawable.ic_head);
     }
 
     /**

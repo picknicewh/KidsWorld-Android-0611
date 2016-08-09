@@ -34,6 +34,7 @@ angular.module('app.controllers')
             }
             $scope.displayInfName=data.name;
             $scope.displayInfCnt=data.content;
+
             if(data.attentionid){
                 $scope.storeActive=true;
             }else{
@@ -51,7 +52,7 @@ angular.module('app.controllers')
     };
     //收藏按钮
     $scope.store=function(){
-        $scope.resourceid=1;
+        //$scope.resourceid=1;
         if($scope.storeActive){
             var cancel=2;
         }else{
@@ -64,8 +65,10 @@ angular.module('app.controllers')
                 CommonService.showAlert.show(data.data);
                 if($scope.storeActive){
                     $scope.storeActive=false;
+                    data.attentionid=false;
                 }else{
                     $scope.storeActive=true;
+                    data.attentionid=true;
                 }
             }else{
                 CommonService.showAlert.show(data.data);
@@ -73,4 +76,4 @@ angular.module('app.controllers')
         });
 
     };
-})
+});

@@ -24,6 +24,7 @@ import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.network.ServerConfigManager;
 import net.hunme.baselibrary.util.DateUtil;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
@@ -33,6 +34,7 @@ import net.hunme.status.widget.ChooseClassPopWindow;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.activity.UserActivity;
 
+import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
 
@@ -86,7 +88,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
      http://zhu.hunme.net:8080/KidsWorld/space/view/dynamic.html
      http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html?
      */
-    private static final String url = "file:///android_asset/www/kidsworld/space/view/dynamic.html?";
+    private static final String url = ServerConfigManager.WEB_IP+"/space/view/dynamic.html?";
     /**
      * 班级选择
      */
@@ -104,6 +106,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     private SystemWebView webView;
     private int position = 0;
     private  MyJpushReceiver myReceiver;
+    private CordovaWebView cordovaWebView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.fragment_status, null);
@@ -117,13 +120,14 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         iv_lift = $(view, R.id.iv_left);
         iv_right = $(view, R.id.iv_right);
         tv_classname = $(view, R.id.tv_classname);
-        webView = $(view, R.id.cordovaWebView);
+        SystemWebView webView = $(view, R.id.cordovaWebView);
         ll_loading = $(view, R.id.ll_loading);
         ll_classchoose = $(view,R.id.ll_classchoose);
         rl_toolbar=$(view,R.id.rl_toolbar);
 
         webView.addJavascriptInterface(this, "change");  //设置本地调用对象及其接口
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),ll_loading));
+        cordovaWebView=getWebView(webView);
         um=UserMessage.getInstance(getActivity());
         classlist = new ArrayList<>();
         setViewAction();
@@ -137,6 +141,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     public void setWebView(int position){
         webView.addJavascriptInterface(this,"showDos");
         getWebView(webView).loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
+        cordovaWebView.loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
                 +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
                 +"&clickTime="+ DateUtil.formatDateTime(new Date()));
         G.log("loadUrl====="+url+"groupId="+dynamicList.get(position).getGroupId()
@@ -192,7 +197,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         if(G.KisTyep.isReleaseSuccess) {
             G.KisTyep.isReleaseSuccess = false;
 //                    //显示dialog
-            webView.loadUrl("javascript:pulldownRefresh()");
+            cordovaWebView.loadUrl("javascript:pulldownRefresh()");
         }
         if(G.KisTyep.isChooseId){
             //用户切换身份 重新刷新数据

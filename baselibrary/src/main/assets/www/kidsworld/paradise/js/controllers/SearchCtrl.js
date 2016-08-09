@@ -27,6 +27,7 @@ angular.module('app.controllers')
     }
     //返回按钮
     $scope.goBack= function () {
+        testOut();
         $state.go('paradiseHome');
     };
     //获得搜索历史
@@ -58,8 +59,8 @@ angular.module('app.controllers')
         $state.go('audioPlay',{ themeid:item.themeid,resourceid:item.id });
     };
     $scope.showInfDet= function ( item ) {
-        $state.go('eduInformation_Detail',{ resourceid:'aa' });
-        //$state.go('eduInformation_Detail',{ resourceid:item.resourceid });
+        //$state.go('eduInformation_Detail',{ resourceid:'aa' });
+        $state.go('eduInformation_Detail',{ resourceid:item.id });
     };
 
     //搜索按钮
@@ -178,7 +179,11 @@ angular.module('app.controllers')
     $scope.loadMoreData2=function(){
         $scope.pageNumber2=$scope.pageNumber2+1;
         $scope.searchByKey2();
-    }
+    };
+
+    //$scope.test=function(){
+    //    alert("testOutinves");
+    //}
 
 
-})
+});

@@ -36,13 +36,6 @@ public class LoadingDialog extends Dialog {
         linearLayout.getBackground().setAlpha(210);
     }
 
-    public static LoadingDialog getInstance(Context context){
-        if(null==dialog){
-            dialog=new LoadingDialog(context,R.style.LoadingDialogTheme);
-        }
-        return dialog;
-    }
-
     public static void setLoadingText(String text){
         tv_prompt.setText(text);
     }

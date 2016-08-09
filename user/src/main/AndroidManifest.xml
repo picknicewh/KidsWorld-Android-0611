@@ -9,22 +9,54 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.UserActivity" />
-        <activity android:name=".activity.UMassageActivity" />
-        <activity android:name=".activity.USettingActivity" />
-        <activity android:name=".activity.UPhotoActivity" />
-        <activity android:name=".activity.UploadPhotoActivity" />
-        <activity android:name=".activity.AlbumSelectActivity" />
-        <activity android:name=".activity.UDynamicsActivity" />
-        <activity android:name=".activity.UCollectionActivity" />
-        <activity android:name="net.hunme.login.UserChooseActivity" />
-        <activity android:name=".activity.SystemInfoActivity" />
-        <activity android:name=".activity.AdviceActivity" />
-        <activity android:name="net.hunme.baselibrary.activity.UpdateMessageActivity" />
-        <activity android:name=".activity.ProvsionActivity" />
-        <activity android:name=".activity.InfoDetailsActivity" />
-        <activity android:name=".activity.AlbumDetailsActivity" />
-        <activity android:name="net.hunme.baselibrary.cordova.HMDroidGap"></activity>
+        <activity
+            android:name=".activity.UserActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.UMassageActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.USettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.UPhotoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.UploadPhotoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AlbumSelectActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.UDynamicsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.UCollectionActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="net.hunme.login.UserChooseActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.SystemInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AdviceActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="net.hunme.baselibrary.activity.UpdateMessageActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ProvsionActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.InfoDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AlbumDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="net.hunme.baselibrary.cordova.HMDroidGap"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

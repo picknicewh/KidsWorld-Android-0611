@@ -25,4 +25,15 @@ public class FormValidation {
 		Matcher m = p.matcher(cardid);
 		return m.matches();
 	}
+
+	/**
+	 *  是否符合密码格式（有数字和字母组成）
+	 * @param passwrod
+	 * @return
+     */
+	public static boolean isPassword(String passwrod){
+		Pattern p=Pattern.compile("^[A-Za-z0-9]{8,16}$");
+		Matcher m=p.matcher(passwrod);
+		return m.matches();
+	}
 }

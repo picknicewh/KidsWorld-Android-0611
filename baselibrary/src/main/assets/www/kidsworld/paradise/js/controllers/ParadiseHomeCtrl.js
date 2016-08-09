@@ -112,8 +112,8 @@ angular.module('app.controllers')
                 CommonService.showAlert.show('无推荐课堂数据！');
             }
             //推荐资讯数据
-            var data_2=data[2].contentJsonList;
-            $scope.items_eduInf=data[2].contentJsonList;
+            var data_2=data[2].resourceJsonList;
+            $scope.items_eduInf=data[2].resourceJsonList;
             var length_2=data_2.length;
             if(length_2<=0) {
                 //$ionicPopup.alert({
@@ -158,7 +158,7 @@ angular.module('app.controllers')
     $scope.showEduInf= function ( item ) {
         clearInterval($scope.bannnerTimer);
         //$state.go('eduInformation_Detail',{ resourceid:5 });
-        $state.go('eduInformation_Detail',{ resourceid:item.resourceid });
+        $state.go('eduInformation_Detail',{ resourceid:item.id });
     };
     $scope.playAudio= function ( item ) {
         clearInterval($scope.bannnerTimer);
@@ -206,4 +206,4 @@ angular.module('app.controllers')
     }
 
 
-})
+});

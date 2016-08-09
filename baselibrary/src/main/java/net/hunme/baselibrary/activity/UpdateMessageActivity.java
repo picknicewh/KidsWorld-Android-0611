@@ -3,6 +3,8 @@ package net.hunme.baselibrary.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,9 +39,10 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     private final String UPDATEPHONE="/appUser/updataPhone.do";
     private String type;
     private MyCount myCount;
-    private boolean isSubmitDate;
-    private String Sign;
-    private String value;
+    private boolean isSubmitDate;//是否需要提交数据
+    private String Sign;//验证码
+    private String value;//新密码或者新手机号
+    private String phoneNum;//手机号
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +79,12 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
             type="2";
             setCententTitle("修改密码");
             et_password.setHint("请输入你的密码");
+            et_password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
             b_finish.setText("完成");
+            b_finish.setEnabled(false);
+            phoneNum=getIntent().getStringExtra("phoneNumber");
+            tv_cp_number.setText("+86 "+phoneNum.substring(0,3)+"****"+phoneNum.substring(phoneNum.length()-4,phoneNum.length()));
         }else{
             type="1";
             setCententTitle("修改手机号");
@@ -87,13 +95,12 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
             et_heckNumber.setVisibility(View.GONE);
             tv_time.setVisibility(View.GONE);
         }
-        tv_cp_number.setText("+86 "+getIntent().getStringExtra("phoneNumber"));
     }
 
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.tv_time){
-            getValidateCode(type,um.getLoginName());
+            getValidateCode(type,phoneNum);
             tv_time.setEnabled(false);
             tv_type.setText("我们已经发送短信验证码到你的手机");
             myCount.start();
@@ -115,6 +122,10 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
                 if(type.equals("1")){
                     updatePhone(Sign,code,value);
                 }else{
+                    if(!FormValidation.isPassword(value)){
+                        G.showToast(this,"输入的密码由数字和字母组成,长度在8-16位");
+                        return;
+                    }
                     updatePassword(Sign,code,value);
                 }
             }
@@ -134,7 +145,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     }
 
     /**
-     * 更新信息
+     * 更新密码
      * @param sign 密钥 有服务端提供来源请求的验证码接口
      * @param code 验证码
      * @param value 更新的值
@@ -149,7 +160,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     }
 
     /**
-     *
+     * 修改电话号码
      * @param sign 密钥 有服务端提供来源请求的验证码接口
      * @param code 验证码
      * @param newPhone 新号码
@@ -168,7 +179,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     public void onSuccess(String uri, Object date) {
         Result<String>result= (Result<String>) date;
         if(VALIDATECODE.equals(uri)){
-            tv_time.setEnabled(true);
+            b_finish.setEnabled(true);
             //验证码
             Sign=result.getSign();
             if(type.equals("1")&&!isSubmitDate){
@@ -194,6 +205,9 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onError(String uri, String error) {
         G.showToast(this,error);
+        if(VALIDATECODE.equals(uri)){
+            myCount.cancel();
+        }
     }
 
     /**

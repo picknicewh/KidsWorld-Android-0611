@@ -50,7 +50,7 @@ angular.module('app.controllers')
     };
     $scope.showInfDet= function ( item ) {
         //$state.go('eduInformation_Detail',{ resourceid:'aa' });
-        $state.go('eduInformation_Detail',{ resourceid:item.resourceid });
+        $state.go('eduInformation_Detail',{ resourceid:item.id });
     };
 
         //选项卡0操作
@@ -152,6 +152,6 @@ angular.module('app.controllers')
     //    });
     //}
 
-})
+});
 
 
