@@ -12,6 +12,7 @@ import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
@@ -56,6 +57,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      * web接口类
      */
     private WebCommonPageFrom from;
+    private RelativeLayout rl_discovery;
     /**
      * 没网络时显示
      */
@@ -94,6 +96,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         iv_right = $(v,R.id.iv_dright);
         webView = $(v,R.id.cordovaWebView);
         pb_web=$(v,R.id.pb_web);
+        rl_discovery=$(v,R.id.rl_discovery);
 //        ll_loading = $(v,R.id.ll_loading);
         //rl_nonetwork= $(v,R.id.rl_nonetwork);
        // rl_nonetwork.setOnClickListener(this);
@@ -113,7 +116,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      }
     private void  setWebView(){
         webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
-        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web));
+        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web,webView,getActivity(),rl_discovery));
         getWebView(webView).loadUrl(url+"?tsId="+ UserMessage.getInstance(getActivity()).getTsId());
 //        if (!webView.getUrl().contains("paradiseHome")){
 //            ll_loading.setVisibility(View.GONE);
