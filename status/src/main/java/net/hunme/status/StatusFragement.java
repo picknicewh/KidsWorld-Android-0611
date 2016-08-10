@@ -118,7 +118,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         iv_lift = $(view, R.id.iv_left);
         iv_right = $(view, R.id.iv_right);
         tv_classname = $(view, R.id.tv_classname);
-        SystemWebView webView = $(view, R.id.cordovaWebView);
+        webView = $(view, R.id.cordovaWebView);
         ll_classchoose = $(view,R.id.ll_classchoose);
         rl_toolbar=$(view,R.id.rl_toolbar);
         pb_web=$(view,R.id.pb_web);
@@ -135,12 +135,14 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     public void setPosition(int position){
         this.position = position;
     }
+
     public void setWebView(int position){
         webView.addJavascriptInterface(this,"showDos");
-        getWebView(webView).loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
+        cordovaWebView.loadUrl(url+"groupId="+dynamicList.get(position).getGroupId());
         cordovaWebView.loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
                 +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
                 +"&clickTime="+ DateUtil.formatDateTime(new Date()));
+
         G.log("loadUrl====="+url+"groupId="+dynamicList.get(position).getGroupId()
                 +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
         +"&clickTime="+ DateUtil.formatDateTime(new Date()));

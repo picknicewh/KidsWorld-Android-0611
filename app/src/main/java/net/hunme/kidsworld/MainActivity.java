@@ -1,11 +1,15 @@
 package net.hunme.kidsworld;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -151,26 +155,26 @@ public class MainActivity extends JPushBaseActivity {
     /**
      * 初始化viewpager
      */
-   private void  initViewpager(){
-       userMessage = new UserMessage(this);
-       userId = userMessage.getTsId();
-       username = userMessage.getUserName();
-       portrait = userMessage.getHoldImgUrl();
-       statusFragement = new StatusFragement();
-       schoolFragement = new SchoolFragement();
-       discoveryFragement = new DiscoveryFragement();
-       messageFragement = new MessageFragement();
-       fragmentManager = getSupportFragmentManager();
-       fragmentList = new ArrayList<>();
-       fragmentList.add(statusFragement);
-       fragmentList.add(schoolFragement);
-       fragmentList.add(discoveryFragement);
-       fragmentList.add(messageFragement);
-       MyViewPagerAdapter adapter = new MyViewPagerAdapter(fragmentManager,fragmentList);
-       viewPager.setAdapter(adapter);
-       viewPager .setOffscreenPageLimit(3);
-       viewPager.setPagingEnabled(false);
-   }
+    private void  initViewpager(){
+        userMessage = new UserMessage(this);
+        userId = userMessage.getTsId();
+        username = userMessage.getUserName();
+        portrait = userMessage.getHoldImgUrl();
+        statusFragement = new StatusFragement();
+        schoolFragement = new SchoolFragement();
+        discoveryFragement = new DiscoveryFragement();
+        messageFragement = new MessageFragement();
+        fragmentManager = getSupportFragmentManager();
+        fragmentList = new ArrayList<>();
+        fragmentList.add(statusFragement);
+        fragmentList.add(schoolFragement);
+        fragmentList.add(discoveryFragement);
+        fragmentList.add(messageFragement);
+        MyViewPagerAdapter adapter = new MyViewPagerAdapter(fragmentManager,fragmentList);
+        viewPager.setAdapter(adapter);
+        viewPager .setOffscreenPageLimit(3);
+        viewPager.setPagingEnabled(false);
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -211,12 +215,12 @@ public class MainActivity extends JPushBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         this.unregisterReceiver(myReceiver);
-       // Log.i("TAG","=================onDestroy===================");
+        // Log.i("TAG","=================onDestroy===================");
     }
 
     /**
-    * 未读消息监听
-    */
+     * 未读消息监听
+     */
     private void setNoreadMessage(){
         Handler handler = new Handler();
         final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
@@ -286,34 +290,12 @@ public class MainActivity extends JPushBaseActivity {
      */
     private void  initCount(){
         if (G.isNetworkConnected(this)){
-           count=1;
+            count=1;
         }else {
             count=-1;
         }
     }
 
-//    public boolean dispatchKeyEvent(KeyEvent event) {
-//        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-//            //这里处理逻辑代码
-//            if (isQuit) {
-//                // 这是两次点击以后
-//                timer.cancel();
-//                BaseLibrary.exit();
-//            } else {
-//                isQuit = true;
-//                Toast.makeText(this.getApplicationContext(), "再按一次退出财富锦囊",Toast.LENGTH_SHORT).show();
-//                TimerTask task = new TimerTask() {
-//                    @Override
-//                    public void run() {
-//                        isQuit = false;
-//                    }
-//                };
-//                timer.schedule(task, 2000);
-//            }
-//            return false;
-//        }
-//        return super.dispatchKeyEvent(event);
-//    }
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             //这里处理逻辑代码
@@ -336,24 +318,25 @@ public class MainActivity extends JPushBaseActivity {
         }
         return super.dispatchKeyEvent(event);
     }
- private class  MyStatusDosShowReceiver extends BroadcastReceiver {
-     public static final String STATUSDOSHOW = "net.hunme.kidsworld.MyStatusDosShowReceiver";
-     @Override
-     public void onReceive(Context context, Intent intent) {
-         Log.i("Tdddd",intent.getAction());
-         if (intent.getAction().equals(STATUSDOSHOW)){
-             Bundle bundle = intent.getExtras();
 
-             if (bundle.getInt("count",0)==1){
-                 tvStatusDos.setVisibility(View.VISIBLE);
-                 Log.i("Tdddd","cccccccccccccccccccccccccccc");
-             }else {
-                 tvStatusDos.setVisibility(View.GONE);
-                 Log.i("Tdddd","dddddddddDDDDDDDDDDDDDDDDDD");
-             }
-         }
-     }
-  }
+    private class  MyStatusDosShowReceiver extends BroadcastReceiver {
+        public static final String STATUSDOSHOW = "net.hunme.kidsworld.MyStatusDosShowReceiver";
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i("Tdddd",intent.getAction());
+            if (intent.getAction().equals(STATUSDOSHOW)){
+                Bundle bundle = intent.getExtras();
+
+                if (bundle.getInt("count",0)==1){
+                    tvStatusDos.setVisibility(View.VISIBLE);
+                    Log.i("Tdddd","cccccccccccccccccccccccccccc");
+                }else {
+                    tvStatusDos.setVisibility(View.GONE);
+                    Log.i("Tdddd","dddddddddDDDDDDDDDDDDDDDDDD");
+                }
+            }
+        }
+    }
 }
 
 

@@ -28,15 +28,25 @@ import java.util.ArrayList;
 public class GridAlbumAdapter extends BaseAdapter {
     private ArrayList<String> imageItems;
     private Context context;
+    private int maxContent;
     public GridAlbumAdapter(ArrayList<String> imageItems, Context context) {
         this.imageItems = imageItems;
         this.context = context;
     }
 
+    public GridAlbumAdapter(ArrayList<String> imageItems, Context context, boolean isSchool) {
+        this.imageItems = imageItems;
+        this.context = context;
+        if(isSchool)
+            maxContent=1;
+        else
+            maxContent=9;
+    }
+
     @Override
     public int getCount() {
-        if(imageItems.size()==9){
-            return  9;
+        if(imageItems.size()==maxContent){
+            return  maxContent;
         }
         return imageItems.size()+1;
     }
@@ -67,7 +77,7 @@ public class GridAlbumAdapter extends BaseAdapter {
                     holder.image);
             holder.clv_delete.setVisibility(View.GONE);
             holder.image.setVisibility(View.VISIBLE);
-            if (position >= 9) {
+            if (position >= maxContent) {
                 holder.image.setVisibility(View.GONE);
             }
         }

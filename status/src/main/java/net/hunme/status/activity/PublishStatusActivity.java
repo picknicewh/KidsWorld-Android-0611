@@ -117,7 +117,9 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         setLiftOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!G.isEmteny(et_content.getText().toString().trim())||dynamicType.equals("1")&&itemList.size()>1){
+                if(!G.isEmteny(et_content.getText().toString().trim())
+                        ||null!=dynamicType&&dynamicType.equals("1")&&itemList.size()>1
+                        ||source.equals("school")&&itemList.size()==1){
                     getExitPrompt();
                 }else{
                     finish();
@@ -138,7 +140,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             case StatusPublishPopWindow.PICTURE:
                 setCententTitle("发布图片");
                 goSelectImager();
-                showPhoto();
+                showPhoto(null!=source);
                 dynamicType="1";
                 break;
             case StatusPublishPopWindow.VEDIO:
@@ -169,7 +171,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             rl_restrict.setVisibility(View.GONE);
             setCententTitle("发布课程");
             goSelectImager();
-            showPhoto();
+            showPhoto(null!=source);
         }
         loadingDialog =new LoadingDialog(this,R.style.LoadingDialogTheme);
     }
@@ -206,9 +208,13 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     /**
      * 发布照片页面
      */
-    private void showPhoto(){
+    private void showPhoto(boolean isSchool){
         itemList=new ArrayList<>();
-        mAdapter=new GridAlbumAdapter(itemList,this);
+        if(isSchool){
+            mAdapter=new GridAlbumAdapter(itemList,this,true);
+        }else{
+            mAdapter=new GridAlbumAdapter(itemList,this);
+        }
         gv_photo.setAdapter(mAdapter);
         gv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -221,6 +227,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             }
         });
     }
+
     private void imageBrower(int position, ArrayList<String> urls2) {
         Intent intent = new Intent(this, ImagePagerActivity.class);
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
@@ -228,6 +235,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         intent.putExtra("source","local");
         startActivity(intent);
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case ChoosePermitActivity.CHOOSE_PERMIT:
@@ -424,7 +432,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onRestart() {
         super.onRestart();
-        if(dynamicType.equals("1")&&itemList.size()<1){
+        if(null!=source&&itemList.size()<1||null!=dynamicType&&dynamicType.equals("1")&&itemList.size()<1){
             finish();
         }
     }
