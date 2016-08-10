@@ -34,12 +34,19 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content" />
    </RelativeLayout>
+   <ProgressBar
+       android:id="@+id/pb_web"
+       android:layout_width="match_parent"
+       android:layout_height="@dimen/space_x0.5"
+       android:max="100"
+       android:background="@drawable/progress_bar_states"
+       style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
   <!-- <include
        android:id="@+id/rl_nonetwork"
        layout="@layout/nonetwork"/>-->
-   <include
-       android:id="@+id/ll_loading"
-       layout="@layout/loadwebview"/>
+   <!--<include-->
+       <!--android:id="@+id/ll_loading"-->
+       <!--layout="@layout/loadwebview"/>-->
    <!--<net.hunme.baselibrary.widget.MyViewView-->
        <!--android:layerType="software"-->
        <!--android:id="@+id/wv_discovery"-->

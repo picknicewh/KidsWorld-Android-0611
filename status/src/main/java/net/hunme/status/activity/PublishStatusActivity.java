@@ -95,7 +95,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 限制内容
      */
     private RelativeLayout rl_restrict;
-    private LoadingDialog dialog;
+    private LoadingDialog loadingDialog;
     private TextView tv_subtilte;
     // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
@@ -117,7 +117,9 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         setLiftOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!G.isEmteny(et_content.getText().toString().trim())||dynamicType.equals("1")&&itemList.size()>1){
+                if(!G.isEmteny(et_content.getText().toString().trim())
+                        ||null!=dynamicType&&dynamicType.equals("1")&&itemList.size()>1
+                        ||source.equals("school")&&itemList.size()==1){
                     getExitPrompt();
                 }else{
                     finish();
@@ -138,7 +140,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             case StatusPublishPopWindow.PICTURE:
                 setCententTitle("发布图片");
                 goSelectImager();
-                showPhoto();
+                showPhoto(null!=source);
                 dynamicType="1";
                 break;
             case StatusPublishPopWindow.VEDIO:
@@ -169,9 +171,9 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             rl_restrict.setVisibility(View.GONE);
             setCententTitle("发布课程");
             goSelectImager();
-            showPhoto();
+            showPhoto(null!=source);
         }
-        dialog=new LoadingDialog(this,R.style.LoadingDialogTheme);
+        loadingDialog =new LoadingDialog(this,R.style.LoadingDialogTheme);
     }
 
     /**
@@ -206,9 +208,13 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     /**
      * 发布照片页面
      */
-    private void showPhoto(){
+    private void showPhoto(boolean isSchool){
         itemList=new ArrayList<>();
-        mAdapter=new GridAlbumAdapter(itemList,this);
+        if(isSchool){
+            mAdapter=new GridAlbumAdapter(itemList,this,true);
+        }else{
+            mAdapter=new GridAlbumAdapter(itemList,this);
+        }
         gv_photo.setAdapter(mAdapter);
         gv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -221,6 +227,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             }
         });
     }
+
     private void imageBrower(int position, ArrayList<String> urls2) {
         Intent intent = new Intent(this, ImagePagerActivity.class);
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
@@ -228,6 +235,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         intent.putExtra("source","local");
         startActivity(intent);
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case ChoosePermitActivity.CHOOSE_PERMIT:
@@ -265,6 +273,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             }else if (source.equals("school")){
                 publishcaurse(dyContent);
             }
+
         }
     }
     /**
@@ -276,6 +285,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             tv_subtilte.setEnabled(true);
             return;
         }
+        loadingDialog.show();
         Map<String,Object>map=new HashMap<>();
         map.put("tsId",UserMessage.getInstance(this).getTsId());
         map.put("content",dyContent);
@@ -292,13 +302,13 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             tv_subtilte.setEnabled(true);
             return;
         }
+        loadingDialog.show();
         Map<String,Object>map=new HashMap<>();
         map.put("tsId",UserMessage.getInstance(this).getTsId());
         map.put("text",dyContent);
         map.put("dynamicVisicty",dynamicVisicty);
         Type type =new TypeToken<Result<String>>(){}.getType();
         if(dynamicType.equals("1")&&itemList.size()>0){
-            dialog.show();
             List<File>list= BitmapCache.getFileList(itemList);
             dynamicType="1";
             map.put("dynamicType",dynamicType);
@@ -363,7 +373,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         tv_subtilte.setEnabled(true);
         G.showToast(this,"发布成功!");
         G.KisTyep.isReleaseSuccess=true;
-       dialog.dismiss();
+       loadingDialog.dismiss();
         finish();
     }
 
@@ -377,7 +387,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         tv_subtilte.setEnabled(true);
         G.KisTyep.isReleaseSuccess=false;
 //        G.showToast(this,"发布失败，请检测网络!");
-        dialog.dismiss();
+        loadingDialog.dismiss();
 
     }
 
@@ -419,5 +429,12 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         return super.dispatchKeyEvent(event);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(null!=source&&itemList.size()<1||null!=dynamicType&&dynamicType.equals("1")&&itemList.size()<1){
+            finish();
+        }
+    }
 }
 

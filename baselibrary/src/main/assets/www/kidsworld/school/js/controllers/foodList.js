@@ -21,7 +21,7 @@ angular.module('app.controllers')
         };
         //变量声明
         var tsId=getUrlParam("TsId");
-        tsId = "81c5dc8725044e629cf524a3222cd818";
+        //tsId = "81c5dc8725044e629cf524a3222cd818";
 
         //日历初始化
         var currentDate = new Date();

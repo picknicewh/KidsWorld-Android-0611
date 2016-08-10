@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
@@ -60,6 +61,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      */
   //  private RelativeLayout rl_nonetwork;
    private static final String url = ServerConfigManager.WEB_IP+"/paradise/index.html";
+    private ProgressBar pb_web;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,7 +93,8 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         tv_title = $(v,R.id.tv_dtitle);
         iv_right = $(v,R.id.iv_dright);
         webView = $(v,R.id.cordovaWebView);
-        ll_loading = $(v,R.id.ll_loading);
+        pb_web=$(v,R.id.pb_web);
+//        ll_loading = $(v,R.id.ll_loading);
         //rl_nonetwork= $(v,R.id.rl_nonetwork);
        // rl_nonetwork.setOnClickListener(this);
         from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,getActivity());
@@ -110,13 +113,13 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      }
     private void  setWebView(){
         webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
-        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),ll_loading));
+        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web));
         getWebView(webView).loadUrl(url+"?tsId="+ UserMessage.getInstance(getActivity()).getTsId());
-        if (!webView.getUrl().contains("paradiseHome")){
-            ll_loading.setVisibility(View.GONE);
-        }else {
-            ll_loading.setVisibility(View.VISIBLE);
-        }
+//        if (!webView.getUrl().contains("paradiseHome")){
+//            ll_loading.setVisibility(View.GONE);
+//        }else {
+//            ll_loading.setVisibility(View.VISIBLE);
+//        }
     }
 
 

@@ -107,6 +107,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     private int position = 0;
     private  MyJpushReceiver myReceiver;
     private CordovaWebView cordovaWebView;
+    private ProgressBar pb_web;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.fragment_status, null);
@@ -120,12 +121,12 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         iv_lift = $(view, R.id.iv_left);
         iv_right = $(view, R.id.iv_right);
         tv_classname = $(view, R.id.tv_classname);
-        SystemWebView webView = $(view, R.id.cordovaWebView);
-        ll_loading = $(view, R.id.ll_loading);
+        webView = $(view, R.id.cordovaWebView);
         ll_classchoose = $(view,R.id.ll_classchoose);
         rl_toolbar=$(view,R.id.rl_toolbar);
-        webView.addJavascriptInterface(this, "showDos");  //设置本地调用对象及其接口
-        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),ll_loading));
+        pb_web=$(view,R.id.pb_web);
+        webView.addJavascriptInterface(this, "change");  //设置本地调用对象及其接口
+        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web));
         cordovaWebView=getWebView(webView);
         um=UserMessage.getInstance(getActivity());
         classlist = new ArrayList<>();
@@ -137,15 +138,17 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     public void setPosition(int position){
         this.position = position;
     }
+
     public void setWebView(int position){
-      //  getWebView(webView).loadUrl(url+"groupId="+dynamicList.get(position).getGroupId());
+        webView.addJavascriptInterface(this,"showDos");
+        cordovaWebView.loadUrl(url+"groupId="+dynamicList.get(position).getGroupId());
         cordovaWebView.loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
                 +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
                 +"&clickTime="+ DateUtil.formatDateTime(new Date()));
+
         G.log("loadUrl====="+url+"groupId="+dynamicList.get(position).getGroupId()
                 +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
         +"&clickTime="+ DateUtil.formatDateTime(new Date()));
-
     }
     /**
      * 设置选择弹窗
@@ -185,7 +188,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             G.initDisplaySize(getActivity());
             int xPos = G.size.W/2-G.dp2px(getActivity(),75);
             G.log(G.size.W/2+"----------------"+popWindow.getContentView().getWidth()/2);
-            popWindow.showAsDropDown(rl_toolbar,xPos,-G.dp2px(getActivity(),0));
+            popWindow.showAsDropDown(rl_toolbar,xPos,-G.dp2px(getActivity(),10));
         }
     }
 

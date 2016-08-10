@@ -6,7 +6,7 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.R;
@@ -22,9 +22,9 @@ import org.apache.cordova.engine.SystemWebViewEngine;
 public class HMDroidGap extends CordovaActivity {
     private ImageView iv_left;
     private SystemWebView webView;
-    private LinearLayout ll_loading;
     private TextView tv_title;
     private TextView tv_subtitle;
+    private ProgressBar pb_web;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,8 +37,8 @@ public class HMDroidGap extends CordovaActivity {
         loadUrl(launchUrl);
         iv_left= (ImageView) findViewById(R.id.iv_left);
         tv_title= (TextView) findViewById(R.id.tv_title);
-        ll_loading = (LinearLayout) findViewById(R.id.ll_loading);
         tv_subtitle= (TextView) findViewById(R.id.tv_subtitle);
+        pb_web= (ProgressBar) findViewById(R.id.pb_web);
         setTabBarText();
         iv_left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,9 +84,11 @@ public class HMDroidGap extends CordovaActivity {
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
             if (newProgress == 100 )
-                ll_loading.setVisibility(View.GONE);
-            else
-                ll_loading.setVisibility(View.VISIBLE);
+                pb_web.setVisibility(View.GONE);
+            else{
+                pb_web.setProgress(newProgress);
+                pb_web.setVisibility(View.VISIBLE);
+            }
         }
     }
 }

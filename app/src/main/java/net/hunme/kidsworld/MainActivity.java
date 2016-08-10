@@ -129,10 +129,6 @@ public class MainActivity extends JPushBaseActivity {
     public  static  boolean isconnect;
     public  static int count;
     /**
-     * 显示动态红点
-     */
-    private  MyStatusDosShowReceiver MyStatusDosShowReceiver;
-    /**
      * 是否连续点击了两次返回键
      */
     private boolean isQuit = false;
@@ -159,26 +155,26 @@ public class MainActivity extends JPushBaseActivity {
     /**
      * 初始化viewpager
      */
-   private void  initViewpager(){
-       userMessage = new UserMessage(this);
-       userId = userMessage.getTsId();
-       username = userMessage.getUserName();
-       portrait = userMessage.getHoldImgUrl();
-       statusFragement = new StatusFragement();
-       schoolFragement = new SchoolFragement();
-       discoveryFragement = new DiscoveryFragement();
-       messageFragement = new MessageFragement();
-       fragmentManager = getSupportFragmentManager();
-       fragmentList = new ArrayList<>();
-       fragmentList.add(statusFragement);
-       fragmentList.add(schoolFragement);
-       fragmentList.add(discoveryFragement);
-       fragmentList.add(messageFragement);
-       MyViewPagerAdapter adapter = new MyViewPagerAdapter(fragmentManager,fragmentList);
-       viewPager.setAdapter(adapter);
-       viewPager .setOffscreenPageLimit(3);
-       viewPager.setPagingEnabled(false);
-   }
+    private void  initViewpager(){
+        userMessage = new UserMessage(this);
+        userId = userMessage.getTsId();
+        username = userMessage.getUserName();
+        portrait = userMessage.getHoldImgUrl();
+        statusFragement = new StatusFragement();
+        schoolFragement = new SchoolFragement();
+        discoveryFragement = new DiscoveryFragement();
+        messageFragement = new MessageFragement();
+        fragmentManager = getSupportFragmentManager();
+        fragmentList = new ArrayList<>();
+        fragmentList.add(statusFragement);
+        fragmentList.add(schoolFragement);
+        fragmentList.add(discoveryFragement);
+        fragmentList.add(messageFragement);
+        MyViewPagerAdapter adapter = new MyViewPagerAdapter(fragmentManager,fragmentList);
+        viewPager.setAdapter(adapter);
+        viewPager .setOffscreenPageLimit(3);
+        viewPager.setPagingEnabled(false);
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -214,24 +210,22 @@ public class MainActivity extends JPushBaseActivity {
         IntentFilter filter=new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         myReceiver=new ConnectionChangeReceiver();
         this.registerReceiver(myReceiver, filter);
-
-        IntentFilter dfilter = new IntentFilter(MyStatusDosShowReceiver.STATUSDOSHOW);
-        MyStatusDosShowReceiver = new MyStatusDosShowReceiver();
-        this.registerReceiver(MyStatusDosShowReceiver,dfilter);
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         this.unregisterReceiver(myReceiver);
-        this.unregisterReceiver(MyStatusDosShowReceiver);
+        // Log.i("TAG","=================onDestroy===================");
     }
+
     /**
-    * 未读消息监听
-    */
+     * 未读消息监听
+     */
     private void setNoreadMessage(){
         Handler handler = new Handler();
-        final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE,
-                Conversation.ConversationType.GROUP};
+        final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
+                Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
+                Conversation.ConversationType.PUBLIC_SERVICE};
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -296,7 +290,7 @@ public class MainActivity extends JPushBaseActivity {
      */
     private void  initCount(){
         if (G.isNetworkConnected(this)){
-           count=1;
+            count=1;
         }else {
             count=-1;
         }
@@ -324,24 +318,25 @@ public class MainActivity extends JPushBaseActivity {
         }
         return super.dispatchKeyEvent(event);
     }
- private class  MyStatusDosShowReceiver extends BroadcastReceiver {
-     public static final String STATUSDOSHOW = "net.hunme.kidsworld.MyStatusDosShowReceiver";
-     @Override
-     public void onReceive(Context context, Intent intent) {
-         Log.i("Tdddd",intent.getAction());
-         if (intent.getAction().equals(STATUSDOSHOW)){
-             Bundle bundle = intent.getExtras();
 
-             if (bundle.getInt("count",0)==1){
-                 tvStatusDos.setVisibility(View.VISIBLE);
-                 Log.i("Tdddd","cccccccccccccccccccccccccccc");
-             }else {
-                 tvStatusDos.setVisibility(View.GONE);
-                 Log.i("Tdddd","dddddddddDDDDDDDDDDDDDDDDDD");
-             }
-         }
-     }
-  }
+    private class  MyStatusDosShowReceiver extends BroadcastReceiver {
+        public static final String STATUSDOSHOW = "net.hunme.kidsworld.MyStatusDosShowReceiver";
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i("Tdddd",intent.getAction());
+            if (intent.getAction().equals(STATUSDOSHOW)){
+                Bundle bundle = intent.getExtras();
+
+                if (bundle.getInt("count",0)==1){
+                    tvStatusDos.setVisibility(View.VISIBLE);
+                    Log.i("Tdddd","cccccccccccccccccccccccccccc");
+                }else {
+                    tvStatusDos.setVisibility(View.GONE);
+                    Log.i("Tdddd","dddddddddDDDDDDDDDDDDDDDDDD");
+                }
+            }
+        }
+    }
 }
 
 

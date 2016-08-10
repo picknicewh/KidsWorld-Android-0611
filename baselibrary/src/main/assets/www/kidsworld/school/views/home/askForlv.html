@@ -7,6 +7,7 @@
         <!--<button class="button-stable button-clear" style="color: white">我要请假</button>-->
     <!--</ion-nav-buttons>-->
     <ion-content>
+        <ion-refresher pulling-text="正在刷新" on-refresh="doRefresh()"></ion-refresher>
         <div class="list">
         <ul>
             <li ng-repeat="item in items">
@@ -51,5 +52,8 @@
                 <!--</div>-->
             <!--</li>-->
         </ul>
+        </div>
+        <div class="cont" ng-show="pro">
+            <span class="no-data">暂无数据</span>
         </div>
     </ion-content>

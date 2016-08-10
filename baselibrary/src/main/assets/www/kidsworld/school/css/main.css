@@ -294,7 +294,8 @@ ion-content .list .dis-list{
 .courseArr-con img{
     display: block;
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
+    height: 150px;
 }
 .time-del time{
     color: #bababa;
@@ -543,4 +544,24 @@ ion-view title{
 }
 .onezone-datepicker-navigation-arrow{
     color: #8ec600 !important;
+}
+#pro{
+    display:none;
+}
+.cont{
+    position: relative;
+    z-index: 20;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    /*height:inherit;*/
+}
+.no-data{
+    position: absolute;
+    left: 37%;
+    top: 240px;
+    color: #A0A0A0;
+    font-size: 24px;
+
 }

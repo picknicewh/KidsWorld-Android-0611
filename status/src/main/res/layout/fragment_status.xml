@@ -50,9 +50,13 @@
    <!-- <include
         android:id="@+id/rl_nonetwork"
         layout="@layout/nonetwork"/>-->
-    <include
-        android:id="@+id/ll_loading"
-        layout="@layout/loadwebview"/>
+    <ProgressBar
+        android:id="@+id/pb_web"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_x0.5"
+        android:max="100"
+        android:background="@drawable/progress_bar_states"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
    <!--<net.hunme.baselibrary.widget.MyViewView-->
        <!--android:id="@+id/wv_status"-->
        <!--android:layout_width="match_parent"-->
