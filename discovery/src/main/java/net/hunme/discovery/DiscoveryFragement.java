@@ -60,7 +60,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      * 没网络时显示
      */
   //  private RelativeLayout rl_nonetwork;
-   private static final String url = ServerConfigManager.WEB_IP+"/paradise/index.html";
+    private static final String url = ServerConfigManager.WEB_IP+"/paradise/index.html";
     private ProgressBar pb_web;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override

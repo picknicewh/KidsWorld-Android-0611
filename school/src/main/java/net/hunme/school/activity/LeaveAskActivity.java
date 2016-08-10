@@ -14,6 +14,7 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.LoadingDialog;
 import net.hunme.school.R;
@@ -121,10 +122,10 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
         String datestr = format.format(date);
         if (flag==1){
             tv_start.setText(datestr);
-            endDate = format2.format(date);
+            starDate = format2.format(date);
         }else {
             tv_end.setText(datestr);
-            starDate = format2.format(date);
+            endDate = format2.format(date);
         }
     }
     private void init(){
@@ -185,8 +186,12 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
      */
     private void subLeaveAsk(){
         Map<String,Object> params = new HashMap<>();
-        if (et_cause.getText().toString()==null || endDate==null){
-            Toast.makeText(this,"填写的数据不能为空哦！",Toast.LENGTH_SHORT).show();
+        if (G.isEmteny(et_cause.getText().toString())){
+            Toast.makeText(this,"请假事由不能为空！",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (G.isEmteny(endDate)){
+            Toast.makeText(this,"结束时间不能为空！",Toast.LENGTH_SHORT).show();
             return;
         }
         //提交角色ID

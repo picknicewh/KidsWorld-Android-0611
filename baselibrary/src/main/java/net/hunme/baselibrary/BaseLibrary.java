@@ -113,8 +113,9 @@ public class BaseLibrary {
     }
     /**
      * 建立与融云服务器的连接
-     *
-     * @param token
+     * @param token 连接融云的参数
+     * @param  username 用户名
+     * @param  portrait 用户头像地址
      */
     public static void connect(String token, Activity activity, final String username, final String portrait) {
 

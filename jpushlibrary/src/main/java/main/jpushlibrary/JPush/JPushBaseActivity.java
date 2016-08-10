@@ -23,11 +23,11 @@ import main.jpushlibrary.R;
  * 主要接口：暂无
  */
 public class JPushBaseActivity extends FragmentActivity {
-    public static boolean isForeground = false;
+
      public void initJPushConfiguration(String alias,String tag){
           setAliasAndTags(setAlias(alias),setTag(tag));
-         setStyleBasic();
-         setPushTime();
+          setStyleBasic();
+          setPushTime();
    }
 
     @Override
@@ -46,7 +46,8 @@ public class JPushBaseActivity extends FragmentActivity {
     private Set<String> setTag(String tag){
         // 检查 tag 的有效性
         if (JPushUtil.isEmpty(tag)) {
-            Toast.makeText(getApplicationContext(), R.string.error_tag_empty, Toast.LENGTH_SHORT).show();
+            Log.i("TAG", "tag不能为空！");
+           // Toast.makeText(getApplicationContext(), R.string.error_tag_empty, Toast.LENGTH_SHORT).show();
             return null;
         }
         // ","隔开的多个 转换成 Set
@@ -54,6 +55,7 @@ public class JPushBaseActivity extends FragmentActivity {
         Set<String> tagSet = new LinkedHashSet<String>();
         for (String sTagItme : sArray) {
             if (!JPushUtil.isValidTagAndAlias(sTagItme)) {
+                Log.i("TAG", "设置tag格式不对！");
                 Toast.makeText(getApplicationContext(),R.string.error_tag_gs_empty, Toast.LENGTH_SHORT).show();
                 return null;
             }
@@ -65,16 +67,18 @@ public class JPushBaseActivity extends FragmentActivity {
      * 设置将获取的alias字符串,进行过滤判断
      */
     private String setAlias(String alias){
-
         if (JPushUtil.isEmpty(alias)) {
             Toast.makeText(getApplicationContext(),R.string.error_alias_empty, Toast.LENGTH_SHORT).show();
+            Log.i("TAG", "alias不能为空！");
             return null;
         }
         if (!JPushUtil.isValidTagAndAlias(alias)) {
-            Toast.makeText(getApplicationContext(),R.string.error_tag_gs_empty, Toast.LENGTH_SHORT).show();
+            Log.i("TAG", "设置alias格式不对！");
+          //  Toast.makeText(getApplicationContext(),R.string.error_tag_gs_empty, Toast.LENGTH_SHORT).show();
             return null;
         }else {
-            Toast.makeText(getApplicationContext(),"设置失败", Toast.LENGTH_SHORT).show();
+            Log.i("TAG", "设置极光设备别名成功！");
+           // Toast.makeText(getApplicationContext(),"设置极光设备别名失败", Toast.LENGTH_SHORT).show();
         }
 
         return  alias;

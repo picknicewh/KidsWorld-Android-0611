@@ -3,6 +3,7 @@ package net.hunme.school.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -50,7 +51,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         setContentView(R.layout.activity_hm_droidgap);
         super.init();
         launchUrl=getIntent().getStringExtra("loadUrl");
-       // Log.i("TAGG",launchUrl);
+        Log.i("TAGG",launchUrl);
         loadUrl(launchUrl);
         initData();
     }
@@ -96,19 +97,19 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
             }
         });
     }
-
     @Override
     public void onRestart() {
         super.onRestart();
-       /*  int index =  webView.getUrl().lastIndexOf("/");
-         String url =  webView.getUrl().substring(0,index)+ webView.getUrl().substring(index+1);
-        //   String url =  webView.getUrl();
-        Log.i("TAGFGG",url);
+        //Log.i("SSSSS","====================onRestart============");
+  //      webView.loadUrl("javascript:getData()");
+       //  int index =  webView.getUrl().lastIndexOf("/");
+      //   String url =  webView.getUrl().substring(0,index)+ webView.getUrl().substring(index+1);
+        String url =  webView.getUrl();
         if (webView.getUrl().contains(SchoolFragement.LEAVE)){
             webView.loadUrl(url);
         }else if (webView.getUrl().contains(SchoolFragement.ARRANGE)){
             webView.loadUrl(url);
-        }*/
+        }
     }
 
     @Override
@@ -117,6 +118,17 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView)));
         webView.addJavascriptInterface(this, "change_ngb");  //设置本地调用对象及其接口
         return new CordovaWebViewImpl(new SystemWebViewEngine(webView));
+    }
+    /**
+     *web端接收是否是班主任的方法
+     */
+    @JavascriptInterface
+    public boolean isHeadmaster(){
+        if (UserMessage.getInstance(this).getType().equals("2")){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override

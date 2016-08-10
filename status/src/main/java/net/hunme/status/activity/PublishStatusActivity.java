@@ -432,9 +432,9 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onRestart() {
         super.onRestart();
-        if(null!=source&&itemList.size()<1||null!=dynamicType&&dynamicType.equals("1")&&itemList.size()<1){
+        /*if(null!=source&&itemList.size()<1||null!=dynamicType&&dynamicType.equals("1")&&itemList.size()<1){
             finish();
-        }
+        }*/
     }
 }
 

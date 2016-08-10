@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -125,7 +126,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         ll_classchoose = $(view,R.id.ll_classchoose);
         rl_toolbar=$(view,R.id.rl_toolbar);
         pb_web=$(view,R.id.pb_web);
-        webView.addJavascriptInterface(this, "change");  //设置本地调用对象及其接口
+        webView.addJavascriptInterface(this, "showDos");  //设置本地调用对象及其接口
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web));
         cordovaWebView=getWebView(webView);
         um=UserMessage.getInstance(getActivity());
@@ -140,12 +141,10 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     }
 
     public void setWebView(int position){
-        webView.addJavascriptInterface(this,"showDos");
         cordovaWebView.loadUrl(url+"groupId="+dynamicList.get(position).getGroupId());
         cordovaWebView.loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
                 +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
                 +"&clickTime="+ DateUtil.formatDateTime(new Date()));
-
         G.log("loadUrl====="+url+"groupId="+dynamicList.get(position).getGroupId()
                 +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
         +"&clickTime="+ DateUtil.formatDateTime(new Date()));

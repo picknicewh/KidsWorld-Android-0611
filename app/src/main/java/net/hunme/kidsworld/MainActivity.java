@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -101,18 +100,6 @@ public class MainActivity extends JPushBaseActivity {
      */
     private UserMessage userMessage;
     /**
-     * 保存的用户名
-     */
-    private String username;
-    /**
-     * 用户的userId
-     */
-    private String userId;
-    /**
-     * 用户头像地址
-     */
-    private String portrait;
-    /**
      * 标记位
      */
     private int flag = 0;
@@ -133,6 +120,10 @@ public class MainActivity extends JPushBaseActivity {
      */
     private boolean isQuit = false;
     private Timer timer;
+    /**
+     * 接收动态小红点的广播
+     */
+    private MyStatusDosShowReceiver myStatusDosShowReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,9 +148,6 @@ public class MainActivity extends JPushBaseActivity {
      */
     private void  initViewpager(){
         userMessage = new UserMessage(this);
-        userId = userMessage.getTsId();
-        username = userMessage.getUserName();
-        portrait = userMessage.getHoldImgUrl();
         statusFragement = new StatusFragement();
         schoolFragement = new SchoolFragement();
         discoveryFragement = new DiscoveryFragement();
@@ -210,14 +198,20 @@ public class MainActivity extends JPushBaseActivity {
         IntentFilter filter=new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         myReceiver=new ConnectionChangeReceiver();
         this.registerReceiver(myReceiver, filter);
+
+        IntentFilter filter2=new IntentFilter(MyStatusDosShowReceiver.STATUSDOSHOW);
+        myStatusDosShowReceiver=new MyStatusDosShowReceiver();
+        this.registerReceiver(myStatusDosShowReceiver, filter2);
+
+
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         this.unregisterReceiver(myReceiver);
+        this.unregisterReceiver(myStatusDosShowReceiver);
         // Log.i("TAG","=================onDestroy===================");
     }
-
     /**
      * 未读消息监听
      */
@@ -305,7 +299,7 @@ public class MainActivity extends JPushBaseActivity {
                 BaseLibrary.exit();
             } else {
                 isQuit = true;
-                Toast.makeText(this.getApplicationContext(), "再按一次退出财富锦囊",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getApplicationContext(), "再按一次退出",Toast.LENGTH_SHORT).show();
                 TimerTask task = new TimerTask() {
                     @Override
                     public void run() {
@@ -318,21 +312,19 @@ public class MainActivity extends JPushBaseActivity {
         }
         return super.dispatchKeyEvent(event);
     }
-
+    /**
+     * 接收动态小红点的广播
+     */
     private class  MyStatusDosShowReceiver extends BroadcastReceiver {
         public static final String STATUSDOSHOW = "net.hunme.kidsworld.MyStatusDosShowReceiver";
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.i("Tdddd",intent.getAction());
             if (intent.getAction().equals(STATUSDOSHOW)){
                 Bundle bundle = intent.getExtras();
-
                 if (bundle.getInt("count",0)==1){
                     tvStatusDos.setVisibility(View.VISIBLE);
-                    Log.i("Tdddd","cccccccccccccccccccccccccccc");
                 }else {
                     tvStatusDos.setVisibility(View.GONE);
-                    Log.i("Tdddd","dddddddddDDDDDDDDDDDDDDDDDD");
                 }
             }
         }
