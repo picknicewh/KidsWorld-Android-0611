@@ -3,7 +3,6 @@ package net.hunme.school.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -104,7 +103,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
     @Override
     public void onRestart() {
         super.onRestart();
-         int index =  webView.getUrl().lastIndexOf("/");
+       /*  int index =  webView.getUrl().lastIndexOf("/");
          String url =  webView.getUrl().substring(0,index)+ webView.getUrl().substring(index+1);
         //   String url =  webView.getUrl();
         Log.i("TAGFGG",url);
@@ -112,7 +111,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
             webView.loadUrl(url);
         }else if (webView.getUrl().contains(SchoolFragement.ARRANGE)){
             webView.loadUrl(url);
-        }
+        }*/
     }
 
     @Override

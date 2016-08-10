@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import net.hunme.baselibrary.base.BaseFragement;
-import net.hunme.baselibrary.network.ServerConfigManager;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.NavigationBar;
 import net.hunme.school.activity.PublishActivity;
@@ -55,9 +54,9 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     /**
      * 基本url
      */
-    public static final String baseurl = ServerConfigManager.WEB_IP+"/school/index.html?";
+ //   public static final String baseurl = ServerConfigManager.WEB_IP+"/school/index.html?";
    // public static final String baseurl = "file:///android_asset/www/kidsworld/school/index.html?";
-    public static final String baseurl = "192.168.1.134:8080/kidsWorld/school/index.html?";
+     public static final String baseurl = "192.168.1.134:8080/kidsWorld/school/index.html?";
     /**
      * 考勤
      */

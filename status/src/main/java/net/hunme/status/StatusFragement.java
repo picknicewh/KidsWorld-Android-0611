@@ -124,8 +124,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         ll_loading = $(view, R.id.ll_loading);
         ll_classchoose = $(view,R.id.ll_classchoose);
         rl_toolbar=$(view,R.id.rl_toolbar);
-
-        webView.addJavascriptInterface(this, "change");  //设置本地调用对象及其接口
+        webView.addJavascriptInterface(this, "showDos");  //设置本地调用对象及其接口
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),ll_loading));
         cordovaWebView=getWebView(webView);
         um=UserMessage.getInstance(getActivity());
@@ -139,14 +138,14 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         this.position = position;
     }
     public void setWebView(int position){
-        webView.addJavascriptInterface(this,"showDos");
-        getWebView(webView).loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
+      //  getWebView(webView).loadUrl(url+"groupId="+dynamicList.get(position).getGroupId());
         cordovaWebView.loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
                 +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
                 +"&clickTime="+ DateUtil.formatDateTime(new Date()));
         G.log("loadUrl====="+url+"groupId="+dynamicList.get(position).getGroupId()
                 +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
         +"&clickTime="+ DateUtil.formatDateTime(new Date()));
+
     }
     /**
      * 设置选择弹窗

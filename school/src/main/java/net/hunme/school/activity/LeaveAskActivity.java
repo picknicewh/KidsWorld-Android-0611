@@ -207,7 +207,7 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
     public void onSuccess(String uri, Object date) {
            Result< String> data = (Result<String>) date;
            dialog.dismiss();
-          if (data.isSuccess()){
+           if (data.isSuccess()){
             String result  = data.getData();
             Toast.makeText(LeaveAskActivity.this,result,Toast.LENGTH_SHORT).show();
             finish();
