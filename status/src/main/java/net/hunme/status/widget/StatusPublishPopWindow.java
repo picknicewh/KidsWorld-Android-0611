@@ -29,6 +29,10 @@ public class StatusPublishPopWindow extends CommonPubishPopWindow {
      * 视频
      */
     public  static  final int   VEDIO = 1;
+    /**
+     *
+     */
+    public static final int COURSE=4;
     private Activity context;
     public StatusPublishPopWindow(Activity context) {
         super(context);
@@ -49,7 +53,6 @@ public class StatusPublishPopWindow extends CommonPubishPopWindow {
         }/*else if (view.getId()==  R.id.iv_move){
             intent.putExtra("type",VEDIO);
         }*/
-        intent.putExtra("from","status");
         context.startActivity(intent);
         dismiss();
     }

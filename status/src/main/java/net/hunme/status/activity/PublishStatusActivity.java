@@ -88,10 +88,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      */
     private String dynamicVisicty="1";
     /**
-     * 来源 school 来自发布课程，status发布动态
-     */
-    private String source;
-    /**
      * 限制内容
      */
     private RelativeLayout rl_restrict;
@@ -102,6 +98,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
+    private int maxContent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,8 +115,8 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 if(!G.isEmteny(et_content.getText().toString().trim())
-                        ||null!=dynamicType&&dynamicType.equals("1")&&itemList.size()>1
-                        ||source.equals("school")&&itemList.size()==1){
+                        ||dynamicType.equals("1")&&itemList.size()>=1
+                        ||dynamicType.equals("4")&&itemList.size()==1){
                     getExitPrompt();
                 }else{
                     finish();
@@ -140,12 +137,21 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             case StatusPublishPopWindow.PICTURE:
                 setCententTitle("发布图片");
                 goSelectImager();
-                showPhoto(null!=source);
+                showPhoto(false);
                 dynamicType="1";
+                maxContent=9;
                 break;
             case StatusPublishPopWindow.VEDIO:
                 setCententTitle("发布视频");
                 dynamicType="2";
+                break;
+            case 4:
+                rl_restrict.setVisibility(View.GONE);
+                setCententTitle("发布课程");
+                goSelectImager();
+                showPhoto(true);
+                dynamicType="4";
+                maxContent=1;
                 break;
         }
     }
@@ -163,16 +169,8 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         tv_subtilte.setOnClickListener(this);
         ll_permitchoose.setOnClickListener(this);
         setEditContent();
-        source = getIntent().getStringExtra("from");
-        if (source.equals("status")){
-            rl_restrict.setVisibility(View.VISIBLE);
-            showView(getIntent().getIntExtra("type",-1));
-        }else if (source.equals("school")){
-            rl_restrict.setVisibility(View.GONE);
-            setCententTitle("发布课程");
-            goSelectImager();
-            showPhoto(null!=source);
-        }
+        rl_restrict.setVisibility(View.VISIBLE);
+        showView(getIntent().getIntExtra("type",-1));
         loadingDialog =new LoadingDialog(this,R.style.LoadingDialogTheme);
     }
 
@@ -210,11 +208,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      */
     private void showPhoto(boolean isSchool){
         itemList=new ArrayList<>();
-        if(isSchool){
-            mAdapter=new GridAlbumAdapter(itemList,this,true);
-        }else{
-            mAdapter=new GridAlbumAdapter(itemList,this);
-        }
+        mAdapter=new GridAlbumAdapter(itemList,this,isSchool);
         gv_photo.setAdapter(mAdapter);
         gv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -268,12 +262,11 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         }else if(viewId==R.id.tv_subtitle){
             tv_subtilte.setEnabled(false);
             String dyContent=et_content.getText().toString().trim();
-            if (source.equals("status")){
-                publishstatus(dyContent);
-            }else if (source.equals("school")){
+            if (dynamicType.equals("4")){
                 publishcaurse(dyContent);
+            }else{
+                publishstatus(dyContent);
             }
-
         }
     }
     /**
@@ -334,14 +327,8 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 if(items != null && items.size() > 0){
                     for(ImageItem item:items){
                         G.log("选择了===="+item.path);
-                        if (source.equals("status")){
-                            if(itemList.size()<9){
-                                itemList.add(item.path);
-                            }
-                        }else if (source.equals("school")){
-                            if(itemList.size()<1){
-                                itemList.add(item.path);
-                            }
+                        if(itemList.size()<maxContent) {
+                            itemList.add(item.path);
                         }
                     }
                     mAdapter.notifyDataSetChanged();
@@ -352,43 +339,19 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onSuccess(String uri, Object date) {
-//        if(DYNAMIC.equals(uri)){
-//            Result<String>result= (Result<String>) date;
-//            if(result.isSuccess()){
-//                G.showToast(this,"发布成功!");
-//                finish();
-//            }else{
-//                G.showToast(this,"发布失败，请稍后再试!");
-//            }
-//        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
-//            Result<String>result= (Result<String>) date;
-//            if(result.isSuccess()){
-//                G.showToast(this,"发布成功!");
-//                finish();
-//            }else{
-//                G.showToast(this,"发布失败，请稍后再试!");
-//            }
-//            isReleaseSuccess=true;
-//        }
         tv_subtilte.setEnabled(true);
         G.showToast(this,"发布成功!");
         G.KisTyep.isReleaseSuccess=true;
-       loadingDialog.dismiss();
+        loadingDialog.dismiss();
         finish();
     }
 
     @Override
     public void onError(String uri, String error) {
-//        if (DYNAMIC.equals(uri)){
-//            G.showToast(this,"发布失败，请检测网络!");
-//        }else if (Apiurl.SCHOOL_PUBLISHCAURSE.equals(uri)){
-            G.showToast(this,error);
-//        }
+        G.showToast(this,error);
         tv_subtilte.setEnabled(true);
         G.KisTyep.isReleaseSuccess=false;
-//        G.showToast(this,"发布失败，请检测网络!");
         loadingDialog.dismiss();
-
     }
 
     /**
@@ -432,7 +395,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onRestart() {
         super.onRestart();
-        if(null!=source&&itemList.size()<1||null!=dynamicType&&dynamicType.equals("1")&&itemList.size()<1){
+        if(dynamicType.equals("4")&&itemList.size()<1||null!=dynamicType&&dynamicType.equals("1")&&itemList.size()<1){
             finish();
         }
     }

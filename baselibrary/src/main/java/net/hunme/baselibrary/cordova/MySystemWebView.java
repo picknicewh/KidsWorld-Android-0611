@@ -1,11 +1,16 @@
 package net.hunme.baselibrary.cordova;
 
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.WebView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import org.apache.cordova.engine.SystemWebChromeClient;
+import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
 
 /**
@@ -19,37 +24,79 @@ import org.apache.cordova.engine.SystemWebViewEngine;
  * ================================================
  */
 public class MySystemWebView extends SystemWebChromeClient {
-    private LinearLayout ll_loading;
     private ProgressBar pb_web;
-    public MySystemWebView(SystemWebViewEngine parentEngine, LinearLayout ll_loading) {
-        super(parentEngine);
-        this.ll_loading=ll_loading;
-    }
-
+    private View myView = null;
+    private CustomViewCallback myCallback = null;
+    private SystemWebView mWebView;
+    private Activity activity;
+    private RelativeLayout rl_toolbar;
     public MySystemWebView(SystemWebViewEngine parentEngine, ProgressBar pb_web) {
         super(parentEngine);
         this.pb_web=pb_web;
     }
 
+    public MySystemWebView(SystemWebViewEngine parentEngine, ProgressBar pb_web,SystemWebView mWebView,Activity activity,RelativeLayout rl_toolbar) {
+        super(parentEngine);
+        this.pb_web=pb_web;
+        this.mWebView=mWebView;
+        this.activity=activity;
+        this.rl_toolbar=rl_toolbar;
+    }
+
     @Override
     public void onProgressChanged(WebView view, int newProgress) {
         if (newProgress == 100){
-            if(null!=pb_web){
-                pb_web.setVisibility(View.GONE);
-            }
-            if(null!=ll_loading){
-                ll_loading.setVisibility(View.GONE);
-            }
-
+            pb_web.setVisibility(View.GONE);
         } else{
-            if(null!=ll_loading){
-                ll_loading.setVisibility(View.VISIBLE);
-            }
-            if(null!=pb_web){
-                pb_web.setProgress(newProgress);
-                pb_web.setVisibility(View.VISIBLE);
-            }
+            pb_web.setProgress(newProgress);
+            pb_web.setVisibility(View.VISIBLE);
         }
         super.onProgressChanged(view, newProgress);
+    }
+
+    @Override
+    public void onShowCustomView(View view, CustomViewCallback callback) {
+        if (myCallback != null) {
+            myCallback.onCustomViewHidden();
+            myCallback = null ;
+            return;
+        }
+        ViewGroup parent = (ViewGroup) mWebView.getParent();
+        parent.removeView( mWebView);
+        parent.addView(view);
+        rl_toolbar.setVisibility(View.GONE);
+        myView = view;
+        myCallback = callback;
+        //设置横屏
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        //设置全屏
+        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+
+    @Override
+    public void onHideCustomView() {
+        if (myView != null) {
+            if (myCallback != null) {
+                myCallback.onCustomViewHidden();
+                myCallback = null ;
+            }
+
+            ViewGroup parent = (ViewGroup) myView.getParent();
+            parent.removeView( myView);
+            parent.addView( mWebView);
+            myView = null;
+        }
+        rl_toolbar.setVisibility(View.VISIBLE);
+        // 设置竖屏
+       activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        // 取消全屏
+        final WindowManager.LayoutParams attrs =activity.getWindow()
+                .getAttributes();
+        attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        activity.getWindow().setAttributes(attrs);
+        activity.getWindow().clearFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 }

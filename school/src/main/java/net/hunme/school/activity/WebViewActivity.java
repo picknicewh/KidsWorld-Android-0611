@@ -177,8 +177,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
                 startActivity(intent);
             }else if (launchUrl.contains(SchoolFragement.ARRANGE)){
                 Intent intent = new Intent(this,PublishStatusActivity.class);
-                intent.putExtra("type", StatusPublishPopWindow.PICTURE);
-                intent.putExtra("from","school");
+                intent.putExtra("type", StatusPublishPopWindow.COURSE);
                 startActivity(intent);
             }
         }

@@ -11,7 +11,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait">
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:hardwareAccelerated="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
