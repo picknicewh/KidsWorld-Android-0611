@@ -31,11 +31,11 @@ import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.LoadingDialog;
-import net.hunme.user.util.MyAlertDialog;
 import net.hunme.status.R;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.adapter.GridAlbumAdapter;
 import net.hunme.user.util.BitmapCache;
+import net.hunme.user.util.MyAlertDialog;
 import net.hunme.user.util.PermissionUtils;
 
 import java.io.File;
@@ -88,10 +88,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      */
     private String dynamicVisicty="1";
     /**
-     * 来源 school 来自发布课程，status发布动态
-     */
-    private String source;
-    /**
      * 限制内容
      */
     private RelativeLayout rl_restrict;
@@ -100,8 +96,11 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
-            Manifest.permission.READ_EXTERNAL_STORAGE
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+
     };
+    private int maxContent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,8 +117,8 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 if(!G.isEmteny(et_content.getText().toString().trim())
-                        ||null!=dynamicType&&dynamicType.equals("1")&&itemList.size()>1
-                        ||source.equals("school")&&itemList.size()==1){
+                        ||dynamicType.equals("1")&&itemList.size()>=1
+                        ||dynamicType.equals("4")&&itemList.size()==1){
                     getExitPrompt();
                 }else{
                     finish();
@@ -139,13 +138,24 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 break;
             case StatusPublishPopWindow.PICTURE:
                 setCententTitle("发布图片");
+                maxContent=9;
                 goSelectImager();
-                showPhoto(null!=source);
+                showPhoto(false);
                 dynamicType="1";
+
                 break;
             case StatusPublishPopWindow.VEDIO:
                 setCententTitle("发布视频");
                 dynamicType="2";
+                break;
+            case 4:
+                rl_restrict.setVisibility(View.GONE);
+                setCententTitle("发布课程");
+                maxContent=1;
+                goSelectImager();
+                showPhoto(true);
+                dynamicType="4";
+
                 break;
         }
     }
@@ -164,9 +174,10 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         ll_permitchoose.setOnClickListener(this);
         setEditContent();
         rl_restrict.setVisibility(View.VISIBLE);
-        showView(getIntent().getIntExtra("type",-1));
+        showView(getIntent().getIntExtra("type",1));
         loadingDialog =new LoadingDialog(this,R.style.LoadingDialogTheme);
     }
+
 
     /**
      * 计算文字的长度，如果文字的长度大于100则不能再输入
@@ -209,6 +220,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == itemList.size()) {
                     goSelectImager();
+
                 }else {
                     imageBrower(i,itemList);
                 }
@@ -315,20 +327,25 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
             return;
         }
-        AndroidImagePicker.getInstance().pickMulti(PublishStatusActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
+        AndroidImagePicker androidImagePicker =   AndroidImagePicker.getInstance();
+        androidImagePicker.setSelectLimit(maxContent);
+        androidImagePicker.pickMulti(PublishStatusActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
             @Override
             public void onImagePickComplete(List<ImageItem> items) {
                 if(items != null && items.size() > 0){
                     for(ImageItem item:items){
                         G.log("选择了===="+item.path);
-                        if(itemList.size()<maxContent) {
                             itemList.add(item.path);
-                        }
+                            maxContent = maxContent -1;
+
                     }
                     mAdapter.notifyDataSetChanged();
+
                 }
             }
         });
+
+        androidImagePicker.setSelectLimit(maxContent);
     }
 
     @Override
@@ -357,7 +374,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         Button b_notrigst = (Button) coupons_view.findViewById(R.id.pop_notrigst);
         Button b_mastrigst = (Button) coupons_view.findViewById(R.id.pop_mastrigst);
         TextView pop_title = (TextView) coupons_view.findViewById(R.id.tv_poptitle);
-        b_mastrigst.setText("确认退出");
+        b_mastrigst.setText("确认");
         pop_title.setText("是否放弃本次编辑？");
         b_notrigst.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -99,8 +99,10 @@ public class WebCommonPageFrom {
                         break;
                     case Constant.VEDIO:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
-                        iv_right.setVisibility(View.GONE);
-                        tv_title.setVisibility(View.GONE);
+                        tv_title.setText("幼儿课堂");
+                        tv_title.setVisibility(View.VISIBLE);
+                        iv_right.setImageResource(R.mipmap.ic_search);
+                        iv_right.setVisibility(View.VISIBLE);
                         break;
                     case Constant.MEDIAPLAY:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
@@ -117,8 +119,9 @@ public class WebCommonPageFrom {
                         break;
                     case Constant.MEDIAPLAYING:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
+                        tv_title.setText("幼儿听听");
+                        tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
-                        tv_title.setVisibility(View.GONE);
                         break;
                     case Constant.SEARCH_CAUSRE:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);

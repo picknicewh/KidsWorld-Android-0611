@@ -56,7 +56,7 @@ public class JPushBaseActivity extends FragmentActivity {
         for (String sTagItme : sArray) {
             if (!JPushUtil.isValidTagAndAlias(sTagItme)) {
                 Log.i("TAG", "设置tag格式不对！");
-                Toast.makeText(getApplicationContext(),R.string.error_tag_gs_empty, Toast.LENGTH_SHORT).show();
+           //     Toast.makeText(getApplicationContext(),R.string.error_tag_gs_empty, Toast.LENGTH_SHORT).show();
                 return null;
             }
             tagSet.add(sTagItme);

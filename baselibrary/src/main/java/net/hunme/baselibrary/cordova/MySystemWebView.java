@@ -1,6 +1,7 @@
 package net.hunme.baselibrary.cordova;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,7 @@ public class MySystemWebView extends SystemWebChromeClient {
 //        //设置全屏
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        sendBroadcast(activity,false);
     }
 
 
@@ -89,6 +91,7 @@ public class MySystemWebView extends SystemWebChromeClient {
             myView = null;
         }
         rl_toolbar.setVisibility(View.VISIBLE);
+
         // 设置竖屏
        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // 取消全屏
@@ -98,5 +101,11 @@ public class MySystemWebView extends SystemWebChromeClient {
         activity.getWindow().setAttributes(attrs);
         activity.getWindow().clearFlags(
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        sendBroadcast(activity,true);
     }
+    private void sendBroadcast(Activity activity,boolean isVisible){
+      Intent intent = new Intent("net.hunme.kidsworld.hideMainTabReceiver");
+      intent.putExtra("isVisible",isVisible);
+      activity.sendBroadcast(intent);
+  }
 }

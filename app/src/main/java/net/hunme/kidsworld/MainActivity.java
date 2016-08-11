@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +62,12 @@ public class MainActivity extends JPushBaseActivity {
      */
     @Bind(R.id.tv_dos_status)
     TextView tvStatusDos;
+    /**
+     * 底部tab
+     */
+    @Bind(R.id.ll_tab)
+    LinearLayout llTab;
+
     private FragmentManager fragmentManager;
     /**
      * 动态
@@ -110,11 +117,10 @@ public class MainActivity extends JPushBaseActivity {
      */
     private ConnectionChangeReceiver myReceiver;
     /**
-     *
-     判断网络是否连接
+     * 判断网络是否连接
      */
-    public  static  boolean isconnect;
-    public  static int count;
+    public static boolean isconnect;
+    public static int count;
     /**
      * 是否连续点击了两次返回键
      */
@@ -124,29 +130,35 @@ public class MainActivity extends JPushBaseActivity {
      * 接收动态小红点的广播
      */
     private MyStatusDosShowReceiver myStatusDosShowReceiver;
+    /**
+     *全屏隐藏底部tab广播
+     */
+    private HideMainTabReceiver hideMainTabReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UserAction.isGoLogin(MainActivity.this,this);
+        UserAction.isGoLogin(MainActivity.this, this);
         BaseLibrary.addActivity(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initViewpager();
-        //初始激光推送配置信息
-        initJPushConfiguration(UserMessage.getInstance(this).getLoginName(),"tag");
+        //初始极光推送配置信息
+        initJPushConfiguration(UserMessage.getInstance(this).getLoginName(), "tag");
         //如果网络连接时，连接融云
-        if (G.isNetworkConnected(this)){
-            BaseLibrary.connect(userMessage.getRyId(),MainActivity.this,userMessage.getUserName(),userMessage.getHoldImgUrl());
+        if (G.isNetworkConnected(this)) {
+            BaseLibrary.connect(userMessage.getRyId(), MainActivity.this, userMessage.getUserName(), userMessage.getHoldImgUrl());
             setNoreadMessage();
         }
         registerReceiver();
         initCount();
-        timer=new Timer();
+        timer = new Timer();
     }
+
     /**
      * 初始化viewpager
      */
-    private void  initViewpager(){
+    private void initViewpager() {
         userMessage = new UserMessage(this);
         statusFragement = new StatusFragement();
         schoolFragement = new SchoolFragement();
@@ -158,64 +170,81 @@ public class MainActivity extends JPushBaseActivity {
         fragmentList.add(schoolFragement);
         fragmentList.add(discoveryFragement);
         fragmentList.add(messageFragement);
-        MyViewPagerAdapter adapter = new MyViewPagerAdapter(fragmentManager,fragmentList);
+        MyViewPagerAdapter adapter = new MyViewPagerAdapter(fragmentManager, fragmentList);
         viewPager.setAdapter(adapter);
-        viewPager .setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setPagingEnabled(false);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        if (UserChooseActivity.flag==1){
+        if (UserChooseActivity.flag == 1) {
             initViewpager();
-            UserChooseActivity.flag=0;
+            UserChooseActivity.flag = 0;
         }
         setNoreadMessage();
     }
+
     /**
      * 通过点击事件改变tab
      */
     @OnClick({R.id.ll_status, R.id.ll_school, R.id.ll_discovery, R.id.ll_message})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.ll_status:flag=0;break;
-            case R.id.ll_school:flag=1;break;
-            case R.id.ll_discovery:flag=2;break;
-            case R.id.ll_message:flag=3;break;
+            case R.id.ll_status:
+                flag = 0;
+                break;
+            case R.id.ll_school:
+                flag = 1;
+                break;
+            case R.id.ll_discovery:
+                flag = 2;
+                break;
+            case R.id.ll_message:
+                flag = 3;
+                break;
         }
-        if (isconnect && count%2==0){
+        if (isconnect && count % 2 == 0) {
             initViewpager();
-            BaseLibrary.connect(userMessage.getRyId(),this,userMessage.getUserName(),userMessage.getHoldImgUrl());
-            count=1;
+            BaseLibrary.connect(userMessage.getRyId(), this, userMessage.getUserName(), userMessage.getHoldImgUrl());
+            count = 1;
         }
-        viewPager.setCurrentItem(flag,false);
+        viewPager.setCurrentItem(flag, false);
         setBaseBar(flag);
     }
+
     /**
      * 注册监听网络广播广播
      */
-    private  void registerReceiver(){
-        IntentFilter filter=new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        myReceiver=new ConnectionChangeReceiver();
+    private void registerReceiver() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        myReceiver = new ConnectionChangeReceiver();
         this.registerReceiver(myReceiver, filter);
 
-        IntentFilter filter2=new IntentFilter(MyStatusDosShowReceiver.STATUSDOSHOW);
-        myStatusDosShowReceiver=new MyStatusDosShowReceiver();
+        IntentFilter filter2 = new IntentFilter(MyStatusDosShowReceiver.STATUSDOSHOW);
+        myStatusDosShowReceiver = new MyStatusDosShowReceiver();
         this.registerReceiver(myStatusDosShowReceiver, filter2);
 
+        IntentFilter filter3 = new IntentFilter(HideMainTabReceiver.HIDEMAINTAB);
+        hideMainTabReceiver = new HideMainTabReceiver();
+        this.registerReceiver(hideMainTabReceiver, filter3);
 
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         this.unregisterReceiver(myReceiver);
         this.unregisterReceiver(myStatusDosShowReceiver);
+        this.unregisterReceiver(hideMainTabReceiver);
         // Log.i("TAG","=================onDestroy===================");
     }
+
     /**
      * 未读消息监听
      */
-    private void setNoreadMessage(){
+    private void setNoreadMessage() {
         Handler handler = new Handler();
         final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
                 Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
@@ -223,10 +252,11 @@ public class MainActivity extends JPushBaseActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener,conversationTypes);
+                RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener, conversationTypes);
             }
         }, 500);
     }
+
     /**
      * 发送广播通知改变主界面的圆点的显示状态
      */
@@ -242,10 +272,11 @@ public class MainActivity extends JPushBaseActivity {
     };
 
     /**
-     *  设置底部颜色状态
+     * 设置底部颜色状态
+     *
      * @param chooseType
      */
-    private void setBaseBar(int chooseType){
+    private void setBaseBar(int chooseType) {
         tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
         tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
         tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
@@ -254,7 +285,7 @@ public class MainActivity extends JPushBaseActivity {
         ivDiscovery.setImageResource(R.mipmap.discovery);
         ivMessage.setImageResource(R.mipmap.message);
         ivStatus.setImageResource(R.mipmap.status);
-        switch (chooseType){
+        switch (chooseType) {
             case 0:
                 tvStatus.setTextColor(getResources().getColor(R.color.main_green));
                 ivStatus.setImageResource(R.mipmap.status_p);
@@ -273,8 +304,9 @@ public class MainActivity extends JPushBaseActivity {
                 break;
 
         }
-        UserChooseActivity.flag=0;
+        UserChooseActivity.flag = 0;
     }
+
     /**
      * 如果count的值为0时表示一进来就是断网的，此时点击tab重新连接加载viewpager
      * 如果count的值是为1时表示有网络状态，一进来就已经加载刷新数据了，不需要重新加载
@@ -282,11 +314,11 @@ public class MainActivity extends JPushBaseActivity {
      * 初始化是否有网络的值，如果进应用程序时时断网的设置此时的count值为-1(因为如果断网的话监听到断网，此时
      * count会加1)
      */
-    private void  initCount(){
-        if (G.isNetworkConnected(this)){
-            count=1;
-        }else {
-            count=-1;
+    private void initCount() {
+        if (G.isNetworkConnected(this)) {
+            count = 1;
+        } else {
+            count = -1;
         }
     }
 
@@ -299,7 +331,7 @@ public class MainActivity extends JPushBaseActivity {
                 BaseLibrary.exit();
             } else {
                 isQuit = true;
-                Toast.makeText(this.getApplicationContext(), "再按一次退出",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getApplicationContext(), "再按一次退出", Toast.LENGTH_SHORT).show();
                 TimerTask task = new TimerTask() {
                     @Override
                     public void run() {
@@ -312,19 +344,40 @@ public class MainActivity extends JPushBaseActivity {
         }
         return super.dispatchKeyEvent(event);
     }
+
     /**
      * 接收动态小红点的广播
      */
-    private class  MyStatusDosShowReceiver extends BroadcastReceiver {
+    public class MyStatusDosShowReceiver extends BroadcastReceiver {
         public static final String STATUSDOSHOW = "net.hunme.kidsworld.MyStatusDosShowReceiver";
+
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(STATUSDOSHOW)){
+            if (intent.getAction().equals(STATUSDOSHOW)) {
                 Bundle bundle = intent.getExtras();
-                if (bundle.getInt("count",0)==1){
+                if (bundle.getInt("count", 0) == 1) {
                     tvStatusDos.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     tvStatusDos.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+    /**
+     * 全屏播放视频隐藏底部tab广播
+     */
+    public class HideMainTabReceiver extends BroadcastReceiver {
+
+        public static final String HIDEMAINTAB = "net.hunme.kidsworld.hideMainTabReceiver";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(HIDEMAINTAB)) {
+                Bundle bundle = intent.getExtras();
+                if (bundle.getBoolean("isVisible", false)) {
+                    llTab.setVisibility(View.VISIBLE);
+                } else {
+                    llTab.setVisibility(View.GONE);
                 }
             }
         }

@@ -164,14 +164,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             public void onClick(View view) {
                 final StatusPublishPopWindow pubishPopWindow = new StatusPublishPopWindow(getActivity());
                 pubishPopWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
-                pubishPopWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (!hasFocus) {
-                            pubishPopWindow.dismiss();
-                        }
-                    }
-                });
+
             }
         });
     }
@@ -188,6 +181,14 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             int xPos = G.size.W/2-G.dp2px(getActivity(),75);
             G.log(G.size.W/2+"----------------"+popWindow.getContentView().getWidth()/2);
             popWindow.showAsDropDown(rl_toolbar,xPos,-G.dp2px(getActivity(),10));
+            popWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!hasFocus) {
+                        popWindow.dismiss();
+                    }
+                }
+            });
         }
     }
 
@@ -238,14 +239,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             classlist.add(d.getGroupName());
         }
         popWindow = new ChooseClassPopWindow(this, classlist);
-        popWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    popWindow.dismiss();
-                }
-            }
-        });
         ll_classchoose.setOnClickListener(this);
         if(dynamicList.size()>0){
             setWebView(0);

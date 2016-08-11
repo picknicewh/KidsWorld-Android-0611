@@ -67,5 +67,6 @@ public class ChooseClassPopWindow extends PopupWindow {
         this.setBackgroundDrawable(dw);
         //防止虚拟软键盘被弹出菜单遮住
         this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
     }
 }

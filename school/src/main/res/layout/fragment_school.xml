@@ -68,10 +68,10 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            <TextView
+            <ImageView
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:text="09:18"
+                android:src="@mipmap/ic_arrow_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
@@ -102,10 +102,10 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            <TextView
+            <ImageView
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:text="昨天"
+                android:src="@mipmap/ic_arrow_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
@@ -139,10 +139,10 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            <TextView
+            <ImageView
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:text="星期五"
+                android:src="@mipmap/ic_arrow_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
@@ -173,10 +173,10 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            <TextView
+            <ImageView
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:text="13/7/10"
+                android:src="@mipmap/ic_arrow_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>

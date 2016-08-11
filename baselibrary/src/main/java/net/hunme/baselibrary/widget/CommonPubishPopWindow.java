@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import net.hunme.baselibrary.R;
@@ -36,6 +37,10 @@ public abstract class CommonPubishPopWindow extends PopupWindow implements View.
      * 发布视频
      */
     private ImageView iv_move;
+    /**
+     * 下面的阴影
+     */
+    private LinearLayout ll_shade;
     public CommonPubishPopWindow(Activity context){
         this.context = context;
         init();
@@ -45,9 +50,16 @@ public abstract class CommonPubishPopWindow extends PopupWindow implements View.
         conentView = inflater.inflate(R.layout.dialog_inform, null);
         iv_text= (ImageView) conentView.findViewById(R.id.iv_text);
         iv_photo= (ImageView) conentView.findViewById(R.id.iv_photo);
+        ll_shade = (LinearLayout) conentView.findViewById(R.id.ll_shade);
      //   iv_move= (ImageView) conentView.findViewById(R.id.iv_move);
         iv_text.setOnClickListener(this);
         iv_photo.setOnClickListener(this);
+        ll_shade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
     //    iv_move.setOnClickListener(this);
 
     }
@@ -58,12 +70,13 @@ public abstract class CommonPubishPopWindow extends PopupWindow implements View.
         this.setContentView(conentView);
         //设置SignPopupWindow弹出窗体的高
         int height =  context.getWindow().getWindowManager().getDefaultDisplay().getHeight();
-        this.setHeight(height- G.dp2px(context,75));
+        this.setHeight(height-G.dp2px(context,70));
         //设置SignPopupWindow弹出窗体的宽
         this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         //设置SignPopupWindow弹出窗体可点击
         this.setFocusable(true);
         this.setTouchable(true);
+        this.setOutsideTouchable(true);
         //实例化一个ColorDrawable颜色为半透明
         ColorDrawable dw = new ColorDrawable(0000000000);
         //设置SignPopupWindow弹出窗体的背景
