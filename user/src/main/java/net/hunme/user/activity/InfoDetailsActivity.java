@@ -16,7 +16,7 @@ public class InfoDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_details);
         initView();
-//        initDate();
+        initDate();
     }
 
     @Override

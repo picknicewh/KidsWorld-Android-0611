@@ -4,36 +4,54 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-   <RelativeLayout
-       android:id="@+id/rl_discovery"
+   <LinearLayout
+       android:id="@+id/ll_cdiscovery"
        android:background="@color/colorAccent"
        android:layout_width="match_parent"
+       android:gravity="center"
        android:layout_height="50dp">
-      <ImageView
-          android:padding="@dimen/space_x1.5"
-          android:layout_alignParentLeft="true"
-          android:id="@+id/iv_dleft"
-          android:src="@mipmap/ic_history"
-          android:layout_centerInParent="true"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
+      <net.hunme.baselibrary.widget.CircleImageView
+           android:layout_marginLeft="@dimen/space"
+           android:id="@+id/iv_dleft"
+           android:layout_width="40dp"
+           android:layout_height="40dp" />
       <TextView
+          android:visibility="gone"
+          android:layout_weight="1"
+          android:text="乐园"
+          android:gravity="center"
           android:id="@+id/tv_dtitle"
           android:layout_centerInParent="true"
-          android:text="乐园"
           android:textSize="@dimen/ts_xx_large"
           android:textColor="@color/white"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content" />
-      <ImageView
-          android:padding="@dimen/space_x1.5"
-          android:id="@+id/iv_dright"
-          android:src="@mipmap/ic_search"
-          android:layout_alignParentRight="true"
-          android:layout_centerVertical="true"
+      <EditText
+
+          android:layout_marginLeft="@dimen/space"
+          android:layout_marginRight="@dimen/space"
+          android:layout_weight="1"
+          android:id="@+id/et_search"
+          android:background="@drawable/bg_login_text"
+          android:hint="搜索故事、课堂、资讯"
+          android:textSize="@dimen/ts_medium"
+          android:paddingTop="7dp"
+          android:paddingBottom="7dp"
+          android:paddingLeft="@dimen/space_x2"
+          android:paddingRight="@dimen/space_x2"
+          android:layout_centerInParent="true"
+          android:drawableLeft="@mipmap/ic_dissearch"
+           android:drawablePadding="@dimen/space_x0.5"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content" />
-   </RelativeLayout>
+      <ImageView
+
+          android:paddingRight="@dimen/space"
+          android:id="@+id/iv_dright"
+          android:src="@mipmap/ic_history"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+   </LinearLayout>
 
    <RelativeLayout
        android:layout_width="match_parent"

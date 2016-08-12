@@ -15,7 +15,7 @@
              android:id="@+id/rb_allroom"
              android:padding="@dimen/space_x2"
              android:checked="true"
-             android:text="班级空间和校园空间"
+             android:text="校园空间"
              android:layout_width="match_parent"
              android:layout_height="wrap_content" />
          <View

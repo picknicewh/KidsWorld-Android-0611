@@ -1,7 +1,10 @@
 package net.hunme.user.activity;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
@@ -83,6 +86,14 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
     private UserMessage um;
     private File path;
     private TextView tv_provsion;
+    /**
+     * 系统红点
+     */
+    private TextView tv_sysdos;
+    /**
+     * 系统红点显示广播
+     */
+    private ShowSysDosReceiver showSysDosReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +123,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
         tv_cache=$(R.id.tv_cache);
         tv_version=$(R.id.tv_version);
         tv_provsion=$(R.id.tv_provsion);
+        tv_sysdos = $(R.id.tv_sysdos);
         ll_exit.setOnClickListener(this);
         ll_cleancache.setOnClickListener(this);
         ll_changephone.setOnClickListener(this);
@@ -120,6 +132,21 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
         ll_callback.setOnClickListener(this);
         ll_checkupadte.setOnClickListener(this);
         tv_provsion.setOnClickListener(this);
+        registerReceiver();
+    }
+    /**
+     * 注册监听网络广播广播
+     */
+    private void registerReceiver() {
+        IntentFilter filter = new IntentFilter(ShowSysDosReceiver.SHOWSYSDOS);
+        showSysDosReceiver = new ShowSysDosReceiver();
+        this.registerReceiver(showSysDosReceiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(showSysDosReceiver);
     }
 
     private void initDate(){
@@ -169,9 +196,10 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
         } else if (viewID == R.id.ll_changephone) {
             showPhoneialog();
         } else if (viewID == R.id.ll_systeminfo) {
-            Intent intent = new Intent();
-            intent.setClass(this, SystemInfoActivity.class);
-            startActivity(intent);
+             Intent intent = new Intent();
+             intent.setClass(this, SystemInfoActivity.class);
+             startActivity(intent);
+            tv_sysdos.setVisibility(View.GONE);
         } else if (viewID == R.id.ll_callback) {
             Intent intent = new Intent();
             intent.setClass(this, AdviceActivity.class);
@@ -265,5 +293,18 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
             }
         });
     }
-
+    private class ShowSysDosReceiver extends BroadcastReceiver{
+        public static final String SHOWSYSDOS = "net.hunme.user.activity.ShowSysDosReceiver";
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(SHOWSYSDOS)) {
+                Bundle bundle = intent.getExtras();
+                if (bundle.getBoolean("isVisible", false)) {
+                    tv_sysdos.setVisibility(View.VISIBLE);
+                } else {
+                    tv_sysdos.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
 }

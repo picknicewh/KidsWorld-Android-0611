@@ -24,27 +24,6 @@ mui.init({
 	}
 });
 
-//删除消息
-$('.mui-scroll').on('tap','#del', function(event) {
-	var $this = $(this);
-	var dynamicId = $this.data('id');
-	var wrap = $this.parent().parent().parent();
-	//alert 弹窗确认
-	
-	//数据库操作
-	var datas = {
-		"tsId": tsId,
-		"dynamicId":dynamicId
-	}
-	$.post(url + '/dynamic/deleteDynamic.do',datas,
-	  function(response){
-	  	 if(response.code == 0){
-//	  	 	alert("删除成功");
-	  	 }
-	  });
-	wrap.remove();	
-});
-
 
 var count = 0;
 
@@ -57,17 +36,19 @@ function generateHtml(arr) {
 	tmpHtml += '<div class="section-right"><div class="app-content content-top">';
 	tmpHtml += '<div class="text">' + arr.text +'</div>';
 	//如果有图片
-//	    if(arr.dynamicType ==1 && arr.imgUrl.length != 0){
-	    if(arr.imgUrl !== null && arr.imgUrl.length != 0){
-	    	var imgHtml = "";
-	    	var imgArr = arr.imgUrl;
-	    	//创建一个ul，然后往ul里放图片li
-//	    	var ul = document.createElement('ul');
-//			ul.className = 'image2';
-	    	for(var j = 0; j < imgArr.length; j++){
-	    		imgHtml += '<li><img src="' + imgArr[j] + '" data-preview-src="' + imgArr[j].replace(/\/s/,"") + '" data-preview-group="' + imgIndex + '"/></li>';
+	     if(arr.dynamicType ==1 && arr.imgUrl.length != 0){
+	    	var imgHtml = "",
+	    	     imgArr = arr.imgUrl,
+	    	     imgLen = imgArr.length;
+
+            if(imgLen == 1){
+            	imgHtml += '<li><img src="' + imgArr[0] + '" class="oneImg" data-preview-src="' + imgArr[0].replace(/\/s/,"") + '" data-preview-group="' + imgIndex + '"/></li>';
+            }else {
+		    	for(var j = 0; j < imgLen; j++){
+		    		imgHtml += '<li><img src="' + imgArr[j] + '" data-preview-src="' + imgArr[j].replace(/\/s/,"") + '" data-preview-group="' + imgIndex + '"/></li>';
+		    	}
 	    	}
-//	    	ul.innerHTML = imgHtml;
+
 	        tmpHtml += '<ul class="image2">' + imgHtml + '</ul>';
 	    	imgIndex++;		
 	    }
@@ -121,19 +102,19 @@ function pullupRefresh() {
 	}, 1500);
 }
 
-//确认消息弹窗
+//删除消息及确认消息弹窗
 //document.getElementById("del").addEventListener('tap', function() {
 	$('.mui-scroll').on('tap','#del', function(event) {
-	      
-				var btnArray = ['取消', '删除'];
+	            var $this = $(this),
+	                dynamicId = $this.data('id'),
+	                wrap = $this.parent().parent().parent(),
+				    btnArray = ['取消', '删除'];
 				mui.confirm('','确定删除吗？',btnArray, function(e) {
 					if (e.index == 1) {
-						var $this = $(this);
-						var dynamicId = $this.data('id');
-						var wrap = $this.parent().parent().parent();
+					
 						//数据库操作
 						var datas = {
-							"tsId":"123456",
+							"tsId":tsId,
 							"dynamicId":dynamicId
 						}
 						$.post(url + '/dynamic/deleteDynamic.do',datas,
@@ -141,6 +122,15 @@ function pullupRefresh() {
 						  	 if(response.code == 0){
 //						  	 	alert("删除成功");
 						  	 	wrap.remove();
+						  	 	//根据不同的设备，调用不同的原生方法，来重新加载页面。
+						  	 	var u = navigator.userAgent;
+					            if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){ //android终端
+					                     alert(45);
+							             change_tob.noticeChange();
+							    }else if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){ //ios终端
+							            refreshTrend();
+							    }
+						  	 	
 						  	 }
 						  });
 								

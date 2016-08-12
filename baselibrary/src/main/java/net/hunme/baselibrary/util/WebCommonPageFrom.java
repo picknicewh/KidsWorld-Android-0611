@@ -3,13 +3,18 @@ package net.hunme.baselibrary.util;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.R;
 import net.hunme.baselibrary.cordova.HMDroidGap;
+import net.hunme.baselibrary.image.ImageCache;
 
 /**
  * 作者： Administrator
@@ -33,8 +38,20 @@ public class WebCommonPageFrom {
      * 右边图片
      */
     private ImageView iv_right;
+    /**
+     * 首页搜索
+     */
+    private EditText et_search;
     private Activity activity;
-    public WebCommonPageFrom(ImageView iv_left,TextView tv_title,ImageView iv_right,Activity activity){
+
+    public WebCommonPageFrom(ImageView iv_left, TextView tv_title, ImageView iv_right, EditText et_search,Activity activity){
+        this.iv_left = iv_left;
+        this.tv_title = tv_title;
+        this.iv_right = iv_right;
+        this.activity = activity;
+        this.et_search = et_search;
+    }
+    public WebCommonPageFrom(ImageView iv_left, TextView tv_title, ImageView iv_right,Activity activity){
         this.iv_left = iv_left;
         this.tv_title = tv_title;
         this.iv_right = iv_right;
@@ -51,11 +68,13 @@ public class WebCommonPageFrom {
             public void run() {
                 switch (view) {
                     case Constant.HOME:
-                        iv_left.setImageResource(R.mipmap.ic_history);
-                        tv_title.setText("乐园");
-                        tv_title.setVisibility(View.VISIBLE);
-                        iv_right.setImageResource(R.mipmap.ic_search);
+                       // iv_left.setImageResource(R.mipmap.ic_history);
+                        ImageCache.imageLoader(UserMessage.getInstance(activity).getHoldImgUrl(),iv_left);
+                      /*  tv_title.setText("乐园");
+                        tv_title.setVisibility(View.VISIBLE);*/
+                        iv_right.setImageResource(R.mipmap.ic_history);
                         iv_right.setVisibility(View.VISIBLE);
+                        tv_title.setVisibility(View.GONE);
                         break;
                     case Constant.CHILDSTORY:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
@@ -153,6 +172,26 @@ public class WebCommonPageFrom {
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setVisibility(View.GONE);
                         break;
+                }
+                if (view.equals(Constant.HOME)){
+                    int size = G.dp2px(activity,40);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(size,size);
+                    layoutParams.gravity = Gravity.CENTER_VERTICAL;
+                    layoutParams.setMargins(G.dp2px(activity,10),0,0,0);
+                    iv_left.setLayoutParams(layoutParams);
+                    if (et_search!=null){
+                        et_search.setVisibility(View.VISIBLE);
+                    }
+                }else {
+                    LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    layoutParams2.gravity = Gravity.CENTER_VERTICAL;
+                    layoutParams2.setMargins(G.dp2px(activity,10),0,0,0);
+                    iv_left.setLayoutParams(layoutParams2);
+                    tv_title.setVisibility(View.VISIBLE);
+                    if (et_search!=null){
+                        et_search.setVisibility(View.GONE);
+                    }
                 }
             }
         });

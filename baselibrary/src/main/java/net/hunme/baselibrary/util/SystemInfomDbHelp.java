@@ -99,6 +99,15 @@ public class SystemInfomDbHelp {
 
     }
     /**
+     *删除通过id号删除单个系统消息
+     * @param  db 数据库
+     * @param id 唯一用户id号
+     */
+    public void  deleteById(SQLiteDatabase db,int id){
+        String sql="delete from user where uid =" + id;
+        db.execSQL(sql);
+    }
+    /**
      * 删除所有
      * @param db
      */
@@ -106,7 +115,5 @@ public class SystemInfomDbHelp {
         String sql="delete from user";
         db.execSQL(sql);
         Log.i("cscscs",isEmpty(db)+"");
-     /*   String sqls = "DELETE FROM sqlite_sequence";
-        db.execSQL(sqls);*/
     }
 }

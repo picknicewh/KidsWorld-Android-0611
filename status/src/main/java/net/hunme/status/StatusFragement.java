@@ -109,6 +109,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     private  MyJpushReceiver myReceiver;
     private CordovaWebView cordovaWebView;
     private ProgressBar pb_web;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.fragment_status, null);
@@ -125,6 +126,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         webView = $(view, R.id.cordovaWebView);
         ll_classchoose = $(view,R.id.ll_classchoose);
         rl_toolbar=$(view,R.id.rl_toolbar);
+
         pb_web=$(view,R.id.pb_web);
         webView.addJavascriptInterface(this, "showDos");  //设置本地调用对象及其接口
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web));
@@ -135,6 +137,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         getDynamicHead();
         ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
         registerReceiver();
+
     }
     public void setPosition(int position){
         this.position = position;

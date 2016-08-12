@@ -1,6 +1,8 @@
 package net.hunme.school.activity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -139,6 +141,7 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
         ll_start.setOnClickListener(this);
         setSubTitleOnClickListener(this);
         message = UserMessage.getInstance(this);
+        setEditContent(et_cause);
         initdata();
     }
     /**
@@ -181,6 +184,7 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
             subLeaveAsk();
         }
     }
+
     /**
      *提交请假申请
      */
@@ -223,5 +227,32 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
     public void onError(String uri, String error) {
         dialog.dismiss();
         Toast.makeText(LeaveAskActivity.this,error,Toast.LENGTH_SHORT).show();
+    }
+    /**
+     * 计算文字的长度，如果文字的长度大于100则不能再输入
+     * @param  et_content 请假事由
+     */
+    private void setEditContent(final EditText et_content) {
+        et_content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                String str = s.toString();
+                int count = 0;
+                count = str.length();
+                if (count > 140) {
+                    deleteSelection(s);
+                }
+            }
+            private void deleteSelection(Editable s) {
+                int selection = et_content.getSelectionStart();
+                if (selection > 1) {
+                    s.delete(selection - 1, selection);
+                }
+            }
+        });
     }
 }

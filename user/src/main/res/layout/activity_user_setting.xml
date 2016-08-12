@@ -94,7 +94,14 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="系统消息"/>
-
+                <TextView
+                    android:visibility="gone"
+                    android:layout_marginRight="@dimen/space_x2"
+                    android:layout_gravity="center"
+                    android:id="@+id/tv_sysdos"
+                    android:background="@drawable/circledos"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
                 <ImageView
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"

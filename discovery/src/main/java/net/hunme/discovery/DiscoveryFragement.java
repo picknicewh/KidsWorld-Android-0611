@@ -1,6 +1,7 @@
 package net.hunme.discovery;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -9,18 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.cordova.CordovaInterfaceImpl;
 import net.hunme.baselibrary.cordova.MySystemWebView;
+import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.network.ServerConfigManager;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
+import net.hunme.user.activity.UserActivity;
 
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
@@ -50,6 +53,10 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      */
     private ImageView iv_right;
     /**
+     * 首页搜索
+     */
+    private EditText et_search;
+    /**
      * 加载动画
      */
     private LinearLayout ll_loading;
@@ -57,11 +64,10 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      * web接口类
      */
     private WebCommonPageFrom from;
-    private RelativeLayout rl_discovery;
+    private LinearLayout ll_discovery;
     /**
      * 没网络时显示
      */
-  //  private RelativeLayout rl_nonetwork;
     private static final String url = ServerConfigManager.WEB_IP+"/paradise/index.html";
     private ProgressBar pb_web;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
@@ -94,18 +100,22 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         iv_left = $(v,R.id.iv_dleft);
         tv_title = $(v,R.id.tv_dtitle);
         iv_right = $(v,R.id.iv_dright);
+        et_search = $(v,R.id.et_search);
         webView = $(v,R.id.cordovaWebView);
         pb_web=$(v,R.id.pb_web);
-        rl_discovery=$(v,R.id.rl_discovery);
+        ll_discovery=$(v,R.id.ll_cdiscovery);
+        ImageCache.imageLoader(UserMessage.getInstance(getActivity()).getHoldImgUrl(),iv_left);
 //        ll_loading = $(v,R.id.ll_loading);
         //rl_nonetwork= $(v,R.id.rl_nonetwork);
        // rl_nonetwork.setOnClickListener(this);
-        from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,getActivity());
+        from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,et_search,getActivity());
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
+        et_search.setOnClickListener(this);
        // setShowView();
        setWebView();
     }
+
      private  void  setShowView(){
          setWebView();
       /*   if (G.isNetworkConnected(getActivity())){
@@ -116,7 +126,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      }
     private void  setWebView(){
         webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
-        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web,webView,getActivity(),rl_discovery));
+        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web,webView,getActivity(),ll_discovery));
         getWebView(webView).loadUrl(url+"?tsId="+ UserMessage.getInstance(getActivity()).getTsId());
 //        if (!webView.getUrl().contains("paradiseHome")){
 //            ll_loading.setVisibility(View.GONE);
@@ -129,14 +139,15 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
-        if (viewId==R.id.iv_dleft){
-             if (webView.getUrl().contains("paradiseHome")){
-                 webView.loadUrl("javascript:goHistory_Origin()");
-            }else {
-                 webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-                 webView.goBack();
-             }
-        }else if (viewId==R.id.iv_dright){
+       if (viewId==R.id.iv_dleft){
+           if (webView.getUrl().contains("paradiseHome")){
+               Intent intent = new Intent(getActivity(), UserActivity.class);
+               getActivity().startActivity(intent);
+           }else {
+               webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+               webView.goBack();
+           }
+         } else if (viewId==R.id.iv_dright){
             String url = webView.getUrl();
             if (url.contains("childClass")){
                 webView.loadUrl("javascript:goSearchVideo_Origin()");
@@ -144,12 +155,13 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                 webView.loadUrl("javascript:goSearchAudio_Origin()");
             }else if (url.contains("eduInformation")){
                 webView.loadUrl("javascript:goSearchInf_Origin()");
-            }else if (url.contains("paradiseHome")){
-                webView.loadUrl("javascript:goSearch_Origin()");
+
+            }else if (webView.getUrl().contains("paradiseHome")){
+                webView.loadUrl("javascript:goHistory_Origin()");
             }
-        }/*else if (viewId==R.id.rl_nonetwork){
-            setShowView();
-        }*/
+        }else if (viewId==R.id.et_search){
+           webView.loadUrl("javascript:goSearch_Origin()");
+        }
     }
 
 }

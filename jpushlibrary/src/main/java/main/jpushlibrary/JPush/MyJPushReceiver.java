@@ -1,15 +1,26 @@
 package main.jpushlibrary.JPush;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import net.hunme.baselibrary.util.SystemInfomDb;
+import net.hunme.baselibrary.util.SystemInfomDbHelp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import cn.jpush.android.api.JPushInterface;
+import main.jpushlibrary.R;
 
 /**
  * 作者： wh
@@ -23,11 +34,8 @@ import cn.jpush.android.api.JPushInterface;
  */
 public class MyJPushReceiver extends BroadcastReceiver {
     private static final String TAG = "wanghua";
-    private Context context;
-
     @Override
     public void onReceive(Context context, Intent intent) {
-        this.context = context;
         Bundle bundle = intent.getExtras();
         // Log.i(TAG, "[MyJPushReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
         if (intent.getAction().equals(JPushInterface.ACTION_REGISTRATION_ID)) {
@@ -36,22 +44,46 @@ public class MyJPushReceiver extends BroadcastReceiver {
             //  sendRegistrationId(regId,context);
         } else if (intent.getAction().equals(JPushInterface.ACTION_MESSAGE_RECEIVED)) {
             Log.i(TAG, "[MyJPushReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
-            String content = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-            String title = bundle.getString(JPushInterface.EXTRA_TITLE);
-            String messageId = bundle.getString(JPushInterface.EXTRA_MSG_ID);
-            Log.i("TAG", "content=========" + content + "title===========" + title + "messageId===========" + messageId );
+
             String message = bundle.getString(JPushInterface.EXTRA_EXTRA);
           //  接收到推送下来的自定义消息: {"messagetype":"1","schoolid":"","classid":"298f1648653840fdaa6c396830025af5"}
             try {
                 JSONObject jsonObject = new JSONObject(message);
                 String messagetype = (String) jsonObject.get("messagetype");
-                String schoolid = (String) jsonObject.get("schoolid");
-                String classid = (String) jsonObject.get("classid");
-                Intent myintent = new Intent("net.hunme.status.showstatusdos");
-                myintent.putExtra("messagetype",messagetype);
-                myintent.putExtra("schoolid",schoolid);
-                myintent.putExtra("classid",classid);
-                context.sendBroadcast(myintent);
+                if (messagetype.equals("1")){
+                    String schoolid = (String) jsonObject.get("schoolid");
+                    String classid = (String) jsonObject.get("classid");
+                    Intent myintent = new Intent("net.hunme.status.showstatusdos");
+                    myintent.putExtra("messagetype",messagetype);
+                    myintent.putExtra("schoolid",schoolid);
+                    myintent.putExtra("classid",classid);
+                    context.sendBroadcast(myintent);
+                }else if (messagetype.equals("3")) {
+                    String mycontent = (String) jsonObject.get("content");
+                    String create_time = (String) jsonObject.get("create_time");
+                    String mytitle = (String) jsonObject.get("title");
+                    String type = (String) jsonObject.get("type");
+                    SystemInfomDb systemInfomDb = new SystemInfomDb(context);
+                    SQLiteDatabase db = systemInfomDb.getWritableDatabase();
+                    Intent myintent = new Intent("net.hunme.user.activity.ShowSysDosReceiver");
+                    myintent.putExtra("isVisible",true);
+                    switch (type){
+                        case "0":
+                            SystemInfomDbHelp.getinstance().insert(db,mytitle,mycontent,create_time,1);
+                            context.sendBroadcast(myintent);
+                            break;
+                        case "1":
+                            receivingNotification(context,mycontent,mytitle);
+                            context.sendBroadcast(myintent);
+                            SystemInfomDbHelp.getinstance().insert(db,mytitle,mycontent,create_time,1);
+                            break;
+                        case "2":
+                            receivingNotification(context,mycontent,mytitle);
+                            break;
+                    }
+
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -67,23 +99,20 @@ public class MyJPushReceiver extends BroadcastReceiver {
             Log.i(TAG, "[MyJPushReceiver] Unhandled intent - " + intent.getAction());
         }
     }
-}
- /*   *//**
+
+     /**
      *  处理返回过来的数据，并发送通知
-     *//*
-    public  void receivingNotification(Bundle bundle , Context context){
+     */
+    public  void receivingNotification(Context context,String message,String title){
        PendingIntent default_pendingIntent =
                 PendingIntent.getActivity(context, 1, new Intent(context, EmptyActivity.class), 0);
         NotificationManager manager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-        String title = bundle.getString(JPushInterface.EXTRA_TITLE);
-        Log.i("hahah",message);
         // 使用notification
         // 使用广播或者通知进行内容的显示
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentText(message);
-        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setSmallIcon(R.mipmap.ic_main);
         //设置跳转的内容
         builder.setContentIntent(default_pendingIntent);
         Log.i("TAGG",JPushUtil.getRegid(context));
@@ -98,9 +127,9 @@ public class MyJPushReceiver extends BroadcastReceiver {
         manager.notify(0,notification);
     }
 
-    *//**
+    /**
      * 获取包名
-     *//*
+     */
     public String getApplicationName(Context context) {
         PackageManager packageManager = null;
         ApplicationInfo applicationInfo = null;
@@ -114,6 +143,9 @@ public class MyJPushReceiver extends BroadcastReceiver {
                 (String) packageManager.getApplicationLabel(applicationInfo);
         return applicationName;
     }
+}
+
+
  // 打印所有的 intent extra 数据*/
   /*  private static String printBundle(Bundle bundle) {
         StringBuilder sb = new StringBuilder();

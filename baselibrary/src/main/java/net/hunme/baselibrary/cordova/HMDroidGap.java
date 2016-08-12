@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.R;
@@ -34,7 +34,7 @@ public class HMDroidGap extends CordovaActivity {
     protected CordovaPlugin activityResultCallback = null;
     protected boolean activityResultKeepRunning;
     protected boolean keepRunning = true;
-    private RelativeLayout rl_toolbar;
+    private LinearLayout ll_toolbar;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,10 +49,10 @@ public class HMDroidGap extends CordovaActivity {
         tv_title= (TextView) findViewById(R.id.tv_title);
         tv_subtitle= (TextView) findViewById(R.id.tv_subtitle);
         pb_web= (ProgressBar) findViewById(R.id.pb_web);
-        rl_toolbar= (RelativeLayout) findViewById(R.id.rl_toolbar);
+        ll_toolbar= (LinearLayout) findViewById(R.id.rl_toolbar);
         from  = new WebCommonPageFrom(iv_left,tv_title,(ImageView) findViewById(R.id.iv_test),this);
         webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
-        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web,webView,this,rl_toolbar));
+        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web,webView,this,ll_toolbar));
         setTabBarText();
         iv_left.setOnClickListener(new View.OnClickListener() {
             @Override

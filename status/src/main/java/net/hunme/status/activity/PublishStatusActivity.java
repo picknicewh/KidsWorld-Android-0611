@@ -155,7 +155,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 goSelectImager();
                 showPhoto(true);
                 dynamicType="4";
-
                 break;
         }
     }

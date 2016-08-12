@@ -9,12 +9,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.util.G;
@@ -32,7 +30,6 @@ import net.hunme.status.StatusFragement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -166,9 +163,9 @@ public class MainActivity extends JPushBaseActivity {
         messageFragement = new MessageFragement();
         fragmentManager = getSupportFragmentManager();
         fragmentList = new ArrayList<>();
-        fragmentList.add(statusFragement);
-        fragmentList.add(schoolFragement);
         fragmentList.add(discoveryFragement);
+        fragmentList.add(schoolFragement);
+        fragmentList.add(statusFragement);
         fragmentList.add(messageFragement);
         MyViewPagerAdapter adapter = new MyViewPagerAdapter(fragmentManager, fragmentList);
         viewPager.setAdapter(adapter);
@@ -192,13 +189,13 @@ public class MainActivity extends JPushBaseActivity {
     @OnClick({R.id.ll_status, R.id.ll_school, R.id.ll_discovery, R.id.ll_message})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.ll_status:
+            case R.id.ll_discovery:
                 flag = 0;
                 break;
             case R.id.ll_school:
                 flag = 1;
                 break;
-            case R.id.ll_discovery:
+            case R.id.ll_status:
                 flag = 2;
                 break;
             case R.id.ll_message:
@@ -287,16 +284,16 @@ public class MainActivity extends JPushBaseActivity {
         ivStatus.setImageResource(R.mipmap.status);
         switch (chooseType) {
             case 0:
-                tvStatus.setTextColor(getResources().getColor(R.color.main_green));
-                ivStatus.setImageResource(R.mipmap.status_p);
+                tvDiscovery.setTextColor(getResources().getColor(R.color.main_green));
+                ivDiscovery.setImageResource(R.mipmap.discovery_p);
                 break;
             case 1:
                 tvSchool.setTextColor(getResources().getColor(R.color.main_green));
                 ivSchool.setImageResource(R.mipmap.school_p);
                 break;
             case 2:
-                tvDiscovery.setTextColor(getResources().getColor(R.color.main_green));
-                ivDiscovery.setImageResource(R.mipmap.discovery_p);
+                tvStatus.setTextColor(getResources().getColor(R.color.main_green));
+                ivStatus.setImageResource(R.mipmap.status_p);
                 break;
             case 3:
                 tvMessage.setTextColor(getResources().getColor(R.color.main_green));
@@ -322,7 +319,7 @@ public class MainActivity extends JPushBaseActivity {
         }
     }
 
-    public boolean dispatchKeyEvent(KeyEvent event) {
+   /* public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             //这里处理逻辑代码
             if (isQuit) {
@@ -344,7 +341,7 @@ public class MainActivity extends JPushBaseActivity {
         }
         return super.dispatchKeyEvent(event);
     }
-
+*/
     /**
      * 接收动态小红点的广播
      */

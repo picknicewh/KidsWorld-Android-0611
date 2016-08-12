@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
@@ -31,17 +32,18 @@ public class MySystemWebView extends SystemWebChromeClient {
     private SystemWebView mWebView;
     private Activity activity;
     private RelativeLayout rl_toolbar;
+    private LinearLayout ll_toolbar;
     public MySystemWebView(SystemWebViewEngine parentEngine, ProgressBar pb_web) {
         super(parentEngine);
         this.pb_web=pb_web;
     }
 
-    public MySystemWebView(SystemWebViewEngine parentEngine, ProgressBar pb_web,SystemWebView mWebView,Activity activity,RelativeLayout rl_toolbar) {
+    public MySystemWebView(SystemWebViewEngine parentEngine, ProgressBar pb_web, SystemWebView mWebView, Activity activity, LinearLayout ll_toolbar) {
         super(parentEngine);
         this.pb_web=pb_web;
         this.mWebView=mWebView;
         this.activity=activity;
-        this.rl_toolbar=rl_toolbar;
+        this.ll_toolbar = ll_toolbar;
     }
 
     @Override
@@ -65,7 +67,7 @@ public class MySystemWebView extends SystemWebChromeClient {
         ViewGroup parent = (ViewGroup) mWebView.getParent();
         parent.removeView( mWebView);
         parent.addView(view);
-        rl_toolbar.setVisibility(View.GONE);
+        ll_toolbar.setVisibility(View.GONE);
         myView = view;
         myCallback = callback;
         //设置横屏
@@ -90,8 +92,8 @@ public class MySystemWebView extends SystemWebChromeClient {
             parent.addView( mWebView);
             myView = null;
         }
-        rl_toolbar.setVisibility(View.VISIBLE);
 
+        ll_toolbar.setVisibility(View.VISIBLE);
         // 设置竖屏
        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // 取消全屏

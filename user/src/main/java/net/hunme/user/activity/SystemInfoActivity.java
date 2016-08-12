@@ -1,12 +1,16 @@
 package net.hunme.user.activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.SystemInformVo;
@@ -14,6 +18,7 @@ import net.hunme.baselibrary.util.SystemInfomDb;
 import net.hunme.baselibrary.util.SystemInfomDbHelp;
 import net.hunme.user.R;
 import net.hunme.user.adapter.SystemInfoAdapter;
+import net.hunme.user.util.MyAlertDialog;
 import net.hunme.user.util.PermissionUtils;
 
 import java.util.ArrayList;
@@ -66,7 +71,7 @@ public class SystemInfoActivity extends BaseActivity {
         dbHelp = SystemInfomDbHelp.getinstance();
         //测试数据
         wdb = infoDb.getWritableDatabase();
-        insert();//插入数据
+       // insert();//插入数据
         systemInformVoList =new ArrayList<>();
         systemInformVoList = dbHelp.getSystemInformVo(infoDb.getReadableDatabase());
         adapter=new SystemInfoAdapter(systemInformVoList,this);
@@ -74,19 +79,57 @@ public class SystemInfoActivity extends BaseActivity {
         lv_systeminfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //  String value=messageList.get(i).getContent()+messageList.get(i).getDate();
-                //  SQLiteDatabase rdb=infoDb.getReadableDatabase();
-              /*  if(!SystemInfoDbHelp.select(rdb,value)){
-                    SQLiteDatabase wdb = infoDb.getWritableDatabase();
-                    SystemInfoDbHelp.insert(wdb,value);
-                }*/
                 dbHelp.update(wdb,systemInformVoList.get(i).getId(),0);
                 adapter.notifyDataSetChanged();
-                startActivity(new Intent(SystemInfoActivity.this,InfoDetailsActivity.class));
+                Intent intent = new Intent(SystemInfoActivity.this,InfoDetailsActivity.class);
+                intent.putExtra("content",systemInformVoList.get(i).getContent());
+                intent.putExtra("title",systemInformVoList.get(i).getTitle());
+                intent.putExtra("date",systemInformVoList.get(i).getTime());
+                startActivity(intent);
+                setDosGone();
+            }
+        });
+        lv_systeminfo.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+                showAlertDialog(systemInformVoList.get(position),wdb);
+                setDosGone();
+                return true;
             }
         });
     }
-
+    private void setDosGone(){
+        Intent myintent = new Intent("net.hunme.user.activity.ShowSysDosReceiver");
+        myintent.putExtra("isVisible",false);
+        sendBroadcast(myintent);
+    }
+    /**
+     * 删除提示框
+     */
+    private void showAlertDialog(final SystemInformVo systemInformVo, final  SQLiteDatabase database) {
+        View coupons_view = LayoutInflater.from(this).inflate(R.layout.alertdialog_message, null);
+        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this, 1);
+        Button pop_notrigst = (Button) coupons_view.findViewById(R.id.pop_notrigst);
+        Button pop_mastrigst = (Button) coupons_view.findViewById(R.id.pop_mastrigst);
+        TextView pop_title = (TextView) coupons_view.findViewById(R.id.tv_poptitle);
+        pop_title.setText("确认删除此系统消息？");
+        pop_notrigst.setText("取消");
+        pop_mastrigst.setText("删除");
+        pop_mastrigst.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dbHelp.deleteById(database,systemInformVo.getId());
+                initdata();
+                alertDialog.dismiss();
+            }
+        });
+        pop_notrigst.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+    }
     @Override
     protected void onRestart() {
         super.onRestart();

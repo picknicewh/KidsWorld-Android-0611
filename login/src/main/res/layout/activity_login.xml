@@ -11,31 +11,30 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/ic_login"/>
 
         <EditText
             android:id="@+id/ed_username"
             android:layout_margin="@dimen/space_x1.5"
-            android:padding="@dimen/space"
+            android:padding="@dimen/space_x1.5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/ic_launcher"
+
             android:hint="请输入您的手机号码"
-            android:background="@color/white"
+            android:background="@drawable/bg_login_text"
             />
         <EditText
             android:inputType="textPassword"
             android:id="@+id/ed_password"
             android:layout_margin="@dimen/space_x1.5"
-            android:padding="@dimen/space"
+            android:padding="@dimen/space_x1.5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/ic_launcher"
             android:hint="请输入您的密码"
-            android:background="@color/white"
+            android:background="@drawable/bg_login_text"
             />
 
         <Button
@@ -57,6 +56,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:padding="@dimen/space_x2"
-        android:text="忘记密码"
+        android:textColor="@color/main_green"
+        android:text="忘记密码？"
         />
 </RelativeLayout>

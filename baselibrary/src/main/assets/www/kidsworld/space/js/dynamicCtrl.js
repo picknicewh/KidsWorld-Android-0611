@@ -16,31 +16,41 @@ var imgIndex = 2,
     dynamicId = null,
     myName = getQueryString("myName");
     
-/* var imgIndex = 2,   
+ /*var imgIndex = 2,   
     urlNow = window.location.href,
     tsId = "81c5dc8725044e629cf524a3222cd818",
     groupId = "298f1648653840fdaa6c396830025af5",
+//  tsId = "988ab628507b4addb3130cca0b5d60fb",
+//  groupId = "298f1648653840fdaa6c396830025af5",
     groupType = 1,
-    firstTime = "2016-08-09 9:35:00",//第一次请求的时间
+    firstTime = "2016-08-12 9:35:00",//第一次请求的时间
     dynamicId = null,
-    myName = "周龙龙";
-*/
-    
-
-	
-	//点击事件
+    myName = "周龙龙";*/
+   		
+	//点赞事件
 	$('.mui-scroll').on('tap', '#more', function(event) {
 
 	var $this = $(this);
 	var drop = $this.next().data('show');
 
 	if(drop == 0) {
+		//其它的点赞弹窗消失
+		$('[id=popup]').data('show', 0).hide();
 		$this.next().data('show', 1).show();
 	} else {
 		$this.next().data('show', 0).hide();
 	}
+	
+	//点击其它地方，让所有的#popup消失
+	$(document).one("tap", function() { //对document绑定一个影藏Div方法
+			$('[id=popup]').data('show', 0).hide();
+		});
+	 event.stopPropagation(); //阻止事件向上冒泡
+	 
     });
-
+     
+      
+    
 	$('.mui-scroll').on('tap', '#popup', function(event) {
 	var $this = $(this);
 
@@ -182,11 +192,19 @@ function pulldownRefresh() {
          
         $.post(url + '/dynamic/getDynamic.do', data, 
         function(response){ 
-
+        	//根据不同设备，调用不同的消除红点方法。
+             var u = navigator.userAgent;
+              if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){ //android终端
+		            showDos.setStatus();
+		        }else if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){ //ios终端
+		            tooc();
+		        }
+		        
         	if(response.code == 0 && response.data.length > 0){
 //      		firstTime = refreshTime.Format("yyyy-MM-dd hh:mm:ss");
         		
         		var resultData = response.data;
+        		    
         		dynamicId = resultData[0].dynamicId;
 //      		alert(dynamicId);
         		
@@ -198,7 +216,11 @@ function pulldownRefresh() {
 					//下拉刷新，新纪录插到最前面
 					table.insertBefore(li, table.firstChild);
 			    }
-	        	showDos.setStatus();
+	        	
+//	        	 var u = navigator.userAgent;
+		       
+	        	
+	        	
         	}
         	
         	
@@ -348,6 +370,7 @@ function getQueryString(name) {
     doc.addEventListener('DOMContentLoaded', recalc, false);
 })(document, window);
 
+//设备准备好
 if(mui.os.plus) {
 	
 	mui.plusReady(function() {

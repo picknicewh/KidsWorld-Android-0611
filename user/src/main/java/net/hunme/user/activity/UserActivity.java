@@ -33,7 +33,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_id;
     private TextView tv_name;
     private TextView tv_address;//http://192.168.5.136:8989/webSVN/kidsWorld/paradise/indexH.html?tsId=6b64f21d7bc54e108fecbcf77e28e55e#/collect
-    private final String MYCOLLECTION="http://192.168.5.136:8989/webSVN/kidsWorld/paradise/index.html";
+    private final String MYCOLLECTION="file:///android_asset/www/kidsworld/paradise/index.html";
     private final String MYDYNAMICS="file:///android_asset/www/kidsworld/space/view/myDynamic.html";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
