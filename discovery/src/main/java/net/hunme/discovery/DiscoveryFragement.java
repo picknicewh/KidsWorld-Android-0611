@@ -1,6 +1,7 @@
 package net.hunme.discovery;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -111,7 +113,17 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,et_search,getActivity());
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
-        et_search.setOnClickListener(this);
+       // et_search.setOnClickListener(this);
+        et_search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                webView.loadUrl("javascript:goSearch_Origin()");
+                InputMethodManager imm = (InputMethodManager)getActivity(). getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(view,InputMethodManager.SHOW_FORCED);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+            }
+        });
        // setShowView();
        setWebView();
     }
@@ -155,13 +167,12 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                 webView.loadUrl("javascript:goSearchAudio_Origin()");
             }else if (url.contains("eduInformation")){
                 webView.loadUrl("javascript:goSearchInf_Origin()");
-
             }else if (webView.getUrl().contains("paradiseHome")){
                 webView.loadUrl("javascript:goHistory_Origin()");
             }
-        }else if (viewId==R.id.et_search){
+        }/*else if (viewId==R.id.et_search){
            webView.loadUrl("javascript:goSearch_Origin()");
-        }
+        }*/
     }
 
 }
