@@ -25,7 +25,7 @@
         <TextView
             android:layout_gravity="center"
             android:padding="@dimen/space"
-            android:text="苗苗班"
+            android:text="未知班级"
             android:textColor="@color/white"
             android:id="@+id/tv_classname"
             android:textSize="@dimen/ts_xx_large"

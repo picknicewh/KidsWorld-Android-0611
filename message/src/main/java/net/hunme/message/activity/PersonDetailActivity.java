@@ -136,11 +136,15 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
                 RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
                     @Override
                     public UserInfo getUserInfo(String userId) {
-                        UserInfo userInfo =new UserInfo(userid,username, Uri.parse(image));
-                        return  userInfo;
+                        if(null!=image){
+                            return  new UserInfo(userid,username, Uri.parse(image));
+                        }
+                       return null;
                     }
                 }, true);
-                RongIM.getInstance().refreshUserInfoCache(new UserInfo(userid, username, Uri.parse(image)));
+                if(null!=image){
+                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(userid, username, Uri.parse(image)));
+                }
             }
         }
     }

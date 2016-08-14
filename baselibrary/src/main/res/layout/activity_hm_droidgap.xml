@@ -10,41 +10,46 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/main_green">
-        <ImageView
-            android:layout_marginLeft="@dimen/space"
-            android:id="@+id/iv_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_arrow_lift"
-            android:layout_centerVertical="true"
+        <RelativeLayout
             android:layout_gravity="center"
-            android:padding="@dimen/space"/>
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:gravity="center"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/ts_xx_large"
-            android:text="我的收藏"
-            android:layout_gravity="center"/>
-        <TextView
-            android:visibility="gone"
-            android:padding="@dimen/space_x1.5"
-            android:id="@+id/tv_subtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/ts_large"
-            android:text="121"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/iv_test"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginLeft="@dimen/space"
+                android:id="@+id/iv_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_arrow_lift"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/space"/>
+            <TextView
+                android:layout_centerInParent="true"
+                android:id="@+id/tv_title"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/ts_xx_large"
+                android:text="我的收藏"
+                android:layout_gravity="center"/>
+            <TextView
+                android:visibility="gone"
+                android:padding="@dimen/space_x1.5"
+                android:id="@+id/tv_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/ts_large"
+                android:text="121"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"/>
+            <ImageView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_test"/>
+        </RelativeLayout>
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"

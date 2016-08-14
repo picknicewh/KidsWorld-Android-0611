@@ -29,7 +29,6 @@ import net.hunme.status.StatusFragement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -119,11 +118,6 @@ public class MainActivity extends JPushBaseActivity {
     public static boolean isconnect;
     public static int count;
     /**
-     * 是否连续点击了两次返回键
-     */
-    private boolean isQuit = false;
-    private Timer timer;
-    /**
      * 接收动态小红点的广播
      */
     private MyStatusDosShowReceiver myStatusDosShowReceiver;
@@ -140,8 +134,10 @@ public class MainActivity extends JPushBaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initViewpager();
-        //初始极光推送配置信息
-        initJPushConfiguration(UserMessage.getInstance(this).getLoginName(), "tag");
+        if(null!=userMessage.getUserName()){
+            //初始极光推送配置信息
+            initJPushConfiguration(userMessage.getLoginName(), "tag");
+        }
         //如果网络连接时，连接融云
         if (G.isNetworkConnected(this)) {
             BaseLibrary.connect(userMessage.getRyId(), MainActivity.this, userMessage.getUserName(), userMessage.getHoldImgUrl());
@@ -149,14 +145,13 @@ public class MainActivity extends JPushBaseActivity {
         }
         registerReceiver();
         initCount();
-        timer = new Timer();
     }
 
     /**
      * 初始化viewpager
      */
     private void initViewpager() {
-        userMessage = new UserMessage(this);
+        userMessage = UserMessage.getInstance(this);
         statusFragement = new StatusFragement();
         schoolFragement = new SchoolFragement();
         discoveryFragement = new DiscoveryFragement();
@@ -319,29 +314,6 @@ public class MainActivity extends JPushBaseActivity {
         }
     }
 
-   /* public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            //这里处理逻辑代码
-            if (isQuit) {
-                // 这是两次点击以后
-                timer.cancel();
-                BaseLibrary.exit();
-            } else {
-                isQuit = true;
-                Toast.makeText(this.getApplicationContext(), "再按一次退出", Toast.LENGTH_SHORT).show();
-                TimerTask task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        isQuit = false;
-                    }
-                };
-                timer.schedule(task, 2000);
-            }
-            return false;
-        }
-        return super.dispatchKeyEvent(event);
-    }
-*/
     /**
      * 接收动态小红点的广播
      */

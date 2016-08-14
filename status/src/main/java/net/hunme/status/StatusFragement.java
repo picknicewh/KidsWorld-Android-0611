@@ -182,7 +182,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         if (viewId==R.id.ll_classchoose){
             G.initDisplaySize(getActivity());
             int xPos = G.size.W/2-G.dp2px(getActivity(),75);
-            G.log(G.size.W/2+"----------------"+popWindow.getContentView().getWidth()/2);
             popWindow.showAsDropDown(rl_toolbar,xPos,-G.dp2px(getActivity(),10));
             popWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
@@ -235,16 +234,19 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
 
     @Override
     public void onSuccess(String uri, Object date) {
-        G.KisTyep.isChooseId=false;
-        dynamicList = ((Result<List<DynamicVo>>) date).getData();
-        classlist.clear();
-        for (DynamicVo d: dynamicList){
-            classlist.add(d.getGroupName());
-        }
-        popWindow = new ChooseClassPopWindow(this, classlist);
-        ll_classchoose.setOnClickListener(this);
-        if(dynamicList.size()>0){
-            setWebView(0);
+        if(DYNAMICHEAD.equals(uri)){
+            G.KisTyep.isChooseId=false;
+            dynamicList = ((Result<List<DynamicVo>>) date).getData();
+            classlist.clear();
+            for (DynamicVo d: dynamicList){
+                classlist.add(d.getGroupName());
+            }
+            popWindow = new ChooseClassPopWindow(this, classlist);
+            ll_classchoose.setOnClickListener(this);
+            if(dynamicList.size()>0){
+                tv_classname.setText(classlist.get(0));
+                setWebView(0);
+            }
         }
     }
     @Override

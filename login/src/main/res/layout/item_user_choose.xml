@@ -48,6 +48,7 @@
     </RelativeLayout>
 
     <ImageView
+        android:visibility="invisible"
         android:id="@+id/iv_choose"
         android:padding="@dimen/space"
         android:src="@mipmap/ic_choose"

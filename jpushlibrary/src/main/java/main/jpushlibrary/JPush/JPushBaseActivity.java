@@ -3,7 +3,6 @@ package main.jpushlibrary.JPush;
 import android.app.Notification;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -68,7 +67,7 @@ public class JPushBaseActivity extends FragmentActivity {
      */
     private String setAlias(String alias){
         if (JPushUtil.isEmpty(alias)) {
-            Toast.makeText(getApplicationContext(),R.string.error_alias_empty, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(),R.string.error_alias_empty, Toast.LENGTH_SHORT).show();
             Log.i("TAG", "alias不能为空！");
             return null;
         }

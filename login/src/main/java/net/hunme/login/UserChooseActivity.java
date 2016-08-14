@@ -58,6 +58,13 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
         }
         isGoBack=getIntent().getBooleanExtra("type",false);
         dialog=new LoadingDialog(this,R.style.LoadingDialogTheme);
+        if(isGoBack){
+            for (int i=0;i<seleteList.size();i++){
+                if(um.getUserName().equals(seleteList.get(i).getName())){
+                    adapter.setSelectPosition(i);
+                }
+            }
+        }
     }
 
     @Override
