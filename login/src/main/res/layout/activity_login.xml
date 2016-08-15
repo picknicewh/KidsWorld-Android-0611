@@ -1,62 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".LoginActivity">
-
     <LinearLayout
-        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_login"/>
+
+            <EditText
+                android:id="@+id/ed_username"
+                android:layout_margin="@dimen/space_x1.5"
+                android:padding="@dimen/space_x1.5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:windowSoftInputMode="stateHidden|adjustResize"
+                android:hint="请输入您的手机号码"
+                android:background="@drawable/bg_login_text"
+                />
+            <EditText
+                android:windowSoftInputMode="stateHidden|adjustResize"
+                android:inputType="textPassword"
+                android:id="@+id/ed_password"
+                android:layout_margin="@dimen/space_x1.5"
+                android:padding="@dimen/space_x1.5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入您的密码"
+                android:background="@drawable/bg_login_text"
+                />
+
+            <Button
+                android:id="@+id/b_login"
+                android:background="@drawable/bg_login_btn"
+                android:padding="@dimen/space"
+                android:layout_margin="@dimen/space_x1.5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="登录"
+                android:textColor="@color/white"
+                android:textSize="@dimen/ts_x_large"/>
+        </LinearLayout>
+
+        <TextView
             android:layout_gravity="center"
-            android:src="@mipmap/ic_login"/>
-
-        <EditText
-            android:id="@+id/ed_username"
-            android:layout_margin="@dimen/space_x1.5"
-            android:padding="@dimen/space_x1.5"
-            android:layout_width="match_parent"
+            android:id="@+id/tv_unpassword"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:hint="请输入您的手机号码"
-            android:background="@drawable/bg_login_text"
+            android:padding="@dimen/space_x2"
+            android:textColor="@color/main_green"
+            android:text="忘记密码？"
             />
-        <EditText
-            android:inputType="textPassword"
-            android:id="@+id/ed_password"
-            android:layout_margin="@dimen/space_x1.5"
-            android:padding="@dimen/space_x1.5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="请输入您的密码"
-            android:background="@drawable/bg_login_text"
-            />
-
-        <Button
-            android:id="@+id/b_login"
-            android:background="@drawable/bg_login_btn"
-            android:padding="@dimen/space"
-            android:layout_margin="@dimen/space_x1.5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="登录"
-            android:textColor="@color/white"
-            android:textSize="@dimen/ts_x_large"/>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_unpassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:padding="@dimen/space_x2"
-        android:textColor="@color/main_green"
-        android:text="忘记密码？"
-        />
-</RelativeLayout>
+</ScrollView>

@@ -10,29 +10,8 @@ angular.module('app', ['ui.router','ionic','ionic-datepicker','onezone-datepicke
         document.addEventListener('deviceready', onDeviceReady, false);
     })
 
-
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('home', {
-                url: '/home',
-                templateUrl: 'views/home/home.html',
-                controller: 'AppCtrl'
-            })
-            .state('openClass',{
-                url:'/openClass',
-                templateUrl:'views/home/openClass.html',
-                controller:'openClassCtrl'
-            })
-            .state('noticeRead',{
-                url:'/noticeRead',
-                templateUrl:'views/home/noticeRead.html',
-                controller:'noticeReadCtrl'
-            })
-            .state('notificationDetails',{
-                url:'/notificationDetails',
-                templateUrl:'views/home/notificationDetails.html',
-                controller:'notificationDetailsCtrl'
-            })
             .state('foodList',{
                 url:'/foodList',
                 templateUrl:'views/home/foodList.html',
@@ -42,21 +21,6 @@ angular.module('app', ['ui.router','ionic','ionic-datepicker','onezone-datepicke
                 url:'/foodListDet',
                 templateUrl:'views/home/foodListDet.html',
                 controller:'foodListDetCtrl'
-            })
-            //.state('recipes',{
-            //    url:'/recipes',
-            //    templateUrl:'views/home/recipes.html',
-            //    controller:'recipesCtrl'
-            //})
-            //.state('recipesDet',{
-            //    url:'/recipesDet',
-            //    templateUrl:'views/home/recipesDet.html',
-            //    controller:'recipesDetCtrl'
-            //})
-            .state('checkOn',{
-                url:'/checkOn',
-                templateUrl:'views/home/checkOn.html',
-                controller:'checkOnCtrl'
             })
             .state('askForlv',{
                 url:'/askForlv',
@@ -68,17 +32,8 @@ angular.module('app', ['ui.router','ionic','ionic-datepicker','onezone-datepicke
                 templateUrl:'views/home/courseArr.html',
                 controller:'courseArrCtrl'
             })
-            .state('checkOnclass',{
-                url:'/checkOnclass',
-                templateUrl:'views/home/checkOnclass.html',
-                controller: 'checkOnclassCtrl'
-            })
-            .state('checkOnperson',{
-                url:'/checkOnperson',
-                templateUrl:'views/home/checkOnperson.html',
-                controller: 'checkOnpersonCtrl'
-            })
 
-            $urlRouterProvider.otherwise('home');
+
+            //$urlRouterProvider.otherwise('home');
     });
 

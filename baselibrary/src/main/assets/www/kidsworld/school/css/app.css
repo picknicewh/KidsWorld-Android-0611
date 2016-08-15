@@ -14,3 +14,7 @@ div.head span {
 .has-border a{
     border-bottom: 1px solid #737272;
 }
+.loadMoreBox span {
+    text-align: center;
+    display: inherit;
+}
