@@ -32,6 +32,7 @@ import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.LoadingDialog;
 import net.hunme.status.R;
+import net.hunme.status.StatusFragement;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.adapter.GridAlbumAdapter;
 import net.hunme.user.util.BitmapCache;
@@ -305,6 +306,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         map.put("tsId",UserMessage.getInstance(this).getTsId());
         map.put("text",dyContent);
         map.put("dynamicVisicty",dynamicVisicty);
+        map.put("classId", StatusFragement.CLASSID);
         Type type =new TypeToken<Result<String>>(){}.getType();
         if(dynamicType.equals("1")&&itemList.size()>0){
             List<File>list= BitmapCache.getFileList(itemList);
