@@ -37,6 +37,7 @@ public class HMDroidGap extends CordovaActivity {
     protected boolean activityResultKeepRunning;
     protected boolean keepRunning = true;
     private LinearLayout ll_toolbar;
+    public  static  int flag =0;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,11 +77,7 @@ public class HMDroidGap extends CordovaActivity {
         });
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
 
-    }
 
     private void setTabBarText(){
         tv_title.setText(getIntent().getStringExtra("title"));

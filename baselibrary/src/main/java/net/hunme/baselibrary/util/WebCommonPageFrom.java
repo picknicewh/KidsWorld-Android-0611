@@ -3,6 +3,7 @@ package net.hunme.baselibrary.util;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -225,5 +226,18 @@ public class WebCommonPageFrom {
         intent.putExtra("loadUrl",url);
         intent.putExtra("title","我的收藏");
         activity.startActivity(intent);
+    }
+
+    @JavascriptInterface
+    public void noticeChange(){
+        Log.i("TAG","重新加载动态");
+        HMDroidGap.flag = 1;
+    }
+
+    @JavascriptInterface
+    public void sendBroadcast(boolean isVisible){
+        Intent intent = new Intent("net.hunme.kidsworld.hideMainTabReceiver");
+        intent.putExtra("isVisible",isVisible);
+        activity.sendBroadcast(intent);
     }
 }

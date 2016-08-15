@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.BaseLibrary;
+import net.hunme.baselibrary.cordova.HMDroidGap;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.NoScrollViewPager;
@@ -171,9 +172,10 @@ public class MainActivity extends JPushBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (UserChooseActivity.flag == 1) {
+        if (UserChooseActivity.flag == 1 || HMDroidGap.flag==1) {
             initViewpager();
             UserChooseActivity.flag = 0;
+            HMDroidGap.flag=0;
         }
         setNoreadMessage();
     }
@@ -296,7 +298,7 @@ public class MainActivity extends JPushBaseActivity {
                 break;
 
         }
-        UserChooseActivity.flag = 0;
+
     }
 
     /**

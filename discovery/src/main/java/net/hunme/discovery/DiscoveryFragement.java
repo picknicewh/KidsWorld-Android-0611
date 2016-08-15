@@ -22,6 +22,7 @@ import net.hunme.baselibrary.cordova.CordovaInterfaceImpl;
 import net.hunme.baselibrary.cordova.MySystemWebView;
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.network.ServerConfigManager;
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
 import net.hunme.user.activity.UserActivity;
@@ -89,9 +90,9 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                   // webView.goBack();   //这方法没用的哦
 //                    getActivity().getSupportFragmentManager().popBackStack("gifPageTwoFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                   if(webView.canGoBack()){
+
                       webView.goBack();
                   }else{
                       getActivity().finish();
@@ -121,10 +122,11 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         et_search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                webView.loadUrl("javascript:goSearch_Origin()");
+                //关闭软键盘
                 InputMethodManager imm = (InputMethodManager)getActivity(). getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(view,InputMethodManager.SHOW_FORCED);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                webView.loadUrl("javascript:goSearch_Origin()");
 
             }
         });
@@ -132,7 +134,16 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
        setWebView();
     }
 
-     private  void  setShowView(){
+    @Override
+    public void onResume() {
+        super.onResume();
+       if (G.KisTyep.isUpadteHold){
+           ImageCache.imageLoader(UserMessage.getInstance(getActivity()).getHoldImgUrl(),iv_left);
+       }
+
+    }
+
+    private  void  setShowView(){
          setWebView();
       /*   if (G.isNetworkConnected(getActivity())){
              rl_nonetwork.setVisibility(View.GONE);
@@ -149,6 +160,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
 //        }else {
 //            ll_loading.setVisibility(View.VISIBLE);
 //        }
+
     }
 
 
@@ -162,6 +174,8 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
            }else {
                webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
                webView.goBack();
+
+               //Log.i("TAGG",webView.getUrl());
            }
          } else if (viewId==R.id.iv_dright){
             String url = webView.getUrl();

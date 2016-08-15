@@ -1,7 +1,6 @@
 package net.hunme.baselibrary.cordova;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +74,15 @@ public class MySystemWebView extends SystemWebChromeClient {
 //        //设置全屏
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        sendBroadcast(activity,false);
+      //  sendBroadcast(activity,false);
+       /* if (!mWebView.getUrl().contains("paradiseHome")){
+            sendBroadcast(activity,false);
+            Log.i("TADDD","AAAAAAAAAAAA"+mWebView.getUrl());
+        }else {
+            sendBroadcast(activity,true);
+            Log.i("TADDD","BBBBBBBBBBBBB"+mWebView.getUrl());
+        }
+        Log.i("TADDD",mWebView.getUrl());*/
     }
 
 
@@ -103,11 +110,11 @@ public class MySystemWebView extends SystemWebChromeClient {
         activity.getWindow().setAttributes(attrs);
         activity.getWindow().clearFlags(
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        sendBroadcast(activity,true);
+      //  sendBroadcast(activity,true);
     }
-    private void sendBroadcast(Activity activity,boolean isVisible){
+   /* private void sendBroadcast(boolean isVisible){
       Intent intent = new Intent("net.hunme.kidsworld.hideMainTabReceiver");
       intent.putExtra("isVisible",isVisible);
       activity.sendBroadcast(intent);
-  }
+  }*/
 }

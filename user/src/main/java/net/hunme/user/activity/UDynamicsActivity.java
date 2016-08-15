@@ -1,18 +1,16 @@
 package net.hunme.user.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MWebChromeClient;
 import net.hunme.baselibrary.util.MWebViewClient;
 import net.hunme.baselibrary.widget.MyViewView;
-import net.hunme.login.UserChooseActivity;
 import net.hunme.user.R;
 
 /**
@@ -42,6 +40,7 @@ public class UDynamicsActivity extends BaseActivity implements View.OnClickListe
      * 没有网络时显示内容
      */
     private RelativeLayout rl_nonetwork;
+    @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,16 +69,13 @@ public class UDynamicsActivity extends BaseActivity implements View.OnClickListe
         }
     }
     private void  setWebView(){
-        webView.addJavascriptInterface(this, "change_tob");  //设置本地调用对象及其接口
+        webView.addJavascriptInterface(this, "refresh");  //设置本地调用对象及其接口
         webView.setWebViewClient(new MWebViewClient(webView,this));
         webView.setWebChromeClient(new MWebChromeClient(this,ll_loading,webView));
         webView.loadUrl(url);
     }
-    @JavascriptInterface
-    public void noticeChange(){
-        Toast.makeText(this,"重新加载动态",Toast.LENGTH_SHORT).show();
-        UserChooseActivity.flag=1;
-    }
+
+
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);

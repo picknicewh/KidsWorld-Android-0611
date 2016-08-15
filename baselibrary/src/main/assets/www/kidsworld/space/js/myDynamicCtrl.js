@@ -125,8 +125,8 @@ function pullupRefresh() {
 						  	 	//根据不同的设备，调用不同的原生方法，来重新加载页面。
 						  	 	var u = navigator.userAgent;
 					            if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){ //android终端
-					                     alert(45);
-							             change_tob.noticeChange();
+
+							              change_tb.noticeChange();
 							    }else if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){ //ios终端
 							            refreshTrend();
 							    }

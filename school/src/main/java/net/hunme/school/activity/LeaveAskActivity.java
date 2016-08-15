@@ -198,11 +198,16 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
             Toast.makeText(this,"结束时间不能为空！",Toast.LENGTH_SHORT).show();
             return;
         }
+        if (endDate.compareTo(starDate)<=0){
+            Toast.makeText(this,"请假开始时间不能比结束时间晚哦！",Toast.LENGTH_SHORT).show();
+            return;
+        }
         //提交角色ID
         UserMessage userMessage = UserMessage.getInstance(this);
         params.put("tsId", userMessage.getTsId());
         //需要请假人员角色ID
         params.put("leaveTsId",userMessage.getTsId());
+
         params.put("endDate",endDate);
         params.put("startDate",starDate);
         //1=早餐，2=中餐，3=晚餐 多选时，用英文逗号分隔
