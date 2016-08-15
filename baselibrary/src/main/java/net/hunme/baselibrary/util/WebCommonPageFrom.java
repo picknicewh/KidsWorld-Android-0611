@@ -8,7 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,10 +42,10 @@ public class WebCommonPageFrom {
     /**
      * 首页搜索
      */
-    private EditText et_search;
+    private Button et_search;
     private Activity activity;
 
-    public WebCommonPageFrom(ImageView iv_left, TextView tv_title, ImageView iv_right, EditText et_search,Activity activity){
+    public WebCommonPageFrom(ImageView iv_left, TextView tv_title, ImageView iv_right, Button et_search, Activity activity){
         this.iv_left = iv_left;
         this.tv_title = tv_title;
         this.iv_right = iv_right;
@@ -102,7 +102,8 @@ public class WebCommonPageFrom {
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("安全教育");
                         tv_title.setVisibility(View.VISIBLE);
-                        iv_right.setVisibility(View.GONE);
+                        iv_right.setVisibility(R.mipmap.ic_empty);
+                        //iv_right.setVisibility(View.GONE);
                         break;
                     case Constant.CONSULTDETAIL:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
@@ -146,31 +147,34 @@ public class WebCommonPageFrom {
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("搜索课程");
                         tv_title.setVisibility(View.VISIBLE);
-                        iv_right.setVisibility(View.GONE);
+                        iv_right.setImageResource(R.mipmap.ic_empty);
                         break;
                     case Constant.SEARCH_MUSIC:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("搜索音乐");
                         tv_title.setVisibility(View.VISIBLE);
-                        iv_right.setVisibility(View.GONE);
+                       // iv_right.setVisibility(View.GONE);
+                        iv_right.setImageResource(R.mipmap.ic_empty);
                         break;
                     case Constant.SEARCH_CON:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("搜索资讯");
                         tv_title.setVisibility(View.VISIBLE);
-                        iv_right.setVisibility(View.GONE);
+                        iv_right.setImageResource(R.mipmap.ic_empty);
                         break;
                     case Constant.PLAY_HISTORY:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("播放记录");
                         tv_title.setVisibility(View.VISIBLE);
-                        iv_right.setVisibility(View.GONE);
+                        //iv_right.setVisibility(View.GONE);
+                        iv_right.setImageResource(R.mipmap.ic_empty);
                         break;
                     case Constant.COLLECT:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("我的收藏");
                         tv_title.setVisibility(View.VISIBLE);
-                        iv_right.setVisibility(View.GONE);
+                      //  iv_right.setVisibility(View.GONE);
+                        iv_right.setImageResource(R.mipmap.ic_empty);
                         break;
                 }
                 if (view.equals(Constant.HOME)){
@@ -192,6 +196,7 @@ public class WebCommonPageFrom {
                              activity instanceof  HMDroidGap&&view.equals(Constant.MEDIAPLAYING)){
                         layoutParams2.setMargins(G.dp2px(activity,0),0,0,0);
                     }
+
                     else {
                         layoutParams2.setMargins(G.dp2px(activity,10),0,0,0);
                     }
@@ -212,10 +217,16 @@ public class WebCommonPageFrom {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams2.gravity = Gravity.CENTER_VERTICAL;
+                layoutParams2.setMargins(G.dp2px(activity,10),0,0,0);
+                iv_left.setLayoutParams(layoutParams2);
                 iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                 tv_title.setText(title);
                 tv_title.setVisibility(View.VISIBLE);
-                iv_right.setVisibility(View.GONE);
+                iv_right.setImageResource(R.mipmap.ic_empty);
+              //  iv_right.setVisibility(View.GONE);
             }
         });
     }

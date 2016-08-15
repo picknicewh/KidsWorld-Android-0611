@@ -3,7 +3,6 @@ package net.hunme.baselibrary.cordova;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.widget.ImageView;
@@ -67,7 +66,7 @@ public class HMDroidGap extends CordovaActivity {
                     }
                     tv_title.setVisibility(View.VISIBLE);
                     tv_title.setText("我的收藏");
-                    Log.i("TAFFFF",webView.getUrl());
+                    findViewById(R.id.iv_test).setVisibility(View.VISIBLE);
                     webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
                     webView.goBack();
                 }else {

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.cordova.CordovaInterfaceImpl;
+import net.hunme.baselibrary.cordova.HMDroidGap;
 import net.hunme.baselibrary.cordova.MySystemWebView;
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.mode.Result;
@@ -219,6 +221,12 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         Intent myIntent = new Intent("net.hunme.kidsworld.MyStatusDosShowReceiver");
         myIntent.putExtra("count",0);
         getActivity().sendBroadcast(myIntent);
+    }
+
+    @JavascriptInterface
+    public void noticeChange(){
+        Log.i("TAG","重新加载动态");
+        HMDroidGap.flag = 1;
     }
     /**
      * 获取班级列表

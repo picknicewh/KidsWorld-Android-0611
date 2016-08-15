@@ -1,7 +1,6 @@
 package net.hunme.discovery;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,9 +8,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -57,7 +55,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
     /**
      * 首页搜索
      */
-    private EditText et_search;
+    private Button bt_search;
     /**
      * 加载动画
      */
@@ -107,7 +105,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         iv_left = $(v,R.id.iv_dleft);
         tv_title = $(v,R.id.tv_dtitle);
         iv_right = $(v,R.id.iv_dright);
-        et_search = $(v,R.id.et_search);
+        bt_search = $(v,R.id.et_search);
         webView = $(v,R.id.cordovaWebView);
         pb_web=$(v,R.id.pb_web);
         ll_discovery=$(v,R.id.ll_cdiscovery);
@@ -115,11 +113,17 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
 //        ll_loading = $(v,R.id.ll_loading);
         //rl_nonetwork= $(v,R.id.rl_nonetwork);
        // rl_nonetwork.setOnClickListener(this);
-        from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,et_search,getActivity());
+        from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,bt_search,getActivity());
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
        // et_search.setOnClickListener(this);
-        et_search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        bt_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                webView.loadUrl("javascript:goSearch_Origin()");
+            }
+        });
+     /*   bt_search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 //关闭软键盘
@@ -129,7 +133,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                 webView.loadUrl("javascript:goSearch_Origin()");
 
             }
-        });
+        });*/
        // setShowView();
        setWebView();
     }
