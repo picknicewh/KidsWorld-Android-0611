@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     app:title=" "
+    app:navigationIcon="@mipmap/ic_arrow_lift"
     android:background="@color/colorAccent">
 
     <ImageView
@@ -24,7 +25,6 @@
         android:textSize="@dimen/ts_xx_large" />
 
     <LinearLayout
-        android:paddingRight="@dimen/space"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

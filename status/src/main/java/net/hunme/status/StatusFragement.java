@@ -106,10 +106,10 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     private RelativeLayout rl_toolbar;
     private SystemWebView webView;
     private int position = 0;
-    private  MyJpushReceiver myReceiver;
+    private MyJpushReceiver myReceiver;
     private CordovaWebView cordovaWebView;
     private ProgressBar pb_web;
-
+    public static String CLASSID;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.fragment_status, null);
@@ -144,6 +144,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     }
 
     public void setWebView(int position){
+        CLASSID=dynamicList.get(position).getGroupId();
         cordovaWebView.loadUrl(url+"groupId="+dynamicList.get(position).getGroupId());
         cordovaWebView.loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
                 +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
@@ -246,6 +247,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             if(dynamicList.size()>0){
                 tv_classname.setText(classlist.get(0));
                 setWebView(0);
+                CLASSID=dynamicList.get(0).getGroupId();
             }
         }
     }
