@@ -141,7 +141,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
 
     }
     private String  geturl(String type){
-        String url = baseurl+"TsId="+ UserMessage.getInstance(getActivity()).getTsId()+ "&type=" +UserMessage.getInstance(getActivity()).getType()+"#/";
+        String url =baseurl+"tsId="+ UserMessage.getInstance(getActivity()).getTsId()+"&type="+UserMessage.getInstance(getActivity()).getType()+"#/";
         switch (type){
          case OPENCLASS:url =url+OPENCLASS ;break;
          case CHECK:url = url+CHECK;break;

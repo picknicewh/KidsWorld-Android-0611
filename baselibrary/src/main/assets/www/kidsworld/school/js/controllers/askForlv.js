@@ -3,90 +3,68 @@
  */
 angular.module('app.controllers')
 
-    .controller('askForlvCtrl',function($scope, $state,$ionicPopup,$parse, NoteService,WebService,$timeout,$http) {
+    .controller('askForlvCtrl',function($scope, $state,$ionicScrollDelegate,$ionicPopup,$parse, NoteService,WebService,$timeout,$http) {
         //页面无内容时，提示无数据
-        $scope.pro = false;
-
+        //$scope.pro = false;
+        $scope.loadState = 0;
         var pageNumber = 1,
             pageSize = 15;
-            $scope.tsId=getUrlParam("TsId");
+        $scope.tsId=getUrlParam("tsId");
+//        $scope.tsId = "12345678901";
         // 视图显示之前需要完成的任务
         $scope.$on('$ionicView.beforeEnter', function() {
-            $scope.doMore = true;
-            $scope.getData();
+            //$scope.pro = false;
+            //$scope.noMore = false;
+            //$scope.doMore = true;
+            $scope.items=[];
+            getData();
         });
+
         //获取数据列表
-        $scope.getData = function(){
-        //}
-        //function getData() {
+        function getData() {
             //alert('弹出');
             var res = WebService.getLeaveList($scope.tsId,pageNumber,pageSize);
+            $scope.loadState = 1;
             res.$promise.then(function(response) {
-                data = response.data;
-                var length = data.data.length;
-                if(data.code == "0"){
-                    $scope.items = data.data;
-                    //页面无内容时，提示无数据
-                    if(length=0){
-                        $scope.pro = true;
-                        $scope.doMore = false;
+                var data = response.data.data;
+                var length = data.length;
+                $scope.loadState=0;
+                if(response.data.code == 0){
+
+                    if(length < pageSize) {
+                        $scope.loadState=2;
+                        if(length<=0){
+                            return;
+                        }
                     }
+                    $scope.items=$scope.items.concat(data);
+                    $ionicScrollDelegate.resize();
+                }else{
+                    $scope.loadState=2;
                 }
-                if(data.code == "1") {
-                    //$ionicPopup.alert({
-                    //    title: '提示',
-                    //    template: '无数据！'
-                    //});
-                    //页面无内容时，提示无数据
+
+
+               /* if(length=0){
+
+                    if(pageIndex == 1) {
                         $scope.pro = true;
-                    return;
+                    }
+
+                }else{
+                    $scope.items=$scope.items.concat(data);
+
                 }
+                $scope.domore=false;
+                $scope.noMore = true;*/
+
             });
         }
-        function pullUp(){
-            getData();
+
+        //上拉加载
+        $scope.pullUp = function(){
             pageNumber++;
+            getData();
+
         }
-        //$scope.hasmore=true;
-        //var run = false;//模拟线程锁机制  防止多次请求 含义：是否正在请求。请注意，此处并非加入到了就绪队列，而是直接跳过不执行
-        //console.log($scope.hasmore+"是否加载更多");
-        //var obj = {pageNumber:1,pageSize:2};
-        //var result = chushihua(obj,1);
-        //
-        ////上拉加载
-        //$scope.loadMore = function(){
-        //    var old = $scope.project;
-        //    if(old!=undefined){
-        //        var result = chushihua(obj,3);
-        //    }
-        //    $scope.$broadcast('scroll.infiniteScrollComplete');
-        //};
-        //function chushihua(obj_data,state) {
-        //    if (!run) {
-        //        run = true;
-        //        $http({
-        //            method: 'POST',
-        //            url: '/school/getLeave.do',
-        //            data: WebService.getLeaveList($scope.tsId, pageNumber, pageSize),
-        //            headers: {'Content-Type': 'application/json;charset=utf-8'},
-        //            dataType: 'JSON'
-        //        }).success(function (data, status) {
-        //            run = false;
-        //            if(state==3){
-        //                $scope.project = $scope.project.concat(data.result);
-        //                if(data.result==null || data.result.length==0){
-        //                    console.log("结束");
-        //                    $scope.hasmore=false;
-        //                }else{
-        //                    obj.current += obj.count;
-        //                }
-        //            }else{
-        //                $scope.project = data.result;
-        //            }
-        //        }).error(function(data,status){
-        //
-        //        })
-        //
-        //    }
-        //}
+
     });

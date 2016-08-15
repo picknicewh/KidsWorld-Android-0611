@@ -1,35 +1,32 @@
 <ion-view title="课程安排">
-    <!--<ion-nav-bar class="bar-tf">-->
-        <!--<ion-nav-back-button class="btt-col">-->
-        <!--</ion-nav-back-button>-->
-    <!--</ion-nav-bar>-->
-    <!--<ion-nav-buttons side="right">-->
-        <!--<button class="button-stable button-clear" style="color: white">发布</button>-->
-    <!--</ion-nav-buttons>-->
     <ion-content>
-        <!--<div class="courseArr-allt">-->
-            <!--<div class="courseArr-con" ng-repeat="item in items">-->
-                <!--<span>{{ item.title }}</span>-->
-                <!--<div class="courseArr-pic"><img src="{{item.imgs}}"/></div>-->
-                <!--<div class="time-del">-->
-                    <!--<time>{{item.creationTime}}</time>-->
-                    <!--<a ng-click="del(item)">删除</a>-->
-                <!--</div>-->
-                <!--<div class="border-bott"></div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <div class="courseArr-allt">
-            <div class="courseArr-con" ng-repeat="item in items">
+
+
+
+        <ul class="courseArr-allt">
+            <li class="courseArr-con" ng-repeat="item in items">
                 <span>{{ item.title }}</span>
                 <div class="courseArr-pic"><img src="{{item.imgs[0]}}"/></div>
                 <div class="time-del">
                     <time>{{item.creationTime | dataTime}}</time>
-                    <a ng-click="del($index,item.syllabusId)" data-id="{{item.syllabusId}}">删除</a>
+                    <a ng-click="showConfirm($index,item.syllabusId)" data-id="{{item.syllabusId}}" ng-show="type == 2" >删除</a>
                 </div>
                 <div class="border-bott"></div>
-            </div>
+            </li>
+            <!--<li class="clear"></li>
+            <li class="noMore" ng-show="noMore">没有更多数据了</li>-->
+        </ul>
+       <!-- <ion-infinite-scroll on-infinite="pullUp()" distance="1%" ng-if="doMore">
+        </ion-infinite-scroll>-->
+        <div class="loadMoreBox">
+            <span class="loadMore" ng-show="loadState==0" ng-click="pullUp()">查看更多</span>
+            <span class="moreIcon" ng-show="loadState==0" ng-click="pullUp()"></span>
+            <ion-spinner icon="bubbles" class="spinner-balanced loading" ng-show="loadState==1"></ion-spinner>
+            <span class="loadEnd" ng-show="loadState==2">没有更多数据了</span>
         </div>
-        <div class="cont" ng-show="pro">
+
+       <!-- <div class="cont" ng-show="pro">
             <span class="no-data">暂无数据</span>
-        </div>
+        </div>-->
     </ion-content>
+</ion-view>

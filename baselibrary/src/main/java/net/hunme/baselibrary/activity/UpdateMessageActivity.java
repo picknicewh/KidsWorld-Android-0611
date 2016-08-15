@@ -206,6 +206,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     public void onError(String uri, String error) {
         G.showToast(this,error);
         if(VALIDATECODE.equals(uri)){
+            myCount.onFinish();
             myCount.cancel();
         }
     }

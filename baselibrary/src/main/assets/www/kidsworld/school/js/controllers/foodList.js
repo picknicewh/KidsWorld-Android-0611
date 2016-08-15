@@ -20,8 +20,9 @@ angular.module('app.controllers')
             return fmt;
         };
         //变量声明
-        var tsId=getUrlParam("TsId");
-        //tsId = "81c5dc8725044e629cf524a3222cd818";
+        var tsId=getUrlParam("tsId");
+        $scope.pro = false;
+//        tsId = "81c5dc8725044e629cf524a3222cd818";
 
         //日历初始化
         var currentDate = new Date();
@@ -55,24 +56,32 @@ angular.module('app.controllers')
         $scope.showDatepicker = function () {
             $scope.onezoneDatepicker.showDatepicker = true;
         };
-        $scope.goSearch= function () {
-            $state.go('foodListDet');
-            //clearInterval($scope.bannnerTimer);
-        };
+        //$scope.goSearch= function () {
+        //    $state.go('foodListDet');
+        //    //clearInterval($scope.bannnerTimer);
+        //};
 
         function getFoodList(tsId,dateKey){
             var res = WebService.getFoodList(tsId,dateKey);
             res.$promise.then(function(response) {
                 $scope.items = response.data.data.dishesList;
-                if($scope.items.length <= 0) {
+                if($scope.items.length=0) {
+                    if (pageIndex == 1) {
+                        $scope.pro = true;
+                        return;
+                    }
+                }
+               /* if($scope.items.length <= 0) {
                     $ionicPopup.alert({
                         title: '提示',
                         template: '无数据！'
                     });
                     return;
-                }
+                }*/
             });
         };
+
+
 
 
     });

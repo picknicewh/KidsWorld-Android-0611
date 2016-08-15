@@ -50,7 +50,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hm_droidgap);
         super.init();
-        launchUrl=getIntent().getStringExtra("loadUrl") ;
+        launchUrl=getIntent().getStringExtra("loadUrl");
         Log.i("TAGG",launchUrl);
         loadUrl(launchUrl);
         initData();
@@ -80,13 +80,6 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         }
         if (launchUrl.contains(SchoolFragement.ARRANGE)){
             if (UserMessage.getInstance(this).getType().equals("2")){
-                tv_subtitle.setVisibility(View.VISIBLE);
-            }else {
-                tv_subtitle.setVisibility(View.GONE);
-            }
-        }
-        if (launchUrl.contains(SchoolFragement.LEAVE)){
-            if (UserMessage.getInstance(this).getType().equals("1")){
                 tv_subtitle.setVisibility(View.VISIBLE);
             }else {
                 tv_subtitle.setVisibility(View.GONE);
