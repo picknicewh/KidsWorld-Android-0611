@@ -50,7 +50,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hm_droidgap);
         super.init();
-        launchUrl=getIntent().getStringExtra("loadUrl");
+        launchUrl=getIntent().getStringExtra("loadUrl") + "&type = " +UserMessage.getInstance(this).getType();
         Log.i("TAGG",launchUrl);
         loadUrl(launchUrl);
         initData();

@@ -3,6 +3,7 @@ package net.hunme.baselibrary.cordova;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.R;
+import net.hunme.baselibrary.util.Constant;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
 
@@ -57,7 +59,14 @@ public class HMDroidGap extends CordovaActivity {
         iv_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (webView.canGoBack()){
+                    if (!webView.getUrl().contains(Constant.COLLECT)){
+
+                    }
+                    tv_title.setVisibility(View.VISIBLE);
+                    tv_title.setText("我的收藏");
+                    Log.i("TAFFFF",webView.getUrl());
                     webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
                     webView.goBack();
                 }else {
@@ -65,6 +74,12 @@ public class HMDroidGap extends CordovaActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
     }
 
     private void setTabBarText(){

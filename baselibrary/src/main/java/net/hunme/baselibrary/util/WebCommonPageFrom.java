@@ -105,8 +105,8 @@ public class WebCommonPageFrom {
                         break;
                     case Constant.CONSULTDETAIL:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
-                        tv_title.setText("教育资讯");
-                        tv_title.setVisibility(View.VISIBLE);
+                   //     tv_title.setText("教育资讯");
+                        tv_title.setVisibility(View.GONE);
                         iv_right.setVisibility(View.GONE);
                         break;
                     case Constant.SEARCH:
@@ -118,10 +118,9 @@ public class WebCommonPageFrom {
                         break;
                     case Constant.VEDIO:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
-                        tv_title.setText("幼儿课堂");
-                        tv_title.setVisibility(View.VISIBLE);
-                        iv_right.setImageResource(R.mipmap.ic_search);
-                        iv_right.setVisibility(View.VISIBLE);
+                       // tv_title.setText("幼儿课堂");
+                        tv_title.setVisibility(View.GONE);
+                        iv_right.setVisibility(View.GONE);
                         break;
                     case Constant.MEDIAPLAY:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
@@ -132,14 +131,14 @@ public class WebCommonPageFrom {
                         break;
                     case Constant.MEDIAPLAYDEATIL:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
-                        tv_title.setText("幼儿听听");
-                        tv_title.setVisibility(View.VISIBLE);
+                      //  tv_title.setText("幼儿听听");
+                        tv_title.setVisibility(View.GONE);
                         iv_right.setVisibility(View.GONE);
                         break;
                     case Constant.MEDIAPLAYING:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
-                        tv_title.setText("幼儿听听");
-                        tv_title.setVisibility(View.VISIBLE);
+                       // tv_title.setText("幼儿听听");
+                        tv_title.setVisibility(View.GONE);
                         iv_right.setVisibility(View.GONE);
                         break;
                     case Constant.SEARCH_CAUSRE:
@@ -186,9 +185,17 @@ public class WebCommonPageFrom {
                     LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     layoutParams2.gravity = Gravity.CENTER_VERTICAL;
-                    layoutParams2.setMargins(G.dp2px(activity,10),0,0,0);
+                    if (activity instanceof  HMDroidGap ||
+                            activity instanceof  HMDroidGap&&view.equals(Constant.CONSULTDETAIL)
+                            ||activity instanceof  HMDroidGap&&view.equals(Constant.VEDIO)||
+                             activity instanceof  HMDroidGap&&view.equals(Constant.MEDIAPLAYING)){
+                        layoutParams2.setMargins(G.dp2px(activity,0),0,0,0);
+                    }
+                    else {
+                        layoutParams2.setMargins(G.dp2px(activity,10),0,0,0);
+                    }
                     iv_left.setLayoutParams(layoutParams2);
-                    tv_title.setVisibility(View.VISIBLE);
+
                     if (et_search!=null){
                         et_search.setVisibility(View.GONE);
                     }
