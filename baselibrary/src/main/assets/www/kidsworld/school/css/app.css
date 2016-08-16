@@ -14,7 +14,38 @@ div.head span {
 .has-border a{
     border-bottom: 1px solid #737272;
 }
-.loadMoreBox span {
+/*.loadMoreBox span {
     text-align: center;
     display: inherit;
+}*/
+.loadMoreBox{
+    height:52px;
+    text-align:center;
+}
+.loadMoreBox .loadMore{
+    display:inline-block;
+    width:90px;
+    font-size:16px;
+    line-height:22px;
+    height:22px;
+    margin-bottom:15px;
+    vertical-align:middle;
+}
+.loadMoreBox .moreIcon{
+    margin-top:15px;
+    display:inline-block;
+    width:22px;
+    height:22px;
+    background:url(../images/icon/loadMore.png) no-repeat center center;
+    background-size:22px;
+}
+.loadMoreBox .loading{
+    display:block;
+    margin-top:12px;
+}
+.loadMoreBox .loadEnd{
+    display:inline-block;
+    font-size:16px;
+    line-height:22px;
+    margin-top:15px;
 }
