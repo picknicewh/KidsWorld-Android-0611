@@ -43,7 +43,9 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -98,6 +100,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
      http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html?
      */
     private static final String url = ServerConfigManager.WEB_IP+"/space/view/dynamic.html?";
+    private static final String url2 = ServerConfigManager.WEB_IP+"/paradise/index.html";
     /**
      * 班级选择
      */
@@ -160,13 +163,19 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
 
     public void setWebView(int position){
         CLASSID=dynamicList.get(position).getGroupId();
-        cordovaWebView.loadUrl(url+"groupId="+dynamicList.get(position).getGroupId());
-        cordovaWebView.loadUrl(url+"groupId="+dynamicList.get(position).getGroupId()
-                +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
-                +"&clickTime="+ DateUtil.formatDateTime(new Date()));
-        G.log("loadUrl====="+url+"groupId="+dynamicList.get(position).getGroupId()
-                +"&groupType="+dynamicList.get(position).getGroupType()+"&tsId="+um.getTsId()+"&myName="+um.getUserName()
-        +"&clickTime="+ DateUtil.formatDateTime(new Date()));
+//        cordovaWebView.loadUrl(url+"?tsId="+ UserMessage.getInstance(getActivity()).getTsId());
+        String realUrl = null;
+        try {
+            realUrl = url+"groupId="+dynamicList.get(position).getGroupId()
+                    +"&groupType="+dynamicList.get(position).getGroupType()
+                    +"&tsId="+um.getTsId()+"&myName="+ URLEncoder.encode(um.getUserName(),"utf-8")
+                    +"&clickTime="+ URLEncoder.encode(DateUtil.formatDateTime(new Date()), "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        //
+        cordovaWebView.loadUrl(realUrl);
+        G.log("loadUrl====="+realUrl);
     }
     /**
      * 设置选择弹窗

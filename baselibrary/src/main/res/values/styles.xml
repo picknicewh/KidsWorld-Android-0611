@@ -45,7 +45,7 @@
 
     <style name="myToolbarNavigationButtonStyle" parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="android:minWidth">0dp</item>
-        <item name="android:padding">@dimen/space_x0.5</item>
+        <item name="android:padding">@dimen/space</item>
         <item name="android:scaleType">centerInside</item>
     </style>
 </resources>
