@@ -102,7 +102,7 @@ public class WebCommonPageFrom {
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("安全教育");
                         tv_title.setVisibility(View.VISIBLE);
-                        iv_right.setVisibility(R.mipmap.ic_empty);
+                        iv_right.setImageResource(R.mipmap.ic_empty);
                         //iv_right.setVisibility(View.GONE);
                         break;
                     case Constant.CONSULTDETAIL:
@@ -115,7 +115,7 @@ public class WebCommonPageFrom {
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
                         tv_title.setText("搜索");
                         tv_title.setVisibility(View.VISIBLE);
-                        iv_right.setImageResource(R.mipmap.ic_search);
+                        iv_right.setImageResource(R.mipmap.ic_empty);
                         iv_right.setVisibility(View.VISIBLE);
                         break;
                     case Constant.VEDIO:

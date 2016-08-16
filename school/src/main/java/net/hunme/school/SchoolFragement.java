@@ -95,6 +95,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
         navigationBar.setTitle("园所");
       //  rl_openclass = $(v,R.id.rl_openclass);
         rl_check = $(v,R.id.rl_check);
+
         rl_leave = $(v,R.id.rl_leave);
         rl_inform = $(v,R.id.rl_info);
         rl_food = $(v,R.id.rl_food);

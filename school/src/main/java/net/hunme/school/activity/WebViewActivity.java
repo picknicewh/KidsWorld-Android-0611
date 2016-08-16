@@ -39,12 +39,13 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
      * 右边显示
      */
     public TextView tv_subtitle;
+    private  ImageView iv_right;
     /**
      * 网页
      */
     public static SystemWebView webView;
     private ProgressBar pb_web;
-    private  ImageView iv_right;
+
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {

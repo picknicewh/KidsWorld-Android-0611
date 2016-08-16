@@ -47,6 +47,7 @@
         android:orientation="vertical"
         android:background="@drawable/layout_select_line">
         <RelativeLayout
+            android:visibility="gone"
             android:background="@drawable/layout_select_not_line"
             android:id="@+id/rl_check"
             android:padding="@dimen/space"

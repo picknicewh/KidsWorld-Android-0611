@@ -90,7 +90,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
 //                    getActivity().getSupportFragmentManager().popBackStack("gifPageTwoFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                   if(webView.canGoBack()){
-
                       webView.goBack();
                   }else{
                       getActivity().finish();
@@ -123,17 +122,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                 webView.loadUrl("javascript:goSearch_Origin()");
             }
         });
-     /*   bt_search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                //关闭软键盘
-                InputMethodManager imm = (InputMethodManager)getActivity(). getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(view,InputMethodManager.SHOW_FORCED);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                webView.loadUrl("javascript:goSearch_Origin()");
 
-            }
-        });*/
        // setShowView();
        setWebView();
     }
@@ -175,11 +164,11 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
            if (webView.getUrl().contains("paradiseHome")){
                Intent intent = new Intent(getActivity(), UserActivity.class);
                getActivity().startActivity(intent);
+
            }else {
                webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
                webView.goBack();
 
-               //Log.i("TAGG",webView.getUrl());
            }
          } else if (viewId==R.id.iv_dright){
             String url = webView.getUrl();

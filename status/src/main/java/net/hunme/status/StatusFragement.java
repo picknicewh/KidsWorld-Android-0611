@@ -95,9 +95,8 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     private TextView tv_status_bar;
     /**
      * 动态uri地址  loadUrlStr = "file:///android_asset/www/sdk/view/index_android.html#/open-prepare";
-     *
-     http://zhu.hunme.net:8080/KidsWorld/space/view/dynamic.html
-     http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html?
+                http://zhu.hunme.net:8080/KidsWorld/space/view/dynamic.html
+                http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html?
      */
     private static final String url = ServerConfigManager.WEB_IP+"/space/view/dynamic.html?";
     private static final String url2 = ServerConfigManager.WEB_IP+"/paradise/index.html";
@@ -153,9 +152,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
         registerReceiver();
 
-    }
-    public void setNoNetShow(){
-        tv_status_bar.setVisibility(View.VISIBLE);
     }
     public void setPosition(int position){
         this.position = position;
@@ -305,7 +301,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         getActivity().unregisterReceiver(connectionChangeReceiver);
 
     }
-
      class ConnectionChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
