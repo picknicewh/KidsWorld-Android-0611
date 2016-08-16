@@ -12,7 +12,7 @@
         android:drawableLeft="@drawable/rc_notification_network_available"
         android:drawablePadding="25dp"
         android:paddingLeft="27dp"
-        android:text="当前网络不可用"
+        android:text="网络不给力，请检查网络设置"
         android:textColor="#776868"
         android:background="#ffdfdf"
         android:textSize="14sp"

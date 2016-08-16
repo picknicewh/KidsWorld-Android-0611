@@ -44,6 +44,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
      */
     public static SystemWebView webView;
     private ProgressBar pb_web;
+    private  ImageView iv_right;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         iv_left= (ImageView) findViewById(R.id.iv_left);
         tv_title= (TextView) findViewById(R.id.tv_title);
         pb_web = (ProgressBar) findViewById(R.id.pb_web);
+        iv_right = (ImageView) findViewById(R.id.iv_test);
         tv_subtitle= (TextView) findViewById(R.id.tv_subtitle);
         tv_subtitle.setOnClickListener(this);
        // rl_nonetwork=(RelativeLayout)findViewById(R.id.rl_nonetwork);
@@ -77,12 +79,18 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         if(!G.isEmteny(subTitle)) {
             tv_subtitle.setText(subTitle);
             tv_subtitle.setVisibility(View.VISIBLE);
+            iv_right.setVisibility(View.GONE);
+        }else {
+            tv_subtitle.setVisibility(View.GONE);
+            iv_right.setVisibility(View.VISIBLE);
         }
         if (launchUrl.contains(SchoolFragement.ARRANGE)){
             if (UserMessage.getInstance(this).getType().equals("2")){
                 tv_subtitle.setVisibility(View.VISIBLE);
+                iv_right.setVisibility(View.GONE);
             }else {
                 tv_subtitle.setVisibility(View.GONE);
+                iv_right.setVisibility(View.VISIBLE);
             }
         }
         iv_left.setOnClickListener(new View.OnClickListener() {

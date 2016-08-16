@@ -4,38 +4,23 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.base.BaseFragement;
-import net.hunme.baselibrary.mode.Result;
-import net.hunme.baselibrary.network.Apiurl;
-import net.hunme.baselibrary.network.OkHttpListener;
-import net.hunme.baselibrary.network.OkHttps;
-import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.activity.ClassActivity;
 import net.hunme.message.activity.InitContractData;
+import net.hunme.message.activity.InitGroupData;
 import net.hunme.message.activity.ParentActivity;
-import net.hunme.message.bean.GroupJson;
 import net.hunme.message.ronglistener.MyConversationBehaviorListener;
-
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Group;
 
 /**
  * 作者： wh
@@ -45,7 +30,7 @@ import io.rong.imlib.model.Group;
  * 附加注释：
  * 主要接口：
  */
-public class MessageFragement extends BaseFragement implements View.OnClickListener,OkHttpListener{
+public class MessageFragement extends BaseFragement implements View.OnClickListener{
     /**
      * 搜索
      */
@@ -85,10 +70,13 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         iv_teacher = $(v,R.id.iv_teacher);
         iv_parent = $(v,R.id.iv_parent);
         userMessage = UserMessage.getInstance(getActivity());
-        getGroupList(userMessage.getTsId(),1);
-       //初始化联系人所有的头像和名字
-       InitContractData data = new InitContractData(userMessage.getTsId(),getActivity());
+       // getGroupList(userMessage.getTsId(),1);
+        //初始化联系人所有的头像和名字
+        InitContractData data = new InitContractData(getActivity());
         data.getContractList(userMessage.getTsId());
+       //初始化qunzhu的头像和名字
+        InitGroupData groupData = new InitGroupData(getActivity());
+        groupData.getGroupList(userMessage.getTsId());
         initframent();
         iv_parent.setOnClickListener(this);
         iv_teacher.setOnClickListener(this);
@@ -131,11 +119,11 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
             startActivity(intent);
         }*/
     }
-    /**
+   /* *//**
      * 获取所有班级信息
      * @param tsid
      * @param  mtype 获取列表类型 0 所有联系人 1 所有群信息 2 所有家长 3 所有教师
-     */
+     *//*
     private  void getGroupList(String tsid,int mtype){
         if(G.isEmteny(tsid)){
             //用户没登录或者退出账号 打开App无需去请求
@@ -181,5 +169,5 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     public void onError(String uri, String error) {
         Log.i("TAG",error);
         Toast.makeText(getActivity(),error,Toast.LENGTH_SHORT).show();
-    }
+    }*/
 }

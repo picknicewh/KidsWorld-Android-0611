@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -86,6 +88,10 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
      */
     private LinearLayout ll_loading;
     /**
+     * 断网提示
+     */
+    private TextView tv_status_bar;
+    /**
      * 动态uri地址  loadUrlStr = "file:///android_asset/www/sdk/view/index_android.html#/open-prepare";
      *
      http://zhu.hunme.net:8080/KidsWorld/space/view/dynamic.html
@@ -112,6 +118,10 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     private CordovaWebView cordovaWebView;
     private ProgressBar pb_web;
     public static String CLASSID;
+    /**
+     *
+     */
+   private ConnectionChangeReceiver connectionChangeReceiver;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.fragment_status, null);
@@ -128,7 +138,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         webView = $(view, R.id.cordovaWebView);
         ll_classchoose = $(view,R.id.ll_classchoose);
         rl_toolbar=$(view,R.id.rl_toolbar);
-
+        tv_status_bar = $(view,R.id.tv_status_bar);
         pb_web=$(view,R.id.pb_web);
         webView.addJavascriptInterface(this, "showDos");  //设置本地调用对象及其接口
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web));
@@ -140,6 +150,9 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
         registerReceiver();
 
+    }
+    public void setNoNetShow(){
+        tv_status_bar.setVisibility(View.VISIBLE);
     }
     public void setPosition(int position){
         this.position = position;
@@ -271,11 +284,33 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         IntentFilter filter=new IntentFilter(MyJpushReceiver.SHOWSTAUSDOL);
         myReceiver=new MyJpushReceiver();
         getActivity().registerReceiver(myReceiver, filter);
+
+        IntentFilter filter2 = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        connectionChangeReceiver = new ConnectionChangeReceiver();
+        getActivity().registerReceiver(connectionChangeReceiver, filter2);
     }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         getActivity().unregisterReceiver(myReceiver);
+        getActivity().unregisterReceiver(connectionChangeReceiver);
+
+    }
+
+     class ConnectionChangeReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager connectivityManager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mobNetInfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            NetworkInfo  wifiNetInfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
+                tv_status_bar.setVisibility(View.VISIBLE);
+
+            }else {
+                tv_status_bar.setVisibility(View.GONE);
+            }
+
+        }
     }
     class MyJpushReceiver extends BroadcastReceiver {
         public static final String SHOWSTAUSDOL = "net.hunme.status.showstatusdos";
