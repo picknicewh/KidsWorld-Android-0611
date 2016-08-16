@@ -100,7 +100,6 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
         Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
         OkHttps.sendPost(type,Apiurl.MESSAGE_GETGTOUP,params,this,2,"contract_class");
     }
-
     @Override
     public void onSuccess(String uri, Object date) {
         Log.i("TAG",date+"");
@@ -112,7 +111,6 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
             }
         }
     }
-
     @Override
     public void onError(String uri, String error) {
         Log.i("TAG",error);

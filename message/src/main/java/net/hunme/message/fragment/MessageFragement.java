@@ -22,6 +22,7 @@ import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.activity.ClassActivity;
+import net.hunme.message.activity.InitContractData;
 import net.hunme.message.activity.ParentActivity;
 import net.hunme.message.bean.GroupJson;
 import net.hunme.message.ronglistener.MyConversationBehaviorListener;
@@ -65,6 +66,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
      * 用户信息
      */
     private  UserMessage userMessage;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, null);
@@ -83,7 +85,10 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         iv_teacher = $(v,R.id.iv_teacher);
         iv_parent = $(v,R.id.iv_parent);
         userMessage = UserMessage.getInstance(getActivity());
-        getGroupList(userMessage.getTsId());
+        getGroupList(userMessage.getTsId(),1);
+       //初始化联系人所有的头像和名字
+       InitContractData data = new InitContractData(userMessage.getTsId(),getActivity());
+        data.getContractList(userMessage.getTsId());
         initframent();
         iv_parent.setOnClickListener(this);
         iv_teacher.setOnClickListener(this);
@@ -129,8 +134,9 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     /**
      * 获取所有班级信息
      * @param tsid
+     * @param  mtype 获取列表类型 0 所有联系人 1 所有群信息 2 所有家长 3 所有教师
      */
-    private  void getGroupList(String tsid){
+    private  void getGroupList(String tsid,int mtype){
         if(G.isEmteny(tsid)){
             //用户没登录或者退出账号 打开App无需去请求
             return;
@@ -138,7 +144,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         Map<String,Object> params = new HashMap<>();
         params.put("tsId", tsid);
         //1=群，2=老师，3=家长
-        params.put("type",1);
+        params.put("type",mtype);
         Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this,2,"GETGTOUP");
     }
@@ -158,12 +164,13 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
                                         public Group getGroupInfo(String s) {
                                             if (s.equals(classId)){
                                                 Group group = new Group(classId,groupName, Uri.parse(""));
+                                                RongIM.getInstance().refreshGroupInfoCache(group);
                                                 return group;
                                 }
                                 return null;
                             }
                         },true);
-                        RongIM.getInstance().refreshGroupInfoCache(new Group(classId, groupName, Uri.parse("")));
+
                     }
                  }
             }

@@ -81,11 +81,14 @@ public class PublishAdapter extends BaseAdapter {
             view.setTag(this);
         }
 
-         public void setTextColor(boolean isRead){
-             if(!isRead)
+         public void setTextColor(boolean isRead) {
+             if (!isRead) {
                  tv_content.setTextColor(Color.BLACK);
-             else
+                 tv_content.setTextColor(Color.BLACK);
+             } else {
                  tv_content.setTextColor(Color.parseColor("#a9a9a9"));
+                 tv_title.setTextColor(Color.parseColor("#a9a9a9"));
+             }
          }
-    }
+     }
 }

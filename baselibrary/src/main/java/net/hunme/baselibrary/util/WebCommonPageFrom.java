@@ -226,6 +226,9 @@ public class WebCommonPageFrom {
                 tv_title.setText(title);
                 tv_title.setVisibility(View.VISIBLE);
                 iv_right.setImageResource(R.mipmap.ic_empty);
+                if (et_search!=null){
+                    et_search.setVisibility(View.GONE);
+                }
               //  iv_right.setVisibility(View.GONE);
             }
         });

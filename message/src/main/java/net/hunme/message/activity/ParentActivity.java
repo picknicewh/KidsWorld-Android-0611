@@ -297,6 +297,8 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         }
     }
 
+
+
     @Override
     public void onError(String uri, String error) {
         Log.i("TAG",error);
