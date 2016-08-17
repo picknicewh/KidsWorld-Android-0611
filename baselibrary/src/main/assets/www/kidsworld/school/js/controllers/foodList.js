@@ -2,7 +2,22 @@
  * Created by yanghy on 2016/7/30.
  */
 angular.module('app.controllers')
-    .controller('foodListCtrl', function($scope,$state,NoteService,WebService){
+    .controller('foodListCtrl', function($scope,$state,$ionicPopup,NoteService,WebService){
+
+        //变量声明
+        var tsId=getUrlParam("tsId");
+        // var tsId = "6040009dfa2947328d0f5981f19dcc7b";
+
+        $scope.items = [];
+        var date = new Date();
+            //date = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+        //$scope.date = date;
+
+        $scope.$on("$ionicView.beforeEnter", function(){
+            $scope.items=[];
+            $scope.myFunction(date);
+        });
+
         //日期格式转换
         Date.prototype.Format = function (fmt) {
             var o = {
@@ -19,15 +34,8 @@ angular.module('app.controllers')
                 if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
             return fmt;
         };
-        //变量声明
-        var tsId=getUrlParam("tsId");
-        $scope.pro = false;
-//        tsId = "81c5dc8725044e629cf524a3222cd818";
 
-        //日历初始化
-        var currentDate = new Date();
-        var date = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-        $scope.date = date;
+
 
         $scope.myFunction=function(date){
             //alert(date);
@@ -65,19 +73,10 @@ angular.module('app.controllers')
             var res = WebService.getFoodList(tsId,dateKey);
             res.$promise.then(function(response) {
                 $scope.items = response.data.data.dishesList;
-                if($scope.items.length=0) {
-                    if (pageIndex == 1) {
+                if($scope.items.length == 0) {
                         $scope.pro = true;
-                        return;
-                    }
                 }
-               /* if($scope.items.length <= 0) {
-                    $ionicPopup.alert({
-                        title: '提示',
-                        template: '无数据！'
-                    });
-                    return;
-                }*/
+
             });
         };
 

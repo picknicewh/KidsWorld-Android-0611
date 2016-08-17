@@ -10,7 +10,7 @@ mui.previewImage();
 var imgIndex = 2,
     pageflag = true,
     pageIndex = 1,
-//  tsId = "81c5dc8725044e629cf524a3222cd818",
+    // tsId = "6040009dfa2947328d0f5981f19dcc7b",
     tsId = getQueryString("tsId"),
     pageSize = 15;
 
@@ -31,8 +31,8 @@ function generateHtml(arr) {
 	var tmpHtml = "",
 	    createTime = new Date(arr.createTime);
 	tmpHtml += '<div class="section-left">';
-    tmpHtml += '<span class="time" id="time">' + createTime.getDay() + '</span>';
-    tmpHtml += '<span class="time2">' + getMonth(createTime.getMonth()) + '</span></div>';
+    tmpHtml += '<span class="time" id="time">' + createTime.getDate() + '</span>';
+    tmpHtml += '<span class="time2">' + getMonthZ(createTime.getMonth()) + '</span></div>';
 	tmpHtml += '<div class="section-right"><div class="app-content content-top">';
 	tmpHtml += '<div class="text">' + arr.text +'</div>';
 	//如果有图片
@@ -125,7 +125,7 @@ function pullupRefresh() {
 						  	 	//根据不同的设备，调用不同的原生方法，来重新加载页面。
 						  	 	var u = navigator.userAgent;
 					            if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){ //android终端
-							              change_tb.noticeChange();
+							            change_tob.noticeChange();
 							    }else if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){ //ios终端
 							            refreshTrend();
 							    }
@@ -177,10 +177,10 @@ if(mui.os.plus) {
 	return day;
 }*/
 //获取月份
-var getMonth = function (month){
+var getMonthZ = function (month){
 //	var month = ((date.split(" "))[0].split("-"))[1];
 	var monthStr = "";
-	switch (month){
+	switch (month + 1){
 		case 1:
 		    monthStr = "一月";
 			break;

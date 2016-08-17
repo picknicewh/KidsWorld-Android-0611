@@ -9,16 +9,16 @@ angular.module('app.controllers')
         var pageNumber = 1,
             pageSize = 2;
         $scope.tsId=getUrlParam("tsId");
-          $scope.type = getUrlParam("type");
-//        $scope.tsId = "540813c7aec64327acf0e36ac339d8c0";
-//        $scope.type = 0;
+        $scope.type = getUrlParam("type");
+        // $scope.tsId = "6040009dfa2947328d0f5981f19dcc7b";
+        // $scope.type = 0;
         //alert(tsId);
         $scope.$on("$ionicView.beforeEnter", function(){
-            $scope.loadState=0;
+            $scope.loadState = 0;
             //$scope.pro = false;
             //$scope.doMore = true;
             //$scope.noMore = false;
-            $scope.items=[];
+            $scope.items = [];
             getData();
         });
 
@@ -32,10 +32,7 @@ angular.module('app.controllers')
                 var data=response.data.data,
                     length = data.length;
                 $scope.loadState=0;
-               /* if(!data) {
-                    CommonService.showAlert({message:"查询数据失败"});
-                    return;
-                }*/
+
                 if(length < pageSize) {
                     $scope.loadState=2;
                     if(length<=0){
@@ -45,17 +42,6 @@ angular.module('app.controllers')
                 $scope.items=$scope.items.concat(data);
                 $ionicScrollDelegate.resize();
 
-/*
-                if(data.length = 0){
-                    if(pageNumber == 1) {
-                        $scope.pro = true;
-                        $scope.doMore=false;
-                        return;
-                    }else{
-                        $scope.noMore = true;
-
-                    }
-                }*/
             });
         }
 
@@ -68,12 +54,16 @@ angular.module('app.controllers')
         //删除
         $scope.showConfirm = function(index,syllabusId) {
             var confirmPopup = $ionicPopup.confirm({
-                title: '确定删除吗？'
+                title: '确定删除吗？',
+                buttons: [
+                    { text: '取消' },
+                    {
+                        text: '<b>确认</b>',
+                        type: 'button-positive'}]
 
             });
             confirmPopup.then(function(res) {
                 if(res) {
-                    //console.log('You are sure');
                     del(index,syllabusId);
                 } else {
                     console.log('You are not sure');
@@ -91,7 +81,5 @@ angular.module('app.controllers')
                 }
             });
         }
-
-
 
     });

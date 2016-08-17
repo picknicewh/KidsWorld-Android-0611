@@ -108,7 +108,7 @@ public class SystemInfoActivity extends BaseActivity {
      */
     private void showAlertDialog(final SystemInformVo systemInformVo, final  SQLiteDatabase database) {
         View coupons_view = LayoutInflater.from(this).inflate(R.layout.alertdialog_message, null);
-        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this, 1);
+        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this);
         Button pop_notrigst = (Button) coupons_view.findViewById(R.id.pop_notrigst);
         Button pop_mastrigst = (Button) coupons_view.findViewById(R.id.pop_mastrigst);
         TextView pop_title = (TextView) coupons_view.findViewById(R.id.tv_poptitle);

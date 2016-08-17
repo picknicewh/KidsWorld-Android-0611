@@ -222,7 +222,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
      */
     private void showAlertDialog(final int flag) {
         View coupons_view = LayoutInflater.from(this).inflate(R.layout.alertdialog_message, null);
-        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this, 1);
+        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this);
         Button pop_notrigst = (Button) coupons_view.findViewById(R.id.pop_notrigst);
         Button pop_mastrigst = (Button) coupons_view.findViewById(R.id.pop_mastrigst);
         TextView pop_title = (TextView) coupons_view.findViewById(R.id.tv_poptitle);
@@ -264,7 +264,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
      */
     private void showPhoneialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_modifyphone, null);
-        final AlertDialog alertDialog = MyAlertDialog.getDialog(view, this, 0);
+        final AlertDialog alertDialog = MyAlertDialog.getDialog(view, this);
         Button bt_conform = (Button) view.findViewById(R.id.bt_dg_conform);
         Button bt_cancel = (Button) view.findViewById(R.id.bt_dg_cancel);
         final EditText et_password = (EditText) view.findViewById(R.id.et_dg_password);

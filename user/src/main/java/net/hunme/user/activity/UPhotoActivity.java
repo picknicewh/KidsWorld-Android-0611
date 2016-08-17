@@ -99,7 +99,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
             //获取View
             final View dialogView = LayoutInflater.from(this).inflate(R.layout.alertdialog_add_album, null);
             //获取弹框
-            alertDialog =MyAlertDialog.getDialog(dialogView,this,1);
+            alertDialog =MyAlertDialog.getDialog(dialogView,this);
             Button alertCancel= (Button) dialogView.findViewById(R.id.b_cancel);
             Button alertConfirm= (Button) dialogView.findViewById(R.id.b_confirm);
             final EditText etAlbumName= (EditText) dialogView.findViewById(R.id.et_album_name);

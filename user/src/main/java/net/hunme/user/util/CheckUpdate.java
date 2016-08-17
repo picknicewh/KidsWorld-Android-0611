@@ -174,7 +174,7 @@ public class CheckUpdate implements OkHttpListener {
 
 	private void showDownLoadDialog(){
 		View view = LayoutInflater.from(context).inflate(R.layout.alertdialog_checkupdate,null);
-		dialog= MyAlertDialog.getDialog(view,activity,0);
+		dialog= MyAlertDialog.getDialog(view,activity);
 		dialog.setCancelable(false);
 		final TextView tv_message= (TextView) view.findViewById(R.id.tv_update_message); //更新提示
 		final RelativeLayout rl_dowmload= (RelativeLayout) view.findViewById(R.id.rl_dowmload); //下载页面

@@ -18,9 +18,7 @@ import net.hunme.baselibrary.util.G;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -224,12 +222,7 @@ public class OkHttps<T> {
         Iterator<Map.Entry<String, Object>> iterator = set.iterator();
         while (iterator.hasNext()) {
             Map.Entry<String, Object> entry = iterator.next();
-            try {
-                //参数进行utf-8编码
-                params.put(URLEncoder.encode(entry.getKey(),"utf-8"), URLEncoder.encode(String.valueOf(entry.getValue()),"utf-8"));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            params.put(entry.getKey(), entry.getValue().toString());
             G.log(entry.getKey()+"-----请求参数-------"+entry.getValue());
         }
 //        params.put("msec",msec);

@@ -371,7 +371,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      */
     private void getExitPrompt(){
         View coupons_view = LayoutInflater.from(this).inflate(R.layout.alertdialog_message, null);
-        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this, 1);
+        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this);
         Button b_notrigst = (Button) coupons_view.findViewById(R.id.pop_notrigst);
         Button b_mastrigst = (Button) coupons_view.findViewById(R.id.pop_mastrigst);
         TextView pop_title = (TextView) coupons_view.findViewById(R.id.tv_poptitle);
