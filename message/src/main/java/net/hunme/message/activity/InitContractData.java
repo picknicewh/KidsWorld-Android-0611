@@ -79,8 +79,10 @@ public class InitContractData implements OkHttpListener {
                         }
 
                     }, true);
+                    if (image!=null && ryid!=null && userName!=null){
+                        RongIM.getInstance().refreshUserInfoCache(new UserInfo(ryid, userName, Uri.parse(image)));
+                    }
 
-                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(ryid, userName, Uri.parse(image)));
                 }
             }
         }

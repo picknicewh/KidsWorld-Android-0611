@@ -77,6 +77,21 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
     private void setToolBar() {
         tv_title.setText(getIntent().getStringExtra("title"));
         String subTitle=getIntent().getStringExtra("subTitle");
+        setSubtitle(subTitle);
+        iv_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (launchUrl.equals(webView.getUrl())){
+                    finish();
+                }else {
+                    webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+                    webView.goBack();
+                }
+            }
+        });
+    }
+
+    private void setSubtitle(String subTitle){
         if(!G.isEmteny(subTitle)) {
             tv_subtitle.setText(subTitle);
             tv_subtitle.setVisibility(View.VISIBLE);
@@ -94,17 +109,13 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
                 iv_right.setVisibility(View.VISIBLE);
             }
         }
-        iv_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (launchUrl.equals(webView.getUrl())){
-                    finish();
-                }else {
-                    webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-                    webView.goBack();
-                }
-            }
-        });
+        if (launchUrl.contains(SchoolFragement.LEAVE)&& UserMessage.getInstance(this).getType().equals("1")){
+            tv_subtitle.setVisibility(View.VISIBLE);
+            iv_right.setVisibility(View.GONE);
+        }else {
+            tv_subtitle.setVisibility(View.GONE);
+            iv_right.setVisibility(View.VISIBLE);
+        }
     }
     @Override
     public void onRestart() {
