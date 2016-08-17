@@ -161,14 +161,14 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
     public void onClick(View view) {
         int viewId = view.getId();
        if (viewId==R.id.iv_dleft){
-           if (webView.getUrl().contains("paradiseHome")){
+           if (!webView.getUrl().contains("#/")||webView.getUrl().contains("paradiseHome")){
                Intent intent = new Intent(getActivity(), UserActivity.class);
                getActivity().startActivity(intent);
-
            }else {
                webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
                webView.goBack();
 
+               //Log.i("TAGG",webView.getUrl());
            }
          } else if (viewId==R.id.iv_dright){
             String url = webView.getUrl();
@@ -178,7 +178,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                 webView.loadUrl("javascript:goSearchAudio_Origin()");
             }else if (url.contains("eduInformation")){
                 webView.loadUrl("javascript:goSearchInf_Origin()");
-            }else if (webView.getUrl().contains("paradiseHome")){
+            }else if (!webView.getUrl().contains("#/")||webView.getUrl().contains("paradiseHome")){
                 webView.loadUrl("javascript:goHistory_Origin()");
             }
         }/*else if (viewId==R.id.et_search){

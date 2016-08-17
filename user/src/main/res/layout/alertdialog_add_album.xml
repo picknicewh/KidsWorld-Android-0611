@@ -15,7 +15,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/ts_x_large"
         android:gravity="center"
-        android:padding="@dimen/space_x2"
+        android:padding="40dp"
         />
     <View
         android:layout_width="match_parent"

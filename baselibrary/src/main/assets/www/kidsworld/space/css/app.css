@@ -57,6 +57,7 @@ ul li {margin:0; padding:0; list-sytle:none}
 .app-mainBox{
     padding:10px 10px;
     position:relative;
+    padding-bottom: 0;
     /*padding-top: 10px;*/
 }
 .app-leftIn{
@@ -262,3 +263,5 @@ div.app-control > span#more {
 	width: 30px;
 	text-align: right;
 }
+
+

@@ -195,8 +195,7 @@ function pulldownRefresh() {
         	//根据不同设备，调用不同的消除红点方法。
              var u = navigator.userAgent;
               if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){ //android终端
-		              showDos.setStatus();
-		             showDos.noticeChange();
+		            showDos.setStatus();
 		        }else if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){ //ios终端
 		            tooc();
 		        }

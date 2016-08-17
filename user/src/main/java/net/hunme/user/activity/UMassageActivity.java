@@ -147,7 +147,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
      */
     public void showSexDialog(){
         View view= LayoutInflater.from(this).inflate(R.layout.alertdialog_select_sex,null);
-        final AlertDialog alertDialog= MyAlertDialog.getDialog(view,this,0);
+        final AlertDialog alertDialog= MyAlertDialog.getDialog(view,this);
         final RadioButton rb_boy= (RadioButton) view.findViewById(R.id.rb_boy);
         final RadioButton rb_girl= (RadioButton) view.findViewById(R.id.rb_girl);
         if(um.getSex().equals("女"))
@@ -176,7 +176,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
         //获取View
         final View dialogView = LayoutInflater.from(this).inflate(R.layout.alertdialog_add_album, null);
         //获取弹框
-        final AlertDialog alertDialog =MyAlertDialog.getDialog(dialogView,this,1);
+        final AlertDialog alertDialog =MyAlertDialog.getDialog(dialogView,this);
         Button alertCancel= (Button) dialogView.findViewById(R.id.b_cancel);
         Button alertConfirm= (Button) dialogView.findViewById(R.id.b_confirm);
         final EditText etAlbumName= (EditText) dialogView.findViewById(R.id.et_album_name);
