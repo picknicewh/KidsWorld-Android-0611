@@ -72,10 +72,10 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         userMessage = UserMessage.getInstance(getActivity());
        // getGroupList(userMessage.getTsId(),1);
         //初始化联系人所有的头像和名字
-        InitContractData data = new InitContractData(getActivity());
-        data.getContractList(userMessage.getTsId());
-       //初始化qunzhu的头像和名字
-        InitGroupData groupData = new InitGroupData(getActivity());
+         InitContractData data = new InitContractData(getActivity());
+         data.getContractList(userMessage.getTsId());
+        //初始化群主的头像和名字
+         InitGroupData groupData = new InitGroupData(getActivity());
         groupData.getGroupList(userMessage.getTsId());
         initframent();
         iv_parent.setOnClickListener(this);

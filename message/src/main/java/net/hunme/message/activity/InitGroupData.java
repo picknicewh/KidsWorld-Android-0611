@@ -66,15 +66,12 @@ public class InitGroupData implements OkHttpListener {
                         RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
                             @Override
                             public Group getGroupInfo(String s) {
-                                if (s.equals(classId)){
-                                    Group group = new Group(classId,groupName, Uri.parse(""));
-                                    RongIM.getInstance().refreshGroupInfoCache(group);
-                                    return group;
-                                }
-                                return null;
+                                Group group = new Group(classId,groupName, Uri.parse(""));
+                                return group;
+
                             }
                         },true);
-
+                        RongIM.getInstance().refreshGroupInfoCache(new Group(classId,groupName, Uri.parse("")));
                     }
                 }
             }

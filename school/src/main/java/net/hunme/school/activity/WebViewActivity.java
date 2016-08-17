@@ -128,17 +128,6 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         webView.addJavascriptInterface(this, "change_ngb");  //设置本地调用对象及其接口
         return new CordovaWebViewImpl(new SystemWebViewEngine(webView));
     }
-    /**
-     *web端接收是否是班主任的方法
-     */
-    @JavascriptInterface
-    public boolean isHeadmaster(){
-        if (UserMessage.getInstance(this).getType().equals("2")){
-            return true;
-        }else {
-            return false;
-        }
-    }
 
     @Override
     protected void createViews() {
