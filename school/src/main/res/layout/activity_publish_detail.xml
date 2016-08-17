@@ -33,9 +33,10 @@
             android:layout_alignParentRight="true"/>
 
         <TextView
+
             android:textColor="@color/black"
             android:id="@+id/tv_content"
-            android:layout_marginTop="@dimen/space_x0.5"
+            android:layout_marginTop="@dimen/space_x2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/ts_large"

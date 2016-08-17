@@ -196,7 +196,6 @@ public class WebCommonPageFrom {
                              activity instanceof  HMDroidGap&&view.equals(Constant.MEDIAPLAYING)){
                         layoutParams2.setMargins(G.dp2px(activity,0),0,0,0);
                     }
-
                     else {
                         layoutParams2.setMargins(G.dp2px(activity,10),0,0,0);
                     }

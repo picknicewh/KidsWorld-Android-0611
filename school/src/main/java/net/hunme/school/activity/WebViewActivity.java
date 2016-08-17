@@ -90,7 +90,10 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
             }
         });
     }
-
+    /**
+     * 设置右边的显示内容
+     * @param  subTitle
+     */
     private void setSubtitle(String subTitle){
         if(!G.isEmteny(subTitle)) {
             tv_subtitle.setText(subTitle);

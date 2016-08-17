@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     tools:context="net.hunme.login.UserChooseActivity">
     <ListView
+        android:divider="@color/bg_line"
+        android:dividerHeight="1dp"
         android:id="@+id/lv_user_choose"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

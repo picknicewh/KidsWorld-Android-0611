@@ -24,4 +24,5 @@ dependencies {
     compile project(':baselibrary')
     compile project(':IMKit')
     compile project(':picturesee')
+    compile project(path: ':user')
 }

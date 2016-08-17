@@ -30,8 +30,12 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     private EditText et_heckNumber;
     private EditText et_password;
     private Button b_finish;
-    private TextView tv_time;
+ //   private TextView tv_time;
     private TextView tv_cp_number;
+    /**
+     * 获取验证码
+     */
+    private Button btn_checkcode;
     private UserMessage um;
     private TextView tv_type;
     private final String VALIDATECODE="/appUser/validateCode.do";
@@ -61,11 +65,12 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
         et_heckNumber=$(R.id.et_heckNumber);
         et_password=$(R.id.et_password);
         b_finish=$(R.id.b_finish);
-        tv_time=$(R.id.tv_time);
+      //  tv_time=$(R.id.tv_time);
+        btn_checkcode = $(R.id.btn_checkcode);
         tv_cp_number=$(R.id.tv_cp_number);
         tv_type=$(R.id.tv_type);
         b_finish.setOnClickListener(this);
-        tv_time.setOnClickListener(this);
+        btn_checkcode.setOnClickListener(this);
 //        b_finish.setEnabled(false);
     }
 
@@ -93,15 +98,15 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
             tv_type.setVisibility(View.GONE);
             tv_cp_number.setVisibility(View.GONE);
             et_heckNumber.setVisibility(View.GONE);
-            tv_time.setVisibility(View.GONE);
+            btn_checkcode.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==R.id.tv_time){
+        if(view.getId()==R.id.btn_checkcode){
             getValidateCode(type,phoneNum);
-            tv_time.setEnabled(false);
+            btn_checkcode.setEnabled(false);
             tv_type.setText("我们已经发送短信验证码到你的手机");
             myCount.start();
         }else if(view.getId()==R.id.b_finish){
@@ -221,13 +226,13 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
 
         @Override
         public void onFinish() {
-            tv_time.setEnabled(true);
-            tv_time.setText("获取验证码");
+            btn_checkcode.setEnabled(true);
+            btn_checkcode.setText("获取验证码");
         }
 
         @Override
         public void onTick(long millisUntilFinished) {
-            tv_time.setText("重新获取(" + millisUntilFinished / 1000 + ")秒");
+            btn_checkcode.setText("重新获取(" + millisUntilFinished / 1000 + ")秒");
         }
     }
 

@@ -60,6 +60,7 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conservation);
+     //   addExtendProvider();
         initView();
 
     }
@@ -108,4 +109,13 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
             startActivity(intent);
         }
     }
+ /*   private void  addExtendProvider(){
+        //扩展功能自定义
+        InputProvider.ExtendProvider[] provider = {
+                new ImageInputProvider(RongContext.getInstance()),//图片
+                new CameraInputProvider(RongContext.getInstance()),//相机
+                new LocationInputProvider(RongContext.getInstance()),//地理位置
+        };
+        RongIM.getInstance().resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, provider);
+    }*/
 }

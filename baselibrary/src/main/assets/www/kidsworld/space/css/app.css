@@ -2,7 +2,9 @@
  * Created by wangjb on 2016-7-11.
  * 
  */
-body {font-family:"黑体","宋体", arial;}
+body {font-family:"黑体","宋体", arial;
+      color: #494949;
+   }
 /*html {
         font-size : 20px;
     }
@@ -64,7 +66,7 @@ ul li {margin:0; padding:0; list-sytle:none}
     width:50px;
     position:absolute;
     left:8px;
-    top:10px;
+    /*top:20px;*/
 }
 .app-leftIn span.mui-badge{
     z-index:1;
@@ -90,7 +92,7 @@ ul li {margin:0; padding:0; list-sytle:none}
 }
 .app-rigthIn .app-content .text{
     /*font-family:"黑体","宋体", arial;*/
-    font-size:13px;
+    font-size:15px;
     color: #494949;
 }
 .app-rigthIn .app-time{
@@ -135,8 +137,8 @@ div.names {
 	background-color: #f3f3f3;
     color: #5a6e97;
     font-weight: bolder;
-    font-size: 12px;
-    padding-left: 10px;
+    font-size: 14px;
+    padding-left: 8px;
     margin-bottom: 8px;
 }
 .admires span {
@@ -154,12 +156,12 @@ div.names {
 
 div.app-control {
     font-size: 0.6rem;
-    /*padding-top: 10px;*/
+    padding-top: 8px;
     padding-bottom: 6px;
 }
 .names span.name {
-	    padding-left: 8px;
-    padding-right: 8px;
+	    padding-left: 5px;
+    /*padding-right: 8px;*/
 }
 .wrap-list {
      position: relative; 
@@ -203,10 +205,10 @@ div.app-content ul li {
 	padding-left: 4px;
 }
 .popup img, .names img, .heart-gray img{
-	width: 16px;
-    height: 14px;
-	vertical-align: middle;
-	
+    width: 14px;
+    height: 12px;
+    vertical-align: middle;
+    margin-top: -2px;
 }
 .video-width {
 	width: 8rem;

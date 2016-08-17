@@ -16,6 +16,7 @@ import net.hunme.message.activity.ClassActivity;
 import net.hunme.message.activity.InitContractData;
 import net.hunme.message.activity.InitGroupData;
 import net.hunme.message.activity.ParentActivity;
+import net.hunme.message.ronglistener.MyConnectionStatusListener;
 import net.hunme.message.ronglistener.MyConversationBehaviorListener;
 
 import io.rong.imkit.RongIM;
@@ -58,6 +59,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         init(view);
         // 设置点击头像监听事件
         RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
+        RongIM.setConnectionStatusListener(new MyConnectionStatusListener(getActivity()));
         return view;
     }
     /**

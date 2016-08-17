@@ -6,6 +6,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 
+import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.user.R;
 
 
@@ -21,13 +22,18 @@ import net.hunme.user.R;
 public class MyAlertDialog {
     public static AlertDialog getDialog(View view, Activity activity) {
         AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-        alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
         WindowManager windowManager = activity.getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         WindowManager.LayoutParams params =
                 alertDialog.getWindow().getAttributes();
-        params.width = (int) (display.getWidth() * 0.8);
+        if (activity instanceof BaseActivity){
+            params.width = (int) (display.getWidth() * 0.8);
+            alertDialog.setCanceledOnTouchOutside(true);
+        }else {
+            params.width = (int) (display.getWidth() * 0.7);
+            alertDialog.setCanceledOnTouchOutside(false);
+        }
         params.height=WindowManager.LayoutParams.WRAP_CONTENT;
         params.flags = WindowManager. LayoutParams.FLAG_DIM_BEHIND;
         alertDialog.getWindow().setAttributes(params);
