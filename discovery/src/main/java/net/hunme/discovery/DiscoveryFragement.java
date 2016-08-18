@@ -74,8 +74,9 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        LayoutInflater localInflater = inflater.cloneInContext(new CordovaInterfaceImpl(getActivity(), this));
-        View view = localInflater.inflate(R.layout.fragment_discovery, null);
+       inflater.cloneInContext(new CordovaInterfaceImpl(getActivity(), this));
+//        View view = inflater.inflate(R.layout.fragment_discovery, null);
+        View view =inflater.inflate(R.layout.fragment_discovery, container, false);
         init(view);
         return view;
     }
