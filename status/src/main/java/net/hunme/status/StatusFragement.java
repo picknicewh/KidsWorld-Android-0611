@@ -7,12 +7,15 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -99,7 +102,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
                 http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html?
      */
     private static final String url = ServerConfigManager.WEB_IP+"/space/view/dynamic.html?";
-    private static final String url2 = ServerConfigManager.WEB_IP+"/paradise/index.html";
     /**
      * 班级选择
      */
@@ -142,7 +144,12 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         rl_toolbar=$(view,R.id.rl_toolbar);
         tv_status_bar = $(view,R.id.tv_status_bar);
         pb_web=$(view,R.id.pb_web);
+
         webView.addJavascriptInterface(this, "showDos");  //设置本地调用对象及其接口
+        //设置 缓存模式
+        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        // 开启 DOM storage API 功能
+        webView.getSettings().setDomStorageEnabled(true);
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web));
         cordovaWebView=getWebView(webView);
         um=UserMessage.getInstance(getActivity());
@@ -151,7 +158,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         getDynamicHead();
         ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
         registerReceiver();
-
     }
     public void setPosition(int position){
         this.position = position;
@@ -173,6 +179,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         cordovaWebView.loadUrl(realUrl);
         G.log("loadUrl====="+realUrl);
     }
+
     /**
      * 设置选择弹窗
      */
@@ -337,5 +344,22 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
                 }
             }
         }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                        getActivity().finish();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }
