@@ -8,7 +8,7 @@ var url = "http://zhu.hunme.net:8080/KidsWorld";
 
 
 //页面参数
-var imgIndex = 2,   
+var imgIndex = 2,
     tsId = getQueryString("tsId"),
     groupId = getQueryString("groupId"),
     groupType = getQueryString("groupType"),
@@ -16,14 +16,15 @@ var imgIndex = 2,
     dynamicId = null,
     myName = getQueryString("myName");
     
- /*var imgIndex = 2,   
+/* var imgIndex = 2,
     urlNow = window.location.href,
-    tsId = "81c5dc8725044e629cf524a3222cd818",
-    groupId = "298f1648653840fdaa6c396830025af5",
-//  tsId = "988ab628507b4addb3130cca0b5d60fb",
-//  groupId = "298f1648653840fdaa6c396830025af5",
+    tsId = "afa41d59d3f4400ca1558d43b6d29991",
+    groupId = "eed2ce7de25b44f2a550d96b1f2b5295",
+  tsId = "988ab628507b4addb3130cca0b5d60fb",
+  groupId = "298f1648653840fdaa6c396830025af5",
     groupType = 1,
-    firstTime = "2016-08-12 9:35:00",//第一次请求的时间
+    firstTime = "2016-08-17 16:35:00",//第一次请求的时间
+     //refreshTime = null;
     dynamicId = null,
     myName = "周龙龙";*/
    		
@@ -170,23 +171,24 @@ mui.init({
  * 下拉刷新具体业务实现
  */
 function pulldownRefresh() {
-//	refreshTime = new Date();
+	firstTime = (new Date()).Format("yyyy-MM-dd hh:mm:ss");
+	//alert(refreshTime);
+	pageIndex = 1;
 	setTimeout(function() {
-        
 //		 mui.toast('下拉刷新');//测试
 		//选择DOM
 		var table = document.body.querySelector('.mui-table-view');
 		var cells = document.body.querySelectorAll('.app-mainBox');
+         table.innerHTML = "";
 		//请求数据
-//		alert(firstTime);
 		var data = {
         	"tsId": tsId,
         	"groupId": groupId,
         	"groupType": groupType,
-        	"pageNumber": 1,
-        	"pageSize":100,
-        	"dynamicId": dynamicId,
-        	"type": 2
+        	"pageNumber": pageIndex,
+        	"pageSize":pageSize,
+        	"createTime": firstTime,
+        	"type": 1
        };
 
          
@@ -203,30 +205,26 @@ function pulldownRefresh() {
         	if(response.code == 0 && response.data.length > 0){
 //      		firstTime = refreshTime.Format("yyyy-MM-dd hh:mm:ss");
         		
-        		var resultData = response.data;
-        		    
+        		var resultData = response.data,
+				    dataLen = resultData.length;
         		dynamicId = resultData[0].dynamicId;
 //      		alert(dynamicId);
-        		
-	        	for(var i = resultData.length - 1; i > -1; i--) {
+
+        		//修改的部分
+				for(var i = 0; i < dataLen; i++) {
 					var li = document.createElement('div');
 					li.className = 'app-mainBox';
 					li.innerHTML = generateHtml(resultData[i]);
-				
-					//下拉刷新，新纪录插到最前面
-					table.insertBefore(li, table.firstChild);
-			    }
-	        	
-//	        	 var u = navigator.userAgent;
-		       
-	        	
-	        	
+
+					table.appendChild(li);
+				}
+
         	}
         	
         	
         	 
        });
-//     pageNewIndex++;
+        pageIndex = 2;
 
 		//加载完数据后
 		mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
@@ -255,27 +253,32 @@ function pullupRefresh() {
         	"type": 1
         	
       };  
-        
+
          $.post(url + '/dynamic/getDynamic.do', data, 
         function(response){ 
-        	if(response.code == "0" && response.data.length != 0){
-        	var resultData = response.data,
-        	    dataLen = resultData.length;
-        	if(dataLen != pageSize){
-        		pageflag = false;
-        	}
-        	
-        	dynamicId = resultData[0].dynamicId;
+        	if(response.code == "0"){
+				if(response.data.length == 0){
+					mui.toast("暂无数据");
+				}else{
+					var resultData = response.data,
+						dataLen = resultData.length;
+					if(dataLen != pageSize){
+						pageflag = false;
+					}
+
+					dynamicId = resultData[0].dynamicId;
 //      	alert(dynamicId);
 //      	pageCount = response.pageCount;//初次请求，返回总页数
-        	
-        	for(var i = 0; i < dataLen; i++) {
-				var li = document.createElement('div');
-				li.className = 'app-mainBox';
-				li.innerHTML = generateHtml(resultData[i]);
-			
-				table.appendChild(li);
-		    }
+
+					for(var i = 0; i < dataLen; i++) {
+						var li = document.createElement('div');
+						li.className = 'app-mainBox';
+						li.innerHTML = generateHtml(resultData[i]);
+
+						table.appendChild(li);
+					}
+				}
+
         	
         	}
         });

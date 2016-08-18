@@ -27,7 +27,9 @@ public class UserAction {
      */
     public static void isGoLogin(Activity activity,Context context){
         if (G.isEmteny(UserMessage.getInstance(context).getLoginName())){
+
             activity.startActivity(new Intent(context, LoginActivity.class));
+
             return;
         }
     }
@@ -41,6 +43,7 @@ public class UserAction {
      * @param schoolName 学校名字
      * @param ryId 融云通讯ID
      * @param tsId 用户ID 用户唯一标识
+     * @param
      */
     public static void saveUserMessage(Context context, String userName, String holdImgUrl,
                                        String className, String schoolName,
@@ -54,6 +57,7 @@ public class UserAction {
         um.setTsId(tsId);
         um.setType(type);
         um.setSex(sex);
+
         um.setUserSign(signature);
     }
 

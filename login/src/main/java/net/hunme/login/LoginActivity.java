@@ -3,7 +3,6 @@ package net.hunme.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -116,13 +115,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             List<CharacterSeleteVo> seleteList=result.getData();
             //将用户信息json串保存起来，提供用户多个身份选择
             UserMessage.getInstance(this).setUserMessagejsonCache(new Gson().toJson(seleteList));
-//            if(result.getData().size()>1){
+            UserMessage.getInstance(this).setCount(result.getData().size());
+           if(result.getData().size()>1){
                 startActivity(new Intent(this,UserChooseActivity.class));
                 finish();
-//            }else{
-//                data=seleteList.get(0);
-//                selectUserSubmit(data.getTsId(),this);
-//            }
+           }else{
+                data=seleteList.get(0);
+                selectUserSubmit(data.getTsId(),this);
+                UserChooseActivity.flag = 1;
+
+            }
             UserAction.saveLoginMessage(this,username,password);
         }else if(SELECTUSER.equals(uri)){
             String sex;
@@ -134,6 +136,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             UserAction.saveUserMessage(this,data.getName(),
                     data.getImg(),data.getClassName(),data.getSchoolName(),
                     data.getRyId(),data.getTsId(),data.getType(),sex,data.getSignature());
+            //如果网络连接时，连接融云
+            if (G.isNetworkConnected(this)) {
+                BaseLibrary.connect(data.getRyId(), LoginActivity.this, data.getName(), data.getImg());
+            }
             G.KisTyep.isChooseId=true;
             finish();
             G.log("用户选择身份成功----");
@@ -143,7 +149,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onError(String uri, String error) {
         b_login.setEnabled(true);
-        Log.i("RRRRRR",error);
         G.showToast(this,error);
     }
 

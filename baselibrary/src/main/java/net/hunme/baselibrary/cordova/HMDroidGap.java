@@ -8,6 +8,7 @@ import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.R;
@@ -22,21 +23,46 @@ import org.apache.cordova.CordovaWebViewImpl;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
 
-public class HMDroidGap extends CordovaActivity {
+public class HMDroidGap extends CordovaActivity implements View.OnClickListener{
+    /**
+     * 左边返回按钮
+     */
     private ImageView iv_left;
+    /**
+     * html页面
+     */
     private SystemWebView webView;
+    /**
+     * 标题
+     */
     private TextView tv_title;
+    /**
+     * 右边内容
+     */
     private TextView tv_subtitle;
+    /**
+     * 加载页面进度条
+     */
     private ProgressBar pb_web;
     /**
      * web接口类
      */
     private WebCommonPageFrom from;
+    /**
+     * cordova插件
+     */
     protected CordovaPlugin activityResultCallback = null;
     protected boolean activityResultKeepRunning;
     protected boolean keepRunning = true;
+    /**
+     * 标题
+     */
     private LinearLayout ll_toolbar;
     public  static  int flag =0;
+    /**
+     * 无网络
+     */
+    private RelativeLayout rl_nonetwork;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,38 +72,45 @@ public class HMDroidGap extends CordovaActivity {
         String uri=getIntent().getStringExtra("loadUrl");
         G.log("loaduri-----"+uri);
         launchUrl =uri;
-        loadUrl(launchUrl);
+        initView();
+    }
+    /**
+     * 初始化
+     */
+    private void initView(){
         iv_left= (ImageView) findViewById(R.id.iv_left);
         tv_title= (TextView) findViewById(R.id.tv_title);
         tv_subtitle= (TextView) findViewById(R.id.tv_subtitle);
+        rl_nonetwork = (RelativeLayout)findViewById(R.id.rl_nonetwork);
         pb_web= (ProgressBar) findViewById(R.id.pb_web);
         ll_toolbar= (LinearLayout) findViewById(R.id.rl_toolbar);
+        iv_left.setOnClickListener(this);
+        setShowView();
+        setTabBarText();
+    }
+    /**
+     * 设置web配置
+     */
+    private void setWebView(){
         from  = new WebCommonPageFrom(iv_left,tv_title,(ImageView) findViewById(R.id.iv_test),this);
         webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web,webView,this,ll_toolbar));
-        setTabBarText();
-        iv_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (webView.canGoBack()){
-                    if (!webView.getUrl().contains(Constant.COLLECT)){
-
-                    }
-                    tv_title.setVisibility(View.VISIBLE);
-                    tv_title.setText("我的收藏");
-                    findViewById(R.id.iv_test).setVisibility(View.VISIBLE);
-                    webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-                    webView.goBack();
-                }else {
-                   finish();
-                }
-            }
-        });
     }
-
-
-
+    /**
+     * 有无网络加载页面状态
+     */
+    private  void  setShowView(){
+        setWebView();
+        loadUrl(launchUrl);
+        if (G.isNetworkConnected(this)){
+            rl_nonetwork.setVisibility(View.GONE);
+        }else {
+            rl_nonetwork.setVisibility(View.VISIBLE);
+        }
+    }
+    /**
+     * 设置标题的栏的内容
+     */
     private void setTabBarText(){
         tv_title.setText(getIntent().getStringExtra("title"));
         String subTitle=getIntent().getStringExtra("subTitle");
@@ -116,6 +149,23 @@ public class HMDroidGap extends CordovaActivity {
         CordovaPlugin callback = this.activityResultCallback;
         if (callback != null) {
             callback.onActivityResult(requestCode, resultCode, intent);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        int viewId = view.getId();
+        if (viewId==R.id.iv_left){
+            if (webView.canGoBack()){
+                if (!webView.getUrl().contains(Constant.COLLECT)){}
+                tv_title.setVisibility(View.VISIBLE);
+                tv_title.setText("我的收藏");
+                findViewById(R.id.iv_test).setVisibility(View.VISIBLE);
+                webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+                webView.goBack();
+            }else {
+                finish();
+            }
         }
     }
 }

@@ -5,6 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.PublishActivity">
+    <include
+        android:id="@+id/rl_nonetwork"
+        layout="@layout/nonetwork"/>
     <ListView
         android:id="@+id/lv_publish"
         android:layout_width="match_parent"

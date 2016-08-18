@@ -10,6 +10,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.util.G;
@@ -45,7 +46,10 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
      */
     public static SystemWebView webView;
     private ProgressBar pb_web;
-
+    /**
+     * 无网络
+     */
+    private RelativeLayout rl_nonetwork;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,12 +71,13 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         iv_right = (ImageView) findViewById(R.id.iv_test);
         tv_subtitle= (TextView) findViewById(R.id.tv_subtitle);
         tv_subtitle.setOnClickListener(this);
-       // rl_nonetwork=(RelativeLayout)findViewById(R.id.rl_nonetwork);
-       // rl_nonetwork.setOnClickListener(this);
+        rl_nonetwork=(RelativeLayout)findViewById(R.id.rl_nonetwork);
+        rl_nonetwork.setOnClickListener(this);
         setToolBar();
+        setShowView();
     }
     /**
-     * 是在导航栏
+     * 是在标题栏
      */
     private void setToolBar() {
         tv_title.setText(getIntent().getStringExtra("title"));
@@ -89,6 +94,17 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
                 }
             }
         });
+    }
+    /**
+     * 有无网络加载页面状态
+     */
+    private  void  setShowView(){
+        loadUrl(launchUrl);
+        if (G.isNetworkConnected(this)){
+            rl_nonetwork.setVisibility(View.GONE);
+        }else {
+            rl_nonetwork.setVisibility(View.VISIBLE);
+        }
     }
     /**
      * 设置右边的显示内容
@@ -123,10 +139,6 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
     @Override
     public void onRestart() {
         super.onRestart();
-        //Log.i("SSSSS","====================onRestart============");
-  //      webView.loadUrl("javascript:getData()");
-       //  int index =  webView.getUrl().lastIndexOf("/");
-      //   String url =  webView.getUrl().substring(0,index)+ webView.getUrl().substring(index+1);
         String url =  webView.getUrl();
         if (webView.getUrl().contains(SchoolFragement.LEAVE)){
             webView.loadUrl(url);
@@ -202,6 +214,8 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
                 Intent intent = new Intent(this,PublishStatusActivity.class);
                 intent.putExtra("type", StatusPublishPopWindow.COURSE);
                 startActivity(intent);
+            }else if (view.getId()==R.id.rl_nonetwork){
+                loadUrl(launchUrl);
             }
         }
     }

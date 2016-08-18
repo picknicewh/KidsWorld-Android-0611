@@ -32,7 +32,16 @@ public class UserMessage {
         }
        return userMessage;
     }
-
+    /**
+     * @param count 用户角色个数
+     */
+    public void setCount(int count){
+        editor.putInt("count",count);
+        editor.commit();
+    }
+    public int  getCount(){
+        return  spf.getInt("count",1);
+    }
     /**
      * @param loginName 登录账号
      */

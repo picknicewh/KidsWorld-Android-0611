@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
@@ -57,9 +58,9 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      */
     private Button bt_search;
     /**
-     * 加载动画
+     * 无网络状态
      */
-    private LinearLayout ll_loading;
+    private RelativeLayout rl_nonetwork;
     /**
      * web接口类
      */
@@ -110,8 +111,8 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         ll_discovery=$(v,R.id.ll_cdiscovery);
         ImageCache.imageLoader(UserMessage.getInstance(getActivity()).getHoldImgUrl(),iv_left);
 //        ll_loading = $(v,R.id.ll_loading);
-        //rl_nonetwork= $(v,R.id.rl_nonetwork);
-       // rl_nonetwork.setOnClickListener(this);
+        rl_nonetwork= $(v,R.id.rl_nonetwork);
+        rl_nonetwork.setOnClickListener(this);
         from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,bt_search,getActivity());
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
@@ -122,37 +123,32 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
                 webView.loadUrl("javascript:goSearch_Origin()");
             }
         });
-
-       // setShowView();
-       setWebView();
+       setShowView();
+      // setWebView();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-       if (G.KisTyep.isUpadteHold){
+        if (G.KisTyep.isUpadteHold){
            ImageCache.imageLoader(UserMessage.getInstance(getActivity()).getHoldImgUrl(),iv_left);
-       }
-
+        }
     }
-
+    /**
+     * 有无网络加载页面状态
+     */
     private  void  setShowView(){
-         setWebView();
-      /*   if (G.isNetworkConnected(getActivity())){
+        setWebView();
+         if (G.isNetworkConnected(getActivity())){
              rl_nonetwork.setVisibility(View.GONE);
          }else {
              rl_nonetwork.setVisibility(View.VISIBLE);
-         }*/
+         }
      }
     private void  setWebView(){
         webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web,webView,getActivity(),ll_discovery));
         getWebView(webView).loadUrl(url+"?tsId="+ UserMessage.getInstance(getActivity()).getTsId());
-//        if (!webView.getUrl().contains("paradiseHome")){
-//            ll_loading.setVisibility(View.GONE);
-//        }else {
-//            ll_loading.setVisibility(View.VISIBLE);
-//        }
 
     }
 
@@ -181,9 +177,9 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
             }else if (!webView.getUrl().contains("#/")||webView.getUrl().contains("paradiseHome")){
                 webView.loadUrl("javascript:goHistory_Origin()");
             }
-        }/*else if (viewId==R.id.et_search){
-           webView.loadUrl("javascript:goSearch_Origin()");
-        }*/
+        }else if (viewId==R.id.rl_nonetwork){
+            setShowView();
+        }
     }
 
 }

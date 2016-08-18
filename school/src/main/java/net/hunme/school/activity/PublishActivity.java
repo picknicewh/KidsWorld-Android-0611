@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -26,13 +27,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PublishActivity extends BaseActivity implements OkHttpListener {
+public class PublishActivity extends BaseActivity implements OkHttpListener, View.OnClickListener {
     private ListView lv_publish;
     private PublishAdapter adapter;
     private List<PublishVo> publishList;
     public static PublishDb db;
     private final String MESSAGE="/school/message.do";
     private UserMessage um;
+    /**
+     *  无网络状态
+     */
+    private RelativeLayout rl_nonetwork;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +45,22 @@ public class PublishActivity extends BaseActivity implements OkHttpListener {
         initView();
         initDate();
     }
+    /**
+     *
+     */
     private void initView(){
         lv_publish=$(R.id.lv_publish);
+        rl_nonetwork = $(R.id.rl_nonetwork);
+        if (G.isNetworkConnected(this)){
+            rl_nonetwork.setVisibility(View.GONE);
+        }else {
+            rl_nonetwork.setVisibility(View.VISIBLE);
+        }
+        rl_nonetwork.setOnClickListener(this);
     }
 
     private void initDate(){
+
         db=new PublishDb(this);
         um=UserMessage.getInstance(this);
         publishList=new ArrayList<>();
@@ -72,25 +88,7 @@ public class PublishActivity extends BaseActivity implements OkHttpListener {
         setLiftOnClickClose();
         setCententTitle("通知");
         setSubTitle("全部阅读");
-        setSubTitleOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(publishList.size()<0){
-                    //通知列表为空返回
-                    return;
-                }
-                //遍历消息列表
-                for (PublishVo p:publishList){
-                    //所有未读的插入数据库
-                    if(!p.isRead()){
-                        PublishDbHelp.insert(db.getWritableDatabase(),p.getMessageId()+um.getTsId());
-                        p.setRead(true);
-                    }
-                }
-                //刷新适配器
-                adapter.notifyDataSetChanged();
-            }
-        });
+        setSubTitleOnClickListener(this);
     }
 
     /**
@@ -131,6 +129,34 @@ public class PublishActivity extends BaseActivity implements OkHttpListener {
     @Override
     public void onError(String uri, String error) {
         G.showToast(this,error);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId()==R.id.rl_nonetwork){
+            publishList.clear();
+            getPublishMessage();
+            if (G.isNetworkConnected(this)){
+                rl_nonetwork.setVisibility(View.GONE);
+            }else {
+                rl_nonetwork.setVisibility(View.VISIBLE);
+            }
+        }else if (view.getId()==R.id.tv_subtitle){
+            if(publishList.size()<0){
+                //通知列表为空返回
+                return;
+            }
+            //遍历消息列表
+            for (PublishVo p:publishList){
+                //所有未读的插入数据库
+                if(!p.isRead()){
+                    PublishDbHelp.insert(db.getWritableDatabase(),p.getMessageId()+um.getTsId());
+                    p.setRead(true);
+                }
+            }
+            //刷新适配器
+            adapter.notifyDataSetChanged();
+        }
     }
 
 //    private void testDate(){

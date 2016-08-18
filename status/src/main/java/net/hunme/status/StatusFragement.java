@@ -121,9 +121,13 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     private ProgressBar pb_web;
     public static String CLASSID;
     /**
-     *
+     *网络状态监听
      */
    private ConnectionChangeReceiver connectionChangeReceiver;
+    /**
+     * 无网络状态
+     */
+    private RelativeLayout rl_nonetwork;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.fragment_status, null);
@@ -141,6 +145,8 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         ll_classchoose = $(view,R.id.ll_classchoose);
         rl_toolbar=$(view,R.id.rl_toolbar);
         tv_status_bar = $(view,R.id.tv_status_bar);
+        rl_nonetwork= $(view,R.id.rl_nonetwork);
+        rl_nonetwork.setOnClickListener(this);
         pb_web=$(view,R.id.pb_web);
         webView.addJavascriptInterface(this, "showDos");  //设置本地调用对象及其接口
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web));
@@ -156,7 +162,18 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     public void setPosition(int position){
         this.position = position;
     }
+    /**
+     * 有无网络加载页面状态
+     */
+    private  void  setShowView(int position){
+        setWebView(position);
+        if (G.isNetworkConnected(getActivity())){
+            rl_nonetwork.setVisibility(View.GONE);
+        }else {
+            rl_nonetwork.setVisibility(View.VISIBLE);
 
+        }
+    }
     public void setWebView(int position){
         CLASSID=dynamicList.get(position).getGroupId();
 //        cordovaWebView.loadUrl(url+"?tsId="+ UserMessage.getInstance(getActivity()).getTsId());
@@ -212,7 +229,9 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
                     }
                 }
             });
-        }
+        }else if (viewId==R.id.rl_nonetwork){
+          setShowView(position);
+      }
     }
 
     @Override
@@ -272,7 +291,8 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             ll_classchoose.setOnClickListener(this);
             if(dynamicList.size()>0){
                 tv_classname.setText(classlist.get(0));
-                setWebView(0);
+            //    setWebView(0);
+                setShowView(0);
                 CLASSID=dynamicList.get(0).getGroupId();
             }
         }
@@ -301,6 +321,9 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         getActivity().unregisterReceiver(connectionChangeReceiver);
 
     }
+    /**
+     * 有无网络监听广播
+     */
      class ConnectionChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -312,10 +335,13 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
 
             }else {
                 tv_status_bar.setVisibility(View.GONE);
-            }
 
+            }
         }
     }
+    /**
+     * 红点广播
+     */
     class MyJpushReceiver extends BroadcastReceiver {
         public static final String SHOWSTAUSDOL = "net.hunme.status.showstatusdos";
         @Override

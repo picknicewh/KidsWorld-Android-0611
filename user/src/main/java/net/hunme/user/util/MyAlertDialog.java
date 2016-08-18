@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.user.R;
 
 
@@ -33,6 +34,7 @@ public class MyAlertDialog {
         }else {
             params.width = (int) (display.getWidth() * 0.7);
             alertDialog.setCanceledOnTouchOutside(false);
+            UserMessage.getInstance(activity).clean();
         }
         params.height=WindowManager.LayoutParams.WRAP_CONTENT;
         params.flags = WindowManager. LayoutParams.FLAG_DIM_BEHIND;

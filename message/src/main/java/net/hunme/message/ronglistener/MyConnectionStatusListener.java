@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import net.hunme.baselibrary.BaseLibrary;
-import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.login.LoginActivity;
 import net.hunme.message.R;
@@ -36,11 +34,11 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
             case CONNECTED://连接成功。
                 break;
             case DISCONNECTED://断开连接。
-                //如果网络连接时，连接融云
+              /*  //如果网络连接时，连接融云
                 UserMessage userMessage = UserMessage.getInstance(context);
                 if (G.isNetworkConnected(context)) {
                     BaseLibrary.connect(userMessage.getRyId(), context, userMessage.getUserName(), userMessage.getHoldImgUrl());
-                }
+                }*/
                 break;
             case CONNECTING://连接中。
 

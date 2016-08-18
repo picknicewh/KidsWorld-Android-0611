@@ -51,7 +51,6 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     adapter.setSelectPosition(i);
                     data=seleteList.get(i);
-
                     LoginActivity.selectUserSubmit(data.getTsId(),UserChooseActivity.this);
                     dialog.show();
                 }
