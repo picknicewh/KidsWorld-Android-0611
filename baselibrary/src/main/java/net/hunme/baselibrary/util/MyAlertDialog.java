@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.WindowManager;
 
 import net.hunme.baselibrary.R;
-import net.hunme.baselibrary.base.BaseActivity;
 
 
 
@@ -21,14 +20,14 @@ import net.hunme.baselibrary.base.BaseActivity;
  * 主要接口：.
  */
 public class MyAlertDialog {
-    public static AlertDialog getDialog(View view, Activity activity) {
+    public static AlertDialog getDialog(View view, Activity activity,int flag) {
         AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
         alertDialog.show();
         WindowManager windowManager = activity.getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         WindowManager.LayoutParams params =
                 alertDialog.getWindow().getAttributes();
-        if (activity instanceof BaseActivity){
+        if (flag ==1){
             params.width = (int) (display.getWidth() * 0.8);
             alertDialog.setCanceledOnTouchOutside(true);
         }else {

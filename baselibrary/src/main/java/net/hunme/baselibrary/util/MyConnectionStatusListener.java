@@ -1,16 +1,13 @@
-package net.hunme.kidsworld.util;
+package net.hunme.baselibrary.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import net.hunme.baselibrary.util.MyAlertDialog;
-import net.hunme.baselibrary.util.UserMessage;
-import net.hunme.login.LoginActivity;
 
 import io.rong.imlib.RongIMClient;
 
@@ -46,6 +43,7 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
 
                 break;
             case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+
                   showAlertDialog();
                 break;
         }
@@ -55,6 +53,7 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
      * 退出提示框
      */
     private void showAlertDialog() {
+
        context.runOnUiThread(new Runnable() {
            @Override
            public void run() {
@@ -69,7 +68,10 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
                    public void onClick(View arg0) {
                        //退出账号
                        UserMessage.getInstance(context).clean();
-                       Intent intent = new Intent(context, LoginActivity.class);
+                       ComponentName componetName = new ComponentName("net.hunme.login","net.hunme.login.LoginActivity");
+                       Intent intent = new Intent();
+                       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                       intent.setComponent(componetName);
                        context.startActivity(intent);
                        context.finish();
                        alertDialog.dismiss();
