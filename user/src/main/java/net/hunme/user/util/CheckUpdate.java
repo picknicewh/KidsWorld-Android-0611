@@ -23,6 +23,7 @@ import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MD5Utils;
+import net.hunme.baselibrary.util.MyAlertDialog;
 import net.hunme.baselibrary.util.NetWorkUitls;
 import net.hunme.user.R;
 import net.hunme.user.mode.CheckUpadteVo;
@@ -174,7 +175,7 @@ public class CheckUpdate implements OkHttpListener {
 
 	private void showDownLoadDialog(){
 		View view = LayoutInflater.from(context).inflate(R.layout.alertdialog_checkupdate,null);
-		dialog= MyAlertDialog.getDialog(view,activity);
+		dialog= MyAlertDialog.getDialog(view,activity,1);
 		dialog.setCancelable(false);
 		final TextView tv_message= (TextView) view.findViewById(R.id.tv_update_message); //更新提示
 		final RelativeLayout rl_dowmload= (RelativeLayout) view.findViewById(R.id.rl_dowmload); //下载页面

@@ -14,11 +14,11 @@ import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.SystemInformVo;
+import net.hunme.baselibrary.util.MyAlertDialog;
 import net.hunme.baselibrary.util.SystemInfomDb;
 import net.hunme.baselibrary.util.SystemInfomDbHelp;
 import net.hunme.user.R;
 import net.hunme.user.adapter.SystemInfoAdapter;
-import net.hunme.user.util.MyAlertDialog;
 import net.hunme.user.util.PermissionUtils;
 
 import java.util.ArrayList;
@@ -108,7 +108,7 @@ public class SystemInfoActivity extends BaseActivity {
      */
     private void showAlertDialog(final SystemInformVo systemInformVo, final  SQLiteDatabase database) {
         View coupons_view = LayoutInflater.from(this).inflate(R.layout.alertdialog_message, null);
-        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this);
+        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this,1);
         Button pop_notrigst = (Button) coupons_view.findViewById(R.id.pop_notrigst);
         Button pop_mastrigst = (Button) coupons_view.findViewById(R.id.pop_mastrigst);
         TextView pop_title = (TextView) coupons_view.findViewById(R.id.tv_poptitle);

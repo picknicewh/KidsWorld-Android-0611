@@ -151,7 +151,6 @@
                         android:textStyle="bold"
                         android:textColor="@android:color/white" />
                 </FrameLayout>
-
             </FrameLayout>
             <TextView
                 android:textSize="@dimen/ts_small"

@@ -17,11 +17,11 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.MyAlertDialog;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.user.R;
 import net.hunme.user.adapter.PhotoAdapter;
 import net.hunme.user.mode.PhotoVo;
-import net.hunme.user.util.MyAlertDialog;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -99,7 +99,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
             //获取View
             final View dialogView = LayoutInflater.from(this).inflate(R.layout.alertdialog_add_album, null);
             //获取弹框
-            alertDialog =MyAlertDialog.getDialog(dialogView,this);
+            alertDialog = MyAlertDialog.getDialog(dialogView,this,1);
             Button alertCancel= (Button) dialogView.findViewById(R.id.b_cancel);
             Button alertConfirm= (Button) dialogView.findViewById(R.id.b_confirm);
             final EditText etAlbumName= (EditText) dialogView.findViewById(R.id.et_album_name);

@@ -53,7 +53,6 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
      * 退出提示框
      */
     private void showAlertDialog() {
-
        context.runOnUiThread(new Runnable() {
            @Override
            public void run() {

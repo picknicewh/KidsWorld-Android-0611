@@ -62,7 +62,7 @@ public class PublishAdapter extends BaseAdapter {
         viewHold.tv_title.setText(vo.getTsName());
         viewHold.tv_content.setText(vo.getMessage());
         viewHold.tv_date.setText(vo.getDateTime().substring(0,10));
-        viewHold.lv_holad.setImageResource(R.mipmap.person);//校长的头像
+        viewHold.lv_holad.setImageResource(R.mipmap.ic_headmaster);//校长的头像
         viewHold.setTextColor(vo.isRead());
         return view;
     }

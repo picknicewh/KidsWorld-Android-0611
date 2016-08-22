@@ -25,12 +25,12 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.MyAlertDialog;
 import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.user.R;
 import net.hunme.user.util.BitmapCache;
-import net.hunme.user.util.MyAlertDialog;
 import net.hunme.user.util.PermissionUtils;
 
 import java.io.File;
@@ -147,7 +147,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
      */
     public void showSexDialog(){
         View view= LayoutInflater.from(this).inflate(R.layout.alertdialog_select_sex,null);
-        final AlertDialog alertDialog= MyAlertDialog.getDialog(view,this);
+        final AlertDialog alertDialog= MyAlertDialog.getDialog(view,this,1);
         final RadioButton rb_boy= (RadioButton) view.findViewById(R.id.rb_boy);
         final RadioButton rb_girl= (RadioButton) view.findViewById(R.id.rb_girl);
         if(um.getSex().equals("女"))
@@ -176,7 +176,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
         //获取View
         final View dialogView = LayoutInflater.from(this).inflate(R.layout.alertdialog_add_album, null);
         //获取弹框
-        final AlertDialog alertDialog =MyAlertDialog.getDialog(dialogView,this);
+        final AlertDialog alertDialog = MyAlertDialog.getDialog(dialogView,this,1);
         Button alertCancel= (Button) dialogView.findViewById(R.id.b_cancel);
         Button alertConfirm= (Button) dialogView.findViewById(R.id.b_confirm);
         final EditText etAlbumName= (EditText) dialogView.findViewById(R.id.et_album_name);

@@ -28,6 +28,7 @@ import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.MyAlertDialog;
 import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.LoadingDialog;
@@ -36,7 +37,6 @@ import net.hunme.status.StatusFragement;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.adapter.GridAlbumAdapter;
 import net.hunme.user.util.BitmapCache;
-import net.hunme.user.util.MyAlertDialog;
 import net.hunme.user.util.PermissionUtils;
 
 import java.io.File;
@@ -371,7 +371,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      */
     private void getExitPrompt(){
         View coupons_view = LayoutInflater.from(this).inflate(R.layout.alertdialog_message, null);
-        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this);
+        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this,1);
         Button b_notrigst = (Button) coupons_view.findViewById(R.id.pop_notrigst);
         Button b_mastrigst = (Button) coupons_view.findViewById(R.id.pop_mastrigst);
         TextView pop_title = (TextView) coupons_view.findViewById(R.id.tv_poptitle);

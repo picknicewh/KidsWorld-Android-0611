@@ -20,13 +20,13 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 import net.hunme.baselibrary.activity.UpdateMessageActivity;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.MyAlertDialog;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.login.LoginActivity;
 import net.hunme.login.UserChooseActivity;
 import net.hunme.user.R;
 import net.hunme.user.util.CacheHelp;
 import net.hunme.user.util.CheckUpdate;
-import net.hunme.user.util.MyAlertDialog;
 import net.hunme.user.util.PackageUtils;
 
 import java.io.File;
@@ -230,7 +230,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
      */
     private void showAlertDialog(final int flag) {
         View coupons_view = LayoutInflater.from(this).inflate(R.layout.alertdialog_message, null);
-        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this);
+        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this,1);
         Button pop_notrigst = (Button) coupons_view.findViewById(R.id.pop_notrigst);
         Button pop_mastrigst = (Button) coupons_view.findViewById(R.id.pop_mastrigst);
         TextView pop_title = (TextView) coupons_view.findViewById(R.id.tv_poptitle);
@@ -272,7 +272,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
      */
     private void showPhoneialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_modifyphone, null);
-        final AlertDialog alertDialog = MyAlertDialog.getDialog(view, this);
+        final AlertDialog alertDialog = MyAlertDialog.getDialog(view, this,1);
         Button bt_conform = (Button) view.findViewById(R.id.bt_dg_conform);
         Button bt_cancel = (Button) view.findViewById(R.id.bt_dg_cancel);
         final EditText et_password = (EditText) view.findViewById(R.id.et_dg_password);
