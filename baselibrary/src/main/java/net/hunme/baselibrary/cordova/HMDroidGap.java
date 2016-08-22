@@ -14,6 +14,7 @@ import android.widget.TextView;
 import net.hunme.baselibrary.R;
 import net.hunme.baselibrary.util.Constant;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
 
 import org.apache.cordova.CordovaActivity;
@@ -22,6 +23,8 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaWebViewImpl;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
+
+import io.rong.imkit.RongIM;
 
 public class HMDroidGap extends CordovaActivity implements View.OnClickListener{
     /**
@@ -87,6 +90,10 @@ public class HMDroidGap extends CordovaActivity implements View.OnClickListener{
         iv_left.setOnClickListener(this);
         setShowView();
         setTabBarText();
+        // 抢登监听
+        if (RongIM.getInstance()!=null){
+            RongIM.setConnectionStatusListener(new MyConnectionStatusListener(this));
+        }
     }
     /**
      * 设置web配置
