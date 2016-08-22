@@ -400,7 +400,6 @@ public class AndroidImagePicker {
             }
         }
         fragment.startActivityForResult(takePictureIntent, requestCode);
-
     }
 
     /**

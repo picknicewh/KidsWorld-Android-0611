@@ -63,6 +63,7 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
                alertDialog.setCancelable(false);
                btn_conform.setText("确认退出");
                pop_title.setText("您的帐号已在其他设备上登录，如果不是您的操作，请尽快重新登录修改密码.");
+
                btn_conform.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View arg0) {

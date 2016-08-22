@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.school.R;
 import net.hunme.school.bean.PublishVo;
 
@@ -58,8 +57,9 @@ public class PublishAdapter extends BaseAdapter {
         }
         PublishVo vo=publishList.get(i);
         viewHold= (ViewHold) view.getTag();
-        ImageCache.imageLoader(vo.getImgUrl(),viewHold.lv_holad);
-        viewHold.tv_title.setText(vo.getTsName());
+       // ImageCache.imageLoader(vo.getImgUrl(),viewHold.lv_holad);
+       // viewHold.tv_title.setText(vo.getTsName());
+        viewHold.tv_title.setText("校长");
         viewHold.tv_content.setText(vo.getMessage());
         viewHold.tv_date.setText(vo.getDateTime().substring(0,10));
         viewHold.lv_holad.setImageResource(R.mipmap.ic_headmaster);//校长的头像

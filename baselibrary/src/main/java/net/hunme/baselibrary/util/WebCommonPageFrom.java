@@ -79,7 +79,7 @@ public class WebCommonPageFrom {
                         break;
                     case Constant.CHILDSTORY:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
-                        tv_title.setText("幼儿故事");
+                        tv_title.setText("幼儿听听");
                         tv_title.setVisibility(View.VISIBLE);
                         iv_right.setImageResource(R.mipmap.ic_search);
                         iv_right.setVisibility(View.VISIBLE);
@@ -151,7 +151,7 @@ public class WebCommonPageFrom {
                         break;
                     case Constant.SEARCH_MUSIC:
                         iv_left.setImageResource(R.mipmap.ic_arrow_lift);
-                        tv_title.setText("搜索音乐");
+                        tv_title.setText("搜索听听");
                         tv_title.setVisibility(View.VISIBLE);
                        // iv_right.setVisibility(View.GONE);
                         iv_right.setImageResource(R.mipmap.ic_empty);
