@@ -10,4 +10,10 @@
         android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <View
+        android:id="@+id/v_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="@color/white"
+        />
 </LinearLayout>
