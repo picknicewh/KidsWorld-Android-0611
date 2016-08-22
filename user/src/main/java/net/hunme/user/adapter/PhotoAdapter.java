@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.image.ImageCache;
+import net.hunme.baselibrary.util.G;
 import net.hunme.user.R;
 import net.hunme.user.mode.PhotoVo;
 
@@ -63,7 +64,11 @@ public class PhotoAdapter extends BaseAdapter {
                 ImageCache.imageLoader(photoList.get(i).getUrl(),viewHold.photo);
             }
             viewHold.photoName.setText(photoList.get(i).getName());
-            viewHold.photoNumber.setText(photoList.get(i).getCount()+"张");
+            String photoCount=photoList.get(i).getCount();
+            if(G.isEmteny(photoCount)){
+                photoCount="0";
+            }
+            viewHold.photoNumber.setText(photoCount+"张");
         }
         return view;
     }

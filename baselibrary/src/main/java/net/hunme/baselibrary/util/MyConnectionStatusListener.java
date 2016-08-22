@@ -60,6 +60,7 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
                final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, context,0);
                Button btn_conform = (Button) coupons_view.findViewById(net.hunme.baselibrary.R.id.btn_conform);
                TextView pop_title = (TextView) coupons_view.findViewById(net.hunme.baselibrary.R.id.tv_title);
+               alertDialog.setCancelable(false);
                btn_conform.setText("确认退出");
                pop_title.setText("您的帐号已在其他设备上登录，如果不是您的操作，请尽快重新登录修改密码.");
                btn_conform.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +68,7 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
                    public void onClick(View arg0) {
                        //退出账号
                        UserMessage.getInstance(context).clean();
-                       ComponentName componetName = new ComponentName("net.hunme.login","net.hunme.login.LoginActivity");
+                       ComponentName componetName = new ComponentName("net.hunme.kidsworld","net.hunme.login.LoginActivity");
                        Intent intent = new Intent();
                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                        intent.setComponent(componetName);

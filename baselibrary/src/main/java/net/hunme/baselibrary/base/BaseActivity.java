@@ -55,6 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         onCreateCustomToolBar(toolbar) ;
         getToolbarViews(toolbar);
         setToolBar();
+        // 账号抢登监听
         if (RongIM.getInstance()!=null){
             RongIM.setConnectionStatusListener(new MyConnectionStatusListener(this));
         }
