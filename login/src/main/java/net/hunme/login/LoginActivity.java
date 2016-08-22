@@ -142,6 +142,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             G.KisTyep.isChooseId=true;
             finish();
+            UserAction.goMainActivity(this);
             G.log("用户选择身份成功----");
         }
     }

@@ -35,20 +35,23 @@ public class ChooseClassPopWindow extends PopupWindow {
         init();
     }
     private void initview(){
-        conentView = LayoutInflater.from(statusFragement.getActivity()).inflate(R.layout.pop_chooseclass,null);
-        lv_classchoose = (ListView) conentView.findViewById(R.id.lv_classchoose);
-        lv_classchoose.setDivider(null);
-        adapter = new ChooseClassAdapter(statusFragement.getActivity(),classlist);
-        lv_classchoose.setAdapter(adapter);
-        lv_classchoose.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                statusFragement.setClassname(classlist.get(position));
-                statusFragement.setWebView(position);
-                statusFragement.setPosition(position);
-                dismiss();
-            }
-        });
+        if (statusFragement!=null){
+            conentView = LayoutInflater.from(statusFragement.getActivity()).inflate(R.layout.pop_chooseclass,null);
+            lv_classchoose = (ListView) conentView.findViewById(R.id.lv_classchoose);
+            lv_classchoose.setDivider(null);
+            adapter = new ChooseClassAdapter(statusFragement.getActivity(),classlist);
+            lv_classchoose.setAdapter(adapter);
+            lv_classchoose.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    statusFragement.setClassname(classlist.get(position));
+                    statusFragement.setWebView(position);
+                    statusFragement.setPosition(position);
+                    dismiss();
+                }
+            });
+        }
+
     }
     public void init() {
         initview();

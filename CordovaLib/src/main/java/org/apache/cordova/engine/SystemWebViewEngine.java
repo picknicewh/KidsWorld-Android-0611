@@ -214,7 +214,6 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
         }
         // end CB-1405
     }
-
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void enableRemoteDebugging() {
         try {
@@ -308,5 +307,6 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
         }
         webView.chromeClient.destroyLastDialog();
         webView.destroy();
+
     }
 }

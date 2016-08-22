@@ -48,10 +48,14 @@ public class BaseLibrary {
         if (activitys != null && activitys.size() > 0) {
             if(!activitys.contains(activity)){
                 activitys.add(activity);
+
             }
         }else{
             activitys.add(activity);
         }
+    }
+    public static  List<Activity> getActivities(){
+        return  activitys;
     }
     // 遍历所有Activity并finish
     public static void exit() {

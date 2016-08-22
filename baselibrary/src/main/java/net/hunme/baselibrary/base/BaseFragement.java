@@ -71,6 +71,7 @@ public class BaseFragement extends Fragment implements CordovaInterface {
         if (null!=webView&&webView.getPluginManager() != null) {
             webView.getPluginManager().onDestroy();
             webView.handleDestroy();
+           // getActivity().unregisterReceiver();
         }
     }
 

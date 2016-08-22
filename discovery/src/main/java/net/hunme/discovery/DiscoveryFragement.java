@@ -164,8 +164,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
            }else {
                webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
                webView.goBack();
-
-               //Log.i("TAGG",webView.getUrl());
            }
          } else if (viewId==R.id.iv_dright){
             String url = webView.getUrl();
@@ -182,5 +180,4 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
             setShowView();
         }
     }
-
 }

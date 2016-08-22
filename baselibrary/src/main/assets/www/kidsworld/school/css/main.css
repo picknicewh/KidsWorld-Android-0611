@@ -27,6 +27,7 @@
 .notify-time{
     float: right;
     margin-right: 8px;
+    color: #a0a0a0;
 }
 .notify-content{
     width: 100%;
@@ -294,6 +295,7 @@ ion-content .list .dis-list{
 .courseArr-con img {
     display: block;
     max-width: 100%;
+    overflow: hidden;
 }
 .time-del time{
     color: #bababa;
@@ -309,7 +311,7 @@ ion-content .list .dis-list{
     color: #A0C547;
 }
 .border-bott{
-    border: 1px solid #dadada;
+    border: 1px solid #e1e1e1;
     margin-top: 10px;
 }
 .slider {

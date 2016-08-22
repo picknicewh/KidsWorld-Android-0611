@@ -21,6 +21,7 @@ import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.NoScrollViewPager;
 import net.hunme.discovery.DiscoveryFragement;
 import net.hunme.kidsworld.util.ConnectionChangeReceiver;
+import net.hunme.kidsworld.util.MyConnectionStatusListener;
 import net.hunme.kidsworld.util.MyViewPagerAdapter;
 import net.hunme.login.UserChooseActivity;
 import net.hunme.login.util.UserAction;
@@ -144,6 +145,7 @@ public class MainActivity extends JPushBaseActivity {
             BaseLibrary.connect(userMessage.getRyId(), MainActivity.this, userMessage.getUserName(), userMessage.getHoldImgUrl());
             setNoreadMessage();
         }
+        RongIM.setConnectionStatusListener(new MyConnectionStatusListener(this));
         registerReceiver();
         initCount();
     }

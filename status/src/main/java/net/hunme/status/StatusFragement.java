@@ -164,6 +164,8 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         getDynamicHead();
         ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
         registerReceiver();
+
+
     }
     public void setPosition(int position){
         this.position = position;

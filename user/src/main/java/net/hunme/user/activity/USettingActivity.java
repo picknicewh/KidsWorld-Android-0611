@@ -109,6 +109,12 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
         setSubTitleOnClickListener(this);
         setCententTitle("账户设置");
         setSubTitle("切换");
+        if (UserMessage.getInstance(this).getCount()>1){
+            findViewById(R.id.tv_subtitle).setVisibility(View.VISIBLE);
+        }else {
+            findViewById(R.id.tv_subtitle).setVisibility(View.GONE);
+        }
+
     }
 
     private void initView() {
@@ -133,6 +139,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
         ll_checkupadte.setOnClickListener(this);
         tv_provsion.setOnClickListener(this);
         registerReceiver();
+
     }
     /**
      * 注册监听网络广播广播
@@ -183,14 +190,11 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         int viewID = v.getId();
         if (viewID == R.id.tv_subtitle) {
-            if (um.getCount()>1){
-              v.setVisibility(View.VISIBLE); Intent intent = new Intent();
-                intent.setClass(this, UserChooseActivity.class);
-                intent.putExtra("type",true);
-                startActivity(intent);
-            }else {
-                v.setVisibility(View.GONE);
-            }
+            Intent intent = new Intent();
+            intent.setClass(this, UserChooseActivity.class);
+            intent.putExtra("type",true);
+            startActivity(intent);
+
         } else if (viewID == R.id.ll_changepasswd) {
             Intent intent = new Intent();
             intent.putExtra("type", "pw");
