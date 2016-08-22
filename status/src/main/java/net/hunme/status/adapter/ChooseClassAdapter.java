@@ -49,14 +49,21 @@ public class ChooseClassAdapter extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.item_chooseclass,null);
             viewHolder = new ViewHolder();
             viewHolder.tv_ca_class = (TextView)view.findViewById(R.id.tv_ca_class);
+            viewHolder.v_line=view.findViewById(R.id.v_line);
             view.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) view.getTag();
+        }
+        if(position==classnamelist.size()-1){
+            viewHolder.v_line.setVisibility(View.GONE);
+        }else{
+            viewHolder.v_line.setVisibility(View.VISIBLE);
         }
         viewHolder.tv_ca_class.setText(classnamelist.get(position));
         return view;
     }
     private  class ViewHolder{
         TextView tv_ca_class;
+        View v_line;
     }
 }

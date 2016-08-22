@@ -282,13 +282,16 @@ ion-content .list .dis-list{
    margin-top: 10px;
     margin-left: 15px;
     margin-right: 15px;
+    border-bottom: 1px solid #e1e1e1;
 }
 .courseArr-con span{
     font-weight: 500;
-    font-size: 14px;
+    font-size: 16px;
+    color: #494949;
 }
 .courseArr-pic{
     margin-top: 10px;
+
     /*height: 150px;*/
     /*border: 1px solid red;*/
 }
@@ -311,7 +314,7 @@ ion-content .list .dis-list{
     color: #A0C547;
 }
 .border-bott{
-    border: 1px solid #e1e1e1;
+    /*border: 1px solid #e1e1e1;*/
     margin-top: 10px;
 }
 .slider {
@@ -397,6 +400,7 @@ ion-view title{
 }
 .ion-calendar{
     margin-right: 10px;
+    color: #8EC500;
 }
 .checkOnclass-left{
     position: absolute;
@@ -540,7 +544,7 @@ ion-view title{
 }
 .button-outline{
     background: #efeff4 !important;
-    color: #a0a0a0 !important;
+    color: #8ec500 !important;
 }
 .onezone-datepicker-navigation-arrow{
     color: #8ec600 !important;
