@@ -13,7 +13,10 @@ import com.umeng.analytics.MobclickAgent;
 
 import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.R;
+import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.ToolBarHelper;
+
+import io.rong.imkit.RongIM;
 
 
 /**
@@ -52,6 +55,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         onCreateCustomToolBar(toolbar) ;
         getToolbarViews(toolbar);
         setToolBar();
+        if (RongIM.getInstance()!=null){
+            RongIM.setConnectionStatusListener(new MyConnectionStatusListener(this));
+        }
     }
 
     public void onCreateCustomToolBar(Toolbar toolbar){
