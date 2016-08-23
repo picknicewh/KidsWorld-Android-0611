@@ -21,6 +21,7 @@ import net.hunme.baselibrary.util.EncryptUtil;
 import net.hunme.baselibrary.util.FormValidation;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
+import net.hunme.baselibrary.widget.LoadingDialog;
 import net.hunme.login.mode.CharacterSeleteVo;
 import net.hunme.login.util.UserAction;
 
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView tv_unpassword;
     private static final String SELECTUSER="/app/selectUser.do";
     private CharacterSeleteVo data;
+    private LoadingDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         b_login= (Button) findViewById(R.id.b_login);
         b_login.setOnClickListener(this);
         tv_unpassword.setOnClickListener(this);
+        dialog=new LoadingDialog(this,R.style.LoadingDialogTheme);
     }
 
     @Override
@@ -96,6 +99,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         map.put("password", EncryptUtil.getBase64(password+"hunme"+(int)(Math.random()*900)+100));
         Type type =new TypeToken<Result<List<CharacterSeleteVo>>>(){}.getType();
         OkHttps.sendPost(type,APPLOGIN,map,this);
+        dialog.show();
     }
 
     //用户选择提交用户ID
@@ -117,13 +121,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             UserMessage.getInstance(this).setUserMessagejsonCache(new Gson().toJson(seleteList));
             UserMessage.getInstance(this).setCount(result.getData().size());
            if(result.getData().size()>1){
+                dialog.dismiss();
                 startActivity(new Intent(this,UserChooseActivity.class));
                 finish();
            }else{
                 data=seleteList.get(0);
                 selectUserSubmit(data.getTsId(),this);
                 UserChooseActivity.flag = 1;
-
             }
             UserAction.saveLoginMessage(this,username,password);
         }else if(SELECTUSER.equals(uri)){
@@ -141,14 +145,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 BaseLibrary.connect(data.getRyId(), LoginActivity.this, data.getName(), data.getImg());
             }
             G.KisTyep.isChooseId=true;
+            dialog.dismiss();
             finish();
             UserAction.goMainActivity(this);
-            G.log("用户选择身份成功----");
         }
     }
 
     @Override
     public void onError(String uri, String error) {
+        dialog.dismiss();
         b_login.setEnabled(true);
         G.showToast(this,error);
     }

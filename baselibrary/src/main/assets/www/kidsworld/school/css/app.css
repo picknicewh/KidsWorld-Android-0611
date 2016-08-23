@@ -53,3 +53,6 @@ div.head span {
     line-height:22px;
     margin-top:15px;
 }
+.button.button-positive {
+    background-color: #8EC500;
+}

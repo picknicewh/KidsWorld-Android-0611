@@ -17,11 +17,11 @@ angular.module('app', ['ui.router','ionic','ionic-datepicker','onezone-datepicke
                 templateUrl:'views/home/foodList.html',
                 controller:'foodListCtrl'
             })
-            .state('foodListDet',{
+          /*  .state('foodListDet',{
                 url:'/foodListDet',
                 templateUrl:'views/home/foodListDet.html',
                 controller:'foodListDetCtrl'
-            })
+            })*/
             .state('askForlv',{
                 url:'/askForlv',
                 templateUrl:'views/home/askForlv.html',

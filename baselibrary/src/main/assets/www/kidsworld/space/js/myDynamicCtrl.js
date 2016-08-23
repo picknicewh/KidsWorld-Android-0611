@@ -10,7 +10,7 @@ mui.previewImage();
 var imgIndex = 2,
     pageflag = true,
     pageIndex = 1,
-    // tsId = "6040009dfa2947328d0f5981f19dcc7b",
+    //tsId = "6040009dfa2947328d0f5981f19dcc7b",
     tsId = getQueryString("tsId"),
     pageSize = 15;
 
@@ -79,22 +79,27 @@ function pullupRefresh() {
         	"pageSize": pageSize               	
         };
         
-         $.post(url + '/dynamic/myDynamic.do', data, 
+		$.post(url + '/dynamic/myDynamic.do', data,
         function(response){ 
         	if(response.code == "0" && response.data != null){
-	        	var resultData = response.data;
-	        	if(resultData.length != pageSize){
-	        		pageflag = false;
-	        	}
+				if(response.data == null | response.data.length == 0 ){
+                     mui.toast("暂无数据");
+				}else{
+					var resultData = response.data;
+					if(resultData.length != pageSize){
+						pageflag = false;
+					}
 //	        	pageCount = response.pageCount;//初次请求，返回总页数
-	//      	mui('#pullrefresh').pullRefresh().endPullupToRefresh(()); //参数为true代表没有更多数据了。
-	        	for(var i = 0; i < resultData.length; i++) {
-					var li = document.createElement('div');
-					li.className = 'app-mainBox';
-					li.innerHTML = generateHtml(resultData[i]);
-				
-					table.appendChild(li);
-			    }
+					//      	mui('#pullrefresh').pullRefresh().endPullupToRefresh(()); //参数为true代表没有更多数据了。
+					for(var i = 0; i < resultData.length; i++) {
+						var li = document.createElement('div');
+						li.className = 'app-mainBox';
+						li.innerHTML = generateHtml(resultData[i]);
+
+						table.appendChild(li);
+					}
+				}
+
         	}
         });
         pageIndex++;//页码加一
@@ -125,8 +130,7 @@ function pullupRefresh() {
 						  	 	//根据不同的设备，调用不同的原生方法，来重新加载页面。
 						  	 	var u = navigator.userAgent;
 					            if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){ //android终端
-					                //   alert(change_tb);
-							            change_tb.noticeChange();
+							            change_tob.noticeChange();
 							    }else if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){ //ios终端
 							            refreshTrend();
 							    }

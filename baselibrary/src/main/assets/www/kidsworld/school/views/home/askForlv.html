@@ -27,6 +27,11 @@
             <span class="moreIcon" ng-show="loadState==0" ng-click="pullUp()"></span>
             <ion-spinner icon="bubbles" class="spinner-balanced loading" ng-show="loadState==1"></ion-spinner>
             <span class="loadEnd" ng-show="loadState==2">没有更多数据了</span>
+
+           <!-- <span class="loadMore" ng-click="pullUp()">查看更多</span>
+            <span class="moreIcon" ng-click="pullUp()"></span>
+            <ion-spinner icon="bubbles" class="spinner-balanced loading"></ion-spinner>
+            <span class="loadEnd">没有更多数据了</span>-->
         </div>
       <!--  <ion-infinite-scroll on-infinite="pullUp()" distance="1%" ng-if="doMore">
         </ion-infinite-scroll>

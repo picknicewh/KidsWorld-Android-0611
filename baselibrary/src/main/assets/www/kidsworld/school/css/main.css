@@ -177,6 +177,7 @@ ion-content .list .dis-list{
     font-size: 18px;
     font-weight: 500;
     margin-left: 10px;
+    color: #8ec500;
 }
 .askForlv-top{
     margin-top: 10px;
@@ -189,11 +190,11 @@ ion-content .list .dis-list{
 }
 .askForlv-dis span{
     display: block;
-    color: #A2A2A2;
+    color: #a0a0a0;
 }
 .askForlv-dis i{
     margin-left: 10px;
-    color: black;
+    color: #494949;
 }
 .askForlv-top .askForlv-agr-side{
     width: 40px;
@@ -567,6 +568,6 @@ ion-view title{
     top: 240px;
     color: #A0A0A0;
     font-size: 24px;
-    text-shadow: 0 0 1px #9a9a9a;
+    /*text-shadow: 0 0 1px #9a9a9a;*/
 
 }
