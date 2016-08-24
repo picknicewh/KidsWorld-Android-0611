@@ -7,8 +7,7 @@
         android:layout_margin="@dimen/space"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:id="@+id/lv_holad"
-        android:src="@mipmap/ic_test01"/>
+        android:id="@+id/lv_holad" />
 
     <RelativeLayout
         android:layout_marginRight="@dimen/space"

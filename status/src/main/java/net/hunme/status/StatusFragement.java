@@ -361,7 +361,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
                 String schoolid = bundle.getString("schoolid");
                 String classid = bundle.getString("classid");
                 String groupId = dynamicList.get(position).getGroupId();
-                if (messagetype.equals("1")) {
+                if (null!=messagetype&&messagetype.equals("1")) {
                      Intent myIntent = new Intent("net.hunme.kidsworld.MyStatusDosShowReceiver");
                     if (schoolid.equals("") && classid.equals(classid) ||classid.equals("")&&schoolid.equals(groupId)) {
                         myIntent.putExtra("count",1);

@@ -4,7 +4,6 @@
     android:layout_height="wrap_content">
   <ImageView
       android:id="@+id/iv_cphoto"
-      android:src="@mipmap/ic_test01"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" />
    <FrameLayout

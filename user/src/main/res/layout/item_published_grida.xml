@@ -7,8 +7,7 @@
         android:id="@+id/item_grida_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_test01" >
+        android:scaleType="centerCrop">
     </ImageView>
 
     <ImageView

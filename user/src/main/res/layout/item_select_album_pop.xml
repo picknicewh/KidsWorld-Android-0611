@@ -7,8 +7,7 @@
         android:id="@+id/iv_album"
         android:layout_margin="@dimen/space"
         android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@mipmap/ic_test01"/>
+        android:layout_height="80dp" />
 
     <LinearLayout
         android:padding="@dimen/space"
