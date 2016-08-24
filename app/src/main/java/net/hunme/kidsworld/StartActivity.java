@@ -1,14 +1,15 @@
 package net.hunme.kidsworld;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 
-public class StartActivity extends Activity {
+import main.jpushlibrary.JPush.JPushBaseActivity;
+
+public class StartActivity extends JPushBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
