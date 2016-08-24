@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -56,29 +58,37 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
        context.runOnUiThread(new Runnable() {
            @Override
            public void run() {
-               View coupons_view = LayoutInflater.from(context).inflate(net.hunme.baselibrary.R.layout.dialog_exit, null);
-               final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, context,0);
-               Button btn_conform = (Button) coupons_view.findViewById(net.hunme.baselibrary.R.id.btn_conform);
-               TextView pop_title = (TextView) coupons_view.findViewById(net.hunme.baselibrary.R.id.tv_title);
-               alertDialog.setCancelable(false);
-               btn_conform.setText("确认退出");
-               pop_title.setText("您的帐号已在其他设备上登录，如果不是您的操作，请尽快重新登录修改密码.");
-
-               btn_conform.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View arg0) {
-                       //退出账号
-                       UserMessage.getInstance(context).clean();
-                       ComponentName componetName = new ComponentName("net.hunme.kidsworld","net.hunme.login.LoginActivity");
-                       Intent intent = new Intent();
-                       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                       intent.setComponent(componetName);
-                       context.startActivity(intent);
-                       context.finish();
-                       alertDialog.dismiss();
-                   }
-               });
+              handler.sendEmptyMessage(0x01);
            }
        });
     }
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what==0x01){
+                View coupons_view = LayoutInflater.from(context).inflate(net.hunme.baselibrary.R.layout.dialog_exit, null);
+                final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, context,0);
+                Button btn_conform = (Button) coupons_view.findViewById(net.hunme.baselibrary.R.id.btn_conform);
+                TextView pop_title = (TextView) coupons_view.findViewById(net.hunme.baselibrary.R.id.tv_title);
+                alertDialog.setCancelable(false);
+                btn_conform.setText("确认退出");
+                pop_title.setText("您的帐号已在其他设备上登录，如果不是您的操作，请尽快重新登录修改密码.");
+                btn_conform.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+                        //退出账号
+                        UserMessage.getInstance(context).clean();
+                        ComponentName componetName = new ComponentName("net.hunme.kidsworld","net.hunme.login.LoginActivity");
+                        Intent intent = new Intent();
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.setComponent(componetName);
+                        context.startActivity(intent);
+                        context.finish();
+                        alertDialog.dismiss();
+                    }
+                });
+            }
+        }
+    };
 }

@@ -21,7 +21,7 @@ import net.hunme.baselibrary.R;
  */
 public class MyAlertDialog {
     public static AlertDialog getDialog(View view, Activity activity,int flag) {
-        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+       final AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
         alertDialog.show();
         WindowManager windowManager = activity.getWindowManager();
         Display display = windowManager.getDefaultDisplay();
