@@ -123,16 +123,18 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
                 PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
                 return;
             }
+
             AndroidImagePicker.getInstance().pickAndCrop(UMassageActivity.this, true, 200, new AndroidImagePicker.OnImageCropCompleteListener() {
                 @Override
                 public void onImageCropComplete(Bitmap bmp, float ratio) {
 //                    Log.i(TAG,"=====onImageCropComplete (get bitmap="+bmp.toString());
 //                    ivCrop.setVisibility(View.VISIBLE);
-                    path=path+ new Date().getTime()+".jpg";
-                    BitmapCache.compressBiamp(bmp,path,100);//压缩图片到该路径 path
+                    String mpath=path+ new Date().getTime()+".jpg";
+                    BitmapCache.compressBiamp(bmp,mpath,100);//压缩图片到该路径 path
                     List<File> files=new ArrayList<>();
-                    files.add(new File(path));//从该路径拿到图片
+                    files.add(new File(mpath));//从该路径拿到图片
                     userAvatarSubmit(files);
+                   // path= Environment.getExternalStorageDirectory().toString() + "/ChatFile/";
                 }
             });
         }else if(viewID==R.id.ll_sex){
