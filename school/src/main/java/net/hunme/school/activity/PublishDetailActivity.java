@@ -40,8 +40,7 @@ public class PublishDetailActivity extends BaseActivity {
         PublishVo vo= (PublishVo) getIntent().getSerializableExtra("publish");
         ImageCache.imageLoader(vo.getImgUrl(),lv_holad);
         lv_holad.setImageResource(R.mipmap.ic_headmaster);//校长的头像
-       // tv_title.setText(vo.getTsName());
-         tv_title.setText("校长");
+        tv_title.setText("校长");
         tv_date.setText(vo.getDateTime().substring(0,11));
         tv_content.setText(vo.getMessage());
     }
