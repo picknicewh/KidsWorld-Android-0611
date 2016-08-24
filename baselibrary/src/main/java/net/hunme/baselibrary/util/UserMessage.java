@@ -176,6 +176,19 @@ public class UserMessage {
         return spf.getString("jsonCache","");
     }
 
+    /**
+     *  用户身份选择标签
+     * @param position
+     */
+    public void setSelectFlag(int position){
+        editor.putInt("selectFlag",position);
+        editor.commit();
+    }
+    public int getSelectFlag(){
+        return spf.getInt("selectFlag",0);
+    }
+
+
     public void clean(){
         cleanPublishDb();
         editor.clear().commit();

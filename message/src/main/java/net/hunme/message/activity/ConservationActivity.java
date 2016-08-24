@@ -1,5 +1,6 @@
 package net.hunme.message.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,8 +9,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.activity.PermissionsActivity;
+import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
+import net.hunme.user.util.PermissionUtils;
 
 import java.util.Locale;
 
@@ -56,13 +61,19 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
      *当前的会话类型
      */
     private Conversation.ConversationType mconversationType;
+    private final String[] PERMISSIONS = new String[]{
+            Manifest.permission.RECORD_AUDIO, //麦克风权限
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conservation);
      //   addExtendProvider();
         initView();
-
+        if(new PermissionsChecker(this).lacksPermissions(PERMISSIONS)){
+            PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
+            return;
+        }
     }
     /**
      * 初始化数据
@@ -118,4 +129,15 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         };
         RongIM.getInstance().resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, provider);
     }*/
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case PermissionUtils.REQUEST_CODE:
+                //检测到没有授取权限 关闭页面
+                if(resultCode == PermissionsActivity.PERMISSIONS_DENIED){
+                    G.showToast(this,"权限没有授取，可能会影响您的语音发送，请到权限中心授权");
+                }
+                break;
+        }
+    }
 }

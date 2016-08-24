@@ -68,6 +68,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     private final String SETSIGN="/appUser/setSignature.do";
     private final String AVATAR="/appUser/setAvatar.do";
     private String path;//选择头像保存地址
+    private String mpath; //头像绝对地址
     private String sign; //用户个性签名
     // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
@@ -129,12 +130,11 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
                 public void onImageCropComplete(Bitmap bmp, float ratio) {
 //                    Log.i(TAG,"=====onImageCropComplete (get bitmap="+bmp.toString());
 //                    ivCrop.setVisibility(View.VISIBLE);
-                    String mpath=path+ new Date().getTime()+".jpg";
+                    mpath=path+ new Date().getTime()+".jpg";
                     BitmapCache.compressBiamp(bmp,mpath,100);//压缩图片到该路径 path
                     List<File> files=new ArrayList<>();
                     files.add(new File(mpath));//从该路径拿到图片
                     userAvatarSubmit(files);
-                   // path= Environment.getExternalStorageDirectory().toString() + "/ChatFile/";
                 }
             });
         }else if(viewID==R.id.ll_sex){
@@ -237,7 +237,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
             Result<String> result= (Result<String>) date;
              //um.setHoldImgUrl(result.getData());
             //测试数据
-            um.setHoldImgUrl("file://"+path);
+            um.setHoldImgUrl("file://"+mpath);
             //修改头像成功后，设置当前融云的用户头像
             if (RongIM.getInstance() != null) {
                 RongIM.getInstance().setCurrentUserInfo(new UserInfo(um.getTsId(), um.getUserName(), Uri.parse(result.getData())));

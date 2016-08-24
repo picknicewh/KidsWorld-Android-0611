@@ -49,8 +49,9 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
             lv_user_choose.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    adapter.setSelectPosition(i);
+                    adapter.changItemImage(view,i);
                     data=seleteList.get(i);
+                    um.setSelectFlag(i);
                     LoginActivity.selectUserSubmit(data.getTsId(),UserChooseActivity.this);
                     dialog.show();
                 }
@@ -61,7 +62,7 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
         if(isGoBack){
             for (int i=0;i<seleteList.size();i++){
                 if(um.getUserName().equals(seleteList.get(i).getName())){
-                    adapter.setSelectPosition(i);
+                    adapter.setSelectPosition(um.getSelectFlag());
                 }
             }
         }
