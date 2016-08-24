@@ -10,9 +10,13 @@ angular.module('app.controllers')
             pageSize = 2;
         $scope.tsId=getUrlParam("tsId");
         $scope.type = getUrlParam("type");
-        // $scope.tsId = "6040009dfa2947328d0f5981f19dcc7b";
-        // $scope.type = 0;
+
+        //测试
+        //$scope.tsId = "09e05e5c31f244d3b51e00e5973ab874";
+        //$scope.type = 0;
+        //$scope.type = 2;
         //alert(tsId);
+
         $scope.$on("$ionicView.beforeEnter", function(){
             $scope.loadState = 0;
             //$scope.pro = false;

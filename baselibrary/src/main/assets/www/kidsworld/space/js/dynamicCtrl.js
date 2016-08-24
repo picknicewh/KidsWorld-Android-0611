@@ -20,11 +20,8 @@ var imgIndex = 2,
     urlNow = window.location.href,
     tsId = "afa41d59d3f4400ca1558d43b6d29991",
     groupId = "eed2ce7de25b44f2a550d96b1f2b5295",
-  tsId = "988ab628507b4addb3130cca0b5d60fb",
-  groupId = "298f1648653840fdaa6c396830025af5",
     groupType = 1,
     firstTime = "2016-08-17 16:35:00",//第一次请求的时间
-     //refreshTime = null;
     dynamicId = null,
     myName = "周龙龙";*/
    		
@@ -179,7 +176,7 @@ function pulldownRefresh() {
 		//选择DOM
 		var table = document.body.querySelector('.mui-table-view');
 		var cells = document.body.querySelectorAll('.app-mainBox');
-         table.innerHTML = "";
+
 		//请求数据
 		var data = {
         	"tsId": tsId,
@@ -199,12 +196,11 @@ function pulldownRefresh() {
               if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){ //android终端
 		            showDos.setStatus();
 		        }else if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){ //ios终端
-		            tooc();
+		            //tooc();
 		        }
 		        
         	if(response.code == 0 && response.data.length > 0){
-//      		firstTime = refreshTime.Format("yyyy-MM-dd hh:mm:ss");
-        		
+				table.innerHTML = "";
         		var resultData = response.data,
 				    dataLen = resultData.length;
         		dynamicId = resultData[0].dynamicId;
@@ -220,9 +216,6 @@ function pulldownRefresh() {
 				}
 
         	}
-        	
-        	
-        	 
        });
         pageIndex = 2;
 
@@ -257,7 +250,7 @@ function pullupRefresh() {
          $.post(url + '/dynamic/getDynamic.do', data, 
         function(response){ 
         	if(response.code == "0"){
-				if(response.data.length == 0){
+				if(response.data.length == 0 && pageIndex == 1){
 					mui.toast("暂无数据");
 				}else{
 					var resultData = response.data,
@@ -273,16 +266,21 @@ function pullupRefresh() {
 					for(var i = 0; i < dataLen; i++) {
 						var li = document.createElement('div');
 						li.className = 'app-mainBox';
+
 						li.innerHTML = generateHtml(resultData[i]);
 
 						table.appendChild(li);
+
 					}
+					////时间转换
+					//$('time.timeago').timeago();
 				}
 
         	
         	}
         });
         pageIndex++;//页码加一
+
       
 	}, 1500);
 }
@@ -323,10 +321,11 @@ function generateHtml(arr) {//此处arr不是数组
 
     tmpHtml += '</div>';
     tmpHtml += '<div class="app-control" data-islike=' + arr.isAgree + ' data-likecnt=' + arr.list.length;
-    tmpHtml += ' data-dynamicid=' + arr.dynamicId + '>';
-	tmpHtml += '<span class="app-time">' + (new Date(arr.createTime)).Format("yyyy-MM-dd") + '</span>';
-//	tmpHtml += '<img src="../images/more.png" class="mui-pull-right" id="more" style="width:20px;"/>';
-    tmpHtml += '<span class="mui-pull-right" id="more"><img src="../images/more.png"  style="width:20px;"/></span>';
+    tmpHtml += ' data-dynamicid=' + arr.dynamicId + '><span class="app-time">';
+	//时间
+	//tmpHtml += '<span class="app-time">' + (new Date(arr.createTime)).Format("yyyy-MM-dd") + '</span>';
+	tmpHtml += '<span class="app-time">' + arr.date + '</span>';
+    tmpHtml += '</span><span class="mui-pull-right" id="more"><img src="../images/more.png"  style="width:20px;"/></span>';
 	tmpHtml += '<a  class="item dy_like_btn_v3 popup" id="popup" href="javascript:;" data-show="0" style="display: none;">';
 	tmpHtml += '<img src="../images/heart.png"/><span id="thumb">' +((arr.isAgree == 2)?"赞":"取消")+'</span></a></div>';
 	
@@ -357,6 +356,20 @@ function getQueryString(name) {
 //调用getQueryString
 //alert(getQueryString("text"));
 
+//时间格式
+function ISODateString(d) {
+	function pad(n){
+		return n<10 ? '0'+n : n
+	}
+	return d.getUTCFullYear()+'-'
+		+ pad(d.getUTCMonth()+1)+'-'
+		+ pad(d.getUTCDate())+'T'
+		+ pad(d.getUTCHours())+':'
+		+ pad(d.getUTCMinutes())+':'
+		+ pad(d.getUTCSeconds())+'Z'
+}
+
+
 //适配
  (function (doc, win) {
     var docEl = doc.documentElement || doc.body,
@@ -386,5 +399,7 @@ if(mui.os.plus) {
 	mui.ready(function() {
 	mui('#pullrefresh').pullRefresh().pullupLoading();
 	});    
-}  
+}
+
+
 

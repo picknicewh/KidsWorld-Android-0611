@@ -6,8 +6,9 @@ angular.module('app.controllers')
 
         //变量声明
         var tsId=getUrlParam("tsId");
-        // var tsId = "6040009dfa2947328d0f5981f19dcc7b";
-
+        //var tsId = "6040009dfa2947328d0f5981f19dcc7b";
+        //var tsId = "6040009dfa2947328d0f5981f19dcc7c";
+        //var tsId = "";
         $scope.items = [];
         var date = new Date();
             //date = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
@@ -74,7 +75,9 @@ angular.module('app.controllers')
             res.$promise.then(function(response) {
                 $scope.items = response.data.data.dishesList;
                 if($scope.items.length == 0) {
-                        $scope.pro = true;
+                    $scope.pro = true;
+                }else{
+                    $scope.pro = false;
                 }
 
             });

@@ -57,7 +57,7 @@ ul li {margin:0; padding:0; list-sytle:none}
 }
 /*分享页面-头部及头部二级菜单样式*/
 .app-mainBox{
-    padding:20px 10px;
+    padding:20px 10px 20px 0;
     position:relative;
     padding-bottom: 0;
     /*padding-top: 10px;*/
@@ -70,7 +70,7 @@ ul li {margin:0; padding:0; list-sytle:none}
 }
 .app-leftIn span.mui-badge{
     z-index:1;
-    margin-left:-12px;
+    margin-left:-10px;
     padding: 2px;
     top: 26px;
 }
@@ -99,6 +99,7 @@ ul li {margin:0; padding:0; list-sytle:none}
     font-family:"宋体", arial;
     font-size:13px;
     color:#a0a0a0;
+    padding-right: 2px;
 }
 ul.image2 {
 	padding-left: 0;
@@ -265,5 +266,7 @@ div.app-control > span#more {
 	width: 30px;
 	text-align: right;
 }
-
+.mui-table-view:before {
+    height: 0;
+}
 

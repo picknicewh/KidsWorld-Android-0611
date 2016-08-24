@@ -13,9 +13,9 @@ angular.module('app.services').factory('AjaxService', function($http, $httpParam
                 var pString = $httpParamSerializerJQLike(options.data || {});
                 httpOption.url += pString ? "?" + pString : "";
             }
-            $ionicLoading.show({
-                template: '加载中...'
-            });
+            //$ionicLoading.show({
+            //    template: '加载中...'
+            //});
             var deferred = $q.defer();
             if(httpOption.method == "post"){    //post方法用jQuery的post方法
                 $.ajax({
@@ -24,13 +24,13 @@ angular.module('app.services').factory('AjaxService', function($http, $httpParam
                     data: httpOption.data,
                     dataType: 'json',
                     success: function(data){
-                        $ionicLoading.hide();
+                        //$ionicLoading.hide();
                         deferred.resolve({
                             data : data
                         });
                     },
                     error: function(data){
-                        $ionicLoading.hide();
+                        //$ionicLoading.hide();
                         CommonService.showAlert.show("请求失败");
                         $rootScope.$broadcast('ajaxError');
                         deferred.reject(data);
@@ -40,7 +40,7 @@ angular.module('app.services').factory('AjaxService', function($http, $httpParam
             }else{  //get方法用angularjs的get方法
                 $http(httpOption).success(
                     function(data, status, header, config){
-                        $ionicLoading.hide();
+                        //$ionicLoading.hide();
                         //$ionicPopup.alert({
                         //    title: '提示',
                         //    template: '请求成功！'
@@ -51,7 +51,7 @@ angular.module('app.services').factory('AjaxService', function($http, $httpParam
                     }
                 ).error(
                     function(data, status, header, config){
-                        $ionicLoading.hide();
+                        //$ionicLoading.hide();
                         CommonService.showAlert.show("请求失败");
                         $rootScope.$broadcast('ajaxError');
                         deferred.reject(data);

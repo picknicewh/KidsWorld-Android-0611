@@ -10,7 +10,9 @@ angular.module('app.controllers')
         var pageNumber = 1,
             pageSize = 15;
         $scope.tsId=getUrlParam("tsId");
-//        $scope.tsId = "12345678901";
+
+        //测试
+        //$scope.tsId = "6040009dfa2947328d0f5981f19dcc7b";
         // 视图显示之前需要完成的任务
         $scope.$on('$ionicView.beforeEnter', function() {
             //$scope.pro = false;
