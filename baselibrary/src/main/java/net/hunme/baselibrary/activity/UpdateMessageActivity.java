@@ -65,13 +65,11 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
         et_heckNumber=$(R.id.et_heckNumber);
         et_password=$(R.id.et_password);
         b_finish=$(R.id.b_finish);
-      //  tv_time=$(R.id.tv_time);
         btn_checkcode = $(R.id.btn_checkcode);
         tv_cp_number=$(R.id.tv_cp_number);
         tv_type=$(R.id.tv_type);
         b_finish.setOnClickListener(this);
         btn_checkcode.setOnClickListener(this);
-//        b_finish.setEnabled(false);
     }
 
     private void initData(){
@@ -107,7 +105,6 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
         if(view.getId()==R.id.btn_checkcode){
             getValidateCode(type,phoneNum);
             btn_checkcode.setEnabled(false);
-            tv_type.setText("我们已经发送短信验证码到你的手机");
             myCount.start();
         }else if(view.getId()==R.id.b_finish){
             if(type.equals("1")&&!isSubmitDate){
@@ -191,6 +188,8 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
                 isSubmitDate=true;
                 et_heckNumber.setVisibility(View.VISIBLE);
                 et_password.setVisibility(View.GONE);
+            }else if(type.equals("2")){
+                tv_type.setText("我们已经发送短信验证码到你的手机");
             }
             b_finish.setEnabled(true);
             G.showToast(this,"验证码已发送你的手机请注意查收！");

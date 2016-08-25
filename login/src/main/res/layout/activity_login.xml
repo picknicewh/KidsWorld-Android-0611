@@ -15,10 +15,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <ImageView
+                android:layout_marginBottom="@dimen/space_x2.5"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:src="@mipmap/ic_main"/>
+                android:src="@mipmap/ic_login"/>
 
             <EditText
                 android:maxLength="11"
