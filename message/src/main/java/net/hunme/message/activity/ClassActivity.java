@@ -2,7 +2,6 @@ package net.hunme.message.activity;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -94,7 +93,6 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
     private  void getClassinfor(){
         Map<String,Object> params = new HashMap<>();
         params.put("tsId", UserMessage.getInstance(this).getTsId());
-        Log.i("TAFFFF",UserMessage.getInstance(this).getTsId());
         //1=群，2=老师，3=家长
         params.put("type",1);
         Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
@@ -102,7 +100,6 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
     }
     @Override
     public void onSuccess(String uri, Object date) {
-        Log.i("TAG",date+"");
         Result<List<GroupJson>> data = (Result<List<GroupJson>>) date;
         if (data!=null){
             List<GroupJson> groupJsonList =data.getData();
@@ -113,7 +110,6 @@ public class ClassActivity extends BaseActivity implements OkHttpListener{
     }
     @Override
     public void onError(String uri, String error) {
-        Log.i("TAG",error);
         Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
     }
 }

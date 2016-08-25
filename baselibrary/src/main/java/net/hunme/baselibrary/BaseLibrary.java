@@ -5,7 +5,6 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 
 import com.lzy.okhttputils.OkHttpUtils;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -15,6 +14,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+
+import net.hunme.baselibrary.util.G;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -128,20 +129,22 @@ public class BaseLibrary {
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
                 @Override
                 public void onTokenIncorrect() {
-                    Log.i("LoginActivity", "--onTokenIncorrect");}
+
+                }
                 /**
                  * 连接融云成功
                  * @param userid 当前 token
                  */
                 @Override
                 public void onSuccess(String userid) {
+                    G.log("融云连接成功----");
                     if (RongIM.getInstance() != null) {
                         RongIM.getInstance().setCurrentUserInfo(new UserInfo(userid, username, Uri.parse(portrait)));
                         RongIM.getInstance().setMessageAttachedUserInfo(true);
                     }
                 }
                 @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {Log.i("LoginActivity", "--onError" + errorCode);}
+                public void onError(RongIMClient.ErrorCode errorCode) {  G.log("融云连接失败----");}
             });
         }
     }

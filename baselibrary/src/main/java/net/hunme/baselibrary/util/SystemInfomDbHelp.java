@@ -115,5 +115,6 @@ public class SystemInfomDbHelp {
         String sql="delete from user";
         db.execSQL(sql);
         Log.i("cscscs",isEmpty(db)+"");
+        G.log(isEmpty(db)+"---是否删除数据库成功");
     }
 }

@@ -3,7 +3,6 @@ package net.hunme.baselibrary.util;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -243,7 +242,7 @@ public class WebCommonPageFrom {
 
     @JavascriptInterface
     public void noticeChange(){
-        Log.i("TAG","重新加载动态");
+       G.log("重新加载动态");
         HMDroidGap.flag = 1;
     }
 

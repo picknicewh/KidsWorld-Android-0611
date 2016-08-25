@@ -28,12 +28,6 @@
             android:name=".activity.AlbumSelectActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.UDynamicsActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".activity.UCollectionActivity"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name="net.hunme.login.UserChooseActivity"
             android:screenOrientation="portrait"/>
         <activity

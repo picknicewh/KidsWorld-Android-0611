@@ -2,7 +2,6 @@ package net.hunme.message.activity;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -55,7 +54,6 @@ public class InitContractData implements OkHttpListener {
         params.put("type",0);
         Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this);
-        Log.i("TGGG","ryid.................."+tsid);
     }
 
     @Override

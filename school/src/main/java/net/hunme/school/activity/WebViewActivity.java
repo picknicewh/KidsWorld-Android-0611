@@ -3,7 +3,6 @@ package net.hunme.school.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -57,7 +56,6 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         setContentView(R.layout.activity_hm_droidgap);
         super.init();
         launchUrl=getIntent().getStringExtra("loadUrl");
-        Log.i("TAGG",launchUrl);
         loadUrl(launchUrl);
         initData();
     }

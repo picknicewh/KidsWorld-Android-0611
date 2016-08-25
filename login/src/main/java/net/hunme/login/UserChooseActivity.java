@@ -108,10 +108,8 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
         BaseLibrary.connect(data.getRyId(),UserChooseActivity.this,data.getName(),image);
         G.KisTyep.isChooseId=true;
         flag=1;
-       // G.log("-----------------用户选择身份成功-----------");
         UserAction.goMainActivity(this);
         finish();
-      //  G.log("用户选择身份成功----");
     }
 
     @Override

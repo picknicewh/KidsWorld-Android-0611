@@ -2,7 +2,6 @@ package net.hunme.message.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -301,7 +300,6 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
 
     @Override
     public void onError(String uri, String error) {
-        Log.i("TAG",error);
         Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
     }
 }

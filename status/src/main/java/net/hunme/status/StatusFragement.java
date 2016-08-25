@@ -8,7 +8,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -54,6 +53,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * 作者： wh
@@ -164,8 +164,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         getDynamicHead();
         ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
         registerReceiver();
-
-
     }
     public void setPosition(int position){
         this.position = position;
@@ -194,7 +192,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        //
         cordovaWebView.loadUrl(realUrl);
         G.log("loadUrl====="+realUrl);
     }
@@ -214,7 +211,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             public void onClick(View view) {
                 final StatusPublishPopWindow pubishPopWindow = new StatusPublishPopWindow(getActivity());
                 pubishPopWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
-
             }
         });
     }
@@ -249,7 +245,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         //用户发布动态成功 重新刷新数据
         if(G.KisTyep.isReleaseSuccess) {
             G.KisTyep.isReleaseSuccess = false;
-//                    //显示dialog
             cordovaWebView.loadUrl("javascript:pulldownRefresh()");
         }
         if(G.KisTyep.isChooseId){
@@ -271,7 +266,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
 
     @JavascriptInterface
     public void noticeChange(){
-        Log.i("TAG","重新加载动态");
         HMDroidGap.flag = 1;
     }
     /**
@@ -300,7 +294,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             ll_classchoose.setOnClickListener(this);
             if(dynamicList.size()>0){
                 tv_classname.setText(classlist.get(0));
-            //    setWebView(0);
                 setShowView(0);
                 CLASSID=dynamicList.get(0).getGroupId();
             }
@@ -308,7 +301,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     }
     @Override
     public void onError(String uri, String error) {
-//        G.showToast(getActivity(),error);
         G.KisTyep.isChooseId=false;
     }
     /**

@@ -2,7 +2,8 @@ package main.jpushlibrary.JPush;
 
 import android.app.Notification;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+
+import net.hunme.baselibrary.util.G;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -45,7 +46,7 @@ public class JPushBaseActivity extends FragmentActivity {
     private Set<String> setTag(String tag){
         // 检查 tag 的有效性
         if (JPushUtil.isEmpty(tag)) {
-            Log.i("TAG", "tag不能为空！");
+           G.log( "tag不能为空！");
            // Toast.makeText(getApplicationContext(), R.string.error_tag_empty, Toast.LENGTH_SHORT).show();
             return null;
         }
@@ -54,7 +55,7 @@ public class JPushBaseActivity extends FragmentActivity {
         Set<String> tagSet = new LinkedHashSet<String>();
         for (String sTagItme : sArray) {
             if (!JPushUtil.isValidTagAndAlias(sTagItme)) {
-                Log.i("TAG", "设置tag格式不对！");
+                G.log(  "设置tag格式不对！");
            //     Toast.makeText(getApplicationContext(),R.string.error_tag_gs_empty, Toast.LENGTH_SHORT).show();
                 return null;
             }
@@ -68,15 +69,15 @@ public class JPushBaseActivity extends FragmentActivity {
     private String setAlias(String alias){
         if (JPushUtil.isEmpty(alias)) {
 //            Toast.makeText(getApplicationContext(),R.string.error_alias_empty, Toast.LENGTH_SHORT).show();
-            Log.i("TAG", "alias不能为空！");
+            G.log(  "alias不能为空！");
             return null;
         }
         if (!JPushUtil.isValidTagAndAlias(alias)) {
-            Log.i("TAG", "设置alias格式不对！");
+            G.log(  "设置alias格式不对！");
           //  Toast.makeText(getApplicationContext(),R.string.error_tag_gs_empty, Toast.LENGTH_SHORT).show();
             return null;
         }else {
-            Log.i("TAG", "设置极光设备别名成功！");
+            G.log(  "设置极光设备别名成功！");
            // Toast.makeText(getApplicationContext(),"设置极光设备别名失败", Toast.LENGTH_SHORT).show();
         }
 
@@ -91,10 +92,10 @@ public class JPushBaseActivity extends FragmentActivity {
             public void gotResult(int code, String s, Set<String> set) {
                 switch (code) {
                     case 0:
-                        Log.i("TAG", "设置成功！");
+                        G.log(  "设置成功！");
                         break;
                     case 6002:
-                        Log.i("TAG", "设置超时！");
+                        G.log(  "设置超时！");
                         break;
                 }
             }

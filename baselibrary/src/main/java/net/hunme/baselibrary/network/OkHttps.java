@@ -1,7 +1,6 @@
 package net.hunme.baselibrary.network;
 
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -102,12 +101,11 @@ public class OkHttps<T> {
         //进行网络请求
         postRequest= getInstance()
                 .post(uri_host+uri);
-//                .addFileParams("KEY",filelist);
+        // 分批次上传文件给服务器   一起打包发送给服务器的话 服务器接受到最后一个文件
         for (int i=0;i<filelist.size();i++){
             postRequest.params(i+"",filelist.get(i));
-            Log.i("TAFFF",i+""+filelist.get(i));
         }
-        G.log(filelist.size()+"-----------");
+        G.log(filelist.size()+"-----------上传文件个数");
         doInternet(type,uri,getParams(map),okHttpListener);
     }
 
@@ -198,7 +196,6 @@ public class OkHttps<T> {
                     @Override
                     public void upProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
                         super.upProgress(currentSize, totalSize, progress, networkSpeed);
-                        G.log("--------------"+networkSpeed+"---------------"+totalSize);
                     }
                 });
     }

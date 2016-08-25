@@ -9,6 +9,7 @@ import android.widget.TextView;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.cordova.HMDroidGap;
 import net.hunme.baselibrary.image.ImageCache;
+import net.hunme.baselibrary.network.ServerConfigManager;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
@@ -33,8 +34,8 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_id;
     private TextView tv_name;
     private TextView tv_address;//http://192.168.5.136:8989/webSVN/kidsWorld/paradise/indexH.html?tsId=6b64f21d7bc54e108fecbcf77e28e55e#/collect
-    private final String MYCOLLECTION="file:///android_asset/www/kidsworld/paradise/index.html";
-    private final String MYDYNAMICS="file:///android_asset/www/kidsworld/space/view/myDynamic.html";
+    private final String MYCOLLECTION=ServerConfigManager.WEB_IP+"/paradise/index.html";
+    private final String MYDYNAMICS= ServerConfigManager.WEB_IP+"/space/view/myDynamic.html";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

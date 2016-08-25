@@ -234,7 +234,6 @@ public class MainActivity extends JPushBaseActivity {
         this.unregisterReceiver(myReceiver);
         this.unregisterReceiver(myStatusDosShowReceiver);
         this.unregisterReceiver(hideMainTabReceiver);
-        // Log.i("TAG","=================onDestroy===================");
     }
 
     /**

@@ -2,7 +2,6 @@ package net.hunme.message.activity;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -80,7 +79,6 @@ public class InitGroupData implements OkHttpListener {
 
     @Override
     public void onError(String uri, String error) {
-        Log.i("TAG",error);
         Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
     }
 }

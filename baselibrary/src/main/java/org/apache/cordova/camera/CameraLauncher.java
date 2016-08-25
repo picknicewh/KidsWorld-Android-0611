@@ -816,7 +816,7 @@ private String ouputModifiedBitmap(Bitmap bitmap, Uri uri) throws IOException {
     /**
      * Return a scaled bitmap based on the target width and height
      *
-     * @param imagePath
+     * @param
      * @return
      * @throws IOException
      */

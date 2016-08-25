@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.activity.PermissionsActivity;
-import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
@@ -72,7 +71,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         initView();
         if(new PermissionsChecker(this).lacksPermissions(PERMISSIONS)){
             PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
-            return;
         }
     }
     /**
@@ -93,6 +91,7 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         mconversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
         showview(mconversationType);
     }
+
     private void  showview(Conversation.ConversationType mconversationType){
          if (mconversationType.equals(Conversation.ConversationType.GROUP)){
              iv_call.setVisibility(View.GONE);
@@ -130,14 +129,4 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         RongIM.getInstance().resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, provider);
     }*/
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case PermissionUtils.REQUEST_CODE:
-                //检测到没有授取权限 关闭页面
-                if(resultCode == PermissionsActivity.PERMISSIONS_DENIED){
-                    G.showToast(this,"权限没有授取，可能会影响您的语音发送，请到权限中心授权");
-                }
-                break;
-        }
-    }
 }

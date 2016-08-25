@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
+import net.hunme.baselibrary.util.G;
 import net.hunme.kidsworld.MainActivity;
 
 /**
@@ -32,7 +32,7 @@ public class ConnectionChangeReceiver extends BroadcastReceiver {
             //连上网络
             MainActivity.isconnect = true;
         }
-        Log.i("TAG",+MainActivity.count+"===============");
+        G.log(MainActivity.count+"===============");
     }
 
 }
