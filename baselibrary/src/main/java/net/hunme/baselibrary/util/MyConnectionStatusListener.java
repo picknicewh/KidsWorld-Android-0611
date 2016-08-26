@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
 /**
@@ -73,6 +74,9 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
             @Override
             public void onClick(View arg0) {
                 //退出账号
+                if(RongIM.getInstance()!=null){
+                    RongIM.getInstance().disconnect();
+                }
                 UserMessage.getInstance(context).clean();
                 ComponentName componetName = new ComponentName("net.hunme.kidsworld","net.hunme.login.LoginActivity");
                 Intent intent = new Intent();

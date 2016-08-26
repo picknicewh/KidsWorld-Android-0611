@@ -339,7 +339,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             NetworkInfo  wifiNetInfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
                 tv_status_bar.setVisibility(View.VISIBLE);
-
             }else {
                 tv_status_bar.setVisibility(View.GONE);
 
