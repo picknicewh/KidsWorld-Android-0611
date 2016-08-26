@@ -135,7 +135,9 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
      * 跳转到选择本地图片页面
      */
     private void getPhotos(){
-        AndroidImagePicker.getInstance().pickMulti(UploadPhotoActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
+        AndroidImagePicker androidImagePicker = AndroidImagePicker.getInstance();
+        androidImagePicker.setSelectLimit(9-itemList.size());
+        androidImagePicker.pickMulti(UploadPhotoActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
             @Override
             public void onImagePickComplete(List<ImageItem> items) {
                 if(items != null && items.size() > 0){

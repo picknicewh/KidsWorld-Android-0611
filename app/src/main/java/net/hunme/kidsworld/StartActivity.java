@@ -22,7 +22,7 @@ public class StartActivity extends JPushBaseActivity {
                startActivity(new Intent(StartActivity.this,MainActivity.class));
                finish();
            }
-       },3000);
+       },1000);
     }
     /**
      * 标题栏透明

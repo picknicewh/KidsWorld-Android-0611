@@ -97,9 +97,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
-            Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
-
     };
     private int maxContent;
     @Override
@@ -174,6 +172,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         ll_permitchoose.setOnClickListener(this);
         setEditContent();
         rl_restrict.setVisibility(View.VISIBLE);
+        itemList=new ArrayList<>();
         showView(getIntent().getIntExtra("type",1));
         loadingDialog =new LoadingDialog(this,R.style.LoadingDialogTheme);
     }
@@ -212,7 +211,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 发布照片页面
      */
     private void showPhoto(boolean isSchool){
-        itemList=new ArrayList<>();
         mAdapter=new GridAlbumAdapter(itemList,this,isSchool);
         gv_photo.setAdapter(mAdapter);
         gv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -329,7 +327,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             return;
         }
         AndroidImagePicker androidImagePicker =   AndroidImagePicker.getInstance();
-        androidImagePicker.setSelectLimit(maxContent);
+        androidImagePicker.setSelectLimit(maxContent-itemList.size());
         androidImagePicker.pickMulti(PublishStatusActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
             @Override
             public void onImagePickComplete(List<ImageItem> items) {
@@ -337,16 +335,11 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                     for(ImageItem item:items){
                         G.log("选择了===="+item.path);
                             itemList.add(item.path);
-                            maxContent = maxContent -1;
-
                     }
                     mAdapter.notifyDataSetChanged();
-
                 }
             }
         });
-
-        androidImagePicker.setSelectLimit(maxContent);
     }
 
     @Override
