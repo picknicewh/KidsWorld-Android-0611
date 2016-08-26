@@ -87,6 +87,7 @@ public class GridAlbumAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 imageItems.remove(position);
+
                 notifyDataSetChanged();
             }
         });
