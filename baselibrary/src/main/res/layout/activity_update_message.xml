@@ -21,6 +21,7 @@
         android:textSize="@dimen/ts_x_large"
         android:layout_height="wrap_content" />
     <LinearLayout
+        android:id="@+id/ll_code"
         android:layout_marginRight="@dimen/space_x2"
         android:orientation="horizontal"
         android:layout_width="match_parent"

@@ -237,7 +237,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
             Result<String> result= (Result<String>) date;
              //um.setHoldImgUrl(result.getData());
             //测试数据
-            um.setHoldImgUrl("file://"+mpath);
+            um.setHoldImgUrl(result.getData());
             //修改头像成功后，设置当前融云的用户头像
             if (RongIM.getInstance() != null) {
                 RongIM.getInstance().setCurrentUserInfo(new UserInfo(um.getTsId(), um.getUserName(), Uri.parse(result.getData())));

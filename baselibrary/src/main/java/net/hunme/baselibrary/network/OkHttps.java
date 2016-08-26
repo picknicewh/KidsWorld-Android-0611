@@ -47,7 +47,6 @@ public class OkHttps<T> {
     private static boolean isSendError;
     private static OkHttpUtils getInstance() {
         if(null==httpUtils){
-            OkHttpUtils.getInstance().getOkHttpClient();
             httpUtils =OkHttpUtils.getInstance()
                     .setCertificates()          // 自签名https的证书，可变参数，可以设置多个
                     .debug("OkHttpUtils")//是否打开调试

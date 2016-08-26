@@ -79,7 +79,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 选择的内容
      */
     private TextView tv_permitchoose;
-    private final String DYNAMIC ="/dynamic/issueDynamic.do";
+    private final String DYNAMIC ="/dynamics/issueDynamic.do";
     /**
      * 发布类型
      */

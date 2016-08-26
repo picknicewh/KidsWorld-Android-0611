@@ -5,14 +5,12 @@ angular.module('app.controllers')
     .controller('foodListCtrl', function($scope,$state,$ionicPopup,NoteService,WebService){
 
         //变量声明
-        var tsId=getUrlParam("tsId");
+        //var tsId=getUrlParam("tsId");
         //var tsId = "6040009dfa2947328d0f5981f19dcc7b";
-        //var tsId = "6040009dfa2947328d0f5981f19dcc7c";
+        var tsId = "6040009dfa2947328d0f5981f19dcc7c";
         //var tsId = "";
         $scope.items = [];
         var date = new Date();
-            //date = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-        //$scope.date = date;
 
         $scope.$on("$ionicView.beforeEnter", function(){
             $scope.items=[];

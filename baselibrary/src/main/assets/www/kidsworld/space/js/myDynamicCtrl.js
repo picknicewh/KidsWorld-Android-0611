@@ -3,7 +3,9 @@
  *
  * */
 //var url = "http://192.168.1.200:8080/KidsWorld";
-var url = "http://zhu.hunme.net:8080/KidsWorld";
+//var url = "http://zhu.hunme.net:8080/KidsWorld";
+var url = "http://eduslb.openhunme.com/KidsWorld";
+
 //图片预览
 mui.previewImage();	
 
@@ -79,7 +81,7 @@ function pullupRefresh() {
         	"pageSize": pageSize               	
         };
         
-		$.post(url + '/dynamic/myDynamic.do', data,
+		$.post(url + '/dynamics/myDynamic.do', data,
         function(response){ 
         	if(response.code == "0" && response.data != null){
 				if(response.data == null | response.data.length == 0 ){
@@ -122,7 +124,7 @@ function pullupRefresh() {
 							"tsId":tsId,
 							"dynamicId":dynamicId
 						}
-						$.post(url + '/dynamic/deleteDynamic.do',datas,
+						$.post(url + '/dynamics/deleteDynamic.do',datas,
 						  function(response){
 						  	 if(response.code == 0){
 //						  	 	alert("删除成功");

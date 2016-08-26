@@ -3,8 +3,8 @@
  *
  * */
 //var url = "http://192.168.1.108:8080/KidsWorld";
-var url = "http://zhu.hunme.net:8080/KidsWorld";
-
+//var url = "http://zhu.hunme.net:8080/KidsWorld";
+var url = "http://eduslb.openhunme.com/KidsWorld";
 
 
 //页面参数
@@ -15,8 +15,8 @@ var imgIndex = 2,
     firstTime = getQueryString("clickTime"),//第一次请求的时间
     dynamicId = null,
     myName = getQueryString("myName");
+    
 /* var imgIndex = 2,
-    urlNow = window.location.href,
     tsId = "afa41d59d3f4400ca1558d43b6d29991",
     groupId = "eed2ce7de25b44f2a550d96b1f2b5295",
     groupType = 1,
@@ -89,7 +89,7 @@ var imgIndex = 2,
 		$this.data('show', 0).hide();
 		
 		//点赞	
-        $.post(url + '/dynamic/subPraise.do', dataz, 
+        $.post(url + '/dynamics/subPraise.do', dataz,
         function(response){ 
 //      	if(response.data )        	
        });
@@ -101,7 +101,7 @@ var imgIndex = 2,
 		$this.parent().data('likecnt', likecnt - 1);
 		
 		//取消赞
-        $.post(url + '/dynamic/subPraise.do', dataq, 
+        $.post(url + '/dynamics/subPraise.do', dataq,
         function(response){ 
 //      	if(response.data )        	
        });
@@ -112,7 +112,7 @@ var imgIndex = 2,
 		$this.parent().siblings('div#names').append('<span class="name" value=' + myName + '>' + myName + '</span>');
 		$this.data('show', 0).hide();
 		//点赞
-        $.post(url + '/dynamic/subPraise.do', dataz, 
+        $.post(url + '/dynamics/subPraise.do', dataz,
         function(response){         	
        });
 	}
@@ -197,7 +197,7 @@ function pulldownRefresh() {
        };
 
          
-        $.post(url + '/dynamic/getDynamic.do', data, 
+        $.post(url + '/dynamics/getDynamic.do', data,
         function(response){ 
         	//根据不同设备，调用不同的消除红点方法。
 
@@ -250,7 +250,7 @@ function pullupRefresh() {
         	
       };  
 
-         $.post(url + '/dynamic/getDynamic.do', data, 
+         $.post(url + '/dynamics/getDynamic.do', data,
         function(response){ 
         	if(response.code == "0"){
 				if(response.data.length == 0 && pageIndex == 1){
@@ -352,8 +352,10 @@ function getQueryString(name) {
     var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
     var r = window.location.search.substr(1).match(reg);
     if (r != null) {
-//        return decodeURI(r[2]);
-    return decodeURIComponent(r[2]);
+		//return unescape(r[2]);
+        //return decodeURI(r[2]);
+		return decodeURIComponent(r[2]);
+
     }
     return null;
 }

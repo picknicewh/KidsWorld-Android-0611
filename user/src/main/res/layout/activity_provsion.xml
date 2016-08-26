@@ -16,7 +16,7 @@
             style="@style/TextStyleBase"
             android:textSize="@dimen/ts_x_large"
             android:gravity="center"
-            android:text="红掌教育服务使用协议"/>
+            android:text="贝贝虎服务使用协议"/>
         <TextView
             android:id="@+id/tv_provsion"
             android:layout_width="match_parent"

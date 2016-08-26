@@ -108,7 +108,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     /**
      * 获取班级列表uri
      */
-    private final String DYNAMICHEAD="/dynamic/getDynamicHead.do";
+    private final String DYNAMICHEAD="/dynamics/getDynamicHead.do";
     private UserMessage um;
     /**
      * 班级列表对象

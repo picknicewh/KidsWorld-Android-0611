@@ -3,10 +3,26 @@
 
 
 
+        <!--<ul class="courseArr-allt">
+            <li class="courseArr-con" ng-repeat="item in items">
+                <span>{{ item.title }}</span>
+                <div class="courseArr-pic" ng-repeat="img in item.imgs"><img src="{{img}}"/></div>
+                <div class="time-del">
+                    <time>{{item.creationTime | dataTime}}</time>
+                    <a ng-click="showConfirm($index,item.syllabusId)" data-id="{{item.syllabusId}}" ng-show="type == 2" >删除</a>
+                </div>
+                <div class="border-bott"></div>
+            </li>
+        </ul>-->
+
+        <!--测试-->
         <ul class="courseArr-allt">
             <li class="courseArr-con" ng-repeat="item in items">
                 <span>{{ item.title }}</span>
-                <div class="courseArr-pic"><img src="{{item.imgs[0]}}"/></div>
+                <div class="courseArr-pic" ng-repeat="img in item.imgs">
+                    <img src="{{img}}" data-preview-src="{{img}}" data-preview-group="{{$id}}"/>
+                    <!--<img src="http://zhu.hunme.net:8080/coursePlan/eed2ce7de25b44f2a550d96b1f2b5295/1471350774977/14713507749771471350777018.jpg" data-preview-src="http://zhu.hunme.net:8080/coursePlan/eed2ce7de25b44f2a550d96b1f2b5295/1471350774977/14713507749771471350777018.jpg" data-preview-group="1"/>-->
+                </div>
                 <div class="time-del">
                     <time>{{item.creationTime | dataTime}}</time>
                     <a ng-click="showConfirm($index,item.syllabusId)" data-id="{{item.syllabusId}}" ng-show="type == 2" >删除</a>

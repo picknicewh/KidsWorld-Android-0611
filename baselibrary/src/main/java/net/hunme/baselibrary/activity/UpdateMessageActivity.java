@@ -8,6 +8,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
@@ -47,6 +48,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
     private String Sign;//验证码
     private String value;//新密码或者新手机号
     private String phoneNum;//手机号
+    private LinearLayout ll_code; //获取验证码页面
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
         btn_checkcode = $(R.id.btn_checkcode);
         tv_cp_number=$(R.id.tv_cp_number);
         tv_type=$(R.id.tv_type);
+        ll_code=$(R.id.ll_code);
         b_finish.setOnClickListener(this);
         btn_checkcode.setOnClickListener(this);
     }
@@ -97,6 +100,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
             tv_cp_number.setVisibility(View.GONE);
             et_heckNumber.setVisibility(View.GONE);
             btn_checkcode.setVisibility(View.GONE);
+            ll_code.setVisibility(View.GONE);
         }
     }
 
@@ -115,7 +119,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
                 }
                 getValidateCode(type,phoneNumber);
             }else{
-                String code=et_heckNumber.getText().toString().trim();
+                 String code=et_heckNumber.getText().toString().trim();
                  value=et_password.getText().toString().trim();
                 if(G.isEmteny(code)||G.isEmteny(value)){
                     G.showToast(this,"提交的数据不能为空");
@@ -125,7 +129,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
                     updatePhone(Sign,code,value);
                 }else{
                     if(!FormValidation.isPassword(value)){
-                        G.showToast(this,"输入的密码由数字和字母组成,长度在8-16位");
+                        G.showToast(this,"输入的密码由数字和字母组成,长度在6-16位");
                         return;
                     }
                     updatePassword(Sign,code,value);
@@ -188,6 +192,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
                 isSubmitDate=true;
                 et_heckNumber.setVisibility(View.VISIBLE);
                 et_password.setVisibility(View.GONE);
+                ll_code.setVisibility(View.VISIBLE);
             }else if(type.equals("2")){
                 tv_type.setText("我们已经发送短信验证码到你的手机");
             }

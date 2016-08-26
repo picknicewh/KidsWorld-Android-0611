@@ -2,13 +2,13 @@
 angular.module('app.services').factory('WebService', function(AjaxService) {
     return {
         //获取首页轮播图-本机测试
-        getParadiseBanner: function() {
+        /*getParadiseBanner: function() {
             var options={};
             options.type = "get";
             options.useBaseUrl = false;
             options.url = "jsonTemp/paradiseBanner.json";
             return AjaxService.ajax(options);
-        },
+        },*/
        //获取食谱列表
         getFoodList: function(tsId,date) {
             var options = {};

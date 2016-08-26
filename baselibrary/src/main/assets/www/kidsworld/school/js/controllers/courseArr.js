@@ -8,13 +8,15 @@ angular.module('app.controllers')
         $scope.pro = false;
         var pageNumber = 1,
             pageSize = 2;
-        $scope.tsId=getUrlParam("tsId");
-        $scope.type = getUrlParam("type");
+        $scope.reg =new RegExp(/\/s/,'');
+        $scope.imgIndex = 2;
+    /*    $scope.tsId=getUrlParam("tsId");
+        $scope.type = getUrlParam("type");*/
 
         //测试
-        //$scope.tsId = "09e05e5c31f244d3b51e00e5973ab874";
+        $scope.tsId = "09e05e5c31f244d3b51e00e5973ab874";
         //$scope.type = 0;
-        //$scope.type = 2;
+        $scope.type = 2;
         //alert(tsId);
 
         $scope.$on("$ionicView.beforeEnter", function(){
@@ -24,7 +26,10 @@ angular.module('app.controllers')
             //$scope.noMore = false;
             $scope.items = [];
             getData();
+            mui.previewImage();
         });
+
+        //$scope.$on("")
 
         //获取数据
         function getData() {
@@ -46,8 +51,11 @@ angular.module('app.controllers')
                 $scope.items=$scope.items.concat(data);
                 $ionicScrollDelegate.resize();
 
+
             });
         }
+
+
 
         //上拉加载
         $scope.pullUp = function(){

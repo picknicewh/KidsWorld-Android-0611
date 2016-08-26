@@ -99,10 +99,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             G.showToast(this,"账号密码不能为空");
             return;
         }
-//        if(!FormValidation.isMobileNO(username)){
-//            G.showToast(this,"您输入的账号不规范");
-//            return;
-//        }
+        if(!FormValidation.isMobileNO(username)){
+            G.showToast(this,"您输入的账号不规范");
+            return;
+        }
         b_login.setEnabled(false);
         Map<String,Object>map=new HashMap<>();
         map.put("accountId",username);

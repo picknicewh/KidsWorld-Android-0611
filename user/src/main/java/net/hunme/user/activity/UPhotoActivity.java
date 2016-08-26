@@ -101,7 +101,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
             //获取弹框
             alertDialog = MyAlertDialog.getDialog(dialogView,this,1);
             Button alertCancel= (Button) dialogView.findViewById(R.id.b_cancel);
-            Button alertConfirm= (Button) dialogView.findViewById(R.id.b_confirm);
+            final Button alertConfirm= (Button) dialogView.findViewById(R.id.b_confirm);
             final EditText etAlbumName= (EditText) dialogView.findViewById(R.id.et_album_name);
             etAlbumName.setFocusable(true);
             etAlbumName.setFocusableInTouchMode(true);
@@ -123,6 +123,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
                         return;
                     }
                     createFlickr(albumName);
+                    alertConfirm.setEnabled(false);
                 }
             });
         }
