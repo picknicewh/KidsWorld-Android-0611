@@ -12,7 +12,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.school.R;
 import net.hunme.school.SchoolFragement;
@@ -25,6 +27,8 @@ import org.apache.cordova.CordovaWebViewImpl;
 import org.apache.cordova.engine.SystemWebChromeClient;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
+
+import io.rong.imkit.RongIM;
 
 public class WebViewActivity extends CordovaActivity implements View.OnClickListener{
     /**
@@ -54,6 +58,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hm_droidgap);
+        BaseLibrary.addActivity(this);
         super.init();
         launchUrl=getIntent().getStringExtra("loadUrl");
         loadUrl(launchUrl);
@@ -73,6 +78,10 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         rl_nonetwork.setOnClickListener(this);
         setToolBar();
         setShowView();
+        // 抢登监听
+        if (RongIM.getInstance()!=null){
+            RongIM.setConnectionStatusListener(new MyConnectionStatusListener(this));
+        }
     }
     /**
      * 是在标题栏

@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.R;
 import net.hunme.baselibrary.util.Constant;
 import net.hunme.baselibrary.util.G;
@@ -71,6 +72,7 @@ public class HMDroidGap extends CordovaActivity implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hm_droidgap);
+        BaseLibrary.addActivity(this);
         super.init();
         String uri=getIntent().getStringExtra("loadUrl");
         G.log("loaduri-----"+uri);

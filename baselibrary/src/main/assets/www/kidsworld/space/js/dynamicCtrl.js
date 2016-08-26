@@ -15,7 +15,6 @@ var imgIndex = 2,
     firstTime = getQueryString("clickTime"),//第一次请求的时间
     dynamicId = null,
     myName = getQueryString("myName");
-    
 /* var imgIndex = 2,
     urlNow = window.location.href,
     tsId = "afa41d59d3f4400ca1558d43b6d29991",
@@ -168,9 +167,18 @@ mui.init({
  * 下拉刷新具体业务实现
  */
 function pulldownRefresh() {
+
 	firstTime = (new Date()).Format("yyyy-MM-dd hh:mm:ss");
 	//alert(refreshTime);
 	pageIndex = 1;
+
+	var u = navigator.userAgent;
+	if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){ //android终端
+		showDos.setStatus();
+	}else if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){ //ios终端
+		tooc();
+	}
+
 	setTimeout(function() {
 //		 mui.toast('下拉刷新');//测试
 		//选择DOM
@@ -192,12 +200,7 @@ function pulldownRefresh() {
         $.post(url + '/dynamic/getDynamic.do', data, 
         function(response){ 
         	//根据不同设备，调用不同的消除红点方法。
-             var u = navigator.userAgent;
-              if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){ //android终端
-		            showDos.setStatus();
-		        }else if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){ //ios终端
-		            //tooc();
-		        }
+
 		        
         	if(response.code == 0 && response.data.length > 0){
 				table.innerHTML = "";
@@ -349,7 +352,8 @@ function getQueryString(name) {
     var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
     var r = window.location.search.substr(1).match(reg);
     if (r != null) {
-        return decodeURI(r[2]);
+//        return decodeURI(r[2]);
+    return decodeURIComponent(r[2]);
     }
     return null;
 }

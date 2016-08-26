@@ -1,6 +1,9 @@
 package net.hunme.login;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -44,9 +47,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStatusBar(Color.parseColor("#fafafa"));
         setContentView(R.layout.activity_login);
         BaseLibrary.addActivity(this);
         initView();
+
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setStatusBar(int color){
+        //设置状态栏颜色
+        getWindow().setStatusBarColor(color);
     }
 
     private void initView(){

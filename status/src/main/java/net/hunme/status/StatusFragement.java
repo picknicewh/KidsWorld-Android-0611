@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
-import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -152,10 +151,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         pb_web=$(view,R.id.pb_web);
 
         webView.addJavascriptInterface(this, "showDos");  //设置本地调用对象及其接口
-        //设置 缓存模式
-        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        // 开启 DOM storage API 功能
-        webView.getSettings().setDomStorageEnabled(true);
         webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web));
         cordovaWebView=getWebView(webView);
         um=UserMessage.getInstance(getActivity());
@@ -187,12 +182,13 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         try {
             realUrl = url+"groupId="+dynamicList.get(position).getGroupId()
                     +"&groupType="+dynamicList.get(position).getGroupType()
-                    +"&tsId="+um.getTsId()+"&myName="+ URLEncoder.encode(um.getUserName(),"utf-8")
-                    +"&clickTime="+ URLEncoder.encode(DateUtil.formatDateTime(new Date()), "utf-8");
+                    +"&tsId="+um.getTsId()+"&myName="+ URLEncoder.encode(um.getUserName(), "UTF-8")
+                    +"&clickTime="+ URLEncoder.encode(DateUtil.formatDateTime(new Date()), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         cordovaWebView.loadUrl(realUrl);
+
         G.log("loadUrl====="+realUrl);
     }
 
