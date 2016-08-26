@@ -76,6 +76,7 @@ public class HMDroidGap extends CordovaActivity implements View.OnClickListener{
         super.init();
         String uri=getIntent().getStringExtra("loadUrl");
         G.log("loaduri-----"+uri);
+
         launchUrl =uri;
         initView();
     }
@@ -173,6 +174,7 @@ public class HMDroidGap extends CordovaActivity implements View.OnClickListener{
                 webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
                 webView.goBack();
             }else {
+                from.sendBroadcast(true);
                 finish();
             }
         }

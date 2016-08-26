@@ -33,6 +33,7 @@ import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.network.ServerConfigManager;
 import net.hunme.baselibrary.util.DateUtil;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.status.mode.DynamicVo;
@@ -52,6 +53,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.rong.imkit.RongIM;
 
 
 /**
@@ -254,6 +257,11 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         }
     }
     @JavascriptInterface
+    public void listenerReload(){
+        RongIM.setConnectionStatusListener(new MyConnectionStatusListener(getActivity()));
+    }
+
+    @JavascriptInterface
     public void setStatus(){
         Intent myIntent = new Intent("net.hunme.kidsworld.MyStatusDosShowReceiver");
         myIntent.putExtra("count",0);
@@ -264,6 +272,8 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     public void noticeChange(){
         HMDroidGap.flag = 1;
     }
+
+
     /**
      * 获取班级列表
      */

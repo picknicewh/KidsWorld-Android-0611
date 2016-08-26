@@ -149,7 +149,6 @@ public class MainActivity extends JPushBaseActivity {
         registerReceiver();
         initCount();
     }
-
     /**
      * 初始化viewpager
      */

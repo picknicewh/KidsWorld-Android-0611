@@ -59,6 +59,9 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
      * 退出提示框
      */
     private void showAlertDialog() {
+        if (context==null){
+          return;
+        }
         View coupons_view = LayoutInflater.from(context).inflate(net.hunme.baselibrary.R.layout.dialog_exit, null);
         final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, context,0);
         Button btn_conform = (Button) coupons_view.findViewById(net.hunme.baselibrary.R.id.btn_conform);

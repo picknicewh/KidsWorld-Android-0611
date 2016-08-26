@@ -324,6 +324,7 @@
 			group = group || defaultGroupName;
 			this.addImages(group, index); //刷新当前group
 			this.openByGroup(index, group);
+			showDos.listenerReload();
 		} else {
 			group = index.getAttribute('data-preview-group');
 			group = group || defaultGroupName;

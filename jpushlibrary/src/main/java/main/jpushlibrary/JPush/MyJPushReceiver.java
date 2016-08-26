@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -104,8 +105,13 @@ public class MyJPushReceiver extends BroadcastReceiver {
      *  处理返回过来的数据，并发送通知
      */
     public  void receivingNotification(Context context,String message,String title){
-       PendingIntent default_pendingIntent =
-                PendingIntent.getActivity(context, 1, new Intent(context, EmptyActivity.class), 0);
+
+        ComponentName componetName = new ComponentName("net.hunme.kidsworld","net.hunme.user.activity.SystemInfoActivity");
+        Intent intent = new Intent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setComponent(componetName);
+         PendingIntent default_pendingIntent =
+                PendingIntent.getActivity(context, 1, intent, 0);
         NotificationManager manager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         // 使用notification
