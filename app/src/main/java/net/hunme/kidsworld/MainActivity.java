@@ -322,7 +322,6 @@ public class MainActivity extends JPushBaseActivity {
      */
     public class MyStatusDosShowReceiver extends BroadcastReceiver {
         public static final String STATUSDOSHOW = "net.hunme.kidsworld.MyStatusDosShowReceiver";
-
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(STATUSDOSHOW)) {
