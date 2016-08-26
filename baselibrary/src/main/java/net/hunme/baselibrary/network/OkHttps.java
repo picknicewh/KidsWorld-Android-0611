@@ -49,7 +49,7 @@ public class OkHttps<T> {
         if(null==httpUtils){
             OkHttpUtils.getInstance().getOkHttpClient();
             httpUtils =OkHttpUtils.getInstance()
-//                    .setCertificates("")          // 自签名https的证书，可变参数，可以设置多个
+                    .setCertificates()          // 自签名https的证书，可变参数，可以设置多个
                     .debug("OkHttpUtils")//是否打开调试
                     .setConnectTimeout(OkHttpUtils.DEFAULT_MILLISECONDS)               //全局的连接超时时间
                     .setReadTimeOut(OkHttpUtils.DEFAULT_MILLISECONDS)                  //全局的读取超时时间
