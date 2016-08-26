@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.R;
-import net.hunme.baselibrary.util.Constant;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
@@ -167,7 +166,6 @@ public class HMDroidGap extends CordovaActivity implements View.OnClickListener{
         int viewId = view.getId();
         if (viewId==R.id.iv_left){
             if (webView.canGoBack()){
-                if (!webView.getUrl().contains(Constant.COLLECT)){}
                 tv_title.setVisibility(View.VISIBLE);
                 tv_title.setText("我的收藏");
                 findViewById(R.id.iv_test).setVisibility(View.VISIBLE);

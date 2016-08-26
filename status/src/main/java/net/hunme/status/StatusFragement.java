@@ -245,6 +245,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         if(G.KisTyep.isReleaseSuccess) {
             G.KisTyep.isReleaseSuccess = false;
             cordovaWebView.loadUrl("javascript:pulldownRefresh()");
+            G.log("---------xxx---------");
         }
         if(G.KisTyep.isChooseId){
             //用户切换身份 重新刷新数据
