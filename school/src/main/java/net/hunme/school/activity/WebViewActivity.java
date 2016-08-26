@@ -62,6 +62,7 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         super.init();
         launchUrl=getIntent().getStringExtra("loadUrl");
         loadUrl(launchUrl);
+        G.log("loadUrl=="+launchUrl);
         initData();
     }
     /**
