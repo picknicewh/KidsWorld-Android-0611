@@ -30,7 +30,7 @@ public class HunmeApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        RongIM.init(this,"x4vkb1qpvvggk");//初始化消息中的信息
+        RongIM.init(this,"pvxdm17jxxeer");//初始化消息中的信息
         setExtendProvide();
         BaseLibrary.initializer(this);
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
