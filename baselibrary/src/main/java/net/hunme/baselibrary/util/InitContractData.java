@@ -1,4 +1,4 @@
-package net.hunme.message.activity;
+package net.hunme.baselibrary.util;
 
 import android.content.Context;
 import android.net.Uri;
@@ -6,13 +6,12 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.hunme.baselibrary.mode.GroupJson;
+import net.hunme.baselibrary.mode.MemberJson;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
-import net.hunme.baselibrary.util.G;
-import net.hunme.message.bean.GroupJson;
-import net.hunme.message.bean.MemberJson;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;

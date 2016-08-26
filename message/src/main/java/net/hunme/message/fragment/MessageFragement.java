@@ -13,8 +13,6 @@ import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.activity.ClassActivity;
-import net.hunme.message.activity.InitContractData;
-import net.hunme.message.activity.InitGroupData;
 import net.hunme.message.activity.ParentActivity;
 import net.hunme.message.ronglistener.MyConversationBehaviorListener;
 
@@ -71,13 +69,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         iv_teacher = $(v,R.id.iv_teacher);
         iv_parent = $(v,R.id.iv_parent);
         userMessage = UserMessage.getInstance(getActivity());
-       // getGroupList(userMessage.getTsId(),1);
-        //初始化联系人所有的头像和名字
-         InitContractData data = new InitContractData(getActivity());
-         data.getContractList(userMessage.getTsId());
-        //初始化群主的头像和名字
-         InitGroupData groupData = new InitGroupData(getActivity());
-        groupData.getGroupList(userMessage.getTsId());
+
         initframent();
         iv_parent.setOnClickListener(this);
         iv_teacher.setOnClickListener(this);

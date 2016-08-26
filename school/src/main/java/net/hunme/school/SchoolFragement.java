@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import net.hunme.baselibrary.base.BaseFragement;
-import net.hunme.baselibrary.network.ServerConfigManager;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.NavigationBar;
 import net.hunme.school.activity.PublishActivity;

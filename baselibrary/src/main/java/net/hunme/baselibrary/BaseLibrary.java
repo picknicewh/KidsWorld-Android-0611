@@ -16,6 +16,8 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.InitContractData;
+import net.hunme.baselibrary.util.InitGroupData;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -122,7 +124,7 @@ public class BaseLibrary {
      * @param  username 用户名
      * @param  portrait 用户头像地址
      */
-    public static void connect(String token, Activity activity, final String username, final String portrait) {
+    public static void connect(String token, final Activity activity, final String username, final String portrait) {
 
         if (activity.getApplicationInfo().packageName.equals(BaseLibrary.getCurProcessName(activity))) {
 
@@ -141,6 +143,12 @@ public class BaseLibrary {
                     if (RongIM.getInstance() != null) {
                         RongIM.getInstance().setCurrentUserInfo(new UserInfo(userid, username, Uri.parse(portrait)));
                         RongIM.getInstance().setMessageAttachedUserInfo(true);
+                        //初始化联系人所有的头像和名字
+                        InitContractData data = new InitContractData(activity);
+                        data.getContractList(userid);
+                        //初始化群主的头像和名字
+                        InitGroupData groupData = new InitGroupData(activity);
+                        groupData.getGroupList(userid);
                     }
                 }
                 @Override
