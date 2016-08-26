@@ -20,6 +20,7 @@ import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.cordova.CordovaInterfaceImpl;
 import net.hunme.baselibrary.cordova.MySystemWebView;
 import net.hunme.baselibrary.image.ImageCache;
+import net.hunme.baselibrary.network.ServerConfigManager;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.util.WebCommonPageFrom;

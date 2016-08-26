@@ -9,6 +9,7 @@ import android.widget.TextView;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.cordova.HMDroidGap;
 import net.hunme.baselibrary.image.ImageCache;
+import net.hunme.baselibrary.network.ServerConfigManager;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
