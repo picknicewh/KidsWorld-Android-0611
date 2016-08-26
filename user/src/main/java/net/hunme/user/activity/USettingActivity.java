@@ -31,6 +31,8 @@ import net.hunme.user.util.PackageUtils;
 
 import java.io.File;
 
+import io.rong.imkit.RongIM;
+
 /**
  * ================================================
  * 作    者：ZLL
@@ -246,6 +248,9 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
             public void onClick(View arg0) {
                 if (flag == 1) {
                     //退出账号
+                    if(RongIM.getInstance()!=null){
+                        RongIM.getInstance().disconnect();
+                    }
                     UserMessage.getInstance(USettingActivity.this).clean();
                     Intent intent = new Intent(USettingActivity.this, LoginActivity.class);
                     startActivity(intent);
