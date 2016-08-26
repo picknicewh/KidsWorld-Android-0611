@@ -6,7 +6,12 @@ import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.util.G;
 
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.widget.provider.CameraInputProvider;
+import io.rong.imkit.widget.provider.ImageInputProvider;
+import io.rong.imkit.widget.provider.InputProvider;
+import io.rong.imlib.model.Conversation;
 
 /**
  * 作者： wh
@@ -26,12 +31,21 @@ public class HunmeApplication extends Application {
         super.onCreate();
         instance = this;
         RongIM.init(this,"x4vkb1qpvvggk");//初始化消息中的信息
+        setExtendProvide();
         BaseLibrary.initializer(this);
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);// 初始化 JPush
 
     }
-
+    //回话扩展功能自定义
+     private void setExtendProvide(){
+    InputProvider.ExtendProvider[] provider = {
+            new ImageInputProvider(RongContext.getInstance()),//图片
+            new CameraInputProvider(RongContext.getInstance()),//相机
+    };
+         RongIM.getInstance().resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, provider);
+         RongIM.getInstance().resetInputExtensionProvider(Conversation.ConversationType.GROUP, provider);
+}
 
     @Override
     public void onTerminate() {

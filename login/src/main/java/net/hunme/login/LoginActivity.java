@@ -51,13 +51,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         BaseLibrary.addActivity(this);
         initView();
-
     }
-
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setStatusBar(int color){
         //设置状态栏颜色
-        getWindow().setStatusBarColor(color);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(color);
+        }
     }
 
     private void initView(){
@@ -120,7 +120,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         OkHttps.sendPost(type,SELECTUSER,map,listener);
     }
 
-
     @Override
     public void onSuccess(String uri, Object date) {
         if(APPLOGIN.equals(uri)){
@@ -159,6 +158,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
             UserAction.goMainActivity(this);
         }
+
     }
 
     @Override
