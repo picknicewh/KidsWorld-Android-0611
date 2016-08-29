@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.cordova.CordovaInterfaceImpl;
@@ -28,6 +29,9 @@ import net.hunme.user.activity.UserActivity;
 
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -71,12 +75,15 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      */
     private static final String url = ServerConfigManager.WEB_IP+"/paradise/index.html";
     private ProgressBar pb_web;
+    private  boolean isQuit = false;
+    private Timer timer;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        inflater.cloneInContext(new CordovaInterfaceImpl(getActivity(), this));
 //        View view = inflater.inflate(R.layout.fragment_discovery, null);
         View view =inflater.inflate(R.layout.fragment_discovery, container, false);
+        timer  = new Timer();
         init(view);
         return view;
     }
@@ -91,10 +98,26 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
 //                    getActivity().getSupportFragmentManager().popBackStack("gifPageTwoFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                  if(webView.canGoBack()){
+                  if(webView.canGoBack() && !webView.getUrl().contains("paradiseHome") ){
                       webView.goBack();
-                  }else{
-                      getActivity().finish();
+                  }else if (webView.getUrl().contains("paradiseHome")){
+                     // getActivity().finish();
+                      //这里处理逻辑代码
+                      if (isQuit) {
+                          // 这是两次点击以后
+                          timer.cancel();
+                          getActivity().finish();
+                      } else {
+                          isQuit = true;
+                          Toast.makeText(getActivity(), "再按一次退出财富锦囊",Toast.LENGTH_SHORT).show();
+                          TimerTask task = new TimerTask() {
+                              @Override
+                              public void run() {
+                                  isQuit = false;
+                              }
+                          };
+                          timer.schedule(task, 2000);
+                      }
                   }
                    return true;
                 }

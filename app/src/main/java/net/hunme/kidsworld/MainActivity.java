@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.cordova.HMDroidGap;
@@ -31,6 +33,8 @@ import net.hunme.status.StatusFragement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -127,7 +131,8 @@ public class MainActivity extends JPushBaseActivity {
      *全屏隐藏底部tab广播
      */
     private HideMainTabReceiver hideMainTabReceiver;
-
+    private  boolean isQuit = false;
+    private Timer timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,6 +140,7 @@ public class MainActivity extends JPushBaseActivity {
         BaseLibrary.addActivity(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        timer  = new Timer();
         initViewpager();
         if(null!=userMessage.getUserName()){
             //初始极光推送配置信息
@@ -264,7 +270,41 @@ public class MainActivity extends JPushBaseActivity {
             }
         }
     };
+    private int myflag;
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN && flag!=0) {
+            //这里处理逻辑代码
+            if (isQuit) {
+                // 这是两次点击以后
+                if (myflag==flag){
+                    timer.cancel();
+                    BaseLibrary.exit();
+                }else {
+                    pressBackOneTime();
+                }
+            } else {
+               pressBackOneTime();
+            }
+            return false;
+        }
+        return super.dispatchKeyEvent(event);
+    }
 
+    /**
+     * 按下一次物理返回键
+     */
+    private void pressBackOneTime(){
+        isQuit = true;
+        myflag = flag;
+        Toast.makeText(this.getApplicationContext(), "再按一次退出财富锦囊",Toast.LENGTH_SHORT).show();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                isQuit = false;
+            }
+        };
+        timer.schedule(task, 2000);
+    }
     /**
      * 设置底部颜色状态
      *
@@ -300,7 +340,6 @@ public class MainActivity extends JPushBaseActivity {
         }
 
     }
-
     /**
      * 如果count的值为0时表示一进来就是断网的，此时点击tab重新连接加载viewpager
      * 如果count的值是为1时表示有网络状态，一进来就已经加载刷新数据了，不需要重新加载
