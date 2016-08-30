@@ -244,7 +244,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         //用户发布动态成功 重新刷新数据
         if(G.KisTyep.isReleaseSuccess) {
             G.KisTyep.isReleaseSuccess = false;
-            cordovaWebView.loadUrl("javascript:pulldownRefresh()");
+            cordovaWebView.loadUrl("javascript:loadNew()");
             G.log("---------xxx---------");
         }
         if(G.KisTyep.isChooseId){

@@ -15,7 +15,7 @@
             android:id="@+id/iv_photo_itme"
             android:layout_width="140dp"
             android:layout_height="100dp"
-            android:scaleType="fitXY"/>
+            android:scaleType="centerCrop"/>
 
         <LinearLayout
             android:padding="@dimen/space"
