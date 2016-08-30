@@ -296,7 +296,7 @@ public class MainActivity extends JPushBaseActivity {
     private void pressBackOneTime(){
         isQuit = true;
         myflag = flag;
-        Toast.makeText(this.getApplicationContext(), "再按一次退出财富锦囊",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getApplicationContext(), "再按一次返回到桌面",Toast.LENGTH_SHORT).show();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {

@@ -7,7 +7,9 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -370,7 +372,8 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         }
     }
 
-  /*  @Override
+    //拦截动态页面返回（不拦截的话Web页面会返回刷新） 不做任何操作 交给MainActiviy去处理
+   @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getView().setFocusableInTouchMode(true);
@@ -379,11 +382,10 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                        getActivity().finish();
-                    return true;
+                    return false;
                 }
                 return false;
             }
         });
-    }*/
+    }
 }
