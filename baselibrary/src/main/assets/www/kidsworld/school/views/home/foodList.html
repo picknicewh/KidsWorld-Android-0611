@@ -1,5 +1,5 @@
 <ion-view title="食谱">
-    <ion-content class="">
+    <ion-content class="no-scrollbar">
 
         <onezone-datepicker datepicker-object="onezoneDatepicker">
             <button class="button button-block button-outline button-positive show-onezone-datepicker">
@@ -8,7 +8,9 @@
             </button>
         </onezone-datepicker>
 
-        <div class="list no-break" overflow-scroll="true" overflow="auto">
+
+        <div class="list no-break" overflow-scroll="false">
+        <!--<div class="no-break">-->
            <!-- <a class="item item-thumbnail-left footer-line" ng-click="goSearch()">
                 <img src="http://www.runoob.com/try/demo_source/blue-album.jpg">
                 <h2>早餐</h2>

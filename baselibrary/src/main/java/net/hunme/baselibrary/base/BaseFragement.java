@@ -3,7 +3,6 @@ package net.hunme.baselibrary.base;
 
 import android.content.Intent;
 import android.support.annotation.IdRes;
-import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.umeng.analytics.MobclickAgent;
@@ -29,7 +28,7 @@ import java.util.concurrent.Executors;
  * 附加注释：
  * 主要接口：
  */
-public class BaseFragement extends Fragment implements CordovaInterface {
+public class BaseFragement extends SwipeBackFragment implements CordovaInterface {
 
     protected CordovaPlugin activityResultCallback = null;
     protected boolean activityResultKeepRunning;

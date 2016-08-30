@@ -3,7 +3,6 @@ package net.hunme.baselibrary.base;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,7 +29,7 @@ import io.rong.imkit.RongIM;
  * 主要接口：
  * ================================================
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends SwipeBackActivity {
     private ToolBarHelper mToolBarHelper ;
     public Toolbar toolbar ;
     private ImageView iv_lift;

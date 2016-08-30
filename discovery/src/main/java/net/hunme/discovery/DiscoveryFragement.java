@@ -183,7 +183,8 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
        if (viewId==R.id.iv_dleft){
            if (!webView.getUrl().contains("#/")||webView.getUrl().contains("paradiseHome")){
                Intent intent = new Intent(getActivity(), UserActivity.class);
-               getActivity().startActivity(intent);
+               startParallaxSwipeBackActivty(getActivity(),intent);
+               // getActivity().startActivity(intent);
            }else {
                webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
                webView.goBack();
