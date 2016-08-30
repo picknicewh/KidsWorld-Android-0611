@@ -7,9 +7,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -372,7 +370,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         }
     }
 
-    @Override
+  /*  @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getView().setFocusableInTouchMode(true);
@@ -387,5 +385,5 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
                 return false;
             }
         });
-    }
+    }*/
 }

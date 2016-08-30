@@ -2,14 +2,18 @@ package net.hunme.baselibrary.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 /**
  * ================================================
@@ -43,6 +47,39 @@ public class G {
          */
         public static int H = 800;
     }
+    /**
+     * 截屏
+     */
+    public static void screenshots(Activity activity, boolean isFullScreen) {
+        File mFileTemp = new File(activity.getCacheDir(), "screenshots.jpg");
+        try {
+            //View是你需要截图的View
+            View decorView = activity.getWindow().getDecorView();
+            decorView.setDrawingCacheEnabled(true);
+            decorView.buildDrawingCache();
+            Bitmap b1 = decorView.getDrawingCache();
+            // 获取状态栏高度 /
+            Rect frame = new Rect();
+            activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+            int statusBarHeight = frame.top;
+            // 获取屏幕长和高 Get screen width and height
+            int width = activity.getWindowManager().getDefaultDisplay().getWidth();
+            int height = activity.getWindowManager().getDefaultDisplay().getHeight();
+            // 去掉标题栏 Remove the statusBar Height
+            Bitmap bitmap;
+            if (isFullScreen) {
+                bitmap = Bitmap.createBitmap(b1, 0, 0, width, height);
+            } else {
+                bitmap = Bitmap.createBitmap(b1, 0, statusBarHeight, width, height - statusBarHeight);
+            }
+            decorView.destroyDrawingCache();
+            FileOutputStream out = new FileOutputStream(mFileTemp);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * 初始化屏幕尺寸
@@ -175,4 +212,5 @@ public class G {
 
         public static  boolean isUpadteHold=false;   //是否修改用户头像
     }
+
 }

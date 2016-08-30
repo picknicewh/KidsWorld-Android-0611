@@ -98,15 +98,18 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         Intent intent = new Intent();
         if (v.getId()==R.id.iv_class){
             intent.setClass(getActivity(), ClassActivity.class);
-            startActivity(intent);
+            startParallaxSwipeBackActivty(getActivity(),intent);
+          //  startActivity(intent);
         }else if (v.getId()==R.id.iv_teacher){
             intent.setClass(getActivity(), ParentActivity.class);
             intent.putExtra("title","教师");
-            startActivity(intent);
+            startParallaxSwipeBackActivty(getActivity(),intent);
+           // startActivity(intent);
         }else if (v.getId()==R.id.iv_parent){
             intent.setClass(getActivity(), ParentActivity.class);
             intent.putExtra("title","家长");
-            startActivity(intent);
+            startParallaxSwipeBackActivty(getActivity(),intent);
+           // startActivity(intent);
         }/*else if (v.getId()==R.id.iv_search){
             intent.setClass(getActivity(), SearchActivity.class);
             startActivity(intent);

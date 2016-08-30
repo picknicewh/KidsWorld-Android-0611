@@ -101,6 +101,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
         Intent intent=null;
         if(viewId==R.id.ll_userMassage){
             intent=new Intent(UserActivity.this,UMassageActivity.class);
+
         }else if(viewId==R.id.ll_usersetting){
             intent=new Intent(UserActivity.this,USettingActivity.class);
         }else if(viewId==R.id.ll_myphoto){
@@ -115,7 +116,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
             intent.putExtra("title","我的动态");
         }
         if(null!=intent){
-            startActivity(intent);
+            startParallaxSwipeBackActivty(this,intent);
         }
     }
 }
