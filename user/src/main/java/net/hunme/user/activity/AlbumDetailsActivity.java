@@ -78,7 +78,7 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
         Map<String,Object> map=new HashMap<>();
         map.put("tsId", UserMessage.getInstance(this).getTsId());
         map.put("flickrId",flickrId);
-        map.put("pageSize",100);
+        map.put("pageSize",10000);
         map.put("pageNumber",1);
         Type type=new TypeToken<Result<List<Photodetail>>>(){}.getType();
         OkHttps.sendPost(type,FILCKR,map,this,2,FILCKR);

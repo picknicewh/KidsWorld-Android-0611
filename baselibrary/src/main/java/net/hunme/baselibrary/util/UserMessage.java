@@ -210,7 +210,7 @@ public class UserMessage {
         editor.commit();
     }
     public String getPublishDateTime(){
-        return  spf.getString("dateTime","2016-07-01 00:00:00");
+        return  spf.getString("dateTime","2016-08-08 00:00:00");
     }
 
 }
