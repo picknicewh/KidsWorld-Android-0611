@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,6 @@ import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.NoScrollViewPager;
 import net.hunme.discovery.DiscoveryFragement;
-import net.hunme.kidsworld.util.ConnectionChangeReceiver;
 import net.hunme.kidsworld.util.MyViewPagerAdapter;
 import net.hunme.login.UserChooseActivity;
 import net.hunme.login.util.UserAction;
@@ -114,10 +114,7 @@ public class MainActivity extends JPushBaseActivity {
     private int flag = 0;
 
     private List<Fragment> fragmentList;
-    /**
-     * 有无网络请求
-     */
-    private ConnectionChangeReceiver myReceiver;
+
     /**
      * 判断网络是否连接
      */
@@ -126,11 +123,11 @@ public class MainActivity extends JPushBaseActivity {
     /**
      * 接收动态小红点的广播
      */
-    private MyStatusDosShowReceiver myStatusDosShowReceiver;
+   // private MyStatusDosShowReceiver myStatusDosShowReceiver;
     /**
-     *全屏隐藏底部tab广播
+     *所有的广播
      */
-    private HideMainTabReceiver hideMainTabReceiver;
+    private MyBroadcasReceiver myBroadcasReceiver;
     private  boolean isQuit = false;
     private Timer timer;
     @Override
@@ -219,26 +216,20 @@ public class MainActivity extends JPushBaseActivity {
      * 注册监听网络广播广播
      */
     private void registerReceiver() {
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        myReceiver = new ConnectionChangeReceiver();
-        this.registerReceiver(myReceiver, filter);
-
-        IntentFilter filter2 = new IntentFilter(MyStatusDosShowReceiver.STATUSDOSHOW);
-        myStatusDosShowReceiver = new MyStatusDosShowReceiver();
-        this.registerReceiver(myStatusDosShowReceiver, filter2);
-
-        IntentFilter filter3 = new IntentFilter(HideMainTabReceiver.HIDEMAINTAB);
-        hideMainTabReceiver = new HideMainTabReceiver();
-        this.registerReceiver(hideMainTabReceiver, filter3);
+        IntentFilter filter3 = new IntentFilter(MyBroadcasReceiver.HIDEMAINTAB);
+        IntentFilter filter2 = new IntentFilter(MyBroadcasReceiver.STATUSDOSHOW);
+        IntentFilter filter1 = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        myBroadcasReceiver = new MyBroadcasReceiver();
+        this.registerReceiver(myBroadcasReceiver, filter2);
+        this.registerReceiver(myBroadcasReceiver, filter3);
+        this.registerReceiver(myBroadcasReceiver, filter1);
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.unregisterReceiver(myReceiver);
-        this.unregisterReceiver(myStatusDosShowReceiver);
-        this.unregisterReceiver(hideMainTabReceiver);
+        this.unregisterReceiver(myBroadcasReceiver);
     }
 
     /**
@@ -356,37 +347,41 @@ public class MainActivity extends JPushBaseActivity {
     }
 
     /**
-     * 接收动态小红点的广播
+     *  全屏播放视频隐藏底部tab广播 HIDEMAINTAB
+     *  接收动态小红点的广播  STATUSDOSHOW
+     *  注册监听网络广播广播  ConnectivityManager.CONNECTIVITY_ACTION
      */
-    public class MyStatusDosShowReceiver extends BroadcastReceiver {
+    public class MyBroadcasReceiver extends BroadcastReceiver {
+        public static final String HIDEMAINTAB = "net.hunme.kidsworld.hideMainTabReceiver";
         public static final String STATUSDOSHOW = "net.hunme.kidsworld.MyStatusDosShowReceiver";
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(STATUSDOSHOW)) {
+            String action  = intent.getAction();
+            if (action.equals(HIDEMAINTAB)) {
+                Bundle bundle = intent.getExtras();
+                if (bundle.getBoolean("isVisible", false)) {
+                    llTab.setVisibility(View.VISIBLE);
+                } else {
+                    llTab.setVisibility(View.GONE);
+                }
+            } else if (action.equals(STATUSDOSHOW)) {
                 Bundle bundle = intent.getExtras();
                 if (bundle.getInt("count", 0) == 1) {
                     tvStatusDos.setVisibility(View.VISIBLE);
                 } else {
                     tvStatusDos.setVisibility(View.GONE);
                 }
-            }
-        }
-    }
-    /**
-     * 全屏播放视频隐藏底部tab广播
-     */
-    public class HideMainTabReceiver extends BroadcastReceiver {
-
-        public static final String HIDEMAINTAB = "net.hunme.kidsworld.hideMainTabReceiver";
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(HIDEMAINTAB)) {
-                Bundle bundle = intent.getExtras();
-                if (bundle.getBoolean("isVisible", false)) {
-                    llTab.setVisibility(View.VISIBLE);
-                } else {
-                    llTab.setVisibility(View.GONE);
+            }else if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)){
+                ConnectivityManager connectivityManager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo mobNetInfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+                NetworkInfo  wifiNetInfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
+                    isconnect = false;
+                    //断网
+                    count++;
+                }else {
+                    //连上网络
+                    isconnect = true;
                 }
             }
         }
