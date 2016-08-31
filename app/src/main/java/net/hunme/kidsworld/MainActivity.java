@@ -121,10 +121,6 @@ public class MainActivity extends JPushBaseActivity {
     public static boolean isconnect;
     public static int count;
     /**
-     * 接收动态小红点的广播
-     */
-   // private MyStatusDosShowReceiver myStatusDosShowReceiver;
-    /**
      *所有的广播
      */
     private MyBroadcasReceiver myBroadcasReceiver;
@@ -345,7 +341,6 @@ public class MainActivity extends JPushBaseActivity {
             count = -1;
         }
     }
-
     /**
      *  全屏播放视频隐藏底部tab广播 HIDEMAINTAB
      *  接收动态小红点的广播  STATUSDOSHOW

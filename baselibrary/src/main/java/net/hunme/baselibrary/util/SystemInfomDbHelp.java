@@ -69,7 +69,7 @@ public class SystemInfomDbHelp {
      */
     public  int queryFlag(SQLiteDatabase db,String content){
         int flag = 0;
-        Cursor cursor  =db.rawQuery("select falg from user where content ='" +content+"'",null);
+        Cursor cursor  =db.rawQuery("select f1ag from user where content ='" +content+"'",null);
         while (cursor.moveToNext()){
             flag = cursor.getInt(cursor.getColumnIndex("flag"));
         }

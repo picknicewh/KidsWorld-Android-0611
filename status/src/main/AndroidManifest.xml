@@ -13,6 +13,15 @@
         <activity
             android:name=".activity.ChoosePermitActivity"
             android:screenOrientation="portrait"/>
-    </application>
+        <PreferenceScreen
+                android:title="@string/radio_controls_title"
+                 android:summary="@string/radio_controls_summary">
+                  <intent
+                       android:action="android.intent.action.MAIN"
+                       android:targetPackage="com.android.settings"
+                       android:targetClass="com.android.settings.WirelessSettings" />
+        </PreferenceScreen>
+
+</application>
 
 </manifest>

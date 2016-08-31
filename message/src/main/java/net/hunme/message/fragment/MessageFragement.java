@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import net.hunme.baselibrary.base.BaseFragement;
+import net.hunme.baselibrary.contract.GetContractData;
+import net.hunme.baselibrary.contract.GetGroupData;
+import net.hunme.baselibrary.contract.InitContractData;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.activity.ClassActivity;
@@ -69,7 +72,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         iv_teacher = $(v,R.id.iv_teacher);
         iv_parent = $(v,R.id.iv_parent);
         userMessage = UserMessage.getInstance(getActivity());
-
+        initContract(userMessage);
         initframent();
         iv_parent.setOnClickListener(this);
         iv_teacher.setOnClickListener(this);
@@ -77,6 +80,15 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
      //   iv_search.setOnClickListener(this);
 
    }
+    private void initContract(UserMessage userMessage){
+        GetContractData getContractData = new GetContractData(getActivity());
+        getContractData.getContractList(userMessage.getTsId());
+        GetGroupData getGroupData = new GetGroupData(getActivity());
+        getGroupData.getGroupList(userMessage.getTsId());
+        //初始化所有联系人的数据
+        InitContractData data = new InitContractData(getActivity());
+        data.init();
+    }
     /**
      *获取聊天列表
      */

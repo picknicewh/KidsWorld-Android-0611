@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">status</string>
+    <string name="radio_controls_summary">radio_controls_summary</string>
+    <string name="radio_controls_title">radio_controls_title</string>
 </resources>

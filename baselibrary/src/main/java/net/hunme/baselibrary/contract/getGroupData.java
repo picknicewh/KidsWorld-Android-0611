@@ -1,7 +1,7 @@
-package net.hunme.baselibrary.util;
+package net.hunme.baselibrary.contract;
 
 import android.content.Context;
-import android.net.Uri;
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -11,6 +11,7 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.G;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -18,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
-import io.rong.imlib.model.Group;
 
 /**
  * 作者： Administrator
@@ -28,10 +28,15 @@ import io.rong.imlib.model.Group;
  * 附加注释：
  * 主要接口：
  */
-public class InitGroupData implements OkHttpListener {
+public class GetGroupData implements OkHttpListener {
     private Context context;
-    public InitGroupData(Context context){
+    private SQLiteDatabase database;
+    private GroupsDbHelper groupsDbHelper;
+    public GetGroupData(Context context){
         this.context = context;
+        GroupDb groupDb = new GroupDb(context);
+        database  = groupDb.getWritableDatabase();
+        groupsDbHelper = GroupsDbHelper.getinstance();
     }
     /**
      * 获取所有班级信息
@@ -61,15 +66,7 @@ public class InitGroupData implements OkHttpListener {
                         GroupJson groupJson = groupJsonList.get(i);
                         final String classId = groupJson.getClassId();
                         final String groupName = groupJson.getGroupName();
-                        RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
-                            @Override
-                            public Group getGroupInfo(String s) {
-                                Group group = new Group(classId,groupName, Uri.parse(""));
-                                return group;
-
-                            }
-                        },true);
-                        RongIM.getInstance().refreshGroupInfoCache(new Group(classId,groupName, Uri.parse("")));
+                        groupsDbHelper.insert(database,groupName,classId);
                     }
                 }
             }

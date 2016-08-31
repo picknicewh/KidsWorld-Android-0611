@@ -1,6 +1,7 @@
-package net.hunme.baselibrary.util;
+package net.hunme.baselibrary.contract;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.G;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -29,14 +31,16 @@ import io.rong.imlib.model.UserInfo;
  * 附加注释：
  * 主要接口：
  */
-public class InitContractData implements OkHttpListener {
-
+public class GetContractData implements OkHttpListener {
+    private SQLiteDatabase db;
+    private FriendsDbHelper friendsDbHelper;
     private Context context;
-    public InitContractData(Context context){
+    public GetContractData(Context context){
         this.context = context;
-     //   getGroupList(tsid);
+        FriendsDb friendsDb = new FriendsDb(context);
+        db  = friendsDb.getWritableDatabase();
+        friendsDbHelper = FriendsDbHelper.getinstance();
     }
-
     /**
      * 获取所有班级信息
      * @param tsid
@@ -67,24 +71,24 @@ public class InitContractData implements OkHttpListener {
                     final String image = memberJson.getImg();
                     final String userName = memberJson.getTsName();
                     final String ryid  = memberJson.getRyId();
+                    if (friendsDbHelper.isEmpty(db)){
+                        friendsDbHelper.insert(db,userName,ryid,image);
+                    }
                     RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-
-                        @Override
-                        public UserInfo getUserInfo(String userId) {
-                                UserInfo userInfo = new UserInfo(ryid, userName, Uri.parse(image));
-                                return userInfo;
-                        }
-
-                    }, true);
-                    if (image!=null && ryid!=null && userName!=null){
-                        RongIM.getInstance().refreshUserInfoCache(new UserInfo(ryid, userName, Uri.parse(image)));
+                    @Override
+                    public UserInfo getUserInfo(String userId) {
+                        UserInfo userInfo = new UserInfo(ryid, userName, Uri.parse(image));
+                        return userInfo;
                     }
 
-                }
+                  }, true);
+                 if (image!=null && ryid!=null && userName!=null){
+                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(ryid, userName, Uri.parse(image)));
+                 }
+            }
             }
         }
     }
-
     @Override
     public void onError(String uri, String error) {
         Toast.makeText(context,error,Toast.LENGTH_SHORT).show();

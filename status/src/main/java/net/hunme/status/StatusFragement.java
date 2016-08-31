@@ -151,6 +151,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         tv_status_bar = $(view,R.id.tv_status_bar);
         rl_nonetwork= $(view,R.id.rl_nonetwork);
         rl_nonetwork.setOnClickListener(this);
+        tv_status_bar.setOnClickListener(this);
         pb_web=$(view,R.id.pb_web);
 
         webView.addJavascriptInterface(this, "showDos");  //设置本地调用对象及其接口
@@ -235,7 +236,17 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             });
         }else if (viewId==R.id.rl_nonetwork){
           setShowView(position);
-      }
+      }else if (viewId==R.id.tv_status_bar){
+            Intent intent = null;
+            // 先判断当前系统版本
+            if(android.os.Build.VERSION.SDK_INT > 10){  // 3.0以上
+                intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
+            }else{
+                intent = new Intent();
+                intent.setClassName("com.android.settings", "com.android.settings.WirelessSettings");
+            }
+            getActivity().startActivity(intent);
+        }
     }
 
     @Override
