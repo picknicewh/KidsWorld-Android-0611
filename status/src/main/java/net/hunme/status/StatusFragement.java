@@ -133,6 +133,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
      * 无网络状态
      */
     private RelativeLayout rl_nonetwork;
+    private String dynamicId;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.fragment_status, null);
@@ -268,9 +269,9 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
         }
         // 动态发生改变 刷新数据
-        if(G.KisTyep.isUpdateComment){
+        if(G.KisTyep.isUpdateComment&&!G.isEmteny(dynamicId)){
             G.KisTyep.isUpdateComment=false;
-            cordovaWebView.loadUrl("javascript:pulldownRefresh()");
+            cordovaWebView.loadUrl("javascript: backMessage('"+um.getTsId()+"','"+dynamicId+"')");
         }
     }
     @JavascriptInterface
@@ -295,6 +296,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         if(G.isEmteny(dynamicId)){
             return;
         }
+        this.dynamicId=dynamicId;
         Intent intent=new Intent(getActivity(), StatusDetilsActivity.class);
         intent.putExtra("dynamicId",dynamicId);
         startActivity(intent);

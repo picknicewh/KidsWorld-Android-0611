@@ -3,7 +3,6 @@ package net.hunme.baselibrary.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -16,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import net.hunme.baselibrary.R;
+import net.hunme.baselibrary.image.ImageCache;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -137,7 +137,12 @@ public class SwipeBackActivity extends AppCompatActivity implements SlidingPaneL
      * @return
      */
     public Bitmap getBitmap() {
-        return BitmapFactory.decodeFile(mFileTemp.getAbsolutePath());
+        try {
+            // BitmapFactory.decodeFile(mFileTemp.getAbsolutePath())
+            return ImageCache.getBitmap("file:///"+mFileTemp.getAbsolutePath());
+        }catch (OutOfMemoryError e){
+            return null;
+        }
     }
 
     /**

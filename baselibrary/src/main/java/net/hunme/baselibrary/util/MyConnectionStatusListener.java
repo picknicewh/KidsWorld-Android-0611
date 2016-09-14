@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.R;
+
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
@@ -63,7 +65,7 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
         if (context==null){
           return;
         }
-        View coupons_view = LayoutInflater.from(context).inflate(net.hunme.baselibrary.R.layout.dialog_exit, null);
+        View coupons_view = LayoutInflater.from(context).inflate(R.layout.dialog_exit, null);
         final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, context,0);
         Button btn_conform = (Button) coupons_view.findViewById(net.hunme.baselibrary.R.id.btn_conform);
         TextView pop_title = (TextView) coupons_view.findViewById(net.hunme.baselibrary.R.id.tv_title);

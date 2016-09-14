@@ -5,6 +5,7 @@ import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 /**
  * ================================================
@@ -37,5 +38,14 @@ public class ImageCache {
 
     public static void imageLoader(String uri, ImageView imageView){
         ImageCache().displayImage(uri, imageView, options);
+    }
+
+    public static void imageLoader(String uri, ImageView imageView, SimpleImageLoadingListener listener){
+        ImageCache().displayImage(uri, imageView, listener);
+    }
+
+    public static Bitmap getBitmap(String uri){
+//        BaseImageDownloader.getStreamFromOtherSource
+        return ImageCache().loadImageSync(uri);
     }
 }

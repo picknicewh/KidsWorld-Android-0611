@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import net.hunme.baselibrary.mode.FriendInforVo;
 import net.hunme.baselibrary.mode.GroupInforVo;
+import net.hunme.baselibrary.util.G;
 
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class InitContractData {
                 }
             }, true);
             if (image!=null && ryid!=null && userName!=null){
-//                RongIM.getInstance().refreshUserInfoCache(new UserInfo(ryid, userName, Uri.parse(image)));
+                RongIM.getInstance().refreshUserInfoCache(new UserInfo(ryid, userName, Uri.parse(image)));
             }
         }
         List<GroupInforVo> groupInforVos = groupsDbHelper.getGroupInformVos(db2);
@@ -66,7 +67,9 @@ public class InitContractData {
 
                 }
             },true);
-//            RongIM.getInstance().refreshGroupInfoCache(new Group(classId,groupName, Uri.parse("")));
+            if (!G.isEmteny(classId) && !G.isEmteny(groupName)){
+                RongIM.getInstance().refreshGroupInfoCache(new Group(classId,groupName, Uri.parse("")));
+            }
         }
     }
 }

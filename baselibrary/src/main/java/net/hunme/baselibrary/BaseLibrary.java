@@ -38,14 +38,18 @@ import io.rong.push.RongPushClient;
  */
 public class BaseLibrary {
     private static List<Activity> activitys = null;
+    private static Application instance;
     public static void initializer(Application application){
         OkHttpUtils.init(application);
         initImageLoader(application);
         RongPushClient.registerMiPush(application, " 2882303761517505108", "5551750520108");
         RongIM.init(application);
         activitys=new ArrayList<>();
+        instance=application;
     }
-
+    public static Application getInstance() {
+        return instance;
+    }
     // 添加Activity到容器中
     public static void addActivity(Activity activity) {
         if (activitys != null && activitys.size() > 0) {
