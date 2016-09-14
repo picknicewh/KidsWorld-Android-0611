@@ -230,7 +230,6 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
                     view.getLocationOnScreen(location);
 //                    lv_commmet.smoothScrollBy(location[1],100);
                     scrollView.smoothScrollBy(0,location[1]-view.getHeight());
-                    G.log(view.getTop()+"---------"+view.getY()+"-----------"+location[1]);
                 }
             }
         });
