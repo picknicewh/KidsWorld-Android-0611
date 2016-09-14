@@ -11,11 +11,9 @@
             android:id="@+id/cv_head"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@mipmap/person"
             android:scaleType="centerCrop" />
         <TextView
             android:id="@+id/tv_id"
-            android:text="学"
             android:gravity="center"
             android:textColor="@color/white"
             android:layout_width="15dp"
@@ -37,7 +35,6 @@
                 android:layout_marginTop="@dimen/space_x0.5"
                 android:padding="@dimen/space_x0.5"
                 android:id="@+id/tv_name"
-                android:text="奥丽"
                 android:textSize="@dimen/ts_x_large"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
@@ -55,7 +52,6 @@
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textColor="@color/black"
-                    android:text="王儿"
                     android:id="@+id/tv_reply_person"
                     android:textSize="@dimen/ts_x_large"
                     android:layout_width="wrap_content"
@@ -66,8 +62,7 @@
                 android:gravity="right|center"
                 android:id="@+id/tv_time"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="8-21 09:30"/>
+                android:layout_height="match_parent" />
         </LinearLayout>
 
 
@@ -76,7 +71,6 @@
             android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1131313"
         />
     </LinearLayout>
 </LinearLayout>
