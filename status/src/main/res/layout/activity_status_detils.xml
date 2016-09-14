@@ -50,8 +50,8 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:paddingTop="@dimen/space"
-                    android:paddingBottom="@dimen/space"
+                    android:layout_marginTop="@dimen/space_x0.5"
+                    android:layout_marginBottom="@dimen/space_x0.5"
                     android:textSize="@dimen/ts_x_large"
                     android:id="@+id/tv_content"
                     android:layout_width="match_parent"
@@ -64,6 +64,7 @@
                     <!--android:layout_marginTop="8dp"-->
                     <!--app:sapcing="4dp" />-->
                 <RelativeLayout
+                    android:layout_marginTop="@dimen/space_x0.5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/rl_picture">
@@ -112,7 +113,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:paddingLeft="@dimen/space"
                     android:id="@+id/ll_praise"
                     android:layout_width="match_parent"
