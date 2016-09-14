@@ -64,7 +64,6 @@ public class ClassActivity extends BaseActivity implements OkHttpListener,View.O
     }
 
     private void setlistview(final List<GroupInfoVo> groupJsons){
-
         lv_class = $(R.id.lv_class);
         adapter = new ClassAdapter(this,groupJsons);
         lv_class.setAdapter(adapter);

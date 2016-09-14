@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.activity.PermissionsActivity;
-import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
@@ -54,7 +53,7 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
     /**
      * 用户昵称
      */
-    private String name;
+    public static String name;
     /**
      *当前的会话类型
      */
@@ -96,7 +95,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
             showview(mconversationType);
         }
     }
-
     private void  showview(Conversation.ConversationType mconversationType){
          if (mconversationType.equals(Conversation.ConversationType.GROUP)){
              iv_call.setVisibility(View.GONE);
@@ -120,7 +118,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
             Intent intent = new Intent(Intent.ACTION_DIAL,phoneUri);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            finish();
         }else if (v.getId()==R.id.iv_detail){
             Intent intent = new Intent();
             if (isGroup){
@@ -128,8 +125,7 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
                 intent.putExtra("title",name);
                 intent.putExtra("targetGroupId",targetId);
                 startActivityForResult(intent,GroupDetailActivity.EDIT_NMAE);
-                finish();
-                G.log("我跳转了----");
+               // finish();
             }else {
                 intent.setClass(this,PersonDetailActivity.class);
                 intent.putExtra("title",name);

@@ -38,7 +38,6 @@ import java.util.Map;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -161,20 +160,6 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
           setLiftOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               if (RongIM.getInstance()!=null){
-                   RongIM.getInstance().startGroupChat(GroupDetailActivity.this,targetGroupId,targetGroupName);
-                   RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
-                       @Override
-                       public Group getGroupInfo(String s) {
-                           if (s.equals(targetGroupId)){
-                               Group group = new Group(targetGroupId,targetGroupName, Uri.parse(""));
-                               return group;
-                           }
-                           return null;
-                       }
-                   },true);
-                   RongIM.getInstance().refreshGroupInfoCache(new Group(targetGroupId,targetGroupName, Uri.parse("")));
-               }
                finish();
            }
        });
@@ -312,7 +297,8 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
                 intent.setClass(this,ModifyNameActivity.class);
                 intent.putExtra("targetGroupId",targetGroupId);
                 intent.putExtra("targetGroupName",targetGroupName);
-                startParallaxSwipeBackActivty(this,intent);
+                startActivityForResult(intent,EDIT_NMAE);
+              //  startParallaxSwipeBackActivty(this,intent);
                 finish();
             }
         }else if (viewId==R.id.rl_nodiscribe){
@@ -385,7 +371,6 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
                 public void onError(RongIMClient.ErrorCode errorCode) {
                     Toast.makeText(getApplicationContext(),errorCode.getMessage(),Toast.LENGTH_SHORT).show();
                 }
-
             });
         }
     }

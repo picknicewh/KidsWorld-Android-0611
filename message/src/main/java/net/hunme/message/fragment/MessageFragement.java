@@ -18,6 +18,8 @@ import net.hunme.message.R;
 import net.hunme.message.activity.ClassActivity;
 import net.hunme.message.activity.ParentActivity;
 import net.hunme.message.ronglistener.MyConversationBehaviorListener;
+import net.hunme.message.ronglistener.MyConversationListBehaviorListener;
+import net.hunme.message.ronglistener.MyReceiveMessageListener;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
@@ -59,13 +61,15 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         init(view);
         // 设置点击头像监听事件
         RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
+        RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener(getActivity()));
+        RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener(getActivity()));
         return view;
     }
     /**
      * 初始化view
      * @param  v
      */
-   private  void init(View v){
+   public   void init(View v){
      //  iv_search = $(v,R.id.iv_search);
         iv_class = $(v,R.id.iv_class);
         iv_teacher = $(v,R.id.iv_teacher);
@@ -73,16 +77,14 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         iv_parent.setOnClickListener(this);
         iv_teacher.setOnClickListener(this);
         iv_class.setOnClickListener(this);
-       initData();
-     //   iv_search.setOnClickListener(this);
+        initframent();
     }
     /**
      * 初始化界面数据
      */
-    private void initData(){
+    public void initData(){
         userMessage = UserMessage.getInstance(getActivity());
         initContract(userMessage);
-        initframent();
     }
     /**
      * 初始化联系人
@@ -102,13 +104,13 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     public void onResume() {
         super.onResume();
         initData();
+        RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener(getActivity()));
     }
     /**
      *获取聊天列表
      */
     public void  initframent(){
         ConversationListFragment fragment = new ConversationListFragment();
-
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
@@ -126,13 +128,11 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         if (v.getId()==R.id.iv_class){
             intent.setClass(getActivity(), ClassActivity.class);
             startParallaxSwipeBackActivty(getActivity(),intent);
-          //  startActivity(intent);
         }else if (v.getId()==R.id.iv_teacher){
             intent.setClass(getActivity(), ParentActivity.class);
             intent.putExtra("title","教师");
             intent.putExtra("type",2);
             startParallaxSwipeBackActivty(getActivity(),intent);
-           // startActivity(intent);
         }else if (v.getId()==R.id.iv_parent) {
             intent.setClass(getActivity(), ParentActivity.class);
             intent.putExtra("title", "家长");

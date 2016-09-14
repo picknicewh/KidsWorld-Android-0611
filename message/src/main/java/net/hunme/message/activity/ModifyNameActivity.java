@@ -94,6 +94,7 @@ public class ModifyNameActivity extends BaseActivity implements OkHttpListener {
      */
      private void editName(String targetGroupId){
          groupName = et_name.getText().toString();
+         ConservationActivity.name = groupName;
         Map<String,Object> params = new HashMap<>();
         params.put("tsId",UserMessage.getInstance(this).getTsId());
         params.put("groupChatAdmin", UserMessage.getInstance(this).getTsId());

@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.hunme.baselibrary.contract.GroupDb;
+import net.hunme.baselibrary.contract.GroupsDbHelper;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
@@ -219,6 +221,10 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
         params.put("tsId",tsId);
         params.put("groupChatId",targetGroupId);
         Log.i("EEEEEEEE","tsId:"+tsId+"groupChatId:"+targetGroupId);
+        GroupsDbHelper dbHelper = new GroupsDbHelper();
+        GroupDb groupDb = new GroupDb(context);
+        dbHelper.deleteById(groupDb.getWritableDatabase(),targetGroupId);
+        removeConversation(targetGroupId);
         Type type =new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_DISSORE_GROUP,params,this);
     }
@@ -252,5 +258,23 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
     public void onError(String uri, String error) {
         Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
         alertDialog.dismiss();
+    }
+    private void removeConversation(String targetId){
+        if (RongIM.getInstance() != null) {
+            RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP,targetId, new RongIMClient.ResultCallback<Boolean>(){
+                @Override
+                public void onSuccess(Boolean aBoolean) {
+                    if (aBoolean){
+                        Log.i("TAG","移除成功！");
+                    }else {
+                        Log.i("TAG","移除失败！");
+                    }
+                }
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    Log.i("TAG",errorCode.getMessage());
+                }
+            });
+        }
     }
 }

@@ -74,10 +74,10 @@ public class GroupsDbHelper {
     /**
      *删除通过id号删除单个系统消息
      * @param  db 数据库
-     * @param id 唯一用户id号
+     * @param classId 群id号
      */
-    public void  deleteById(SQLiteDatabase db,int id){
-        String sql="delete from mgroup where uid =" + id;
+    public void  deleteById(SQLiteDatabase db,String classId){
+        String sql="delete from mgroup where classId ='"+classId+"'";
         db.execSQL(sql);
     }
     /**
