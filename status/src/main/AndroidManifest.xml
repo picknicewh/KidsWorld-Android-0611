@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.hunme.status">
+
     <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
@@ -9,19 +11,21 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.PublishStatusActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ChoosePermitActivity"
-            android:screenOrientation="portrait"/>
-        <PreferenceScreen
-                android:title="@string/radio_controls_title"
-                 android:summary="@string/radio_controls_summary">
-                  <intent
-                       android:action="android.intent.action.MAIN"
-                       android:targetPackage="com.android.settings"
-                       android:targetClass="com.android.settings.WirelessSettings" />
-        </PreferenceScreen>
+            android:screenOrientation="portrait" />
 
-</application>
+        <PreferenceScreen
+            android:summary="@string/radio_controls_summary"
+            android:title="@string/radio_controls_title">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.android.settings.WirelessSettings"
+                android:targetPackage="com.android.settings" />
+        </PreferenceScreen>
+        <activity android:name=".activity.StatusDetilsActivity">
+        </activity>
+    </application>
 
 </manifest>

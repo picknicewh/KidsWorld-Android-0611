@@ -36,6 +36,7 @@ import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
+import net.hunme.status.activity.StatusDetilsActivity;
 import net.hunme.status.mode.DynamicVo;
 import net.hunme.status.widget.ChooseClassPopWindow;
 import net.hunme.status.widget.StatusPublishPopWindow;
@@ -256,7 +257,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         if(G.KisTyep.isReleaseSuccess) {
             G.KisTyep.isReleaseSuccess = false;
             cordovaWebView.loadUrl("javascript:loadNew()");
-            G.log("---------xxx---------");
         }
         if(G.KisTyep.isChooseId){
             //用户切换身份 重新刷新数据
@@ -285,6 +285,23 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         HMDroidGap.flag = 1;
     }
 
+    @JavascriptInterface
+    public void startStatusDetils(String dynamicId){
+        if(G.isEmteny(dynamicId)){
+            return;
+        }
+        Intent intent=new Intent(getActivity(), StatusDetilsActivity.class);
+        intent.putExtra("dynamicId",dynamicId);
+        startActivityForResult(intent,101);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if(requestCode==101){
+            cordovaWebView.loadUrl("javascript:loadNew()");
+        }
+    }
 
     /**
      * 获取班级列表
