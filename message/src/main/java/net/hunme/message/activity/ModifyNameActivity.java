@@ -1,7 +1,6 @@
 package net.hunme.message.activity;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -35,9 +34,25 @@ import java.util.Map;
 public class ModifyNameActivity extends BaseActivity implements OkHttpListener {
     private EditText et_name;
     /**
-     * 群数据库
+     * 群数据库操作类
      */
     private GroupsDbHelper dbHelper;
+    /**
+     * 群数据库类
+     */
+    private   GroupDb groupDb;
+    /**
+     * 更新群组的名称
+     */
+    private String groupName;
+    /**
+     * 群id
+     */
+    private String targetGroupId;
+    /**
+     * 群名称
+     */
+    private    String targetGroupName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,20 +63,21 @@ public class ModifyNameActivity extends BaseActivity implements OkHttpListener {
      * 初始化数据
      */
     private void initView() {
-        et_name = $(R.id.et_groupname);
-        dbHelper = new GroupsDbHelper();
-        GroupDb groupDb = new GroupDb(this);
-        SQLiteDatabase db =  groupDb.getWritableDatabase();
-        final String targetGroupId = getIntent().getStringExtra("targetGroupId");
-        String targetGroupName =  getIntent().getStringExtra("targetGroupName");
-        et_name.setHint(targetGroupName);
-        setSubTitleOnClickListener(new View.OnClickListener() {
+         et_name = $(R.id.et_groupname);
+         dbHelper = new GroupsDbHelper();
+         groupDb = new GroupDb(this);
+        targetGroupId = getIntent().getStringExtra("targetGroupId");
+        targetGroupName =  getIntent().getStringExtra("targetGroupName");
+        et_name.setText(targetGroupName);
+         setSubTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editName(targetGroupId);
                 Intent intent = new Intent(ModifyNameActivity.this,GroupDetailActivity.class);
-                intent.putExtra("targetGroupName",et_name.getText().toString());
+                intent.putExtra("title",groupName);
+                intent.putExtra("targetGroupId",targetGroupId);
                 startActivityForResult(intent,GroupDetailActivity.EDIT_NMAE);
+                finish();
             }
         });
     }
@@ -77,6 +93,7 @@ public class ModifyNameActivity extends BaseActivity implements OkHttpListener {
      * @param targetGroupId 群组id
      */
      private void editName(String targetGroupId){
+         groupName = et_name.getText().toString();
         Map<String,Object> params = new HashMap<>();
         params.put("tsId",UserMessage.getInstance(this).getTsId());
         params.put("groupChatAdmin", UserMessage.getInstance(this).getTsId());
@@ -85,21 +102,23 @@ public class ModifyNameActivity extends BaseActivity implements OkHttpListener {
             Toast.makeText(this,"群组名不能为空！",Toast.LENGTH_SHORT).show();
             return;
         }
-        params.put("groupChatName",et_name.getText().toString());
-
+        params.put("groupChatName",groupName);
+         //更新数据库
+        dbHelper.updateGroupName(groupDb.getWritableDatabase(),groupName,targetGroupId);
         Type type =new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_EDITGROUPNAME,params,this);
     }
-    @Override
-    public void onSuccess(String uri, Object date) {
+     @Override
+     public void onSuccess(String uri, Object date) {
         Result<String> data  = (Result<String>) date;
         if (data!=null){
             String result = data.getData();
             Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
         }
-    }
-    @Override
-    public void onError(String uri, String error) {
+     }
+     @Override
+     public void onError(String uri, String error) {
         Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
-    }
+     }
+
 }

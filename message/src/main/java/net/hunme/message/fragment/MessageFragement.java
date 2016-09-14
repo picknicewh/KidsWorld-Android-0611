@@ -70,15 +70,24 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         iv_class = $(v,R.id.iv_class);
         iv_teacher = $(v,R.id.iv_teacher);
         iv_parent = $(v,R.id.iv_parent);
-        userMessage = UserMessage.getInstance(getActivity());
-        initContract(userMessage);
-        initframent();
         iv_parent.setOnClickListener(this);
         iv_teacher.setOnClickListener(this);
         iv_class.setOnClickListener(this);
+       initData();
      //   iv_search.setOnClickListener(this);
-
-   }
+    }
+    /**
+     * 初始化界面数据
+     */
+    private void initData(){
+        userMessage = UserMessage.getInstance(getActivity());
+        initContract(userMessage);
+        initframent();
+    }
+    /**
+     * 初始化联系人
+     * @param  userMessage 用户信息类
+     */
     private void initContract(UserMessage userMessage){
         GetContractData getContractData = new GetContractData(getActivity());
         getContractData.getContractList(userMessage.getTsId());
@@ -88,6 +97,11 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         InitContractData data = new InitContractData(getActivity());
         data.init();
 
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
     }
     /**
      *获取聊天列表

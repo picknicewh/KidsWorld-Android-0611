@@ -38,6 +38,7 @@ import java.util.Map;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -129,9 +130,9 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
         rl_overhead = $(R.id.rl_overhead);
         targetGroupId = getIntent().getStringExtra("targetGroupId");
         targetGroupName =  getIntent().getStringExtra("title");
+        tv_name.setText(targetGroupName);
         spf=getSharedPreferences("group", Context.MODE_PRIVATE);
         editor=spf.edit();
-        tv_name.setText(targetGroupName);
         tg_nodisturb.setChecked(spf.getBoolean("isStatus",false));
         tg_Overhead.setChecked(spf.getBoolean("isTop",false));
         tg_Overhead.setOnClickListener(this);
@@ -156,8 +157,27 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
     }
     @Override
     protected void setToolBar() {
-        setLiftImage(R.mipmap.ic_arrow_lift);
-        setLiftOnClickClose();
+          setLiftImage(R.mipmap.ic_arrow_lift);
+          setLiftOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               if (RongIM.getInstance()!=null){
+                   RongIM.getInstance().startGroupChat(GroupDetailActivity.this,targetGroupId,targetGroupName);
+                   RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
+                       @Override
+                       public Group getGroupInfo(String s) {
+                           if (s.equals(targetGroupId)){
+                               Group group = new Group(targetGroupId,targetGroupName, Uri.parse(""));
+                               return group;
+                           }
+                           return null;
+                       }
+                   },true);
+                   RongIM.getInstance().refreshGroupInfoCache(new Group(targetGroupId,targetGroupName, Uri.parse("")));
+               }
+               finish();
+           }
+       });
     }
     @Override
     public void onSuccess(String uri, Object date) {
@@ -293,6 +313,7 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
                 intent.putExtra("targetGroupId",targetGroupId);
                 intent.putExtra("targetGroupName",targetGroupName);
                 startParallaxSwipeBackActivty(this,intent);
+                finish();
             }
         }else if (viewId==R.id.rl_nodiscribe){
             tg_nodisturb.setChecked(!tg_nodisturb.isChecked());
@@ -315,7 +336,6 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
             }
             editor.commit();
         }else if (viewId==R.id.tv_mcount){
-
             Intent intent = new Intent();
             intent.setClass(this, GroupMemberDetailActivity.class);
             intent.putExtra("targetGroupId",targetGroupId);
@@ -370,9 +390,10 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
         }
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)  {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
        if (requestCode==EDIT_NMAE){
-           String targetGroupName = data.getStringExtra("targetGroupName");
+           targetGroupId = data.getStringExtra("targetGroupId");
+           targetGroupName =  data.getStringExtra("title");
            tv_name.setText(targetGroupName);
        }
     }
