@@ -14,9 +14,9 @@ import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/8/31
- * 名称：
+ * 名称：初始化所有联系人和群组信息
  * 版本说明：
  * 附加注释：
  * 主要接口：
@@ -33,7 +33,7 @@ public class InitContractData {
         db2 = groupDb.getWritableDatabase();
         groupsDbHelper = GroupsDbHelper.getinstance();
         friendsDbHelper = FriendsDbHelper.getinstance();
-        init();
+        //init();
     }
     public void  init(){
         List<FriendInforVo> friendInforVos = friendsDbHelper.getFriendInformVos(db);

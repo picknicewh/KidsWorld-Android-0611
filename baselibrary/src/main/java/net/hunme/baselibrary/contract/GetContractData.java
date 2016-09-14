@@ -24,9 +24,9 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/8/16
- * 名称：初始化联系人头像
+ * 名称：：获取所有联系人信息，并保存到数据库
  * 版本说明：
  * 附加注释：
  * 主要接口：

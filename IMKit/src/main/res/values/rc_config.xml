@@ -28,5 +28,5 @@
     <!-- 消息撤回有效时间（单位：秒）-->
     <integer name="rc_message_recall_interval">120</integer>
     
-    <bool name="rc_enable_mentioned_message">false</bool>
+    <bool name="rc_enable_mentioned_message">true</bool>
 </resources>

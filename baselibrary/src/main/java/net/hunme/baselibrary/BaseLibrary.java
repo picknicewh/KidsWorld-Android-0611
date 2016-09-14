@@ -24,6 +24,7 @@ import java.util.List;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
+import io.rong.push.RongPushClient;
 
 /**
  * ================================================
@@ -40,6 +41,7 @@ public class BaseLibrary {
     public static void initializer(Application application){
         OkHttpUtils.init(application);
         initImageLoader(application);
+        RongPushClient.registerMiPush(application, " 2882303761517505108", "5551750520108");
         RongIM.init(application);
         activitys=new ArrayList<>();
     }

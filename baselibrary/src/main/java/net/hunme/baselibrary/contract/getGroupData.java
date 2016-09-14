@@ -21,9 +21,9 @@ import java.util.Map;
 import io.rong.imkit.RongIM;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/8/16
- * 名称：
+ * 名称：获取所有群组信息，并保存到数据库
  * 版本说明：
  * 附加注释：
  * 主要接口：

@@ -33,5 +33,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'src/main/libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'src/main/libs')
+    compile files('src/main/libs/MiPush_SDK_Client_3_0_3.jar')
 }

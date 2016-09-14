@@ -59,7 +59,6 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         init(view);
         // 设置点击头像监听事件
         RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
-    //    RongIM.setConnectionStatusListener(new MyConnectionStatusListener(getActivity()));
         return view;
     }
     /**
@@ -88,12 +87,14 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         //初始化所有联系人的数据
         InitContractData data = new InitContractData(getActivity());
         data.init();
+
     }
     /**
      *获取聊天列表
      */
     public void  initframent(){
         ConversationListFragment fragment = new ConversationListFragment();
+
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
@@ -115,67 +116,15 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         }else if (v.getId()==R.id.iv_teacher){
             intent.setClass(getActivity(), ParentActivity.class);
             intent.putExtra("title","教师");
+            intent.putExtra("type",2);
             startParallaxSwipeBackActivty(getActivity(),intent);
            // startActivity(intent);
-        }else if (v.getId()==R.id.iv_parent){
+        }else if (v.getId()==R.id.iv_parent) {
             intent.setClass(getActivity(), ParentActivity.class);
-            intent.putExtra("title","家长");
-            startParallaxSwipeBackActivty(getActivity(),intent);
-           // startActivity(intent);
-        }/*else if (v.getId()==R.id.iv_search){
-            intent.setClass(getActivity(), SearchActivity.class);
-            startActivity(intent);
-        }*/
-    }
-   /* *//**
-     * 获取所有班级信息
-     * @param tsid
-     * @param  mtype 获取列表类型 0 所有联系人 1 所有群信息 2 所有家长 3 所有教师
-     *//*
-    private  void getGroupList(String tsid,int mtype){
-        if(G.isEmteny(tsid)){
-            //用户没登录或者退出账号 打开App无需去请求
-            return;
-        }
-        Map<String,Object> params = new HashMap<>();
-        params.put("tsId", tsid);
-        //1=群，2=老师，3=家长
-        params.put("type",mtype);
-        Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this,2,"GETGTOUP");
-    }
-    @Override
-    public void onSuccess(String uri, Object date) {
-        Result<List<GroupJson>> data = (Result<List<GroupJson>>) date;
-        if (data!=null){
-            List<GroupJson> groupJsonList =data.getData();
-            if (groupJsonList!=null||groupJsonList.size()!=0){
-                if (RongIM.getInstance()!=null){
-                    for (int i = 0 ;i<groupJsonList.size();i++){
-                        GroupJson groupJson = groupJsonList.get(i);
-                        final String classId = groupJson.getClassId();
-                                    final String groupName = groupJson.getGroupName();
-                                    RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
-                                        @Override
-                                        public Group getGroupInfo(String s) {
-                                            if (s.equals(classId)){
-                                                Group group = new Group(classId,groupName, Uri.parse(""));
-                                                RongIM.getInstance().refreshGroupInfoCache(group);
-                                                return group;
-                                }
-                                return null;
-                            }
-                        },true);
-
-                    }
-                 }
-            }
+            intent.putExtra("title", "家长");
+            intent.putExtra("type", 3);
+            startParallaxSwipeBackActivty(getActivity(), intent);
         }
     }
 
-    @Override
-    public void onError(String uri, String error) {
-        Log.i("TAG",error);
-        Toast.makeText(getActivity(),error,Toast.LENGTH_SHORT).show();
-    }*/
 }

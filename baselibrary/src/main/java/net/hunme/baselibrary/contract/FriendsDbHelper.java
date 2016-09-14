@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/8/31
- * 名称：
+ * 名称：联系人信息数据库操作类（增删改查）
  * 版本说明：
  * 附加注释：
  * 主要接口：

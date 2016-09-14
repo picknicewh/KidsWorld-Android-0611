@@ -13,6 +13,7 @@ import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.message.R;
 import net.hunme.message.bean.GroupMemberBean;
 
+import java.util.HashMap;
 import java.util.List;
 /**
  * 作者： wh
@@ -25,9 +26,15 @@ import java.util.List;
 public class ContractAdapter extends BaseAdapter implements SectionIndexer {
 	private List<GroupMemberBean> list = null;
 	private Context mContext;
-	public ContractAdapter(Context mContext, List<GroupMemberBean> list) {
+    private int type;
+	private static HashMap<Integer, Boolean> isSelected;
+	public ContractAdapter(Context mContext, List<GroupMemberBean> list,int type) {
 		this.mContext = mContext;
 		this.list = list;
+		this.type = type;
+		isSelected = new HashMap<>();
+		initDate();
+
 	}
 	/**
 	 * 当ListView数据发生变化时,调用此方法来更新ListView
@@ -38,8 +45,16 @@ public class ContractAdapter extends BaseAdapter implements SectionIndexer {
 		this.list = list;
 		notifyDataSetChanged();
 	}
+	/**
+	 * 初始化isSelected的数据
+	 */
+	private void initDate() {
+		for (int i = 0; i < list.size(); i++) {
+			getIsSelected().put(i, false);
+		}
+	}
 	public int getCount() {
-		return this.list.size();
+		return list.size() >0 ? list.size():0;
 	}
 
 	public Object getItem(int position) {
@@ -59,6 +74,7 @@ public class ContractAdapter extends BaseAdapter implements SectionIndexer {
 			viewHolder.tvTitle = (TextView) view.findViewById(R.id.tv_title_item);
 			viewHolder.tvLetter = (TextView) view.findViewById(R.id.tv_catalog_item);
             viewHolder.ivimage = (ImageView)view.findViewById(R.id.iv_image_item);
+
 			view.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) view.getTag();
@@ -74,13 +90,15 @@ public class ContractAdapter extends BaseAdapter implements SectionIndexer {
 		}
 		viewHolder.tvTitle.setText(this.list.get(position).getName());
 		ImageCache.imageLoader(list.get(position).getImg(),viewHolder.ivimage);
+
 		return view;
 	}
 
-	final static class ViewHolder {
-		TextView tvLetter;
-		TextView tvTitle;
-        ImageView ivimage;
+	public   class ViewHolder {
+		public TextView tvLetter;
+		public TextView tvTitle;
+        public ImageView ivimage;
+
 	}
 
 	/**
@@ -108,5 +126,7 @@ public class ContractAdapter extends BaseAdapter implements SectionIndexer {
 		}
 		return -1;
 	}
-
+	public static HashMap<Integer, Boolean> getIsSelected() {
+		return isSelected;
+	}
 }

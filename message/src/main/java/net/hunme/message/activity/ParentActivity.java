@@ -22,9 +22,9 @@ import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.adapter.ContractAdapter;
-import net.hunme.message.bean.GroupJson;
+import net.hunme.message.bean.GroupInfoVo;
 import net.hunme.message.bean.GroupMemberBean;
-import net.hunme.message.bean.MemberJson;
+import net.hunme.message.bean.ContractInfoVo;
 import net.hunme.message.util.CharacterParser;
 import net.hunme.message.util.PinyinComparator;
 import net.hunme.message.widget.SideBar;
@@ -101,6 +101,14 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      * 标题
      */
     private String title;
+    /**
+     * 类型
+     */
+    private int type;
+    /**
+     * 是否选中对话框的item
+     */
+    private HashMap<Integer, Boolean> isSelected;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,9 +122,11 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         title = getIntent().getStringExtra("title");
         setCententTitle(title);
         setLiftOnClickClose();
+        setSubTitle("确定");
     }
     private void init(){
-        getfriendinfor(getIntent().getStringExtra("title"));
+        type = getIntent().getIntExtra("type",0);
+        getfriendinfor(type);
         lv_parent = $(R.id.lv_parent);
         tv_noparent = $(R.id.tv_no_parent);
         tv_title_cat = $(R.id.tv_title_cat);
@@ -131,21 +141,16 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
     }
     /**
      * 获取所有所有好友信息
-     * @param  title 标题
+     * @param  mtype 类型
      */
-    private  void getfriendinfor(String title){
+    private  void getfriendinfor(int mtype){
         String dbname;
         Map<String,Object> params = new HashMap<>();
         params.put("tsId",UserMessage.getInstance(this).getTsId());
         //1=群，2=老师，3=家长
-        if (title.equals("教师")){
-            params.put("type","2");
-            dbname  = "contract_teacher";
-        }else {
-            params.put("type","3");
-            dbname  = "contract_parent";
-        }
-        Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
+        params.put("type",mtype);
+        dbname  = "contract_teacher";
+        Type type =new TypeToken<Result<List<GroupInfoVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this,2,dbname);
     }
     /**
@@ -153,7 +158,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      */
     private void initList() {
         Collections.sort(groupMemberBeanList, pinyinComparator);
-        adapter = new ContractAdapter(this, groupMemberBeanList);
+        adapter = new ContractAdapter(this, groupMemberBeanList,type);
         lv_parent.setAdapter(adapter);
         // 设置右侧触摸监听
         sb_parent.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
@@ -166,22 +171,13 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
                 }
             }
         });
-        lv_parent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    final int position, long id) {
-                GroupMemberBean bean = groupMemberBeanList.get(position);
-                final String uid  = bean.getUserid();
-                final  String name = bean.getName();
-                if (RongIM.getInstance()!=null){
-                    Intent intent  = new Intent(ParentActivity.this,PersonDetailActivity.class);
-                    intent.putExtra("targetId",uid);
-                    intent.putExtra("title",name);
-                    startActivity(intent);
-                }
-            }
-        });
+        itemclick();
+        itemScroll();
+    }
+    /**
+     * 列表滑动事件
+     */
+    private void itemScroll(){
         lv_parent.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -223,6 +219,28 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
             }
         });
     }
+    /**
+     * 列表点击事件
+     */
+    private  void itemclick(){
+        lv_parent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                    GroupMemberBean bean = groupMemberBeanList.get(position);
+                    final String uid  = bean.getUserid();
+                    final  String name = bean.getName();
+                    if (RongIM.getInstance()!=null){
+                        Intent intent  = new Intent(ParentActivity.this,PersonDetailActivity.class);
+                        intent.putExtra("targetId",uid);
+                        intent.putExtra("title",name);
+                        startActivity(intent);
+                    }
+                }
+        });
+
+    }
+
+
 
     @Override
     public Object[] getSections() {
@@ -253,13 +271,13 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      * 设置好友列表
      * @param  groupJsonList 数据列表
      */
-    private void setFriendList(List<GroupJson> groupJsonList){
-        List<MemberJson> memberJsons = groupJsonList.get(0).getMenberList();
+    private void setFriendList(List<GroupInfoVo> groupJsonList){
+        List<ContractInfoVo> memberJsons = groupJsonList.get(0).getMenberList();
         if(null==memberJsons){
             return;
         }
         for (int i = 0;i<memberJsons.size();i++){
-            MemberJson memberJson = memberJsons.get(i);
+            ContractInfoVo memberJson = memberJsons.get(i);
             GroupMemberBean groupMemberBean = MemberJsonnTGroupMember(memberJson);
             groupMemberBeanList.add(groupMemberBean);
         }
@@ -268,7 +286,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      * 将MemberJson转换成GroupMemberBean
      * @param  memberJson 实体类
      */
-    private GroupMemberBean MemberJsonnTGroupMember(MemberJson memberJson){
+    private GroupMemberBean MemberJsonnTGroupMember(ContractInfoVo memberJson){
         GroupMemberBean groupMember =new GroupMemberBean();
         groupMember.setName(memberJson.getTsName());
         groupMember.setUserid(memberJson.getTsId());
@@ -286,17 +304,15 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
     }
     @Override
     public void onSuccess(String uri, Object date) {
-        Result<List<GroupJson>> data = (Result<List<GroupJson>>) date;
+        Result<List<GroupInfoVo>> data = (Result<List<GroupInfoVo>>) date;
         if (data!=null){
-            List<GroupJson>  groupJsonList = data.getData();
+            List<GroupInfoVo>  groupJsonList = data.getData();
             if (groupJsonList!=null||groupJsonList.size()!=0){
                 setFriendList(groupJsonList);
                 initList();
             }
         }
     }
-
-
 
     @Override
     public void onError(String uri, String error) {

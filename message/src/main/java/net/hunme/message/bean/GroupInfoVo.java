@@ -11,7 +11,7 @@ import java.util.List;
  * 附加注释：
  * 主要接口：
  */
-public class GroupJson implements Serializable {
+public class GroupInfoVo implements Serializable {
     /**
      * groupName : 苗苗班
      * ryId : 298f1648653840fdaa6c396830025af5
@@ -33,7 +33,7 @@ public class GroupJson implements Serializable {
     /**
      *群成员
      */
-    private List<MemberJson> menberList;
+    private List<ContractInfoVo> menberList;
 
     public String getGroupName() {
         return groupName;
@@ -59,11 +59,11 @@ public class GroupJson implements Serializable {
         this.classId = classId;
     }
 
-    public List<MemberJson> getMenberList() {
+    public List<ContractInfoVo> getMenberList() {
         return menberList;
     }
 
-    public void setMenberList(List<MemberJson> menberList) {
+    public void setMenberList(List<ContractInfoVo> menberList) {
         this.menberList = menberList;
     }
 

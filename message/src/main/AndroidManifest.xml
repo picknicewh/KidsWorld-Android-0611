@@ -7,12 +7,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <!--  -->
         <activity
             android:name=".activity.ConservationActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -24,19 +25,28 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.ClassActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ParentActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.PersonDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GroupDetailActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SearchActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ModifyNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ContractMemberActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.GroupMemberDetailActivity"></activity>
     </application>
 
 </manifest>
