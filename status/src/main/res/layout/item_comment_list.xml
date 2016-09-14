@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/space">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <net.hunme.baselibrary.widget.CircleImageView
+            android:id="@+id/cv_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/person"
+            android:scaleType="centerCrop" />
+        <TextView
+            android:id="@+id/tv_id"
+            android:text="学"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:textSize="@dimen/ts_small"
+            android:layout_alignBottom="@id/cv_head"
+            android:layout_alignRight="@id/cv_head"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginTop="@dimen/space_x0.5"
+                android:padding="@dimen/space_x0.5"
+                android:id="@+id/tv_name"
+                android:text="奥丽"
+                android:textSize="@dimen/ts_x_large"
+                android:textColor="@color/black"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="8-21 09:30"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="@dimen/space_x0.5"
+            android:id="@+id/ll_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+
+                android:text="回复"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textColor="@color/black"
+                android:text="王儿"
+                android:id="@+id/tv_reply_person"
+                android:textSize="@dimen/ts_x_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="："
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <TextView
+            android:layout_marginLeft="@dimen/space_x0.5"
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1131313"
+        />
+    </LinearLayout>
+</LinearLayout>
