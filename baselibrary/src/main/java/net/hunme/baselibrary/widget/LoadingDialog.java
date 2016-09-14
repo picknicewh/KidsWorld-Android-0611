@@ -37,7 +37,7 @@ public class LoadingDialog extends Dialog {
         linearLayout.getBackground().setAlpha(210);
     }
 
-    public static void setLoadingText(String text){
+    public void setLoadingText(String text){
         tv_prompt.setText(text);
     }
 

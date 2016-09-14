@@ -26,7 +26,7 @@ public class UserMessage {
         this.context=context;
     }
 
-    public static UserMessage getInstance(Context context){
+    public synchronized static UserMessage getInstance(Context context){
         if(null==userMessage){
             userMessage=new UserMessage(context);
         }

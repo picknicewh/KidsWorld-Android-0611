@@ -173,7 +173,7 @@
     <color name="transparent">#0000</color><!-- 透明 -->
     <color name="transparent2">#8000</color><!-- 透明 -->
     <color name="bg_layout_">#e1e1e1</color><!--淡灰色 -->
-    <color name="pgrey">#b3b3b3</color>
+    <color name="pgrey">#f3f3f3</color>
     <color name="text_blue">#1b8bc8</color>
     <color name="bg_line">#e1e1e1</color>
 </resources>
