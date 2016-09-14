@@ -185,7 +185,7 @@ function testPlat(){
 //点赞事件
 var pageflag = true,
     pageIndex = 1,
-    pageSize = 15;
+    pageSize = 30;
     
   
 
@@ -256,7 +256,7 @@ function loadNew() {
 				}else if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){ //ios终端
 					tooc();
 				}*/
-                alert(response);
+//                alert(response);
 				if(platFlag == 0){//android终端
 //					alert("安卓");
 					showDos.setStatus();
@@ -492,13 +492,13 @@ function generateHtml(arr) {//此处arr不是数组
 	
 	if(arr.list.length != 0){
 		 names = arr.list;
-		tmpHtml += '<div class="names" id="names"><span class="top"></span><img src="../images/lightHeart.png" width="20px" height="18px">';
+		tmpHtml += '<div class="names" id="names"><span class="top"></span><img src="../images/lightHeart.png" width="14px">';
 		
 		for(var n = 0, namesLen = names.length; n < namesLen; n++){
 			tmpHtml += '<span class="name" value=' + names[n] + '>' + names[n] + '</span>';
 		}
 	}else{
-		tmpHtml += '<div class="names" id="names" hidden><span class="top"></span><img src="../images/lightHeart.png" width="20px" height="18px">';
+		tmpHtml += '<div class="names" id="names" hidden><span class="top"></span><img src="../images/lightHeart.png" width="14px">';
 	}
 	tmpHtml += '</div></div></div>';
 

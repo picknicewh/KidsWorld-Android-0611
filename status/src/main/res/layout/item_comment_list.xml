@@ -32,7 +32,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_marginTop="@dimen/space_x0.5"
                 android:padding="@dimen/space_x0.5"
                 android:id="@+id/tv_name"
                 android:textSize="@dimen/ts_x_large"

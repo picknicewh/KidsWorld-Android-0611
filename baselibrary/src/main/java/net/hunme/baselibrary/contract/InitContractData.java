@@ -50,7 +50,7 @@ public class InitContractData {
                 }
             }, true);
             if (image!=null && ryid!=null && userName!=null){
-                RongIM.getInstance().refreshUserInfoCache(new UserInfo(ryid, userName, Uri.parse(image)));
+//                RongIM.getInstance().refreshUserInfoCache(new UserInfo(ryid, userName, Uri.parse(image)));
             }
         }
         List<GroupInforVo> groupInforVos = groupsDbHelper.getGroupInformVos(db2);
@@ -66,7 +66,7 @@ public class InitContractData {
 
                 }
             },true);
-            RongIM.getInstance().refreshGroupInfoCache(new Group(classId,groupName, Uri.parse("")));
+//            RongIM.getInstance().refreshGroupInfoCache(new Group(classId,groupName, Uri.parse("")));
         }
     }
 }

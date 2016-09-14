@@ -14,7 +14,7 @@ var imgIndex = 2,
     //tsId = "34f7752ddb384677b05a185e2cedebd7",
     //tsId = "",
     tsId = getQueryString("tsId"),
-    pageSize = 15;
+    pageSize = 30;
 
 
 //判断平台
@@ -45,6 +45,7 @@ mui.previewImage();
 
 var count = 0;
 
+//拼接html
 function generateHtml(arr) {
 	var tmpHtml = "",
 		counts = arr.list.length,
@@ -172,6 +173,63 @@ function pullupRefresh() {
 	}, 1500);
 }
 
+
+//下拉刷新
+function pulldownRefresh() {
+
+	//firstTime = (new Date()).Format("yyyy-MM-dd hh:mm:ss");
+	//alert(refreshTime);
+	pageIndex = 1;
+
+	/*var u = navigator.userAgent;
+	if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){ //android终端
+		showDos.setStatus();
+	}else if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){ //ios终端
+		tooc();
+	}*/
+
+	setTimeout(function() {
+		//选择DOM
+		var table = document.body.querySelector('.wrap-list');
+		var cells = document.body.querySelectorAll('.app-mainBox');
+
+		//请求数据
+		var data = {
+			"tsId": tsId,
+			"pageNumber": pageIndex,
+			"pageSize": pageSize
+		};
+
+
+		$.post(url + '/dynamics/myDynamic.do', data,
+			function(response){
+
+				if(response.code == 0 && response.data.length > 0){
+					table.innerHTML = "";
+					var resultData = response.data,
+						dataLen = resultData.length;
+					dynamicId = resultData[0].dynamicId;
+//      		alert(dynamicId);
+
+					//修改的部分
+					for(var i = 0; i < dataLen; i++) {
+						var li = document.createElement('div');
+						li.className = 'app-mainBox';
+						li.innerHTML = generateHtml(resultData[i]);
+
+						table.appendChild(li);
+					}
+
+				}
+			});
+		pageIndex = 2;
+
+		//加载完数据后
+		mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+	}, 1500);
+}
+
+
 //删除消息及确认消息弹窗
 //document.getElementById("del").addEventListener('tap', function() {
 	$('.mui-scroll').on('tap','#del', function(event) {
@@ -226,7 +284,7 @@ $('.mui-scroll').on('tap','span.comment',function(event) {
 
 	if(platFlag == 0){//android终端
 		//alert("安卓");
-		showDos.startStatusDetils(dynamicIds);
+		change_tb.startStatusDetils(dynamicIds);
 
 	}else if(platFlag == 1){//ios终端
         //alert("IOS");

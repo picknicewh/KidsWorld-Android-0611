@@ -2,6 +2,7 @@ package net.hunme.baselibrary.util;
 
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.view.Gravity;
 import android.view.View;
@@ -251,5 +252,17 @@ public class WebCommonPageFrom {
         Intent intent = new Intent("net.hunme.kidsworld.hideMainTabReceiver");
         intent.putExtra("isVisible",isVisible);
         activity.sendBroadcast(intent);
+    }
+
+    @JavascriptInterface
+    public void startStatusDetils(String dynamicId){
+        if(G.isEmteny(dynamicId)){
+            return;
+        }
+        ComponentName componetName = new ComponentName("net.hunme.kidsworld","net.hunme.status.activity.StatusDetilsActivity");
+        Intent intent = new Intent();
+        intent.setComponent(componetName);
+        intent.putExtra("dynamicId",dynamicId);
+        activity.startActivity(intent);
     }
 }
