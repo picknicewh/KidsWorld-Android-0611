@@ -1,7 +1,6 @@
 package net.hunme.status;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -134,7 +133,7 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
             G.KisTyep.isUpdateComment=true;  //通知statusFragement 当前动态发生了改变  需要刷新数据
             view.stopLoadingDialog();
             Result<String> result= (Result<String>) date;
-            Toast.makeText(context, result.getData(), Toast.LENGTH_SHORT).show();
+            G.showToast(context,result.getData());
             getStatusDetils(tsId,dynamicId);
         }
 

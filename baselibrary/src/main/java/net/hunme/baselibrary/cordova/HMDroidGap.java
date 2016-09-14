@@ -162,6 +162,15 @@ public class HMDroidGap extends CordovaActivity implements View.OnClickListener{
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(launchUrl.contains("myDynamic")&&G.KisTyep.isUpdateComment){
+            G.KisTyep.isUpdateComment=false;
+            webView.loadUrl("javascript:pulldownRefresh()");
+        }
+    }
+
+    @Override
     public void onClick(View view) {
         int viewId = view.getId();
         if (viewId==R.id.iv_left){

@@ -266,7 +266,7 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
         b_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String content=td_commnet.getText().toString();
+                String content=td_commnet.getText().toString().trim();
                 if(G.isEmteny(content)){
                     popWindow.dismiss();
                     return;
