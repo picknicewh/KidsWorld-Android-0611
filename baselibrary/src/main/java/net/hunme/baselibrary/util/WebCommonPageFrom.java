@@ -44,7 +44,7 @@ public class WebCommonPageFrom {
      */
     private Button et_search;
     private Activity activity;
-
+    public static String dynamicId;
     public WebCommonPageFrom(ImageView iv_left, TextView tv_title, ImageView iv_right, Button et_search, Activity activity){
         this.iv_left = iv_left;
         this.tv_title = tv_title;
@@ -259,6 +259,7 @@ public class WebCommonPageFrom {
         if(G.isEmteny(dynamicId)){
             return;
         }
+        this.dynamicId=dynamicId;
         ComponentName componetName = new ComponentName("net.hunme.kidsworld","net.hunme.status.activity.StatusDetilsActivity");
         Intent intent = new Intent();
         intent.setComponent(componetName);
