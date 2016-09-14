@@ -27,14 +27,19 @@ import main.picturesee.util.ImagePagerActivity;
 public class PictrueUtils implements View.OnClickListener {
     private Context context;
     private List<String> imageUrl;
+    private int MAXIMAGESIZE=0;
+    private int IMAGESIZE=0;
     public void setPictrueLoad(Context context, List<String> imageUrl, RelativeLayout rlParams){
         this.context=context;
         this.imageUrl=imageUrl;
+        MAXIMAGESIZE=G.dp2px(context,180);
+        IMAGESIZE=G.dp2px(context,90);
         if(imageUrl.size()==1){
             //单张图片
             ImageView imageView=new ImageView(context);
             ImageCache.imageLoader(imageUrl.get(0),imageView);
-            RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(MAXIMAGESIZE,MAXIMAGESIZE);
             rlParams.addView(imageView,pl);
             imageView.setTag(0);
             imageView.setOnClickListener(this);
@@ -49,10 +54,10 @@ public class PictrueUtils implements View.OnClickListener {
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 RelativeLayout.LayoutParams pl;
                 if(i==0){
-                    pl=new RelativeLayout.LayoutParams(G.dp2px(context,160),G.dp2px(context,160));
+                    pl=new RelativeLayout.LayoutParams(MAXIMAGESIZE,MAXIMAGESIZE);
                     pl.setMargins(5,5,5,5);
                 }else if(i<=2){
-                    pl=new RelativeLayout.LayoutParams(G.dp2px(context,80),G.dp2px(context,80));
+                    pl=new RelativeLayout.LayoutParams(IMAGESIZE,IMAGESIZE);
                     if(i==2){
                         pl.addRule(RelativeLayout.BELOW,i+100-1);
                         pl.addRule(RelativeLayout.ALIGN_LEFT,i+100-1);
@@ -63,7 +68,7 @@ public class PictrueUtils implements View.OnClickListener {
                         pl.addRule(RelativeLayout.ALIGN_TOP,i+100-1);
                     }
                 }else {
-                    pl=new RelativeLayout.LayoutParams(G.dp2px(context,80),G.dp2px(context,80));
+                    pl=new RelativeLayout.LayoutParams(IMAGESIZE,IMAGESIZE);
                     if(i==3){
                         pl.addRule(RelativeLayout.BELOW,i+100-3);
                         pl.addRule(RelativeLayout.ALIGN_LEFT,i+100-3);
@@ -85,7 +90,7 @@ public class PictrueUtils implements View.OnClickListener {
                 imageView.setOnClickListener(this);
                 imageView.setTag(i);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(G.dp2px(context,80),G.dp2px(context,80));
+                RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(IMAGESIZE,IMAGESIZE);
                 if(i%2==0){
                     pl.setMargins(5,5,5,5);
                     pl.addRule(RelativeLayout.BELOW,i+100-1);
@@ -105,7 +110,7 @@ public class PictrueUtils implements View.OnClickListener {
                 imageView.setOnClickListener(this);
                 imageView.setTag(i);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(G.dp2px(context,80),G.dp2px(context,80));
+                RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(IMAGESIZE,IMAGESIZE);
                 if(i%3==0){
                     pl.setMargins(5,5,5,5);
                     pl.addRule(RelativeLayout.BELOW,i+100-1);

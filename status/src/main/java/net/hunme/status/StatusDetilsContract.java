@@ -27,6 +27,8 @@ public interface StatusDetilsContract {
         void setImagePrasise(boolean isAgree);
         void showPopWindow(android.view.View view,StatusDetilsVo.DynamidRewListBean bean);
         void setPictures(List<String> imageUrl);
+        void setCommentVis(boolean isVis);
+        void setImageVis(boolean isVis);
         void setPiaiseNum(int piaiseNum);
         void setCommentNum(int commentNum);
         void showLoadingDialog();

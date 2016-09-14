@@ -256,9 +256,9 @@ function loadNew() {
 				}else if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){ //ios终端
 					tooc();
 				}*/
-
+                alert(response);
 				if(platFlag == 0){//android终端
-					//alert("安卓");
+//					alert("安卓");
 					showDos.setStatus();
 				}else if(platFlag == 1){//ios终端
 					//alert("IOS");
@@ -266,7 +266,7 @@ function loadNew() {
 				}else{
 					return;
 				}
-
+//                 alert(response);
 				if(response.code == 0 && response.data.length > 0){
 //      		firstTime = refreshTime.Format("yyyy-MM-dd hh:mm:ss");
 
