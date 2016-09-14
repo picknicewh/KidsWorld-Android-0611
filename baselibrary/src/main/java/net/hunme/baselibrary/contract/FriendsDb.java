@@ -5,12 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/8/31
- * 名称：
+ * 名称：保存联系人信息数据库
  * 版本说明：
  * 附加注释：
- * 主要接口：
+ * 主要接口：无
  */
 public class FriendsDb extends SQLiteOpenHelper {
     private static final String DB_NAME = "friend.db"; //数据库名称

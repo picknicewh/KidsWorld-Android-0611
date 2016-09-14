@@ -219,7 +219,6 @@ public class MainActivity extends JPushBaseActivity {
         this.registerReceiver(myBroadcasReceiver, filter2);
         this.registerReceiver(myBroadcasReceiver, filter3);
         this.registerReceiver(myBroadcasReceiver, filter1);
-
     }
 
     @Override

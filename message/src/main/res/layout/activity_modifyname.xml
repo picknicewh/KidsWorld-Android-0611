@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/bg_layout"
+    android:layout_height="match_parent">
+   <TextView
+       android:paddingBottom="@dimen/space"
+       android:paddingTop="@dimen/space"
+       android:paddingLeft="@dimen/space_x1.5"
+       android:text="群聊名称"
+       android:textSize="@dimen/ts_large"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/et_groupname"
+        android:textSize="@dimen/ts_large"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:padding="@dimen/space_x1.5"
+        android:hint="活动群"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

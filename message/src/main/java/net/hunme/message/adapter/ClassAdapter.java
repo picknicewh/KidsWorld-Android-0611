@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import net.hunme.message.R;
-import net.hunme.message.bean.GroupJson;
+import net.hunme.message.bean.GroupInfoVo;
 
 import java.util.List;
 
@@ -22,8 +22,8 @@ import java.util.List;
  */
 public class ClassAdapter extends BaseAdapter {
     private Context context;
-    private List<GroupJson> classnamelist;
-    public ClassAdapter(Context context, List<GroupJson> classnamelist){
+    private List<GroupInfoVo> classnamelist;
+    public ClassAdapter(Context context, List<GroupInfoVo> classnamelist){
         this.context = context;
         this.classnamelist = classnamelist;
     }

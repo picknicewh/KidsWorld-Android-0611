@@ -1,0 +1,105 @@
+package net.hunme.message.activity;
+
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.gson.reflect.TypeToken;
+
+import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.contract.GroupDb;
+import net.hunme.baselibrary.contract.GroupsDbHelper;
+import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
+import net.hunme.baselibrary.network.OkHttpListener;
+import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.UserMessage;
+import net.hunme.message.R;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * 作者： wh
+ * 时间： 2016/9/12
+ * 名称：
+ * 版本说明：
+ * 附加注释：
+ * 主要接口：
+ */
+public class ModifyNameActivity extends BaseActivity implements OkHttpListener {
+    private EditText et_name;
+    /**
+     * 群数据库
+     */
+    private GroupsDbHelper dbHelper;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_modifyname);
+        initView();
+    }
+    /**
+     * 初始化数据
+     */
+    private void initView() {
+        et_name = $(R.id.et_groupname);
+        dbHelper = new GroupsDbHelper();
+        GroupDb groupDb = new GroupDb(this);
+        SQLiteDatabase db =  groupDb.getWritableDatabase();
+        final String targetGroupId = getIntent().getStringExtra("targetGroupId");
+        String targetGroupName =  getIntent().getStringExtra("targetGroupName");
+        et_name.setHint(targetGroupName);
+        setSubTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editName(targetGroupId);
+                Intent intent = new Intent(ModifyNameActivity.this,GroupDetailActivity.class);
+                intent.putExtra("targetGroupName",et_name.getText().toString());
+                startActivityForResult(intent,GroupDetailActivity.EDIT_NMAE);
+            }
+        });
+    }
+    @Override
+    protected void setToolBar() {
+        setLiftImage(R.mipmap.ic_arrow_lift);
+        setLiftOnClickClose();
+        setCententTitle("群聊名称");
+        setSubTitle("完成");
+    }
+    /**
+     * 修改群名称
+     * @param targetGroupId 群组id
+     */
+     private void editName(String targetGroupId){
+        Map<String,Object> params = new HashMap<>();
+        params.put("tsId",UserMessage.getInstance(this).getTsId());
+        params.put("groupChatAdmin", UserMessage.getInstance(this).getTsId());
+        params.put("groupChatId",targetGroupId);
+        if (TextUtils.isEmpty(et_name.getText().toString())){
+            Toast.makeText(this,"群组名不能为空！",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        params.put("groupChatName",et_name.getText().toString());
+
+        Type type =new TypeToken<Result<String>>(){}.getType();
+        OkHttps.sendPost(type, Apiurl.MESSAGE_EDITGROUPNAME,params,this);
+    }
+    @Override
+    public void onSuccess(String uri, Object date) {
+        Result<String> data  = (Result<String>) date;
+        if (data!=null){
+            String result = data.getData();
+            Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        }
+    }
+    @Override
+    public void onError(String uri, String error) {
+        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+    }
+}

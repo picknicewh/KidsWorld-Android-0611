@@ -44,8 +44,7 @@ import static android.view.MotionEvent.ACTION_CANCEL;
 import static android.view.MotionEvent.ACTION_DOWN;
 import static android.view.MotionEvent.ACTION_UP;
 
-public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
-        OnGestureListener,
+public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, OnGestureListener,
         ViewTreeObserver.OnGlobalLayoutListener {
 
     private static final String LOG_TAG = "PhotoViewAttacher";

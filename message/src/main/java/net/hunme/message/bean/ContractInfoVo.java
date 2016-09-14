@@ -3,14 +3,14 @@ package net.hunme.message.bean;
 import java.io.Serializable;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/7/25
- * 名称：
+ * 名称：联系人信息
  * 版本说明：
  * 附加注释：
  * 主要接口：
  */
-public class MemberJson implements Serializable{
+public class ContractInfoVo implements Serializable{
     /**
      * 用户id
      */
@@ -59,6 +59,7 @@ public class MemberJson implements Serializable{
     public void setTsName(String tsName) {
         this.tsName = tsName;
     }
+
 
 
 }

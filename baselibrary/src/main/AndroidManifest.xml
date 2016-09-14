@@ -20,9 +20,6 @@
             android:value="wandoujia" />
 
         <activity
-            android:name=".activity.WebActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
             android:name=".activity.PermissionsActivity"
             android:screenOrientation="portrait"/>
     </application>

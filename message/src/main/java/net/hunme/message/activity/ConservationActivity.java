@@ -65,6 +65,7 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
     private final String[] PERMISSIONS = new String[]{
             Manifest.permission.RECORD_AUDIO, //麦克风权限
     };
+    private boolean isGroup = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +94,7 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         Intent intent = getIntent();
         targetId = intent.getData().getQueryParameter("targetId");
         name = intent.getData().getQueryParameter("title");
+
         tv_name.setText(name);
         mconversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
         showview(mconversationType);
@@ -101,10 +103,14 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
     private void  showview(Conversation.ConversationType mconversationType){
          if (mconversationType.equals(Conversation.ConversationType.GROUP)){
              iv_call.setVisibility(View.GONE);
-             iv_detail.setVisibility(View.GONE);
+             iv_detail.setVisibility(View.VISIBLE);
+             iv_detail.setImageResource(R.mipmap.ic_member);
+             isGroup = true;
          }else if (mconversationType.equals(Conversation.ConversationType.PRIVATE)){
              iv_call.setVisibility(View.VISIBLE);
              iv_detail.setVisibility(View.VISIBLE);
+             iv_detail.setImageResource(R.mipmap.ic_person);
+             isGroup = false;
          }
     }
 
@@ -119,20 +125,17 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
             startActivity(intent);
         }else if (v.getId()==R.id.iv_detail){
             Intent intent = new Intent();
-            intent.setClass(this,PersonDetailActivity.class);
-            intent.putExtra("title",name);
-            intent.putExtra("targetId",targetId);
+            if (isGroup){
+                intent.setClass(this,GroupDetailActivity.class);
+                intent.putExtra("title",name);
+                intent.putExtra("targetGroupId",targetId);
+            }else {
+                intent.setClass(this,PersonDetailActivity.class);
+                intent.putExtra("title",name);
+                intent.putExtra("targetId",targetId);
+            }
             startActivity(intent);
         }
     }
- /*   private void  addExtendProvider(){
-        //扩展功能自定义
-        InputProvider.ExtendProvider[] provider = {
-                new ImageInputProvider(RongContext.getInstance()),//图片
-                new CameraInputProvider(RongContext.getInstance()),//相机
-                new LocationInputProvider(RongContext.getInstance()),//地理位置
-        };
-        RongIM.getInstance().resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, provider);
-    }*/
 
 }

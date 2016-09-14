@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_marginTop="@dimen/space"
+        android:id="@+id/iv_mhead"
+        android:layout_gravity="center"
+       android:layout_marginBottom="@dimen/space_x0.5"
+        android:src="@mipmap/person"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <LinearLayout
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <TextView
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:id="@+id/tv_mname"
+        android:layout_marginLeft="@dimen/space"
+        android:text="周六了"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/tv_role"
+            android:layout_marginLeft="@dimen/space_x0.5"
+            android:text="学"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+    </LinearLayout>
+</LinearLayout>

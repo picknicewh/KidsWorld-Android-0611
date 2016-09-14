@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/8/31
- * 名称：
+ * 名称：群组信息数据库操作类（增删改查）
  * 版本说明：
  * 附加注释：
  * 主要接口：
@@ -25,6 +25,9 @@ public class GroupsDbHelper {
     }
     /**
      * 插入数据
+     * @param  db 数据库
+     * @param  groupName 群名称
+     * @param  classId 群id
      */
     public  void insert(SQLiteDatabase db, String groupName, String classId) {
         String sql = "insert into mgroup" + "(groupName,classId) values ('"+groupName+"','" + classId + "')";
@@ -32,6 +35,7 @@ public class GroupsDbHelper {
     }
     /**
      * 查询所有数据数据,获取列表信息
+     * @param  db 数据库
      */
     public List<GroupInforVo> getGroupInformVos(SQLiteDatabase db){
         List<GroupInforVo> groupInforVos = new ArrayList<>();
@@ -74,6 +78,16 @@ public class GroupsDbHelper {
      */
     public void  deleteById(SQLiteDatabase db,int id){
         String sql="delete from mgroup where uid =" + id;
+        db.execSQL(sql);
+    }
+    /**
+     * 修改群名称
+     * @param  db 数据库
+     * @param  groupName 群名称
+     * @param  classId 群id
+     */
+    public void updateGroupName(SQLiteDatabase db ,String groupName,String classId) {
+        String sql = "update mgroup set groupName = '"+ groupName + "'where classId ='"+classId+"'";
         db.execSQL(sql);
     }
     /**

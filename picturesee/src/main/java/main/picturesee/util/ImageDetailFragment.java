@@ -26,10 +26,23 @@ import main.picturesee.photoview.PhotoViewAttacher;
  * 单张图片显示Fragment
  */
 public class ImageDetailFragment extends Fragment {
+	/**
+	 * 图片链接地址
+	 */
 	private String mImageUrl;
+	/**
+	 * 显示图片
+	 */
 	private ImageView mImageView;
+	/**
+	 * 加载图片进度条
+	 */
 	private ProgressBar progressBar;
+
 	private PhotoViewAttacher mAttacher;
+	/**
+	 * 来自本地图片或者是网络图片，处理图片的方式不同
+	 */
     private String source;
 	public static ImageDetailFragment newInstance(String imageUrl,String source) {
 		final ImageDetailFragment f = new ImageDetailFragment();
