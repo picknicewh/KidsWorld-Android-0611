@@ -123,12 +123,7 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
         setCententTitle("动态详情");
-        setLiftOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        setLiftOnClickClose();
     }
 
     @Override
@@ -230,12 +225,12 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
                         }
                     });
                 }else {
-//                    showPopWindow(view,bean);
+                    showPopWindow(view,bean);
                     int[] location = new int[2] ;
                     view.getLocationOnScreen(location);
 //                    lv_commmet.smoothScrollBy(location[1],100);
-                    scrollView.smoothScrollBy(0,location[1]);
-                    G.log(location[0]+"-----------------------"+location[1]);
+                    scrollView.smoothScrollBy(0,location[1]-view.getHeight());
+                    G.log(view.getTop()+"---------"+view.getY()+"-----------"+location[1]);
                 }
             }
         });
@@ -286,6 +281,22 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
     @Override
     public void setPictures(List<String> imageUrl) {
         new PictrueUtils().setPictrueLoad(this,imageUrl,rl_picture);
+    }
+
+    @Override
+    public void setCommentVis(boolean isVis) {
+        if(isVis)
+            tv_content.setVisibility(View.VISIBLE);
+        else
+            tv_content.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setImageVis(boolean isVis) {
+        if(isVis)
+            rl_picture.setVisibility(View.VISIBLE);
+        else
+            rl_picture.setVisibility(View.GONE);
     }
 
     @Override

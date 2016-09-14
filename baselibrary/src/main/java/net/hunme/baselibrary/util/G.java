@@ -211,6 +211,8 @@ public class G {
         public static boolean isReleaseSuccess=false;  //是否成功发布动态 用户刷新数据
 
         public static  boolean isUpadteHold=false;   //是否修改用户头像
+
+        public static boolean isUpdateComment=false;
     }
 
 }

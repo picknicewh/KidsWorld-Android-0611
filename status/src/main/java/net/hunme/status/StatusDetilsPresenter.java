@@ -123,10 +123,15 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
             view.setCommentNum(detilsVo.getDynamidRewList().size());
             view.setImagePrasise(detilsVo.getIsAgree()==1);
             view.setCommentList(detilsVo.getDynamidRewList());
+            view.setCommentVis(!G.isEmteny(detilsVo.getText()));
             if(null!=detilsVo.getImgUrl()&&detilsVo.getImgUrl().size()>0){
                 view.setPictures(detilsVo.getImgUrl());
+                view.setImageVis(true);
+            }else {
+                view.setImageVis(false);
             }
         } else{
+            G.KisTyep.isUpdateComment=true;  //通知statusFragement 当前动态发生了改变  需要刷新数据
             view.stopLoadingDialog();
             Result<String> result= (Result<String>) date;
             Toast.makeText(context, result.getData(), Toast.LENGTH_SHORT).show();

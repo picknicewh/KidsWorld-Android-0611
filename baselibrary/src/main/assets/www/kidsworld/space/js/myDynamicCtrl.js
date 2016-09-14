@@ -11,12 +11,11 @@ var url = "http://zhu.hunme.net:8080/KidsWorld";
 var imgIndex = 2,
     pageflag = true,
     pageIndex = 1,
-    //tsId = "6040009dfa2947328d0f5981f19dcc7b",
+    //tsId = "34f7752ddb384677b05a185e2cedebd7",
+    //tsId = "",
     tsId = getQueryString("tsId"),
     pageSize = 15;
 
-//测试
-//var tsId = "0ff067cb7bf3485fab89a984bf0249df";
 
 //判断平台
 var platFlag=testPlat();
@@ -48,6 +47,7 @@ var count = 0;
 
 function generateHtml(arr) {
 	var tmpHtml = "",
+		counts = arr.list.length,
 	    createTime = new Date(arr.createTime);
 	tmpHtml += '<div class="section-left">';
     tmpHtml += '<span class="time" id="time">' + createTime.getDate() + '</span>';
@@ -73,7 +73,7 @@ function generateHtml(arr) {
 	    }
 	
 	tmpHtml += '</div><div class="app-control" data-islike=' + arr.isAgree + ' data-likecnt=' + counts;
-	tmpHtml += ' data-dynamicid=' + arr.dynamicId + '><span class="app-time">';
+	tmpHtml += ' data-dynamicid=' + arr.dynamicId + '>';
 
 	tmpHtml += '<span class="app-time title-green" id="del">删除</span>';
 
@@ -102,10 +102,6 @@ function generateHtml(arr) {
 	}else{
 		tmpHtml += '<span class="counts">赞</span></span></div>';
 	}
-
-	if(arr.list.length > 0){
-		tmpHtml += '<div class="mui-pull-right heart-gray" style="display: inline-block;"><img src="../images/heart.png"/><span class="padding-left label-font">' + arr.list.length + '</span></div>';
-	}
 //	tmpHtml += '<div class="mui-pull-right names" style="display: inline-block;" hidden><img src="../images/heart.png"/><span class="padding-left">3</span></div>';
 	tmpHtml += '</div>';
 
@@ -128,17 +124,20 @@ function pullupRefresh() {
         };
         
 		$.post(url + '/dynamics/myDynamic.do', data,
-        function(response){ 
-        	if(response.code == "0" && response.data != null){
-				if(response.data == null | response.data.length == 0 ){
-                     mui.toast("暂无数据");
+        function(response){
+			if(response.code == "0"){
+				if(response.data.length == 0) {
+
+					if(pageIndex == 1) {
+						mui.toast("暂无数据");
+					}
+
 				}else{
+
 					var resultData = response.data;
 					if(resultData.length != pageSize){
 						pageflag = false;
 					}
-//	        	pageCount = response.pageCount;//初次请求，返回总页数
-					//      	mui('#pullrefresh').pullRefresh().endPullupToRefresh(()); //参数为true代表没有更多数据了。
 					for(var i = 0; i < resultData.length; i++) {
 						var li = document.createElement('div');
 						li.className = 'app-mainBox';
@@ -146,7 +145,25 @@ function pullupRefresh() {
 
 						table.appendChild(li);
 					}
-				}
+
+			}
+        	//if(response.code == "0" && response.data != null){
+				/*if(response.data == null || response.data.length == 0 ){
+                     mui.toast("暂无数据");
+				}else{
+					var resultData = response.data;
+					if(resultData.length != pageSize){
+						pageflag = false;
+					}
+					for(var i = 0; i < resultData.length; i++) {
+						var li = document.createElement('div');
+						li.className = 'app-mainBox';
+						li.innerHTML = generateHtml(resultData[i]);
+
+						table.appendChild(li);
+					}
+
+				}*/
 
         	}
         });
@@ -201,22 +218,23 @@ function pullupRefresh() {
 			});
 
 
-//评论跳转到消息详情
+//点击评论跳转到消息详情
 $('.mui-scroll').on('tap','span.comment',function(event) {
 
 	var $this = $(this);
 	var dynamicIds = $this.parent().data('dynamicid');
 
 	if(platFlag == 0){//android终端
-		showDos.startStatusDetils(dynamicIds);
 		//alert("安卓");
+		showDos.startStatusDetils(dynamicIds);
+
 	}else if(platFlag == 1){//ios终端
         //alert("IOS");
 		OCdynamicId.iosUsercomment(dynamicIds);
 	}else{
 		return;
 	}
-	event.stopPropagation(); //阻止事件向上冒泡
+	//event.stopPropagation(); //阻止事件向上冒泡
 });
 
 //点赞

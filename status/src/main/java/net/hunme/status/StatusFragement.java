@@ -267,6 +267,11 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
             //用户切换头像 重新刷新数据
             ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
         }
+        // 动态发生改变 刷新数据
+        if(G.KisTyep.isUpdateComment){
+            G.KisTyep.isUpdateComment=false;
+            cordovaWebView.loadUrl("javascript:pulldownRefresh()");
+        }
     }
     @JavascriptInterface
     public void listenerReload(){
@@ -292,17 +297,17 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         }
         Intent intent=new Intent(getActivity(), StatusDetilsActivity.class);
         intent.putExtra("dynamicId",dynamicId);
-        startActivityForResult(intent,101);
+        startActivity(intent);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        if(requestCode==101){
-            cordovaWebView.loadUrl("javascript:loadNew()");
-        }
-    }
-
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+//        super.onActivityResult(requestCode, resultCode, intent);
+//        if(requestCode==101){
+//            G.showToast(getActivity(),"我要刷新动态");
+//            cordovaWebView.loadUrl("javascript:loadNew()");
+//        }
+//    }
     /**
      * 获取班级列表
      */
