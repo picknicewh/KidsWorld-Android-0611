@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.activity.PermissionsActivity;
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
@@ -55,10 +56,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
      */
     private String name;
     /**
-     * 聊天用户id
-     */
-    private String image;
-    /**
      *当前的会话类型
      */
     private Conversation.ConversationType mconversationType;
@@ -70,7 +67,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conservation);
-     //   addExtendProvider();
         initView();
         if(new PermissionsChecker(this).lacksPermissions(PERMISSIONS)){
             PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
@@ -92,12 +88,13 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         iv_detail.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         Intent intent = getIntent();
-        targetId = intent.getData().getQueryParameter("targetId");
-        name = intent.getData().getQueryParameter("title");
-
-        tv_name.setText(name);
-        mconversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
-        showview(mconversationType);
+        if (intent.getData()!=null){
+            targetId = intent.getData().getQueryParameter("targetId");
+            name = intent.getData().getQueryParameter("title");
+            tv_name.setText(name);
+            mconversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
+            showview(mconversationType);
+        }
     }
 
     private void  showview(Conversation.ConversationType mconversationType){
@@ -123,19 +120,23 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
             Intent intent = new Intent(Intent.ACTION_DIAL,phoneUri);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            finish();
         }else if (v.getId()==R.id.iv_detail){
             Intent intent = new Intent();
             if (isGroup){
                 intent.setClass(this,GroupDetailActivity.class);
                 intent.putExtra("title",name);
                 intent.putExtra("targetGroupId",targetId);
+                startActivityForResult(intent,GroupDetailActivity.EDIT_NMAE);
+                finish();
+                G.log("我跳转了----");
             }else {
                 intent.setClass(this,PersonDetailActivity.class);
                 intent.putExtra("title",name);
                 intent.putExtra("targetId",targetId);
+                startActivity(intent);
             }
-            startActivity(intent);
+
         }
     }
-
 }
