@@ -144,7 +144,7 @@ public class MainActivity extends JPushBaseActivity {
             BaseLibrary.connect(userMessage.getRyId(), MainActivity.this, userMessage.getUserName(), userMessage.getHoldImgUrl());
             setNoreadMessage();
         }
-        RongIM.setConnectionStatusListener(new MyConnectionStatusListener(this));
+        RongIM.setConnectionStatusListener(new MyConnectionStatusListener(MainActivity.this));
         registerReceiver();
         initCount();
     }

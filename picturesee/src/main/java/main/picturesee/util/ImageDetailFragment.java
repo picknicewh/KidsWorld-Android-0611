@@ -11,9 +11,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import net.hunme.baselibrary.image.ImageCache;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -80,7 +81,7 @@ public class ImageDetailFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		if (source.equals("net") || source.equals("message")){
-			ImageLoader.getInstance().displayImage(mImageUrl, mImageView, new SimpleImageLoadingListener() {
+			ImageCache.imageLoader(mImageUrl, mImageView, new SimpleImageLoadingListener() {
 				@Override
 				public void onLoadingStarted(String imageUri, View view) {
 					progressBar.setVisibility(View.VISIBLE);

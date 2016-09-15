@@ -117,11 +117,13 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
                     praisePerson=G.isEmteny(praisePerson)?praisePerson+s:praisePerson+"、"+s;
                 }
                 view.setPraisePerson(praisePerson);
+                view.setPiaiseNum(detilsVo.getList().size());
             }
-            view.setPiaiseNum(detilsVo.getList().size());
-            view.setCommentNum(detilsVo.getDynamidRewList().size());
+            if(detilsVo.getDynamidRewList()!=null){
+                view.setCommentNum(detilsVo.getDynamidRewList().size());
+                view.setCommentList(detilsVo.getDynamidRewList());
+            }
             view.setImagePrasise(detilsVo.getIsAgree()==1);
-            view.setCommentList(detilsVo.getDynamidRewList());
             view.setCommentVis(!G.isEmteny(detilsVo.getText()));
             if(null!=detilsVo.getImgUrl()&&detilsVo.getImgUrl().size()>0){
                 view.setPictures(detilsVo.getImgUrl());

@@ -17,6 +17,7 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.adapter.ClassAdapter;
@@ -94,7 +95,10 @@ public class ClassActivity extends BaseActivity implements OkHttpListener,View.O
                             return null;
                         }
                     },true);
-                    RongIM.getInstance().refreshGroupInfoCache(new Group(classId,groupName, Uri.parse("")));
+
+                    if(!G.isEmteny(classId)&&!G.isEmteny(groupName)){
+                        RongIM.getInstance().refreshGroupInfoCache(new Group(classId,groupName, Uri.parse("")));
+                    }
                    // RongIM.getInstance().refreshGroupUserInfoCache(new GroupUserInfo(classId,groupName,groupName));
                 }
             }

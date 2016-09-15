@@ -15,6 +15,7 @@ import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.R;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MyConnectionStatusListener;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
 
 import org.apache.cordova.CordovaActivity;
@@ -164,9 +165,9 @@ public class HMDroidGap extends CordovaActivity implements View.OnClickListener{
     @Override
     protected void onResume() {
         super.onResume();
-        if(launchUrl.contains("myDynamic")&&G.KisTyep.isUpdateComment){
+        if(launchUrl.contains("myDynamic")&&G.KisTyep.isUpdateComment&&!G.isEmteny(WebCommonPageFrom.dynamicId)){
             G.KisTyep.isUpdateComment=false;
-            webView.loadUrl("javascript:pulldownRefresh()");
+            webView.loadUrl("javascript: backMessage('"+ UserMessage.getInstance(this).getTsId()+"','"+WebCommonPageFrom.dynamicId+"')");
         }
     }
 
