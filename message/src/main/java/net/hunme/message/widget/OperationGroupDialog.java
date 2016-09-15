@@ -49,11 +49,15 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
      */
     public static  final int FLAG_DISSOLVE = 1;
     /**
-     * 删除群
+     * 移除群成员
      */
-    public static  final int FLAG_REMOVE = 2;
+    public static  final int FLAG_REMOVE_MEMBER = 2;
     /**
      * 退出群
+     */
+    public static  final int FLAG_REMOVE = 4;
+    /**
+     * 添加
      */
     public static  final int FLAG_ADD = 3;
 
@@ -104,7 +108,7 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
         this.flag = flag;
     }
     //退出群，或者是添加新成员
-    public OperationGroupDialog(Activity context, String targetId, String targetGroupId, String targetGroupName, int flag){
+    public OperationGroupDialog(Activity context, String targetId, String targetGroupId,String targetGroupName,int flag){
         this.context  = context;
         this.targetId = targetId;
         this.targetGroupId = targetGroupId;
@@ -132,6 +136,9 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
                 break;
             case FLAG_DISSOLVE:
                 tv_message.setText(" 删除并退出后，将不再接收改群信息");
+                break;
+            case FLAG_REMOVE_MEMBER:
+                tv_message.setText("确认删除成员？");
                 break;
             case FLAG_REMOVE:
                 tv_message.setText("确认删除成员？");
@@ -166,11 +173,15 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
                     }
                     break;
                 case FLAG_DISSOLVE:
-                    tv_message.setText(" 删除并退出后，将不再接收改群信息");
+                    tv_message.setText("删除并退出后，将不再接收改群信息!");
                     dissolveGroup(targetId,targetGroupId);
                     break;
-                case FLAG_REMOVE:
+                case FLAG_REMOVE_MEMBER:
                     tv_message.setText("确认删除成员？");
+                    removeMember(targetId,targetGroupId);
+                    break;
+                case FLAG_REMOVE:
+                    tv_message.setText("删除并退出后，将不再接收改群信息!");
                     removeMember(targetId,targetGroupId);
                     break;
                 case FLAG_ADD:
@@ -192,6 +203,7 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
         params.put("tsIds",targetIds);
         params.put("groupChatAdmin", UserMessage.getInstance(context).getTsId());
         params.put("groupChatId",targetGroupId);
+        removeConversation(targetGroupId);
         Log.i("EEEEEEEE","tsIds:"+targetIds+"groupChatAdmin:"+UserMessage.getInstance(context).getTsId()+"groupChatId:"+targetGroupId);
         Type type =new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_EXIT_MEMBER,params,this);
@@ -233,13 +245,21 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
     public void onSuccess(String uri, Object date) {
         if (uri.contains(Apiurl.MESSAGE_EXIT_MEMBER)){
             result(date);
-            context.finish();
+            if (flag==FLAG_REMOVE){
+                Intent intent = new Intent(context,ClassActivity.class);
+                context.startActivity(intent);
+                context.finish();
+            }else if (flag==FLAG_REMOVE_MEMBER){
+                context.finish();
+            }
         }else if (uri.contains(Apiurl.MESSAGE_ADD_MEMBER)){
             result(date);
             context.finish();
         }else if (uri.contains(Apiurl.MESSAGE_DISSORE_GROUP)){
-           result(date);
-            context.startActivity(new Intent(context, ClassActivity.class));
+            result(date);
+            Intent intent = new Intent(context, ClassActivity.class);
+            context.startActivity(intent);
+            context.finish();
         }
     }
     /**

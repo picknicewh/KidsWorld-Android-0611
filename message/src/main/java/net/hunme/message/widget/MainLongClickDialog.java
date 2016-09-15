@@ -2,14 +2,15 @@ package net.hunme.message.widget;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.hunme.baselibrary.contract.GroupDb;
+import net.hunme.baselibrary.contract.GroupsDbHelper;
 import net.hunme.baselibrary.util.MyAlertDialog;
 import net.hunme.message.R;
 
@@ -52,8 +53,8 @@ public class MainLongClickDialog implements View.OnClickListener{
      * 会话类型
      */
     private Conversation.ConversationType type;
-    private SharedPreferences spf;
-    private SharedPreferences.Editor editor;
+    private GroupsDbHelper dbHelper;
+    private SQLiteDatabase db;
     /**
      * 是否顶置
      */
@@ -76,9 +77,9 @@ public class MainLongClickDialog implements View.OnClickListener{
         tv_name.setText(targetName);
     }
    public void initData(){
-       spf=context.getSharedPreferences("group", Context.MODE_PRIVATE);
-       editor=spf.edit();
-       isTop = spf.getBoolean("isTop",false);
+       dbHelper = new GroupsDbHelper();
+       db = new GroupDb(context).getWritableDatabase();
+       isTop = dbHelper.getTop(db,targetId);
        if (isTop){
            tv_top.setText("取消顶置");
        }else {
@@ -95,12 +96,11 @@ public class MainLongClickDialog implements View.OnClickListener{
         }else if (viewId==R.id.tv_maintop){
             if (isTop){
                 setTopConversation(false);
-                editor.putBoolean("isTop",false);
+                dbHelper.updateIsTop(db,0,targetId);
             }else {
                 setTopConversation(true);
-                editor.putBoolean("isTop",true);
+                dbHelper.updateIsTop(db,1,targetId);
             }
-            editor.commit();
             alertDialog.dismiss();
         }
     }

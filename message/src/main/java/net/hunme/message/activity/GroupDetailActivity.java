@@ -3,6 +3,7 @@ package net.hunme.message.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,8 @@ import android.widget.ToggleButton;
 import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.contract.GroupDb;
+import net.hunme.baselibrary.contract.GroupsDbHelper;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
@@ -50,6 +53,7 @@ import io.rong.imlib.model.UserInfo;
  */
 public class GroupDetailActivity extends BaseActivity implements OkHttpListener ,View.OnClickListener{
     public  static  final  int EDIT_NMAE = 1;
+    public  static  final  int ENTEREDIT = 2;
     /**
      * 显示成员
      */
@@ -107,9 +111,12 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
      * 群主id
      */
     private   String  ganapatiId;
-
+    private GroupsDbHelper dbHelper;
+    private SQLiteDatabase db;
+    private boolean isTop;
+    private boolean isStatus;
     private SharedPreferences spf;
-    private SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,13 +134,6 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
         ll_name = $(R.id.ll_mname);
         rl_nodisturb = $(R.id.rl_nodiscribe);
         rl_overhead = $(R.id.rl_overhead);
-        targetGroupId = getIntent().getStringExtra("targetGroupId");
-        targetGroupName =  getIntent().getStringExtra("title");
-        tv_name.setText(targetGroupName);
-        spf=getSharedPreferences("group", Context.MODE_PRIVATE);
-        editor=spf.edit();
-        tg_nodisturb.setChecked(spf.getBoolean("isStatus",false));
-        tg_Overhead.setChecked(spf.getBoolean("isTop",false));
         tg_Overhead.setOnClickListener(this);
         tg_nodisturb.setOnClickListener(this);
         tv_clean.setOnClickListener(this);
@@ -142,7 +142,23 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
         rl_overhead.setOnClickListener(this);
         rl_nodisturb.setOnClickListener(this);
         tv_count.setOnClickListener(this);
-        getMemberList(targetGroupId);
+        setCheck();
+        setGroupInfo();
+    }
+    private void setCheck(){
+
+        dbHelper = new GroupsDbHelper();
+        db = new GroupDb(this).getWritableDatabase();
+        isTop =dbHelper.getTop(db,targetGroupId);
+        isStatus = dbHelper.getStatus(db,targetGroupId);
+        tg_nodisturb.setChecked(isStatus);
+        tg_Overhead.setChecked(isTop);
+    }
+    private void setGroupInfo(){
+        spf=getSharedPreferences("name", Context.MODE_PRIVATE);
+        targetGroupId =  spf.getString("targetGroupId","");
+        targetGroupName = spf.getString("groupName","");
+        tv_name.setText(targetGroupName);
     }
     /**
      * 获取所有群成员
@@ -184,11 +200,6 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
                         groupMemberVoList.addAll(getLast());
                     }
                     setGirdView(groupMemberVoList);
-                    if (groupMemberVoList.size()>40){
-                        tv_count.setClickable(true);
-                    }else {
-                        tv_count.setClickable(false);
-                    }
                 }
             }
         }
@@ -225,6 +236,7 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
     @Override
     protected void onResume() {
         super.onResume();
+        setGroupInfo();
         getMemberList(targetGroupId);
     }
 
@@ -262,30 +274,31 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
         if (viewId==R.id.tg_nodiscribe){
             if (tg_nodisturb.isChecked()){
                 setStatus(Conversation.ConversationNotificationStatus.DO_NOT_DISTURB);
-                editor.putBoolean("isStatus",true);
+                dbHelper.updateIsStatus(db,1,targetGroupId);
             }else {
                 setStatus(Conversation.ConversationNotificationStatus.NOTIFY);
-                editor.putBoolean("isStatus",false);
+                dbHelper.updateIsStatus(db,0,targetGroupId);
             }
-            editor.commit();
         }else if (viewId==R.id.tg_overhead){
             if (tg_Overhead.isChecked()){
                 setTopConversation(true);
-                editor.putBoolean("isTop",true);
+                dbHelper.updateIsTop(db,1,targetGroupId);
             }else {
                 setTopConversation(false);
-                editor.putBoolean("isTop",false);
+                dbHelper.updateIsTop(db,0,targetGroupId);
             }
-            editor.commit();
+
         }else if (viewId==R.id.btn_exit){
             OperationGroupDialog dialog;
             if (isganapati(ganapatiId)){//解散群
+              //  public OperationGroupDialog(Activity context, String targetId, String targetGroupId, int flag)
                  dialog = new OperationGroupDialog(this,UserMessage.getInstance(this).getTsId(),
                         targetGroupId, OperationGroupDialog.FLAG_DISSOLVE);
             }else {//退出群
                 dialog = new OperationGroupDialog(this,UserMessage.getInstance(this).getTsId(),
-                        targetGroupId,targetGroupName, OperationGroupDialog.FLAG_DISSOLVE);
+                        targetGroupId,targetGroupName, OperationGroupDialog.FLAG_REMOVE);
             }
+
             dialog.initView();
         }else if (viewId==R.id.tv_clean) {
             //清空消息
@@ -295,38 +308,34 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
             if (isganapati(ganapatiId)) {
                 Intent intent = new Intent();
                 intent.setClass(this,ModifyNameActivity.class);
-                intent.putExtra("targetGroupId",targetGroupId);
-                intent.putExtra("targetGroupName",targetGroupName);
-                startActivityForResult(intent,EDIT_NMAE);
-              //  startParallaxSwipeBackActivty(this,intent);
-                finish();
+              //  intent.putExtra("targetGroupId",targetGroupId);
+                //intent.putExtra("targetGroupName",targetGroupName);
+                startActivityForResult(intent,ENTEREDIT);
             }
         }else if (viewId==R.id.rl_nodiscribe){
             tg_nodisturb.setChecked(!tg_nodisturb.isChecked());
             if (tg_nodisturb.isChecked()){
                 setStatus(Conversation.ConversationNotificationStatus.DO_NOT_DISTURB);
-                editor.putBoolean("isStatus",true);
+                dbHelper.updateIsStatus(db,1,targetGroupId);
             }else {
                 setStatus(Conversation.ConversationNotificationStatus.NOTIFY);
-                editor.putBoolean("isStatus",false);
+                dbHelper.updateIsStatus(db,0,targetGroupId);
             }
-            editor.commit();
         }else if (viewId==R.id.rl_overhead){
             tg_Overhead.setChecked(!tg_Overhead.isChecked());
             if (tg_Overhead.isChecked()){
                 setTopConversation(true);
-                editor.putBoolean("isTop",true);
+                dbHelper.updateIsTop(db,1,targetGroupId);
             }else {
                 setTopConversation(false);
-                editor.putBoolean("isTop",false);
+                dbHelper.updateIsTop(db,0,targetGroupId);
             }
-            editor.commit();
         }else if (viewId==R.id.tv_mcount){
             Intent intent = new Intent();
             intent.setClass(this, GroupMemberDetailActivity.class);
             intent.putExtra("targetGroupId",targetGroupId);
             intent.putExtra("targetGroupName",targetGroupName);
-            startParallaxSwipeBackActivty(this,intent);
+            startActivity(intent);
         }
     }
     /**
@@ -348,11 +357,12 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
           public void onError(RongIMClient.ErrorCode errorCode) {
               Toast.makeText(getApplicationContext(),errorCode.getMessage(),Toast.LENGTH_SHORT).show();
           }
-      });
+         });
        }
   }
     /**
      * 设置消息顶置
+     * @param isTop 是否置顶
      */
     private void setTopConversation(final boolean isTop) {
         if (RongIM.getInstance() != null) {
@@ -373,13 +383,5 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
                 }
             });
         }
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-       if (requestCode==EDIT_NMAE){
-           targetGroupId = data.getStringExtra("targetGroupId");
-           targetGroupName =  data.getStringExtra("title");
-           tv_name.setText(targetGroupName);
-       }
     }
 }

@@ -1,7 +1,9 @@
 package net.hunme.message.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -62,6 +64,8 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
             Manifest.permission.RECORD_AUDIO, //麦克风权限
     };
     private boolean isGroup = false;
+    private SharedPreferences spf;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,15 +90,34 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         iv_call.setOnClickListener(this);
         iv_detail.setOnClickListener(this);
         iv_back.setOnClickListener(this);
-        Intent intent = getIntent();
-        if (intent.getData()!=null){
-            targetId = intent.getData().getQueryParameter("targetId");
-            name = intent.getData().getQueryParameter("title");
-            tv_name.setText(name);
-            mconversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
-            showview(mconversationType);
-        }
+        setGroupInfo();
     }
+    private void setGroupInfo(){
+        spf=getSharedPreferences("name", Context.MODE_PRIVATE);
+        editor=spf.edit();
+        targetId =  spf.getString("targetGroupId","");
+        name = spf.getString("groupName","");
+        Intent intent = getIntent();
+
+        if (targetId.equals("")&& name.equals("") || !targetId.equals(intent.getData().getQueryParameter("targetId"))&&
+                !name.equals(intent.getData().getQueryParameter("title"))){
+              targetId = intent.getData().getQueryParameter("targetId");
+               name = intent.getData().getQueryParameter("title");
+        }
+        editor.putString("groupName",name);
+        editor.putString("targetGroupId",targetId);
+        editor.commit();
+        tv_name.setText(name);
+        mconversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
+        showview(mconversationType);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setGroupInfo();
+    }
+
     private void  showview(Conversation.ConversationType mconversationType){
          if (mconversationType.equals(Conversation.ConversationType.GROUP)){
              iv_call.setVisibility(View.GONE);

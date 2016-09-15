@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -60,6 +61,11 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
      * 删除或者添加
      */
     private int type;
+    /**
+     * 右边内容
+     */
+    private TextView tv_subTitle;
+    private TextView tv_nocontract;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +74,7 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
     }
     private void initListview(){
          lv_member = $(R.id.lv_member);
+         tv_nocontract = $(R.id.tv_nocontract);
          type = getIntent().getIntExtra("type",0);
          targetGroupId = getIntent().getStringExtra("targetGroupId");
          targetGroupName = getIntent().getStringExtra("targetGroupName");
@@ -91,6 +98,9 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
         setLiftOnClickClose();
         setCententTitle(getIntent().getStringExtra("title"));
         setSubTitle("确定");
+        tv_subTitle = $(R.id.tv_subtitle);
+        tv_subTitle.setClickable(false);
+        tv_subTitle.setTextColor(getResources().getColor(R.color.line_gray));
         setSubTitleOnClickListener(this);
 
     }
@@ -126,22 +136,29 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
         Type type =new TypeToken<Result<List<GroupInfoVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this);
     }
-
     @Override
     public void onClick(View view) {
       if (view.getId()==R.id.tv_subtitle){
-          if (type ==0){
-              CreateGroupDialog createGroupDialog = new CreateGroupDialog(ContractMemberActivity.this,getTargets(userids));
-              createGroupDialog.initView();
-          }else if (type==1){
-              OperationGroupDialog exitGroupDialog = new OperationGroupDialog(
-                      ContractMemberActivity.this,getTargets(userids),targetGroupId,targetGroupName, OperationGroupDialog.FLAG_ADD);
-              exitGroupDialog.initView();
-          }else if (type==2){
-              OperationGroupDialog exitGroupDialog = new OperationGroupDialog(
-                      ContractMemberActivity.this,getTargets(userids),targetGroupId,targetGroupName, OperationGroupDialog.FLAG_REMOVE);
-              exitGroupDialog.initView();
+          if (!tv_subTitle.getText().equals("确定")){
+              tv_subTitle.setClickable(true);
+              tv_subTitle.setTextColor(getResources().getColor(R.color.white));
+              if (type ==0){
+                  CreateGroupDialog createGroupDialog = new CreateGroupDialog(ContractMemberActivity.this,getTargets(userids));
+                  createGroupDialog.initView();
+              }else if (type==1){
+                  OperationGroupDialog exitGroupDialog = new OperationGroupDialog(
+                          ContractMemberActivity.this,getTargets(userids),targetGroupId,targetGroupName, OperationGroupDialog.FLAG_ADD);
+                  exitGroupDialog.initView();
+              }else if (type==2){
+                  OperationGroupDialog exitGroupDialog = new OperationGroupDialog(
+                          ContractMemberActivity.this,getTargets(userids),targetGroupId,targetGroupName, OperationGroupDialog.FLAG_REMOVE_MEMBER);
+                  exitGroupDialog.initView();
+              }
+          }else {
+              tv_subTitle.setClickable(false);
+              tv_subTitle.setTextColor(getResources().getColor(R.color.line_gray));
           }
+
       }
     }
     /**
@@ -158,9 +175,11 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
                     userids= getGroupItem(isSelected,groupMemberVos);
                     if (userids.size()>0){
                         setSubTitle("确定("+userids.size()+")");
-                        findViewById(R.id.tv_subtitle).setClickable(true);
+                        tv_subTitle.setTextColor(getResources().getColor(R.color.white));
+                        tv_subTitle.setClickable(true);
                     }else {
-                        findViewById(R.id.tv_subtitle).setClickable(false);
+                        tv_subTitle.setClickable(false);
+                        tv_subTitle.setTextColor(getResources().getColor(R.color.line_gray));
                         setSubTitle("确定");
                     }
             }
@@ -185,9 +204,19 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
      * @param groupMemberVoList 数据列表
      */
     private void  setListView(List<GroupMemberVo> groupMemberVoList){
-        adapter = new ContractMemberAdapter(this,groupMemberVoList);
-        lv_member.setAdapter(adapter);
-        itemclick(groupMemberVoList);
+        if (groupMemberVoList.size()>0){
+            tv_subTitle.setClickable(true);
+            tv_nocontract.setVisibility(View.GONE);
+            adapter = new ContractMemberAdapter(this,groupMemberVoList);
+            lv_member.setAdapter(adapter);
+            itemclick(groupMemberVoList);
+            tv_subTitle.setTextColor(getResources().getColor(R.color.white));
+        }else {
+            tv_subTitle.setClickable(false);
+            tv_subTitle.setTextColor(getResources().getColor(R.color.line_gray));
+            tv_nocontract.setVisibility(View.VISIBLE);
+        }
+
     }
     /**
      * 把 List<String> 类型tsids转换成为以逗号，分割的String类型的字符串
@@ -203,9 +232,12 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
             String targetid=userids.get(i);
             builder.append(targetid).append(",");
         }
-        builder.deleteCharAt(builder.lastIndexOf(","));
+        if (builder.lastIndexOf(",")!=-1){
+            builder.deleteCharAt(builder.lastIndexOf(","));
+        }
         targetids = builder.toString();
         return targetids;
+
     }
     /**
      * 将ContractInfoVo转变成GroupMemberVo
@@ -246,10 +278,8 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
             Result<List<GroupInfoVo>> data = (Result<List<GroupInfoVo>>) date;
             if (data!=null){
                 List<GroupInfoVo>  groupJsonList = data.getData();
-                if (groupJsonList!=null||groupJsonList.size()!=0){
-                    List<GroupMemberVo> groupMemberVoList = getGroupMemberVoList(groupJsonList);
-                    setListView(groupMemberVoList);
-                }
+                List<GroupMemberVo> groupMemberVoList = getGroupMemberVoList(groupJsonList);
+                setListView(groupMemberVoList);
             }
         }else if (uri.contains(Apiurl.MESSAGE_CREATE_GROUP)){
             Result<String> data = (Result<String>) date;
