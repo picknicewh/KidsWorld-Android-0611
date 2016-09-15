@@ -66,7 +66,7 @@ public class GetGroupData implements OkHttpListener {
                         GroupJson groupJson = groupJsonList.get(i);
                         final String classId = groupJson.getClassId();
                         final String groupName = groupJson.getGroupName();
-                        groupsDbHelper.insert(database,groupName,classId);
+                        groupsDbHelper.insert(database,groupName,classId,0,0);
                     }
                 }
             }

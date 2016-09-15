@@ -29,8 +29,8 @@ public class GroupsDbHelper {
      * @param  groupName 群名称
      * @param  classId 群id
      */
-    public  void insert(SQLiteDatabase db, String groupName, String classId) {
-        String sql = "insert into mgroup" + "(groupName,classId) values ('"+groupName+"','" + classId + "')";
+    public  void insert(SQLiteDatabase db, String groupName, String classId,int isTop,int isStatus) {
+        String sql = "insert into mgroup" + "(groupName,classId,isTop,isStatus) values ('"+groupName+"','" + classId + "',"+isTop+","+isStatus+")";
         db.execSQL(sql);
     }
     /**
@@ -43,7 +43,6 @@ public class GroupsDbHelper {
         int idindex  = cursor.getColumnIndex("uid");
         int nameIndex = cursor.getColumnIndex("groupName");
         int classIdIndex= cursor.getColumnIndex("classId");
-
         while (cursor.moveToNext()){
             GroupInforVo groupInforVo = new GroupInforVo();
             int id = cursor.getInt(idindex);
@@ -52,12 +51,46 @@ public class GroupsDbHelper {
             groupInforVo.setUid(id);
             groupInforVo.setGroupName(groupName);
             groupInforVo.setClassId(classId);
-
             groupInforVos.add(groupInforVo);
         }
         return groupInforVos;
     }
-
+    /**
+     * 查询某个群是否顶置
+     * @param  db 数据库
+     * @param classId 群组id
+     */
+   public  boolean getTop(SQLiteDatabase db,String classId){
+       Cursor cursor = db.rawQuery("select isTop from mgroup where classId ='"+classId+"'",null);
+       int topIndex  = cursor.getColumnIndex("isTop");
+       while (cursor.moveToNext()){
+           int istop = cursor.getInt(topIndex);
+           if (istop==1){
+               return true;
+           }else {
+               return false;
+           }
+       }
+      return false;
+   }
+    /**
+     * 查询某个群是否设置免打扰
+     * @param  db 数据库
+     * @param  classId 群组id
+     */
+    public  boolean getStatus(SQLiteDatabase db,String classId){
+        Cursor cursor = db.rawQuery("select isStatus from mgroup where classId ='"+classId+"'",null);
+        int statusIndex  = cursor.getColumnIndex("isStatus");
+        while (cursor.moveToNext()){
+            int isstatus = cursor.getInt(statusIndex);
+            if (isstatus==1){
+                return true;
+            }else {
+                return false;
+            }
+        }
+        return false;
+    }
     /**
      * 判断是否数据是否为空
      * @param  db 数据库
@@ -88,6 +121,27 @@ public class GroupsDbHelper {
      */
     public void updateGroupName(SQLiteDatabase db ,String groupName,String classId) {
         String sql = "update mgroup set groupName = '"+ groupName + "'where classId ='"+classId+"'";
+        db.execSQL(sql);
+    }
+    /**
+     * 修改是否设置免打扰
+     * @param  db 数据库
+     * @param  isStatus 是否设置免打扰
+     * @param  classId 群id
+     */
+    public void updateIsStatus(SQLiteDatabase db ,int  isStatus ,String classId) {
+        String sql = "update mgroup set isStatus = "+ isStatus + " where classId ='"+classId+"'";
+        db.execSQL(sql);
+    }
+
+    /**
+     * 修改是否顶置
+     * @param  db 数据库
+     * @param  isTop 是否顶置
+     * @param  classId 群id
+     */
+    public void updateIsTop(SQLiteDatabase db ,int isTop,String classId) {
+        String sql = "update mgroup set isTop = "+ isTop + " where classId ='"+classId+"'";
         db.execSQL(sql);
     }
     /**

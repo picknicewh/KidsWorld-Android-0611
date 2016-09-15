@@ -1,6 +1,7 @@
 package net.hunme.message.activity;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -53,6 +54,9 @@ public class ModifyNameActivity extends BaseActivity implements OkHttpListener {
      * 群名称
      */
     private    String targetGroupName;
+
+    private SharedPreferences spf;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,20 +70,22 @@ public class ModifyNameActivity extends BaseActivity implements OkHttpListener {
          et_name = $(R.id.et_groupname);
          dbHelper = new GroupsDbHelper();
          groupDb = new GroupDb(this);
-        targetGroupId = getIntent().getStringExtra("targetGroupId");
-        targetGroupName =  getIntent().getStringExtra("targetGroupName");
-        et_name.setText(targetGroupName);
+         setGroupInfo();
          setSubTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editName(targetGroupId);
-                Intent intent = new Intent(ModifyNameActivity.this,GroupDetailActivity.class);
-                intent.putExtra("title",groupName);
-                intent.putExtra("targetGroupId",targetGroupId);
-                startActivityForResult(intent,GroupDetailActivity.EDIT_NMAE);
                 finish();
             }
         });
+    }
+    private void setGroupInfo(){
+        spf=getSharedPreferences("name", Context.MODE_PRIVATE);
+        editor=spf.edit();
+        targetGroupId =  spf.getString("targetGroupId","");
+        targetGroupName = spf.getString("groupName","");
+        et_name.setText(targetGroupName);
+        et_name.setHint(targetGroupName);
     }
     @Override
     protected void setToolBar() {
@@ -94,7 +100,8 @@ public class ModifyNameActivity extends BaseActivity implements OkHttpListener {
      */
      private void editName(String targetGroupId){
          groupName = et_name.getText().toString();
-         ConservationActivity.name = groupName;
+         editor.putString("groupName",groupName);
+         editor.commit();
         Map<String,Object> params = new HashMap<>();
         params.put("tsId",UserMessage.getInstance(this).getTsId());
         params.put("groupChatAdmin", UserMessage.getInstance(this).getTsId());
@@ -121,5 +128,4 @@ public class ModifyNameActivity extends BaseActivity implements OkHttpListener {
      public void onError(String uri, String error) {
         Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
      }
-
 }

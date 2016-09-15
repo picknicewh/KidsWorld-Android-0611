@@ -1,9 +1,10 @@
 package net.hunme.message.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -46,12 +47,14 @@ public class ClassActivity extends BaseActivity implements OkHttpListener,View.O
      * 适配器
      */
     private ClassAdapter adapter;
-
+    private SharedPreferences spf;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class);
         getClassinfor();
+        initdata();
     }
 
     @Override
@@ -62,7 +65,10 @@ public class ClassActivity extends BaseActivity implements OkHttpListener,View.O
         setRightImage(R.mipmap.ic_add);
         setRightOnClickListener(this);
     }
-
+   private void  initdata(){
+       spf=getSharedPreferences("name", Context.MODE_PRIVATE);
+       editor=spf.edit();
+   }
     private void setlistview(final List<GroupInfoVo> groupJsons){
         lv_class = $(R.id.lv_class);
         adapter = new ClassAdapter(this,groupJsons);
@@ -71,9 +77,11 @@ public class ClassActivity extends BaseActivity implements OkHttpListener,View.O
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
                 GroupInfoVo groupJson = groupJsons.get(i);
-                Log.i("TAF","groupName:"+groupJson.getGroupName());
                 final String classId = groupJson.getClassId();
                 final String groupName = groupJson.getGroupName();
+                editor.putString("groupName",groupName);
+                editor.putString("targetGroupId",classId);
+                editor.commit();
                 if (RongIM.getInstance()!=null){
                     RongIM.getInstance().startGroupChat(ClassActivity.this,classId,groupName);
                     RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
@@ -132,7 +140,7 @@ public class ClassActivity extends BaseActivity implements OkHttpListener,View.O
             intent.setClass(this, ContractMemberActivity.class);
             intent.putExtra("title","创建群聊");
             intent.putExtra("type",0);
-            startParallaxSwipeBackActivty(this,intent);
+            startActivity(intent);
         }
     }
 }

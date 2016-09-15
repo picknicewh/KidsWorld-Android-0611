@@ -1,6 +1,7 @@
 package net.hunme.message.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,9 @@ import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.adapter.ContractAdapter;
+import net.hunme.message.bean.ContractInfoVo;
 import net.hunme.message.bean.GroupInfoVo;
 import net.hunme.message.bean.GroupMemberBean;
-import net.hunme.message.bean.ContractInfoVo;
 import net.hunme.message.util.CharacterParser;
 import net.hunme.message.util.PinyinComparator;
 import net.hunme.message.widget.SideBar;
@@ -109,6 +110,9 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      * 是否选中对话框的item
      */
     private HashMap<Integer, Boolean> isSelected;
+
+    private SharedPreferences spf;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,6 +142,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         groupMemberBeanList = new ArrayList<>();
         sb_parent.setTextView(tv_dialog_parent);
         setLiftOnClickClose();
+
     }
     /**
      * 获取所有所有好友信息

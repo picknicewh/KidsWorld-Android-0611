@@ -24,7 +24,9 @@ public class GroupDb extends SQLiteOpenHelper {
         String sql="create table " +TABLENAME+
                 "(uid integer primary key autoincrement," +
                 "classId varchar(50) not null,"+
-                "groupName varchar(50) not null)";
+                "groupName varchar(50) not null," +
+                "isTop integer not null," +
+                "isStatus integer not null)";
         sqLiteDatabase.execSQL(sql);
     }
     @Override
