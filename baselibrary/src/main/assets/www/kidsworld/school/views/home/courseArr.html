@@ -1,1 +1,9 @@
-<ion-view title=课程安排><ion-content><ul class=courseArr-allt><li class=courseArr-con ng-repeat="item in items"><span>{{ item.title }}</span><div class=courseArr-pic ng-repeat="img in item.imgs"><img src={{img}} data-preview-src={{img}} data-preview-group={{$id}}></div><div class=time-del><time>{{item.creationTime | dataTime}}</time><a ng-click=showConfirm($index,item.syllabusId) data-id={{item.syllabusId}} ng-show="type == 2">删除</a></div><div class=border-bott></div></li></ul><div class=loadMoreBox><span class=loadMore ng-show="loadState==0" ng-click=pullUp()>查看更多</span> <span class=moreIcon ng-show="loadState==0" ng-click=pullUp()></span><ion-spinner icon=bubbles class="spinner-balanced loading" ng-show="loadState==1"></ion-spinner><span class=loadEnd ng-show="loadState==2">没有更多数据了</span></div></ion-content></ion-view>
+<ion-view title=课程安排>
+    <ion-content>
+        <ul class=courseArr-allt>
+            <li class=courseArr-con ng-repeat="item in items">
+                <span>{{ item.title }}</span>
+                <div class=courseArr-pic ng-repeat="img in item.imgs">
+                    <img src={{img}} data-preview-src={{img}} data-preview-group={{$id}}>
+                </div><div class=time-del><time>{{item.creationTime | dataTime}}</time>
+                <a ng-click=showConfirm($index,item.syllabusId) data-id={{item.syllabusId}} ng-show="type == 2">删除</a></div><div class=border-bott></div></li></ul><div class=loadMoreBox><span class=loadMore ng-show="loadState==0" ng-click=pullUp()>查看更多</span> <span class=moreIcon ng-show="loadState==0" ng-click=pullUp()></span><ion-spinner icon=bubbles class="spinner-balanced loading" ng-show="loadState==1"></ion-spinner><span class=loadEnd ng-show="loadState==2">没有更多数据了</span></div></ion-content></ion-view>

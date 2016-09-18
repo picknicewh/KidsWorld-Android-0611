@@ -3,6 +3,7 @@ package net.hunme.school.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -119,29 +120,30 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
      * @param  subTitle
      */
     private void setSubtitle(String subTitle){
-        if(!G.isEmteny(subTitle)) {
+        if (TextUtils.isEmpty(subTitle)){
+            tv_subtitle.setVisibility(View.GONE);
+            iv_right.setVisibility(View.VISIBLE);
+        }else {
             tv_subtitle.setText(subTitle);
             tv_subtitle.setVisibility(View.VISIBLE);
             iv_right.setVisibility(View.GONE);
-        }else {
-            tv_subtitle.setVisibility(View.GONE);
-            iv_right.setVisibility(View.VISIBLE);
-        }
-        if (launchUrl.contains(SchoolFragement.ARRANGE)){
-            if (UserMessage.getInstance(this).getType().equals("2")){
-                tv_subtitle.setVisibility(View.VISIBLE);
-                iv_right.setVisibility(View.GONE);
+            if (launchUrl.contains(SchoolFragement.ARRANGE)){
+                if (UserMessage.getInstance(this).getType().equals("2")){
+                    tv_subtitle.setText("发布");
+                    tv_subtitle.setVisibility(View.VISIBLE);
+                    iv_right.setVisibility(View.GONE);
+                }else {
+                    tv_subtitle.setVisibility(View.GONE);
+                    iv_right.setVisibility(View.VISIBLE);
+                }
+            }else if (launchUrl.contains(SchoolFragement.LEAVE)&&
+                    UserMessage.getInstance(this).getType().equals("1")){
+                  tv_subtitle.setVisibility(View.VISIBLE);
+                   iv_right.setVisibility(View.GONE);
             }else {
-                tv_subtitle.setVisibility(View.GONE);
-                iv_right.setVisibility(View.VISIBLE);
+                   tv_subtitle.setVisibility(View.GONE);
+                   iv_right.setVisibility(View.VISIBLE);
             }
-        }
-        if (launchUrl.contains(SchoolFragement.LEAVE)&& UserMessage.getInstance(this).getType().equals("1")){
-            tv_subtitle.setVisibility(View.VISIBLE);
-            iv_right.setVisibility(View.GONE);
-        }else {
-            tv_subtitle.setVisibility(View.GONE);
-            iv_right.setVisibility(View.VISIBLE);
         }
     }
     @Override

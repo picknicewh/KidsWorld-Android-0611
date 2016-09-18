@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
         <RelativeLayout
+            android:id="@+id/rl_count"
             android:paddingLeft="@dimen/space_x1.5"
             android:paddingRight="@dimen/space_x1.5"
             android:paddingTop="@dimen/space"
@@ -170,6 +171,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <Button
+            android:visibility="gone"
             android:id="@+id/btn_exit"
             android:textSize="@dimen/ts_x_large"
             android:text="删除并退出"

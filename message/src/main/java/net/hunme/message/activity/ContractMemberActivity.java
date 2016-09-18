@@ -66,6 +66,8 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
      */
     private TextView tv_subTitle;
     private TextView tv_nocontract;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

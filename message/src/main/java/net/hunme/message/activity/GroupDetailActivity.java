@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -66,6 +67,7 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
      * 群成员
      */
     private TextView tv_count;
+    private RelativeLayout rl_count;
     /**
      * 群名称
      */
@@ -113,8 +115,7 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
     private   String  ganapatiId;
     private GroupsDbHelper dbHelper;
     private SQLiteDatabase db;
-    private boolean isTop;
-    private boolean isStatus;
+
     private SharedPreferences spf;
 
     @Override
@@ -132,6 +133,7 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
         tv_name = $(R.id.tv_mname);
         tv_count = $(R.id.tv_mcount);
         ll_name = $(R.id.ll_mname);
+        rl_count = $(R.id.rl_count);
         rl_nodisturb = $(R.id.rl_nodiscribe);
         rl_overhead = $(R.id.rl_overhead);
         tg_Overhead.setOnClickListener(this);
@@ -141,18 +143,16 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
         ll_name.setOnClickListener(this);
         rl_overhead.setOnClickListener(this);
         rl_nodisturb.setOnClickListener(this);
-        tv_count.setOnClickListener(this);
-        setCheck();
+        rl_count.setOnClickListener(this);
         setGroupInfo();
-    }
-    private void setCheck(){
+        setCheck(spf.getString("targetGroupId",""));
 
+    }
+    private void setCheck(String targetGroupId){
         dbHelper = new GroupsDbHelper();
         db = new GroupDb(this).getWritableDatabase();
-        isTop =dbHelper.getTop(db,targetGroupId);
-        isStatus = dbHelper.getStatus(db,targetGroupId);
-        tg_nodisturb.setChecked(isStatus);
-        tg_Overhead.setChecked(isTop);
+        tg_nodisturb.setChecked(dbHelper.getStatus(db,targetGroupId));
+        tg_Overhead.setChecked(dbHelper.getTop(db,targetGroupId));
     }
     private void setGroupInfo(){
         spf=getSharedPreferences("name", Context.MODE_PRIVATE);
@@ -193,6 +193,7 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
                     }else {
                         btn_exit.setVisibility(View.VISIBLE);
                     }
+
                     List<GroupMemberVo> groupMemberVoList = groupMemberVos.getMemberList();
                     setCententTitle("群信息"+"("+groupMemberVoList.size()+")");
                     tv_count.setText("全部群成员("+groupMemberVoList.size()+")");
@@ -209,12 +210,18 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
      * @param  groupMemberVoList 数据
      */
    private void setGirdView(final List<GroupMemberVo> groupMemberVoList){
-       adapter = new MemberAdapter(this,groupMemberVoList,targetGroupId,targetGroupName);
+      final List<GroupMemberVo> groupMemberVoList2 = new ArrayList<>();
+       for (int i = 0 ; i <groupMemberVoList.size();i++){
+           if (i<40){
+               groupMemberVoList2.add(i,groupMemberVoList.get(i));
+           }
+       }
+       adapter = new MemberAdapter(this,groupMemberVoList2,targetGroupId,targetGroupName);
        girdView.setAdapter(adapter);
        girdView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
            @Override
            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               final GroupMemberVo groupMemberVo = groupMemberVoList.get(i);
+               final GroupMemberVo groupMemberVo = groupMemberVoList2.get(i);
                if (RongIM.getInstance()!=null){
                    RongIM.getInstance().startPrivateChat(GroupDetailActivity.this,groupMemberVo.getTs_id(),groupMemberVo.getTs_name());
                    RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
@@ -275,6 +282,7 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
             if (tg_nodisturb.isChecked()){
                 setStatus(Conversation.ConversationNotificationStatus.DO_NOT_DISTURB);
                 dbHelper.updateIsStatus(db,1,targetGroupId);
+                Log.i("TTTTT",dbHelper.getStatus(db,targetGroupId)+"");
             }else {
                 setStatus(Conversation.ConversationNotificationStatus.NOTIFY);
                 dbHelper.updateIsStatus(db,0,targetGroupId);
@@ -283,6 +291,8 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
             if (tg_Overhead.isChecked()){
                 setTopConversation(true);
                 dbHelper.updateIsTop(db,1,targetGroupId);
+                Log.i("TTTTT",dbHelper.getTop(db,targetGroupId)+"");
+
             }else {
                 setTopConversation(false);
                 dbHelper.updateIsTop(db,0,targetGroupId);
@@ -330,7 +340,7 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
                 setTopConversation(false);
                 dbHelper.updateIsTop(db,0,targetGroupId);
             }
-        }else if (viewId==R.id.tv_mcount){
+        }else if (viewId==R.id.rl_count){
             Intent intent = new Intent();
             intent.setClass(this, GroupMemberDetailActivity.class);
             intent.putExtra("targetGroupId",targetGroupId);

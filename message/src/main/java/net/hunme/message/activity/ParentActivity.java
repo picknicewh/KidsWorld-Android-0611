@@ -1,7 +1,6 @@
 package net.hunme.message.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,10 +108,6 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
     /**
      * 是否选中对话框的item
      */
-    private HashMap<Integer, Boolean> isSelected;
-
-    private SharedPreferences spf;
-    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +121,6 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         title = getIntent().getStringExtra("title");
         setCententTitle(title);
         setLiftOnClickClose();
-        setSubTitle("确定");
     }
     private void init(){
         type = getIntent().getIntExtra("type",0);

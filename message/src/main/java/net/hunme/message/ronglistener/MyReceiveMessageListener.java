@@ -2,7 +2,6 @@ package net.hunme.message.ronglistener;
 
 import android.app.Activity;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -68,7 +67,6 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
             if (groupJsonList!=null||groupJsonList.size()!=0){
                for (int i = 0 ; i <groupJsonList.size();i++){
                    GroupInfoVo groupJson = groupJsonList.get(i);
-                   Log.i("TAF","groupName:"+groupJson.getGroupName());
                    final String classId = groupJson.getClassId();
                    final String groupName = groupJson.getGroupName();
                    if (RongIM.getInstance()!=null){

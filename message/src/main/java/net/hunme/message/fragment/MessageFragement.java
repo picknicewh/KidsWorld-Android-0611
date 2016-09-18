@@ -63,6 +63,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
         RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener(getActivity()));
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener(getActivity()));
+
         return view;
     }
     /**
@@ -105,6 +106,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         super.onResume();
         initData();
         RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener(getActivity()));
+
     }
     /**
      *获取聊天列表

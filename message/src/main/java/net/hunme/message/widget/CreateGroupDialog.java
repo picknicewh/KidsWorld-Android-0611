@@ -56,6 +56,8 @@ public class CreateGroupDialog implements View.OnClickListener, OkHttpListener {
      * 群组成员所有id
      */
     private String targetIds;
+
+    public  static   boolean isCreate=false;
     public CreateGroupDialog(Activity context, String targetIds){
         this.context  = context;
         this.targetIds = targetIds;
@@ -98,6 +100,7 @@ public class CreateGroupDialog implements View.OnClickListener, OkHttpListener {
             String result = data.getData();
             Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
             alertDialog.dismiss();
+            isCreate=true;
             context.finish();
         }
     }
