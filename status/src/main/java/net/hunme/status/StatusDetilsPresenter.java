@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
@@ -26,10 +27,6 @@ import java.util.Map;
  */
 public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, OkHttpListener {
     private StatusDetilsContract.View view;
-    private String StatusDetils="/dynamics/getDynamicDetail.do";
-    private String SubComment="/dynamics/subComment.do";
-    private String SubPraise="/dynamics/subPraise.do";
-    private String DeleterComment="/dynamics/deleteComment.do";
     private Context context;
     private String tsId;
     private String dynamicId;
@@ -48,7 +45,7 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
         map.put("tsId",tsId);
         map.put("dynamicId",dynamicId);
         Type type=new TypeToken<Result<StatusDetilsVo>>(){}.getType();
-        OkHttps.sendPost(type,StatusDetils,map,this);
+        OkHttps.sendPost(type, Apiurl.STATUSDETILS,map,this);
     }
 
     /**
@@ -61,7 +58,7 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
         map.put("dynamicId",dynamicId);
         map.put("cancel",cancel);
         Type type=new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(type,SubPraise,map,this);
+        OkHttps.sendPost(type,Apiurl.SUBPRAISE,map,this);
         view.showLoadingDialog();
     }
 
@@ -82,7 +79,7 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
         }
         map.put("rewtype",rewtype);
         Type type=new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(type, SubComment,map,this);
+        OkHttps.sendPost(type, Apiurl.SUBCOMMENT,map,this);
         view.showLoadingDialog();
     }
 
@@ -95,12 +92,12 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
         map.put("tsId",tsId);
         map.put("rewId",rewId);
         Type type=new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(type,DeleterComment,map,this);
+        OkHttps.sendPost(type,Apiurl.DELETERCOMMENTD,map,this);
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if(StatusDetils.equals(uri)){
+        if(Apiurl.STATUSDETILS.equals(uri)){
             view.stopLoadingDialog();
             Result<StatusDetilsVo> result= (Result<StatusDetilsVo>) date;
             StatusDetilsVo detilsVo= result.getData();
@@ -139,10 +136,10 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
             getStatusDetils(tsId,dynamicId);
         }
 
-//        if(SubComment.equals(uri)) {
+//        if(SUBCOMMENT.equals(uri)) {
 //            Result<String> result= (Result<String>) date;
 //            Toast.makeText(context, result.getData(), Toast.LENGTH_SHORT).show();
-//        }else if(SubPraise.equals(uri)){
+//        }else if(SUBPRAISE.equals(uri)){
 //            Result<String> result= (Result<String>) date;
 //            Toast.makeText(context, result.getData(), Toast.LENGTH_SHORT).show();
 //        }

@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import net.hunme.baselibrary.activity.PermissionsActivity;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
@@ -31,7 +32,6 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
     private GridView gv_photo;
     private ArrayList<String>itemList;
     private AlbumDetailsAdapter adapter;
-    private final String FILCKR="/appUser/flickr.do";
     public static String flickrId;//相册ID
     // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
@@ -81,12 +81,12 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
         map.put("pageSize",10000);
         map.put("pageNumber",1);
         Type type=new TypeToken<Result<List<Photodetail>>>(){}.getType();
-        OkHttps.sendPost(type,FILCKR,map,this,2,FILCKR);
+        OkHttps.sendPost(type,Apiurl.FILCKR,map,this,2,"FILCKR");
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if(FILCKR.equals(uri)){
+        if(Apiurl.FILCKR.equals(uri)){
             Result<List<Photodetail>> result= (Result<List<Photodetail>>) date;
             itemList.clear();
             for (Photodetail p:result.getData()){

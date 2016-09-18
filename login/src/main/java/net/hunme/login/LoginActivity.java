@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.activity.UpdateMessageActivity;
 import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.EncryptUtil;
@@ -37,11 +38,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText ed_username;
     private EditText ed_password;
     private Button b_login;
-    private final String APPLOGIN="/app/login.do";
     private String username;
     private String password;
     private TextView tv_unpassword;
-    private static final String SELECTUSER="/app/selectUser.do";
     private CharacterSeleteVo data;
     private LoadingDialog dialog;
     @Override
@@ -108,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         map.put("accountId",username);
         map.put("password", EncryptUtil.getBase64(password+"hunme"+(int)(Math.random()*900)+100));
         Type type =new TypeToken<Result<List<CharacterSeleteVo>>>(){}.getType();
-        OkHttps.sendPost(type,APPLOGIN,map,this);
+        OkHttps.sendPost(type, Apiurl.APPLOGIN,map,this);
         dialog.show();
     }
 
@@ -117,12 +116,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Map<String,Object>map=new HashMap<>();
         map.put("tsId",tsid);
         Type type =new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(type,SELECTUSER,map,listener);
+        OkHttps.sendPost(type,Apiurl.SELECTUSER,map,listener);
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if(APPLOGIN.equals(uri)){
+        if(Apiurl.APPLOGIN.equals(uri)){
             b_login.setEnabled(true);
             Result<List<CharacterSeleteVo>> result= (Result<List<CharacterSeleteVo>>) date;
             List<CharacterSeleteVo> seleteList=result.getData();
@@ -139,7 +138,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 UserChooseActivity.flag = 1;
             }
             UserAction.saveLoginMessage(this,username,password);
-        }else if(SELECTUSER.equals(uri)){
+        }else if(Apiurl.SELECTUSER.equals(uri)){
             String sex;
             if(data.getSex()==1){
                 sex="男";

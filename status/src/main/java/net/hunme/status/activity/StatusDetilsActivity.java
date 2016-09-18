@@ -94,10 +94,8 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
         findId();
         onClickComment();
         onClickPraise();
-//        setPicture();
         tsId= UserMessage.getInstance(this).getTsId();
         dynamicId=getIntent().getStringExtra("dynamicId");
-//        dynamicId= "d0ae01ed16f34ca6965bc9b8c6953fbf";  //d0ae01ed16f34ca6965bc9b8c6953fbf 64ad96a400cb41bf819ed274c7ae8c7a
         presenter= new StatusDetilsPresenter(this,tsId,dynamicId,this);
     }
 

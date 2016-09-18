@@ -10,7 +10,7 @@ package net.hunme.baselibrary.network;
  */
 public class Apiurl {
 
-    //通讯
+    //=============================通讯=====================================
     /**
      * 获取通讯成员
      */
@@ -19,7 +19,8 @@ public class Apiurl {
      * 获取用户详情
      */
     public static final String MESSAGE_GETDETAIL = "/message/getTS.do";
-    //学校
+
+    //=============================学校======================================
     /**
      * 提交请假申请
      */
@@ -57,5 +58,73 @@ public class Apiurl {
      */
     public static final String  MESSAGE_EDITGROUPNAME = "/message/editGroupChatName.do";
 
+    //==============================个人中心============================
+    /**
+     * 意见反馈
+     */
+    public static final String FEEDBACK="/appUser/feedback.do";
+    /**
+     * 获取相册所有图片
+     */
+    public static final String FILCKR="/appUser/flickr.do";
+    /**
+     * 修改用户个性签名
+     */
+    public static final String SETSIGN="/appUser/setSignature.do";
+    /**
+     * 修改用户头像
+     */
+    public static final String AVATAR="/appUser/setAvatar.do";
+    /**
+     * 获取我的相册
+     */
+    public static final String MYFlICKR="/appUser/myFlickr.do";
+    /**
+     * 新建相册
+     */
+    public static final String CREATEEFILCK="/appUser/createFlickr.do";
+    /**
+     * 上传图片
+     */
+    public static final String UPLOADPHOTO="/appUser/uploadPhoto.do";
+    /**
+     * 我的收藏
+     */
+    public static final String MYCOLLECTION=ServerConfigManager.WEB_IP+"/paradise/index.html";
+    /**
+     * 我的动态
+     */
+    public static final String MYDYNAMICS= ServerConfigManager.WEB_IP+"/space/view/myDynamic.html";
+    /**
+     * 版本更新地址
+     */
+    public static final String UPDATESYSTEM="/appUser/getVersion.do";
 
+    //=========================动态================================
+    /**
+     * 获取动态详情
+     */
+    public static final String STATUSDETILS ="/dynamics/getDynamicDetail.do";
+    /**
+     * 提交评论
+     */
+    public static final String SUBCOMMENT ="/dynamics/subComment.do";
+    /**
+     * 提交赞
+     */
+    public static final String SUBPRAISE ="/dynamics/subPraise.do";
+    /**
+     * 删除评论
+     */
+    public static final String DELETERCOMMENTD ="/dynamics/deleteComment.do";
+
+    //=========================登录==============================
+    /**
+     * 用户登录
+     */
+    public static final String APPLOGIN="/app/login.do";
+    /**
+     * 用户身份选择
+     */
+    public static final String SELECTUSER="/app/selectUser.do";
 }

@@ -14,6 +14,7 @@ import com.pizidea.imagepicker.bean.ImageItem;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
@@ -50,7 +51,6 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     private static final int Album_NAME_SELECT=1111;
     private GridAlbumAdapter mAdapter;
     private ArrayList<String> itemList;
-    private String UPLOADPHOTO="/appUser/uploadPhoto.do";
     private LoadingDialog dialog;
     /**
      * 上传图片的状态
@@ -162,7 +162,7 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
         map.put("tsId", UserMessage.getInstance(this).getTsId());
         map.put("flickrId",AlbumDetailsActivity.flickrId);
         Type type=new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(type,UPLOADPHOTO,map,fileList,this);
+        OkHttps.sendPost(type, Apiurl.UPLOADPHOTO,map,fileList,this);
         dialog.show();
     }
 
