@@ -372,17 +372,19 @@ public class DateView extends LinearLayout implements View.OnClickListener{
         linearLayout.setTag(TAG_MIDDLE);
         linearLayout.setOrientation(HORIZONTAL);
         TextView tv_mouth = new TextView(context);
-        tv_mouth.setText(DateUtil.getMouthByChinese(mouth));
+       // tv_mouth.setText(DateUtil.getMouthByChinese(mouth));
+        tv_mouth.setText(date);
         tv_mouth.setTextColor(Color.BLACK);
         tv_mouth.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
         tv_mouth.setGravity(Gravity.CENTER);
-        TextView tv_year = new TextView(context);
+        linearLayout.addView(tv_mouth);
+
+      /*  TextView tv_year = new TextView(context);
         tv_year.setText(String.valueOf(year));
         tv_year.setTextColor(Color.BLACK);
         tv_year.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
         tv_year.setGravity(Gravity.CENTER);
-        linearLayout.addView(tv_mouth);
-        linearLayout.addView(tv_year);
+        linearLayout.addView(tv_year);*/
     }
     /**
      * 向上翻日历
