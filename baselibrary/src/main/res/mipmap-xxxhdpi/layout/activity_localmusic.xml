@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@mipmap/localmusic_bg"
+    android:layout_height="match_parent">
+    <main.myplaymusic.widget.NavigationBar
+        android:background="@color/half_transparent"
+        android:id="@+id/my_music_ng"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="10dp"/>
+
+    <ListView
+        android:id="@+id/l_music_list"
+        android:divider="@color/white"
+        android:dividerHeight="0.5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
