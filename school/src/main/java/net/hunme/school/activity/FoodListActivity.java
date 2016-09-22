@@ -68,7 +68,7 @@ public class FoodListActivity extends BaseActivity implements View.OnClickListen
        tv_nodata = $(R.id.tv_nodata);
        rl_calendar.setOnClickListener(this);
        tv_calendar.setText(dateView.getDate());
-       getCookBook(dateView.getDate());
+       getCookBook(dateView.getFormatDate());
    }
     @Override
     protected void setToolBar() {
