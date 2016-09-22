@@ -11,7 +11,6 @@ import com.lzy.okhttputils.model.HttpParams;
 import com.lzy.okhttputils.request.PostRequest;
 
 import net.hunme.baselibrary.mode.Result;
-import net.hunme.baselibrary.util.EncryptUtil;
 import net.hunme.baselibrary.util.G;
 
 import org.json.JSONObject;
@@ -40,7 +39,6 @@ import okhttp3.Response;
 public class OkHttps<T> {
     private static OkHttpUtils httpUtils;
     public static PostRequest postRequest;
-    //ServerConfigManager.SERVER_IP;
     private static boolean isSuccess; //服务端返回状态
     private static String uri_host=ServerConfigManager.SERVER_IP;
     private static final String ERRORPROMPT="与服务器连接异常，请检查网络后重试！";
@@ -56,7 +54,6 @@ public class OkHttps<T> {
         }
         return httpUtils;
     }
-
 
 //    public static OkHttps getIntence() {
 ////        OkHttps.mClass = mClass;
@@ -77,7 +74,6 @@ public class OkHttps<T> {
             G.log("参数或者访问地址为空");
             return;
         }
-
         //进行网络请求
         postRequest= getInstance()
                 .post(uri_host+uri);
@@ -104,7 +100,6 @@ public class OkHttps<T> {
         for (int i=0;i<filelist.size();i++){
             postRequest.params(i+"",filelist.get(i));
         }
-        G.log(filelist.size()+"-----------上传文件个数");
         doInternet(type,uri,getParams(map),okHttpListener);
     }
 
@@ -151,6 +146,13 @@ public class OkHttps<T> {
         doInternet(type,uri,getParams(map),okHttpListener);
     }
 
+    /**
+     * 网络请求回调
+     * @param type
+     * @param uri
+     * @param params
+     * @param okHttpListener
+     */
     private static void doInternet(final Type type, final String uri, HttpParams params, final OkHttpListener okHttpListener){
         postRequest.params(params)
                 .execute(new AbsCallback<Object>(){
@@ -159,12 +161,12 @@ public class OkHttps<T> {
                         String value=response.body().string();
                         JSONObject jsonObject = new JSONObject(value);
                         isSuccess ="0".equals(jsonObject.getString("code"));
-                        isSendError=false;
+                        isSendError=false; //初始化默认发送过错误
+                        //是否成功访问（服务端是不是正常返回值 如果不是正常返回一般date都是String类型 直接去解析 否则 按照所传的格式解析）
                         if(isSuccess)
                             return new Gson().fromJson(value,type);
                         else
                             return new Gson().fromJson(value,new TypeToken<Result<String>>(){}.getType());
-
                     }
 
                     @Override
@@ -172,14 +174,15 @@ public class OkHttps<T> {
 //                            Result result= (Result) o;
 //                            Map<String,Object>map=new HashMap<>();
 //                            map.put("data",result.getData());
-                        //验签
+                              //验签
 //                            boolean isSuccess=EncryptUtil.verify(map,result.getMsec(),result.getSign());
 //                            if(isSuccess)
 
+                            //服务端正常返回或者是缓存的 请求成功
                             if(isSuccess||isFromCache)
                                 okHttpListener.onSuccess(uri,o);
                             else
-                            if(!isSendError)
+                            if(!isSendError) //否则请求失败  但是必须是之前没有发送错误信息  不能重复发送 会报错
                                 okHttpListener.onError(uri,((Result<String>)o).getData());
 //                            else
 //                               okHttpListener.onError(uri,"非法访问");
@@ -189,7 +192,7 @@ public class OkHttps<T> {
                     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                         super.onError(isFromCache, call, response, e);
                         okHttpListener.onError(uri,ERRORPROMPT);
-                        isSendError=true;
+                        isSendError=true; //请求失败 并且告诉onResponse已经发送过无需发送
                     }
 
                     @Override
@@ -209,8 +212,8 @@ public class OkHttps<T> {
             return  null;
         }
         //将参数加签
-        String msec = String.valueOf(System.currentTimeMillis());
-        String sign = EncryptUtil.getSign(map, msec);
+//        String msec = String.valueOf(System.currentTimeMillis());
+//        String sign = EncryptUtil.getSign(map, msec);
 
         //将map转化成httpParams
         HttpParams params=new HttpParams();
@@ -219,7 +222,7 @@ public class OkHttps<T> {
         while (iterator.hasNext()) {
             Map.Entry<String, Object> entry = iterator.next();
             params.put(entry.getKey(), entry.getValue().toString());
-            G.log(entry.getKey()+"-----请求参数-------"+entry.getValue());
+            G.log(entry.getKey()+"------请求参数-------"+entry.getValue());
         }
 //        params.put("msec",msec);
 //        params.put("sign",sign);

@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.pizidea.imagepicker.AndroidImagePicker;
 
-import net.hunme.baselibrary.activity.PermissionsActivity;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.mode.Result;
@@ -32,7 +31,6 @@ import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.user.R;
 import net.hunme.user.util.BitmapCache;
-import net.hunme.user.util.PermissionUtils;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -119,11 +117,11 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         int viewID=v.getId();
         if(viewID==R.id.rl_userMessage){
-            if(new PermissionsChecker(this).lacksPermissions(PERMISSIONS)){
-                PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
-                return;
-            }
-
+//            if(new PermissionsChecker(this).lacksPermissions(PERMISSIONS)){
+//                PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
+//                return;
+//            }
+            PermissionsChecker.getInstance(this).getPerMissions(PERMISSIONS);
             AndroidImagePicker.getInstance().pickAndCrop(UMassageActivity.this, true, 200, new AndroidImagePicker.OnImageCropCompleteListener() {
                 @Override
                 public void onImageCropComplete(Bitmap bmp, float ratio) {

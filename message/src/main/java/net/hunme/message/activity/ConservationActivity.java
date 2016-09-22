@@ -11,12 +11,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import net.hunme.baselibrary.activity.PermissionsActivity;
 import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
-import net.hunme.user.util.PermissionUtils;
 
 import java.util.Locale;
 
@@ -71,9 +69,7 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conservation);
         initView();
-        if(new PermissionsChecker(this).lacksPermissions(PERMISSIONS)){
-            PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
-        }
+        PermissionsChecker.getInstance(this).getPerMissions(PERMISSIONS);
         // 账号抢登监听
         if (RongIM.getInstance()!=null){
             RongIM.setConnectionStatusListener(new MyConnectionStatusListener(this));

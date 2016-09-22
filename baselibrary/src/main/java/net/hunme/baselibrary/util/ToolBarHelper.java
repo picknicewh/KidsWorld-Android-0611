@@ -81,7 +81,7 @@ public class ToolBarHelper {
         boolean overly = typedArray.getBoolean(0, false);
         /*获取主题中定义的toolbar的高度*/
 //        int toolBarSize = (int) typedArray.getDimension(1,(int) mContext.getResources().getDimension(R.dimen.abc_action_bar_default_height_material));
-        int toolBarSize=G.dp2px(mContext,50);
+        int toolBarSize=G.dp2px(mContext,74);
         typedArray.recycle();
         /*如果是悬浮状态，则不需要设置间距*/
         params.topMargin = overly ? 0 : toolBarSize;

@@ -15,11 +15,11 @@ import android.widget.TextView;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.SystemInformVo;
 import net.hunme.baselibrary.util.MyAlertDialog;
+import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.SystemInfomDb;
 import net.hunme.baselibrary.util.SystemInfomDbHelp;
 import net.hunme.user.R;
 import net.hunme.user.adapter.SystemInfoAdapter;
-import net.hunme.user.util.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +66,7 @@ public class SystemInfoActivity extends BaseActivity {
      * 初始化数据库数据
      */
     private void initdata(){
-        PermissionUtils.getPermission(this,PERMISSIONS);
+        PermissionsChecker.getInstance(this).getPerMissions(PERMISSIONS);
         infoDb = new SystemInfomDb(this);
         dbHelp = SystemInfomDbHelp.getinstance();
         //测试数据

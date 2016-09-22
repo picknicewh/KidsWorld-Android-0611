@@ -26,6 +26,7 @@ import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MD5Utils;
 import net.hunme.baselibrary.util.MyAlertDialog;
 import net.hunme.baselibrary.util.NetWorkUitls;
+import net.hunme.baselibrary.util.PackageUtils;
 import net.hunme.user.R;
 import net.hunme.user.mode.CheckUpadteVo;
 

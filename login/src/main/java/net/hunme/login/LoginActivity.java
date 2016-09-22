@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.umeng.analytics.MobclickAgent;
 
 import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.activity.UpdateMessageActivity;
@@ -122,6 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onSuccess(String uri, Object date) {
         if(Apiurl.APPLOGIN.equals(uri)){
+            MobclickAgent.onProfileSignIn(EncryptUtil.getBase64(username));
             b_login.setEnabled(true);
             Result<List<CharacterSeleteVo>> result= (Result<List<CharacterSeleteVo>>) date;
             List<CharacterSeleteVo> seleteList=result.getData();

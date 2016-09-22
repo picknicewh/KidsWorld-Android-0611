@@ -20,7 +20,6 @@ import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.user.R;
 import net.hunme.user.adapter.AlbumDetailsAdapter;
 import net.hunme.user.mode.Photodetail;
-import net.hunme.user.util.PermissionUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -54,8 +53,9 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
         setSubTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(new PermissionsChecker(AlbumDetailsActivity.this).lacksPermissions(PERMISSIONS)){
-                    PermissionsActivity.startActivityForResult(AlbumDetailsActivity.this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
+                PermissionsChecker checker=PermissionsChecker.getInstance(AlbumDetailsActivity.this);
+                if(checker.lacksPermissions(PERMISSIONS)){
+                    checker.getPerMissions(PERMISSIONS);
                     return;
                 }
                 Intent intent=new Intent(AlbumDetailsActivity.this,UploadPhotoActivity.class);
@@ -111,10 +111,12 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case PermissionUtils.REQUEST_CODE:
+            case PermissionsChecker.REQUEST_CODE:
                 //检测到没有授取权限 关闭页面
                 if(resultCode == PermissionsActivity.PERMISSIONS_DENIED){
-                   G.showToast(this,"权限没有授取，本次操作取消，请到权限中心授权");
+                    G.showToast(this,"权限没有授取，本次操作取消，请到权限中心授权");
+                }else if(resultCode==PermissionsActivity.PERMISSIONS_GRANTED){
+                    G.showToast(this,"权限获取成功！");
                 }
                 break;
         }
