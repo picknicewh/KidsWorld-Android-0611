@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import net.hunme.baselibrary.util.G;
 import net.hunme.school.R;
+import net.hunme.school.activity.FoodListActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -330,6 +331,7 @@ public class DateView extends LinearLayout implements View.OnClickListener{
         setDate(date);
         if (flag==1){
             DateView.this.setVisibility(GONE);
+            FoodListActivity.getCalender().setText(date);
         }else {
             DateView.this.setVisibility(VISIBLE);
         }

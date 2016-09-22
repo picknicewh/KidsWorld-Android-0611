@@ -39,7 +39,7 @@ public class FoodListActivity extends BaseActivity implements View.OnClickListen
     /**
      *日期显示
      */
-    private TextView tv_calendar;
+    private static TextView tv_calendar;
     /**
      *适配器
      */
@@ -84,6 +84,10 @@ public class FoodListActivity extends BaseActivity implements View.OnClickListen
             tv_calendar.setText(dateView.getDate());
             getCookBook(dateView.getFormatDate());
         }
+    }
+
+    public static TextView getCalender(){
+        return tv_calendar;
     }
     /**
      * 获取食谱
