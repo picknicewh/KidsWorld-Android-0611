@@ -35,7 +35,7 @@ public class MyConversationListBehaviorListener implements RongIM.ConversationLi
 
     @Override
     public boolean onConversationLongClick(Context context, View view, UIConversation uiConversation) {
-        MainLongClickDialog dialog = new MainLongClickDialog(activity,uiConversation.getConversationTargetId(),uiConversation.getUIConversationTitle(),uiConversation.getConversationType());
+        MainLongClickDialog dialog = new MainLongClickDialog(activity,uiConversation.getConversationTargetId(),uiConversation.getUIConversationTitle(),uiConversation.getConversationType(),0);
         dialog.initData();
         return true;
     }

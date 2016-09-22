@@ -34,10 +34,10 @@ import io.rong.imlib.model.Conversation;
 /**
  * 作者： wh
  * 时间： 2016/9/8
- * 名称：
- * 版本说明：
- * 附加注释：
- * 主要接口：
+ * 名称：群组操作对话框
+ * 版本说明：3.0.2 三个构造方法，不同的方法分别对应，情况群的聊天记录，解散群，以及添加或删除群的操作。
+ * 附加注释：三个构造方法共同传值flag,通过flag的不同，代表不同的操作 0 清空聊天记录 1解散群 2移除群成员，4退出群，3添加新成员
+ * 主要接口：1.查看不在群内成员 2.查看群成员 3.解散群
  */
 public class OperationGroupDialog implements View.OnClickListener, OkHttpListener {
     /**
@@ -115,6 +115,9 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
         this.targetGroupName = targetGroupName;
         this.flag = flag;
     }
+    /**
+     * 初始化view
+     */
     public void  initView(){
          View contentView = LayoutInflater.from(context).inflate(R.layout.dialog_exitgroup, null);
          alertDialog = MyAlertDialog.getDialog(contentView, context,1);
@@ -204,7 +207,7 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
         params.put("groupChatAdmin", UserMessage.getInstance(context).getTsId());
         params.put("groupChatId",targetGroupId);
         removeConversation(targetGroupId);
-        Log.i("EEEEEEEE","tsIds:"+targetIds+"groupChatAdmin:"+UserMessage.getInstance(context).getTsId()+"groupChatId:"+targetGroupId);
+        //Log.i("EEEEEEEE","tsIds:"+targetIds+"groupChatAdmin:"+UserMessage.getInstance(context).getTsId()+"groupChatId:"+targetGroupId);
         Type type =new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_EXIT_MEMBER,params,this);
     }
@@ -219,7 +222,7 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
         params.put("tsIds",targetIds);
         params.put("groupName",targetGroupName);
         params.put("groupChatId",targetGroupId);
-        Log.i("EEEEEEEE","tsIds:"+targetIds+"groupName:"+targetGroupName+"groupChatId:"+targetGroupId);
+        //Log.i("EEEEEEEE","tsIds:"+targetIds+"groupName:"+targetGroupName+"groupChatId:"+targetGroupId);
         Type type =new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_ADD_MEMBER,params,this);
     }
@@ -232,7 +235,7 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
         Map<String,Object> params = new HashMap<>();
         params.put("tsId",tsId);
         params.put("groupChatId",targetGroupId);
-        Log.i("EEEEEEEE","tsId:"+tsId+"groupChatId:"+targetGroupId);
+      //  Log.i("EEEEEEEE","tsId:"+tsId+"groupChatId:"+targetGroupId);
         GroupsDbHelper dbHelper = new GroupsDbHelper();
         GroupDb groupDb = new GroupDb(context);
         dbHelper.deleteById(groupDb.getWritableDatabase(),targetGroupId);
@@ -264,6 +267,7 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
     }
     /**
      * 返回结果
+     * @param  date 结果值
      */
    private void result(Object date){
        Result<String> data  = (Result<String>) date;
@@ -279,6 +283,10 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
         Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
         alertDialog.dismiss();
     }
+    /**
+     * 移除会话
+     * @param  targetId 会话的id
+     */
     private void removeConversation(String targetId){
         if (RongIM.getInstance() != null) {
             RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP,targetId, new RongIMClient.ResultCallback<Boolean>(){

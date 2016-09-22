@@ -14,7 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class GroupDb extends SQLiteOpenHelper {
     private static final String DB_NAME = "group.db"; //数据库名称
-    private static final int version = 1; //数据库版本
+    private static final int version =  302; //数据库版本
     private static final String TABLENAME = "mgroup";//表名
     public GroupDb(Context context) {
         super(context, DB_NAME, null, version);

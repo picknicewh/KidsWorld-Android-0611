@@ -116,7 +116,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
             intent.putExtra("title","我的动态");
         }
         if(null!=intent){
-            startParallaxSwipeBackActivty(this,intent);
+            startActivity(intent);
         }
     }
 }

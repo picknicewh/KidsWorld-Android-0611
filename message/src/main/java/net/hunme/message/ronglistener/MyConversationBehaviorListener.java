@@ -1,8 +1,11 @@
 package net.hunme.message.ronglistener;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+
+import net.hunme.message.widget.MainLongClickDialog;
 
 import java.util.ArrayList;
 
@@ -21,7 +24,11 @@ import main.picturesee.util.ImagePagerActivity;
  * 主要接口：
  */
 public class MyConversationBehaviorListener  implements RongIM.ConversationBehaviorListener{
+    private Activity activity;
+   public  MyConversationBehaviorListener(Activity activity){
+       this.activity  =activity;
 
+   }
     /**
      * 当点击用户头像后执行。
      *
@@ -39,6 +46,7 @@ public class MyConversationBehaviorListener  implements RongIM.ConversationBehav
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
         intent.putExtra("source","message");
         context.startActivity(intent);
+      ;
         return true;
     }
     /**
@@ -77,7 +85,10 @@ public class MyConversationBehaviorListener  implements RongIM.ConversationBehav
      */
     @Override
     public boolean onMessageLongClick(Context context, View view, Message message) {
-        return false;
+
+        MainLongClickDialog dialog = new MainLongClickDialog(activity, message,1);
+        dialog.initData();
+        return true;
     }
     /**
      * 当点击链接消息时执行。

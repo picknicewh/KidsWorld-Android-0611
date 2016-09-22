@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="net.hunme.school.activity.FoodListActivity">
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/rl_calendar"
+        android:background="@color/bg_layout"
+        android:padding="@dimen/space_x2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+      <TextView
+          android:id="@+id/tv_calendar"
+          android:drawablePadding="@dimen/space"
+          android:drawableLeft="@mipmap/calendar"
+          android:layout_centerInParent="true"
+          android:textColor="@color/main_green"
+          android:text="2016年09月07日"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <net.hunme.school.widget.DateView
+        android:visibility="gone"
+        android:id="@+id/dateview"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <net.hunme.status.widget.ListViewForScrollView
+        android:id="@+id/lv_foodlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_nodata"
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="没有数据"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+    </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

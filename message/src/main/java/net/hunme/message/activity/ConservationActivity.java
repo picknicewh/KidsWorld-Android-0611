@@ -16,6 +16,7 @@ import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
+import net.hunme.message.ronglistener.MyConversationBehaviorListener;
 import net.hunme.user.util.PermissionUtils;
 
 import java.util.Locale;
@@ -74,8 +75,11 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         if(new PermissionsChecker(this).lacksPermissions(PERMISSIONS)){
             PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
         }
-        // 账号抢登监听
+
         if (RongIM.getInstance()!=null){
+            //消息长按事件处理
+            RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener(this));
+            // 账号抢登监听
             RongIM.setConnectionStatusListener(new MyConnectionStatusListener(this));
         }
     }
@@ -148,7 +152,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
                 intent.putExtra("title",name);
                 intent.putExtra("targetGroupId",targetId);
                 startActivityForResult(intent,GroupDetailActivity.EDIT_NMAE);
-               // finish();
             }else {
                 intent.setClass(this,PersonDetailActivity.class);
                 intent.putExtra("title",name);

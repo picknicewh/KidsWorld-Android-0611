@@ -14,7 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class FriendsDb extends SQLiteOpenHelper {
     private static final String DB_NAME = "friend.db"; //数据库名称
-    private static final int version = 1; //数据库版本
+    private static final int version = 302; //数据库版本
     private static final String TABLENAME = "friend";//表名
     public FriendsDb(Context context) {
         super(context, DB_NAME, null, version);
@@ -30,7 +30,7 @@ public class FriendsDb extends SQLiteOpenHelper {
     }
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        String sql = "drop table if exists" + TABLENAME;
+        String sql = "drop table if exists " + TABLENAME;
         sqLiteDatabase.execSQL(sql);
         this.onCreate(sqLiteDatabase);
     }

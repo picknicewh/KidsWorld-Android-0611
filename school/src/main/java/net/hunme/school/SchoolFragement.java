@@ -12,6 +12,9 @@ import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.network.ServerConfigManager;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.NavigationBar;
+import net.hunme.school.activity.CourseArrangeActivity;
+import net.hunme.school.activity.FoodListActivity;
+import net.hunme.school.activity.LeaveListActivity;
 import net.hunme.school.activity.PublishActivity;
 import net.hunme.school.activity.WebViewActivity;
 
@@ -122,18 +125,18 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             intent.putExtra("loadUrl", geturl(CHECK));
             intent.putExtra("title","选择班级");
         }else if (view.getId()==R.id.rl_leave){
-            intent.setClass(getActivity(), WebViewActivity.class);
-            intent.putExtra("loadUrl",geturl(LEAVE));
+            intent.setClass(getActivity(), LeaveListActivity.class);
+         /*   intent.putExtra("loadUrl",geturl(LEAVE));
             intent.putExtra("title","请假");
-            intent.putExtra("subTitle","我要请假");
+            intent.putExtra("subTitle","我要请假");*/
         }else if (view.getId()==R.id.rl_info){
             intent.setClass(getActivity(), PublishActivity.class);
         }else if (view.getId()==R.id.rl_food){
-            intent.setClass(getActivity(), WebViewActivity.class);
+            intent.setClass(getActivity(), FoodListActivity.class);
             intent.putExtra("loadUrl",geturl(FOODLIST));
             intent.putExtra("title","食谱");
         }else if (view.getId()==R.id.rl_arrangement){
-            intent.setClass(getActivity(), WebViewActivity.class);
+            intent.setClass(getActivity(), CourseArrangeActivity.class);
             intent.putExtra("loadUrl",geturl(ARRANGE));
             intent.putExtra("title","课程安排");
             intent.putExtra("subTitle","发布");

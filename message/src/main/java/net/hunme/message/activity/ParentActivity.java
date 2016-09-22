@@ -86,17 +86,10 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      * 根据拼音来排列ListView里面的数据类
      */
     private PinyinComparator pinyinComparator;
-
-    public static List<String> usernames;
     /**
      * 适配器
      */
     private ContractAdapter adapter;
-    /**
-     * 用户id
-     */
-    private List<String> userids;
-
     /**
      * 标题
      */
@@ -122,6 +115,9 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         setCententTitle(title);
         setLiftOnClickClose();
     }
+    /**
+     * 初始化数据
+     */
     private void init(){
         type = getIntent().getIntExtra("type",0);
         getfriendinfor(type);
@@ -135,8 +131,6 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
         pinyinComparator = new PinyinComparator();
         groupMemberBeanList = new ArrayList<>();
         sb_parent.setTextView(tv_dialog_parent);
-        setLiftOnClickClose();
-
     }
     /**
      * 获取所有所有好友信息
@@ -255,6 +249,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
 
     /**
      * 根据分类的首字母的Char ascii值获取其第一次出现该首字母的位置
+     * @param  section 位置
      */
     public int getPositionForSection(int section) {
         for (int i = 0; i < groupMemberBeanList.size(); i++) {

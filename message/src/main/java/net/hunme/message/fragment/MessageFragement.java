@@ -17,7 +17,6 @@ import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.activity.ClassActivity;
 import net.hunme.message.activity.ParentActivity;
-import net.hunme.message.ronglistener.MyConversationBehaviorListener;
 import net.hunme.message.ronglistener.MyConversationListBehaviorListener;
 import net.hunme.message.ronglistener.MyReceiveMessageListener;
 
@@ -30,7 +29,7 @@ import io.rong.imlib.model.Conversation;
  * 时间： 2016/7/14
  * 名称：通讯首页
  * 版本说明：
- * 附加注释：
+ * 附加注释：三个融云的监听事件，点击头像点击
  * 主要接口：
  */
 public class MessageFragement extends BaseFragement implements View.OnClickListener{
@@ -59,8 +58,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, null);
         init(view);
-        // 设置点击头像监听事件
-        RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
+
         RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener(getActivity()));
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener(getActivity()));
 
@@ -106,7 +104,6 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         super.onResume();
         initData();
         RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener(getActivity()));
-
     }
     /**
      *获取聊天列表
@@ -129,17 +126,17 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         Intent intent = new Intent();
         if (v.getId()==R.id.iv_class){
             intent.setClass(getActivity(), ClassActivity.class);
-            startParallaxSwipeBackActivty(getActivity(),intent);
+            getActivity().startActivity(intent);
         }else if (v.getId()==R.id.iv_teacher){
             intent.setClass(getActivity(), ParentActivity.class);
             intent.putExtra("title","教师");
             intent.putExtra("type",2);
-            startParallaxSwipeBackActivty(getActivity(),intent);
+            getActivity().startActivity(intent);
         }else if (v.getId()==R.id.iv_parent) {
             intent.setClass(getActivity(), ParentActivity.class);
             intent.putExtra("title", "家长");
             intent.putExtra("type", 3);
-            startParallaxSwipeBackActivty(getActivity(), intent);
+            getActivity().startActivity(intent);
         }
     }
 

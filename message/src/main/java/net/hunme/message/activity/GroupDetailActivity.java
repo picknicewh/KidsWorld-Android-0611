@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -48,9 +47,9 @@ import io.rong.imlib.model.UserInfo;
  * 作者： wh
  * 时间： 2016/9/9
  * 名称：群组详情
- * 版本说明：
+ * 版本说明：3.0.2
  * 附加注释：
- * 主要接口：
+ * 主要接口：查看群成员
  */
 public class GroupDetailActivity extends BaseActivity implements OkHttpListener ,View.OnClickListener{
     public  static  final  int EDIT_NMAE = 1;
@@ -115,7 +114,6 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
     private   String  ganapatiId;
     private GroupsDbHelper dbHelper;
     private SQLiteDatabase db;
-
     private SharedPreferences spf;
 
     @Override
@@ -124,6 +122,9 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
         setContentView(R.layout.acitivity_groupdetail);
         initView();
     }
+    /**
+     * 初始化按钮
+     */
     private void initView(){
         girdView = $(R.id.gv_gdetail);
         tg_nodisturb = $(R.id.tg_nodiscribe);
@@ -144,19 +145,27 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
         rl_overhead.setOnClickListener(this);
         rl_nodisturb.setOnClickListener(this);
         rl_count.setOnClickListener(this);
+        spf=getSharedPreferences("name", Context.MODE_PRIVATE);
+        targetGroupId =  spf.getString("targetGroupId","");
+        setCheck(targetGroupId);
         setGroupInfo();
-        setCheck(spf.getString("targetGroupId",""));
+
 
     }
+    /**
+     * 设置ToggleButton选中的状态
+     * @param targetGroupId 群组id
+     */
     private void setCheck(String targetGroupId){
         dbHelper = new GroupsDbHelper();
         db = new GroupDb(this).getWritableDatabase();
         tg_nodisturb.setChecked(dbHelper.getStatus(db,targetGroupId));
         tg_Overhead.setChecked(dbHelper.getTop(db,targetGroupId));
     }
+    /**
+     * 获取并设置当前群组的id号和姓名
+     */
     private void setGroupInfo(){
-        spf=getSharedPreferences("name", Context.MODE_PRIVATE);
-        targetGroupId =  spf.getString("targetGroupId","");
         targetGroupName = spf.getString("groupName","");
         tv_name.setText(targetGroupName);
     }
@@ -193,7 +202,6 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
                     }else {
                         btn_exit.setVisibility(View.VISIBLE);
                     }
-
                     List<GroupMemberVo> groupMemberVoList = groupMemberVos.getMemberList();
                     setCententTitle("群信息"+"("+groupMemberVoList.size()+")");
                     tv_count.setText("全部群成员("+groupMemberVoList.size()+")");
@@ -282,7 +290,6 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
             if (tg_nodisturb.isChecked()){
                 setStatus(Conversation.ConversationNotificationStatus.DO_NOT_DISTURB);
                 dbHelper.updateIsStatus(db,1,targetGroupId);
-                Log.i("TTTTT",dbHelper.getStatus(db,targetGroupId)+"");
             }else {
                 setStatus(Conversation.ConversationNotificationStatus.NOTIFY);
                 dbHelper.updateIsStatus(db,0,targetGroupId);
@@ -291,8 +298,6 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
             if (tg_Overhead.isChecked()){
                 setTopConversation(true);
                 dbHelper.updateIsTop(db,1,targetGroupId);
-                Log.i("TTTTT",dbHelper.getTop(db,targetGroupId)+"");
-
             }else {
                 setTopConversation(false);
                 dbHelper.updateIsTop(db,0,targetGroupId);
@@ -301,14 +306,12 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
         }else if (viewId==R.id.btn_exit){
             OperationGroupDialog dialog;
             if (isganapati(ganapatiId)){//解散群
-              //  public OperationGroupDialog(Activity context, String targetId, String targetGroupId, int flag)
                  dialog = new OperationGroupDialog(this,UserMessage.getInstance(this).getTsId(),
                         targetGroupId, OperationGroupDialog.FLAG_DISSOLVE);
             }else {//退出群
                 dialog = new OperationGroupDialog(this,UserMessage.getInstance(this).getTsId(),
                         targetGroupId,targetGroupName, OperationGroupDialog.FLAG_REMOVE);
             }
-
             dialog.initView();
         }else if (viewId==R.id.tv_clean) {
             //清空消息

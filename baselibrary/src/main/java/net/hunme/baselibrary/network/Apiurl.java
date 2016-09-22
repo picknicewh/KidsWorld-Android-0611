@@ -19,15 +19,6 @@ public class Apiurl {
      * 获取用户详情
      */
     public static final String MESSAGE_GETDETAIL = "/message/getTS.do";
-    //学校
-    /**
-     * 提交请假申请
-     */
-    public static final String SCHOOL_SUBLEAVE = "/school/subLeave.do" ;
-    /**
-     * 发布课程
-     */
-    public static final String SCHOOL_PUBLISHCAURSE = "/school/setSyllabus.do" ;
     /**
      * 创建群
      */
@@ -57,5 +48,30 @@ public class Apiurl {
      */
     public static final String  MESSAGE_EDITGROUPNAME = "/message/editGroupChatName.do";
 
+    //学校
+    /**
+     * 提交请假申请
+     */
+    public static final String SCHOOL_SUBLEAVE = "/school/subLeave.do" ;
+    /**
+     * 发布课程
+     */
+    public static final String SCHOOL_PUBLISHCAURSE = "/school/setSyllabus.do" ;
+    /**
+     * 请假
+     */
+    public static final String SCHOOL_GETLEAVES = "/school/getLeave.do" ;
+    /**
+     * 获取课程表
+     */
+    public static final String SCHOOL_GETSYLLABUSLISTS = "/school/getSyllabusList.do" ;
+    /**
+     * 删除课程表
+     */
+    public static final String SCHOOL_DETLTESYLLABUSLISTS = "/school/deleteSyllabus.do";
+    /**
+     * 获取食谱
+     */
+    public static final String SCHOOL_GETCOOKBOOK = "/school/getCookbook.do";
 
 }

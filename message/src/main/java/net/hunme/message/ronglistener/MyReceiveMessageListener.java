@@ -24,12 +24,12 @@ import io.rong.imlib.model.Group;
 import io.rong.imlib.model.Message;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/9/14
- * 名称：
+ * 名称：接收消息监听
  * 版本说明：
  * 附加注释：
- * 主要接口：
+ * 主要接口：获取群消息
  */
 public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageListener, OkHttpListener {
     private Activity activity;
