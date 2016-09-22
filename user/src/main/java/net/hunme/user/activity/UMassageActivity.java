@@ -18,10 +18,10 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.pizidea.imagepicker.AndroidImagePicker;
 
-import net.hunme.baselibrary.activity.PermissionsActivity;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
@@ -31,7 +31,6 @@ import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.user.R;
 import net.hunme.user.util.BitmapCache;
-import net.hunme.user.util.PermissionUtils;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -65,8 +64,6 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     private TextView tv_classname;
     private TextView tv_schoolname;
     private UserMessage um;
-    private final String SETSIGN="/appUser/setSignature.do";
-    private final String AVATAR="/appUser/setAvatar.do";
     private String path;//选择头像保存地址
     private String mpath; //头像绝对地址
     private String sign; //用户个性签名
@@ -120,11 +117,11 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         int viewID=v.getId();
         if(viewID==R.id.rl_userMessage){
-            if(new PermissionsChecker(this).lacksPermissions(PERMISSIONS)){
-                PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
-                return;
-            }
-
+//            if(new PermissionsChecker(this).lacksPermissions(PERMISSIONS)){
+//                PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
+//                return;
+//            }
+            PermissionsChecker.getInstance(this).getPerMissions(PERMISSIONS);
             AndroidImagePicker.getInstance().pickAndCrop(UMassageActivity.this, true, 200, new AndroidImagePicker.OnImageCropCompleteListener() {
                 @Override
                 public void onImageCropComplete(Bitmap bmp, float ratio) {
@@ -217,23 +214,23 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
         map.put("tsId",um.getTsId());
         map.put("signature",userSign);
         Type type=new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(type,SETSIGN,map,this);
+        OkHttps.sendPost(type, Apiurl.SETSIGN,map,this);
     }
 
     private void userAvatarSubmit(List<File>list){
         Map<String,Object>map=new HashMap<>();
         map.put("tsId",um.getTsId());
         Type type=new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(type,AVATAR,map,list,this);
+        OkHttps.sendPost(type, Apiurl.AVATAR,map,list,this);
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if(SETSIGN.equals(uri)){
+        if( Apiurl.SETSIGN.equals(uri)){
             um.setUserSign(sign);
             tv_sign.setText(um.getUserSign());
             G.showToast(this,"签名修改成功");
-        }else if(AVATAR.equals(uri)){
+        }else if(Apiurl.AVATAR.equals(uri)){
             Result<String> result= (Result<String>) date;
              //um.setHoldImgUrl(result.getData());
             //测试数据

@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import net.hunme.baselibrary.activity.UpdateMessageActivity;
 import net.hunme.baselibrary.base.BaseActivity;
@@ -27,7 +28,7 @@ import net.hunme.login.UserChooseActivity;
 import net.hunme.user.R;
 import net.hunme.user.util.CacheHelp;
 import net.hunme.user.util.CheckUpdate;
-import net.hunme.user.util.PackageUtils;
+import net.hunme.baselibrary.util.PackageUtils;
 
 import java.io.File;
 
@@ -251,6 +252,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
                     if(RongIM.getInstance()!=null){
                         RongIM.getInstance().disconnect();
                     }
+                    MobclickAgent.onProfileSignOff();
                     UserMessage.getInstance(USettingActivity.this).clean();
                     Intent intent = new Intent(USettingActivity.this, LoginActivity.class);
                     startActivity(intent);

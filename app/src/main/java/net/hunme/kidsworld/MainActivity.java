@@ -1,5 +1,6 @@
 package net.hunme.kidsworld;
 
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +10,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,16 +23,13 @@ import net.hunme.baselibrary.cordova.HMDroidGap;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.UserMessage;
-import net.hunme.baselibrary.widget.NoScrollViewPager;
 import net.hunme.discovery.DiscoveryFragement;
-import net.hunme.kidsworld.util.MyViewPagerAdapter;
 import net.hunme.login.UserChooseActivity;
 import net.hunme.login.util.UserAction;
 import net.hunme.message.fragment.MessageFragement;
 import net.hunme.school.SchoolFragement;
 import net.hunme.status.StatusFragement;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -52,8 +50,8 @@ import main.jpushlibrary.JPush.JPushBaseActivity;
  * 主要接口：
  */
 public class MainActivity extends JPushBaseActivity {
-    @Bind(R.id.vp_main)
-    NoScrollViewPager viewPager;
+//    @Bind(R.id.vp_main)
+//    NoScrollViewPager viewPager;
     /**
      * 通讯圆点
      */
@@ -70,7 +68,10 @@ public class MainActivity extends JPushBaseActivity {
     @Bind(R.id.ll_tab)
     LinearLayout llTab;
 
-    private FragmentManager fragmentManager;
+//    @Bind(R.id.content)
+//    FrameLayout content;
+
+//    private FragmentManager fragmentManager;
     /**
      * 动态
      */
@@ -121,11 +122,13 @@ public class MainActivity extends JPushBaseActivity {
     public static boolean isconnect;
     public static int count;
     /**
-     *所有的广播
+     * 所有的广播
      */
     private MyBroadcasReceiver myBroadcasReceiver;
-    private  boolean isQuit = false;
+    private boolean isQuit = false;
     private Timer timer;
+    private FragmentTransaction ft;
+    private Fragment mContent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,9 +136,9 @@ public class MainActivity extends JPushBaseActivity {
         BaseLibrary.addActivity(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        timer  = new Timer();
+        timer = new Timer();
         initViewpager();
-        if(null!=userMessage.getUserName()){
+        if (null != userMessage.getUserName()) {
             //初始极光推送配置信息
             initJPushConfiguration(userMessage.getLoginName(), "tag");
         }
@@ -148,6 +151,7 @@ public class MainActivity extends JPushBaseActivity {
         registerReceiver();
         initCount();
     }
+
     /**
      * 初始化viewpager
      */
@@ -157,25 +161,30 @@ public class MainActivity extends JPushBaseActivity {
         schoolFragement = new SchoolFragement();
         discoveryFragement = new DiscoveryFragement();
         messageFragement = new MessageFragement();
-        fragmentManager = getSupportFragmentManager();
-        fragmentList = new ArrayList<>();
-        fragmentList.add(discoveryFragement);
-        fragmentList.add(schoolFragement);
-        fragmentList.add(statusFragement);
-        fragmentList.add(messageFragement);
-        MyViewPagerAdapter adapter = new MyViewPagerAdapter(fragmentManager, fragmentList);
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(3);
-        viewPager.setPagingEnabled(false);
+//        fragmentManager = getSupportFragmentManager();
+//        fragmentList = new ArrayList<>();
+//        fragmentList.add(discoveryFragement);
+//        fragmentList.add(schoolFragement);
+//        fragmentList.add(statusFragement);
+//        fragmentList.add(messageFragement);
+//        MyViewPagerAdapter adapter = new MyViewPagerAdapter(fragmentManager, fragmentList);
+//        viewPager.setAdapter(adapter);
+//        viewPager.setOffscreenPageLimit(3);
+//        viewPager.setPagingEnabled(false);
+
+        ft = getSupportFragmentManager().beginTransaction();//获取FragmentTransaction 实例
+        ft.replace(R.id.content, discoveryFragement); //使用DetailsFragment 的实例
+        ft.commit();
+        mContent=discoveryFragement;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (UserChooseActivity.flag == 1 || HMDroidGap.flag==1) {
+        if (UserChooseActivity.flag == 1 || HMDroidGap.flag == 1) {
             initViewpager();
             UserChooseActivity.flag = 0;
-            HMDroidGap.flag=0;
+            HMDroidGap.flag = 0;
         }
         setNoreadMessage();
     }
@@ -185,27 +194,46 @@ public class MainActivity extends JPushBaseActivity {
      */
     @OnClick({R.id.ll_status, R.id.ll_school, R.id.ll_discovery, R.id.ll_message})
     public void onClick(View view) {
+        Fragment fragment = null;
         switch (view.getId()) {
             case R.id.ll_discovery:
                 flag = 0;
+                fragment=discoveryFragement;
                 break;
             case R.id.ll_school:
                 flag = 1;
+                fragment=schoolFragement;
                 break;
             case R.id.ll_status:
                 flag = 2;
+                fragment=statusFragement;
                 break;
             case R.id.ll_message:
                 flag = 3;
+                fragment=messageFragement;
                 break;
         }
+        switchContent(fragment);
         if (isconnect && count % 2 == 0) {
             initViewpager();
             BaseLibrary.connect(userMessage.getRyId(), this, userMessage.getUserName(), userMessage.getHoldImgUrl());
             count = 1;
         }
-        viewPager.setCurrentItem(flag, false);
+//        viewPager.setCurrentItem(flag, false);
         setBaseBar(flag);
+    }
+
+    /** 修改显示的内容 不会重新加载 **/
+    public void switchContent(Fragment to) {
+        if (mContent != to) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            if (!to.isAdded()) // 先判断是否被add过
+                transaction.hide(mContent).add(R.id.content, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+             else
+                transaction.hide(mContent).show(to).commit(); // 隐藏当前的fragment，显示下一个
+
+            mContent = to; //重新赋值
+        }
     }
 
     /**
@@ -257,19 +285,20 @@ public class MainActivity extends JPushBaseActivity {
         }
     };
     private int myflag;
+
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN && flag!=0) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN && flag != 0) {
             //这里处理逻辑代码
             if (isQuit) {
                 // 这是两次点击以后
-                if (myflag==flag){
+                if (myflag == flag) {
                     timer.cancel();
                     BaseLibrary.exit();
-                }else {
+                } else {
                     pressBackOneTime();
                 }
             } else {
-               pressBackOneTime();
+                pressBackOneTime();
             }
             return false;
         }
@@ -279,10 +308,10 @@ public class MainActivity extends JPushBaseActivity {
     /**
      * 按下一次物理返回键
      */
-    private void pressBackOneTime(){
+    private void pressBackOneTime() {
         isQuit = true;
         myflag = flag;
-        Toast.makeText(this.getApplicationContext(), "再按一次返回到桌面",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getApplicationContext(), "再按一次返回到桌面", Toast.LENGTH_SHORT).show();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -291,6 +320,7 @@ public class MainActivity extends JPushBaseActivity {
         };
         timer.schedule(task, 2000);
     }
+
     /**
      * 设置底部颜色状态
      *
@@ -326,6 +356,7 @@ public class MainActivity extends JPushBaseActivity {
         }
 
     }
+
     /**
      * 如果count的值为0时表示一进来就是断网的，此时点击tab重新连接加载viewpager
      * 如果count的值是为1时表示有网络状态，一进来就已经加载刷新数据了，不需要重新加载
@@ -340,17 +371,19 @@ public class MainActivity extends JPushBaseActivity {
             count = -1;
         }
     }
+
     /**
-     *  全屏播放视频隐藏底部tab广播 HIDEMAINTAB
-     *  接收动态小红点的广播  STATUSDOSHOW
-     *  注册监听网络广播广播  ConnectivityManager.CONNECTIVITY_ACTION
+     * 全屏播放视频隐藏底部tab广播 HIDEMAINTAB
+     * 接收动态小红点的广播  STATUSDOSHOW
+     * 注册监听网络广播广播  ConnectivityManager.CONNECTIVITY_ACTION
      */
     public class MyBroadcasReceiver extends BroadcastReceiver {
         public static final String HIDEMAINTAB = "net.hunme.kidsworld.hideMainTabReceiver";
         public static final String STATUSDOSHOW = "net.hunme.kidsworld.MyStatusDosShowReceiver";
+
         @Override
         public void onReceive(Context context, Intent intent) {
-            String action  = intent.getAction();
+            String action = intent.getAction();
             if (action.equals(HIDEMAINTAB)) {
                 Bundle bundle = intent.getExtras();
                 if (bundle.getBoolean("isVisible", false)) {
@@ -365,15 +398,15 @@ public class MainActivity extends JPushBaseActivity {
                 } else {
                     tvStatusDos.setVisibility(View.GONE);
                 }
-            }else if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)){
-                ConnectivityManager connectivityManager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo mobNetInfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-                NetworkInfo  wifiNetInfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            } else if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+                ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo mobNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+                NetworkInfo wifiNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
                 if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
                     isconnect = false;
                     //断网
                     count++;
-                }else {
+                } else {
                     //连上网络
                     isconnect = true;
                 }

@@ -165,6 +165,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         getDynamicHead();
         ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
         registerReceiver();
+        G.initDisplaySize(getActivity());
     }
     public void setPosition(int position){
         this.position = position;
@@ -225,7 +226,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     public void onClick(View view) {
         int viewId = view.getId();
         if (viewId==R.id.ll_classchoose){
-            G.initDisplaySize(getActivity());
             int xPos = G.size.W/2-G.dp2px(getActivity(),75);
             popWindow.showAsDropDown(rl_toolbar,xPos,-G.dp2px(getActivity(),10));
             popWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {

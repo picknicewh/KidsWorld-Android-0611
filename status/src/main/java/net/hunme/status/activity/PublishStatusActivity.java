@@ -37,7 +37,6 @@ import net.hunme.status.StatusFragement;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.adapter.GridAlbumAdapter;
 import net.hunme.user.util.BitmapCache;
-import net.hunme.user.util.PermissionUtils;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -246,10 +245,12 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                         dynamicVisicty="2";
                 }
                 break;
-            case PermissionUtils.REQUEST_CODE:
+            case PermissionsChecker.REQUEST_CODE:
                 //检测到没有授取权限 关闭页面
                 if(resultCode == PermissionsActivity.PERMISSIONS_DENIED){
                     G.showToast(this,"权限没有授取，本次操作取消，请到权限中心授权");
+                }else if(resultCode==PermissionsActivity.PERMISSIONS_GRANTED){
+                    G.showToast(this,"权限获取成功！");
                 }
                 break;
         }
@@ -322,8 +323,9 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      */
     private void goSelectImager(){
 //        getPermission(this,PERMISSIONS);
-        if(new PermissionsChecker(this).lacksPermissions(PERMISSIONS)){
-            PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
+        PermissionsChecker checker=PermissionsChecker.getInstance(this);
+        if(checker.lacksPermissions(PERMISSIONS)){
+            checker.getPerMissions(PERMISSIONS);
             return;
         }
         AndroidImagePicker androidImagePicker =   AndroidImagePicker.getInstance();

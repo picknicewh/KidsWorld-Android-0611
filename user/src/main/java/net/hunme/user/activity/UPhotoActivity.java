@@ -14,6 +14,7 @@ import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
@@ -44,14 +45,6 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
     private PhotoAdapter adapter;
     private List<PhotoVo>photoList; //用户相册实体类 list
     private UserMessage um;
-    /**
-     * 获取我的相册
-     */
-    private String MYFlICKR="/appUser/myFlickr.do";
-     /**
-     * 新建相册
-     */
-    private String CREATEEFILCK="/appUser/createFlickr.do";
     /**
      * 弹框新建相册
      */
@@ -142,7 +135,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
         Map<String,Object> map=new HashMap<>();
         map.put("tsId",um.getTsId());
         Type type=new TypeToken<Result<List<PhotoVo>>>(){}.getType();
-        OkHttps.sendPost(type,MYFlICKR,map,this,2,CREATEEFILCK);
+        OkHttps.sendPost(type, Apiurl.MYFlICKR,map,this,2,"MYFlICKR");
     }
 
     /**
@@ -154,17 +147,17 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
         map.put("tsId",um.getTsId());
         map.put("flickrName",flickrName);
         Type type=new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(type,CREATEEFILCK,map,this);
+        OkHttps.sendPost(type,Apiurl.CREATEEFILCK,map,this);
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if(MYFlICKR.equals(uri)){
+        if(Apiurl.MYFlICKR.equals(uri)){
             Result<List<PhotoVo>> result= (Result<List<PhotoVo>>) date;
             photoList.clear();
             photoList.addAll(result.getData());
             adapter.notifyDataSetChanged();
-        }else if(CREATEEFILCK.equals(uri)) {
+        }else if(Apiurl.CREATEEFILCK.equals(uri)) {
             //创建相册成功 刷新一遍相册数据
             getMyPhoto();
             if(alertDialog!=null) alertDialog.dismiss();

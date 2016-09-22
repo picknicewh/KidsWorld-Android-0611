@@ -1,8 +1,10 @@
 package net.hunme.baselibrary.util;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
+
+import net.hunme.baselibrary.activity.PermissionsActivity;
 
 /**
  * ================================================
@@ -15,10 +17,19 @@ import android.support.v4.content.ContextCompat;
  * ================================================
  */
 public class PermissionsChecker {
-    private final Context mContext;
+    private final Activity activity;
+    private static PermissionsChecker checker;
+    //权限请求回调码
+    public static final int  REQUEST_CODE = 10100;
+    public PermissionsChecker(Activity activity) {
+        this.activity = activity;
+    }
 
-    public PermissionsChecker(Context context) {
-        mContext = context.getApplicationContext();
+    public static PermissionsChecker getInstance(Activity activity){
+        if(checker==null){
+            checker=new PermissionsChecker(activity);
+        }
+        return checker;
     }
 
     // 判断权限集合
@@ -33,7 +44,14 @@ public class PermissionsChecker {
 
     // 判断是否缺少权限
     private boolean lacksPermission(String permission) {
-        return ContextCompat.checkSelfPermission(mContext, permission) ==
+        return ContextCompat.checkSelfPermission(activity, permission) ==
                 PackageManager.PERMISSION_DENIED;
+    }
+
+    //获取权限
+    public void getPerMissions(String... permissions){
+        if(lacksPermissions(permissions)){
+            PermissionsActivity.startActivityForResult(activity, REQUEST_CODE, permissions);
+        }
     }
 }

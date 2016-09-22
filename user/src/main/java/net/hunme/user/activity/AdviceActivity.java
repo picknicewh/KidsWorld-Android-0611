@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
@@ -22,7 +23,6 @@ import java.util.Map;
 public class AdviceActivity extends BaseActivity implements View.OnClickListener, OkHttpListener {
     private EditText et_advice;
     private Button b_submit;
-    private final String FEEDBACK="/appUser/feedback.do";
     private UserMessage um;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +59,13 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
             map.put("feedback",advice);
             map.put("contact",um.getLoginName());
             Type type=new TypeToken<Result<String>>(){}.getType();
-            OkHttps.sendPost(type,FEEDBACK,map,this);
+            OkHttps.sendPost(type, Apiurl.FEEDBACK,map,this);
         }
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if(FEEDBACK.equals(uri)){
+        if(Apiurl.FEEDBACK.equals(uri)){
             G.showToast(this,"数据提交成功，感谢亲的反馈！");
             finish();
         }

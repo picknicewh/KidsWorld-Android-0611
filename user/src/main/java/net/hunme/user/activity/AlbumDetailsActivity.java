@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import net.hunme.baselibrary.activity.PermissionsActivity;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
@@ -19,7 +20,6 @@ import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.user.R;
 import net.hunme.user.adapter.AlbumDetailsAdapter;
 import net.hunme.user.mode.Photodetail;
-import net.hunme.user.util.PermissionUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -31,7 +31,6 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
     private GridView gv_photo;
     private ArrayList<String>itemList;
     private AlbumDetailsAdapter adapter;
-    private final String FILCKR="/appUser/flickr.do";
     public static String flickrId;//相册ID
     // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
@@ -54,8 +53,9 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
         setSubTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(new PermissionsChecker(AlbumDetailsActivity.this).lacksPermissions(PERMISSIONS)){
-                    PermissionsActivity.startActivityForResult(AlbumDetailsActivity.this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
+                PermissionsChecker checker=PermissionsChecker.getInstance(AlbumDetailsActivity.this);
+                if(checker.lacksPermissions(PERMISSIONS)){
+                    checker.getPerMissions(PERMISSIONS);
                     return;
                 }
                 Intent intent=new Intent(AlbumDetailsActivity.this,UploadPhotoActivity.class);
@@ -81,12 +81,12 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
         map.put("pageSize",10000);
         map.put("pageNumber",1);
         Type type=new TypeToken<Result<List<Photodetail>>>(){}.getType();
-        OkHttps.sendPost(type,FILCKR,map,this,2,FILCKR);
+        OkHttps.sendPost(type,Apiurl.FILCKR,map,this,2,"FILCKR");
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if(FILCKR.equals(uri)){
+        if(Apiurl.FILCKR.equals(uri)){
             Result<List<Photodetail>> result= (Result<List<Photodetail>>) date;
             itemList.clear();
             for (Photodetail p:result.getData()){
@@ -111,10 +111,12 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case PermissionUtils.REQUEST_CODE:
+            case PermissionsChecker.REQUEST_CODE:
                 //检测到没有授取权限 关闭页面
                 if(resultCode == PermissionsActivity.PERMISSIONS_DENIED){
-                   G.showToast(this,"权限没有授取，本次操作取消，请到权限中心授权");
+                    G.showToast(this,"权限没有授取，本次操作取消，请到权限中心授权");
+                }else if(resultCode==PermissionsActivity.PERMISSIONS_GRANTED){
+                    G.showToast(this,"权限获取成功！");
                 }
                 break;
         }

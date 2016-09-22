@@ -19,12 +19,14 @@ import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.callback.FileCallback;
 
 import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MD5Utils;
 import net.hunme.baselibrary.util.MyAlertDialog;
 import net.hunme.baselibrary.util.NetWorkUitls;
+import net.hunme.baselibrary.util.PackageUtils;
 import net.hunme.user.R;
 import net.hunme.user.mode.CheckUpadteVo;
 
@@ -68,10 +70,6 @@ public class CheckUpdate implements OkHttpListener {
 	 * 新版本号
 	 */
 	private String version;
-	/**
-	 * 版本更新地址
-	 */
-	private final String UPDATESYSTEM="/appUser/getVersion.do";
 	/**
 	 * app名字
 	 */
@@ -123,12 +121,12 @@ public class CheckUpdate implements OkHttpListener {
         map.put("version", String.valueOf(PackageUtils.getVersionCode(context)));
         map.put("system","2");
         Type type= new TypeToken<Result<CheckUpadteVo>>(){}.getType();
-        OkHttps.sendPost(type,UPDATESYSTEM,map,this);
+        OkHttps.sendPost(type, Apiurl.UPDATESYSTEM,map,this);
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if (uri.equals(UPDATESYSTEM)){
+        if (uri.equals(Apiurl.UPDATESYSTEM)){
             Result<CheckUpadteVo> result= (Result<CheckUpadteVo>) date;
             if(!G.isEmteny(result.getData().getUpdateurl())){
                 downLoadURL = result.getData().getUpdateurl();

@@ -5,19 +5,19 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- <FrameLayout
+    <FrameLayout
          android:id="@+id/content"
          android:layout_width="match_parent"
          android:layout_height="0dp"
-         android:layout_weight="1" />-->
+         android:layout_weight="1" />
 
-    <net.hunme.baselibrary.widget.NoScrollViewPager
-        android:id="@+id/vp_main"
-        android:layout_weight="1"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:flipInterval="30"
-        />
+    <!--<net.hunme.baselibrary.widget.NoScrollViewPager-->
+        <!--android:id="@+id/vp_main"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:flipInterval="30"-->
+        <!--/>-->
 
     <View
         android:layout_gravity="bottom"
