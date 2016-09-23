@@ -22,6 +22,7 @@ import net.hunme.school.adapter.LeaveListAdapter;
 import net.hunme.school.bean.LeaveVo;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
     private PullableListView lv_leaves;
     private int count=1;
     private PullToRefreshLayout refresh_view;
+    private List<LeaveVo> leaveVos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,9 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
         lv_leaves  = $(R.id.lv_leaves);
         refresh_view = $(R.id.refresh_view);
         refresh_view.setOnRefreshListener(new MyListener());
+        leaveVos = new ArrayList<>();
         getLeave();
+
     }
 
     @Override
@@ -80,7 +84,8 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
         Result<List<LeaveVo>> data = (Result<List<LeaveVo>>) date;
         if (data!=null){
             List<LeaveVo> leaveVoList = data.getData();
-            adapter = new LeaveListAdapter(this,leaveVoList);
+            leaveVos.addAll(leaveVoList);
+            adapter = new LeaveListAdapter(this,leaveVos);
             lv_leaves.setAdapter(adapter);
         }
     }
@@ -95,6 +100,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
+                    leaveVos.clear();
                     count=1;
                     getLeave();
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
@@ -107,6 +113,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
+                  //  leaveVos.clear();
                     count++;
                     getLeave();
                     pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);

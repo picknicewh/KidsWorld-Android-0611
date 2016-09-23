@@ -1,6 +1,7 @@
 package net.hunme.school.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -43,33 +44,34 @@ public class DateView extends LinearLayout implements View.OnClickListener{
      * 右
      */
     public static final int TAG_RIGHT = 1;
-    /**
-     * 年
-     */
-    private int my_year;
 
     /**
-     * 月
+     * 当前的年
      */
-    private int my_mouth;
+    private int n_year;
+
     /**
-     * 日
+     * 当前的月
      */
-    private int my_day;
+    private int n_mouth;
+    /**
+     * 当前的日
+     */
+    private int n_day;
 
     private Context context;
     /**
      * 点击前记录的日
      */
-    private int my_date;
+    private int b_day;
     /**
      * 点击前记录的年
      */
-    private int my_date_year;
+    private int b_year;
     /**
      * 点击前记录的月
      */
-    private int  my_date_mouth;
+    private int  b_mouth;
     /**
      * 格式日期
      */
@@ -78,7 +80,6 @@ public class DateView extends LinearLayout implements View.OnClickListener{
      * 格式日期
      */
     private String formatDate;
-    private Calendar my_calendar;
     private SimpleDateFormat format1 = new SimpleDateFormat("yyyy年MM月dd日");
     private SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
     public DateView(Context context, AttributeSet attrs) {
@@ -88,7 +89,7 @@ public class DateView extends LinearLayout implements View.OnClickListener{
     public DateView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context,attrs, defStyleAttr);
-        AddView(my_year,my_mouth,my_date);
+        AddView(n_year,n_mouth,n_day);
     }
     /**
      * 设置整体布局，和初始化数据
@@ -101,12 +102,12 @@ public class DateView extends LinearLayout implements View.OnClickListener{
         this.setBackgroundColor(Color.WHITE);
         Calendar calendar =  Calendar.getInstance();
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.DateView, defStyleAttr, 0);
-        my_year = a.getInteger(R.styleable.DateView_year, calendar.get(Calendar.YEAR));
-        my_mouth = a.getInteger(R.styleable.DateView_mouth, calendar.get(Calendar.MONTH))+1;
-        my_day = a.getInteger(R.styleable.DateView_day, calendar.get(Calendar.DAY_OF_MONTH));
-        my_date = my_day;
-        my_date_mouth = my_mouth;
-        my_date_year = my_year;
+        n_year = a.getInteger(R.styleable.DateView_year, calendar.get(Calendar.YEAR));
+        n_mouth = a.getInteger(R.styleable.DateView_mouth, calendar.get(Calendar.MONTH))+1;
+        n_day = a.getInteger(R.styleable.DateView_day, calendar.get(Calendar.DAY_OF_MONTH));
+        b_day = n_day;
+        b_mouth = n_mouth;
+        b_year =n_year;
         date = format1.format(new Date(calendar.getTimeInMillis()));
         formatDate = format2.format(new Date(calendar.getTimeInMillis()));
     }
@@ -215,38 +216,58 @@ public class DateView extends LinearLayout implements View.OnClickListener{
        }
    }
     /**
+     * 设置当前选中日期的颜色状态
+     * @param status 状态   1表示上月日期状态
+     *                     2当前被选中日期状态
+     *                     3有除当天以后的日子选中时，当天日期的状态，
+     */
+    private void  setCurrentSeletColor(int status,TextView view){
+        switch (status){
+            case 1:
+                view.setBackgroundColor(context.getResources().getColor(R.color.white));
+                view.setTextColor(context.getResources().getColor(R.color.line_gray));
+                break;
+            case 2:
+                view.setBackgroundColor(context.getResources().getColor(R.color.main_green));
+                view.setTextColor(context.getResources().getColor(R.color.black));
+                break;
+            case 3:
+                view.setBackgroundColor(context.getResources().getColor(R.color.red));
+                view.setTextColor(context.getResources().getColor(R.color.black));
+                break;
+        }
+    }
+    /**
      * 设置每个日期的数据和显示设置
-     * @param  date 日期
+     * @param  day 日期
      * @param  linearLayout
      * @param flag
      */
-    private void setDate(final int date, LinearLayout linearLayout, final int flag){
+    private void setDate(final int day, LinearLayout linearLayout, final int flag){
         setLinearlayoutParam(linearLayout);
-        final TextView textView = new TextView(context);
-        textView.setText(String.valueOf(date));
-        textView.setTextSize(16);
-        textView.setGravity(Gravity.CENTER);
+        final TextView tv_day = new TextView(context);
+        tv_day.setText(String.valueOf(day));
+        tv_day.setTextSize(16);
+        tv_day.setGravity(Gravity.CENTER);
         Calendar calendar =  Calendar.getInstance();
         int sign=0;
-        if (date==my_date && date==my_day && my_year== calendar.get(Calendar.YEAR)&& my_mouth==calendar.get(Calendar.MONTH)+1){
-            textView.setBackgroundColor(context.getResources().getColor(R.color.main_green));
-            textView.setTextColor(context.getResources().getColor(R.color.black));
+        //当前的时间
+        if (day==b_day && day==n_day && n_year== calendar.get(Calendar.YEAR)&& n_mouth==calendar.get(Calendar.MONTH)+1){
+          setCurrentSeletColor(2,tv_day);
             sign= 1;
-        }else if (date==my_date && date!=my_day && my_date_year==my_year&& my_date_mouth==my_mouth){
-            textView.setBackgroundColor(context.getResources().getColor(R.color.main_green));
-            textView.setTextColor(context.getResources().getColor(R.color.black));
+        }
+        else if (day==n_day&&  b_year==n_year && b_mouth==n_mouth){
+            setCurrentSeletColor(2,tv_day);
             sign=0;
         }
-        if (sign==0 && date==my_day && my_year== calendar.get(Calendar.YEAR)&& my_mouth==calendar.get(Calendar.MONTH)+1){
-            textView.setBackgroundColor(context.getResources().getColor(R.color.red));
-            textView.setTextColor(context.getResources().getColor(R.color.black));
+        if (sign==0 && day==calendar.get(Calendar.DAY_OF_MONTH) && n_year== calendar.get(Calendar.YEAR)&& n_mouth==calendar.get(Calendar.MONTH)+1){
+            setCurrentSeletColor(3,tv_day);
         }
-        setweekParam(textView);
-        linearLayout.addView(textView);
+        setweekParam(tv_day);
+        linearLayout.addView(tv_day);
         if (flag==1||flag==0){
-            textView.setTextColor(context.getResources().getColor(R.color.line_gray));
-            textView.setBackgroundColor(context.getResources().getColor(R.color.white));
-            textView.setOnClickListener(new OnClickListener() {
+            setCurrentSeletColor(1,tv_day);
+            tv_day.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (flag==1){
@@ -254,15 +275,15 @@ public class DateView extends LinearLayout implements View.OnClickListener{
                     }else {
                         downDate();
                     }
-                    my_date = Integer.valueOf(textView.getText().toString());
+                    n_day = Integer.valueOf(tv_day.getText().toString());
                     itemClick(1);
                 }
             });
         }else if (flag==2){
-            textView.setOnClickListener(new OnClickListener() {
+            tv_day.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    my_date = date;
+                    n_day = day;
                     itemClick(1);
                 }
             });
@@ -286,12 +307,6 @@ public class DateView extends LinearLayout implements View.OnClickListener{
      */
    private void setDateTextView(int year,int mouth){
        RelativeLayout relativeLayout = new RelativeLayout(context);
-    /*   TextView tv_center = new TextView(context);
-       tv_center.setTag(TAG_MIDDLE);
-       tv_center.setText(year+"年"+mouth+"月"+day+"日");
-       tv_center.setTextColor(Color.BLACK);
-       tv_center.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18)
-       setDateTextViewparam(tv_center,2,relativeLayout);;*/
        setDateCenterView(year,mouth,relativeLayout);
        ImageView iv_left = new ImageView(context);
        iv_left.setTag(TAG_LEFT);
@@ -317,21 +332,24 @@ public class DateView extends LinearLayout implements View.OnClickListener{
     }
     /**
      * 日期点击事件
-     * @param flag 0左右按钮 日期数字点击
+     * @param flag 0 左右按钮 1日期数字点击
      */
     private void itemClick(int flag){
-        my_date_mouth =my_mouth;
-        my_date_year = my_year;
+        b_mouth =n_mouth;
+        b_year =n_year;
+        b_day = n_day;
         DateView.this.removeAllViews();
-        AddView(my_year,my_mouth,my_date);
+        AddView(n_year,n_mouth,n_day);
         Calendar calendar = Calendar.getInstance();
-        calendar.set(my_year,my_mouth-1,my_date);
+        calendar.set(n_year,n_mouth-1,n_day);
         date = format1.format(new Date(calendar.getTimeInMillis()));
         formatDate = format2.format(new Date(calendar.getTimeInMillis()));
         setDate(date);
         if (flag==1){
             DateView.this.setVisibility(GONE);
             FoodListActivity.getCalender().setText(date);
+            Intent intent  = new Intent(FoodListActivity.ACTION_GEFOOD);
+            context.sendBroadcast(intent);
         }else {
             DateView.this.setVisibility(VISIBLE);
         }
@@ -374,38 +392,36 @@ public class DateView extends LinearLayout implements View.OnClickListener{
         linearLayout.setTag(TAG_MIDDLE);
         linearLayout.setOrientation(HORIZONTAL);
         TextView tv_mouth = new TextView(context);
-       // tv_mouth.setText(DateUtil.getMouthByChinese(mouth));
-        tv_mouth.setText(date);
+        tv_mouth.setText(DateUtil.getMouthByChinese(mouth));
         tv_mouth.setTextColor(Color.BLACK);
         tv_mouth.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
         tv_mouth.setGravity(Gravity.CENTER);
         linearLayout.addView(tv_mouth);
-
-      /*  TextView tv_year = new TextView(context);
+        TextView tv_year = new TextView(context);
         tv_year.setText(String.valueOf(year));
         tv_year.setTextColor(Color.BLACK);
         tv_year.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
         tv_year.setGravity(Gravity.CENTER);
-        linearLayout.addView(tv_year);*/
+        linearLayout.addView(tv_year);
     }
     /**
      * 向上翻日历
      */
     private void upDate(){
-        my_mouth = my_mouth-1;
-        if (my_mouth<1){
-            my_year--;
-            my_mouth=12;
+        n_mouth = n_mouth-1;
+        if (n_mouth<1){
+            n_year--;
+            n_mouth=12;
         }
     }
     /**
      * 下上翻日历
      */
     private void downDate(){
-        my_mouth = my_mouth+1;
-        if (my_mouth>12){
-            my_year++;
-            my_mouth=1;
+        n_mouth = n_mouth+1;
+        if (n_mouth>12){
+            n_year++;
+            n_mouth=1;
         }
     }
     @Override

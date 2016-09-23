@@ -1,5 +1,9 @@
 package net.hunme.school.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -28,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 public class FoodListActivity extends BaseActivity implements View.OnClickListener, OkHttpListener {
+    public  static  final  String ACTION_GEFOOD = "net.hunme.school.getfoodlist";
     /**
      * 日历view
      */
@@ -52,6 +57,11 @@ public class FoodListActivity extends BaseActivity implements View.OnClickListen
      * 没有食谱数据显示
      */
     private TextView tv_nodata;
+    /**
+     * 广播
+     */
+   private getFoodListRecevier recevier;
+    private boolean isvisible = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +77,7 @@ public class FoodListActivity extends BaseActivity implements View.OnClickListen
        lv_foodlist = $(R.id.lv_foodlist);
        tv_nodata = $(R.id.tv_nodata);
        rl_calendar.setOnClickListener(this);
+       registerboradcast();
        tv_calendar.setText(dateView.getDate());
        getCookBook(dateView.getFormatDate());
    }
@@ -80,12 +91,15 @@ public class FoodListActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View view) {
         if (view.getId()==R.id.rl_calendar){
-            dateView.setVisibility(View.VISIBLE);
-            tv_calendar.setText(dateView.getDate());
-            getCookBook(dateView.getFormatDate());
+            if (isvisible){
+                dateView.setVisibility(View.GONE);
+                isvisible = false;
+            }else {
+                dateView.setVisibility(View.VISIBLE);
+                isvisible = true;
+            }
         }
     }
-
     public static TextView getCalender(){
         return tv_calendar;
     }
@@ -93,14 +107,18 @@ public class FoodListActivity extends BaseActivity implements View.OnClickListen
      * 获取食谱
      * @param date 日期
      */
-    private void getCookBook(String date){
+    public  void getCookBook(String date){
         Map<String,Object> params = new HashMap<>();
         params.put("tsId", UserMessage.getInstance(this).getTsId());
         params.put("date",date);
         Type type = new TypeToken<Result<CooikeVo>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.SCHOOL_GETCOOKBOOK,params,this);
     }
-
+    private void registerboradcast(){
+        IntentFilter intentFilter = new IntentFilter(ACTION_GEFOOD);
+        recevier = new getFoodListRecevier();
+        registerReceiver(recevier,intentFilter);
+    }
     @Override
     public void onSuccess(String uri, Object date) {
         Result<CooikeVo> data = (Result<CooikeVo>) date;
@@ -119,9 +137,28 @@ public class FoodListActivity extends BaseActivity implements View.OnClickListen
 
         }
     }
-
     @Override
     public void onError(String uri, String error) {
         Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(recevier);
+    }
+
+    private  class  getFoodListRecevier extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(ACTION_GEFOOD)){
+                String date = tv_calendar.getText().toString();
+                String year = date.substring(0,4);
+                String mouth =date.substring(5,7);
+                String day  = date.substring(8,10);
+                getCookBook(year+"-"+mouth+"-"+day);
+            }
+        }
     }
 }

@@ -27,6 +27,7 @@ import net.hunme.status.activity.PublishStatusActivity;
 import net.hunme.status.widget.StatusPublishPopWindow;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,15 +53,13 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_arrange);
         initView();
-
-
     }
    public void initView(){
        refresh_view = $(R.id.refresh_view);
        lv_course = $(R.id.lv_course);
        refresh_view.setOnRefreshListener(new MyListener());
        registerReceiver();
-       getArrange(count);
+       syllabusVoList = new ArrayList<>();
    }
     @Override
     protected void setToolBar() {
@@ -117,7 +116,8 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
     public void onSuccess(String uri, Object date) {
         Result<List<SyllabusVo>> data = (Result<List<SyllabusVo>>) date;
         if (data!=null){
-            syllabusVoList = data.getData();
+            List<SyllabusVo> syllabusVos= data.getData();
+            syllabusVoList.addAll(syllabusVos);
             CourseListAdapter adapter = new CourseListAdapter(this,syllabusVoList);
             lv_course.setAdapter(adapter);
         }
@@ -148,7 +148,7 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
                  @Override
                  public void handleMessage(Message msg) {
                      super.handleMessage(msg);
-                     syllabusVoList.clear();
+                   //  syllabusVoList.clear();
                      count++;
                      getArrange(count);
                      pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
