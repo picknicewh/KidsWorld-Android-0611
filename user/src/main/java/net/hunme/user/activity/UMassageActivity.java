@@ -70,7 +70,6 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
-
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
     @Override
@@ -106,6 +105,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
         tv_schoolname.setText(um.getSchoolName());
         path= Environment.getExternalStorageDirectory().toString() + "/ChatFile/";
     }
+
     @Override
     protected void setToolBar() {
         setCententTitle("个人信息");
@@ -117,11 +117,11 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         int viewID=v.getId();
         if(viewID==R.id.rl_userMessage){
-//            if(new PermissionsChecker(this).lacksPermissions(PERMISSIONS)){
-//                PermissionsActivity.startActivityForResult(this, PermissionUtils.REQUEST_CODE, PERMISSIONS);
-//                return;
-//            }
-            PermissionsChecker.getInstance(this).getPerMissions(PERMISSIONS);
+            PermissionsChecker checker=PermissionsChecker.getInstance(this);
+            if(checker.lacksPermissions(PERMISSIONS)){
+                checker.getPerMissions(PERMISSIONS);
+                return;
+            }
             AndroidImagePicker.getInstance().pickAndCrop(UMassageActivity.this, true, 200, new AndroidImagePicker.OnImageCropCompleteListener() {
                 @Override
                 public void onImageCropComplete(Bitmap bmp, float ratio) {
