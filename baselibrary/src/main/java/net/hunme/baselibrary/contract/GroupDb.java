@@ -31,7 +31,7 @@ public class GroupDb extends SQLiteOpenHelper {
     }
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        String sql = "drop table if exists" + TABLENAME;
+        String sql = "drop table if exists " + TABLENAME;
         sqLiteDatabase.execSQL(sql);
         this.onCreate(sqLiteDatabase);
     }
