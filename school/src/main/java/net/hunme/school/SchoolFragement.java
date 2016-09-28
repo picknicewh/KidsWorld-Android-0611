@@ -12,6 +12,7 @@ import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.network.ServerConfigManager;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.NavigationBar;
+import net.hunme.school.activity.ClassListActivity;
 import net.hunme.school.activity.CourseArrangeActivity;
 import net.hunme.school.activity.FoodListActivity;
 import net.hunme.school.activity.LeaveListActivity;
@@ -31,10 +32,6 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
      * 导航栏
      */
     private NavigationBar navigationBar;
-    /**
-     * 开放课堂
-     */
- //   private RelativeLayout rl_openclass;
     /**
      *考勤
      */
@@ -56,11 +53,13 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
      */
     private RelativeLayout rl_arrangement;
     /**
+     * 开放课堂
+     */
+    private RelativeLayout rl_openClass;
+    /**
      * 基本url
      */
     public static final String baseurl = ServerConfigManager.WEB_IP+"/school/index.html?";
-   // public static final String baseurl = "file:///android_asset/www/kidsworld/school/index.html?";
-   // public static final String baseurl = "192.168.1.134:8080/kidsWorld/school/index.html?";
     /**
      * 考勤
      */
@@ -96,64 +95,63 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     private void init(View v){
         navigationBar = $(v,R.id.nb_school);
         navigationBar.setTitle("园所");
-      //  rl_openclass = $(v,R.id.rl_openclass);
         rl_check = $(v,R.id.rl_check);
-
+        rl_openClass=$(v,R.id.rl_openClass);
         rl_leave = $(v,R.id.rl_leave);
         rl_inform = $(v,R.id.rl_info);
         rl_food = $(v,R.id.rl_food);
         rl_arrangement = $(v,R.id.rl_arrangement);
-     //   rl_openclass.setOnClickListener(this);
+
         rl_check.setOnClickListener(this);
         rl_leave.setOnClickListener(this);
         rl_inform.setOnClickListener(this);
         rl_food.setOnClickListener(this);
         rl_arrangement.setOnClickListener(this);
+        rl_openClass.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         Intent intent = new Intent();
-         /*
-        if (view.getId()==R.id.rl_openclass){
-        *//*    intent.setClass(getActivity(), WebViewActivity.class);
-            intent.putExtra("url", geturl(OPENCLASS));
-            intent.putExtra("title","开放课堂");*//*
-            Toast.makeText(getActivity(),"暂未开通此功能！",Toast.LENGTH_SHORT).show();
-        }else*/ if (view.getId()==R.id.rl_check){
+        if (view.getId()==R.id.rl_check){
             intent.setClass(getActivity(), WebViewActivity.class);
             intent.putExtra("loadUrl", geturl(CHECK));
             intent.putExtra("title","选择班级");
         }else if (view.getId()==R.id.rl_leave){
             intent.setClass(getActivity(), LeaveListActivity.class);
-         /*   intent.putExtra("loadUrl",geturl(LEAVE));
+//            intent.setClass(getActivity(), WebViewActivity.class);
+            intent.putExtra("loadUrl",geturl(LEAVE));
             intent.putExtra("title","请假");
-            intent.putExtra("subTitle","我要请假");*/
+            intent.putExtra("subTitle","我要请假");
         }else if (view.getId()==R.id.rl_info){
             intent.setClass(getActivity(), PublishActivity.class);
         }else if (view.getId()==R.id.rl_food){
+//            intent.setClass(getActivity(), WebViewActivity.class);
             intent.setClass(getActivity(), FoodListActivity.class);
             intent.putExtra("loadUrl",geturl(FOODLIST));
             intent.putExtra("title","食谱");
         }else if (view.getId()==R.id.rl_arrangement){
+//            intent.setClass(getActivity(), WebViewActivity.class);
             intent.setClass(getActivity(), CourseArrangeActivity.class);
             intent.putExtra("loadUrl",geturl(ARRANGE));
             intent.putExtra("title","课程安排");
             intent.putExtra("subTitle","发布");
+        }else if(view.getId()==R.id.rl_openClass){
+            intent.setClass(getActivity(), ClassListActivity.class);
         }
         startActivity(intent);
-
     }
+
     private String  geturl(String type){
         String url =baseurl+"tsId="+ UserMessage.getInstance(getActivity()).getTsId()+"&type="+UserMessage.getInstance(getActivity()).getType()+"#/";
         switch (type){
-         case OPENCLASS:url =url+OPENCLASS ;break;
-         case CHECK:url = url+CHECK;break;
-         case LEAVE:url = url+LEAVE;break;
-         case INFORM:url = url+INFORM;break;
-         case FOODLIST:url = url+FOODLIST;break;
-         case ARRANGE:url = url+ARRANGE;break;
-      }
+            case OPENCLASS:url =url+OPENCLASS ;break;
+            case CHECK:url = url+CHECK;break;
+            case LEAVE:url = url+LEAVE;break;
+            case INFORM:url = url+INFORM;break;
+            case FOODLIST:url = url+FOODLIST;break;
+            case ARRANGE:url = url+ARRANGE;break;
+        }
         return  url;
     }
 }

@@ -28,6 +28,7 @@ import net.hunme.baselibrary.cordova.HMDroidGap;
 import net.hunme.baselibrary.cordova.MySystemWebView;
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.network.ServerConfigManager;
@@ -109,10 +110,6 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
      * 班级选择
      */
     private LinearLayout ll_classchoose;
-    /**
-     * 获取班级列表uri
-     */
-    private final String DYNAMICHEAD="/dynamics/getDynamicHead.do";
     private UserMessage um;
     /**
      * 班级列表对象
@@ -320,12 +317,12 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         Map<String,Object>map=new HashMap<>();
         map.put("tsId", um.getTsId());
         Type type=new TypeToken<Result<List<DynamicVo>>>(){}.getType();
-        OkHttps.sendPost(type,DYNAMICHEAD,map,this,2,"DYNAMIC");
+        OkHttps.sendPost(type, Apiurl.DYNAMICHEAD,map,this,2,"DYNAMIC");
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if(DYNAMICHEAD.equals(uri)){
+        if(Apiurl.DYNAMICHEAD.equals(uri)){
             G.KisTyep.isChooseId=false;
             dynamicList = ((Result<List<DynamicVo>>) date).getData();
             classlist.clear();

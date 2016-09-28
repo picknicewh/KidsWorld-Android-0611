@@ -133,6 +133,10 @@ public class Apiurl {
      * 删除评论
      */
     public static final String DELETERCOMMENTD ="/dynamics/deleteComment.do";
+    /**
+     * 获取班级列表uri
+     */
+    public static final String DYNAMICHEAD="/dynamics/getDynamicHead.do";
 
     //=========================登录==============================
     /**

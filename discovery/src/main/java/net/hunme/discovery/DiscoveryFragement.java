@@ -97,11 +97,11 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-//                    getActivity().getSupportFragmentManager().popBackStack("gifPageTwoFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    //getActivity().getSupportFragmentManager().popBackStack("gifPageTwoFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                   if(webView.canGoBack() && !webView.getUrl().contains("paradiseHome") ){
                       webView.goBack();
                   }else if (webView.getUrl().contains("paradiseHome")){
-                     // getActivity().finish();
+                      // getActivity().finish();
                       //这里处理逻辑代码
                       if (isQuit) {
                           // 这是两次点击以后

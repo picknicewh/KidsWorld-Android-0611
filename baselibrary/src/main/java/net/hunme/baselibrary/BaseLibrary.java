@@ -103,15 +103,14 @@ public class BaseLibrary {
     //图片缓存
     private static void initImageLoader(Context context) {
         // 缓存文件的目录
-        File cacheDir = StorageUtils.getOwnCacheDirectory(context, "ChatFile");
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                context)
+        File cacheDir = StorageUtils.getOwnCacheDirectory(context, "ChatFile");//设置内存卡的路径
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
                 // .memoryCacheExtraOptions(480, 800)
                 // max width, max height，即保存的每个缓存文件的最大长宽
                 .threadPoolSize(3)
                 // 线程池内加载的数量
-                .threadPriority(Thread.NORM_PRIORITY - 2)
-                .denyCacheImageMultipleSizesInMemory()
+                .threadPriority(Thread.NORM_PRIORITY - 2) // 设置当前线程优先级
+                .denyCacheImageMultipleSizesInMemory() // 缓存显示不同 大小的同一张图片
                 .memoryCache(new UsingFreqLimitedMemoryCache(2 * 1024 * 1024)) // 你可以通过自己的内存缓存实现
                 .memoryCacheSize(2 * 1024 * 1024) // 内存缓存的最大值
                 // int i = 50 * 1024 * 1024;
