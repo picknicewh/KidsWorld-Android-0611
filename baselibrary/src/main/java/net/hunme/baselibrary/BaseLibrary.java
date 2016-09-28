@@ -55,9 +55,6 @@ public class BaseLibrary {
         activityPartList = new ArrayList<>();
         instance=application;
     }
-
-
-
     public static Application getInstance() {
         return instance;
     }
