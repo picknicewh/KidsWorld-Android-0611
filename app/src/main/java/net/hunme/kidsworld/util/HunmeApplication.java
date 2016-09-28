@@ -35,17 +35,18 @@ public class HunmeApplication extends Application {
         BaseLibrary.initializer(this);
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);// 初始化 JPush
-
+//        SchoolLib.initializer();
     }
+
     //回话扩展功能自定义
-     private void setExtendProvide(){
-    InputProvider.ExtendProvider[] provider = {
-            new ImageInputProvider(RongContext.getInstance()),//图片
-            new CameraInputProvider(RongContext.getInstance()),//相机
-    };
-         RongIM.getInstance().resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, provider);
-         RongIM.getInstance().resetInputExtensionProvider(Conversation.ConversationType.GROUP, provider);
-}
+    private void setExtendProvide(){
+        InputProvider.ExtendProvider[] provider = {
+                new ImageInputProvider(RongContext.getInstance()),//图片
+                new CameraInputProvider(RongContext.getInstance()),//相机
+        };
+        RongIM.getInstance().resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, provider);
+        RongIM.getInstance().resetInputExtensionProvider(Conversation.ConversationType.GROUP, provider);
+    }
 
     @Override
     public void onTerminate() {

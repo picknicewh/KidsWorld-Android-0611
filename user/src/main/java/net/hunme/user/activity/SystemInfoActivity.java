@@ -28,7 +28,6 @@ public class SystemInfoActivity extends BaseActivity {
     private ListView lv_systeminfo;
    // private List<MessageVo>messageList;
     private SystemInfoAdapter adapter;
-//    private final String SYSTEMESSAGE="/appUser/systemMessages.do";
     /**
      * 系统消息数据创建类
      */
@@ -138,23 +137,6 @@ public class SystemInfoActivity extends BaseActivity {
         adapter.notifyDataSetChanged();
     }
 
-    /**
-     * 模拟插入数据
-     */
-    private  void  insert(){
-        if (dbHelp.isEmpty(infoDb.getReadableDatabase())) {
-            dbHelp.insert(wdb, "标题一", "这是第一条通知的内容哦！", "10:38", 1);
-            dbHelp.insert(wdb, "标题二", "这是第二条通知的内容哦！", "20:50", 1);
-            dbHelp.insert(wdb, "标题三", "这是第三条通知的内容哦！", "昨天", 1);
-            dbHelp.insert(wdb, "标题四", "这是第四条通知的内容哦！", "星期三", 1);
-            dbHelp.insert(wdb, "标题五", "这是第五条通知的内容哦！", "7/24", 1);
-            dbHelp.insert(wdb, "标题六", "这是第六条通知的内容哦！", "7/25", 1);
-        }
-//        }else {
-//            dbHelp.delete(db);
-//        }
-
-    }
     private void initView(){
         lv_systeminfo=$(R.id.lv_systeminfo);
       //  messageList=new ArrayList<>();

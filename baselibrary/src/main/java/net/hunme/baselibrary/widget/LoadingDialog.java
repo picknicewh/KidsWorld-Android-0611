@@ -18,8 +18,7 @@ import net.hunme.baselibrary.R;
  */
 public class LoadingDialog extends Dialog {
 
-    private static TextView tv_prompt;
-    private static LoadingDialog dialog;
+    private TextView tv_prompt;
     public LoadingDialog(Context context) {
         super(context);
     }

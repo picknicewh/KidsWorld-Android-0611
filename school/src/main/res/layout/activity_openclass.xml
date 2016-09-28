@@ -1,27 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-   <RelativeLayout
-       android:background="@color/colorAccent"
-       android:layout_width="match_parent"
-       android:padding="@dimen/space"
-       android:layout_height="50dp">
-       <ImageView
-           android:src="@mipmap/ic_arrow_lift"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" />
-       <Spinner
-           android:entries="@array/myclass"
-           android:layout_centerInParent="true"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"/>
-   </RelativeLayout>
-    <SurfaceView
-        android:id="@+id/surface_camera"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_centerInParent="true"
-        android:layout_weight="1">
-    </SurfaceView>
+  <SurfaceView
+      android:layout_width="match_parent"
+      android:layout_height="500dp"
+      android:id="@+id/surface_move"/>
+  <Button
+      android:padding="@dimen/space"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="播放"
+      android:onClick="stopPlay"/>
 </LinearLayout>

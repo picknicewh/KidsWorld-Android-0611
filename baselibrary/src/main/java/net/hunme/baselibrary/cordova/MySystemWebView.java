@@ -8,7 +8,6 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import org.apache.cordova.engine.SystemWebChromeClient;
 import org.apache.cordova.engine.SystemWebView;
@@ -30,7 +29,6 @@ public class MySystemWebView extends SystemWebChromeClient {
     private CustomViewCallback myCallback = null;
     private SystemWebView mWebView;
     private Activity activity;
-    private RelativeLayout rl_toolbar;
     private LinearLayout ll_toolbar;
     public MySystemWebView(SystemWebViewEngine parentEngine, ProgressBar pb_web) {
         super(parentEngine);
@@ -74,15 +72,7 @@ public class MySystemWebView extends SystemWebChromeClient {
 //        //设置全屏
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-      //  sendBroadcast(activity,false);
-       /* if (!mWebView.getUrl().contains("paradiseHome")){
-            sendBroadcast(activity,false);
-            Log.i("TADDD","AAAAAAAAAAAA"+mWebView.getUrl());
-        }else {
-            sendBroadcast(activity,true);
-            Log.i("TADDD","BBBBBBBBBBBBB"+mWebView.getUrl());
-        }
-        Log.i("TADDD",mWebView.getUrl());*/
+
     }
 
 
@@ -110,11 +100,6 @@ public class MySystemWebView extends SystemWebChromeClient {
         activity.getWindow().setAttributes(attrs);
         activity.getWindow().clearFlags(
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-      //  sendBroadcast(activity,true);
     }
-   /* private void sendBroadcast(boolean isVisible){
-      Intent intent = new Intent("net.hunme.kidsworld.hideMainTabReceiver");
-      intent.putExtra("isVisible",isVisible);
-      activity.sendBroadcast(intent);
-  }*/
+
 }

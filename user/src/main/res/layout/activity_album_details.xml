@@ -12,4 +12,5 @@
         android:horizontalSpacing="@dimen/space"
         android:verticalSpacing="@dimen/space"
         android:numColumns="3" />
+
 </RelativeLayout>

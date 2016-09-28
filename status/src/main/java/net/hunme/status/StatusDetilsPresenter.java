@@ -135,14 +135,6 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
             G.showToast(context,result.getData());
             getStatusDetils(tsId,dynamicId);
         }
-
-//        if(SUBCOMMENT.equals(uri)) {
-//            Result<String> result= (Result<String>) date;
-//            Toast.makeText(context, result.getData(), Toast.LENGTH_SHORT).show();
-//        }else if(SUBPRAISE.equals(uri)){
-//            Result<String> result= (Result<String>) date;
-//            Toast.makeText(context, result.getData(), Toast.LENGTH_SHORT).show();
-//        }
     }
 
     @Override

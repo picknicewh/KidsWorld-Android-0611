@@ -55,14 +55,6 @@ public class OkHttps<T> {
         return httpUtils;
     }
 
-//    public static OkHttps getIntence() {
-////        OkHttps.mClass = mClass;
-//        if(okHttps==null){
-//            okHttps= new OkHttps();
-//        }
-//        return okHttps;
-//    }
-
     /**
      *  没有缓存的请求
      * @param uri 请求地址

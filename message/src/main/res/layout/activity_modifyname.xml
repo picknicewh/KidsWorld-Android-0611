@@ -18,7 +18,6 @@
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:padding="@dimen/space_x1.5"
-        android:hint="活动群"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

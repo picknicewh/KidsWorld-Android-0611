@@ -85,7 +85,7 @@ public class ModifyNameActivity extends BaseActivity implements OkHttpListener {
         targetGroupId =  spf.getString("targetGroupId","");
         targetGroupName = spf.getString("groupName","");
         et_name.setText(targetGroupName);
-        et_name.setHint(targetGroupName);
+//        et_name.setHint(targetGroupName);
     }
     @Override
     protected void setToolBar() {
