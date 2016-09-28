@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
@@ -54,6 +55,7 @@ public class ClassActivity extends BaseActivity implements OkHttpListener,View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class);
+        BaseLibrary.addPartActivity(this);
         getClassinfor();
         initdata();
     }
@@ -61,7 +63,7 @@ public class ClassActivity extends BaseActivity implements OkHttpListener,View.O
     @Override
     protected void setToolBar() {
         setCententTitle("班级");
-         setLiftOnClickClose();
+        setLiftOnClickClose();
         setLiftImage(R.mipmap.ic_arrow_lift);
         setRightImage(R.mipmap.ic_add);
         setRightOnClickListener(this);
@@ -145,6 +147,7 @@ public class ClassActivity extends BaseActivity implements OkHttpListener,View.O
             intent.putExtra("title","创建群聊");
             intent.putExtra("type",0);
             startActivity(intent);
+
         }
     }
 }

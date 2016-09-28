@@ -36,7 +36,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     /**
      * 搜索
      */
-  //  private ImageView iv_search;
+   // private ImageView iv_search;
     /**
      * 班级
      */
@@ -58,10 +58,8 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, null);
         init(view);
-
         RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener(getActivity()));
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener(getActivity()));
-
         return view;
     }
     /**
@@ -69,13 +67,14 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
      * @param  v
      */
    public   void init(View v){
-     //  iv_search = $(v,R.id.iv_search);
+      // iv_search = $(v,R.id.iv_search);
         iv_class = $(v,R.id.iv_class);
         iv_teacher = $(v,R.id.iv_teacher);
         iv_parent = $(v,R.id.iv_parent);
         iv_parent.setOnClickListener(this);
         iv_teacher.setOnClickListener(this);
         iv_class.setOnClickListener(this);
+     //  iv_search.setOnClickListener(this);
         initframent();
     }
     /**
@@ -127,6 +126,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         if (v.getId()==R.id.iv_class){
             intent.setClass(getActivity(), ClassActivity.class);
             getActivity().startActivity(intent);
+
         }else if (v.getId()==R.id.iv_teacher){
             intent.setClass(getActivity(), ParentActivity.class);
             intent.putExtra("title","教师");
@@ -137,7 +137,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
             intent.putExtra("title", "家长");
             intent.putExtra("type", 3);
             getActivity().startActivity(intent);
-        }
+        }/*else if (v.getId()==R.id.iv_search){
+        }*/
     }
-
 }

@@ -56,6 +56,23 @@ public class GroupsDbHelper {
         return groupInforVos;
     }
     /**
+     * 获取所以群中名称
+     *  @param  db 数据库
+     */
+    public List<String> getGroupNames(SQLiteDatabase db){
+        List<String> groupNames = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select * from mgroup",null);
+
+        int nameIndex = cursor.getColumnIndex("groupName");
+
+        while (cursor.moveToNext()){
+            String groupName = cursor.getString(nameIndex);
+            groupNames.add(groupName);
+
+        }
+        return groupNames;
+    }
+    /**
      * 查询某个群是否顶置
      * @param  db 数据库
      * @param classId 群组id

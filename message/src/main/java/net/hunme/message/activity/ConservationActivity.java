@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
@@ -68,6 +69,7 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BaseLibrary.addPartActivity(this);
         setContentView(R.layout.activity_conservation);
         initView();
          PermissionsChecker.getInstance(this).getPerMissions(PERMISSIONS);
@@ -147,13 +149,14 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
                 intent.putExtra("title",name);
                 intent.putExtra("targetGroupId",targetId);
                 startActivityForResult(intent,GroupDetailActivity.EDIT_NMAE);
+
             }else {
                 intent.setClass(this,PersonDetailActivity.class);
                 intent.putExtra("title",name);
                 intent.putExtra("targetId",targetId);
                 startActivity(intent);
-            }
 
+            }
         }
     }
 }

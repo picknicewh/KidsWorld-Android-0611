@@ -37,7 +37,14 @@ import io.rong.push.RongPushClient;
  * ================================================
  */
 public class BaseLibrary {
+    /**
+     * 整体activity同时销毁的
+     */
     private static List<Activity> activitys = null;
+    /**
+     * 部分activity同时销毁的
+     */
+    private static List<Activity> activityPartList= null;
     private static Application instance;
     public static void initializer(Application application){
         OkHttpUtils.init(application);
@@ -45,8 +52,12 @@ public class BaseLibrary {
         RongPushClient.registerMiPush(application, " 2882303761517505108", "5551750520108");
         RongIM.init(application);
         activitys=new ArrayList<>();
+        activityPartList = new ArrayList<>();
         instance=application;
     }
+
+
+
     public static Application getInstance() {
         return instance;
     }
@@ -61,8 +72,23 @@ public class BaseLibrary {
             activitys.add(activity);
         }
     }
-    public static  List<Activity> getActivities(){
-        return  activitys;
+
+    public  static  void  addPartActivity(Activity activity){
+        // 添加Activity到容器中
+        if (activityPartList != null && activityPartList.size() > 0) {
+            if(!activityPartList.contains(activity)){
+                activityPartList.add(activity);
+            }
+        }else{
+            activityPartList.add(activity);
+        }
+    }
+    public static  void removeActivity(){
+        if (activityPartList != null && activityPartList.size() > 0) {
+            for (Activity activity : activityPartList) {
+                activity.finish();
+            }
+        }
     }
     // 遍历所有Activity并finish
     public static void exit() {

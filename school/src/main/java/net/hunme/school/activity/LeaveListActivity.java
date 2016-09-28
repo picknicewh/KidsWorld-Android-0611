@@ -29,10 +29,22 @@ import java.util.Map;
 
 public class LeaveListActivity extends BaseActivity implements View.OnClickListener, OkHttpListener {
   //  private ListView lv_leaves;
+    /**
+     * 适配器
+     */
     private LeaveListAdapter adapter;
+    /**
+     * 下来刷新view
+     */
     private PullableListView lv_leaves;
+    /**
+     * 页码
+     */
     private int count=1;
     private PullToRefreshLayout refresh_view;
+    /**
+     * 数据列表
+     */
     private List<LeaveVo> leaveVos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

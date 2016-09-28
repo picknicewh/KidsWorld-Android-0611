@@ -1,38 +1,28 @@
 package net.hunme.user.activity;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Environment;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.utils.StorageUtils;
-import com.umeng.analytics.MobclickAgent;
 
 import net.hunme.baselibrary.activity.UpdateMessageActivity;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.util.G;
-import net.hunme.baselibrary.util.MyAlertDialog;
+import net.hunme.baselibrary.util.PackageUtils;
 import net.hunme.baselibrary.util.UserMessage;
-import net.hunme.login.LoginActivity;
 import net.hunme.login.UserChooseActivity;
 import net.hunme.user.R;
 import net.hunme.user.util.CacheHelp;
 import net.hunme.user.util.CheckUpdate;
-import net.hunme.baselibrary.util.PackageUtils;
+import net.hunme.user.widget.OperateDialog;
 
 import java.io.File;
-
-import io.rong.imkit.RongIM;
 
 /**
  * ================================================
@@ -81,7 +71,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
     /**
      * 缓存值
      */
-    private TextView tv_cache;
+    public static TextView tv_cache;
     /**
      * 版本号
      */
@@ -119,7 +109,9 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
         }
 
     }
-
+    public  static  TextView getTv_cache(){
+        return tv_cache;
+    }
     private void initView() {
         ll_changepass = $(R.id.ll_changepasswd);
         ll_changephone = $(R.id.ll_changephone);
@@ -205,7 +197,8 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
             intent.setClass(this, UpdateMessageActivity.class);
             startActivity(intent);
         } else if (viewID == R.id.ll_changephone) {
-            showPhoneialog();
+            OperateDialog dialog = new OperateDialog(this);
+            dialog.initPasswordView();
         } else if (viewID == R.id.ll_systeminfo) {
              Intent intent = new Intent();
              intent.setClass(this, SystemInfoActivity.class);
@@ -216,97 +209,17 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
             intent.setClass(this, AdviceActivity.class);
             startActivity(intent);
         } else if (viewID == R.id.ll_exit) {
-            showAlertDialog(1);
+            OperateDialog dialog = new OperateDialog(this,1);
+            dialog.initexitView();
         } else if (viewID == R.id.ll_cleancache) {
-            showAlertDialog(0);
+            OperateDialog dialog = new OperateDialog(this,2);
+            dialog.initexitView();
         } else if (viewID == R.id.ll_checkupadte) {
 //            String url = "http://apkegg.mumayi.com/cooperation/2016/06/17/101/1013262/doupocangqiong_V1.4.1_mumayi_64934.apk";
             new CheckUpdate(this,true);
         }else if(viewID==R.id.tv_provsion){
             startActivity(new Intent(this,ProvsionActivity.class));
         }
-    }
-
-    /**
-     * 退出提示框
-     * @param  flag
-     */
-    private void showAlertDialog(final int flag) {
-        View coupons_view = LayoutInflater.from(this).inflate(R.layout.alertdialog_message, null);
-        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this,1);
-        Button pop_notrigst = (Button) coupons_view.findViewById(R.id.pop_notrigst);
-        Button pop_mastrigst = (Button) coupons_view.findViewById(R.id.pop_mastrigst);
-        TextView pop_title = (TextView) coupons_view.findViewById(R.id.tv_poptitle);
-        if (flag == 1) {
-            pop_mastrigst.setText("确认退出");
-            pop_title.setText("是否退出当前账号？");
-        } else {
-            pop_mastrigst.setText("确认");
-            pop_title.setText("确认清除缓存的数据和图片吗？");
-        }
-        pop_mastrigst.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                if (flag == 1) {
-                    //退出账号
-                    if(RongIM.getInstance()!=null){
-                        RongIM.getInstance().disconnect();
-                    }
-                    MobclickAgent.onProfileSignOff();
-                    UserMessage.getInstance(USettingActivity.this).clean();
-                    Intent intent = new Intent(USettingActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    CacheHelp.deleteFolderFile(Environment.getExternalStorageDirectory().toString() + "/ChatFile",true);
-                    tv_cache.setText("暂无缓存");
-                    //清除缓存
-//                    alertDialog.dismiss();
-                }
-                alertDialog.dismiss();
-            }
-        });
-        pop_notrigst.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
-    }
-
-    /**
-     * 修改手机号对话框
-     */
-    private void showPhoneialog() {
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_modifyphone, null);
-        final AlertDialog alertDialog = MyAlertDialog.getDialog(view, this,1);
-        Button bt_conform = (Button) view.findViewById(R.id.bt_dg_conform);
-        Button bt_cancel = (Button) view.findViewById(R.id.bt_dg_cancel);
-        final EditText et_password = (EditText) view.findViewById(R.id.et_dg_password);
-        bt_conform.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent();
-                String password = et_password.getText().toString();
-                if (TextUtils.isEmpty(password)) {
-                    G.showToast(USettingActivity.this, "密码不能为空");
-                    return;
-                } else if (!password.equals(UserMessage.getInstance(USettingActivity.this).getPassword())) {
-                    G.showToast(USettingActivity.this, "输入密码不正确");
-                    return;
-                }
-                intent.putExtra("phone", password);
-                intent.setClass(USettingActivity.this, UpdateMessageActivity.class);
-                startActivity(intent);
-                alertDialog.dismiss();
-            }
-        });
-        bt_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
     }
     private class ShowSysDosReceiver extends BroadcastReceiver{
         public static final String SHOWSYSDOS = "net.hunme.user.activity.ShowSysDosReceiver";

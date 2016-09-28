@@ -17,6 +17,7 @@ import android.widget.ToggleButton;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.contract.GroupDb;
 import net.hunme.baselibrary.contract.GroupsDbHelper;
@@ -120,6 +121,7 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_groupdetail);
+        BaseLibrary.addPartActivity(this);
         initView();
     }
     /**
@@ -149,8 +151,6 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
         targetGroupId =  spf.getString("targetGroupId","");
         setCheck(targetGroupId);
         setGroupInfo();
-
-
     }
     /**
      * 设置ToggleButton选中的状态
@@ -302,7 +302,6 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
                 setTopConversation(false);
                 dbHelper.updateIsTop(db,0,targetGroupId);
             }
-
         }else if (viewId==R.id.btn_exit){
             OperationGroupDialog dialog;
             if (isganapati(ganapatiId)){//解散群
@@ -321,7 +320,7 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
             if (isganapati(ganapatiId)) {
                 Intent intent = new Intent();
                 intent.setClass(this,ModifyNameActivity.class);
-              //  intent.putExtra("targetGroupId",targetGroupId);
+               //intent.putExtra("targetGroupId",targetGroupId);
                 //intent.putExtra("targetGroupName",targetGroupName);
                 startActivityForResult(intent,ENTEREDIT);
             }
