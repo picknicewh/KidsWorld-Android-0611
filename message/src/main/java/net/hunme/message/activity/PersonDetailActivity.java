@@ -125,12 +125,13 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         String phone = tv_phone.getText().toString();
-        if (v.getId()==R.id.iv_pcall){
+        int viewId = v.getId();
+        if (viewId==R.id.iv_pcall){
             Uri phoneUri =  Uri.parse("tel:"+phone);
             Intent intent = new Intent(Intent.ACTION_DIAL,phoneUri);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-        }else if (v.getId()==R.id.iv_pmessage){
+        }else if (viewId==R.id.iv_pmessage){
             if (RongIM.getInstance()!=null){
                 RongIM.getInstance().startPrivateChat(this,userid,username);
                 RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {

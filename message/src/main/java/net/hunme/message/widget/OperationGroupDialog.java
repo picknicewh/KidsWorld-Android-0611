@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.contract.GroupDb;
 import net.hunme.baselibrary.contract.GroupsDbHelper;
 import net.hunme.baselibrary.mode.Result;
@@ -249,9 +250,11 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
         if (uri.contains(Apiurl.MESSAGE_EXIT_MEMBER)){
             result(date);
             if (flag==FLAG_REMOVE){
+                BaseLibrary.removeActivity();
                 Intent intent = new Intent(context,ClassActivity.class);
                 context.startActivity(intent);
                 context.finish();
+
             }else if (flag==FLAG_REMOVE_MEMBER){
                 context.finish();
             }
@@ -259,10 +262,12 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
             result(date);
             context.finish();
         }else if (uri.contains(Apiurl.MESSAGE_DISSORE_GROUP)){
+            BaseLibrary.removeActivity();
             result(date);
             Intent intent = new Intent(context, ClassActivity.class);
             context.startActivity(intent);
             context.finish();
+
         }
     }
     /**
@@ -276,7 +281,6 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
            Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
        }
        alertDialog.dismiss();
-
    }
     @Override
     public void onError(String uri, String error) {

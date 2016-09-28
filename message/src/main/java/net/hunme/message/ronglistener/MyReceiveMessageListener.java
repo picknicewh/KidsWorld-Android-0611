@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.hunme.baselibrary.contract.GroupDb;
+import net.hunme.baselibrary.contract.GroupsDbHelper;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
@@ -20,6 +22,7 @@ import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.Message;
 
@@ -33,9 +36,13 @@ import io.rong.imlib.model.Message;
  */
 public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageListener, OkHttpListener {
     private Activity activity;
-   public  MyReceiveMessageListener(Activity activity){
+    private GroupDb groupDb;
+    private GroupsDbHelper helper;
+    public  MyReceiveMessageListener(Activity activity){
        this.activity =activity;
-   }
+        groupDb = new GroupDb(activity);
+        helper = new GroupsDbHelper();
+    }
     /**
      * 收到消息的处理。
      * @param message 收到的消息实体。
@@ -44,7 +51,21 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
      */
     @Override
     public boolean onReceived(Message message, int left) {
-        getClassinfor();
+        Conversation.ConversationType type = message.getConversationType();
+        String name =message.getContent().getUserInfo().getName();
+        boolean isCreate=false;
+        List<String> nameList = helper.getGroupNames(groupDb.getWritableDatabase());
+        for (int i = 0;i<nameList.size();i++){
+            String myname = nameList.get(i);
+            if (!myname.equals(name)){
+                isCreate =true;
+            }else {
+                isCreate =false;
+            }
+        }
+        if (type.equals(Conversation.ConversationType.GROUP)&&isCreate){
+            getClassinfor();
+        }
         return true;
     }
     /**
@@ -69,6 +90,7 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
                    GroupInfoVo groupJson = groupJsonList.get(i);
                    final String classId = groupJson.getClassId();
                    final String groupName = groupJson.getGroupName();
+                   helper.insert(groupDb.getWritableDatabase(),groupName,classId,0,0);
                    if (RongIM.getInstance()!=null){
                        RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
                            @Override

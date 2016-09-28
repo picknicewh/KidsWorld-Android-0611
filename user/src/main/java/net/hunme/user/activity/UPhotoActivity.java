@@ -1,13 +1,9 @@
 package net.hunme.user.activity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.gson.reflect.TypeToken;
@@ -18,11 +14,11 @@ import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
-import net.hunme.baselibrary.util.MyAlertDialog;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.user.R;
 import net.hunme.user.adapter.PhotoAdapter;
 import net.hunme.user.mode.PhotoVo;
+import net.hunme.user.widget.OperateDialog;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -45,10 +41,10 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
     private PhotoAdapter adapter;
     private List<PhotoVo>photoList; //用户相册实体类 list
     private UserMessage um;
-    /**
-     * 弹框新建相册
-     */
-    private AlertDialog alertDialog;
+//    /**
+//     * 弹框新建相册
+//     */
+//    private AlertDialog alertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +85,9 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View view) {
         int viewID=view.getId();
         if(viewID==R.id.tv_subtitle){
-            //获取View
+            OperateDialog dialog =new OperateDialog(this,adapter,photoList);
+            dialog.initAlbumview();
+          /*  //获取View
             final View dialogView = LayoutInflater.from(this).inflate(R.layout.alertdialog_add_album, null);
             //获取弹框
             alertDialog = MyAlertDialog.getDialog(dialogView,this,1);
@@ -118,7 +116,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
                     createFlickr(albumName);
                     alertConfirm.setEnabled(false);
                 }
-            });
+            });*/
         }
     }
 
@@ -137,18 +135,18 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
         Type type=new TypeToken<Result<List<PhotoVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MYFlICKR,map,this,2,"MYFlICKR");
     }
-
-    /**
+/*
+    *//**
      * 创建相册
-     * @param flickrName 相册名
-     */
+     * @param
+     *//*
     private void createFlickr(String flickrName){
         Map<String,Object>map=new HashMap<>();
         map.put("tsId",um.getTsId());
         map.put("flickrName",flickrName);
         Type type=new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type,Apiurl.CREATEEFILCK,map,this);
-    }
+    }*/
 
     @Override
     public void onSuccess(String uri, Object date) {
@@ -157,12 +155,12 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
             photoList.clear();
             photoList.addAll(result.getData());
             adapter.notifyDataSetChanged();
-        }else if(Apiurl.CREATEEFILCK.equals(uri)) {
+        }/*else if(Apiurl.CREATEEFILCK.equals(uri)) {
             //创建相册成功 刷新一遍相册数据
             getMyPhoto();
             if(alertDialog!=null) alertDialog.dismiss();
             G.showToast(this,"相册新建成功");
-        }
+        }*/
     }
 
     @Override
@@ -173,8 +171,8 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(alertDialog!=null){
+       /* if(alertDialog!=null){
             alertDialog.cancel();
-        }
+        }*/
     }
 }

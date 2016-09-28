@@ -56,11 +56,14 @@ public class CreateGroupDialog implements View.OnClickListener, OkHttpListener {
      * 群组成员所有id
      */
     private String targetIds;
-
-    public  static   boolean isCreate=false;
+    /**
+     * 群名称
+     */
+    private String groupName;
     public CreateGroupDialog(Activity context, String targetIds){
         this.context  = context;
         this.targetIds = targetIds;
+
     }
     public void  initView(){
          contentView = LayoutInflater.from(context).inflate(R.layout.dialog_addgroup, null);
@@ -77,31 +80,36 @@ public class CreateGroupDialog implements View.OnClickListener, OkHttpListener {
      if (view.getId()==R.id.bt_gcancel){
          alertDialog.dismiss();
      }else if (view.getId()==R.id.bt_gconform){
-         addGroup();
+         createGroup();
+         alertDialog.dismiss();
          bt_conform.setClickable(false);
       }
     }
-    private void addGroup(){
+    /**
+     * 创建群
+     */
+    private void createGroup(){
         Map<String,Object> params = new HashMap<>();
         if (TextUtils.isEmpty(et_Groupname.getText().toString())){
             Toast.makeText(context,"群名字不能为空",Toast.LENGTH_SHORT).show();
             return;
         }
-        params.put("groupName",et_Groupname.getText().toString());
+        groupName = et_Groupname.getText().toString();
+        params.put("groupName",groupName);
         params.put("tsIds",targetIds);
         Type type =new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_CREATE_GROUP,params,this);
     }
-
     @Override
     public void onSuccess(String uri, Object date) {
-       Result<String> data  = (Result<String>) date;
-        if (data!=null){
-            String result = data.getData();
-            Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
-            alertDialog.dismiss();
-            isCreate=true;
-            context.finish();
+        if (uri.equals(Apiurl.MESSAGE_CREATE_GROUP)){
+            Result<String> data  = (Result<String>) date;
+            if (data!=null){
+                String result = data.getData();
+                Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
+                alertDialog.dismiss();
+                context.finish();
+            }
         }
     }
     @Override
