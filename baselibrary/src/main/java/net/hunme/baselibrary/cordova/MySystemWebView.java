@@ -9,6 +9,8 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.umeng.analytics.MobclickAgent;
+
 import org.apache.cordova.engine.SystemWebChromeClient;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
@@ -50,6 +52,9 @@ public class MySystemWebView extends SystemWebChromeClient {
         } else{
             pb_web.setProgress(newProgress);
             pb_web.setVisibility(View.VISIBLE);
+            if (view.getUrl() != null) {
+                MobclickAgent.onPageStart(view.getUrl());
+            }
         }
         super.onProgressChanged(view, newProgress);
     }
@@ -101,5 +106,4 @@ public class MySystemWebView extends SystemWebChromeClient {
         activity.getWindow().clearFlags(
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
-
 }

@@ -67,7 +67,7 @@ import io.rong.imkit.RongIM;
  * 附加注释：
  * 主要接口：
  */
-public class StatusFragement extends BaseFragement implements View.OnClickListener,OkHttpListener{
+public class StatusFragement extends BaseFragement implements View.OnClickListener, OkHttpListener {
     /**
      * 头像
      */
@@ -83,7 +83,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     /**
      * 班级列表
      */
-    private List<String> classlist ;
+    private List<String> classlist;
     /**
      * 选择班级弹窗
      */
@@ -102,10 +102,10 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     private TextView tv_status_bar;
     /**
      * 动态uri地址  loadUrlStr = "file:///android_asset/www/sdk/view/index_android.html#/open-prepare";
-                http://zhu.hunme.net:8080/KidsWorld/space/view/dynamic.html
-                http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html?
+     * http://zhu.hunme.net:8080/KidsWorld/space/view/dynamic.html
+     * http://192.168.1.179:8787/web/kidsWorld/space/view/dynamic.html?
      */
-    private static final String url = ServerConfigManager.WEB_IP+"/space/view/dynamic.html?";
+    private static final String url = ServerConfigManager.WEB_IP + "/space/view/dynamic.html?";
     /**
      * 班级选择
      */
@@ -123,14 +123,15 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     private ProgressBar pb_web;
     public static String CLASSID;
     /**
-     *网络状态监听
+     * 网络状态监听
      */
-   private ConnectionChangeReceiver connectionChangeReceiver;
+    private ConnectionChangeReceiver connectionChangeReceiver;
     /**
      * 无网络状态
      */
     private RelativeLayout rl_nonetwork;
     private String dynamicId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.fragment_status, null);
@@ -145,61 +146,64 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         iv_right = $(view, R.id.iv_right);
         tv_classname = $(view, R.id.tv_classname);
         webView = $(view, R.id.cordovaWebView);
-        ll_classchoose = $(view,R.id.ll_classchoose);
-        rl_toolbar=$(view,R.id.rl_toolbar);
-        tv_status_bar = $(view,R.id.tv_status_bar);
-        rl_nonetwork= $(view,R.id.rl_nonetwork);
+        ll_classchoose = $(view, R.id.ll_classchoose);
+        rl_toolbar = $(view, R.id.rl_toolbar);
+        tv_status_bar = $(view, R.id.tv_status_bar);
+        rl_nonetwork = $(view, R.id.rl_nonetwork);
         rl_nonetwork.setOnClickListener(this);
         tv_status_bar.setOnClickListener(this);
-        pb_web=$(view,R.id.pb_web);
+        pb_web = $(view, R.id.pb_web);
 
         webView.addJavascriptInterface(this, "showDos");  //设置本地调用对象及其接口
-        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web));
-        cordovaWebView=getWebView(webView);
-        um=UserMessage.getInstance(getActivity());
+        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView), pb_web));
+        cordovaWebView = getWebView(webView);
+        um = UserMessage.getInstance(getActivity());
         classlist = new ArrayList<>();
         setViewAction();
         getDynamicHead();
-        ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
+        ImageCache.imageLoader(um.getHoldImgUrl(), iv_lift);
         registerReceiver();
         G.initDisplaySize(getActivity());
     }
-    public void setPosition(int position){
+
+    public void setPosition(int position) {
         this.position = position;
     }
+
     /**
      * 有无网络加载页面状态
      */
-    private  void  setShowView(int position){
+    private void setShowView(int position) {
         setWebView(position);
-        if (G.isNetworkConnected(getActivity())){
+        if (G.isNetworkConnected(getActivity())) {
             rl_nonetwork.setVisibility(View.GONE);
-        }else {
+        } else {
             rl_nonetwork.setVisibility(View.VISIBLE);
 
         }
     }
-    public void setWebView(int position){
-        CLASSID=dynamicList.get(position).getGroupId();
+
+    public void setWebView(int position) {
+        CLASSID = dynamicList.get(position).getGroupId();
 //        cordovaWebView.loadUrl(url+"?tsId="+ UserMessage.getInstance(getActivity()).getTsId());
         String realUrl = null;
         try {
-            realUrl = url+"groupId="+dynamicList.get(position).getGroupId()
-                    +"&groupType="+dynamicList.get(position).getGroupType()
-                    +"&tsId="+um.getTsId()+"&myName="+ URLEncoder.encode(um.getUserName(), "UTF-8")
-                    +"&clickTime="+ URLEncoder.encode(DateUtil.formatDateTime(new Date()), "UTF-8");
+            realUrl = url + "groupId=" + dynamicList.get(position).getGroupId()
+                    + "&groupType=" + dynamicList.get(position).getGroupType()
+                    + "&tsId=" + um.getTsId() + "&myName=" + URLEncoder.encode(um.getUserName(), "UTF-8")
+                    + "&clickTime=" + URLEncoder.encode(DateUtil.formatDateTime(new Date()), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         cordovaWebView.loadUrl(realUrl);
 
-        G.log("loadUrl====="+realUrl);
+        G.log("loadUrl=====" + realUrl);
     }
 
     /**
      * 设置选择弹窗
      */
-    private void setViewAction(){
+    private void setViewAction() {
         iv_lift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,16 +219,16 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         });
     }
 
-    public void setClassname(String classname){
-       tv_classname.setText(classname);
-   }
+    public void setClassname(String classname) {
+        tv_classname.setText(classname);
+    }
 
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
-        if (viewId==R.id.ll_classchoose){
-            int xPos = G.size.W/2-G.dp2px(getActivity(),75);
-            popWindow.showAsDropDown(rl_toolbar,xPos,-G.dp2px(getActivity(),10));
+        if (viewId == R.id.ll_classchoose) {
+            int xPos = G.size.W / 2 - G.dp2px(getActivity(), 75);
+            popWindow.showAsDropDown(rl_toolbar, xPos, -G.dp2px(getActivity(), 10));
             popWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
@@ -233,14 +237,14 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
                     }
                 }
             });
-        }else if (viewId==R.id.rl_nonetwork){
-          setShowView(position);
-      }else if (viewId==R.id.tv_status_bar){
+        } else if (viewId == R.id.rl_nonetwork) {
+            setShowView(position);
+        } else if (viewId == R.id.tv_status_bar) {
             Intent intent = null;
             // 先判断当前系统版本
-            if(android.os.Build.VERSION.SDK_INT > 10){  // 3.0以上
+            if (android.os.Build.VERSION.SDK_INT > 10) {  // 3.0以上
                 intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
-            }else{
+            } else {
                 intent = new Intent();
                 intent.setClassName("com.android.settings", "com.android.settings.WirelessSettings");
             }
@@ -252,50 +256,51 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     public void onResume() {
         super.onResume();
         //用户发布动态成功 重新刷新数据
-        if(G.KisTyep.isReleaseSuccess) {
+        if (G.KisTyep.isReleaseSuccess) {
             G.KisTyep.isReleaseSuccess = false;
             cordovaWebView.loadUrl("javascript:loadNew()");
         }
-        if(G.KisTyep.isChooseId){
+        if (G.KisTyep.isChooseId) {
             //用户切换身份 重新刷新数据
             getDynamicHead();
-            ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
+            ImageCache.imageLoader(um.getHoldImgUrl(), iv_lift);
         }
-        if(G.KisTyep.isUpadteHold){
+        if (G.KisTyep.isUpadteHold) {
             //用户切换头像 重新刷新数据
-            ImageCache.imageLoader(um.getHoldImgUrl(),iv_lift);
+            ImageCache.imageLoader(um.getHoldImgUrl(), iv_lift);
         }
         // 动态发生改变 刷新数据
-        if(G.KisTyep.isUpdateComment&&!G.isEmteny(dynamicId)){
-            G.KisTyep.isUpdateComment=false;
-            cordovaWebView.loadUrl("javascript: backMessage('"+um.getTsId()+"','"+dynamicId+"')");
+        if (G.KisTyep.isUpdateComment && !G.isEmteny(dynamicId)) {
+            G.KisTyep.isUpdateComment = false;
+            cordovaWebView.loadUrl("javascript: backMessage('" + um.getTsId() + "','" + dynamicId + "')");
         }
     }
+
     @JavascriptInterface
-    public void listenerReload(){
+    public void listenerReload() {
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener(getActivity()));
     }
 
     @JavascriptInterface
-    public void setStatus(){
+    public void setStatus() {
         Intent myIntent = new Intent("net.hunme.kidsworld.MyStatusDosShowReceiver");
-        myIntent.putExtra("count",0);
+        myIntent.putExtra("count", 0);
         getActivity().sendBroadcast(myIntent);
     }
 
     @JavascriptInterface
-    public void noticeChange(){
+    public void noticeChange() {
         HMDroidGap.flag = 1;
     }
 
     @JavascriptInterface
-    public void startStatusDetils(String dynamicId){
-        if(G.isEmteny(dynamicId)){
+    public void startStatusDetils(String dynamicId) {
+        if (G.isEmteny(dynamicId)) {
             return;
         }
-        this.dynamicId=dynamicId;
-        Intent intent=new Intent(getActivity(), StatusDetilsActivity.class);
-        intent.putExtra("dynamicId",dynamicId);
+        this.dynamicId = dynamicId;
+        Intent intent = new Intent(getActivity(), StatusDetilsActivity.class);
+        intent.putExtra("dynamicId", dynamicId);
         startActivity(intent);
     }
 
@@ -307,53 +312,58 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
 //            cordovaWebView.loadUrl("javascript:loadNew()");
 //        }
 //    }
+
     /**
      * 获取班级列表
      */
-    private void getDynamicHead(){
-        if(G.isEmteny(um.getTsId())){
+    private void getDynamicHead() {
+        if (G.isEmteny(um.getTsId())) {
             return;
         }
-        Map<String,Object>map=new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("tsId", um.getTsId());
-        Type type=new TypeToken<Result<List<DynamicVo>>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.DYNAMICHEAD,map,this,2,"DYNAMIC");
+        Type type = new TypeToken<Result<List<DynamicVo>>>() {
+        }.getType();
+        OkHttps.sendPost(type, Apiurl.DYNAMICHEAD, map, this, 2, "DYNAMIC");
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if(Apiurl.DYNAMICHEAD.equals(uri)){
-            G.KisTyep.isChooseId=false;
+        if (Apiurl.DYNAMICHEAD.equals(uri)) {
+            G.KisTyep.isChooseId = false;
             dynamicList = ((Result<List<DynamicVo>>) date).getData();
             classlist.clear();
-            for (DynamicVo d: dynamicList){
+            for (DynamicVo d : dynamicList) {
                 classlist.add(d.getGroupName());
             }
             popWindow = new ChooseClassPopWindow(this, classlist);
             ll_classchoose.setOnClickListener(this);
-            if(dynamicList.size()>0){
+            if (dynamicList.size() > 0) {
                 tv_classname.setText(classlist.get(0));
                 setShowView(0);
-                CLASSID=dynamicList.get(0).getGroupId();
+                CLASSID = dynamicList.get(0).getGroupId();
             }
         }
     }
+
     @Override
     public void onError(String uri, String error) {
-        G.KisTyep.isChooseId=false;
+        G.KisTyep.isChooseId = false;
     }
+
     /**
-    * 注册监听网络广播广播
-    */
-    private  void registerReceiver(){
-        IntentFilter filter=new IntentFilter(MyJpushReceiver.SHOWSTAUSDOL);
-        myReceiver=new MyJpushReceiver();
+     * 注册监听网络广播广播
+     */
+    private void registerReceiver() {
+        IntentFilter filter = new IntentFilter(MyJpushReceiver.SHOWSTAUSDOL);
+        myReceiver = new MyJpushReceiver();
         getActivity().registerReceiver(myReceiver, filter);
 
         IntentFilter filter2 = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         connectionChangeReceiver = new ConnectionChangeReceiver();
         getActivity().registerReceiver(connectionChangeReceiver, filter2);
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -361,28 +371,31 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
         getActivity().unregisterReceiver(connectionChangeReceiver);
 
     }
+
     /**
      * 有无网络监听广播
      */
-     class ConnectionChangeReceiver extends BroadcastReceiver {
+    class ConnectionChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            ConnectivityManager connectivityManager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mobNetInfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-            NetworkInfo  wifiNetInfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mobNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            NetworkInfo wifiNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
                 tv_status_bar.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 tv_status_bar.setVisibility(View.GONE);
 
             }
         }
     }
+
     /**
      * 红点广播
      */
     class MyJpushReceiver extends BroadcastReceiver {
         public static final String SHOWSTAUSDOL = "net.hunme.status.showstatusdos";
+
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(SHOWSTAUSDOL)) {
@@ -391,12 +404,12 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
                 String schoolid = bundle.getString("schoolid");
                 String classid = bundle.getString("classid");
                 String groupId = dynamicList.get(position).getGroupId();
-                if (null!=messagetype&&messagetype.equals("1")) {
-                     Intent myIntent = new Intent("net.hunme.kidsworld.MyStatusDosShowReceiver");
-                    if (schoolid.equals("") && classid.equals(classid) ||classid.equals("")&&schoolid.equals(groupId)) {
-                        myIntent.putExtra("count",1);
-                    } else{
-                        myIntent.putExtra("count",0);
+                if (null != messagetype && messagetype.equals("1")) {
+                    Intent myIntent = new Intent("net.hunme.kidsworld.MyStatusDosShowReceiver");
+                    if (schoolid.equals("") && classid.equals(classid) || classid.equals("") && schoolid.equals(groupId)) {
+                        myIntent.putExtra("count", 1);
+                    } else {
+                        myIntent.putExtra("count", 0);
                     }
                     context.sendBroadcast(myIntent);
                 }
@@ -405,7 +418,7 @@ public class StatusFragement extends BaseFragement implements View.OnClickListen
     }
 
     //拦截动态页面返回（不拦截的话Web页面会返回刷新） 不做任何操作 交给MainActiviy去处理
-   @Override
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getView().setFocusableInTouchMode(true);

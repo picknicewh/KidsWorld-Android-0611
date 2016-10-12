@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.SystemInformVo;
-import net.hunme.baselibrary.util.MyAlertDialog;
+import net.hunme.baselibrary.widget.MyAlertDialog;
 import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.SystemInfomDb;
 import net.hunme.baselibrary.util.SystemInfomDbHelp;
@@ -105,7 +105,7 @@ public class SystemInfoActivity extends BaseActivity {
     /**
      * 删除提示框
      */
-    private void showAlertDialog(final SystemInformVo systemInformVo, final  SQLiteDatabase database) {
+    private void showAlertDialog(final SystemInformVo systemInformVo, final SQLiteDatabase database) {
         View coupons_view = LayoutInflater.from(this).inflate(R.layout.alertdialog_message, null);
         final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this,1);
         Button pop_notrigst = (Button) coupons_view.findViewById(R.id.pop_notrigst);

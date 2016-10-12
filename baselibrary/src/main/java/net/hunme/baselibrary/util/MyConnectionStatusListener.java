@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.R;
+import net.hunme.baselibrary.widget.MyAlertDialog;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -19,7 +20,7 @@ import io.rong.imlib.RongIMClient;
 /**
  * 作者： Administrator
  * 时间： 2016/8/17
- * 名称：
+ * 名称： 融云抢登监听
  * 版本说明：
  * 附加注释：
  * 主要接口：
@@ -51,7 +52,12 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        showAlertDialog();
+                        try {
+                            showAlertDialog();
+                        }catch (Exception e){
+                            G.log("抢登弹框异常===="+e);
+                        }
+
                     }
                 });
                 break;
@@ -66,7 +72,7 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
           return;
         }
         View coupons_view = LayoutInflater.from(context).inflate(R.layout.dialog_exit, null);
-        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, context,0);
+         final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, context,0);
         Button btn_conform = (Button) coupons_view.findViewById(net.hunme.baselibrary.R.id.btn_conform);
         TextView pop_title = (TextView) coupons_view.findViewById(net.hunme.baselibrary.R.id.tv_title);
         alertDialog.setCancelable(false);

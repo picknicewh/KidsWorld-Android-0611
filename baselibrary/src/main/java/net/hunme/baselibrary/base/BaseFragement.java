@@ -44,12 +44,14 @@ public class BaseFragement extends Fragment implements CordovaInterface {
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(getActivity());
+        MobclickAgent.onPageStart(this.getClass().getSimpleName());
     }
 
     @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(getActivity());
+        MobclickAgent.onPageStart(this.getClass().getSimpleName());
     }
 
     public CordovaWebView getWebView(SystemWebView webView){

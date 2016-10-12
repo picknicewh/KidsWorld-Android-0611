@@ -36,7 +36,7 @@ import okhttp3.Response;
  * 主要接口：
  * ================================================
  */
-public class OkHttps<T> {
+public class OkHttps {
     private static OkHttpUtils httpUtils;
     public static PostRequest postRequest;
     private static boolean isSuccess; //服务端返回状态
