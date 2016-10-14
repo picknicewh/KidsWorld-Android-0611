@@ -24,7 +24,7 @@ import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MD5Utils;
-import net.hunme.baselibrary.util.MyAlertDialog;
+import net.hunme.baselibrary.widget.MyAlertDialog;
 import net.hunme.baselibrary.util.NetWorkUitls;
 import net.hunme.baselibrary.util.PackageUtils;
 import net.hunme.user.R;

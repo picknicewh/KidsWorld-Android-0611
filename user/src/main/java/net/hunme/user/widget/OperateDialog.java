@@ -20,7 +20,7 @@ import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
-import net.hunme.baselibrary.util.MyAlertDialog;
+import net.hunme.baselibrary.widget.MyAlertDialog;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.login.LoginActivity;
 import net.hunme.user.R;
@@ -93,46 +93,51 @@ public class OperateDialog implements View.OnClickListener, OkHttpListener {
     /**
      * 处理方式 flag =1 处理退出程序 flag= 0 消除缓存
      */
-    private  int flag;
+    private int flag;
     private PhotoAdapter adapter;
-    private List<PhotoVo>photoList; //用户相册实体类 list
-    public OperateDialog(Activity context, int flag){
+    private List<PhotoVo> photoList; //用户相册实体类 list
+
+    public OperateDialog(Activity context, int flag) {
         this.context = context;
         this.flag = flag;
     }
-    public OperateDialog(Activity context){
+
+    public OperateDialog(Activity context) {
         this.context = context;
     }
+
     //
-    public OperateDialog(Activity context,PhotoAdapter adapter,List<PhotoVo>photoList){
+    public OperateDialog(Activity context, PhotoAdapter adapter, List<PhotoVo> photoList) {
         this.context = context;
-        this.adapter =adapter;
+        this.adapter = adapter;
         this.photoList = photoList;
     }
+
     /**
      * 初始化修改密码的对话框
      */
-    public void initPasswordView(){
-         View view = LayoutInflater.from(context).inflate(R.layout.dialog_modifyphone, null);
-         passwordialog = MyAlertDialog.getDialog(view, context,1);
-         pa_b_confrom = (Button) view.findViewById(R.id.bt_dg_conform);
-         pa_b_cancal = (Button) view.findViewById(R.id.bt_dg_cancel);
-         pa_et_password = (EditText) view.findViewById(R.id.et_dg_password);
-         pa_b_cancal.setOnClickListener(this);
-         pa_b_confrom.setOnClickListener(this);
+    public void initPasswordView() {
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_modifyphone, null);
+        passwordialog = MyAlertDialog.getDialog(view, context, 1);
+        pa_b_confrom = (Button) view.findViewById(R.id.bt_dg_conform);
+        pa_b_cancal = (Button) view.findViewById(R.id.bt_dg_cancel);
+        pa_et_password = (EditText) view.findViewById(R.id.et_dg_password);
+        pa_b_cancal.setOnClickListener(this);
+        pa_b_confrom.setOnClickListener(this);
     }
+
     /**
      * 初始化退出程序或者清除缓存的view
      */
-    public void initexitView(){
+    public void initexitView() {
         View coupons_view = LayoutInflater.from(context).inflate(R.layout.alertdialog_message, null);
-        exitdialog = MyAlertDialog.getDialog(coupons_view, context,1);
+        exitdialog = MyAlertDialog.getDialog(coupons_view, context, 1);
         ex_b_cancal = (Button) coupons_view.findViewById(R.id.pop_notrigst);
         ex_b_confrom = (Button) coupons_view.findViewById(R.id.pop_mastrigst);
         ex_b_cancal.setOnClickListener(this);
         ex_b_confrom.setOnClickListener(this);
         TextView tv_title = (TextView) coupons_view.findViewById(R.id.tv_poptitle);
-        if (flag== 1) {
+        if (flag == 1) {
             ex_b_confrom.setText("确认退出");
             tv_title.setText("是否退出当前账号？");
         } else {
@@ -140,29 +145,31 @@ public class OperateDialog implements View.OnClickListener, OkHttpListener {
             tv_title.setText("确认清除缓存的数据和图片吗？");
         }
     }
-    public void initAlbumview(){
+
+    public void initAlbumview() {
         //获取View
         final View dialogView = LayoutInflater.from(context).inflate(R.layout.alertdialog_add_album, null);
         //获取弹框
-        albumdialog = MyAlertDialog.getDialog(dialogView,context,1);
-        ab_b_cancal= (Button) dialogView.findViewById(R.id.b_cancel);
-        ab_b_confrom =(Button) dialogView.findViewById(R.id.b_confirm);
-        ab_et_name= (EditText) dialogView.findViewById(R.id.et_album_name);
+        albumdialog = MyAlertDialog.getDialog(dialogView, context, 1);
+        ab_b_cancal = (Button) dialogView.findViewById(R.id.b_cancel);
+        ab_b_confrom = (Button) dialogView.findViewById(R.id.b_confirm);
+        ab_et_name = (EditText) dialogView.findViewById(R.id.et_album_name);
         ab_b_cancal.setOnClickListener(this);
         ab_b_confrom.setOnClickListener(this);
         ab_et_name.setFocusable(true);
         ab_et_name.setFocusableInTouchMode(true);
         ab_et_name.requestFocus();
     }
+
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
-        if (viewId== R.id.pop_notrigst){
+        if (viewId == R.id.pop_notrigst) {
             exitdialog.dismiss();
-        }else if (viewId==R.id.pop_mastrigst){
+        } else if (viewId == R.id.pop_mastrigst) {
             if (flag == 1) {
                 //退出账号
-                if(RongIM.getInstance()!=null){
+                if (RongIM.getInstance() != null) {
                     RongIM.getInstance().disconnect();
                 }
                 MobclickAgent.onProfileSignOff();
@@ -171,11 +178,11 @@ public class OperateDialog implements View.OnClickListener, OkHttpListener {
                 context.startActivity(intent);
                 context.finish();
             } else {
-                CacheHelp.deleteFolderFile(Environment.getExternalStorageDirectory().toString() + "/ChatFile",true);
+                CacheHelp.deleteFolderFile(Environment.getExternalStorageDirectory().toString() + "/ChatFile", true);
                 USettingActivity.tv_cache.setText("暂无缓存");
             }
             exitdialog.dismiss();
-        }else if (viewId==R.id.bt_dg_conform){
+        } else if (viewId == R.id.bt_dg_conform) {
             Intent intent = new Intent();
             String password = pa_et_password.getText().toString();
             if (TextUtils.isEmpty(password)) {
@@ -189,51 +196,56 @@ public class OperateDialog implements View.OnClickListener, OkHttpListener {
             intent.setClass(context, UpdateMessageActivity.class);
             context.startActivity(intent);
             passwordialog.dismiss();
-        } else if (viewId==R.id.bt_dg_cancel){
+        } else if (viewId == R.id.bt_dg_cancel) {
             passwordialog.dismiss();
-        }else if (viewId==R.id.b_cancel){
+        } else if (viewId == R.id.b_cancel) {
             albumdialog.dismiss();
-        }else if (viewId==R.id.b_confirm){
-            String albumName=ab_et_name.getText().toString().trim();
-            if(G.isEmteny(albumName)){
-                G.showToast(context,"相册名不能为空");
+        } else if (viewId == R.id.b_confirm) {
+            String albumName = ab_et_name.getText().toString().trim();
+            if (G.isEmteny(albumName)) {
+                G.showToast(context, "相册名不能为空");
                 return;
             }
-           createFlickr(albumName);
-           albumdialog.dismiss();
+            createFlickr(albumName);
+            albumdialog.dismiss();
         }
     }
+
     /**
      * 创建相册
+     *
      * @param flickrName 相册名
      */
-    private void createFlickr(String flickrName){
-        Map<String,Object> map=new HashMap<>();
-        map.put("tsId",UserMessage.getInstance(context).getTsId());
-        map.put("flickrName",flickrName);
-        Type type=new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.CREATEEFILCK,map,this);
+    private void createFlickr(String flickrName) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("tsId", UserMessage.getInstance(context).getTsId());
+        map.put("flickrName", flickrName);
+        Type type = new TypeToken<Result<String>>() {
+        }.getType();
+        OkHttps.sendPost(type, Apiurl.CREATEEFILCK, map, this);
     }
+
     /**
      * 获取相册列表
      */
-    private void getMyPhoto(){
-        Map<String,Object> map=new HashMap<>();
-        map.put("tsId",UserMessage.getInstance(context).getTsId());
-        Type type=new TypeToken<Result<List<PhotoVo>>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.MYFlICKR,map,this,2,"MYFlICKR");
+    private void getMyPhoto() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("tsId", UserMessage.getInstance(context).getTsId());
+        Type type = new TypeToken<Result<List<PhotoVo>>>() {
+        }.getType();
+        OkHttps.sendPost(type, Apiurl.MYFlICKR, map, this, 2, "MYFlICKR");
     }
 
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if(Apiurl.CREATEEFILCK.equals(uri)) {
+        if (Apiurl.CREATEEFILCK.equals(uri)) {
             //创建相册成功 刷新一遍相册数据
             getMyPhoto();
-            if(albumdialog!=null) albumdialog.dismiss();
-            G.showToast(context,"相册新建成功");
-        }else  if(Apiurl.MYFlICKR.equals(uri)){
-            Result<List<PhotoVo>> result= (Result<List<PhotoVo>>) date;
+            if (albumdialog != null) albumdialog.dismiss();
+            G.showToast(context, "相册新建成功");
+        } else if (Apiurl.MYFlICKR.equals(uri)) {
+            Result<List<PhotoVo>> result = (Result<List<PhotoVo>>) date;
             photoList.clear();
             photoList.addAll(result.getData());
             adapter.notifyDataSetChanged();
@@ -242,6 +254,6 @@ public class OperateDialog implements View.OnClickListener, OkHttpListener {
 
     @Override
     public void onError(String uri, String error) {
-            G.showToast(context,error);
+        G.showToast(context, error);
     }
 }

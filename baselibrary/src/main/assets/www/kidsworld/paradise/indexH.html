@@ -30,6 +30,8 @@
       <!-- 判断平台，android为0，ios为1，其他为2-->
       var platFlag=testPlat();
       var tsIdLogin=getUrlParam('tsId');
+      checkHistory();
+
       function testPlat(){
         var u = navigator.userAgent;
         if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){ //android终端
@@ -45,6 +47,13 @@
         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
         if (r!=null) return decodeURI(r[2]); return null;
+      }
+      //检查历史记录，如果记录中tsId与登录tsId相同，则不做操作；如果不同则删除之前所有的历史记录，并存入新的tsId
+      function checkHistory(){
+        if(tsIdLogin!=store.get('tsIdHis')){
+          store.clear();
+          store.set('tsIdHis',tsIdLogin);
+        }
       }
       //跳转到播放历史页面
       function goHistory_Origin(){

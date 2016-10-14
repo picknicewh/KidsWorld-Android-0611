@@ -1,4 +1,4 @@
-package net.hunme.baselibrary.util;
+package net.hunme.baselibrary.widget;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import net.hunme.baselibrary.R;
-
+import net.hunme.baselibrary.util.UserMessage;
 
 
 /**

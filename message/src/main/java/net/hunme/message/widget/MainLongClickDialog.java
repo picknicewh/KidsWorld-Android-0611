@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import net.hunme.baselibrary.contract.GroupDb;
 import net.hunme.baselibrary.contract.GroupsDbHelper;
-import net.hunme.baselibrary.util.MyAlertDialog;
+import net.hunme.baselibrary.widget.MyAlertDialog;
 import net.hunme.message.R;
 
 import io.rong.imkit.RongIM;
