@@ -61,7 +61,6 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
     }
 
     private void initDate(){
-
         db=new PublishDb(this);
         um=UserMessage.getInstance(this);
         publishList=new ArrayList<>();
@@ -172,21 +171,4 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
 
         }
     }
-
-//    private void testDate(){
-//        for (int i=0;i<10;i++){
-//            PublishVo vo=new PublishVo();
-//            vo.setDateTime("2016-08-01");
-//            vo.setMessage("PhoneGap/Cordova是一个专业的移动应用开发框架，是一个全面的WEB APP开发的框架，提供了以WEB形式来访问终端设备的API的功能。这对于采用WEB APP进行开发者来说是个福音，这可以避免了原生开发的某些功能。Cordova 只是个原生外壳，app的内核是一个完整的webapp，需要调用的原生功能将以原生插件的形式实现，以暴露js接口的方式调用。");
-//            vo.setTsName("DNF");
-//            vo.setMessageId(i+"");
-//            boolean isRead= PublishDbHelp.select(PublishActivity.db.getReadableDatabase(),vo.getMessageId()+um.getTsId());
-//            if(!isRead)
-//                publishList.add(0,vo);
-//            else
-//                publishList.add(vo);
-//            vo.setRead(isRead);
-//        }
-//        adapter.notifyDataSetChanged();
-//    }
 }

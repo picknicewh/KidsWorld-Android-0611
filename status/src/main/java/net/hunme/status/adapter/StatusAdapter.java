@@ -178,7 +178,7 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
         if (uri.equals(Apiurl.SUBPRAISE)){
             String result = ((Result<String>)date).getData();
             if (result.contains("成功")){
-                statusFragement.getDynamicList(statusFragement.getGroupId(),statusFragement.getGroupType(),1);
+                statusFragement.getDynamicList(statusFragement.getGroupId(),statusFragement.getGroupType(),1,statusVoList.get(0).getDynamicId());
                 notifyDataSetChanged();
             }
         }

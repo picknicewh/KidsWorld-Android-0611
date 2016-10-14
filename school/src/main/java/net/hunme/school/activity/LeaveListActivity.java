@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 public class LeaveListActivity extends BaseActivity implements View.OnClickListener, OkHttpListener {
-  //  private ListView lv_leaves;
+
     /**
      * 适配器
      */
@@ -46,10 +46,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
      * 数据列表
      */
     private  List<LeaveVo> leaveVos;
-    /**
-     *获取列表的状态=0表示滑到最低层=1表示没滑到最底层
-     */
-    private int state;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +57,8 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
         leaveVos = new ArrayList<>();
         showLoadingDialog();
         getLeave();
+        adapter = new LeaveListAdapter(this,leaveVos);
+        lv_leaves.setAdapter(adapter);
     }
 
     @Override
@@ -101,19 +100,11 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
         Result<List<LeaveVo>> data = (Result<List<LeaveVo>>) date;
         if (data!=null){
             stopLoadingDialog();
-            leaveVos = data.getData();
-            if (count==1 &&leaveVos.size()>0){
-                state=1;
-            }else if (count>1&&leaveVos.size()<3){
-                if (leaveVos.size()==0){
-                    count--;
-                    getLeave();
-                }else {
-                    state = 0;
-                }
+            List<LeaveVo> leaveVoList = data.getData();
+            if (leaveVoList.size()>0){
+                leaveVos.addAll(leaveVoList);
             }
-            adapter = new LeaveListAdapter(this,leaveVos);
-            lv_leaves.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }
     }
     @Override
@@ -140,12 +131,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    leaveVos.clear();
-                    if (state==0){
-                        pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.NoMORE);
-                    }else {
-                        count++;
-                    }
+                    count++;
                     getLeave();
                     pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }

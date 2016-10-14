@@ -29,7 +29,8 @@
             android:screenOrientation="landscape" />
         <activity android:name=".activity.ClassListActivity" />
         <activity android:name=".activity.PublishFoodActivity" />
-        <activity android:name=".activity.PublishInfoActivity"></activity>
+        <activity android:name=".activity.PublishInfoActivity" />
+        <activity android:name=".activity.MedicineActivity"></activity>
     </application>
 
 </manifest>

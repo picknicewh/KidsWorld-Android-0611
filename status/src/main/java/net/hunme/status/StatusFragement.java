@@ -156,7 +156,8 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         iv_right.setOnClickListener(this);
         rl_nonetwork.setOnClickListener(this);
         tv_status_bar.setOnClickListener(this);
-
+        adapter = new StatusAdapter(this,statusVoList);
+        lv_status.setAdapter(adapter);
     }
     /**
      * 设置ListView头部的listview
@@ -175,6 +176,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
     }
     /**
      * popwindow调用
+     * @param position  选择班级的位置
      */
     public void setPosition(int position){
         this.position = position;
@@ -190,7 +192,17 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         type=mType;
         groupId = dynamicList.get(position).getGroupId();
         groupType = dynamicList.get(position).getGroupType();
-        getDynamicList(groupId,groupType,type);
+        if (mType==2){
+          //  dynamicId = statusVoList.get(0).getDynamicId();
+            if (!G.isEmteny(groupId)&&!G.isEmteny(groupType)&&!G.isEmteny(dynamicId)){
+                getDynamicList(groupId,groupType,mType,dynamicId);
+            }
+        }else if (mType==1){
+            if (!G.isEmteny(groupId)&&!G.isEmteny(groupType)){
+                getDynamicList(groupId,groupType,mType,dynamicId);
+            }
+        }
+
     }
     /**
      * 设置班级的姓名
@@ -215,7 +227,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
                 }
             });
         }else if (viewId==R.id.tv_status_bar){
-            Intent intent = null;
+            Intent intent ;
             // 先判断当前系统版本
             if(android.os.Build.VERSION.SDK_INT > 10){  // 3.0以上
                 intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
@@ -240,15 +252,11 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         //用户发布动态成功 重新刷新数据
         if(G.KisTyep.isReleaseSuccess) {
             G.KisTyep.isReleaseSuccess = false;
-            if (!G.isEmteny(groupId)&&!G.isEmteny(groupType)){
-                loadDDynamicList(position,1);
-            }
+            loadDDynamicList(position,1);
         }
         // 动态发生改变 刷新数据
         if(G.KisTyep.isUpdateComment){
-            if (!G.isEmteny(groupId)&&!G.isEmteny(groupType)){
-                loadDDynamicList(position,1);
-            }
+            loadDDynamicList(position,2);
             G.KisTyep.isUpdateComment=false;
         }
         if (isClick){
@@ -266,7 +274,6 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         map.put("tsId", um.getTsId());
         Type type=new TypeToken<Result<List<DynamicVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.DYNAMICHEAD,map,this,2,"DYNAMIC");
-      //  showLoadingDialog();
     }
     @Override
     public void onSuccess(String uri, Object date) {
@@ -287,20 +294,18 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
             stopLoadingDialog();
             Result<List<StatusVo>> data = (Result<List<StatusVo>>) date;
             List<StatusVo> statusVos = data.getData();
-            if (data!=null&& !data.equals("")){
+            if (statusVos!=null&& statusVos.size()>0){
+                dynamicId = statusVos.get(0).getDynamicId();
                 if (type==1){
-                    adapter = new StatusAdapter(this,statusVos);
-                    if (pageNum==1){
-                        statusVoList =  data.getData();
-                    }
-                }else if (type==2){
                     statusVoList.addAll(statusVos);
-                    adapter = new StatusAdapter(this,statusVoList);
+                }else if (type==2){
+                    statusVoList.addAll(0,statusVos);
                 }
             }else {
-                adapter = new StatusAdapter(this,statusVoList);
+              /*  if (type==2&&dynamicId==statusVoList.get(0).getDynamicId()){
+                    loadDDynamicList(position,1);
+                }*/
             }
-            lv_status.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
     }
@@ -308,6 +313,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
     public void onError(String uri, String error) {
         stopLoadingDialog();
         G.KisTyep.isChooseId=false;
+
     }
     @Override
     public void onDestroyView() {
@@ -320,14 +326,9 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         new Handler() {
             @Override
             public void handleMessage(Message message) {
-                if (pageNum>1){
-                    pageNum--;
-                }else {
-                    pageNum=1;
-                }
-                if (!G.isEmteny(groupId)&&!G.isEmteny(groupType)){
-                    loadDDynamicList(position,2);
-                }
+               // statusVoList.clear();
+                pageNum=1;
+                loadDDynamicList(position,1);
                 pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
 
             }
@@ -340,10 +341,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
             @Override
             public void handleMessage(Message message) {
                 pageNum++;
-
-                if (!G.isEmteny(groupId)&&!G.isEmteny(groupType)){
-                    loadDDynamicList(position,1);
-                }
+                loadDDynamicList(position,1);
                 pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
             }
         }.sendEmptyMessageDelayed(0,1000);

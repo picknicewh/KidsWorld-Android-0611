@@ -51,6 +51,7 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
     private static List<SyllabusVo> syllabusVoList;
     private int count = 1;
     private int state = 0;
+    private   CourseListAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +65,19 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
        registerReceiver();
        syllabusVoList = new ArrayList<>();
        showLoadingDialog();
+       getArrange(count);
+       setlist();
    }
+    private void setlist(){
+        adapter = new CourseListAdapter(this,syllabusVoList);
+        lv_course.setAdapter(adapter);
+        lv_course.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                PublishPhotoUtil.imageBrowernet(i, (ArrayList<String>) syllabusVoList.get(i).getImgs(),CourseArrangeActivity.this);
+            }
+        });
+    }
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
@@ -122,30 +135,11 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
         Result<List<SyllabusVo>> data = (Result<List<SyllabusVo>>) date;
         if (data!=null){
             stopLoadingDialog();
-            CourseListAdapter adapter = null;
-            final List<SyllabusVo> syllabusVos =data.getData();
-            if (count==1&&syllabusVos.size()>0){
-                 state=0;
-                 syllabusVoList= syllabusVos;
-              //  adapter = new CourseListAdapter(this,syllabusVos);
-            }else if (count>1 && syllabusVos.size()<2){
-                if (syllabusVoList.size()==0){
-                    count--;
-                    getArrange(count);
-                   // adapter = new CourseListAdapter(this,syllabusVoList);
-                }else {
-                    syllabusVoList= syllabusVos;
-                    state=1;
-                }
+             List<SyllabusVo> syllabusVos =data.getData();
+            if (syllabusVos.size()>0){
+               syllabusVoList.addAll(syllabusVos);
             }
-            adapter = new CourseListAdapter(this,syllabusVos);
-            lv_course.setAdapter(adapter);
-            lv_course.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    PublishPhotoUtil.imageBrowernet(i, (ArrayList<String>) syllabusVos.get(i).getImgs(),CourseArrangeActivity.this);
-                }
-            });
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -160,12 +154,11 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
                  @Override
                  public void handleMessage(Message msg) {
                      super.handleMessage(msg);
-                     syllabusVoList.clear();
                      count=1;
                      getArrange(count);
                      pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                  }
-             }.sendEmptyMessageDelayed(0,2000);
+             }.sendEmptyMessageDelayed(0,1000);
          }
 
          @Override
@@ -175,15 +168,10 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
                  public void handleMessage(Message msg) {
                      super.handleMessage(msg);
                      syllabusVoList.clear();
-                     if (state==1){
-                         pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.NoMORE);
-                     }else if (state==0){
-                         count++;
-                     }
                      getArrange(count);
                      pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                  }
-             }.sendEmptyMessageDelayed(0,2000);
+             }.sendEmptyMessageDelayed(0,1000);
 
          }
      }

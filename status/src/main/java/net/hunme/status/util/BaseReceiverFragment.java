@@ -50,6 +50,7 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
     public RelativeLayout rl_nonetwork;
     public String groupId;
     public String groupType;
+    public String dynamicId;
     public int pageNum=1;
     public   static String  createTime;
     public UserMessage um;
@@ -84,16 +85,19 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
      * @param  mType   1是否第一次请求数据  = 1第一次 =2其他
      *                  2 怎么形式请求数据 1=加载，2=刷新
      */
-    public void getDynamicList(String groupId,String groupType,int mType){
+    public void getDynamicList(String groupId,String groupType,int mType, String dynamicId){
+        Map<String,Object> map=new HashMap<>();
+        if(G.isEmteny(um.getTsId())){
+            return;
+        }
         if (mType ==1){
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String  data = format.format(new Date());
             createTime = data;
+
+        }else if (mType==2){
+              map.put("dynamicId", dynamicId);
         }
-        if(G.isEmteny(um.getTsId())){
-            return;
-        }
-        Map<String,Object> map=new HashMap<>();
         map.put("tsId", um.getTsId());
         map.put("groupId",groupId);
         map.put("groupType", groupType);

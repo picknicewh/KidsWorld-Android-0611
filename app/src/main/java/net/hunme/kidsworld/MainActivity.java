@@ -71,8 +71,6 @@ public class MainActivity extends JPushBaseActivity {
      */
     @Bind(R.id.ll_tab)
     LinearLayout llTab;
-
-
 //    @Bind(R.id.content)
 //    FrameLayout content;
 
@@ -174,7 +172,6 @@ public class MainActivity extends JPushBaseActivity {
 //        viewPager.setAdapter(adapter);
 //        viewPager.setOffscreenPageLimit(3);
 //        viewPager.setPagingEnabled(false);
-
         ft = getSupportFragmentManager().beginTransaction();//获取FragmentTransaction 实例
         ft.replace(R.id.content, discoveryFragement); //使用DetailsFragment 的实例
         ft.commit();

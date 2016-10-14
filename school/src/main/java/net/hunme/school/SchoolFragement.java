@@ -16,6 +16,7 @@ import net.hunme.school.activity.ClassListActivity;
 import net.hunme.school.activity.CourseArrangeActivity;
 import net.hunme.school.activity.FoodListActivity;
 import net.hunme.school.activity.LeaveListActivity;
+import net.hunme.school.activity.MedicineActivity;
 import net.hunme.school.activity.PublishActivity;
 import net.hunme.school.activity.WebViewActivity;
 
@@ -143,9 +144,9 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             intent.putExtra("subTitle","发布");
         }else if(view.getId()==R.id.rl_openClass){
             intent.setClass(getActivity(), ClassListActivity.class);
-        }/*else if (view.getId()==R.id.rl_medicine){
-
-        }*/
+        }else if (view.getId()==R.id.rl_medicine){
+            intent.setClass(getActivity(), MedicineActivity.class);
+        }
         startActivity(intent);
     }
 

@@ -20,6 +20,7 @@ import net.hunme.user.adapter.MyDynamicAdapter;
 import net.hunme.user.mode.DynamicInfoVo;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,7 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
      * 列表信息
      */
     private  static List<DynamicInfoVo> dynamicInfoVoList;
+    private   MyDynamicAdapter adapter=null;
     private int state;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,10 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
     private void initview(){
         lv_dynamic = $(R.id.lv_dynamic);
         refresh_view = $(R.id.refresh_view);
+        dynamicInfoVoList = new ArrayList<>();
         getMyDynamic(pageNumber);
+        adapter = new MyDynamicAdapter(this,dynamicInfoVoList,pageNumber);
+        lv_dynamic.setAdapter(adapter);
         refresh_view.setOnRefreshListener(this);
     }
     @Override
@@ -85,22 +90,11 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
         if (uri.equals(Apiurl.MYDYNAMICS)){
             if (date!=null){
                 stopLoadingDialog();
-                MyDynamicAdapter adapter=null;
                 List<DynamicInfoVo> dynamicInfoVos = ((Result<List<DynamicInfoVo>> )date).getData();
-                int  size = dynamicInfoVos.size();
-                if (size>0&& pageNumber==1){
-                    adapter = new MyDynamicAdapter(this,dynamicInfoVos,pageNumber);
-                    dynamicInfoVoList = dynamicInfoVos;
-                    state=1;
-                }else if (size>0&& pageNumber>1){
-                    adapter = new MyDynamicAdapter(this,dynamicInfoVos,pageNumber);
-                    dynamicInfoVoList = dynamicInfoVos;
-                    state=2;
-                }else if (dynamicInfoVos.size()==0&& pageNumber>1){
-                    adapter = new MyDynamicAdapter(this,dynamicInfoVoList,pageNumber);
-                    state=3;
+                if (dynamicInfoVos.size()>0){
+                    dynamicInfoVoList.addAll(dynamicInfoVos);
                 }
-                lv_dynamic.setAdapter(adapter);
+               adapter.notifyDataSetChanged();
             }
         }
     }
@@ -114,11 +108,8 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
         new Handler() {
             @Override
             public void handleMessage(Message message) {
-                if (pageNumber>1){
-                    pageNumber--;
-                }else {
-                    pageNumber=1;
-                }
+                dynamicInfoVoList.clear();
+                pageNumber=1;
                 getMyDynamic(pageNumber);
                 pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
 
@@ -131,14 +122,9 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
         new Handler() {
             @Override
             public void handleMessage(Message message) {
-                if (state==1){
-                    pageNumber++;
-                    getMyDynamic(pageNumber);
-                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-                }else if (state==2){
-                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-                    return;
-                }
+                pageNumber++;
+                getMyDynamic(pageNumber);
+                pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
             }
         }.sendEmptyMessageDelayed(0,1000);
     }

@@ -99,7 +99,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         targetId =  spf.getString("targetGroupId","");
         name = spf.getString("groupName","");
         Intent intent = getIntent();
-
         if (targetId.equals("")&& name.equals("") || !targetId.equals(intent.getData().getQueryParameter("targetId"))&&
                 !name.equals(intent.getData().getQueryParameter("title"))){
               targetId = intent.getData().getQueryParameter("targetId");
@@ -155,7 +154,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
                 intent.putExtra("title",name);
                 intent.putExtra("targetId",targetId);
                 startActivity(intent);
-
             }
         }
     }

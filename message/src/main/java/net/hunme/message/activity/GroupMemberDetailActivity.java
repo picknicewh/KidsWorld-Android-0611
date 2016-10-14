@@ -45,7 +45,7 @@ public class GroupMemberDetailActivity extends BaseActivity implements OkHttpLis
         setContentView(R.layout.activity_group_member_detail);
         BaseLibrary.addPartActivity(this);
         gv_memberDetail = $(R.id.gv_memberdetail);
-         targetGroupId = getIntent().getStringExtra("targetGroupId");
+        targetGroupId = getIntent().getStringExtra("targetGroupId");
         targetGroupName = getIntent().getStringExtra("targetGroupName");
         getMemberList(targetGroupId);
     }

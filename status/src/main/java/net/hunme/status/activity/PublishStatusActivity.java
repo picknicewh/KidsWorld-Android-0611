@@ -138,7 +138,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
               //  goSelectImager();
                // showPhoto();
                 dynamicType="1";
-
                 break;
             case StatusPublishPopWindow.VEDIO:
                 setCententTitle("发布视频");
@@ -151,7 +150,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 PublishPhotoUtil.showPhoto(this,itemList,gv_photo,maxContent);
                 PublishPhotoUtil.goSelectImager(itemList,this,gv_photo,maxContent);
                 PublishPhotoUtil.showPhoto(this,itemList,gv_photo,maxContent);
-              //
               //  goSelectImager();
                // showPhoto();
                 dynamicType="4";
