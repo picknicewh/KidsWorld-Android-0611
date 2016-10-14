@@ -12,6 +12,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 
+
     <declare-styleable name="RatioImageView">
         <attr name="ratio" format="float"/>
     </declare-styleable>
