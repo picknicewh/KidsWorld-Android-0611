@@ -19,6 +19,7 @@ import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.R;
 import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.ToolBarHelper;
+import net.hunme.baselibrary.widget.LoadingDialog;
 
 import io.rong.imkit.RongIM;
 
@@ -41,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private TextView tv_title;
     private ImageView iv_right;
     private TextView tv_subTitle;
+    public     LoadingDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,7 +148,19 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onResume();
         MobclickAgent.onResume(this);
     }
+    public void showLoadingDialog() {
+        if(dialog==null)
+            dialog=new LoadingDialog(this, R.style.LoadingDialogTheme);
+        dialog.show();
+        dialog.setCancelable(true);
+        dialog.setLoadingText("数据加载中...");
+    }
+    public void stopLoadingDialog() {
+        if (dialog!=null){
+            dialog.dismiss();
+        }
 
+    }
     @Override
     protected void onPause() {
         super.onPause();

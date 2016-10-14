@@ -41,12 +41,16 @@ public class PullToRefreshLayout extends RelativeLayout
 	public static final int LOADING = 4;
 	// 操作完毕
 	public static final int DONE = 5;
+	//没有更多
+	public static final int NOMORE = 6;
 	// 当前状态
 	private int state = INIT;
 	// 刷新回调接口
 	private OnRefreshListener mListener;
 	// 刷新成功
 	public static final int SUCCEED = 0;
+	// 没有更多
+	public static final int NoMORE = 2;
 	// 刷新失败
 	public static final int FAIL = 1;
 	// 按下Y坐标，上一个事件点Y坐标
@@ -87,7 +91,6 @@ public class PullToRefreshLayout extends RelativeLayout
 	private View refreshStateImageView;
 	// 刷新结果：成功或失败
 	private TextView refreshStateTextView;
-
 	// 上拉头
 	private View loadmoreView;
 	// 上拉的箭头
@@ -133,7 +136,6 @@ public class PullToRefreshLayout extends RelativeLayout
 					pullUpY = -loadmoreDist;
 					timer.cancel();
 				}
-
 			}
 			if (pullDownY > 0)
 				pullDownY -= MOVE_SPEED;
@@ -279,7 +281,13 @@ public class PullToRefreshLayout extends RelativeLayout
 			loadStateTextView.setText(R.string.load_succeed);
 			loadStateImageView.setBackgroundResource(R.mipmap.load_succeed);
 			break;
-		case FAIL:
+			case NoMORE:
+				// 没有更多
+				loadStateImageView.setVisibility(View.VISIBLE);
+				loadStateTextView.setText(R.string.load_nomore);
+				loadStateImageView.setBackgroundResource(R.mipmap.load_succeed);
+				break;
+			case FAIL:
 		default:
 			// 加载失败
 			loadStateImageView.setVisibility(View.VISIBLE);
@@ -349,6 +357,15 @@ public class PullToRefreshLayout extends RelativeLayout
 			loadingView.startAnimation(refreshingAnimation);
 			loadStateTextView.setText(R.string.loading);
 			break;
+			case NOMORE:
+				// 正在加载状态
+				pullUpView.clearAnimation();
+				loadingView.setVisibility(View.INVISIBLE);
+				pullUpView.setVisibility(View.INVISIBLE);
+				loadingView.startAnimation(refreshingAnimation);
+				loadStateTextView.setText(R.string.load_nomore);
+				break;
+
 		case DONE:
 			// 刷新或加载完毕，啥都不做
 			break;
@@ -500,6 +517,9 @@ public class PullToRefreshLayout extends RelativeLayout
 		super.dispatchTouchEvent(ev);
 		return true;
 	}
+
+
+
 
 	/**
 	 * @author chenjing 自动模拟手指滑动的task

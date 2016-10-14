@@ -29,19 +29,11 @@ public class GridAlbumAdapter extends BaseAdapter {
     private ArrayList<String> imageItems;
     private Context context;
     private int maxContent;
-    public GridAlbumAdapter(ArrayList<String> imageItems, Context context) {
+    public GridAlbumAdapter(ArrayList<String> imageItems, Context context,int maxContent) {
         this.imageItems = imageItems;
         this.context = context;
-        maxContent=9;
-    }
+        this.maxContent = maxContent;
 
-    public GridAlbumAdapter(ArrayList<String> imageItems, Context context, boolean isSchool) {
-        this.imageItems = imageItems;
-        this.context = context;
-        if(isSchool)
-            maxContent=1;
-        else
-            maxContent=9;
     }
 
     @Override

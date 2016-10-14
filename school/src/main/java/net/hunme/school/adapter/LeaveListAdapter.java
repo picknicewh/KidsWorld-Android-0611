@@ -57,7 +57,7 @@ public class LeaveListAdapter extends BaseAdapter {
         viewHold= (ViewHold) view.getTag();
         viewHold.tv_date.setText(vo.getCreationTime().substring(0,10));
         viewHold.tv_name.setText(vo.getTsName());
-        viewHold.tv_timeStart.setText(vo.getStartDate().substring(0,16));
+        viewHold.tv_timeStart.setText(vo.getStartDate().substring(0,16)+"至");
         viewHold.tv_timeEnd.setText(vo.getEndDate().substring(0,16));
         viewHold.tv_reason.setText(vo.getCause());
         return view;

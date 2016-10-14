@@ -26,12 +26,12 @@ import java.util.List;
 public class ContractAdapter extends BaseAdapter implements SectionIndexer {
 	private List<GroupMemberBean> list = null;
 	private Context mContext;
-    private int type;
+
 	private static HashMap<Integer, Boolean> isSelected;
-	public ContractAdapter(Context mContext, List<GroupMemberBean> list,int type) {
+	public ContractAdapter(Context mContext, List<GroupMemberBean> list) {
 		this.mContext = mContext;
 		this.list = list;
-		this.type = type;
+
 		isSelected = new HashMap<>();
 		initDate();
 

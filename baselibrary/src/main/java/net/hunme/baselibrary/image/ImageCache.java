@@ -38,19 +38,21 @@ public class ImageCache {
                     // .displayer(new RoundedBitmapDisplayer(10)) // 设置成圆角图片
                     .bitmapConfig(Bitmap.Config.ARGB_4444).build(); // 构建完成
             imageLoader =ImageLoader.getInstance();
+
         }
         return imageLoader;
     }
 
     /**
      *  显示普通图片
-     * @param uri 图片地址
+     * @param imageUri 图片地址
      * @param imageView
      */
-    public static void imageLoader(String uri, ImageView imageView){
-        ImageCache().displayImage(uri, imageView, options);
-    }
+    public static void imageLoader( String imageUri,  ImageView imageView){
+        imageView.setTag(imageUri);
+        ImageCache().displayImage(imageUri, imageView, options);
 
+    }
     /**
      *  获取图片下载进度监听
      * @param uri

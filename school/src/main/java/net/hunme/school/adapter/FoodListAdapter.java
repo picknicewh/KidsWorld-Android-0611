@@ -1,6 +1,7 @@
 package net.hunme.school.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,10 @@ import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.school.R;
 import net.hunme.school.bean.DishesVo;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import main.picturesee.util.ImagePagerActivity;
 
 /**
  * 作者： wh
@@ -47,17 +51,28 @@ public class FoodListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewHold viewHold;
         if(null==view){
             view= LayoutInflater.from(context).inflate(R.layout.item_food_list,null);
             new ViewHold(view);
         }
-        DishesVo vo=dishesVoList.get(i);
+        final   DishesVo vo=dishesVoList.get(i);
         viewHold= (ViewHold) view.getTag();
         viewHold.tv_food.setText(vo.getCookName());
         viewHold.tv_dinner.setText(vo.getDinnerTime());
         ImageCache.imageLoader(vo.getCookUrl().get(0),viewHold.iv_food_image);
+        viewHold.iv_food_image.setTag(vo.getCookUrl().get(0));
+        viewHold.iv_food_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ImagePagerActivity.class);
+                intent.putStringArrayListExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, (ArrayList<String>) vo.getCookUrl());
+                intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, String.valueOf(view.getTag()));
+                intent.putExtra("source","net");
+                context.startActivity(intent);
+            }
+        });
         return view;
     }
 

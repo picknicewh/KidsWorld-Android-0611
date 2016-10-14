@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.hunme.school.activity.PublishFoodActivity">
+    <RelativeLayout
+        android:id="@+id/rl_calendar"
+        android:background="@color/bg_layout"
+        android:padding="@dimen/space_x2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_calendar"
+            android:drawablePadding="@dimen/space"
+            android:drawableLeft="@mipmap/calendar"
+            android:layout_centerInParent="true"
+            android:textColor="@color/main_green"
+            android:text="2016年09月07日"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <net.hunme.school.widget.DateView
+        android:visibility="gone"
+        android:id="@+id/dv_date"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <RadioGroup
+        android:padding="@dimen/space"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="2dp"/>
+        <RadioButton
+            android:textSize="@dimen/ts_large"
+            android:layout_weight="1"
+            android:text="点心"
+            android:textColor="@color/main_green"
+            android:id="@+id/tv_sweetFood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:textSize="@dimen/ts_large"
+            android:layout_marginLeft="@dimen/space_x2"
+            android:layout_weight="1"
+            android:text="午餐"
+            android:textColor="@color/main_green"
+            android:id="@+id/tv_launch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="2dp"/>
+    </RadioGroup>
+
+    <EditText
+        android:layout_marginTop="@dimen/space"
+        android:background="@drawable/bg_advice_selecter"
+        android:id="@+id/et_food"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:hint="请输入食谱..."
+        android:inputType="textMultiLine"
+        android:minLines="5"
+        android:layout_margin="@dimen/space"
+        android:padding="@dimen/space_x2" />
+    <GridView
+        android:layout_marginLeft="@dimen/space_x2"
+        android:layout_marginRight="@dimen/space_x2"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/gv_food"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="@dimen/space"
+        android:verticalSpacing="@dimen/space"
+        android:numColumns="3"
+        android:scrollbars="none" />
+</LinearLayout>

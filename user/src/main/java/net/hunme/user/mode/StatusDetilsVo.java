@@ -1,4 +1,4 @@
-package net.hunme.status.mode;
+package net.hunme.user.mode;
 
 import java.util.List;
 

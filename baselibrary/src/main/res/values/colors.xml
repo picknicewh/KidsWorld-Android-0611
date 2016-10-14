@@ -17,6 +17,7 @@
     <color name="harf_black">#50000000</color>
     <color name="_black">#DD000000</color>
     <color name="pop_black">#DD494949</color>
+    <color name="bg_message">#535353</color>
     <color name="sc_">#494949</color>
     <color name="myteacher">#f6af00</color>
     <color name="myclass">#005bb1</color>
@@ -28,7 +29,7 @@
     <color name="bg_layout">#efeff4</color>
     <!--tab选项颜色-->
     <color name="default_grey">#646464</color>
-
+    <color name="background_tab_pressed">#6633B5E5</color>
     <color name="ivory">#fffff0</color><!--象牙色 -->
     <color name="lightyellow">#ffffe0</color><!--亮黄色 -->
     <color name="yellow">#ffff00</color><!--黄色 -->

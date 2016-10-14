@@ -14,8 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.util.DateUtil;
 import net.hunme.baselibrary.util.G;
 import net.hunme.school.R;
+import net.hunme.school.activity.BaseFoodActivity;
 import net.hunme.school.activity.FoodListActivity;
 
 import java.text.SimpleDateFormat;
@@ -347,8 +349,12 @@ public class DateView extends LinearLayout implements View.OnClickListener{
         setDate(date);
         if (flag==1){
             DateView.this.setVisibility(GONE);
-            FoodListActivity.getCalender().setText(date);
-            Intent intent  = new Intent(FoodListActivity.ACTION_GEFOOD);
+            BaseFoodActivity.getCalender().setText(date);
+            if (BaseFoodActivity.from==BaseFoodActivity.FOODLISTPAGE){
+                FoodListActivity.getListView().setVisibility(GONE);
+                FoodListActivity.getNodataView().setVisibility(GONE);
+            }
+            Intent intent  = new Intent(BaseFoodActivity.ACTION_GEFOOD);
             context.sendBroadcast(intent);
         }else {
             DateView.this.setVisibility(VISIBLE);

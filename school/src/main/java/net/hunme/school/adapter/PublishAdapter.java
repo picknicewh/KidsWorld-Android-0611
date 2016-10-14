@@ -57,7 +57,6 @@ public class PublishAdapter extends BaseAdapter {
         }
         PublishVo vo=publishList.get(i);
         viewHold= (ViewHold) view.getTag();
-       // ImageCache.imageLoader(vo.getImgUrl(),viewHold.lv_holad);
        // viewHold.tv_title.setText(vo.getTsName());
         viewHold.tv_title.setText("校长");
         viewHold.tv_content.setText(vo.getMessage());

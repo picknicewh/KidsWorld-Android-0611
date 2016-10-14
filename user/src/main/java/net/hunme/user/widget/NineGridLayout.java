@@ -1,4 +1,4 @@
-package net.hunme.status.widget;
+package net.hunme.user.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import net.hunme.status.R;
+import net.hunme.user.R;
 
 import java.util.ArrayList;
 import java.util.List;

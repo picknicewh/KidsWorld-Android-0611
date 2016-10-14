@@ -30,7 +30,6 @@ import net.hunme.message.fragment.MessageFragement;
 import net.hunme.school.SchoolFragement;
 import net.hunme.status.StatusFragement;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -62,11 +61,17 @@ public class MainActivity extends JPushBaseActivity {
      */
     @Bind(R.id.tv_dos_status)
     TextView tvStatusDos;
+     /**
+     * 园所圆点
+     */
+    @Bind(R.id.tv_dos_school)
+    TextView tvDosSchool;
     /**
      * 底部tab
      */
     @Bind(R.id.ll_tab)
     LinearLayout llTab;
+
 
 //    @Bind(R.id.content)
 //    FrameLayout content;
@@ -113,9 +118,6 @@ public class MainActivity extends JPushBaseActivity {
      * 标记位
      */
     private int flag = 0;
-
-    private List<Fragment> fragmentList;
-
     /**
      * 判断网络是否连接
      */
@@ -129,6 +131,7 @@ public class MainActivity extends JPushBaseActivity {
     private Timer timer;
     private FragmentTransaction ft;
     private Fragment mContent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -175,7 +178,7 @@ public class MainActivity extends JPushBaseActivity {
         ft = getSupportFragmentManager().beginTransaction();//获取FragmentTransaction 实例
         ft.replace(R.id.content, discoveryFragement); //使用DetailsFragment 的实例
         ft.commit();
-        mContent=discoveryFragement;
+        mContent = discoveryFragement;
     }
 
     @Override
@@ -198,19 +201,19 @@ public class MainActivity extends JPushBaseActivity {
         switch (view.getId()) {
             case R.id.ll_discovery:
                 flag = 0;
-                fragment=discoveryFragement;
+                fragment = discoveryFragement;
                 break;
             case R.id.ll_school:
                 flag = 1;
-                fragment=schoolFragement;
+                fragment = schoolFragement;
                 break;
             case R.id.ll_status:
                 flag = 2;
-                fragment=statusFragement;
+                fragment = statusFragement;
                 break;
             case R.id.ll_message:
                 flag = 3;
-                fragment=messageFragement;
+                fragment = messageFragement;
                 break;
         }
         switchContent(fragment);
@@ -223,13 +226,15 @@ public class MainActivity extends JPushBaseActivity {
         setBaseBar(flag);
     }
 
-    /** 修改显示的内容 不会重新加载 **/
+    /**
+     * 修改显示的内容 不会重新加载
+     **/
     public void switchContent(Fragment to) {
         if (mContent != to) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             if (!to.isAdded()) // 先判断是否被add过
                 transaction.hide(mContent).add(R.id.content, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-             else
+            else
                 transaction.hide(mContent).show(to).commit(); // 隐藏当前的fragment，显示下一个
 
             mContent = to; //重新赋值

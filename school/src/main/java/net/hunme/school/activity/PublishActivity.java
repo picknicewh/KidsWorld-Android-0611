@@ -38,6 +38,7 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
      *  无网络状态
      */
     private RelativeLayout rl_nonetwork;
+    private int type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,7 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
         initDate();
     }
     /**
-     *
+     *初始数据
      */
     private void initView(){
         lv_publish=$(R.id.lv_publish);
@@ -87,7 +88,14 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
         setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickClose();
         setCententTitle("通知");
-        setSubTitle("全部阅读");
+        if (UserMessage.getInstance(this).getType().equals("2")){
+            setSubTitle("发布通知");
+            type=1;
+        }else {
+            setSubTitle("全部阅读");
+            type=2;
+        }
+
         setSubTitleOnClickListener(this);
     }
 
@@ -142,20 +150,26 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
                 rl_nonetwork.setVisibility(View.VISIBLE);
             }
         }else if (view.getId()==R.id.tv_subtitle){
-            if(publishList.size()<0){
-                //通知列表为空返回
-                return;
-            }
-            //遍历消息列表
-            for (PublishVo p:publishList){
-                //所有未读的插入数据库
-                if(!p.isRead()){
-                    PublishDbHelp.insert(db.getWritableDatabase(),p.getMessageId()+um.getTsId());
-                    p.setRead(true);
+            if (type==2){
+                if(publishList.size()<0){
+                    //通知列表为空返回
+                    return;
                 }
+                //遍历消息列表
+                for (PublishVo p:publishList){
+                    //所有未读的插入数据库
+                    if(!p.isRead()){
+                        PublishDbHelp.insert(db.getWritableDatabase(),p.getMessageId()+um.getTsId());
+                        p.setRead(true);
+                    }
+                }
+                //刷新适配器
+                adapter.notifyDataSetChanged();
+            }else {
+                Intent intent = new Intent(this,PublishInfoActivity.class);
+                startActivity(intent);
             }
-            //刷新适配器
-            adapter.notifyDataSetChanged();
+
         }
     }
 

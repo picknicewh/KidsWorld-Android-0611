@@ -45,7 +45,11 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
     /**
      * 数据列表
      */
-    private List<LeaveVo> leaveVos;
+    private  List<LeaveVo> leaveVos;
+    /**
+     *获取列表的状态=0表示滑到最低层=1表示没滑到最底层
+     */
+    private int state;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,15 +58,15 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
         refresh_view = $(R.id.refresh_view);
         refresh_view.setOnRefreshListener(new MyListener());
         leaveVos = new ArrayList<>();
+        showLoadingDialog();
         getLeave();
-
     }
 
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickClose();
-        setTitle("请假");
+        setCententTitle("请假");
         setSubTitle("我要请假");
         setSubTitleOnClickListener(this);
     }
@@ -89,14 +93,25 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
         params.put("pageSize",3);
         Type type = new TypeToken<Result<List<LeaveVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.SCHOOL_GETLEAVES,params,this);
+
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
         Result<List<LeaveVo>> data = (Result<List<LeaveVo>>) date;
         if (data!=null){
-            List<LeaveVo> leaveVoList = data.getData();
-            leaveVos.addAll(leaveVoList);
+            stopLoadingDialog();
+            leaveVos = data.getData();
+            if (count==1 &&leaveVos.size()>0){
+                state=1;
+            }else if (count>1&&leaveVos.size()<3){
+                if (leaveVos.size()==0){
+                    count--;
+                    getLeave();
+                }else {
+                    state = 0;
+                }
+            }
             adapter = new LeaveListAdapter(this,leaveVos);
             lv_leaves.setAdapter(adapter);
         }
@@ -125,8 +140,12 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                  //  leaveVos.clear();
-                    count++;
+                    leaveVos.clear();
+                    if (state==0){
+                        pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.NoMORE);
+                    }else {
+                        count++;
+                    }
                     getLeave();
                     pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }

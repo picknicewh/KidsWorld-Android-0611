@@ -76,6 +76,18 @@
             android:layout_below="@id/tv_timeStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            android:padding="@dimen/space_x0.5"
+            android:background="@color/main_green"
+            android:layout_marginRight="@dimen/space_x2"
+            android:layout_alignParentRight="true"
+            android:id="@+id/tv_read"
+            android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/space"
+            android:text="已阅"
+            android:textSize="@dimen/ts_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 
     <LinearLayout
@@ -84,18 +96,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/reason"
+
             android:text="理由："
             android:textSize="@dimen/ts_x_large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/tv_reason"
+            android:layout_toRightOf="@+id/reason"
             android:textColor="#494949"
             android:layout_marginLeft="@dimen/space"
             android:text="回家"
             android:textSize="@dimen/ts_x_large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
     <View
         android:layout_marginLeft="@dimen/space_x2"

@@ -1,7 +1,9 @@
-package net.hunme.message.activity;
+package net.hunme.message.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -14,13 +16,14 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
-import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
+import net.hunme.message.activity.PersonDetailActivity;
 import net.hunme.message.adapter.ContractAdapter;
 import net.hunme.message.bean.ContractInfoVo;
 import net.hunme.message.bean.GroupInfoVo;
@@ -46,7 +49,7 @@ import io.rong.imkit.RongIM;
  * 附加注释：通过传递不同的联系人列表分别显示老师，家长两个页面
  * 主要接口：
  */
-public class ParentActivity extends BaseActivity implements SectionIndexer,OkHttpListener {
+public class ContractListFragment extends BaseFragement implements SectionIndexer,OkHttpListener {
 
     /**
      * 教师列表view
@@ -91,42 +94,28 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      */
     private ContractAdapter adapter;
     /**
-     * 标题
-     */
-    private String title;
-    /**
-     * 类型
-     */
-    private int type;
-    /**
      * 是否选中对话框的item
      */
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parent);
-        init();
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+       View view = inflater.inflate(R.layout.fragment_contractlist,null);
+        init(view);
+        return view;
     }
 
-    @Override
-    protected void setToolBar() {
-        setLiftImage(R.mipmap.ic_arrow_lift);
-        title = getIntent().getStringExtra("title");
-        setCententTitle(title);
-        setLiftOnClickClose();
-    }
     /**
      * 初始化数据
      */
-    private void init(){
-        type = getIntent().getIntExtra("type",0);
-        getfriendinfor(type);
-        lv_parent = $(R.id.lv_parent);
-        tv_noparent = $(R.id.tv_no_parent);
-        tv_title_cat = $(R.id.tv_title_cat);
-        tv_dialog_parent =  $(R.id.tv_dialog_parent);
-        ll_title = $(R.id.ll_title_parent);
-        sb_parent = $(R.id.sb_parent);
+    private void init(View view){
+        lv_parent = $(view,R.id.lv_parent);
+        tv_noparent = $(view,R.id.tv_no_parent);
+        tv_title_cat = $(view,R.id.tv_title_cat);
+        tv_dialog_parent =  $(view,R.id.tv_dialog_parent);
+        ll_title = $(view,R.id.ll_title_parent);
+        sb_parent = $(view,R.id.sb_parent);
+        getfriendinfor();
         characterParser = CharacterParser.getInstance();
         pinyinComparator = new PinyinComparator();
         groupMemberBeanList = new ArrayList<>();
@@ -134,14 +123,13 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
     }
     /**
      * 获取所有所有好友信息
-     * @param  mtype 类型
      */
-    private  void getfriendinfor(int mtype){
+    private  void getfriendinfor(){
         String dbname;
         Map<String,Object> params = new HashMap<>();
-        params.put("tsId",UserMessage.getInstance(this).getTsId());
+        params.put("tsId",UserMessage.getInstance(getActivity()).getTsId());
         //1=群，2=老师，3=家长
-        params.put("type",mtype);
+        params.put("type",0);
         dbname  = "contract_teacher";
         Type type =new TypeToken<Result<List<GroupInfoVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this,2,dbname);
@@ -151,7 +139,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
      */
     private void initList() {
         Collections.sort(groupMemberBeanList, pinyinComparator);
-        adapter = new ContractAdapter(this, groupMemberBeanList,type);
+        adapter = new ContractAdapter(getActivity(), groupMemberBeanList);
         lv_parent.setAdapter(adapter);
         // 设置右侧触摸监听
         sb_parent.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
@@ -223,7 +211,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
                     final String uid  = bean.getUserid();
                     final  String name = bean.getName();
                     if (RongIM.getInstance()!=null){
-                        Intent intent  = new Intent(ParentActivity.this,PersonDetailActivity.class);
+                        Intent intent  = new Intent(getActivity(),PersonDetailActivity.class);
                         intent.putExtra("targetId",uid);
                         intent.putExtra("title",name);
                         startActivity(intent);
@@ -310,7 +298,7 @@ public class ParentActivity extends BaseActivity implements SectionIndexer,OkHtt
 
     @Override
     public void onError(String uri, String error) {
-        Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),error,Toast.LENGTH_SHORT).show();
     }
 }
 

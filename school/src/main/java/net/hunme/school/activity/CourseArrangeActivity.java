@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -25,6 +26,7 @@ import net.hunme.school.adapter.CourseListAdapter;
 import net.hunme.school.bean.SyllabusVo;
 import net.hunme.status.activity.PublishStatusActivity;
 import net.hunme.status.widget.StatusPublishPopWindow;
+import net.hunme.user.util.PublishPhotoUtil;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -46,8 +48,9 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
     /**
      * 数据列表
      */
-    private  List<SyllabusVo> syllabusVoList;
+    private static List<SyllabusVo> syllabusVoList;
     private int count = 1;
+    private int state = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +63,7 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
        refresh_view.setOnRefreshListener(new MyListener());
        registerReceiver();
        syllabusVoList = new ArrayList<>();
+       showLoadingDialog();
    }
     @Override
     protected void setToolBar() {
@@ -96,6 +100,7 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
         params.put("pageSize",2);
         Type type = new TypeToken<Result<List<SyllabusVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.SCHOOL_GETSYLLABUSLISTS,params,this);
+
     }
     @Override
     public void onClick(View view) {
@@ -116,10 +121,31 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
     public void onSuccess(String uri, Object date) {
         Result<List<SyllabusVo>> data = (Result<List<SyllabusVo>>) date;
         if (data!=null){
-            List<SyllabusVo> syllabusVos= data.getData();
-            syllabusVoList.addAll(syllabusVos);
-            CourseListAdapter adapter = new CourseListAdapter(this,syllabusVoList);
+            stopLoadingDialog();
+            CourseListAdapter adapter = null;
+            final List<SyllabusVo> syllabusVos =data.getData();
+            if (count==1&&syllabusVos.size()>0){
+                 state=0;
+                 syllabusVoList= syllabusVos;
+              //  adapter = new CourseListAdapter(this,syllabusVos);
+            }else if (count>1 && syllabusVos.size()<2){
+                if (syllabusVoList.size()==0){
+                    count--;
+                    getArrange(count);
+                   // adapter = new CourseListAdapter(this,syllabusVoList);
+                }else {
+                    syllabusVoList= syllabusVos;
+                    state=1;
+                }
+            }
+            adapter = new CourseListAdapter(this,syllabusVos);
             lv_course.setAdapter(adapter);
+            lv_course.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    PublishPhotoUtil.imageBrowernet(i, (ArrayList<String>) syllabusVos.get(i).getImgs(),CourseArrangeActivity.this);
+                }
+            });
         }
     }
 
@@ -148,8 +174,12 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
                  @Override
                  public void handleMessage(Message msg) {
                      super.handleMessage(msg);
-                   //  syllabusVoList.clear();
-                     count++;
+                     syllabusVoList.clear();
+                     if (state==1){
+                         pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.NoMORE);
+                     }else if (state==0){
+                         count++;
+                     }
                      getArrange(count);
                      pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                  }
@@ -158,7 +188,6 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
          }
      }
     private class  DeleteBroadcast extends BroadcastReceiver{
-
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(COURSEDELETE)){

@@ -20,7 +20,7 @@ import net.hunme.school.activity.PublishActivity;
 import net.hunme.school.activity.WebViewActivity;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/7/14
  * 名称：学校首页
  * 版本说明：
@@ -56,6 +56,10 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
      * 开放课堂
      */
     private RelativeLayout rl_openClass;
+    /**
+     * 喂药
+     */
+    private RelativeLayout rl_medicine;
     /**
      * 基本url
      */
@@ -101,13 +105,14 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
         rl_inform = $(v,R.id.rl_info);
         rl_food = $(v,R.id.rl_food);
         rl_arrangement = $(v,R.id.rl_arrangement);
-
+        rl_medicine = $(v,R.id.rl_medicine);
         rl_check.setOnClickListener(this);
         rl_leave.setOnClickListener(this);
         rl_inform.setOnClickListener(this);
         rl_food.setOnClickListener(this);
         rl_arrangement.setOnClickListener(this);
         rl_openClass.setOnClickListener(this);
+        rl_medicine.setOnClickListener(this);
     }
 
     @Override
@@ -138,7 +143,9 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             intent.putExtra("subTitle","发布");
         }else if(view.getId()==R.id.rl_openClass){
             intent.setClass(getActivity(), ClassListActivity.class);
-        }
+        }/*else if (view.getId()==R.id.rl_medicine){
+
+        }*/
         startActivity(intent);
     }
 

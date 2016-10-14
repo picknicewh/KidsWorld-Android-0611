@@ -1,4 +1,4 @@
-package net.hunme.status.widget;
+package net.hunme.user.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,7 +9,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
-import net.hunme.status.R;
+import net.hunme.user.R;
+
 
 /**
  * ================================================

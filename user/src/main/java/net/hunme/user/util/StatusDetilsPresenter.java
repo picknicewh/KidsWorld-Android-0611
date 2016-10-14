@@ -1,4 +1,4 @@
-package net.hunme.status;
+package net.hunme.user.util;
 
 import android.content.Context;
 
@@ -9,7 +9,7 @@ import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
-import net.hunme.status.mode.StatusDetilsVo;
+import net.hunme.user.mode.StatusDetilsVo;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;

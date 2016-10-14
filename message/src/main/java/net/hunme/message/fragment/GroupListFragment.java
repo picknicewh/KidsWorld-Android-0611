@@ -1,19 +1,20 @@
-package net.hunme.message.activity;
+package net.hunme.message.fragment;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
-import net.hunme.baselibrary.BaseLibrary;
-import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
@@ -21,6 +22,7 @@ import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
+import net.hunme.message.activity.ContractMemberActivity;
 import net.hunme.message.adapter.ClassAdapter;
 import net.hunme.message.bean.GroupInfoVo;
 
@@ -40,7 +42,7 @@ import io.rong.imlib.model.Group;
  * 附加注释：通过服务端传递过来的班级列表，进行群聊
  * 主要接口：
  */
-public class ClassActivity extends BaseActivity implements OkHttpListener,View.OnClickListener{
+public class GroupListFragment extends BaseFragement implements OkHttpListener,View.OnClickListener{
     /**
      * 班级列表
      */
@@ -52,29 +54,18 @@ public class ClassActivity extends BaseActivity implements OkHttpListener,View.O
     private SharedPreferences spf;
     private SharedPreferences.Editor editor;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_class);
-        BaseLibrary.addPartActivity(this);
-        getClassinfor();
-        initdata();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_grouplist, null);
+        init(view);
+        return view;
     }
-
-    @Override
-    protected void setToolBar() {
-        setCententTitle("班级");
-        setLiftOnClickClose();
-        setLiftImage(R.mipmap.ic_arrow_lift);
-        setRightImage(R.mipmap.ic_add);
-        setRightOnClickListener(this);
-    }
-   private void  initdata(){
-       spf=getSharedPreferences("name", Context.MODE_PRIVATE);
+   private void  init(View view){
+       spf=getActivity().getSharedPreferences("name", Context.MODE_PRIVATE);
        editor=spf.edit();
+       lv_class = $(view,R.id.lv_class);
    }
     private void setlistview(final List<GroupInfoVo> groupJsons){
-        lv_class = $(R.id.lv_class);
-        adapter = new ClassAdapter(this,groupJsons);
+        adapter = new ClassAdapter(getActivity(),groupJsons);
         lv_class.setAdapter(adapter);
         lv_class.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -86,7 +77,7 @@ public class ClassActivity extends BaseActivity implements OkHttpListener,View.O
                 editor.putString("targetGroupId",classId);
                 editor.commit();
                 if (RongIM.getInstance()!=null){
-                    RongIM.getInstance().startGroupChat(ClassActivity.this,classId,groupName);
+                    RongIM.getInstance().startGroupChat(getActivity(),classId,groupName);
                     RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
                         @Override
                         public Group getGroupInfo(String s) {
@@ -108,7 +99,7 @@ public class ClassActivity extends BaseActivity implements OkHttpListener,View.O
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         getClassinfor();
     }
@@ -118,7 +109,7 @@ public class ClassActivity extends BaseActivity implements OkHttpListener,View.O
      */
     private  void getClassinfor(){
         Map<String,Object> params = new HashMap<>();
-        params.put("tsId", UserMessage.getInstance(this).getTsId());
+        params.put("tsId", UserMessage.getInstance(getActivity()).getTsId());
         //1=群，2=老师，3=家长
         params.put("type",1);
         Type type =new TypeToken<Result<List<GroupInfoVo>>>(){}.getType();
@@ -136,18 +127,19 @@ public class ClassActivity extends BaseActivity implements OkHttpListener,View.O
     }
     @Override
     public void onError(String uri, String error) {
-        Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),error,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId()==R.id.iv_right){
             Intent intent = new Intent();
-            intent.setClass(this, ContractMemberActivity.class);
+            intent.setClass(getActivity(), ContractMemberActivity.class);
             intent.putExtra("title","创建群聊");
             intent.putExtra("type",0);
             startActivity(intent);
-
+        }else if (view.getId()==R.id.iv_left){
+            getActivity().finish();
         }
     }
 }

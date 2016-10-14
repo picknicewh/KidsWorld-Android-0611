@@ -110,13 +110,23 @@ public class Apiurl {
     /**
      * 我的动态
      */
-    public static final String MYDYNAMICS= ServerConfigManager.WEB_IP+"/space/view/myDynamic.html";
+    public static final String MYDYNAMICS= "/dynamics/myDynamic.do";
+    /**
+     * 删除动态
+     */
+    public static final String DELETEMYDYNAMICS= "/dynamics/deleteDynamic.do";
+
     /**
      * 版本更新地址
      */
     public static final String UPDATESYSTEM="/appUser/getVersion.do";
 
     //=========================动态================================
+
+    /**
+     * 获取动态详情
+     */
+    public static final String STATUSLIST ="/dynamics/getDynamic.do";
     /**
      * 获取动态详情
      */

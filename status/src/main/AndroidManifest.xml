@@ -24,8 +24,8 @@
                 android:targetClass="com.android.settings.WirelessSettings"
                 android:targetPackage="com.android.settings" />
         </PreferenceScreen>
-        <activity android:name=".activity.StatusDetilsActivity">
-        </activity>
+
+        <activity android:name=".activity.MessageDetailActivity"></activity>
     </application>
 
 </manifest>

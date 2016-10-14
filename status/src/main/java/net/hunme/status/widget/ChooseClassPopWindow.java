@@ -45,7 +45,6 @@ public class ChooseClassPopWindow extends PopupWindow {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                     statusFragement.setClassname(classlist.get(position));
-                    statusFragement.setWebView(position);
                     statusFragement.setPosition(position);
                     dismiss();
                 }

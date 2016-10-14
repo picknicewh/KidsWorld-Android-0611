@@ -17,7 +17,7 @@
         android:orientation="vertical"
         android:background="@drawable/layout_select_line">
         <RelativeLayout
-            android:visibility="visible"
+            android:visibility="gone"
             android:background="@drawable/layout_select_not_line"
             android:id="@+id/rl_openClass"
             android:padding="@dimen/space_x1.5"
@@ -47,89 +47,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
-
-        <View
-            android:layout_marginLeft="@dimen/space"
-            android:background="@color/line_gray"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"/>
-
-        <RelativeLayout
-            android:visibility="gone"
-            android:background="@drawable/layout_select_not_line"
-            android:id="@+id/rl_check"
-            android:padding="@dimen/space"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height">
-            <ImageView
-                android:layout_centerVertical="true"
-                android:id="@+id/iv_check"
-                android:src="@mipmap/ic_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"  />
-            <TextView
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/iv_check"
-                android:layout_marginLeft="@dimen/space"
-                android:text="考勤"
-                style="@style/TextStyleBase"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/ic_arrow_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-
-        <View
-            android:visibility="gone"
-            android:layout_marginLeft="@dimen/space"
-            android:background="@color/line_gray"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"/>
-
-        <RelativeLayout
-            android:id="@+id/rl_leave"
-            android:background="@drawable/layout_select_not_line"
-            android:padding="@dimen/space_x1.5"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height">
-            <ImageView
-                android:layout_centerVertical="true"
-                android:id="@+id/iv_askleave"
-                android:src="@mipmap/ic_askleave"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/iv_askleave"
-                android:layout_marginLeft="@dimen/space"
-                android:text="请假"
-                style="@style/TextStyleBase"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:layout_marginRight="@dimen/space_x0.5"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/ic_arrow_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="@dimen/space"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/layout_select_line">
         <RelativeLayout
             android:id="@+id/rl_info"
             android:background="@drawable/layout_select_not_line"
@@ -152,6 +69,16 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_dos_info"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/circledos"
+                android:layout_alignParentRight="true"
+                android:textColor="@android:color/white"
+                android:visibility="gone"
+                android:layout_marginRight="@dimen/space_x2.5"/>
             <ImageView
                 android:layout_marginRight="@dimen/space_x0.5"
                 android:layout_centerVertical="true"
@@ -217,7 +144,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/iv_arrangement"
                 android:layout_marginLeft="@dimen/space"
-                android:text="课程安排"
+                android:text="课程"
                 style="@style/TextStyleBase"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
@@ -230,6 +157,141 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
+        <RelativeLayout
+            android:visibility="gone"
+            android:background="@drawable/layout_select_not_line"
+            android:id="@+id/rl_check"
+            android:padding="@dimen/space"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height">
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/iv_check"
+                android:src="@mipmap/ic_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"  />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_check"
+                android:layout_marginLeft="@dimen/space"
+                android:text="考勤"
+                style="@style/TextStyleBase"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/ic_arrow_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <View
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/space"
+            android:background="@color/line_gray"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/layout_select_line">
+        <RelativeLayout
+            android:id="@+id/rl_leave"
+            android:background="@drawable/layout_select_not_line"
+            android:padding="@dimen/space_x1.5"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height">
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/iv_askleave"
+                android:src="@mipmap/ic_askleave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_askleave"
+                android:layout_marginLeft="@dimen/space"
+                android:text="请假"
+                style="@style/TextStyleBase"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_dos_leaveadk"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginRight="@dimen/space_x2.5"
+                android:layout_centerVertical="true"
+                android:background="@drawable/circledos"
+                android:layout_alignParentRight="true"
+                android:textColor="@android:color/white"  />
+            <ImageView
+                android:layout_marginRight="@dimen/space_x0.5"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/ic_arrow_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <View
+            android:layout_marginLeft="@dimen/space"
+            android:background="@color/line_gray"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+        <RelativeLayout
+            android:id="@+id/rl_medicine"
+            android:background="@drawable/layout_select_not_line"
+            android:padding="@dimen/space_x1.5"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height">
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/iv_medicine"
+                android:src="@mipmap/ic_askleave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_medicine"
+                android:layout_marginLeft="@dimen/space"
+                android:text="喂药"
+                style="@style/TextStyleBase"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_dos_medicine"
+                android:visibility="gone"
+                android:layout_marginRight="@dimen/space_x2.5"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/circledos"
+                android:layout_alignParentRight="true"
+                android:textColor="@android:color/white"  />
+            <ImageView
+                android:layout_marginRight="@dimen/space_x0.5"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/ic_arrow_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
     </LinearLayout>
 
 </LinearLayout>

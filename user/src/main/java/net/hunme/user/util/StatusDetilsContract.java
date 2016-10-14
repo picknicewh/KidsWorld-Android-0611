@@ -1,8 +1,10 @@
-package net.hunme.status;
+package net.hunme.user.util;
 
-import net.hunme.status.mode.StatusDetilsVo;
+import net.hunme.user.mode.StatusDetilsVo;
 
 import java.util.List;
+
+;
 
 /**
  * ================================================
@@ -25,7 +27,7 @@ public interface StatusDetilsContract {
         void setPraisePerson(String person);
         void setCommentList(List<StatusDetilsVo.DynamidRewListBean> list);
         void setImagePrasise(boolean isAgree);
-        void showPopWindow(android.view.View view,StatusDetilsVo.DynamidRewListBean bean);
+        void showPopWindow(android.view.View view, StatusDetilsVo.DynamidRewListBean bean);
         void setPictures(List<String> imageUrl);
         void setCommentVis(boolean isVis);
         void setImageVis(boolean isVis);
@@ -36,10 +38,10 @@ public interface StatusDetilsContract {
     }
 
     interface Presenter{
-        void getStatusDetils(String tsId,String dynamicId);
-        void personPraise(String tsId,String dynamicId,String cancel);
-        void personComment(String tsId,String dynamicId,String content,String rewtsId,String rewtype);
-        void deleteComment(String tsId,String rewId);
+        void getStatusDetils(String tsId, String dynamicId);
+        void personPraise(String tsId, String dynamicId, String cancel);
+        void personComment(String tsId, String dynamicId, String content, String rewtsId, String rewtype);
+        void deleteComment(String tsId, String rewId);
     }
 
 }

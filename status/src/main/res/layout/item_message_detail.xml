@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/space"
+    tools:context="net.hunme.status.activity.MessageDetailActivity">
+     <ImageView
+         android:id="@+id/iv_head"
+         android:layout_alignParentLeft="true"
+         android:src="@mipmap/person"
+         android:layout_width="50dp"
+         android:layout_height="50dp" />
+    <LinearLayout
+        android:layout_toLeftOf="@+id/iv_picture"
+        android:layout_margin="@dimen/space"
+        android:layout_toRightOf="@+id/iv_head"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_name"
+            android:text="杜尧天"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_marginTop="@dimen/space_x0.5"
+            android:textColor="@color/sc_"
+            android:text="在编写园所中群组整体功能时，多页面跳转的问题花了很长时间去解决，通过自己的深入研究和阅读资料，对应多页面跳转这一"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_praise"
+            android:layout_marginTop="@dimen/space_x0.5"
+            android:src="@mipmap/ic_heat_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+
+            android:layout_marginTop="@dimen/space_x0.5"
+            android:id="@+id/tv_time"
+            android:text="昨天 12:21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_picture"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_img_error"
+        android:scaleType="center"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+</RelativeLayout>

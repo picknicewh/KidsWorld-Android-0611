@@ -11,4 +11,12 @@
         <item name="actionBarSize">?attr/actionBarSize</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
+
+    <declare-styleable name="RatioImageView">
+        <attr name="ratio" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="NineGridLayout">
+        <attr name="sapcing" format="dimension"/>
+    </declare-styleable>
 </resources>

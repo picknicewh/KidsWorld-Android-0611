@@ -1,6 +1,5 @@
 package net.hunme.status.activity;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -18,8 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
-import com.pizidea.imagepicker.AndroidImagePicker;
-import com.pizidea.imagepicker.bean.ImageItem;
 
 import net.hunme.baselibrary.activity.PermissionsActivity;
 import net.hunme.baselibrary.base.BaseActivity;
@@ -37,6 +33,7 @@ import net.hunme.status.StatusFragement;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.adapter.GridAlbumAdapter;
 import net.hunme.user.util.BitmapCache;
+import net.hunme.user.util.PublishPhotoUtil;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -44,8 +41,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import main.picturesee.util.ImagePagerActivity;
 
 /**
  * 作者： wh
@@ -68,7 +63,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 显示
      */
     private GridView gv_photo;
-    private GridAlbumAdapter mAdapter;
     private ArrayList<String> itemList;
     /**
      * 选择可见范围
@@ -93,11 +87,11 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     private RelativeLayout rl_restrict;
     private LoadingDialog loadingDialog;
     private TextView tv_subtilte;
-    // 访问相册所需的全部权限
+ /*   // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
             Manifest.permission.CAMERA
-    };
+    };*/
     private int maxContent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +123,8 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * @param  type 类型值
      */
     private void showView(int type){
+        GridAlbumAdapter  adapter=new GridAlbumAdapter(itemList,this,maxContent);
+        gv_photo.setAdapter(adapter);
         switch (type){
             case StatusPublishPopWindow.WORDS:
                 setCententTitle("发布文字");
@@ -137,8 +133,10 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             case StatusPublishPopWindow.PICTURE:
                 setCententTitle("发布图片");
                 maxContent=9;
-                goSelectImager();
-                showPhoto(false);
+                PublishPhotoUtil.goSelectImager(itemList,this,gv_photo,maxContent);
+                PublishPhotoUtil.showPhoto(this,itemList,gv_photo,maxContent);
+              //  goSelectImager();
+               // showPhoto();
                 dynamicType="1";
 
                 break;
@@ -150,8 +148,12 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 rl_restrict.setVisibility(View.GONE);
                 setCententTitle("发布课程");
                 maxContent=1;
-                goSelectImager();
-                showPhoto(true);
+                PublishPhotoUtil.showPhoto(this,itemList,gv_photo,maxContent);
+                PublishPhotoUtil.goSelectImager(itemList,this,gv_photo,maxContent);
+                PublishPhotoUtil.showPhoto(this,itemList,gv_photo,maxContent);
+              //
+              //  goSelectImager();
+               // showPhoto();
                 dynamicType="4";
                 break;
         }
@@ -206,11 +208,11 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         });
     }
 
-    /**
+  /*  *//**
      * 发布照片页面
-     */
-    private void showPhoto(boolean isSchool){
-        mAdapter=new GridAlbumAdapter(itemList,this,isSchool);
+     *//*
+    private void showPhoto(){
+        mAdapter=new GridAlbumAdapter(itemList,this,maxContent);
         gv_photo.setAdapter(mAdapter);
         gv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -223,16 +225,16 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 }
             }
         });
-    }
+    }*/
 
-    private void imageBrower(int position, ArrayList<String> urls2) {
+ /*   private void imageBrower(int position, ArrayList<String> urls2) {
         Intent intent = new Intent(this, ImagePagerActivity.class);
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
         intent.putExtra("source","local");
         startActivity(intent);
     }
-
+*/
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case ChoosePermitActivity.CHOOSE_PERMIT:
@@ -318,11 +320,10 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             OkHttps.sendPost(type,DYNAMIC,map,this);
         }
     }
-    /**
+   /* *//**
      * 前往获取图片
-     */
+     *//*
     private void goSelectImager(){
-//        getPermission(this,PERMISSIONS);
         PermissionsChecker checker=PermissionsChecker.getInstance(this);
         if(checker.lacksPermissions(PERMISSIONS)){
             checker.getPerMissions(PERMISSIONS);
@@ -342,7 +343,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 }
             }
         });
-    }
+    }*/
 
     @Override
     public void onSuccess(String uri, Object date) {

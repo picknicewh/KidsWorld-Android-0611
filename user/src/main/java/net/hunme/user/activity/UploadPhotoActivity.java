@@ -3,7 +3,6 @@ package net.hunme.user.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +22,7 @@ import net.hunme.baselibrary.widget.LoadingDialog;
 import net.hunme.user.R;
 import net.hunme.user.adapter.GridAlbumAdapter;
 import net.hunme.user.util.BitmapCache;
+import net.hunme.user.util.PublishPhotoUtil;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -77,7 +77,10 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     private void initDate(){
         G.initDisplaySize(this);
         itemList=new ArrayList<>();
-        mAdapter=new GridAlbumAdapter(itemList,this);
+        PublishPhotoUtil.goSelectImager(itemList,this,gv_photo,9);
+        PublishPhotoUtil.showPhoto(this,itemList,gv_photo,9);
+
+     /*   mAdapter=new GridAlbumAdapter(itemList,this,9);
         gv_photo.setAdapter(mAdapter);
         gv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -87,7 +90,7 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
                 }
             }
         });
-        getPhotos();//立即跳转到图片选择页面
+        getPhotos();//立即跳转到图片选择页面*/
         albumNameList=new ArrayList<>();
         albumNameList.add("默认相册");
         albumNameList.add("相册一");

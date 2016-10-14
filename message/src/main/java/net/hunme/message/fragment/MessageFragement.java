@@ -1,13 +1,16 @@
 package net.hunme.message.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.contract.GetContractData;
@@ -15,14 +18,15 @@ import net.hunme.baselibrary.contract.GetGroupData;
 import net.hunme.baselibrary.contract.InitContractData;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
-import net.hunme.message.activity.ClassActivity;
-import net.hunme.message.activity.ParentActivity;
+import net.hunme.message.activity.ContractMemberActivity;
+import net.hunme.message.activity.SearchActivity;
 import net.hunme.message.ronglistener.MyConversationListBehaviorListener;
 import net.hunme.message.ronglistener.MyReceiveMessageListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.rong.imkit.RongIM;
-import io.rong.imkit.fragment.ConversationListFragment;
-import io.rong.imlib.model.Conversation;
 
 /**
  * 作者： wh
@@ -34,26 +38,54 @@ import io.rong.imlib.model.Conversation;
  */
 public class MessageFragement extends BaseFragement implements View.OnClickListener{
     /**
+     * 消息页面
+     */
+    private static final int MESSAGE_PAGE = 0;
+    /**
+     * 联系人页面
+     */
+    private static final int CONTRACT_PAGE = 1;
+    /**
+     * 群组页面
+     */
+    private static final int GROUP_PAGE = 2;
+    /**
      * 搜索
      */
-   // private ImageView iv_search;
-    /**
-     * 班级
-     */
-    private ImageView iv_class;
-    /**
-     * 老师
-     */
-    private ImageView iv_teacher;
-    /**
-     * 家长
-     */
-    private ImageView iv_parent;
+    private ImageView iv_search;
     /**
      * 用户信息
      */
     private  UserMessage userMessage;
 
+    /**
+     * 指示器viewpager
+     */
+    private ViewPager viewPager;
+    /**
+     * 页面列表
+     */
+    private List<Fragment> fragmentlist;
+    /**
+     * 消息
+     */
+    private RadioGroup rg_choose;
+    private RadioButton rb_message;
+    private View line_message;
+    /**
+     * 联系人
+     */
+    private RadioButton rb_contract;
+    private View line_contract;
+    /**
+     * 群组
+     */
+    private RadioButton rb_group;
+    private View line_group;
+    /**
+     * 当前页面的位置
+     */
+    private int mPosition;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, null);
@@ -67,15 +99,111 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
      * @param  v
      */
    public   void init(View v){
-      // iv_search = $(v,R.id.iv_search);
-        iv_class = $(v,R.id.iv_class);
-        iv_teacher = $(v,R.id.iv_teacher);
-        iv_parent = $(v,R.id.iv_parent);
-        iv_parent.setOnClickListener(this);
-        iv_teacher.setOnClickListener(this);
-        iv_class.setOnClickListener(this);
-     //  iv_search.setOnClickListener(this);
-        initframent();
+       iv_search = $(v,R.id.iv_search);
+       viewPager = $(v,R.id.vp_exchange);
+       rb_message = $(v,R.id.rb_message);
+       rb_contract = $(v,R.id.rb_contract);
+       rb_group = $(v,R.id.rb_group);
+       line_message = $(v,R.id.line_message);
+       line_group = $(v,R.id.line_group);
+       line_contract = $(v,R.id.line_contract);
+       rg_choose = $(v,R.id.rg_choose);
+       setFrametDetails();
+       iv_search.setOnClickListener(this);
+       rb_group.setOnClickListener(this);
+       rb_contract.setOnClickListener(this);
+       rb_message.setOnClickListener(this);
+    }
+    /**
+     * 设置页面
+     * @param position 位置
+     */
+    private void setItemPage(int position){
+        setLine(position);
+        switch (position){
+            case 0:
+                rb_message.setChecked(true);
+                rb_contract.setChecked(false);
+                rb_group.setChecked(false);
+                break;
+            case 1:
+                rb_message.setChecked(false);
+                rb_contract.setChecked(true);
+                rb_group.setChecked(false);
+                break;
+            case 2:
+                rb_message.setChecked(false);
+                rb_contract.setChecked(true);
+                rb_group.setChecked(true);
+                break;
+        }
+    }
+    /**
+     * 设置下划线
+     * @param position 位置
+     */
+    private void setLine(int position){
+        switch (position){
+            case MESSAGE_PAGE:
+                line_contract.setBackgroundColor(getResources().getColor(R.color.bg_layout));
+                line_group.setBackgroundColor(getResources().getColor(R.color.bg_layout));
+                line_message.setBackgroundColor(getResources().getColor(R.color.main_green));
+                iv_search.setVisibility(View.GONE);
+                mPosition = MESSAGE_PAGE;
+                break;
+            case CONTRACT_PAGE:
+                line_contract.setBackgroundColor(getResources().getColor(R.color.main_green));
+                line_group.setBackgroundColor(getResources().getColor(R.color.bg_layout));
+                line_message.setBackgroundColor(getResources().getColor(R.color.bg_layout));
+                iv_search.setVisibility(View.VISIBLE);
+                iv_search.setImageResource(R.mipmap.search);
+                mPosition = CONTRACT_PAGE;
+                break;
+            case GROUP_PAGE:
+                line_contract.setBackgroundColor(getResources().getColor(R.color.bg_layout));
+                line_group.setBackgroundColor(getResources().getColor(R.color.main_green));
+                line_message.setBackgroundColor(getResources().getColor(R.color.bg_layout));
+                iv_search.setVisibility(View.VISIBLE);
+                iv_search.setImageResource(R.mipmap.ic_add);
+                mPosition = GROUP_PAGE;
+                break;
+        }
+        viewPager.setCurrentItem(position);
+    }
+    /**
+     * 滑动界面
+     */
+    private void setFrametDetails() {
+        fragmentlist = new ArrayList<>();
+        ConverationListFragment converationListFragment = new ConverationListFragment();
+        ContractListFragment   contractListFragment = new ContractListFragment();
+        GroupListFragment   groupListFragment = new GroupListFragment();
+        fragmentlist.add(converationListFragment);
+        fragmentlist.add(contractListFragment);
+        fragmentlist.add(groupListFragment);
+        FragmentPagerAdapter adapter = new FragmentPagerAdapter(getChildFragmentManager()) {
+            @Override
+            public int getCount() {
+                return fragmentlist.size();
+            }
+            @Override
+            public Fragment getItem(int position) {
+                return fragmentlist.get(position);
+            }
+        };
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                setItemPage(position);
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
     /**
      * 初始化界面数据
@@ -96,7 +224,6 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         //初始化所有联系人的数据
         InitContractData data = new InitContractData(getActivity());
         data.init();
-
     }
     @Override
     public void onResume() {
@@ -104,40 +231,29 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         initData();
         RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener(getActivity()));
     }
-    /**
-     *获取聊天列表
-     */
-    public void  initframent(){
-        ConversationListFragment fragment = new ConversationListFragment();
-        Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
-                .appendPath("conversationlist")
-                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
-                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话聚合显示
-                .build();
-        fragment.setUri(uri);
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.rong_content, fragment);
-        transaction.commitAllowingStateLoss();
-    }
-
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent();
-        if (v.getId()==R.id.iv_class){
-            intent.setClass(getActivity(), ClassActivity.class);
-            getActivity().startActivity(intent);
-
-        }else if (v.getId()==R.id.iv_teacher){
-            intent.setClass(getActivity(), ParentActivity.class);
-            intent.putExtra("title","教师");
-            intent.putExtra("type",2);
-            getActivity().startActivity(intent);
-        }else if (v.getId()==R.id.iv_parent) {
-            intent.setClass(getActivity(), ParentActivity.class);
-            intent.putExtra("title", "家长");
-            intent.putExtra("type", 3);
-            getActivity().startActivity(intent);
-        }/*else if (v.getId()==R.id.iv_search){
-        }*/
+        int viewId = v.getId();
+        if (viewId==R.id.rb_message){
+          setLine(MESSAGE_PAGE);
+        }else if (viewId==R.id.rb_contract){
+         setLine(CONTRACT_PAGE);
+        }else if (viewId==R.id.rb_group) {
+          setLine(GROUP_PAGE);
+        } else if (viewId==R.id.iv_search){
+            Intent intent = new Intent();
+            switch (mPosition){
+               case CONTRACT_PAGE:
+                   intent.setClass(getActivity(), SearchActivity.class);
+                   startActivity(intent);
+                   break;
+               case GROUP_PAGE:
+                   intent.setClass(getActivity(), ContractMemberActivity.class);
+                   intent.putExtra("title","创建群聊");
+                   intent.putExtra("type",0);
+                   startActivity(intent);
+                   break;
+           }
+         }
     }
 }

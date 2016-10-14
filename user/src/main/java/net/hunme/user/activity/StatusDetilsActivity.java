@@ -1,4 +1,4 @@
-package net.hunme.status.activity;
+package net.hunme.user.activity;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -21,15 +21,15 @@ import net.hunme.baselibrary.util.MyAlertDialog;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.baselibrary.widget.LoadingDialog;
-import net.hunme.status.PictrueUtils;
-import net.hunme.status.R;
-import net.hunme.status.StatusDetilsContract;
-import net.hunme.status.StatusDetilsPresenter;
-import net.hunme.status.adapter.StatusDetilsAdapter;
-import net.hunme.status.mode.StatusDetilsVo;
-import net.hunme.status.widget.ListViewForScrollView;
-import net.hunme.status.widget.NineGridPictureLayout;
-import net.hunme.status.widget.StatusCommentPopWindow;
+import net.hunme.baselibrary.widget.NoScrollListView;
+import net.hunme.user.R;
+import net.hunme.user.adapter.StatusDetilsAdapter;
+import net.hunme.user.mode.StatusDetilsVo;
+import net.hunme.user.util.PictrueUtils;
+import net.hunme.user.util.StatusDetilsContract;
+import net.hunme.user.util.StatusDetilsPresenter;
+import net.hunme.user.widget.NineGridPictureLayout;
+import net.hunme.user.widget.StatusCommentPopWindow;
 
 import java.util.List;
 
@@ -73,7 +73,7 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
     /**
      * 评论列表
      */
-    private ListViewForScrollView lv_commmet;
+    private NoScrollListView lv_commmet;
     /**
      * 图片
      */
@@ -98,8 +98,8 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
         dynamicId=getIntent().getStringExtra("dynamicId");
         presenter= new StatusDetilsPresenter(this,tsId,dynamicId,this);
     }
-
     private void findId(){
+        lv_commmet= (NoScrollListView) findViewById(R.id.lv_commment);
         cv_head= (CircleImageView) findViewById(R.id.cv_head);
         tv_name= (TextView) findViewById(R.id.tv_name);
         tv_id= (TextView) findViewById(R.id.tv_id);
@@ -109,8 +109,6 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
         iv_comment= (ImageView) findViewById(R.id.iv_comment);
         ll_praise= (LinearLayout) findViewById(R.id.ll_praise);
         tv_praise_person= (TextView) findViewById(R.id.tv_praise_person);
-        lv_commmet= (ListViewForScrollView) findViewById(R.id.lv_commmet);
-//        nine_picture = (NineGridPictureLayout) findViewById(R.id.layout_nine_grid);
         rl_picture= (RelativeLayout) findViewById(R.id.rl_picture);
         scrollView= (ScrollView) findViewById(R.id.scrollView);
         tv_praise_num= (TextView) findViewById(R.id.tv_praise_num);
@@ -270,6 +268,7 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
                     return;
                 }
                 presenter.personComment(tsId,dynamicId,content,rewtsId, rewtype);
+
                 popWindow.dismiss();
             }
         });

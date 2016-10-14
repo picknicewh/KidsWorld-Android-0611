@@ -45,7 +45,14 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
-        setLiftOnClickClose();
+       // setLiftOnClickClose();
+        setLiftOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                G.KisTyep.isReleaseSuccess = true;
+            }
+        });
         setCententTitle("我的");
     }
 
@@ -109,9 +116,10 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
             intent.putExtra("loadUrl", Apiurl.MYCOLLECTION+"?tsId="+UserMessage.getInstance(this).getTsId()+"#/collect");
             intent.putExtra("title","我的收藏");
         }else if(viewId==R.id.ll_mydynamics){
-            intent=new Intent(UserActivity.this,HMDroidGap.class);
+         /*   intent=new Intent(UserActivity.this,HMDroidGap.class);
             intent.putExtra("loadUrl",Apiurl.MYDYNAMICS+"?tsId="+UserMessage.getInstance(this).getTsId());
-            intent.putExtra("title","我的动态");
+            intent.putExtra("title","我的动态");*/
+            intent=new Intent(UserActivity.this,MyDynamicActivity.class);
         }
         if(null!=intent){
             startActivity(intent);

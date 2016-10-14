@@ -1,4 +1,4 @@
-package net.hunme.status.adapter;
+package net.hunme.user.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,10 +11,11 @@ import android.widget.TextView;
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.widget.CircleImageView;
-import net.hunme.status.R;
-import net.hunme.status.mode.StatusDetilsVo;
+import net.hunme.user.R;
+import net.hunme.user.mode.StatusDetilsVo;
 
 import java.util.List;
+
 
 /**
  * ================================================
@@ -29,7 +30,7 @@ import java.util.List;
 public class StatusDetilsAdapter extends BaseAdapter {
     private Context context;
     private List<StatusDetilsVo.DynamidRewListBean> listBeen;
-    public StatusDetilsAdapter(Context context,List<StatusDetilsVo.DynamidRewListBean> listBeen) {
+    public StatusDetilsAdapter(Context context, List<StatusDetilsVo.DynamidRewListBean> listBeen) {
         this.context = context;
         this.listBeen=listBeen;
     }

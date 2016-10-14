@@ -1,4 +1,4 @@
-package net.hunme.status;
+package net.hunme.user.util;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,28 +29,33 @@ public class PictrueUtils implements View.OnClickListener {
     private List<String> imageUrl;
     private int MAXIMAGESIZE=0;
     private int IMAGESIZE=0;
+
     public void setPictrueLoad(Context context, List<String> imageUrl, RelativeLayout rlParams){
         this.context=context;
         this.imageUrl=imageUrl;
         MAXIMAGESIZE=G.dp2px(context,180);
         IMAGESIZE=G.dp2px(context,90);
+        if (rlParams!=null){
+            rlParams.removeAllViews();
+        }
         if(imageUrl.size()==1){
             //单张图片
             ImageView imageView=new ImageView(context);
             ImageCache.imageLoader(imageUrl.get(0),imageView);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(MAXIMAGESIZE,MAXIMAGESIZE);
-            rlParams.addView(imageView,pl);
             imageView.setTag(0);
             imageView.setOnClickListener(this);
+            rlParams.addView(imageView,pl);
         }else if(imageUrl.size()==3||imageUrl.size()==6){
+
             //3张或者6张图片
             for (int i=0;i<imageUrl.size();i++){
                 ImageView imageView=new ImageView(context);
                 imageView.setId(i+100);
+                imageView.setTag(i);
                 ImageCache.imageLoader(imageUrl.get(i),imageView);
                 imageView.setOnClickListener(this);
-                imageView.setTag(i);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 RelativeLayout.LayoutParams pl;
                 if(i==0){
@@ -82,6 +87,7 @@ public class PictrueUtils implements View.OnClickListener {
                 rlParams.addView(imageView,pl);
             }
         }else if(imageUrl.size()==4){
+
             //4张图片
             for (int i=0;i<imageUrl.size();i++){
                 ImageView imageView=new ImageView(context);
@@ -102,6 +108,7 @@ public class PictrueUtils implements View.OnClickListener {
                 rlParams.addView(imageView,pl);
             }
         }else {
+
             //去除上面的情况
             for (int i=0;i<imageUrl.size();i++){
                 ImageView imageView=new ImageView(context);
@@ -119,8 +126,10 @@ public class PictrueUtils implements View.OnClickListener {
                     pl.addRule(RelativeLayout.RIGHT_OF,i+100-1);
                     pl.addRule(RelativeLayout.ALIGN_TOP,i+100-1);
                 }
+
                 rlParams.addView(imageView,pl);
             }
+
         }
     }
 
@@ -132,7 +141,6 @@ public class PictrueUtils implements View.OnClickListener {
         intent.putExtra("source","net");
         context.startActivity(intent);
     }
-
     /**
      * 把缩略图转换成为原图
      */

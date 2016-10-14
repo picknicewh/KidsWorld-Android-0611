@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+
     android:orientation="vertical"
     android:layout_height="match_parent">
 
@@ -16,85 +17,60 @@
             android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    <!--    <ImageView
+        <ImageView
             android:id="@+id/iv_search"
             android:src="@mipmap/search"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />-->
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
-    <LinearLayout
-        android:padding="@dimen/space"
-        android:layout_gravity="center_vertical"
+
+    <RadioGroup
+        android:background="@color/bg_layout"
+        android:id="@+id/rg_choose"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/iv_class"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:src="@mipmap/ic_class"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/iv_teacher"
-            android:layout_weight="1"
-            android:src="@mipmap/ic_parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/iv_parent"
-            android:layout_weight="1"
-            android:src="@mipmap/ic_teacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-   <!--     <LinearLayout
-            android:id="@+id/ll_teacher"
-            android:padding="@dimen/space_x0.5"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:src="@mipmap/teacher"
+        android:layout_height="50dp">
+        <RadioButton
+            android:checked="true"
+            android:text="@string/message"
+            android:id="@+id/rb_message"
+           style="@style/tab_btn" />
+        <RadioButton
+            android:text="@string/contract"
+            android:id="@+id/rb_contract"
+            style="@style/tab_btn" />
+        <RadioButton
+            android:text="@string/group"
+            android:id="@+id/rb_group"
+            style="@style/tab_btn"/>
+    </RadioGroup>
 
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
-            <TextView
-                android:text="老师"
-                android:textColor="@color/myteacher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>-->
-       <!-- <LinearLayout
-            android:id="@+id/ll_parent"
-            android:padding="@dimen/space_x0.5"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:src="@mipmap/parent"
-
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
-            <TextView
-                android:text="家长"
-                android:textColor="@color/parent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>-->
+    <LinearLayout
+        android:layout_marginTop="-5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp">
+        <View
+            android:id="@+id/line_message"
+            style="@style/tab_line"
+            android:background="@color/main_green"/>
+        <View
+            android:id="@+id/line_contract"
+            android:text="@string/contract"
+            style="@style/tab_line" />
+        <View
+            android:id="@+id/line_group"
+            android:text="@string/group"
+            style="@style/tab_line"/>
     </LinearLayout>
-    <View
-        android:background="@color/line_gray"
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_exchange"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"/>
-    <FrameLayout
-        android:id="@+id/rong_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/white" />
+
 </LinearLayout>

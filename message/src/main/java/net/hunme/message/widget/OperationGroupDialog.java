@@ -2,7 +2,6 @@ package net.hunme.message.widget;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,6 @@ import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.MyAlertDialog;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
-import net.hunme.message.activity.ClassActivity;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -251,10 +249,7 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
             result(date);
             if (flag==FLAG_REMOVE){
                 BaseLibrary.removeActivity();
-                Intent intent = new Intent(context,ClassActivity.class);
-                context.startActivity(intent);
                 context.finish();
-
             }else if (flag==FLAG_REMOVE_MEMBER){
                 context.finish();
             }
@@ -264,8 +259,6 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
         }else if (uri.contains(Apiurl.MESSAGE_DISSORE_GROUP)){
             BaseLibrary.removeActivity();
             result(date);
-            Intent intent = new Intent(context, ClassActivity.class);
-            context.startActivity(intent);
             context.finish();
 
         }
