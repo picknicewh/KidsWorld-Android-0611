@@ -18,7 +18,8 @@ import android.widget.Toast;
 
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.cordova.CordovaInterfaceImpl;
-import net.hunme.baselibrary.cordova.MySystemWebView;
+import net.hunme.baselibrary.cordova.CordovaWebChromeClient;
+import net.hunme.baselibrary.cordova.CordovaWebViewClien;
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.network.ServerConfigManager;
 import net.hunme.baselibrary.util.G;
@@ -41,7 +42,7 @@ import java.util.TimerTask;
  * 附加注释：
  * 主要接口：
  */
-public class DiscoveryFragement extends BaseFragement implements View.OnClickListener{
+public class DiscoveryFragement extends BaseFragement implements View.OnClickListener {
 
     private SystemWebView webView;
     /**
@@ -63,7 +64,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
     /**
      * 无网络状态
      */
- //   private RelativeLayout rl_nonetwork;
+    //   private RelativeLayout rl_nonetwork;
     /**
      * web接口类
      */
@@ -72,17 +73,18 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
     /**
      * 没网络时显示
      */
-    private static final String url = ServerConfigManager.WEB_IP+"/paradise/index.html";
+    private static final String url = ServerConfigManager.WEB_IP + "/paradise/index.html";
     private ProgressBar pb_web;
-    private  boolean isQuit = false;
+    private boolean isQuit = false;
     private Timer timer;
+
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       inflater.cloneInContext(new CordovaInterfaceImpl(getActivity(), this));
+        inflater.cloneInContext(new CordovaInterfaceImpl(getActivity(), this));
 //        View view = inflater.inflate(R.layout.fragment_discovery, null);
-        View view =inflater.inflate(R.layout.fragment_discovery, container, false);
-        timer  = new Timer();
+        View view = inflater.inflate(R.layout.fragment_discovery, container, false);
+        timer = new Timer();
         init(view);
         return view;
     }
@@ -97,108 +99,111 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     //getActivity().getSupportFragmentManager().popBackStack("gifPageTwoFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                  if(webView.canGoBack() && !webView.getUrl().contains("paradiseHome") ){
-                      webView.goBack();
-                  }else if (webView.getUrl().contains("paradiseHome")){
-                      // getActivity().finish();
-                      //这里处理逻辑代码
-                      if (isQuit) {
-                          // 这是两次点击以后
-                          timer.cancel();
-                          getActivity().finish();
-                      } else {
-                          isQuit = true;
-                          Toast.makeText(getActivity(), "再按一次返回到桌面",Toast.LENGTH_SHORT).show();
-                          TimerTask task = new TimerTask() {
-                              @Override
-                              public void run() {
-                                  isQuit = false;
-                              }
-                          };
-                          timer.schedule(task, 2000);
-                      }
-                  }
-                   return true;
+                    if (webView.canGoBack() && !webView.getUrl().contains("paradiseHome")) {
+                        webView.goBack();
+                    } else if (webView.getUrl().contains("paradiseHome")) {
+                        // getActivity().finish();
+                        //这里处理逻辑代码
+                        if (isQuit) {
+                            // 这是两次点击以后
+                            timer.cancel();
+                            getActivity().finish();
+                        } else {
+                            isQuit = true;
+                            Toast.makeText(getActivity(), "再按一次返回到桌面", Toast.LENGTH_SHORT).show();
+                            TimerTask task = new TimerTask() {
+                                @Override
+                                public void run() {
+                                    isQuit = false;
+                                }
+                            };
+                            timer.schedule(task, 2000);
+                        }
+                    }
+                    return true;
                 }
                 return false;
             }
         });
     }
-    private  void init(View v){
-        iv_left = $(v,R.id.iv_dleft);
-        tv_title = $(v,R.id.tv_dtitle);
-        iv_right = $(v,R.id.iv_dright);
-        bt_search = $(v,R.id.et_search);
-        webView = $(v,R.id.cordovaWebView);
-        pb_web=$(v,R.id.pb_web);
-        ll_discovery=$(v,R.id.ll_cdiscovery);
-        ImageCache.imageLoader(UserMessage.getInstance(getActivity()).getHoldImgUrl(),iv_left);
+
+    private void init(View v) {
+        iv_left = $(v, R.id.iv_dleft);
+        tv_title = $(v, R.id.tv_dtitle);
+        iv_right = $(v, R.id.iv_dright);
+        bt_search = $(v, R.id.et_search);
+        webView = $(v, R.id.cordovaWebView);
+        pb_web = $(v, R.id.pb_web);
+        ll_discovery = $(v, R.id.ll_cdiscovery);
+        ImageCache.imageLoader(UserMessage.getInstance(getActivity()).getHoldImgUrl(), iv_left);
 //        ll_loading = $(v,R.id.ll_loading);
-      //  rl_nonetwork= $(v,R.id.rl_nonetwork);
-      //  rl_nonetwork.setOnClickListener(this);
-        from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,bt_search,getActivity());
+        //  rl_nonetwork= $(v,R.id.rl_nonetwork);
+        //  rl_nonetwork.setOnClickListener(this);
+        from = new WebCommonPageFrom(iv_left, tv_title, iv_right, bt_search, getActivity());
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
-       // et_search.setOnClickListener(this);
+        // et_search.setOnClickListener(this);
         bt_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 webView.loadUrl("javascript:goSearch_Origin()");
             }
         });
-       setShowView();
-      // setWebView();
+        setShowView();
+        // setWebView();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (G.KisTyep.isUpadteHold){
-           ImageCache.imageLoader(UserMessage.getInstance(getActivity()).getHoldImgUrl(),iv_left);
+        if (G.KisTyep.isUpadteHold) {
+            ImageCache.imageLoader(UserMessage.getInstance(getActivity()).getHoldImgUrl(), iv_left);
         }
     }
+
     /**
      * 有无网络加载页面状态
      */
-    private  void  setShowView(){
+    private void setShowView() {
         setWebView();
        /*  if (G.isNetworkConnected(getActivity())){
              rl_nonetwork.setVisibility(View.GONE);
          }else {
              rl_nonetwork.setVisibility(View.VISIBLE);
          }*/
-     }
-    private void  setWebView(){
-        webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
-        webView.setWebChromeClient(new MySystemWebView(new SystemWebViewEngine(webView),pb_web,webView,getActivity(),ll_discovery));
-        getWebView(webView).loadUrl(url+"?tsId="+ UserMessage.getInstance(getActivity()).getTsId());
+    }
 
+    private void setWebView() {
+        webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
+        webView.setWebChromeClient(new CordovaWebChromeClient((SystemWebViewEngine) getWebView(webView).getEngine(), pb_web, webView, getActivity(), ll_discovery));
+        webView.setWebViewClient(new CordovaWebViewClien((SystemWebViewEngine) getWebView(webView).getEngine()));
+        getWebView(webView).loadUrl(url + "?tsId=" + UserMessage.getInstance(getActivity()).getTsId());
     }
 
 
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
-       if (viewId==R.id.iv_dleft){
-           if (!webView.getUrl().contains("#/")||webView.getUrl().contains("paradiseHome")){
-               Intent intent = new Intent(getActivity(), UserActivity.class);
+        if (viewId == R.id.iv_dleft) {
+            if (!webView.getUrl().contains("#/") || webView.getUrl().contains("paradiseHome")) {
+                Intent intent = new Intent(getActivity(), UserActivity.class);
                 getActivity().startActivity(intent);
-           }else {
-               webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-               webView.goBack();
-           }
-         } else if (viewId==R.id.iv_dright){
+            } else {
+                webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+                webView.goBack();
+            }
+        } else if (viewId == R.id.iv_dright) {
             String url = webView.getUrl();
-            if (url.contains("childClass")){
+            if (url.contains("childClass")) {
                 webView.loadUrl("javascript:goSearchVideo_Origin()");
-            }else if (url.contains("childMusic")){
+            } else if (url.contains("childMusic")) {
                 webView.loadUrl("javascript:goSearchAudio_Origin()");
-            }else if (url.contains("eduInformation")){
+            } else if (url.contains("eduInformation")) {
                 webView.loadUrl("javascript:goSearchInf_Origin()");
-            }else if (!webView.getUrl().contains("#/")||webView.getUrl().contains("paradiseHome")){
+            } else if (!webView.getUrl().contains("#/") || webView.getUrl().contains("paradiseHome")) {
                 webView.loadUrl("javascript:goHistory_Origin()");
             }
-        }else if (viewId==R.id.rl_nonetwork){
+        } else if (viewId == R.id.rl_nonetwork) {
             setShowView();
         }
     }

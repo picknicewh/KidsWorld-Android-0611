@@ -7,7 +7,7 @@
       function testPlat(){
         var u = navigator.userAgent;
         if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){ //android终端
-//            setWebViewFlag();
+            setWebViewFlag();
             return 0;
         }else if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){ //ios终端
             setWebViewFlag();
@@ -15,7 +15,7 @@
         }else{
             return 2;
         }
-      };
+      }
       //获取Url后参数
       function getUrlParam(name){
         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");

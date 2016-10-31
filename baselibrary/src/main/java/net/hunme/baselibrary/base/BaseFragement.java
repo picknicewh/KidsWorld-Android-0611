@@ -61,7 +61,7 @@ public class BaseFragement extends Fragment implements CordovaInterface {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(getActivity());
-        MobclickAgent.onPageStart(this.getClass().getSimpleName());
+        MobclickAgent.onPageEnd(this.getClass().getSimpleName());
     }
 
     public CordovaWebView getWebView(SystemWebView webView){
@@ -90,6 +90,21 @@ public class BaseFragement extends Fragment implements CordovaInterface {
     @Override
     public ExecutorService getThreadPool() {
         return threadPool;
+    }
+
+    @Override
+    public void requestPermission(CordovaPlugin plugin, int requestCode, String permission) {
+
+    }
+
+    @Override
+    public void requestPermissions(CordovaPlugin plugin, int requestCode, String[] permissions) {
+
+    }
+
+    @Override
+    public boolean hasPermission(String permission) {
+        return false;
     }
 
     @Override
