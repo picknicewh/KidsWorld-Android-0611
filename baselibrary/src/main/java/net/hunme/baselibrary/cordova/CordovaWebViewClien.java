@@ -19,12 +19,16 @@ import org.apache.cordova.engine.SystemWebViewEngine;
  * ================================================
  */
 public class CordovaWebViewClien extends SystemWebViewClient {
+
     public CordovaWebViewClien(SystemWebViewEngine parentEngine) {
         super(parentEngine);
     }
 
+
     @Override
     public void onPageFinished(WebView view, String url) {
+        super.onPageFinished(view, url);
+
         if (url != null) {
             MobclickAgent.onPageStart(url);
         }

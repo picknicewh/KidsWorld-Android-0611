@@ -51,19 +51,4 @@ public class CordovaInterfaceImpl extends ContextWrapper implements CordovaInter
     public ExecutorService getThreadPool() {
         return cordova.getThreadPool();
     }
-
-    @Override
-    public void requestPermission(CordovaPlugin plugin, int requestCode, String permission) {
-
-    }
-
-    @Override
-    public void requestPermissions(CordovaPlugin plugin, int requestCode, String[] permissions) {
-
-    }
-
-    @Override
-    public boolean hasPermission(String permission) {
-        return false;
-    }
 }

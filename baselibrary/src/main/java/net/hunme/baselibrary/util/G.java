@@ -38,6 +38,7 @@ public class G {
      * toast提示
      */
     private static Toast toast;
+
     /**
      * 尺寸
      */
@@ -51,6 +52,7 @@ public class G {
          */
         public static int H = 800;
     }
+
     /**
      * 截屏
      */
@@ -105,7 +107,7 @@ public class G {
             toast.cancel();
         }
         toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP, 0, size.H/4);
+        toast.setGravity(Gravity.TOP, 0, size.H / 4);
         toast.show();
 
     }
@@ -117,13 +119,14 @@ public class G {
      */
     public static void log(Object msg) {
         if (DEBUG) {
-            Log.i("TAG",String.valueOf(msg));
+            Log.i("TAG", String.valueOf(msg));
         }
     }
 
 
     /**
-     *  根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     *
      * @param context
      * @param dpValue
      * @return
@@ -134,7 +137,8 @@ public class G {
     }
 
     /**
-     *  根据手机的分辨率从 px(像素) 的单位 转成为 dp
+     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
+     *
      * @param context
      * @param pxValue
      * @return
@@ -147,15 +151,15 @@ public class G {
     /**
      * 判断字符串是否为空
      */
-    public static boolean isEmteny(String values){
-        if(null==values||"".equals(values)||"null".equals(values)){
+    public static boolean isEmteny(String values) {
+        if (null == values || "".equals(values) || "null".equals(values)) {
             return true;
         }
-        return  false;
+        return false;
     }
+
     /**
      * 判断网络是否连接
-     *
      */
     public static boolean isNetworkConnected(Context context) {
         if (context != null) {
@@ -167,14 +171,15 @@ public class G {
         }
         return false;
     }
+
     /**
      * 删除缓存
      */
     public static int clearCacheFolder(File dir, long numDays) {
         int deletedFiles = 0;
-        if (dir!= null && dir.isDirectory()) {
+        if (dir != null && dir.isDirectory()) {
             try {
-                for (File child:dir.listFiles()) {
+                for (File child : dir.listFiles()) {
                     if (child.isDirectory()) {
                         deletedFiles += clearCacheFolder(child, numDays);
                     }
@@ -184,16 +189,17 @@ public class G {
                         }
                     }
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return deletedFiles;
     }
+
     /**
      * 清除WebView缓存
      */
-    public static void clearWebViewCache(Context context){
+    public static void clearWebViewCache(Context context) {
         //清理Webview缓存数据库
         try {
             context.deleteDatabase("webview.db");
@@ -204,18 +210,19 @@ public class G {
         //WebView 缓存文件
         File appCacheDir = context.getDir("cache", Context.MODE_PRIVATE);
         //删除webview 缓存 缓存目录
-        if(appCacheDir.exists()){
+        if (appCacheDir.exists()) {
             context.deleteFile(appCacheDir.getAbsolutePath());
         }
     }
+
     /**
      * 5.0以下版本的沉浸式顶栏
      * //取消状态栏背景 状态栏和toolbar重合  toolbar的背景改变状态栏背景也会改变  实现了动态改变状态栏颜色  也是与主流最为相似
-     // 缺点是 由于和toolbar重合 必须设置toolbar的高度 paddingTop 让其空出位置给状态栏  但是  由于baseActivyt是先加入toolbar 再加入布局
-     //这与会让布局背toolbar遮住 所以 但是不用这个baseActivity是可行的
-     //最终方案
+     * // 缺点是 由于和toolbar重合 必须设置toolbar的高度 paddingTop 让其空出位置给状态栏  但是  由于baseActivyt是先加入toolbar 再加入布局
+     * //这与会让布局背toolbar遮住 所以 但是不用这个baseActivity是可行的
+     * //最终方案
      */
-    public static void setTranslucent(Activity activity){
+    public static void setTranslucent(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //5.0 全透明实现
             //getWindow.setStatusBarColor(Color.TRANSPARENT)
@@ -230,15 +237,15 @@ public class G {
         }
     }
 
-    public static class KisTyep{
-        public static  boolean isChooseId=false;  //是否选中身份 用切换用户后刷新数据
+    public static class KisTyep {
+        public static boolean isChooseId = false;  //是否选中身份 用切换用户后刷新数据
 
-        public static boolean isReleaseSuccess=false;  //是否成功发布动态 用户刷新数据
+        public static boolean isReleaseSuccess = false;  //是否成功发布动态 用户刷新数据
 
-        public static  boolean isUpadteHold=false;   //是否修改用户头像
+        public static boolean isUpadteHold = false;   //是否修改用户头像
 
-        public static boolean isUpdateComment=false;
-        public static  boolean isUpadteContactHold=false;   //是否修改用户头像
+        public static boolean isUpdateComment = false;
+        public static boolean isUpadteContactHold = false;   //是否修改用户头像
     }
 
 }

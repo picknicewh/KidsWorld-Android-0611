@@ -12,7 +12,7 @@ angular.module('app.controllers')
         //var tsId = "b6d039a39af64d7295e0f55352ae417a";//≤‚ ‘
         //var tsId = "25c874b12c0043ef87dcdba85db64f51";//≤‚ ‘
         //store.set(tsId,tsId);//≤‚ ‘
-        //var tsIdLogin = "b6d039a39af64d7295e0f55352ae417a";//≤‚ ‘
+        //var tsIdLogin = "cea03c849fd542df8f69174f79072108";//≤‚ ‘
         $scope.item1 = [];
         $scope.item2 = [];
 

@@ -5,13 +5,14 @@ angular.module('app.controllers')
 
     .controller('medicineEntrustCtrl',function($scope, $state,$ionicPopup,WebService,CommonService) {
 
-
+           //var tsIdLogin = "a1eda6bc285d462698b869564e4592f1";//测试
         $scope.$on('$ionicView.beforeEnter',function(){
             //$scope.tsId = store.get("tsId"); //获取缓存里的tsId;
             //$scope.tsId = "a1eda6bc285d462698b869564e4592f1";//测试
             //alert(new Date());
             $scope.param ={};
-            //alert(tsIdLogin);
+
+             //alert(tsIdLogin);
             //$scope.param.selectedDate = new Date();
 
         });
@@ -28,10 +29,14 @@ angular.module('app.controllers')
                 //必填参数
                 'toBind':input1,//绑定触发日历的元素
                 'callback':function(){ //确定选择执行回调
-                    input1.setAttribute('value',this.outputDate);
+
+                    //input1.setAttribute('value',this.outputDate);
                     input1.value = this.outputDate;
-                    $scope.param.selectedDate = this.outputDate.replace(/\s/ig,'');
-                    //输出日期 this.outputDate
+                    //$scope.param.selectedDateShow = this.outputDate;
+                    //$scope.param.selectedDate = this.outputDate.length==1?this.outputDate:this.outputDate.replace(/\s/ig,'');//去掉所有空格
+                    $scope.param.selectedDate = this.outputDate;
+                    //alert(1);
+
                 }
             });
 
@@ -41,15 +46,18 @@ angular.module('app.controllers')
                /* var medicineTime = $('.radio_meal.on').children('input').val();
                 alert(medicineTime);*/
             }
+
+
             $scope.toggleInput = function(event){
                 $(event.target).parent().addClass("on").siblings().removeClass("on");
-                /*var medicineTime = $('.radio_meal.on').children('input').val();
-                alert(medicineTime);*/
+
             }
-           /* $(".radio_meal").on("tap",function(){
-                alert(2);
-                $(this).addClass("on").siblings().removeClass("on");
-            });*/
+
+            //测试
+            /*$scope.alertEvent = function(){
+                alert($scope.param.selectedDate);
+                alert($scope.param.selectedDateShow);
+            }*/
 
         });
 
@@ -63,13 +71,16 @@ angular.module('app.controllers')
         * tsId家长ID
         * */
        $scope.submitData = function(){
+
            //获取单选按钮的值
-           //var medicineTime = $('input:radio[name="meal"]:checked').val();
-           //var medicineTime = $('input:radio[name="meal"].on').val();
            var medicineTime = $('.radio_meal.on').children('input').val();
+           var selectedDate = $scope.param.selectedDate;
+           selectedDate = selectedDate.length==1?selectedDate:selectedDate.replace(/\s/ig,'');
+           //alert(selectedDate);
 
            var data = {
-               createTime:$scope.param.selectedDate,
+               //createTime:$scope.param.selectedDate,
+               createTime:selectedDate,
                medicineName:$scope.param.medicineName,
                medicineDosage:$scope.param.medicineCounts,
                medicineDoc:$scope.param.remark,

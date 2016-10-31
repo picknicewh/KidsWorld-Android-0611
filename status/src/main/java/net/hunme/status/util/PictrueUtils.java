@@ -137,7 +137,7 @@ public class PictrueUtils implements View.OnClickListener {
     public void onClick(View view) {
         Intent intent = new Intent(context, ImagePagerActivity.class);
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,getimagepath(imageUrl));
-        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, String.valueOf(view.getTag()));
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX,(int)view.getTag());
         intent.putExtra("source","net");
         context.startActivity(intent);
     }

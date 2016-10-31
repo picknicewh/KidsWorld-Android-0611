@@ -107,21 +107,16 @@ public class HMDroidGap extends CordovaActivity implements View.OnClickListener 
     }
 
     /**
-     * 设置web配置
-     */
-    private void setWebView() {
-        from = new WebCommonPageFrom(iv_left, tv_title, (ImageView) findViewById(R.id.iv_test), this);
-        webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
-        webView.setWebChromeClient(new CordovaWebChromeClient((SystemWebViewEngine) appView.getEngine(), pb_web, webView, this, ll_toolbar));
-        webView.setWebViewClient(new CordovaWebViewClien((SystemWebViewEngine) appView.getEngine()));
-    }
-
-    /**
      * 有无网络加载页面状态
      */
     private void setShowView() {
-        setWebView();
+        //设置web配置
+        from = new WebCommonPageFrom(iv_left, tv_title, (ImageView) findViewById(R.id.iv_test), this);
+        webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口
         loadUrl(launchUrl);
+        webView.setWebChromeClient(new CordovaWebChromeClient((SystemWebViewEngine) appView.getEngine(), pb_web, webView, this, ll_toolbar));
+        webView.setWebViewClient(new CordovaWebViewClien((SystemWebViewEngine) appView.getEngine()));
+
         if (G.isNetworkConnected(this)) {
             rl_nonetwork.setVisibility(View.GONE);
         } else {

@@ -1,1 +1,166 @@
-.button.theme-green{border-color:transparent;background-color:#8ec500;color:#fff}.header-img,.list-margin li:first-child{border-top:10px solid #efeff4}.button.button-block.finish-btn{background-color:#c6c6c6;color:#fff;font-size:18px}.button.theme-green.activated,.button.theme-green.active{background-color:#6a9d00}.bar .buttons-left span.extend-right-click{border-right:10px solid transparent}.list-margin li{border-bottom:10px solid #efeff4;padding-left:10px}.list-margin .input-label{width:100%;max-width:100%;border-bottom:1px solid #e1e1e1;color:#a0a0a0;padding-top:12px;padding-bottom:12px}.list-margin li input[type=text]{font-size:16px;height:45px}.list-margin li textarea{height:45px;padding-top:10px}textarea{width:100%}li.height-model{padding-top:10px;padding-bottom:10px}.list-margin li textarea.big-textarea{height:151px}.list-margin li input[readonly],.list-margin li textarea[disabled],.list-margin li textarea[readonly]{background-color:#fff}.ionic-scroll.hasBottomButton{background-color:#efeff4}.header-img,.list-margin li{background-color:#fff}.header-img{width:100%;position:relative;padding-bottom:8px;padding-left:10px;padding-top:10px}.header-img img{border-radius:100px;width:60px}.name{position:absolute;left:76px;top:18px}.header-img a{color:#8ec500;font-size:18px}.error{color:red}.wrap-meal:after{clear:both}.radio_meal{display:inline-block;height:26px;padding-top:3px;text-align:center;margin-right:10px;background-image:url(../images/icon/radio-off.png);background-repeat:no-repeat;background-size:24px}.radioclass{opacity:0;width:30px}.radio_meal.on{background-position:0 0;background-image:url(../images/icon/radio-on.png)}
+/*各种按钮*/
+.button.theme-green {
+    border-color: transparent;
+    background-color: #8ec500;
+    color: #fff;
+
+}
+/*表示已完成的灰色按钮*/
+.button.button-block.finish-btn {
+    background-color: #c6c6c6;
+    color: #ffffff;
+    font-size: 18px;
+}
+/*按下绿色按钮的颜色*/
+.button.theme-green.active,.button.theme-green.activated {
+    background-color: #6a9d00;
+}
+
+/*扩展按钮的右边可点击区域*/
+.bar .buttons-left span.extend-right-click {
+    border-right: 10px solid transparent;
+}
+/*委托喂药申请页*/
+.list-margin li{
+    /*margin-top: 16px;*/
+    border-bottom: 10px solid #efeff4;
+    /*background-color: #fff;*/
+    padding-left: 10px;
+}
+.list-margin .input-label {
+    width: 100%;
+    max-width: 100%;
+    border-bottom: 1px solid #e1e1e1;
+    color: #a0a0a0;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    /*line-height: 45px;*/
+
+    /*position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    content: '';
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+    background-color: #e1e1e1;*/
+}
+/*设置输入框*/
+.list-margin li input[type=text] {
+    font-size: 16px;
+   /* padding-top: 14px;
+    padding-bottom: 14px;*/
+    height: 45px;
+}
+.list-margin li textarea {
+    height: 45px;
+    padding-top: 10px;
+}
+textarea{
+    width: 100%;
+}
+li.height-model {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.list-margin li textarea.big-textarea {
+    height: 151px;
+}
+/*修改.item-staked-label为系统默认色*/
+/*.list-margin .item-stacked-label {
+    background-color: #fff;
+}*/
+
+/*修改textareareadonly下的背景色为白色*/
+.list-margin li textarea[readonly],.list-margin li textarea[disabled],.list-margin li input[readonly] {
+    background-color: #fff;
+    /*padding-top: 10px;*/
+   /* overflow: hidden;
+    text-overflow: ellipsis;*/
+}
+
+
+/*老师喂药详情页和委托喂药页*/
+/*设置整个页面的背景色为灰色*/
+.ionic-scroll.hasBottomButton {
+    background-color: #efeff4;
+}
+.list-margin li {
+    background-color: #fff;
+}
+.header-img {
+    width: 100%;
+    /*margin-top: 16px;*/
+    background-color: #fff;
+    position: relative;
+    padding-bottom: 8px;
+    padding-left: 10px;
+    padding-top: 10px;
+    border-top:10px solid #efeff4;
+    /*border-bottom: 16px solid #efeff4;*/
+}
+
+.list-margin li:first-child {
+    border-top: 10px solid #efeff4;
+}
+/*.list-margin li:last-child {
+    border-bottom: none;
+}*/
+
+.header-img img {
+    border-radius: 100px;
+    width: 60px;
+}
+.name{
+   position: absolute;
+    left: 76px;
+    top: 18px;
+}
+.header-img a {
+    color: #8ec500;
+    font-size: 18px;
+}
+
+/*表单验证*/
+.error {
+    color: #ff0000;
+}
+
+/*单选按钮*/
+/*.wrap-meal {overflow: hidden;}*/
+.wrap-meal:after{
+    clear: both;
+}
+.radio_meal {
+    /*width: 24px;*/
+    /*height: 18px;*/
+    display: inline-block;
+    height: 26px;
+    /*float: left;*/
+    padding-top: 3px;
+    /*cursor: pointer;*/
+    text-align: center;
+    margin-right: 10px;
+    background-image: url(../images/icon/radio-off.png);
+    background-repeat: no-repeat;
+    background-size: 24px;
+    /*background-position: -24px 0;*/
+}
+.radioclass {
+    opacity: 0;
+    width: 30px;
+    /*cursor: pointer;*/
+    /*-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";*/
+    /*filter: alpha(opacity=0);*/
+}
+.radio_meal.on {
+    background-position: 0 0;
+    background-image: url(../images/icon/radio-on.png);
+}
+
+
+/*.radio_meal.activated {*/
+    /*/!*background-position: 0 0;*!/*/
+    /*background-image: url(../images/icon/radio-on.png);*/
+/*}*/

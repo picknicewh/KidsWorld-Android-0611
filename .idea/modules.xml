@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CordovaLib/CordovaLib.iml" filepath="$PROJECT_DIR$/CordovaLib/CordovaLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/IMKit/IMKit.iml" filepath="$PROJECT_DIR$/IMKit/IMKit.iml" />
       <module fileurl="file://$PROJECT_DIR$/KidsWorld-Android.iml" filepath="$PROJECT_DIR$/KidsWorld-Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/baselibrary/baselibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cordovaLib/cordovaLib.iml" filepath="$PROJECT_DIR$/cordovaLib/cordovaLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/discovery/discovery.iml" filepath="$PROJECT_DIR$/discovery/discovery.iml" />
       <module fileurl="file://$PROJECT_DIR$/imagepickerModule/imagepickerModule.iml" filepath="$PROJECT_DIR$/imagepickerModule/imagepickerModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/jpushlibrary/jpushlibrary.iml" filepath="$PROJECT_DIR$/jpushlibrary/jpushlibrary.iml" />

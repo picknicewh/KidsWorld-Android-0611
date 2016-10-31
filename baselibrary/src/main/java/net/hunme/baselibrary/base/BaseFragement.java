@@ -92,20 +92,6 @@ public class BaseFragement extends Fragment implements CordovaInterface {
         return threadPool;
     }
 
-    @Override
-    public void requestPermission(CordovaPlugin plugin, int requestCode, String permission) {
-
-    }
-
-    @Override
-    public void requestPermissions(CordovaPlugin plugin, int requestCode, String[] permissions) {
-
-    }
-
-    @Override
-    public boolean hasPermission(String permission) {
-        return false;
-    }
 
     @Override
     public void setActivityResultCallback(CordovaPlugin plugin) {

@@ -29,5 +29,5 @@ dependencies {
     compile 'com.lzy.net:okhttputils:1.7.2'
     compile files('lib/sun.misc.BASE64Decoder.jar')
     compile project(':IMKit')
-    compile project(':cordovaLib')
+    compile project(':CordovaLib')
 }

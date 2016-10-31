@@ -5,7 +5,7 @@ angular.module('app.controllers')
 
     .controller('medicineTaskCtrl',function($scope, $state,$ionicPopup,$stateParams,$ionicHistory,WebService,CommonService) {
 
-        //var tsIdLogin = "b6d039a39af64d7295e0f55352ae417a";//测试
+        //var tsIdLogin = "cea03c849fd542df8f69174f79072108";//测试
         $scope.$on('$ionicView.beforeEnter',function(){
 
              $scope.medicineId = $stateParams["medicineId"];//获取页面传参
@@ -108,6 +108,9 @@ angular.module('app.controllers')
                     //$scope.status == 1;
                     $(event.target).parent().addClass('ng-hide').next().removeClass('ng-hide');
                     CommonService.showAlert.show("提交成功");
+                    setTimeout($ionicHistory.goBack(),5000);
+                    //$ionicHistory.goBack();
+
 
                 } else {
                     CommonService.showAlert.show("提交失败");
