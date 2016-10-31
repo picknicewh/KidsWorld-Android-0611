@@ -107,9 +107,9 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
         iv_pcall.setOnClickListener(this);
         iv_pmessage.setOnClickListener(this);
         Intent intent = getIntent();
-        username = intent.getStringExtra("title");
+      //  username = intent.getStringExtra("title");
         userid = intent.getStringExtra("targetId");
-        tv_pname.setText(username);
+       // tv_pname.setText(username);
         getUserInfor(userid);
     }
     /**
@@ -120,7 +120,6 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
         param.put("tsId",userid);
         Type  type = new  TypeToken<Result<RyUserInfor>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_GETDETAIL,param,this,2,"contract_person");
-
     }
     @Override
     public void onClick(View v) {
@@ -147,6 +146,7 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
                     RongIM.getInstance().refreshUserInfoCache(new UserInfo(userid, username, Uri.parse(image)));
                 }
             }
+            finish();
         }
     }
 
@@ -156,10 +156,12 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
         if (UserInfor!=null){
             if (UserInfor.isSuccess()){
                 RyUserInfor ryUserInfor= UserInfor.getData();
+                username =ryUserInfor.getTsName();
                 tv_school.setText(ryUserInfor.getSchoolName());
                 tv_role.setText(ryUserInfor.getTsName());
                 tv_phone.setText(ryUserInfor.getPhone());
                 tv_class.setText(ryUserInfor.getClassName());
+                tv_pname.setText(ryUserInfor.getTsName());
                 image = ryUserInfor.getImg();
                 ImageCache.imageLoader(ryUserInfor.getImg(),iv_phead);
             }
@@ -169,5 +171,13 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
     @Override
     public void onError(String uri, String error) {
         Toast.makeText(PersonDetailActivity.this,error,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode== ConservationActivity.PERSONDETAIL){
+            userid = data.getStringExtra("targetId");
+        }
     }
 }

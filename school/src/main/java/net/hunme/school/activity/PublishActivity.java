@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -14,8 +15,8 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
-import net.hunme.baselibrary.util.PublishDb;
-import net.hunme.baselibrary.util.PublishDbHelp;
+import net.hunme.baselibrary.database.PublishDb;
+import net.hunme.baselibrary.database.PublishDbHelp;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.school.R;
 import net.hunme.school.adapter.PublishAdapter;
@@ -39,6 +40,11 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
      */
     private RelativeLayout rl_nonetwork;
     private int type;
+    private int flag = 0;
+    /**
+     * 没有数据
+     */
+    private TextView tv_nodata;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +58,7 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
     private void initView(){
         lv_publish=$(R.id.lv_publish);
         rl_nonetwork = $(R.id.rl_nonetwork);
-        if (G.isNetworkConnected(this)){
-            rl_nonetwork.setVisibility(View.GONE);
-        }else {
-            rl_nonetwork.setVisibility(View.VISIBLE);
-        }
+        tv_nodata = $(R.id.tv_nodata);
         rl_nonetwork.setOnClickListener(this);
     }
 
@@ -87,7 +89,7 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
         setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickClose();
         setCententTitle("通知");
-        if (UserMessage.getInstance(this).getType().equals("2")){
+        if (!UserMessage.getInstance(this).getType().equals("1")){
             setSubTitle("发布通知");
             type=1;
         }else {
@@ -107,34 +109,66 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
         map.put("dateTime",UserMessage.getInstance(this).getPublishDateTime());
         Type type=new TypeToken<Result<List<PublishVo>>>(){}.getType();
         OkHttps.sendPost(type,MESSAGE,map,this,2,"PUBLISH");
+        if (G.isNetworkConnected(this)){
+            rl_nonetwork.setVisibility(View.GONE);
+            showLoadingDialog();
+        }else {
+            rl_nonetwork.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (publishList.size()>0&&publishList!=null&&flag==1){
+            publishList.clear();
+            getPublishMessage();
+            flag=0;
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==0){
-            adapter.notifyDataSetChanged();
+            if (publishList.size()>0&&publishList!=null){
+                publishList.clear();
+                getPublishMessage();
+            }
         }
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-        List<PublishVo> publishVos=((Result<List<PublishVo>>)date).getData();
-        for (int i=0;i<publishVos.size();i++){
-            PublishVo vo= publishVos.get(i);
-            boolean isRead= PublishDbHelp.select(PublishActivity.db.getReadableDatabase(),vo.getMessageId()+um.getTsId());
-            if(!isRead)
-                //将未读信息排在最前列
-                publishList.add(0,vo);
-            else
-                publishList.add(vo);
-            vo.setRead(isRead);
+        if (date!=null){
+            stopLoadingDialog();
+            List<PublishVo> publishVos=((Result<List<PublishVo>>)date).getData();
+            for (int i=0;i<publishVos.size();i++){
+                PublishVo vo= publishVos.get(i);
+                boolean isRead= PublishDbHelp.select(PublishActivity.db.getReadableDatabase(),vo.getMessageId()+um.getTsId());
+                if(!isRead)
+                    //将未读信息排在最前列
+                    publishList.add(0,vo);
+                else
+                    publishList.add(vo);
+                vo.setRead(isRead);
+            }
+            if (publishList.size()==0){
+                tv_nodata.setVisibility(View.VISIBLE);
+                lv_publish.setVisibility(View.GONE);
+            }else {
+                tv_nodata.setVisibility(View.GONE);
+                lv_publish.setVisibility(View.VISIBLE);
+                adapter.notifyDataSetChanged();
+            }
+
         }
-        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onError(String uri, String error) {
+        rl_nonetwork.setVisibility(View.VISIBLE);
         G.showToast(this,error);
     }
 
@@ -143,13 +177,9 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
         if (view.getId()==R.id.rl_nonetwork){
             publishList.clear();
             getPublishMessage();
-            if (G.isNetworkConnected(this)){
-                rl_nonetwork.setVisibility(View.GONE);
-            }else {
-                rl_nonetwork.setVisibility(View.VISIBLE);
-            }
         }else if (view.getId()==R.id.tv_subtitle){
             if (type==2){
+                //
                 if(publishList.size()<0){
                     //通知列表为空返回
                     return;
@@ -167,6 +197,7 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
             }else {
                 Intent intent = new Intent(this,PublishInfoActivity.class);
                 startActivity(intent);
+                flag=1;
             }
 
         }

@@ -15,7 +15,7 @@ import android.widget.RadioGroup;
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.baselibrary.contract.GetContractData;
 import net.hunme.baselibrary.contract.GetGroupData;
-import net.hunme.baselibrary.contract.InitContractData;
+import net.hunme.baselibrary.contract.InitAllContractData;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.activity.ContractMemberActivity;
@@ -205,6 +205,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
             }
         });
     }
+
     /**
      * 初始化界面数据
      */
@@ -222,13 +223,13 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         GetGroupData getGroupData = new GetGroupData(getActivity());
         getGroupData.getGroupList(userMessage.getTsId());
         //初始化所有联系人的数据
-        InitContractData data = new InitContractData(getActivity());
+        InitAllContractData data = new InitAllContractData(getActivity());
         data.init();
     }
     @Override
     public void onResume() {
         super.onResume();
-        initData();
+    //    initData();
         RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener(getActivity()));
     }
     @Override

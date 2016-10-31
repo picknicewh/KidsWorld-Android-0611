@@ -10,6 +10,8 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.mode.ContractInfoVo;
+import net.hunme.baselibrary.mode.GroupInfoVo;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
@@ -17,8 +19,6 @@ import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.adapter.ContractMemberAdapter;
-import net.hunme.message.bean.ContractInfoVo;
-import net.hunme.message.bean.GroupInfoVo;
 import net.hunme.message.bean.GroupMemberVo;
 import net.hunme.message.bean.GroupMemberVos;
 import net.hunme.message.widget.CreateGroupDialog;
@@ -89,7 +89,7 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
      */
     private void  operation(int type,String targetGroupId){
         switch (type){
-            case 0:allContract(type);break;
+            case 0:allContract(4);break;
             case 1:if (targetGroupId!=null){withoutMember(targetGroupId);}break;
             case 2:if (targetGroupId!=null){inMember(targetGroupId);}break;
         }
@@ -116,6 +116,7 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
         params.put("tsId",UserMessage.getInstance(this).getTsId());
         Type type =new TypeToken<Result<List<GroupMemberVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_WITHOUT_MEMBER,params,this);
+        stopLoadingDialog();
     }
     /**
      *  获取在群内成员
@@ -126,6 +127,7 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
         params.put("groupChatId",targetGroupId);
         Type type =new TypeToken<Result<GroupMemberVos>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_SEARCH_MEMBER,params,this);
+        showLoadingDialog();
     }
     /**
      * 全部联系人
@@ -160,7 +162,6 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
               tv_subTitle.setClickable(false);
               tv_subTitle.setTextColor(getResources().getColor(R.color.line_gray));
           }
-
       }
     }
     /**
@@ -249,7 +250,7 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
     private  List<GroupMemberVo> getGroupMemberVoList(List<GroupInfoVo>  groupInfoVos){
         List<GroupMemberVo> groupMemberVoList = new ArrayList<>();
         List<ContractInfoVo> contractInfoVos = groupInfoVos.get(0).getMenberList();
-        for (int i = 0 ;i<contractInfoVos.size();i++){
+        for (int i = 0 ;i < contractInfoVos.size();i++){
             ContractInfoVo contractInfoVo = contractInfoVos.get(i);
             if (!contractInfoVo.getTsId().equals(UserMessage.getInstance(this).getTsId())){
                 GroupMemberVo groupMemberVo= new GroupMemberVo();
@@ -273,8 +274,17 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
         }else if (uri.contains(Apiurl.MESSAGE_SEARCH_MEMBER)){
             Result<GroupMemberVos> data = (Result<GroupMemberVos>) date;
             if (data!=null){
+                //去掉群主
                 GroupMemberVos groupMemberVos = data.getData();
-                setListView(groupMemberVos.getMemberList());
+                String ganapatiId =groupMemberVos.getGanapatiId();
+                List<GroupMemberVo> groupMemberVoList = new ArrayList<>();
+                for (int i=0;i<groupMemberVos.getMemberList().size();i++){
+                    GroupMemberVo vo = groupMemberVos.getMemberList().get(i);
+                    if (!vo.getTs_id().equals(ganapatiId)){
+                        groupMemberVoList.add(vo);
+                    }
+                }
+                setListView(groupMemberVoList);
             }
         }else if (uri.contains(Apiurl.MESSAGE_GETGTOUP)){
             Result<List<GroupInfoVo>> data = (Result<List<GroupInfoVo>>) date;
@@ -289,7 +299,9 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
                 String result = data.getData();
                 Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
             }
+
         }
+        stopLoadingDialog();
     }
     @Override
     public void onError(String uri, String error) {

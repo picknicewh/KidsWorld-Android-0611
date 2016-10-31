@@ -1,7 +1,6 @@
 package net.hunme.school.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,10 @@ import android.widget.TextView;
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.school.R;
 import net.hunme.school.bean.DishesVo;
+import net.hunme.user.util.PublishPhotoUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import main.picturesee.util.ImagePagerActivity;
 
 /**
  * 作者： wh
@@ -66,11 +64,7 @@ public class FoodListAdapter extends BaseAdapter {
         viewHold.iv_food_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ImagePagerActivity.class);
-                intent.putStringArrayListExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, (ArrayList<String>) vo.getCookUrl());
-                intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, String.valueOf(view.getTag()));
-                intent.putExtra("source","net");
-                context.startActivity(intent);
+                PublishPhotoUtil.imageBrowernet(0, (ArrayList<String>) vo.getCookUrl(),context);
             }
         });
         return view;

@@ -1,46 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_marginRight="@dimen/space"
+        android:layout_marginTop="@dimen/space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <net.hunme.baselibrary.widget.CircleImageView
         android:layout_margin="@dimen/space"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/lv_holad" />
-
-    <RelativeLayout
-        android:layout_marginRight="@dimen/space"
-        android:layout_marginTop="@dimen/space"
-        android:layout_marginBottom="@dimen/space"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <TextView
+            android:layout_toRightOf="@+id/lv_holad"
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/ts_x_large"
             android:textColor="@color/black"
-            android:text="王小二"/>
+           />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_date"
-            android:text="18:25"
             android:textSize="@dimen/ts_medium"
             android:layout_alignParentRight="true"/>
-
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <TextView
-
-            android:textColor="@color/black"
-            android:id="@+id/tv_content"
-            android:layout_marginTop="@dimen/space_x2"
+            android:padding="@dimen/space"
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/ts_large"
-            android:text="PhoneGap/Cordova是一个专业的移动应用开发框架，是一个全面的WEB APP开发的框架，提供了以WEB形式来访问终端设备的API的功能。这对于采用WEB APP进行开发者来说是个福音，这可以避免了原生开发的某些功能。Cordova 只是个原生外壳，app的内核是一个完整的webapp，需要调用的原生功能将以原生插件的形式实现，以暴露js接口的方式调用。"
-            android:layout_below="@id/tv_title"/>
-    </RelativeLayout>
+            android:id="@+id/tv_ptitle"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ts_xxx_large"
+            android:layout_alignParentRight="true"/>
+        <TextView
+
+            android:padding="@dimen/space_x2"
+            android:textColor="@color/black"
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ts_xx_large"
+            android:text="PhoneGap/Cordova是一个专业的移动应用开发框架，是一个全面的WEB APP开发的框架，提供了以WEB形式来访问终端设备的API的功能。这对于采用WEB APP进行开发者来说是个福音，这可以避免了原生开发的某些功能。Cordova 只是个原生外壳，app的内核是一个完整的webapp，需要调用的原生功能将以原生插件的形式实现，以暴露js接口的方式调用。" />
+          <ImageView
+              android:layout_gravity="center"
+              android:layout_below="@+id/tv_content"
+              android:id="@+id/iv_image"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </LinearLayout>

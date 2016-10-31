@@ -333,6 +333,7 @@ public class PullToRefreshLayout extends RelativeLayout
 			break;
 		case RELEASE_TO_REFRESH:
 			// 释放刷新状态
+			loadStateTextView.setVisibility(VISIBLE);
 			refreshStateTextView.setText(R.string.release_to_refresh);
 			pullView.startAnimation(rotateAnimation);
 			break;
@@ -341,6 +342,7 @@ public class PullToRefreshLayout extends RelativeLayout
 			pullView.clearAnimation();
 			refreshingView.setVisibility(View.VISIBLE);
 			pullView.setVisibility(View.INVISIBLE);
+			loadStateTextView.setVisibility(VISIBLE);
 			refreshingView.startAnimation(refreshingAnimation);
 			refreshStateTextView.setText(R.string.refreshing);
 			break;
@@ -354,6 +356,7 @@ public class PullToRefreshLayout extends RelativeLayout
 			pullUpView.clearAnimation();
 			loadingView.setVisibility(View.VISIBLE);
 			pullUpView.setVisibility(View.INVISIBLE);
+			loadStateTextView.setVisibility(VISIBLE);
 			loadingView.startAnimation(refreshingAnimation);
 			loadStateTextView.setText(R.string.loading);
 			break;
@@ -362,6 +365,7 @@ public class PullToRefreshLayout extends RelativeLayout
 				pullUpView.clearAnimation();
 				loadingView.setVisibility(View.INVISIBLE);
 				pullUpView.setVisibility(View.INVISIBLE);
+				loadStateTextView.setVisibility(VISIBLE);
 				loadingView.startAnimation(refreshingAnimation);
 				loadStateTextView.setText(R.string.load_nomore);
 				break;
@@ -603,6 +607,8 @@ public class PullToRefreshLayout extends RelativeLayout
 				.findViewById(R.id.loadstate_tv);
 		loadingView = loadmoreView.findViewById(R.id.loading_icon);
 		loadStateImageView = loadmoreView.findViewById(R.id.loadstate_iv);
+		pullUpView.setVisibility(INVISIBLE);
+		loadStateTextView.setVisibility(INVISIBLE);
 	}
 
 	@Override

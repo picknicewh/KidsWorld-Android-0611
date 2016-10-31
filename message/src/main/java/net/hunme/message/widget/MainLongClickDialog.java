@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.hunme.baselibrary.contract.ContractsDb;
+import net.hunme.baselibrary.contract.ContractsDbHelper;
 import net.hunme.baselibrary.contract.GroupDb;
 import net.hunme.baselibrary.contract.GroupsDbHelper;
 import net.hunme.baselibrary.widget.MyAlertDialog;
@@ -65,7 +67,14 @@ public class MainLongClickDialog implements View.OnClickListener{
      * 标记 flag 0消息列表长按某个会话，1消息页面长按消息
      */
     private int flag=0 ;
-    private GroupsDbHelper dbHelper;
+    /**
+     * 群组的数据库
+     */
+    private GroupsDbHelper groupsDbHelper;
+    /**
+     * 联系人数据库
+     */
+    private ContractsDbHelper contractsDbHelper;
     private SQLiteDatabase db;
     /**
      * 是否顶置
@@ -106,13 +115,19 @@ public class MainLongClickDialog implements View.OnClickListener{
    public void initData(){
        switch (flag){
            case 0:
-               dbHelper = new GroupsDbHelper();
-               db = new GroupDb(context).getWritableDatabase();
-               isTop = dbHelper.getTop(db,targetId);
+               groupsDbHelper = GroupsDbHelper.getinstance();
+               contractsDbHelper = ContractsDbHelper.getinstance();
+               if (type== Conversation.ConversationType.GROUP){
+                   db = new GroupDb(context).getWritableDatabase();
+                   isTop = groupsDbHelper.getTop(db,targetId);
+               }else if (type== Conversation.ConversationType.PRIVATE){
+                   db = new ContractsDb(context).getWritableDatabase();
+                   isTop = contractsDbHelper.getTop(db,targetId);
+               }
                if (isTop){
-                   tv_top.setText("取消顶置");
+                   tv_top.setText("取消置顶");
                }else {
-                   tv_top.setText("顶置改会话");
+                   tv_top.setText("置顶该会话");
                }
                tv_remove.setText("从会话列表中移除");
                tv_name.setText(targetName);
@@ -149,10 +164,19 @@ public class MainLongClickDialog implements View.OnClickListener{
                 case 0:
                     if (isTop){
                         setTopConversation(false);
-                        dbHelper.updateIsTop(db,0,targetId);
+                        if (type== Conversation.ConversationType.GROUP){
+                            groupsDbHelper.updateIsTop(db,0,targetId);
+                        }else if (type== Conversation.ConversationType.PRIVATE){
+                            contractsDbHelper.updateIsTop(db,0,targetId);
+                        }
+
                     }else {
                         setTopConversation(true);
-                        dbHelper.updateIsTop(db,1,targetId);
+                        if (type== Conversation.ConversationType.GROUP){
+                            groupsDbHelper.updateIsTop(db,1,targetId);
+                        }else if (type== Conversation.ConversationType.PRIVATE){
+                            contractsDbHelper.updateIsTop(db,1,targetId);
+                        }
                     }
                     break;
                 case 1:
@@ -204,9 +228,9 @@ public class MainLongClickDialog implements View.OnClickListener{
                 public void onSuccess(Boolean issuccess) {
                     if (issuccess){
                         if (isTop){
-                            Toast.makeText(context,"顶置该会话！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,"置顶该会话！",Toast.LENGTH_SHORT).show();
                         }else {
-                            Toast.makeText(context,"取消顶置！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,"取消置顶！",Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

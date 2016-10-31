@@ -8,8 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
-import com.pizidea.imagepicker.AndroidImagePicker;
-import com.pizidea.imagepicker.bean.ImageItem;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
@@ -79,7 +77,6 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
         itemList=new ArrayList<>();
         PublishPhotoUtil.goSelectImager(itemList,this,gv_photo,9);
         PublishPhotoUtil.showPhoto(this,itemList,gv_photo,9);
-
      /*   mAdapter=new GridAlbumAdapter(itemList,this,9);
         gv_photo.setAdapter(mAdapter);
         gv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -135,29 +132,6 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
     }
 
     /**
-     * 跳转到选择本地图片页面
-     */
-    private void getPhotos(){
-        AndroidImagePicker androidImagePicker = AndroidImagePicker.getInstance();
-        androidImagePicker.setSelectLimit(9-itemList.size());
-        androidImagePicker.pickMulti(UploadPhotoActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
-            @Override
-            public void onImagePickComplete(List<ImageItem> items) {
-                if(items != null && items.size() > 0){
-                    for(ImageItem item:items){
-                        G.log("选择了===="+item.path);
-                        if(itemList.size()<9){
-                            itemList.add(item.path);
-                        }
-                    }
-                    mAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-        return;
-    }
-
-    /**
      * 上传图片到目标相册
      */
     private void uploadPhoto(List<File> fileList){
@@ -171,6 +145,7 @@ public class UploadPhotoActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onSuccess(String uri, Object date) {
+        itemList.clear();
         dialog.dismiss();
         G.showToast(this,"图片上传成功");
         isUploadSuccess=true;

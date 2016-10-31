@@ -67,6 +67,7 @@ public class ContractMemberAdapter extends BaseAdapter  {
 		} else {
 			viewHolder = (ViewHolder) view.getTag();
 		}
+
 		viewHolder.checkBox.setChecked(getIsSelected().get(position));
 		viewHolder.tvTitle.setText(mContent.getTs_name());
 		ImageCache.imageLoader(mContent.getImgUrl(),viewHolder.ivimage);

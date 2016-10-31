@@ -8,6 +8,15 @@
     <include
         android:id="@+id/rl_nonetwork"
         layout="@layout/nonetwork"/>
+    <TextView
+        android:id="@+id/tv_nodata"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="没有数据"
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <ListView
         android:id="@+id/lv_publish"
         android:layout_width="match_parent"

@@ -1,34 +1,22 @@
 package net.hunme.school.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.reflect.TypeToken;
-
 import net.hunme.baselibrary.base.BaseActivity;
-import net.hunme.baselibrary.mode.Result;
-import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
-import net.hunme.baselibrary.network.OkHttps;
-import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.LoadingDialog;
 import net.hunme.school.R;
-import net.hunme.school.bean.CooikeVo;
 import net.hunme.school.widget.DateView;
 
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/10/11
  * 名称：
  * 版本说明：
@@ -51,11 +39,6 @@ public abstract class BaseFoodActivity extends BaseActivity implements OkHttpLis
      *日期显示
      */
     public static TextView tv_calendar;
-    /**
-     * 广播
-     */
-    public getFoodListRecevier recevier;
-
 
     /**
      * 来自哪个页面 =1食谱页面 =2 发布食谱页面
@@ -63,33 +46,25 @@ public abstract class BaseFoodActivity extends BaseActivity implements OkHttpLis
     public static int from =1;
     public boolean isvisible = false;
     public     LoadingDialog dialog;
+    /**
+     * 图片列表
+     */
+    public ArrayList<String> itemList;
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-
-
     }
-    public void registerboradcast(){
-        IntentFilter intentFilter = new IntentFilter(ACTION_GEFOOD);
-        recevier = new getFoodListRecevier();
-        registerReceiver(recevier,intentFilter);
-    }
-    private  class  getFoodListRecevier extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(ACTION_GEFOOD)){
-                String date = tv_calendar.getText().toString();
-                String year = date.substring(0,4);
-                String mouth =date.substring(5,7);
-                String day  = date.substring(8,10);
-                String mDate= year+"-"+mouth+"-"+day;
-                if (from==1){
-                    getCookBook(mDate);
-                }else {
-                    publishCookBook(mDate);
-                }
-            }
-        }
+    /**
+     * 特定格式日期
+     * @param tv_calendar
+     */
+    public String getFormateDate(TextView tv_calendar){
+        String date = tv_calendar.getText().toString();
+        String year = date.substring(0,4);
+        String mouth =date.substring(5,7);
+        String day  = date.substring(8,10);
+        String mDate= year+"-"+mouth+"-"+day;
+        return mDate;
     }
     @Override
     public void onClick(View view) {
@@ -106,30 +81,7 @@ public abstract class BaseFoodActivity extends BaseActivity implements OkHttpLis
     public static TextView getCalender(){
         return tv_calendar;
     }
-    /**
-     * 获取食谱
-     * @param date 日期
-     */
-    public  void getCookBook(String date){
-        Map<String,Object> params = new HashMap<>();
-        params.put("tsId", UserMessage.getInstance(this).getTsId());
-        params.put("date",date);
-        Type type = new TypeToken<Result<CooikeVo>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.SCHOOL_GETCOOKBOOK,params,this);
-        showLoadingDialog();
-    }
-    /**
-     * 发布食谱
-     * @param date 日期
-     */
-    public void publishCookBook(String date){
-        Map<String,Object> params = new HashMap<>();
-        params.put("tsId", UserMessage.getInstance(this).getTsId());
-        params.put("date",date);
-        Type type = new TypeToken<Result<CooikeVo>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.SCHOOL_GETCOOKBOOK,params,this);
-        showLoadingDialog();
-    }
+
     public void setDateView(DateView dateView) {
         this.dateView = dateView;
     }
@@ -146,4 +98,17 @@ public abstract class BaseFoodActivity extends BaseActivity implements OkHttpLis
         this.from = from;
     }
 
+    //发布食谱需要的
+    public String date;
+    public EditText et_food;
+    public int type;
+    public void setEt_food(EditText et_food) {
+        this.et_food = et_food;
+    }
+    public void setType(int type) {
+        this.type = type;
+    }
+    public void setItemList(ArrayList<String> itemList) {
+        this.itemList = itemList;
+    }
 }

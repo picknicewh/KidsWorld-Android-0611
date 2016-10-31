@@ -1,6 +1,11 @@
 package net.hunme.baselibrary.util;
 
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -293,5 +298,35 @@ public class DateUtil {
 				break;
 		}
 		return s;
+	}
+	 /**
+	 * 计算文字的长度，如果文字的长度大于100则不能再输入
+	  * @param et_content 编辑框
+	  * @param tv_count 计数显示view
+	 */
+	public static void setEditContent(final EditText et_content, final TextView tv_count) {
+		et_content.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+			@Override
+			public void afterTextChanged(Editable s) {
+				String str = s.toString();
+				int count = 0;
+				count = str.length();
+				if (count > 140) {
+					deleteSelection(s);
+				}else {
+					tv_count.setText(count+"/140");
+				}
+			}
+			private void deleteSelection(Editable s) {
+				int selection = et_content.getSelectionStart();
+				if (selection > 1) {
+					s.delete(selection - 1, selection);
+				}
+			}
+		});
 	}
 }

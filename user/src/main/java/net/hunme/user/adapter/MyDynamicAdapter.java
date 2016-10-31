@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -49,11 +50,34 @@ public class MyDynamicAdapter extends BaseAdapter implements  OkHttpListener {
     private   List<DynamicInfoVo> dynamicInfoVos;
     private int pageNumber;
     private Context context;
+    /**
+     * 点赞集合
+     */
+    private  Map<Integer,Integer> praises;
+    /**
+     * 点赞数量集合
+     */
+    private  Map<Integer,Integer> praiseNums;
     public MyDynamicAdapter(MyDynamicActivity myDynamicActivity,List<DynamicInfoVo> dynamicInfoVos, int pageNumber) {
         this.myDynamicActivity = myDynamicActivity;
         this.dynamicInfoVos = dynamicInfoVos;
         this.pageNumber = pageNumber;
          this.context = myDynamicActivity;
+         praiseNums = new HashMap<>();
+         praises = new HashMap<>();
+    }
+    /**
+     * 设置相对于的数据
+     */
+    public  void setData(List<DynamicInfoVo> dynamicInfoVos ){
+        if (dynamicInfoVos!=null){
+            for (int i = 0 ; i<dynamicInfoVos.size();i++){
+                DynamicInfoVo statusVo = dynamicInfoVos.get(i);
+                praises.put(i,statusVo.getIsAgree());
+                int size=statusVo.getList().size();
+                praiseNums.put(i,size);
+            }
+        }
     }
     @Override
     public int getCount() {
@@ -114,8 +138,8 @@ public class MyDynamicAdapter extends BaseAdapter implements  OkHttpListener {
             }
         }
         //显示点赞
-        if (dynamicInfoVo.getList().size()>0){
-            viewHold.tv_praise_num.setText(String.valueOf(dynamicInfoVo.getList().size()));
+        if (praiseNums.get(i)>0){
+            viewHold.tv_praise_num.setText(String.valueOf(praiseNums.get(i)));
         }else {
             viewHold.tv_praise_num.setText("赞");
         }
@@ -126,9 +150,9 @@ public class MyDynamicAdapter extends BaseAdapter implements  OkHttpListener {
             viewHold.tv_comment_num.setText("评论");
         }
         //是否点赞
-        if (dynamicInfoVo.getIsAgree()==1){
+        if (praises.get(i)==1){
             viewHold.iv_praise.setImageResource(R.mipmap.ic_heat_on);
-        }else if (dynamicInfoVo.getIsAgree()==2){
+        }else if (praises.get(i)==2){
             viewHold.iv_praise.setImageResource(R.mipmap.ic_heat_off);
         }
       //点赞按钮事件
@@ -136,10 +160,14 @@ public class MyDynamicAdapter extends BaseAdapter implements  OkHttpListener {
             @Override
             public void onClick(View view) {
                 String  cancle =null ;
-                if (dynamicInfoVo.getIsAgree()==1){
+                if (praises.get(i)==1){
                     cancle="2";
-                }else if (dynamicInfoVo.getIsAgree()==2){
+                    praises.put(i,2);
+                    praiseNums.put(i,praiseNums.get(i)-1);
+                }else if (praises.get(i)==2){
                     cancle = "1";
+                    praises.put(i,1);
+                    praiseNums.put(i,praiseNums.get(i)+1);
                 }
                 personPraise(UserMessage.getInstance(context).getTsId(),dynamicInfoVo.getDynamicId(), cancle);
             }
@@ -156,10 +184,23 @@ public class MyDynamicAdapter extends BaseAdapter implements  OkHttpListener {
             public void onClick(View view) {
                 Intent intent  = new Intent(context, StatusDetilsActivity.class);
                 intent.putExtra("dynamicId",dynamicInfoVo.getDynamicId());
+                myDynamicActivity.setScrollPosition(getScrollPosition(dynamicInfoVo));
                 context.startActivity(intent);
             }
         });
         return view;
+    }
+    /**
+     * 获取当前点击修改状态在数据的位置
+     * @param dynamicInfoVo
+     */
+    private int  getScrollPosition(DynamicInfoVo dynamicInfoVo){
+        for (int i = 0;i<myDynamicActivity.dynamicInfoVoList.size();i++){
+            if (myDynamicActivity.dynamicInfoVoList.get(i).getDynamicId().equals(dynamicInfoVo.getDynamicId())){
+                return  i;
+            }
+        }
+        return 1;
     }
     /**
      * 点赞
@@ -177,15 +218,15 @@ public class MyDynamicAdapter extends BaseAdapter implements  OkHttpListener {
         if (uri.equals(Apiurl.SUBPRAISE)){
             String result = ((Result<String>)date).getData();
             if (result.contains("成功")){
-                myDynamicActivity.getMyDynamic(pageNumber);
-                notifyDataSetChanged();
+                Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
+                MyDynamicAdapter.this.notifyDataSetChanged();
             }
         }
     }
 
     @Override
     public void onError(String uri, String error) {
-
+        Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
     }
     class ViewHold{
         TextView tv_day; //时间

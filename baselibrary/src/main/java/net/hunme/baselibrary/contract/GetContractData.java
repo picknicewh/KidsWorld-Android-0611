@@ -7,8 +7,8 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
-import net.hunme.baselibrary.mode.GroupJson;
-import net.hunme.baselibrary.mode.MemberJson;
+import net.hunme.baselibrary.mode.ContractInfoVo;
+import net.hunme.baselibrary.mode.GroupInfoVo;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
@@ -33,18 +33,22 @@ import io.rong.imlib.model.UserInfo;
  */
 public class GetContractData implements OkHttpListener {
     private SQLiteDatabase db;
-    private FriendsDbHelper friendsDbHelper;
+    private ContractsDbHelper friendsDbHelper;
     private Context context;
     public GetContractData(Context context){
         this.context = context;
-        FriendsDb friendsDb = new FriendsDb(context);
+        ContractsDb friendsDb = new ContractsDb(context);
         db  = friendsDb.getWritableDatabase();
-        friendsDbHelper = FriendsDbHelper.getinstance();
+        friendsDbHelper = ContractsDbHelper.getinstance();
+        if (!friendsDbHelper.isEmpty(db)){
+            friendsDbHelper.delete(db);
+        }
+
     }
     /**
      * 获取所有班级信息
      * @param tsid
-     *  type获取列表类型 0 所有联系人 1 所有群信息 2 所有老师3 所有家长
+     *  type获取列表类型 0=所有联系人 1=所有群信息 2=所有老师3=所有家长
      */
     public  void getContractList(String tsid){
         if(G.isEmteny(tsid)){
@@ -54,38 +58,36 @@ public class GetContractData implements OkHttpListener {
         Map<String,Object> params = new HashMap<>();
         params.put("tsId", tsid);
         //1=群，2=老师，3=家长
-        params.put("type",0);
-        Type type =new TypeToken<Result<List<GroupJson>>>(){}.getType();
+        params.put("type",4);
+        Type type =new TypeToken<Result<List<GroupInfoVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this);
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
-        Result<List<GroupJson>> data = (Result<List<GroupJson>>) date;
+        Result<List<GroupInfoVo>> data = (Result<List<GroupInfoVo>>) date;
         if (data!=null) {
-            List<GroupJson> groupJsonList = data.getData();
+            List<GroupInfoVo> groupJsonList = data.getData();
             if (RongIM.getInstance()!=null){
-                List<MemberJson> memberJsons = groupJsonList.get(0).getMenberList();
+                List<ContractInfoVo> memberJsons = groupJsonList.get(0).getMenberList();
                 for (int i = 0 ;i<memberJsons.size();i++){
-                   MemberJson memberJson = memberJsons.get(i);
+                    ContractInfoVo memberJson = memberJsons.get(i);
                     final String image = memberJson.getImg();
                     final String userName = memberJson.getTsName();
                     final String ryid  = memberJson.getRyId();
-                    if (friendsDbHelper.isEmpty(db)){
-                        friendsDbHelper.insert(db,userName,ryid,image);
-                    }
-                    RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+                    final  String tsid = memberJson.getTsId();
+                    friendsDbHelper.insert(db,userName,ryid,tsid,image,0);
+                     RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
                     @Override
                     public UserInfo getUserInfo(String userId) {
-                        UserInfo userInfo = new UserInfo(ryid, userName, Uri.parse(image));
+                         UserInfo userInfo = new UserInfo(ryid, userName, Uri.parse(image));
                         return userInfo;
                     }
-
                   }, true);
-                 if (image!=null && ryid!=null && userName!=null){
-                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(ryid, userName, Uri.parse(image)));
-                 }
-            }
+                  if (image!=null && ryid!=null && userName!=null){
+                     RongIM.getInstance().refreshUserInfoCache(new UserInfo(ryid, userName, Uri.parse(image)));
+                  }
+             }
             }
         }
     }

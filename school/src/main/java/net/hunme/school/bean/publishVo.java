@@ -1,6 +1,7 @@
 package net.hunme.school.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * ================================================
@@ -18,8 +19,17 @@ public class PublishVo implements Serializable{
     private String message;
     private String dateTime;
     private String messageId;
-
+    private List<String> messageUrl;
     private boolean isRead;
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public boolean isRead() {
         return isRead;
@@ -68,4 +78,13 @@ public class PublishVo implements Serializable{
     public void setMessageId(String messageId) {
         this.messageId = messageId;
     }
+
+    public List<String> getMessageUrl() {
+        return messageUrl;
+    }
+
+    public void setMessageUrl(List<String>  messageUrl) {
+        this.messageUrl = messageUrl;
+    }
+
 }

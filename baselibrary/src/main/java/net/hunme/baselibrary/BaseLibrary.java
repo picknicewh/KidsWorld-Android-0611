@@ -15,7 +15,11 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
+import net.hunme.baselibrary.contract.GetContractData;
+import net.hunme.baselibrary.contract.GetGroupData;
+import net.hunme.baselibrary.contract.InitAllContractData;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.UserMessage;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -170,10 +174,25 @@ public class BaseLibrary {
                         RongIM.getInstance().setCurrentUserInfo(new UserInfo(userid, username, Uri.parse(portrait)));
                         RongIM.getInstance().setMessageAttachedUserInfo(true);
                     }
+                    initContract(activity);
                 }
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {  G.log("融云连接失败----");}
             });
         }
+    }
+    /**
+     * 初始化联系人
+     * @param context
+     */
+    public  static void initContract( Context context){
+        UserMessage userMessage= (UserMessage.getInstance(context));
+        GetContractData getContractData = new GetContractData(context);
+        getContractData.getContractList(userMessage.getTsId());
+        GetGroupData getGroupData = new GetGroupData(context);
+        getGroupData.getGroupList(userMessage.getTsId());
+        //初始化所有联系人的数据
+        InitAllContractData data = new InitAllContractData(context);
+        data.init();
     }
 }

@@ -9,7 +9,7 @@
         android:id="@+id/tv_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="确定删除这条课程吗？"
+        android:text="确定删除这条动态吗？"
         android:textColor="#494949"
         android:textSize="@dimen/ts_x_large"
         android:gravity="center"

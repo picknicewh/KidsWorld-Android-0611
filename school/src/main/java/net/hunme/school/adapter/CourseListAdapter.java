@@ -1,17 +1,20 @@
 package net.hunme.school.adapter;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.image.ImageCache;
+import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.school.R;
+import net.hunme.school.activity.CourseArrangeActivity;
 import net.hunme.school.bean.SyllabusVo;
-import net.hunme.school.widget.DeleteCourseDialog;
+import net.hunme.school.widget.DeleteDialog;
 
 import java.util.List;
 
@@ -26,10 +29,10 @@ import java.util.List;
  * ================================================
  */
 public class CourseListAdapter extends BaseAdapter  {
-    private Activity context;
+    private CourseArrangeActivity context;
     private List<SyllabusVo> syllabusVoList;
 
-    public CourseListAdapter(Activity context, List<SyllabusVo> publishList) {
+    public CourseListAdapter(CourseArrangeActivity context, List<SyllabusVo> publishList) {
         this.context = context;
         this.syllabusVoList = publishList;
     }
@@ -50,7 +53,7 @@ public class CourseListAdapter extends BaseAdapter  {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewHold viewHold;
         if(null==view){
             view= LayoutInflater.from(context).inflate(R.layout.item_course_arrange,null);
@@ -59,15 +62,23 @@ public class CourseListAdapter extends BaseAdapter  {
         final SyllabusVo vo=syllabusVoList.get(i);
         viewHold= (ViewHold) view.getTag();
         viewHold.tv_date.setText(vo.getCreationTime().substring(0,10));
+        setImageParam(viewHold.iv_course);
+        if (UserMessage.getInstance(context).getType().equals("2")){
+            viewHold.tv_delete.setVisibility(View.VISIBLE);
+        }else {
+            viewHold.tv_delete.setVisibility(View.GONE);
+        }
         viewHold.tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DeleteCourseDialog dialog = new DeleteCourseDialog(context,vo.getSyllabusId());
+                DeleteDialog dialog = new DeleteDialog(context,vo.getSyllabusId(),1,i);
                 dialog.initView();
             }
         });
         viewHold.tv_describle.setText(vo.getTitle());
-        ImageCache.imageLoader(vo.getImgs().get(0),viewHold.iv_course);
+        if (vo.getImgs().size()>0){
+            ImageCache.imageLoader(vo.getImgs().get(0),viewHold.iv_course);
+        }
         return view;
     }
 
@@ -85,4 +96,11 @@ public class CourseListAdapter extends BaseAdapter  {
             view.setTag(this);
         }
      }
+    private void setImageParam(ImageView iv_image){
+        G.initDisplaySize(context);
+        int width  = G.size.W;
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width,width*3/5);
+        iv_image.setScaleType(ImageView.ScaleType.FIT_XY);
+        iv_image.setLayoutParams(lp);
+    }
 }

@@ -4,12 +4,25 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@color/bg_layout">
-    <net.hunme.baselibrary.widget.NavigationBar
-        android:id="@+id/nb_school"
-        android:padding="@dimen/space"
+    <RelativeLayout
+        android:id="@+id/rl_toolbar"
+        android:paddingRight="@dimen/space"
+        android:paddingLeft="@dimen/space"
+        android:paddingTop="@dimen/space_x1.5"
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="74dp"
+        android:background="@color/colorAccent">
+            <TextView
+               android:layout_centerHorizontal="true"
+                android:paddingTop="@dimen/space_x1.5"
+                android:text="园所"
+                android:textColor="@color/white"
+                android:id="@+id/tv_school"
+                android:textSize="@dimen/ts_xx_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
+    </RelativeLayout>
     <LinearLayout
         android:layout_marginTop="@dimen/space"
         android:layout_width="match_parent"
@@ -260,7 +273,7 @@
             <ImageView
                 android:layout_centerVertical="true"
                 android:id="@+id/iv_medicine"
-                android:src="@mipmap/ic_askleave"
+                android:src="@mipmap/ic_medcine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView

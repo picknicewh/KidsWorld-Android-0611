@@ -6,11 +6,9 @@
     android:orientation="vertical"
     tools:context="net.hunme.school.activity.FoodListActivity">
     <ScrollView
-
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <LinearLayout
-
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -37,11 +35,12 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
- <net.hunme.baselibrary.widget.NoScrollListView
+    <net.hunme.baselibrary.widget.NoScrollListView
         android:id="@+id/lv_foodlist"
+        android:dividerHeight="0dp"
+        android:divider="@color/transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
         <TextView
             android:id="@+id/tv_nodata"
             android:visibility="gone"
@@ -51,6 +50,7 @@
             android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="400dp" />
+
     </LinearLayout>
     </ScrollView>
 

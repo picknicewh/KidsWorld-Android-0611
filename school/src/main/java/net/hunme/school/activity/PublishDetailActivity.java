@@ -1,19 +1,26 @@
 package net.hunme.school.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.image.ImageCache;
+import net.hunme.baselibrary.util.G;
 import net.hunme.school.R;
 import net.hunme.school.bean.PublishVo;
+import net.hunme.school.util.PublishPhotoUtil;
+
+import java.util.ArrayList;
 
 public class PublishDetailActivity extends BaseActivity {
     private ImageView lv_holad;
     private TextView tv_title;
     private TextView tv_date;
     private TextView tv_content;
+    private ImageView iv_image;
+    private TextView tv_ptitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +41,38 @@ public class PublishDetailActivity extends BaseActivity {
         tv_title= (TextView) findViewById(R.id.tv_title);
         tv_date= (TextView)findViewById(R.id.tv_date);
         tv_content= (TextView)findViewById(R.id.tv_content);
+        iv_image = (ImageView)findViewById(R.id.iv_image);
+        tv_ptitle =(TextView) findViewById(R.id.tv_ptitle);
     }
 
     private void initDate(){
-        PublishVo vo= (PublishVo) getIntent().getSerializableExtra("publish");
+        final PublishVo vo= (PublishVo) getIntent().getSerializableExtra("publish");
         ImageCache.imageLoader(vo.getImgUrl(),lv_holad);
-        lv_holad.setImageResource(R.mipmap.ic_headmaster);//校长的头像
-        tv_title.setText("校长");
+        if (G.isEmteny(vo.getImgUrl())){
+            lv_holad.setImageResource(R.mipmap.ic_headmaster);//校长的头像
+        }else {
+            ImageCache.imageLoader(vo.getImgUrl(),lv_holad);
+        }
+        if (G.isEmteny(vo.getTsName())){
+            tv_title.setText("校长");
+        }else {
+            tv_title.setText(vo.getTsName());
+        }
+        if (vo.getMessageUrl()!=null&&vo.getMessageUrl().size()>0){
+            ImageCache.imageLoader(vo.getMessageUrl().get(0),iv_image);
+            iv_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PublishPhotoUtil.imageBrowernet(0, (ArrayList<String>) vo.getMessageUrl(),PublishDetailActivity.this);
+                }
+            });
+        }
+        if (!G.isEmteny(vo.getTitle())){
+            tv_ptitle.setText(vo.getTitle());
+            tv_ptitle.setVisibility(View.VISIBLE);
+        }else {
+            tv_ptitle.setVisibility(View.GONE);
+        }
         tv_date.setText(vo.getDateTime().substring(0,11));
         tv_content.setText(vo.getMessage());
     }

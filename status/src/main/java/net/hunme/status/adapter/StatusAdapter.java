@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -25,6 +26,7 @@ import net.hunme.status.R;
 import net.hunme.status.StatusFragement;
 import net.hunme.status.mode.StatusVo;
 import net.hunme.status.util.PictrueUtils;
+import net.hunme.status.widget.DeleteStatusDialog;
 import net.hunme.user.activity.StatusDetilsActivity;
 
 import java.lang.reflect.Type;
@@ -46,12 +48,49 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
     private StatusFragement statusFragement;
     private List<StatusVo> statusVoList;
     private Context context;
-
+    /**
+     * 点赞集合
+     */
+    private  Map<Integer,Integer> praises;
+    /**
+     * 点赞数量集合
+     */
+    private  Map<Integer,Integer> praiseNums;
+    /**
+     * 点赞名字集合
+     */
+    private  Map<Integer,String>praisesNames;
     public StatusAdapter(StatusFragement statusFragement, List<StatusVo> statusVoList) {
         this.statusFragement = statusFragement;
         this.statusVoList = statusVoList;
         context = statusFragement.getActivity();
-
+        praises = new HashMap<>();
+        praiseNums = new HashMap<>();
+        praisesNames = new HashMap<>();
+    }
+    /**
+     * 设置相对于的数据
+     */
+    public  void setData(List<StatusVo> statusVoList){
+        if (statusVoList!=null){
+            for (int i = 0 ; i<statusVoList.size();i++){
+                StatusVo statusVo = statusVoList.get(i);
+                praises.put(i,statusVo.getIsAgree());
+                int size=statusVo.getList().size();
+                praiseNums.put(i,size);
+                praisesNames.put(i,getPesronname(statusVo.getList()));
+            }
+        }
+    }
+    private static String getPesronname(List<String> names){
+        String praisePerson = "";
+        if (names.size()>0){
+            for (String s:names){
+                praisePerson= G.isEmteny(praisePerson)?praisePerson+s:praisePerson+"、"+s;
+            }
+            return praisePerson;
+        }
+        return "";
     }
     @Override
     public int getCount() {
@@ -69,9 +108,8 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHold viewHold = null;
-        String praisePerson = "";
+    public View getView(final int i, View view, ViewGroup viewGroup) {
+         ViewHold viewHold = null;
         if(view==null){
             view= LayoutInflater.from(context).inflate(R.layout.layout_status_head,viewGroup,false);
             new ViewHold(view);
@@ -88,15 +126,11 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
         }else {
             viewHold.tv_content.setVisibility(View.GONE);
         }
-
         //显示点赞和横条
-        if (statusVo.getList()!=null&& statusVo.getList().size()>0){
+        if (praiseNums.get(i)>0){
             viewHold.ll_praise.setVisibility(View.VISIBLE);
-            for (String s:statusVo.getList()){
-                praisePerson= G.isEmteny(praisePerson)?praisePerson+s:praisePerson+"、"+s;
-                viewHold.tv_praise_num.setText(String.valueOf(statusVo.getList().size()));
-                viewHold.tv_praise_person.setText(praisePerson);
-            }
+            viewHold.tv_praise_num.setText(String.valueOf(praiseNums.get(i)));
+            viewHold.tv_praise_person.setText(praisesNames.get(i));
         }else {
             viewHold.ll_praise.setVisibility(View.GONE);
             viewHold.tv_praise_num.setText("赞");
@@ -116,16 +150,15 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
             viewHold.tv_id.setBackgroundResource(R.drawable.user_teach_selecter);
         }
         //是否点赞
-        if (statusVo.getIsAgree()==1){
-            viewHold.iv_praise.setImageResource(R.mipmap.ic_heat_on);
-        }else if (statusVo.getIsAgree()==2){
-            viewHold.iv_praise.setImageResource(R.mipmap.ic_heat_off);
-        }
+         if(praises.get(i)==1){
+             viewHold.iv_praise.setImageResource(R.mipmap.ic_heat_on);
+         }else if (praises.get(i)==2){
+             viewHold.iv_praise.setImageResource(R.mipmap.ic_heat_off);
+         }
 
         //加载图片
         if (statusVo.getImgUrl()!=null&&statusVo.getImgUrl().size()>0){
             viewHold.rl_picture.setVisibility(View.VISIBLE);
-
             new PictrueUtils().setPictrueLoad(context,statusVo.getImgUrl(),viewHold.rl_picture);
         }else {
             viewHold.rl_picture.setVisibility(View.GONE);
@@ -133,11 +166,31 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
         viewHold.iv_praise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String  cancle =null ;
-                if (statusVo.getIsAgree()==1){
-                    cancle="2";
-                }else if (statusVo.getIsAgree()==2){
+                String  praisePerson = praisesNames.get(i);
+                String cancle="";
+                if (praises.get(i)==1){//点赞,取消赞
+                    cancle = "2";
+                    praises.put(i,2);
+                    String[] plist = praisePerson.split("、");
+                    if (plist[0].equals(username)){
+                        if (plist.length==1){
+                            praisesNames.put(i,praisePerson.replace(username,""));
+                        }else {
+                            praisesNames.put(i,praisePerson.replace(username+"、",""));
+                        }
+                    }else {
+                        if (!praisePerson.contains("、")){
+                            praisesNames.put(i,praisePerson.replace(username,""));
+                        }else{
+                            praisesNames.put(i,praisePerson.replace("、"+username,""));
+                        }
+                    }
+                    praiseNums.put(i,praiseNums.get(i)-1);
+                }else if (praises.get(i)==2){//没点赞，点赞
                     cancle = "1";
+                    praises.put(i,1);
+                    praisesNames.put(i,G.isEmteny(praisePerson)?praisePerson+username:praisePerson+"、"+username);
+                    praiseNums.put(i,praiseNums.get(i)+1);
                 }
                 personPraise(UserMessage.getInstance(context).getTsId(),statusVo.getDynamicId(), cancle);
             }
@@ -148,6 +201,8 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
             public void onClick(View view) {
                 Intent intent = new Intent(context, StatusDetilsActivity.class);
                 intent.putExtra("dynamicId",statusVo.getDynamicId());
+                statusFragement.setScrollPosition(getScrollPosition(statusVo));
+
                 context.startActivity(intent);
             }
         });
@@ -157,13 +212,31 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
             public void onClick(View view) {
                 Intent intent = new Intent(context, StatusDetilsActivity.class);
                 intent.putExtra("dynamicId",statusVo.getDynamicId());
+                statusFragement.setScrollPosition(getScrollPosition(statusVo));
                 context.startActivity(intent);
+            }
+        });
+        if (UserMessage.getInstance(context).getTsId().equals(statusVo.getTsId())){
+            viewHold.tv_delete.setVisibility(View.VISIBLE);
+        }else {
+            viewHold.tv_delete.setVisibility(View.GONE);
+        }
+        viewHold.tv_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DeleteStatusDialog dialog = new DeleteStatusDialog(statusFragement,statusVo.getDynamicId(),
+                        statusFragement.getGroupId(),statusFragement.getGroupType());
+                dialog.initView();
             }
         });
         return view;
     }
+    private String username = UserMessage.getInstance(context).getUserName();
     /**
      * 点赞
+     * @param tsId
+     * @param  dynamicId 动态id
+     *  @param cancel 点赞或取消赞
      */
     public void personPraise(String tsId,String dynamicId,String cancel) {
         Map<String,Object> map=new HashMap<>();
@@ -173,21 +246,34 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
         Type type=new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.SUBPRAISE,map,this);
     }
+    /**
+     * 获取当前点击修改状态在数据的位置
+     * @param statusVo
+     */
+    private int  getScrollPosition(StatusVo statusVo){
+        for (int i = 0;i<statusFragement.statusVoList.size();i++){
+            if (statusFragement.statusVoList.get(i).getDynamicId().equals(statusVo.getDynamicId())){
+                return  i;
+            }
+        }
+       return 1;
+    }
     @Override
     public void onSuccess(String uri, Object date) {
         if (uri.equals(Apiurl.SUBPRAISE)){
             String result = ((Result<String>)date).getData();
             if (result.contains("成功")){
-                statusFragement.getDynamicList(statusFragement.getGroupId(),statusFragement.getGroupType(),1,statusVoList.get(0).getDynamicId());
-                notifyDataSetChanged();
+                Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
+                StatusAdapter.this.notifyDataSetChanged();
             }
         }
     }
 
     @Override
     public void onError(String uri, String error) {
-
+        Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
     }
+
     class ViewHold{
         CircleImageView cv_head ;//头像
         TextView tv_name; //姓名
@@ -201,6 +287,7 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
         ImageView iv_praise;//是否已经点赞
         LinearLayout ll_praise;//点赞横条
         RelativeLayout rl_picture;
+        TextView tv_delete;//删除
         public ViewHold(View view) {
             cv_head= (CircleImageView) view.findViewById(R.id.cv_head);
             tv_name= (TextView) view.findViewById(R.id.tv_name);
@@ -212,6 +299,7 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
             tv_comment_num = (TextView)view.findViewById(R.id.tv_comment_num);
             tv_praise_person = (TextView)view.findViewById(R.id.tv_praise_person);
             iv_praise = (ImageView) view.findViewById(R.id.iv_praise);
+            tv_delete = (TextView) view.findViewById(R.id.tv_delete);
             iv_comment = (ImageView)view.findViewById(R.id.iv_comment);
             rl_picture = (RelativeLayout) view.findViewById(R.id.rl_picture);
             view.setTag(this);

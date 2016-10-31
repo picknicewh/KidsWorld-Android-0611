@@ -2,15 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
     <LinearLayout
-        android:padding="8dp"
+        android:padding="@dimen/space"
         android:background="@color/colorAccent"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_marginRight="@dimen/space"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_arrow_lift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     <LinearLayout
         android:layout_weight="1"
         android:background="@drawable/search_bg"
@@ -37,9 +41,9 @@
             android:id="@+id/iv_delete"
             android:layout_marginRight="@dimen/space_x0.5"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_delete"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:src="@mipmap/ic_back"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
     </LinearLayout>
         <TextView
             android:layout_marginLeft="@dimen/space"

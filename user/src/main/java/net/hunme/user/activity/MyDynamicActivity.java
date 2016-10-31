@@ -3,6 +3,10 @@ package net.hunme.user.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -25,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MyDynamicActivity extends BaseActivity implements OkHttpListener,PullToRefreshLayout.OnRefreshListener {
+public class MyDynamicActivity extends BaseActivity implements OkHttpListener,PullToRefreshLayout.OnRefreshListener, View.OnClickListener {
     private PullToRefreshLayout refresh_view;
     /**
      * 我的动态列表
@@ -38,9 +42,24 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
     /**
      * 列表信息
      */
-    private  static List<DynamicInfoVo> dynamicInfoVoList;
-    private   MyDynamicAdapter adapter=null;
-    private int state;
+    public    List<DynamicInfoVo> dynamicInfoVoList;
+    public    MyDynamicAdapter adapter=null;
+    /**
+     * 页码数
+     */
+    private int pagesize;
+    /**
+     *点击进入评论详情的位置
+     */
+    private int scrollPosition=0;
+    /**
+     * 断网显示
+     */
+    private RelativeLayout rl_nonetwork;
+    /**
+     * 没有数据提示
+     */
+    private TextView tv_nodata;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +69,11 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
     private void initview(){
         lv_dynamic = $(R.id.lv_dynamic);
         refresh_view = $(R.id.refresh_view);
+        rl_nonetwork = $(R.id.rl_nonetwork);
+        tv_nodata = $(R.id.tv_nodata);
         dynamicInfoVoList = new ArrayList<>();
-        getMyDynamic(pageNumber);
+        rl_nonetwork.setOnClickListener(this);
+        getMyDynamic(pageNumber,10);
         adapter = new MyDynamicAdapter(this,dynamicInfoVoList,pageNumber);
         lv_dynamic.setAdapter(adapter);
         refresh_view.setOnRefreshListener(this);
@@ -62,45 +84,65 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
         setLiftOnClickClose();
         setCententTitle("我的动态");
     }
-    public void  getMyDynamic(int pageNumber){
+    public void  getMyDynamic(int pageNumber,int pagesize){
+        this.pagesize = pagesize;
         Map<String,Object> params = new HashMap<>();
         params.put("tsId", UserMessage.getInstance(this).getTsId());
         params.put("pageNumber",pageNumber);
-        params.put("pageSize",10);
+        params.put("pageSize",pagesize);
         Type type = new TypeToken<Result<List<DynamicInfoVo>>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.MYDYNAMICS,params,this);
-        showLoadingDialog();
+        OkHttps.sendPost(type, Apiurl.MYDYNAMICS,params,this,2,"MYDYNAMICDATA");
+        if (!G.isNetworkConnected(this)){
+            rl_nonetwork.setVisibility(View.VISIBLE);
+        }else {
+            rl_nonetwork.setVisibility(View.GONE);
+            showLoadingDialog();
+        }
     }
     @Override
     public void onResume() {
         super.onResume();
-        //用户发布动态成功 重新刷新数据
-        if(G.KisTyep.isReleaseSuccess) {
-            G.KisTyep.isReleaseSuccess = false;
-            getMyDynamic(pageNumber);
-        }
         // 动态发生改变 刷新数据
         if(G.KisTyep.isUpdateComment){
-            getMyDynamic(pageNumber);
+            getMyDynamic(scrollPosition+1,1);
             G.KisTyep.isUpdateComment=false;
         }
+    }
+    public void setScrollPosition(int scrollPosition) {
+        this.scrollPosition = scrollPosition;
     }
     @Override
     public void onSuccess(String uri, Object date) {
         if (uri.equals(Apiurl.MYDYNAMICS)){
-            if (date!=null){
+            Result<String> data = (Result<String>) date;
+            if (data==null){
+                stopLoadingDialog();
+            }else {
                 stopLoadingDialog();
                 List<DynamicInfoVo> dynamicInfoVos = ((Result<List<DynamicInfoVo>> )date).getData();
                 if (dynamicInfoVos.size()>0){
-                    dynamicInfoVoList.addAll(dynamicInfoVos);
+                    if (pagesize==1){
+                        dynamicInfoVoList.set(scrollPosition,dynamicInfoVos.get(0));
+                    }else {
+                        dynamicInfoVoList.addAll(dynamicInfoVos);
+                    }
                 }
-               adapter.notifyDataSetChanged();
+                if (dynamicInfoVoList.size()==0){
+                    tv_nodata.setVisibility(View.VISIBLE);
+                    lv_dynamic.setVisibility(View.GONE);
+                }else {
+                    tv_nodata.setVisibility(View.GONE);
+                    lv_dynamic.setVisibility(View.VISIBLE);
+                    adapter.setData(dynamicInfoVoList);
+                    adapter.notifyDataSetChanged();
+                }
             }
         }
     }
     @Override
     public void onError(String uri, String error) {
-     stopLoadingDialog();
+        rl_nonetwork.setVisibility(View.VISIBLE);
+        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -110,7 +152,7 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
             public void handleMessage(Message message) {
                 dynamicInfoVoList.clear();
                 pageNumber=1;
-                getMyDynamic(pageNumber);
+                getMyDynamic(pageNumber,10);
                 pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
 
             }
@@ -123,9 +165,17 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
             @Override
             public void handleMessage(Message message) {
                 pageNumber++;
-                getMyDynamic(pageNumber);
+                getMyDynamic(pageNumber,10);
                 pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
             }
         }.sendEmptyMessageDelayed(0,1000);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId()==R.id.rl_nonetwork){
+            dynamicInfoVoList.clear();
+            getMyDynamic(pageNumber,10);
+        }
     }
 }

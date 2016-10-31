@@ -32,6 +32,7 @@ import io.rong.imlib.model.Conversation;
  * 主要接口：
  */
 public class ConservationActivity extends FragmentActivity implements View.OnClickListener{
+    public static final int PERSONDETAIL=2;
     /**
      * 名字view
      */
@@ -66,6 +67,7 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
     private boolean isGroup = false;
     private SharedPreferences spf;
     private SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,7 +156,14 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
                 intent.putExtra("title",name);
                 intent.putExtra("targetId",targetId);
                 startActivity(intent);
+                //保留一个activity，其他切换都界面，都给销毁
+                if (spf.getInt("count",0)==1){
+                   finish();
+                }
+                editor.putInt("count",1);
+                editor.commit();
             }
         }
     }
+
 }

@@ -16,8 +16,8 @@ import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.SystemInformVo;
 import net.hunme.baselibrary.widget.MyAlertDialog;
 import net.hunme.baselibrary.util.PermissionsChecker;
-import net.hunme.baselibrary.util.SystemInfomDb;
-import net.hunme.baselibrary.util.SystemInfomDbHelp;
+import net.hunme.baselibrary.database.SystemInfomDb;
+import net.hunme.baselibrary.database.SystemInfomDbHelp;
 import net.hunme.user.R;
 import net.hunme.user.adapter.SystemInfoAdapter;
 

@@ -1,3 +1,4 @@
+/*
 package net.hunme.school.activity;
 
 import android.annotation.SuppressLint;
@@ -32,27 +33,37 @@ import org.apache.cordova.engine.SystemWebViewEngine;
 import io.rong.imkit.RongIM;
 
 public class WebViewActivity extends CordovaActivity implements View.OnClickListener {
-    /**
+    */
+/**
      * 左边的图片
-     */
+     *//*
+
     public ImageView iv_left;
-    /**
+    */
+/**
      * 中间的标题
-     */
+     *//*
+
     public TextView tv_title;
-    /**
+    */
+/**
      * 右边显示
-     */
+     *//*
+
     public TextView tv_subtitle;
     private ImageView iv_right;
-    /**
+    */
+/**
      * 网页
-     */
+     *//*
+
     public static SystemWebView webView;
     private ProgressBar pb_web;
-    /**
+    */
+/**
      * 无网络
-     */
+     *//*
+
     private RelativeLayout rl_nonetwork;
 
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
@@ -68,9 +79,11 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         initData();
     }
 
-    /**
+    */
+/**
      * 初始化数据
-     */
+     *//*
+
     private void initData() {
         iv_left = (ImageView) findViewById(R.id.iv_left);
         tv_title = (TextView) findViewById(R.id.tv_title);
@@ -88,9 +101,11 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         }
     }
 
-    /**
+    */
+/**
      * 是在标题栏
-     */
+     *//*
+
     private void setToolBar() {
         tv_title.setText(getIntent().getStringExtra("title"));
         String subTitle = getIntent().getStringExtra("subTitle");
@@ -108,9 +123,11 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         });
     }
 
-    /**
+    */
+/**
      * 有无网络加载页面状态
-     */
+     *//*
+
     private void setShowView() {
         loadUrl(launchUrl);
         if (G.isNetworkConnected(this)) {
@@ -120,11 +137,13 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         }
     }
 
-    /**
+    */
+/**
      * 设置右边的显示内容
      *
      * @param subTitle
-     */
+     *//*
+
     private void setSubtitle(String subTitle) {
         if (TextUtils.isEmpty(subTitle)) {
             tv_subtitle.setVisibility(View.GONE);
@@ -197,12 +216,14 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         }
     }
 
-    /**
+    */
+/**
      * 设置导航栏
      *
      * @param ContentTitle 中间标题
      * @param RightTitle   右边标题
-     */
+     *//*
+
     @JavascriptInterface
     public void setNavigationbar(final String ContentTitle, final String RightTitle) {
         runOnUiThread(new Runnable() {
@@ -238,3 +259,4 @@ public class WebViewActivity extends CordovaActivity implements View.OnClickList
         }
     }
 }
+*/

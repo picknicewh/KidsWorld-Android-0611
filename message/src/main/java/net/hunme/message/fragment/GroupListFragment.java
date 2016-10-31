@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.base.BaseFragement;
+import net.hunme.baselibrary.mode.GroupInfoVo;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
@@ -24,11 +25,9 @@ import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
 import net.hunme.message.activity.ContractMemberActivity;
 import net.hunme.message.adapter.ClassAdapter;
-import net.hunme.message.bean.GroupInfoVo;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.List;
+import java.util.HashMap;import java.util.List;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;

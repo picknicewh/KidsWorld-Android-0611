@@ -7,8 +7,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.image.ImageCache;
+import net.hunme.baselibrary.mode.ContractInfoVo;
 import net.hunme.baselibrary.widget.CircleImageView;
 import net.hunme.message.R;
+
+import java.util.List;
 
 /**
  * 作者： Administrator
@@ -20,21 +24,21 @@ import net.hunme.message.R;
  */
 public class SearchApapter extends BaseAdapter {
     private Context context;
-  //  private List<Map<String,Object>> mlist;
-    String[] name = new String[]{"王小二","刘德华","吴亦凡","吴用","周磊","鹿晗","郑爽","大幂幂","吴彦祖","刘诗诗"};
-    public SearchApapter(Context context){
+     private List<ContractInfoVo> friendInforVos;
+
+    public SearchApapter(Context context,List<ContractInfoVo> friendInforVos){
         this.context = context;
-     //   this.mlist = mlist;
+        this.friendInforVos = friendInforVos;
     }
 
     @Override
     public int getCount() {
-        return name.length;
+        return friendInforVos.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return name[position];
+        return friendInforVos.get(position);
     }
 
     @Override
@@ -54,8 +58,9 @@ public class SearchApapter extends BaseAdapter {
         }else {
            viewHolder = (ViewHolder) view.getTag();
         }
-        viewHolder.iv_icon.setImageResource(R.mipmap.person);
-        viewHolder.iv_name.setText(name[position]);
+        ContractInfoVo contractInfoVo = friendInforVos.get(position);
+        ImageCache.imageLoader(contractInfoVo.getImg(),viewHolder.iv_icon);
+        viewHolder.iv_name.setText(contractInfoVo.getTsName());
         return view;
     }
     private  class ViewHolder{

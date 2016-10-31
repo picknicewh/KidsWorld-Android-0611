@@ -42,7 +42,7 @@
             android:layout_weight="1"
             android:text="点心"
             android:textColor="@color/main_green"
-            android:id="@+id/tv_sweetFood"
+            android:id="@+id/rb_sweetFood"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <RadioButton
@@ -51,7 +51,7 @@
             android:layout_weight="1"
             android:text="午餐"
             android:textColor="@color/main_green"
-            android:id="@+id/tv_launch"
+            android:id="@+id/rb_launch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <View

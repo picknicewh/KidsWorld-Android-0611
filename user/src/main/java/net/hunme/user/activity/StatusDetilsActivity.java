@@ -87,6 +87,7 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
     private ScrollView scrollView;
     private TextView tv_praise_num;
     private TextView tv_comment_num;
+    private TextView tv_delete;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +114,7 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
         scrollView= (ScrollView) findViewById(R.id.scrollView);
         tv_praise_num= (TextView) findViewById(R.id.tv_praise_num);
         tv_comment_num= (TextView) findViewById(R.id.tv_comment_num);
+        tv_delete = (TextView)findViewById(R.id.tv_delete);
     }
 
     @Override
@@ -158,10 +160,12 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
             @Override
             public void onClick(View view) {
                 String agreeType;
-                if(isAgree)
+                if(isAgree){
                     agreeType="2";
-                else
+                } else{
                     agreeType="1";
+                }
+
                 presenter.personPraise(tsId,dynamicId,agreeType);
             }
         });
@@ -309,6 +313,17 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
             tv_comment_num.setText(String.valueOf(commentNum));
         else
             tv_comment_num.setText("评论");
+    }
+
+    @Override
+    public void setDeleteView(boolean isDelete) {
+        if (isDelete){
+            tv_delete.setVisibility(View.VISIBLE);
+            scrollView.setVisibility(View.GONE);
+        }else {
+            tv_delete.setVisibility(View.GONE);
+            scrollView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

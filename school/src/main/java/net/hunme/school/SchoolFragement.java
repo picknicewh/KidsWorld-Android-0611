@@ -1,24 +1,28 @@
 package net.hunme.school;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
+import net.hunme.baselibrary.cordova.HMDroidGap;
 import net.hunme.baselibrary.network.ServerConfigManager;
+import net.hunme.baselibrary.util.BroadcastConstant;
 import net.hunme.baselibrary.util.UserMessage;
-import net.hunme.baselibrary.widget.NavigationBar;
 import net.hunme.school.activity.ClassListActivity;
 import net.hunme.school.activity.CourseArrangeActivity;
 import net.hunme.school.activity.FoodListActivity;
 import net.hunme.school.activity.LeaveListActivity;
-import net.hunme.school.activity.MedicineActivity;
 import net.hunme.school.activity.PublishActivity;
-import net.hunme.school.activity.WebViewActivity;
+
 
 /**
  * 作者： wh
@@ -29,10 +33,7 @@ import net.hunme.school.activity.WebViewActivity;
  * 主要接口：
  */
 public class SchoolFragement extends BaseFragement implements View.OnClickListener{
-    /**
-     * 导航栏
-     */
-    private NavigationBar navigationBar;
+
     /**
      *考勤
      */
@@ -41,10 +42,12 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
      * 请假
      */
     private RelativeLayout rl_leave;
+    private TextView tv_dos_leaveadk;
     /**
      * 通知
      */
     private RelativeLayout rl_inform;
+    private TextView  tv_dos_info;
     /**
      * 食谱
      */
@@ -61,45 +64,26 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
      * 喂药
      */
     private RelativeLayout rl_medicine;
+    private TextView  tv_dos_medicine;
+
+    private ShowDosRecivier recivier;
     /**
      * 基本url
      */
-    public static final String baseurl = ServerConfigManager.WEB_IP+"/school/index.html?";
-    /**
-     * 考勤
-     */
-    public  static final String CHECK = "checkOnclass";
-    /**
-     * 课程安排
-     */
-    public  static final String ARRANGE = "courseArr";
-    /**
-     * 食谱
-     */
-    public  static final String FOODLIST = "foodList";
-    /**
-     * 通知
-     */
-    public  static final String INFORM = "noticeRead";
-    /**
-     * 请假
-     */
-    public  static final String LEAVE = "askForlv";
-    /**
-     * 开放课堂
-     */
-    public  static final String OPENCLASS = "openClass";
-
+    public static final String baseurl = ServerConfigManager.WEB_IP+"/medicine/index.html?";
+    public static final String MEDCINERS = "medicineListT";
+    public static final String MEDCINERP = "medicineListP";
+    private   static  boolean isVisible = false;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_school, null);
         init(view);
+
         return view;
     }
     private void init(View v){
-        navigationBar = $(v,R.id.nb_school);
-        navigationBar.setTitle("园所");
+
         rl_check = $(v,R.id.rl_check);
         rl_openClass=$(v,R.id.rl_openClass);
         rl_leave = $(v,R.id.rl_leave);
@@ -107,6 +91,9 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
         rl_food = $(v,R.id.rl_food);
         rl_arrangement = $(v,R.id.rl_arrangement);
         rl_medicine = $(v,R.id.rl_medicine);
+        tv_dos_info = $(v,R.id.tv_dos_info);
+        tv_dos_leaveadk=$(v,R.id.tv_dos_leaveadk);
+        tv_dos_medicine = $(v,R.id.tv_dos_medicine);
         rl_check.setOnClickListener(this);
         rl_leave.setOnClickListener(this);
         rl_inform.setOnClickListener(this);
@@ -114,51 +101,102 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
         rl_arrangement.setOnClickListener(this);
         rl_openClass.setOnClickListener(this);
         rl_medicine.setOnClickListener(this);
+        registerReceiver();
     }
 
     @Override
     public void onClick(View view) {
         Intent intent = new Intent();
         if (view.getId()==R.id.rl_check){
-            intent.setClass(getActivity(), WebViewActivity.class);
-            intent.putExtra("loadUrl", geturl(CHECK));
-            intent.putExtra("title","选择班级");
+            intent.setClass(getActivity(), TestActivity.class);
         }else if (view.getId()==R.id.rl_leave){
             intent.setClass(getActivity(), LeaveListActivity.class);
-//            intent.setClass(getActivity(), WebViewActivity.class);
-            intent.putExtra("loadUrl",geturl(LEAVE));
-            intent.putExtra("title","请假");
-            intent.putExtra("subTitle","我要请假");
+            schoolDosDisappear(BroadcastConstant.LEAVEASEKDOS);
+
         }else if (view.getId()==R.id.rl_info){
             intent.setClass(getActivity(), PublishActivity.class);
+            schoolDosDisappear(BroadcastConstant.SCHOOLINFODOS);
         }else if (view.getId()==R.id.rl_food){
-//            intent.setClass(getActivity(), WebViewActivity.class);
             intent.setClass(getActivity(), FoodListActivity.class);
-            intent.putExtra("loadUrl",geturl(FOODLIST));
-            intent.putExtra("title","食谱");
         }else if (view.getId()==R.id.rl_arrangement){
-//            intent.setClass(getActivity(), WebViewActivity.class);
             intent.setClass(getActivity(), CourseArrangeActivity.class);
-            intent.putExtra("loadUrl",geturl(ARRANGE));
-            intent.putExtra("title","课程安排");
-            intent.putExtra("subTitle","发布");
         }else if(view.getId()==R.id.rl_openClass){
             intent.setClass(getActivity(), ClassListActivity.class);
         }else if (view.getId()==R.id.rl_medicine){
-            intent.setClass(getActivity(), MedicineActivity.class);
+            intent.setClass(getActivity(), HMDroidGap.class);
+            intent.putExtra("loadUrl",geturl());
+            //"http://192.168.1.171:8787/KidsWorld-Web
+            schoolDosDisappear(BroadcastConstant.MEDICINEDOS);
         }
         startActivity(intent);
     }
+    /**
+     *学校红点消失
+     * @param  action
+     */
+    private void schoolDosDisappear(String action){
+        Intent myintent = new Intent(action);
+        myintent.putExtra("isVisible",false);
+        myintent.putExtra("tsId",UserMessage.getInstance(getActivity()).getTsId());
+        getActivity().sendBroadcast(myintent);
+        showSchoolDos(0);
+    }
+    private void registerReceiver(){
+        IntentFilter leave = new IntentFilter(BroadcastConstant.LEAVEASEKDOS);
+        IntentFilter medicine = new IntentFilter(BroadcastConstant.MEDICINEDOS);
+        IntentFilter info = new IntentFilter(BroadcastConstant.SCHOOLINFODOS);
+        recivier = new ShowDosRecivier();
+        getActivity().registerReceiver(recivier,leave);
+        getActivity().registerReceiver(recivier,medicine);
+        getActivity().registerReceiver(recivier,info);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (recivier!=null){
+            getActivity().unregisterReceiver(recivier);
+        }
+    }
+    private class ShowDosRecivier extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            Bundle bundle = intent.getExtras();
+            String tsid   =bundle.getString("tsId");
+             isVisible = bundle.getBoolean("isVisible",false);
+            if (action.equals(BroadcastConstant.LEAVEASEKDOS)){//请假
+                ShowDos(isVisible,tsid,tv_dos_leaveadk);
+            }else if (action.equals(BroadcastConstant.MEDICINEDOS)){//喂药
+                ShowDos(isVisible,tsid,tv_dos_medicine);
+            }else if (action.equals(BroadcastConstant.SCHOOLINFODOS)){//   通知
+                ShowDos(isVisible,tsid,tv_dos_info);
+            }
 
-    private String  geturl(String type){
-        String url =baseurl+"tsId="+ UserMessage.getInstance(getActivity()).getTsId()+"&type="+UserMessage.getInstance(getActivity()).getType()+"#/";
-        switch (type){
-            case OPENCLASS:url =url+OPENCLASS ;break;
-            case CHECK:url = url+CHECK;break;
-            case LEAVE:url = url+LEAVE;break;
-            case INFORM:url = url+INFORM;break;
-            case FOODLIST:url = url+FOODLIST;break;
-            case ARRANGE:url = url+ARRANGE;break;
+        }
+    }
+    private void ShowDos( boolean isVisible, String tsid,TextView textView){
+        if (tsid.equals(UserMessage.getInstance(getActivity()).getTsId())&& isVisible){
+            textView.setVisibility(View.VISIBLE);
+            showSchoolDos(1);
+        }else {
+            textView.setVisibility(View.GONE);
+        }
+    }
+    /**
+     * 只要接收到任意一个红点通知发送学校底部的通知红点点广播
+     * @param count
+     */
+    private void showSchoolDos(int count){
+        Intent myIntent = new Intent(BroadcastConstant.MAINSCHOOLDOS);
+        myIntent.putExtra("count",count);
+        getActivity().sendBroadcast(myIntent);
+    }
+    private String  geturl(){
+        String url =baseurl+"tsId="+ UserMessage.getInstance(getActivity()).getTsId()+"#/";
+        if (UserMessage.getInstance(getActivity()).getType().equals("1")){
+          url = url+MEDCINERP;
+        }else {
+            url = url+MEDCINERS;
         }
         return  url;
     }

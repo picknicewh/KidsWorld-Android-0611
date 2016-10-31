@@ -19,4 +19,16 @@
       <include layout="@layout/load_more" />
    </net.hunme.baselibrary.widget.listview.PullToRefreshLayout>
 
+   <TextView
+       android:id="@+id/tv_nodata"
+      android:visibility="gone"
+       android:gravity="center"
+       android:layout_gravity="center"
+       android:text="没有数据"
+       android:textSize="18sp"
+       android:layout_width="match_parent"
+       android:layout_height="400dp" />
+   <include
+       android:id="@+id/rl_nonetwork"
+       layout="@layout/nonetwork"/>
 </RelativeLayout>

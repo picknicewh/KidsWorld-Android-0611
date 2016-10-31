@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.image.ImageCache;
+import net.hunme.baselibrary.mode.ContractInfoVo;
 import net.hunme.message.R;
 import net.hunme.message.activity.ContractMemberActivity;
-import net.hunme.message.bean.ContractInfoVo;
 import net.hunme.message.bean.GroupMemberVo;
 
 import java.util.ArrayList;

@@ -7,5 +7,14 @@
      <ListView
          android:id="@+id/lv_message_detail"
          android:layout_width="match_parent"
-         android:layout_height="match_parent"/>
+         android:layout_height="wrap_content"/>
+     <TextView
+         android:id="@+id/tv_more"
+         android:layout_marginTop="@dimen/space_x0.5"
+         android:gravity="center"
+         android:text="点击加载更多"
+         android:layout_below="@+id/lv_message_detail"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+        />
 </RelativeLayout>

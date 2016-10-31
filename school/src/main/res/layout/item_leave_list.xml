@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:id="@+id/ll_leave"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <LinearLayout
+
         android:padding="@dimen/space"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -77,6 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:visibility="gone"
             android:padding="@dimen/space_x0.5"
             android:background="@color/main_green"
             android:layout_marginRight="@dimen/space_x2"
@@ -84,7 +88,6 @@
             android:id="@+id/tv_read"
             android:textColor="@color/white"
             android:layout_marginLeft="@dimen/space"
-            android:text="已阅"
             android:textSize="@dimen/ts_large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -97,7 +100,6 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/reason"
-
             android:text="理由："
             android:textSize="@dimen/ts_x_large"
             android:layout_width="wrap_content"

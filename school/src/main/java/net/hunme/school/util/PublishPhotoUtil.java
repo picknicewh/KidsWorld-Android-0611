@@ -58,11 +58,17 @@ public class PublishPhotoUtil {
         intent.putExtra("source","local");
         context.startActivity(intent);
     }
+    public static void imageBrowernet(int position, ArrayList<String> urls,Context context) {
+        Intent intent = new Intent(context, ImagePagerActivity.class);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+        intent.putExtra("source","net");
+        context.startActivity(intent);
+    }
     /**
      * 前往获取图片
      */
     public static void goSelectImager(final ArrayList<String> itemList,Activity context, final GridAlbumAdapter  adapter,int maxContent){
-
         PermissionsChecker checker=PermissionsChecker.getInstance(context);
         if(checker.lacksPermissions(PERMISSIONS)){
             checker.getPerMissions(PERMISSIONS);

@@ -2,6 +2,7 @@ package net.hunme.user.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,16 +18,18 @@ import com.google.gson.reflect.TypeToken;
 import com.pizidea.imagepicker.AndroidImagePicker;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.contract.ContractsDb;
+import net.hunme.baselibrary.contract.ContractsDbHelper;
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.G;
-import net.hunme.baselibrary.widget.MyAlertDialog;
 import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
+import net.hunme.baselibrary.widget.MyAlertDialog;
 import net.hunme.user.R;
 import net.hunme.user.util.BitmapCache;
 import net.hunme.user.widget.SignDialog;
@@ -66,11 +69,16 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     private String path;//选择头像保存地址
     private String mpath; //头像绝对地址
     private String sign; //用户个性签名
+    private boolean isVisit;
     // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
+    /**
+     * 标记位，一定要等待修改头像成功后才能返回
+     */
+    private int flag=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +119,14 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     protected void setToolBar() {
         setCententTitle("个人信息");
         setLiftImage(R.mipmap.ic_arrow_lift);
-        setLiftOnClickClose();
+        setLiftOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (flag==1){
+                    finish();
+                }
+            }
+        });
     }
 
     @Override
@@ -133,6 +148,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
                     List<File> files=new ArrayList<>();
                     files.add(new File(mpath));//从该路径拿到图片
                     userAvatarSubmit(files);
+
                 }
             });
         }else if(viewID==R.id.ll_sex){
@@ -174,18 +190,22 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
-    private void userAvatarSubmit(List<File>list){
+    private  void  userAvatarSubmit(List<File>list){
+        if(isVisit)return;
+        isVisit=true;
         Map<String,Object>map=new HashMap<>();
         map.put("tsId",um.getTsId());
         Type type=new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.AVATAR,map,list,this);
+        flag = 0;
+        G.log("=============");
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
       if(Apiurl.AVATAR.equals(uri)){
+            isVisit=false;
             Result<String> result= (Result<String>) date;
-             //um.setHoldImgUrl(result.getData());
             //测试数据
             um.setHoldImgUrl(result.getData());
             //修改头像成功后，设置当前融云的用户头像
@@ -194,13 +214,20 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
                 RongIM.getInstance().setMessageAttachedUserInfo(true);
             }
             ImageCache.imageLoader(um.getHoldImgUrl(),cv_head);
+           //修改头像后，修改数据库中的联系人的头像
+            SQLiteDatabase db= new ContractsDb(this).getWritableDatabase();
+            ContractsDbHelper helper = ContractsDbHelper.getinstance();
+            helper.updateImageUrl(db,um.getTsId(),result.getData());
             G.KisTyep.isUpadteHold=true;
+            G.KisTyep.isUpadteContactHold= true;
             G.showToast(this,"头像修改成功");
+            flag = 1;
         }
     }
 
     @Override
     public void onError(String uri, String error) {
         G.showToast(this,error);
+        flag = 0;
     }
 }

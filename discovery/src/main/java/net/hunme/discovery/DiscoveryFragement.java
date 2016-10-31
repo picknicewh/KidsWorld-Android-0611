@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,7 +63,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
     /**
      * 无网络状态
      */
-    private RelativeLayout rl_nonetwork;
+ //   private RelativeLayout rl_nonetwork;
     /**
      * web接口类
      */
@@ -135,8 +134,8 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
         ll_discovery=$(v,R.id.ll_cdiscovery);
         ImageCache.imageLoader(UserMessage.getInstance(getActivity()).getHoldImgUrl(),iv_left);
 //        ll_loading = $(v,R.id.ll_loading);
-        rl_nonetwork= $(v,R.id.rl_nonetwork);
-        rl_nonetwork.setOnClickListener(this);
+      //  rl_nonetwork= $(v,R.id.rl_nonetwork);
+      //  rl_nonetwork.setOnClickListener(this);
         from  = new WebCommonPageFrom(iv_left,tv_title,iv_right,bt_search,getActivity());
         iv_right.setOnClickListener(this);
         iv_left.setOnClickListener(this);
@@ -163,11 +162,11 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
      */
     private  void  setShowView(){
         setWebView();
-         if (G.isNetworkConnected(getActivity())){
+       /*  if (G.isNetworkConnected(getActivity())){
              rl_nonetwork.setVisibility(View.GONE);
          }else {
              rl_nonetwork.setVisibility(View.VISIBLE);
-         }
+         }*/
      }
     private void  setWebView(){
         webView.addJavascriptInterface(from, "change_tb");  //设置本地调用对象及其接口

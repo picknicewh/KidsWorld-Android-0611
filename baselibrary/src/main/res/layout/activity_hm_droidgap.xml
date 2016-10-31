@@ -8,7 +8,8 @@
     <LinearLayout
         android:id="@+id/rl_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="74dp"
+        android:paddingTop="@dimen/space_x1.5"
         android:background="@color/main_green">
             <ImageView
                 android:paddingLeft="@dimen/space"

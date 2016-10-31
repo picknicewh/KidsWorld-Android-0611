@@ -14,11 +14,16 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import net.hunme.baselibrary.util.SystemInfomDb;
-import net.hunme.baselibrary.util.SystemInfomDbHelp;
+import net.hunme.baselibrary.database.StatusInfoDb;
+import net.hunme.baselibrary.database.StatusInfoDbHelper;
+import net.hunme.baselibrary.database.SystemInfomDb;
+import net.hunme.baselibrary.database.SystemInfomDbHelp;
+import net.hunme.baselibrary.util.BroadcastConstant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
 import main.jpushlibrary.R;
@@ -38,7 +43,7 @@ public class MyJPushReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
-        // Log.i(TAG, "[MyJPushReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
+         Log.i(TAG, "[MyJPushReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
         if (intent.getAction().equals(JPushInterface.ACTION_REGISTRATION_ID)) {
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
             Log.d(TAG, "[MyJPushReceiver] 接收Registration Id : " + regId);
@@ -51,22 +56,22 @@ public class MyJPushReceiver extends BroadcastReceiver {
             try {
                 JSONObject jsonObject = new JSONObject(message);
                 String messagetype = (String) jsonObject.get("messagetype");
-                if (messagetype.equals("1")){
-                    String schoolid = (String) jsonObject.get("schoolid");
-                    String classid = (String) jsonObject.get("classid");
-                    Intent myintent = new Intent("net.hunme.status.showstatusdos");
-                    myintent.putExtra("messagetype",messagetype);
-                    myintent.putExtra("schoolid",schoolid);
-                    myintent.putExtra("classid",classid);
+                if (messagetype.equals("1")){//动态
+                    String targetId = (String) jsonObject.get("targetId");
+                    Intent myintent = new Intent(BroadcastConstant.STATUSDOS);
+                    myintent.putExtra("targetId",targetId);
                     context.sendBroadcast(myintent);
-                }else if (messagetype.equals("3")) {
+
+                }else if (messagetype.equals("2")){//请假
+                    schoolDosShow(BroadcastConstant.SCHOOLINFODOS,jsonObject,context);
+                } else if (messagetype.equals("3")) {//系统通知
                     String mycontent = (String) jsonObject.get("content");
                     String create_time = (String) jsonObject.get("create_time");
                     String mytitle = (String) jsonObject.get("title");
                     String type = (String) jsonObject.get("type");
                     SystemInfomDb systemInfomDb = new SystemInfomDb(context);
                     SQLiteDatabase db = systemInfomDb.getWritableDatabase();
-                    Intent myintent = new Intent("net.hunme.user.activity.ShowSysDosReceiver");
+                    Intent myintent = new Intent(BroadcastConstant.SYSYDOS);
                     myintent.putExtra("isVisible",true);
                     switch (type){
                         case "0":
@@ -83,8 +88,29 @@ public class MyJPushReceiver extends BroadcastReceiver {
                             break;
                     }
 
-                }
-
+                }else if (messagetype.equals("4")){//请假
+                    schoolDosShow(BroadcastConstant.LEAVEASEKDOS,jsonObject,context);
+                }else if (messagetype.equals("5")){//喂药
+                    schoolDosShow(BroadcastConstant.MEDICINEDOS,jsonObject,context);
+                }else if (messagetype.equals("6")){//动态评论
+                    SQLiteDatabase db = new StatusInfoDb(context).getWritableDatabase();
+                    StatusInfoDbHelper helper = StatusInfoDbHelper.getInstance();
+                    String tsId = (String) jsonObject.get("tsId");
+                    String createTime = (String) jsonObject.get("createTime");
+                    String imgUrl = (String) jsonObject.get("imgUrl");
+                    //添加到数据中
+                    helper.insert(db,createTime,tsId,imgUrl,0);//按时间顺序插入到数据库中，越早推送的数据，存放在下面，先进后出
+                    int count =helper.getNoReadcount(db);
+                    if (count>0){
+                        Intent myintent = new Intent(BroadcastConstant.COMMENTINFO);
+                        myintent.putExtra("count",count);
+                        myintent.putExtra("imageUrl",helper.getLatestUrl(db));
+                        context.sendBroadcast(myintent);
+                    }
+                    //删除超过20条时记录的id
+                    helper.deleteOverTime(db);
+                    Log.i("AAAAA","count:"+helper.getcount(db));
+                    }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -100,12 +126,10 @@ public class MyJPushReceiver extends BroadcastReceiver {
             Log.i(TAG, "[MyJPushReceiver] Unhandled intent - " + intent.getAction());
         }
     }
-
      /**
      *  处理返回过来的数据，并发送通知
      */
     public  void receivingNotification(Context context,String message,String title){
-
         ComponentName componetName = new ComponentName("net.hunme.kidsworld","net.hunme.user.activity.SystemInfoActivity");
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -121,7 +145,6 @@ public class MyJPushReceiver extends BroadcastReceiver {
         builder.setSmallIcon(R.mipmap.ic_main);
         //设置跳转的内容
         builder.setContentIntent(default_pendingIntent);
-        Log.i("TAGG",JPushUtil.getRegid(context));
         if (title.equals("")){
             builder.setContentTitle(getApplicationName(context));
         }else {
@@ -149,11 +172,24 @@ public class MyJPushReceiver extends BroadcastReceiver {
                 (String) packageManager.getApplicationLabel(applicationInfo);
         return applicationName;
     }
-}
+    /**
+     *学校红点显示
+     * @param  action
+     * @param jsonObject
+     * @param context
+     */
+    private void schoolDosShow(String action,JSONObject jsonObject,Context context) throws JSONException {
+        //发送学校的通知,请假,喂药红点点广播
+        String tsId = (String) jsonObject.get("tsId");
+        Intent intent = new Intent(action);
+        intent.putExtra("isVisible",true);
+        intent.putExtra("tsId",tsId);
+        context.sendBroadcast(intent);
 
+    }
 
  // 打印所有的 intent extra 数据*/
-  /*  private static String printBundle(Bundle bundle) {
+    private static String printBundle(Bundle bundle) {
         StringBuilder sb = new StringBuilder();
         for (String key : bundle.keySet()) {
             if (key.equals(JPushInterface.EXTRA_NOTIFICATION_ID)) {
@@ -184,6 +220,5 @@ public class MyJPushReceiver extends BroadcastReceiver {
         return sb.toString();
 
     }
-*//*
+
 }
-*/

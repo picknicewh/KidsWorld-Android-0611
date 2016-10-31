@@ -1,6 +1,7 @@
 package net.hunme.message.fragment;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,32 +13,22 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.base.BaseFragement;
-import net.hunme.baselibrary.mode.Result;
-import net.hunme.baselibrary.network.Apiurl;
-import net.hunme.baselibrary.network.OkHttpListener;
-import net.hunme.baselibrary.network.OkHttps;
-import net.hunme.baselibrary.util.UserMessage;
+import net.hunme.baselibrary.contract.ContractsDb;
+import net.hunme.baselibrary.contract.ContractsDbHelper;
+import net.hunme.baselibrary.mode.ContractInfoVo;
 import net.hunme.message.R;
 import net.hunme.message.activity.PersonDetailActivity;
 import net.hunme.message.adapter.ContractAdapter;
-import net.hunme.message.bean.ContractInfoVo;
-import net.hunme.message.bean.GroupInfoVo;
 import net.hunme.message.bean.GroupMemberBean;
 import net.hunme.message.util.CharacterParser;
 import net.hunme.message.util.PinyinComparator;
 import net.hunme.message.widget.SideBar;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.rong.imkit.RongIM;
 
@@ -49,7 +40,7 @@ import io.rong.imkit.RongIM;
  * 附加注释：通过传递不同的联系人列表分别显示老师，家长两个页面
  * 主要接口：
  */
-public class ContractListFragment extends BaseFragement implements SectionIndexer,OkHttpListener {
+public class ContractListFragment extends BaseFragement implements SectionIndexer{
 
     /**
      * 教师列表view
@@ -94,9 +85,10 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
      */
     private ContractAdapter adapter;
     /**
-     * 是否选中对话框的item
+     * 数据库
      */
-
+     private SQLiteDatabase database;
+    private ContractsDbHelper helper;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -115,15 +107,21 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
         tv_dialog_parent =  $(view,R.id.tv_dialog_parent);
         ll_title = $(view,R.id.ll_title_parent);
         sb_parent = $(view,R.id.sb_parent);
-        getfriendinfor();
         characterParser = CharacterParser.getInstance();
         pinyinComparator = new PinyinComparator();
-        groupMemberBeanList = new ArrayList<>();
         sb_parent.setTextView(tv_dialog_parent);
+        groupMemberBeanList = new ArrayList<>();
+
+        database = new ContractsDb(getActivity()).getWritableDatabase();
+        helper = ContractsDbHelper.getinstance();
+        List<ContractInfoVo> contractInfoVoa=  helper.getFriendInformVos(database);
+        setFriendList(helper.getFriendInformVos(database));
+        initList();
+        //  getfriendinfor()
     }
-    /**
+  /*  *//**
      * 获取所有所有好友信息
-     */
+     *//*
     private  void getfriendinfor(){
         String dbname;
         Map<String,Object> params = new HashMap<>();
@@ -133,7 +131,7 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
         dbname  = "contract_teacher";
         Type type =new TypeToken<Result<List<GroupInfoVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this,2,dbname);
-    }
+    }*/
     /**
      * 显示列表
      */
@@ -174,8 +172,10 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
                             .getLayoutParams();
                     params.topMargin = 0;
                     ll_title.setLayoutParams(params);
-                    tv_title_cat.setText(groupMemberBeanList.get(
-                            getPositionForSection(section)).getSortLetters());
+                    if (groupMemberBeanList.size()>0&&groupMemberBeanList!=null){
+                        tv_title_cat.setText(groupMemberBeanList.get(
+                                getPositionForSection(section)).getSortLetters());
+                    }
                 }
                 if (nextSecPosition == firstVisibleItem + 1) {
                     View childView = view.getChildAt(0);
@@ -213,16 +213,13 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
                     if (RongIM.getInstance()!=null){
                         Intent intent  = new Intent(getActivity(),PersonDetailActivity.class);
                         intent.putExtra("targetId",uid);
-                        intent.putExtra("title",name);
+                        //intent.putExtra("title",name);
                         startActivity(intent);
                     }
                 }
         });
 
     }
-
-
-
     @Override
     public Object[] getSections() {
         return null;
@@ -232,7 +229,10 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
      * 根据ListView的当前位置获取分类的首字母的Char ascii值
      */
     public int getSectionForPosition(int position) {
-        return groupMemberBeanList.get(position).getSortLetters().charAt(0);
+        if (groupMemberBeanList!=null&&groupMemberBeanList.size()>0){
+            return groupMemberBeanList.get(position).getSortLetters().charAt(0);
+        }
+        return 0;
     }
 
     /**
@@ -251,30 +251,29 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
     }
     /**
      * 设置好友列表
-     * @param  groupJsonList 数据列表
+     * @param  ContractInfoVos 数据列表
      */
-    private void setFriendList(List<GroupInfoVo> groupJsonList){
-        List<ContractInfoVo> memberJsons = groupJsonList.get(0).getMenberList();
-        if(null==memberJsons){
+    private void setFriendList(List<ContractInfoVo> ContractInfoVos){
+        if(null==ContractInfoVos){
             return;
         }
-        for (int i = 0;i<memberJsons.size();i++){
-            ContractInfoVo memberJson = memberJsons.get(i);
+        for (int i = 0;i<ContractInfoVos.size();i++){
+            ContractInfoVo memberJson = ContractInfoVos.get(i);
             GroupMemberBean groupMemberBean = MemberJsonnTGroupMember(memberJson);
             groupMemberBeanList.add(groupMemberBean);
         }
     }
     /**
      * 将MemberJson转换成GroupMemberBean
-     * @param  memberJson 实体类
+     * @param  contractInfoVo 实体类
      */
-    private GroupMemberBean MemberJsonnTGroupMember(ContractInfoVo memberJson){
+    private GroupMemberBean MemberJsonnTGroupMember(ContractInfoVo contractInfoVo){
         GroupMemberBean groupMember =new GroupMemberBean();
-        groupMember.setName(memberJson.getTsName());
-        groupMember.setUserid(memberJson.getTsId());
-        groupMember.setImg(memberJson.getImg());
+        groupMember.setName(contractInfoVo.getTsName());
+        groupMember.setUserid(contractInfoVo.getTsId());
+        groupMember.setImg(contractInfoVo.getImg());
         // 汉字转换成拼音
-        String pinyin = characterParser.getSelling(memberJson.getTsName());
+        String pinyin = characterParser.getSelling(contractInfoVo.getTsName());
         String sortString = pinyin.substring(0, 1).toUpperCase();
         // 正则表达式，判断首字母是否是英文字母
         if (sortString.matches("[A-Z]")) {
@@ -284,13 +283,13 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
         }
         return groupMember;
     }
-    @Override
+  /*  @Override
     public void onSuccess(String uri, Object date) {
         Result<List<GroupInfoVo>> data = (Result<List<GroupInfoVo>>) date;
         if (data!=null){
             List<GroupInfoVo>  groupJsonList = data.getData();
             if (groupJsonList!=null||groupJsonList.size()!=0){
-                setFriendList(groupJsonList);
+                setFriendList(groupJsonList.get(0).getMenberList());
                 initList();
             }
         }
@@ -299,6 +298,6 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
     @Override
     public void onError(String uri, String error) {
         Toast.makeText(getActivity(),error,Toast.LENGTH_SHORT).show();
-    }
+    }*/
 }
 

@@ -42,8 +42,9 @@ public class PictrueUtils implements View.OnClickListener {
             //单张图片
             ImageView imageView=new ImageView(context);
             ImageCache.imageLoader(imageUrl.get(0),imageView);
-            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+           // imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(MAXIMAGESIZE,MAXIMAGESIZE);
+            pl.setMargins(0,0,0,0);
             imageView.setTag(0);
             imageView.setOnClickListener(this);
             rlParams.addView(imageView,pl);

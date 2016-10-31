@@ -1,7 +1,7 @@
 package net.hunme.message.bean;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/9/12
  * 名称：
  * 版本说明：

@@ -25,6 +25,7 @@
     <color name="light_gray">#eeeeee</color>
     <color name="parent">#8ec500</color>
     <color name="main_green">#8dc700</color>
+    <color name="noread_grey">#c6c6c6</color>
     <!--主题页面背景-->
     <color name="bg_layout">#efeff4</color>
     <!--tab选项颜色-->

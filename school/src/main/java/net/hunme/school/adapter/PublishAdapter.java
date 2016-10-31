@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.image.ImageCache;
+import net.hunme.baselibrary.util.G;
 import net.hunme.school.R;
 import net.hunme.school.bean.PublishVo;
 
@@ -57,11 +59,22 @@ public class PublishAdapter extends BaseAdapter {
         }
         PublishVo vo=publishList.get(i);
         viewHold= (ViewHold) view.getTag();
-       // viewHold.tv_title.setText(vo.getTsName());
-        viewHold.tv_title.setText("校长");
+        if (G.isEmteny(vo.getTsName())){
+            viewHold.tv_title.setText("校长");
+        }else {
+            viewHold.tv_title.setText(vo.getTsName());
+        }
         viewHold.tv_content.setText(vo.getMessage());
         viewHold.tv_date.setText(vo.getDateTime().substring(0,10));
-        viewHold.lv_holad.setImageResource(R.mipmap.ic_headmaster);//校长的头像
+        if (G.isEmteny(vo.getImgUrl())){
+            viewHold.lv_holad.setImageResource(R.mipmap.ic_headmaster);//校长的头像
+        }else {
+            ImageCache.imageLoader(vo.getImgUrl(),viewHold.lv_holad);
+        }
+
+        if (!G.isEmteny(vo.getTitle())){
+            viewHold.tv_ptitle.setText(vo.getTitle());
+        }
         viewHold.setTextColor(vo.isRead());
         return view;
     }
@@ -71,10 +84,11 @@ public class PublishAdapter extends BaseAdapter {
          TextView tv_title;
          TextView tv_date;
          TextView tv_content;
-
+         TextView tv_ptitle;
         public ViewHold(View view) {
             lv_holad = (ImageView) view.findViewById(R.id.lv_holad);
             tv_title= (TextView) view.findViewById(R.id.tv_title);
+            tv_ptitle= (TextView) view.findViewById(R.id.tv_ptitle);
             tv_date= (TextView) view.findViewById(R.id.tv_date);
             tv_content= (TextView) view.findViewById(R.id.tv_content);
             view.setTag(this);
@@ -83,10 +97,12 @@ public class PublishAdapter extends BaseAdapter {
          public void setTextColor(boolean isRead) {
              if (!isRead) {
                  tv_content.setTextColor(Color.BLACK);
-                 tv_content.setTextColor(Color.BLACK);
+                 tv_title.setTextColor(Color.BLACK);
+                 tv_ptitle.setTextColor(Color.BLACK);
              } else {
                  tv_content.setTextColor(Color.parseColor("#a9a9a9"));
                  tv_title.setTextColor(Color.parseColor("#a9a9a9"));
+                 tv_ptitle.setTextColor(Color.parseColor("#a9a9a9"));
              }
          }
      }
