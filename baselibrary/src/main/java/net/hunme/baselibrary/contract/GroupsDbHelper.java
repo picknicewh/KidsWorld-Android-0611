@@ -126,7 +126,7 @@ public class GroupsDbHelper {
      * @param  db 数据库
      * @param classId 群id号
      */
-    public void  deleteById(SQLiteDatabase db,String classId){
+    public void  deleteByClassId(SQLiteDatabase db,String classId){
         String sql="delete from mgroup where classId ='"+classId+"'";
         db.execSQL(sql);
     }

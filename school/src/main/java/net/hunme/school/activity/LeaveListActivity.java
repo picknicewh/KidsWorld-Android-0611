@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -14,6 +17,7 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.listview.PullToRefreshLayout;
 import net.hunme.baselibrary.widget.listview.PullableListView;
@@ -32,7 +36,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
     /**
      * 适配器
      */
-    private LeaveListAdapter adapter;
+    public LeaveListAdapter adapter;
     /**
      * 下来刷新view
      */
@@ -45,28 +49,47 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
     /**
      * 数据列表
      */
-    private  List<LeaveVo> leaveVos;
-
+    public  List<LeaveVo> leaveVos;
+    /**
+     * 断网提示
+     */
+    private RelativeLayout rl_nonetwork;
+    /**
+     * 没有数据提示
+     */
+    private TextView tv_nodata;
+    /**
+     * 加载更多
+     */
+    private LinearLayout ll_loadmore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leave_list);
-        lv_leaves  = $(R.id.lv_leaves);
-        refresh_view = $(R.id.refresh_view);
-        refresh_view.setOnRefreshListener(new MyListener());
-        leaveVos = new ArrayList<>();
-        showLoadingDialog();
-        getLeave();
-        adapter = new LeaveListAdapter(this,leaveVos);
-        lv_leaves.setAdapter(adapter);
-    }
+         initView();
 
+    }
+     private void  initView(){
+         lv_leaves  = $(R.id.lv_leaves);
+         refresh_view = $(R.id.refresh_view);
+         rl_nonetwork = $(R.id.rl_lvnonetwork);
+         tv_nodata = $(R.id.tv_nodata);
+         ll_loadmore = $(R.id.load_more);
+         refresh_view.setOnRefreshListener(new MyListener());
+         rl_nonetwork.setOnClickListener(this);
+         leaveVos = new ArrayList<>();
+         getLeave();
+         adapter = new LeaveListAdapter(this,leaveVos);
+         lv_leaves.setAdapter(adapter);
+    }
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickClose();
         setCententTitle("请假");
-        setSubTitle("我要请假");
+        if (UserMessage.getInstance(this).getType().equals("1")){
+            setSubTitle("我要请假");
+        }
         setSubTitleOnClickListener(this);
     }
 
@@ -75,12 +98,18 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
         if (view.getId()==R.id.tv_subtitle){
             Intent intent = new Intent(this,LeaveAskActivity.class);
             startActivity(intent);
+        }else if (view.getId()==R.id.rl_lvnonetwork){
+            leaveVos.clear();
+            getLeave();
         }
     }
     @Override
     protected void onResume() {
         super.onResume();
-         getLeave();
+        if (leaveVos.size()>0&&leaveVos!=null){
+            leaveVos.clear();
+            getLeave();
+        }
     }
     /**
      * 获取请假列表
@@ -92,23 +121,51 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
         params.put("pageSize",3);
         Type type = new TypeToken<Result<List<LeaveVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.SCHOOL_GETLEAVES,params,this);
-
-    }
-
-    @Override
-    public void onSuccess(String uri, Object date) {
-        Result<List<LeaveVo>> data = (Result<List<LeaveVo>>) date;
-        if (data!=null){
-            stopLoadingDialog();
-            List<LeaveVo> leaveVoList = data.getData();
-            if (leaveVoList.size()>0){
-                leaveVos.addAll(leaveVoList);
-            }
-            adapter.notifyDataSetChanged();
+        if (G.isNetworkConnected(this)){
+            showLoadingDialog();
+            rl_nonetwork.setVisibility(View.GONE);
+            dispalynonet(false);
+        }else {
+            rl_nonetwork.setVisibility(View.VISIBLE);
+            dispalynonet(true);
         }
     }
     @Override
+    public void onSuccess(String uri, Object date) {
+        if (Apiurl.SCHOOL_GETLEAVES.equals(uri)){
+            Result<List<LeaveVo>> data = (Result<List<LeaveVo>>) date;
+            if (data!=null){
+                stopLoadingDialog();
+                List<LeaveVo> leaveVoList = data.getData();
+                if (leaveVoList.size()>0){
+                    leaveVos.addAll(leaveVoList);
+                }
+                if (leaveVos.size()==0){
+                    tv_nodata.setVisibility(View.VISIBLE);
+                    dispalynonet(true);
+                }else {
+                    dispalynonet(false);
+                    adapter.notifyDataSetChanged();
+                    tv_nodata.setVisibility(View.GONE);
+
+                }
+
+            }
+        }
+    }
+    private void dispalynonet(boolean isvisible){
+        if (isvisible){
+            lv_leaves.setVisibility(View.GONE);
+            ll_loadmore.setVisibility(View.GONE);
+        }else {
+            lv_leaves.setVisibility(View.VISIBLE);
+            ll_loadmore.setVisibility(View.VISIBLE);
+        }
+
+    }
+    @Override
     public void onError(String uri, String error) {
+        rl_nonetwork.setVisibility(View.VISIBLE);
         Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
     }
     class MyListener implements PullToRefreshLayout.OnRefreshListener {
@@ -123,7 +180,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
                     getLeave();
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
-            }.sendEmptyMessageDelayed(0, 2000);
+            }.sendEmptyMessageDelayed(0, 1000);
         }
 
         public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
@@ -135,7 +192,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
                     getLeave();
                     pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
-            }.sendEmptyMessageDelayed(0, 2000);
+            }.sendEmptyMessageDelayed(0, 1000);
         }
     }
 }

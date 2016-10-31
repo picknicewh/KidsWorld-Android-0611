@@ -2,6 +2,7 @@ package net.hunme.message.widget;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.hunme.baselibrary.contract.GroupDb;
+import net.hunme.baselibrary.contract.GroupsDbHelper;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
@@ -60,9 +63,13 @@ public class CreateGroupDialog implements View.OnClickListener, OkHttpListener {
      * 群名称
      */
     private String groupName;
+    /**
+     * 修改数据库
+     */
     public CreateGroupDialog(Activity context, String targetIds){
         this.context  = context;
         this.targetIds = targetIds;
+
 
     }
     public void  initView(){
@@ -106,6 +113,9 @@ public class CreateGroupDialog implements View.OnClickListener, OkHttpListener {
             Result<String> data  = (Result<String>) date;
             if (data!=null){
                 String result = data.getData();
+                GroupsDbHelper  helper = GroupsDbHelper.getinstance();
+                SQLiteDatabase  database = new GroupDb(context).getWritableDatabase();
+                helper.insert(database,groupName,targetIds,0,0);
                 Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
                 alertDialog.dismiss();
                 context.finish();

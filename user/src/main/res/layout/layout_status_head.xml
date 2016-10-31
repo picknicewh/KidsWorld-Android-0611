@@ -62,9 +62,17 @@
                     android:id="@+id/tv_time"
                     android:gravity="center_vertical"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="4"
                     android:layout_height="match_parent" />
-
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tv_delete"
+                    android:gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="删除"
+                    android:textColor="@color/main_green"
+                    android:layout_height="match_parent" />
                 <ImageView
                     android:padding="@dimen/space_x0.5"
                     android:layout_gravity="center"
@@ -85,8 +93,7 @@
                     android:id="@+id/iv_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_comment"
-                    />
+                    android:src="@mipmap/ic_comment" />
 
                 <TextView
                     android:id="@+id/tv_comment_num"

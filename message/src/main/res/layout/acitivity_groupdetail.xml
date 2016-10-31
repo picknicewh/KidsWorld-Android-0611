@@ -34,7 +34,7 @@
          <TextView
              android:id="@+id/tv_mcount"
             android:textColor="@color/black"
-             android:text="全部成员（20）"
+             android:text="全部成员（0）"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
             <ImageView
@@ -125,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="顶置聊天"/>
+                android:text="置顶聊天"/>
             <ToggleButton
                 android:id="@+id/tg_overhead"
                 android:background="@color/transparent"

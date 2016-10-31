@@ -9,6 +9,8 @@ package net.hunme.school.bean;
  * 主要接口：
  */
 public class LeaveVo {
+
+
     /**
      * 角色ID
      */
@@ -40,14 +42,14 @@ public class LeaveVo {
      */
     private String creationTime	;
     /**
-     *   请假状态
-     1=申请中，2=同意，3=拒绝
+     * 请假状态
+     2=已读，1=未读
      */
     private int status	;
     /**
      请假ID
      */
-    private String leaveId	;
+    private String vacation_id	;
     public String getTsId() {
         return tsId;
     }
@@ -72,12 +74,12 @@ public class LeaveVo {
         this.cause = cause;
     }
 
-    public String getLeaveId() {
-        return leaveId;
+    public String getVacation_id() {
+        return vacation_id;
     }
 
-    public void setLeaveId(String leaveId) {
-        this.leaveId = leaveId;
+    public void setVacation_id(String vacation_id) {
+        this.vacation_id = vacation_id;
     }
 
     public String getTsName() {

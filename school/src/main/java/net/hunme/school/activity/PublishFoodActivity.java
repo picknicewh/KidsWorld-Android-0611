@@ -1,16 +1,32 @@
 package net.hunme.school.activity;
 
-import android.Manifest;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
+
+import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
+import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.school.R;
 import net.hunme.school.util.PublishPhotoUtil;
 import net.hunme.school.widget.DateView;
+import net.hunme.user.util.BitmapCache;
 
+import java.io.File;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 作者： wh
@@ -41,12 +57,27 @@ public class PublishFoodActivity extends BaseFoodActivity {
      * 图片列表
      */
     private ArrayList<String> itemList;
-    // 访问相册所需的全部权限
-    private final String[] PERMISSIONS = new String[]{
-            Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
-            Manifest.permission.CAMERA
-    };
+    /**
+     * 最多选择照片数
+     */
     private int maxContent =3;
+    /**
+     * 发布食谱的编辑框
+     */
+    private EditText et_food;
+    /**
+     * 甜食
+     */
+    private RadioButton rb_sweetFood;
+    /**
+     * 午餐
+     */
+    private RadioButton rb_launch;
+    /**
+     * 发布食谱的类型
+     */
+    private int type;
+    private int flag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,27 +96,79 @@ public class PublishFoodActivity extends BaseFoodActivity {
         rl_calendar = $(R.id.rl_calendar);
         tv_calendar= $(R.id.tv_calendar);
         gv_food = $(R.id.gv_food);
+        et_food= $(R.id.et_food);
+        rb_sweetFood=$(R.id.rb_sweetFood);
+        rb_launch=$(R.id.rb_launch);
+        itemList = new ArrayList<>();
+        flag = 1;
         setDateView(dateView);
         setRl_calendar(rl_calendar);
         setTv_calendar(tv_calendar);
         setFrom(FOODLISTPAGE);
-        registerboradcast();
-        itemList = new ArrayList<>();
+        setEt_food(et_food);
+        setType(type);
         PublishPhotoUtil.showPhoto(this,itemList,gv_food,maxContent);
+        setItemList(itemList);
         rl_calendar.setOnClickListener(this);
         tv_calendar.setText(dateView.getDate());
+        rb_launch.setOnClickListener(this);
+        rb_sweetFood.setOnClickListener(this);
+        setSubTitleOnClickListener(this);
+    }
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        int viewId  =view.getId();
+        if (viewId==R.id.rb_sweetFood){
+            type=1;
+            setType(type);
+        }else  if (viewId==R.id.rb_launch){
+            type=2;
+            setType(type);
+        }else if (viewId==R.id.tv_subtitle){
+            if (flag==1){
+                publishCookBook();
+                flag=0;
+            }
+        }
+    }
+    /**
+     * 发布食谱
+     */
+    public void publishCookBook(){
+        if (itemList.size()==0){
+            Toast.makeText(this,"请选择图片哦！",Toast.LENGTH_LONG).show();
+            flag=1;
+            return;
+        }
+        if (G.isEmteny(tv_calendar.getText().toString())){
+            Toast.makeText(this,"日期不能为空！",Toast.LENGTH_LONG).show();
+            flag=1;
+            return;
+        }
+        Map<String,Object> params = new HashMap<>();
+        params.put("tsId", UserMessage.getInstance(this).getTsId());
+        params.put("date",getFormateDate(tv_calendar));
+        params.put("type",type);
+        params.put("title",et_food.getText().toString());
+        Type type=new TypeToken<Result<String>>(){}.getType();
+
+        List<File> list= BitmapCache.getFileList(itemList);
+        OkHttps.sendPost(type, Apiurl.SCHOOL_PUBLISHCOOK,params,list,this);
+        showLoadingDialog();
     }
     @Override
     public void onSuccess(String uri, Object date) {
-
+        Result<String> data = (Result<String>) date;
+        if (data!=null){
+            String  result = data.getData();
+            Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
     @Override
     public void onError(String uri, String error) {
+        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+    }
 
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(recevier);
-    }
 }

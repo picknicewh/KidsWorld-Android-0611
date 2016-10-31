@@ -19,16 +19,6 @@ public class Apiurl {
      * 获取用户详情
      */
     public static final String MESSAGE_GETDETAIL = "/message/getTS.do";
-
-    //=============================学校======================================
-    /**
-     * 提交请假申请
-     */
-    public static final String SCHOOL_SUBLEAVE = "/school/subLeave.do" ;
-    /**
-     * 发布课程
-     */
-    public static final String SCHOOL_PUBLISHCAURSE = "/school/setSyllabus.do" ;
     /**
      * 创建群
      */
@@ -57,6 +47,28 @@ public class Apiurl {
      * 编辑群名称
      */
     public static final String  MESSAGE_EDITGROUPNAME = "/message/editGroupChatName.do";
+
+    //=============================学校======================================
+    /**
+     * 提交请假申请
+     */
+    public static final String SCHOOL_SUBLEAVE = "/school/subLeave.do" ;
+    /**
+     * 发布课程
+     */
+    public static final String SCHOOL_PUBLISHCAURSE = "/school/setSyllabus.do" ;
+    /**
+     * 发布通知
+     */
+    public static final String SCHOOL_PUBLISHINFOR = "/school/pushSave.do" ;
+    /**
+     * 发布食谱
+     */
+    public static final String SCHOOL_PUBLISHCOOK = "/school/setCookbook.do";
+    /**
+    * 获取班级列表
+    */
+    public static final String SCHOOL_GETCLASSLIST="/school/getTsClass.do";
     /**
      * 获取课程表
      */
@@ -73,7 +85,10 @@ public class Apiurl {
      * 请假
      */
     public static final String SCHOOL_GETLEAVES = "/school/getLeave.do" ;
-
+    /**
+     *删除请假
+     */
+    public static final String SCHOOL_DELETELEAVES = "/school/deleteLeave.do" ;
     //==============================个人中心============================
     /**
      * 意见反馈
@@ -147,7 +162,10 @@ public class Apiurl {
      * 获取班级列表uri
      */
     public static final String DYNAMICHEAD="/dynamics/getDynamicHead.do";
-
+    /**
+     *获取动态小窗口
+     */
+    public static  final String  STATUSINFO = "/dynamics/getDynamicLittleWindow.do";
     //=========================登录==============================
     /**
      * 用户登录

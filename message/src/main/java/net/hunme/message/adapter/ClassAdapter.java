@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.mode.GroupInfoVo;
 import net.hunme.message.R;
-import net.hunme.message.bean.GroupInfoVo;
 
 import java.util.List;
 

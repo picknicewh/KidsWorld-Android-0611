@@ -9,6 +9,8 @@ import android.view.View;
 import com.umeng.analytics.MobclickAgent;
 
 import net.hunme.baselibrary.cordova.CordovaInterfaceImpl;
+import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.MyConnectionStatusListener;
 
 import org.apache.cordova.ConfigXmlParser;
 import org.apache.cordova.CordovaInterface;
@@ -20,6 +22,8 @@ import org.apache.cordova.engine.SystemWebViewEngine;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import io.rong.imkit.RongIM;
 
 /**
  * 作者： wh
@@ -40,11 +44,17 @@ public class BaseFragement extends Fragment implements CordovaInterface {
         return (T)layoutView.findViewById(resId);
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
+        G.setTranslucent(getActivity());
         MobclickAgent.onResume(getActivity());
         MobclickAgent.onPageStart(this.getClass().getSimpleName());
+        // 账号抢登监听
+        if (RongIM.getInstance()!=null){
+            RongIM.setConnectionStatusListener(new MyConnectionStatusListener(getActivity()));
+        }
     }
 
     @Override

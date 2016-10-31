@@ -178,6 +178,7 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
         params.put("groupChatId",targetGroupId);
         Type type =new TypeToken<Result<GroupMemberVos>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_SEARCH_MEMBER,params,this);
+        showLoadingDialog();
     }
     @Override
     protected void setToolBar() {
@@ -192,6 +193,7 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
     @Override
     public void onSuccess(String uri, Object date) {
         if (uri.contains(Apiurl.MESSAGE_SEARCH_MEMBER)){
+            stopLoadingDialog();
             Result<GroupMemberVos> data = (Result<GroupMemberVos>) date;
             if (data!=null){
                 GroupMemberVos  groupMemberVos = data.getData();
@@ -207,6 +209,9 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
                     tv_count.setText("全部群成员("+groupMemberVoList.size()+")");
                     if (isganapati(ganapatiId)){
                         groupMemberVoList.addAll(getLast());
+                        btn_exit.setText("解散群组");
+                    }else {
+                        btn_exit.setText("删除并退出");
                     }
                     setGirdView(groupMemberVoList);
                 }
@@ -383,9 +388,9 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
                 public void onSuccess(Boolean issuccess) {
                     if (issuccess){
                         if (isTop){
-                            Toast.makeText(getApplicationContext(),"顶置该会话！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"置顶该会话！",Toast.LENGTH_SHORT).show();
                         }else {
-                            Toast.makeText(getApplicationContext(),"取消顶置！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"取消置顶！",Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

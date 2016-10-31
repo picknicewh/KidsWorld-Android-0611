@@ -10,25 +10,30 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.base.BaseFragement;
+import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.BroadcastConstant;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.LoadingDialog;
+import net.hunme.baselibrary.widget.listview.PullableListView;
 import net.hunme.status.R;
 import net.hunme.status.mode.DynamicVo;
 import net.hunme.status.mode.StatusVo;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +50,6 @@ import java.util.Map;
 public abstract class BaseReceiverFragment extends BaseFragement implements OkHttpListener,View.OnClickListener{
     public MyJpushReceiver myReceiver;
     public TextView tv_status_bar;
-    public  int mPosition;
     public List<DynamicVo> dynamicList;
     public RelativeLayout rl_nonetwork;
     public String groupId;
@@ -56,10 +60,31 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
     public UserMessage um;
     public     LoadingDialog dialog;
     /**
+     * 未读消息的头像
+     */
+    private ImageView iv_head;
+    /**
+     * 未读消息条数
+     */
+    private TextView tv_message;
+    /**
+     * 动态列表
+     */
+    public PullableListView lv_status;
+
+    /**
+     * ListView头部
+     */
+    private View layout_head;
+
+    /**
      *网络状态监听
      */
     public ConnectionChangeReceiver connectionChangeReceiver;
-
+    /**
+     * 未读新消息的推送时间列表
+     */
+    public ArrayList<String> timeList;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,9 +96,11 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
      * 注册监听网络广播广播
      */
     private  void registerReceiver() {
-        IntentFilter filter = new IntentFilter(MyJpushReceiver.SHOWSTAUSDOL);
+        IntentFilter filter = new IntentFilter(BroadcastConstant.STATUSDOS);
+        IntentFilter filtet2 = new IntentFilter(BroadcastConstant.COMMENTINFO);
         myReceiver = new MyJpushReceiver();
         getActivity().registerReceiver(myReceiver, filter);
+        getActivity().registerReceiver(myReceiver, filtet2);
         IntentFilter filter2 = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         connectionChangeReceiver = new ConnectionChangeReceiver();
         getActivity().registerReceiver(connectionChangeReceiver, filter2);
@@ -85,26 +112,21 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
      * @param  mType   1是否第一次请求数据  = 1第一次 =2其他
      *                  2 怎么形式请求数据 1=加载，2=刷新
      */
-    public void getDynamicList(String groupId,String groupType,int mType, String dynamicId){
+    public void getDynamicList(String groupId,String groupType,int pageSize,int pageNum){
         Map<String,Object> map=new HashMap<>();
         if(G.isEmteny(um.getTsId())){
             return;
         }
-        if (mType ==1){
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String  data = format.format(new Date());
-            createTime = data;
-
-        }else if (mType==2){
-              map.put("dynamicId", dynamicId);
-        }
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String  data = format.format(new Date());
+        createTime = data;
         map.put("tsId", um.getTsId());
         map.put("groupId",groupId);
         map.put("groupType", groupType);
         map.put("pageNumber", pageNum);
-        map.put("pageSize", 10);
+        map.put("pageSize", pageSize);
         map.put("createTime", createTime);
-        map.put("type", mType);
+        map.put("type", 1);
         Type type=new TypeToken<Result<List<StatusVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.STATUSLIST,map,this,2,"status");
         showLoadingDialog();
@@ -130,27 +152,33 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
      * 红点广播
      */
     class MyJpushReceiver extends BroadcastReceiver {
-        public static final String SHOWSTAUSDOL = "net.hunme.status.showstatusdos";
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(SHOWSTAUSDOL)) {
-                Bundle bundle = intent.getExtras();
-                String messagetype = bundle.getString("messagetype");
-                String schoolid = bundle.getString("schoolid");
-                String classid = bundle.getString("classid");
-                String groupId = dynamicList.get(mPosition).getGroupId();
-                if (null!=messagetype&&messagetype.equals("1")) {
-                    Intent myIntent = new Intent("net.hunme.kidsworld.MyStatusDosShowReceiver");
-                    if (schoolid.equals("") && classid.equals(classid) ||classid.equals("")&&schoolid.equals(groupId)) {
-                        myIntent.putExtra("count",1);
-                    } else{
-                        myIntent.putExtra("count",0);
+            String action = intent.getAction();
+            Bundle bundle = intent.getExtras();
+            if (action.equals(BroadcastConstant.STATUSDOS)) {
+                String targetId = bundle.getString("targetId");
+                Intent myIntent = new Intent(BroadcastConstant.MAINSTATUSDOS);
+                if (groupId.equals(targetId)) {
+                    myIntent.putExtra("count",1);
+                } else{
+                    myIntent.putExtra("count",0);
+                }
+                context.sendBroadcast(myIntent);
+            }else if(action.equals(BroadcastConstant.COMMENTINFO)){
+                int count = bundle.getInt("count",0);
+                String imageUrl = bundle.getString("imageUrl");
+                if (count>0){
+                    if (lv_status.getHeaderViewsCount()<=1){
+                        lv_status.addHeaderView(layout_head);
                     }
-                    context.sendBroadcast(myIntent);
+                    ImageCache.imageLoader(imageUrl,iv_head);
+                    tv_message.setText(count+"条新消息");
                 }
             }
         }
     }
+
     /**
      * 有无网络加载页面状态
      */
@@ -206,8 +234,9 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
     public void setRl_nonetwork(RelativeLayout rl_nonetwork) {
         this.rl_nonetwork = rl_nonetwork;
     }
-
-    public void setmPosition(int mPosition) {
-        this.mPosition = mPosition;
-    }
+    public void setLv_status(PullableListView lv_status) {this.lv_status = lv_status;}
+    public void setTv_message(TextView tv_message) {this.tv_message = tv_message;}
+    public void setIv_head(ImageView iv_head) {this.iv_head = iv_head;}
+    public void setLayout_head(View layout_head) {this.layout_head = layout_head;}
+    public void setTimeList(ArrayList<String> timeList) {this.timeList = timeList;}
 }

@@ -3,8 +3,6 @@ package net.hunme.status.activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +21,12 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.DateUtil;
 import net.hunme.baselibrary.util.G;
-import net.hunme.baselibrary.widget.MyAlertDialog;
 import net.hunme.baselibrary.util.PermissionsChecker;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.LoadingDialog;
+import net.hunme.baselibrary.widget.MyAlertDialog;
 import net.hunme.status.R;
 import net.hunme.status.StatusFragement;
 import net.hunme.status.widget.StatusPublishPopWindow;
@@ -169,70 +168,12 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         tv_subtilte=$(R.id.tv_subtitle);
         tv_subtilte.setOnClickListener(this);
         ll_permitchoose.setOnClickListener(this);
-        setEditContent();
+        DateUtil.setEditContent(et_content,tv_count);
         rl_restrict.setVisibility(View.VISIBLE);
         itemList=new ArrayList<>();
         showView(getIntent().getIntExtra("type",1));
         loadingDialog =new LoadingDialog(this,R.style.LoadingDialogTheme);
     }
-
-
-    /**
-     * 计算文字的长度，如果文字的长度大于100则不能再输入
-     */
-    private void setEditContent() {
-        et_content.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                String str = s.toString();
-                int count = 0;
-                count = str.length();
-                if (count > 140) {
-                    deleteSelection(s);
-                }else {
-                    tv_count.setText(count+"/140");
-                }
-            }
-            private void deleteSelection(Editable s) {
-                int selection = et_content.getSelectionStart();
-                if (selection > 1) {
-                    s.delete(selection - 1, selection);
-                }
-            }
-        });
-    }
-
-  /*  *//**
-     * 发布照片页面
-     *//*
-    private void showPhoto(){
-        mAdapter=new GridAlbumAdapter(itemList,this,maxContent);
-        gv_photo.setAdapter(mAdapter);
-        gv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == itemList.size()) {
-                    goSelectImager();
-
-                }else {
-                    imageBrower(i,itemList);
-                }
-            }
-        });
-    }*/
-
- /*   private void imageBrower(int position, ArrayList<String> urls2) {
-        Intent intent = new Intent(this, ImagePagerActivity.class);
-        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
-        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
-        intent.putExtra("source","local");
-        startActivity(intent);
-    }
-*/
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case ChoosePermitActivity.CHOOSE_PERMIT:
@@ -295,8 +236,13 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 发布状态
      */
     private void publishstatus(String dyContent){
-        if(G.isEmteny(dyContent)&&dynamicType.equals("3")||dynamicType.equals("1")&&itemList.size()<1&&G.isEmteny(dyContent)){
+        if(G.isEmteny(dyContent)&&dynamicType.equals("3")){
             G.showToast(this,"发布的内容不能为空");
+            tv_subtilte.setEnabled(true);
+            return;
+        }
+        if (dynamicType.equals("1")&&itemList.size()==0){
+            G.showToast(this,"发布的图片不能为空");
             tv_subtilte.setEnabled(true);
             return;
         }
@@ -318,31 +264,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             OkHttps.sendPost(type,DYNAMIC,map,this);
         }
     }
-   /* *//**
-     * 前往获取图片
-     *//*
-    private void goSelectImager(){
-        PermissionsChecker checker=PermissionsChecker.getInstance(this);
-        if(checker.lacksPermissions(PERMISSIONS)){
-            checker.getPerMissions(PERMISSIONS);
-            return;
-        }
-        AndroidImagePicker androidImagePicker =   AndroidImagePicker.getInstance();
-        androidImagePicker.setSelectLimit(maxContent-itemList.size());
-        androidImagePicker.pickMulti(PublishStatusActivity.this, true, new AndroidImagePicker.OnImagePickCompleteListener() {
-            @Override
-            public void onImagePickComplete(List<ImageItem> items) {
-                if(items != null && items.size() > 0){
-                    for(ImageItem item:items){
-                        G.log("选择了===="+item.path);
-                            itemList.add(item.path);
-                    }
-                    mAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-    }*/
-
     @Override
     public void onSuccess(String uri, Object date) {
         tv_subtilte.setEnabled(true);

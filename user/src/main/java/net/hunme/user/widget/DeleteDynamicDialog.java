@@ -81,8 +81,13 @@ public class DeleteDynamicDialog implements View.OnClickListener, OkHttpListener
         Result<String> data = (Result<String>) date;
         if (data!=null){
             String  result = data.getData();
-            Toast.makeText(context,"删除"+result,Toast.LENGTH_SHORT).show();
-            context.getMyDynamic(pageNumber);
+            Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
+            for (int i = 0;i< context.dynamicInfoVoList.size();i++){
+                if (context.dynamicInfoVoList.get(i).getDynamicId().equals(dynamicId)){
+                    context.dynamicInfoVoList.remove(i);
+                }
+            }
+            context.adapter.notifyDataSetChanged();
         }
         alertDialog.dismiss();
     }

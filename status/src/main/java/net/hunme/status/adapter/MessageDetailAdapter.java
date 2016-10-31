@@ -8,13 +8,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.status.R;
+import net.hunme.status.mode.StatusInfo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * ================================================
@@ -27,20 +27,20 @@ import java.util.Map;
  * ================================================
  */
 public class MessageDetailAdapter extends BaseAdapter  {
-    private List<Map<String,Object>>  statusVoList;
+    private List<StatusInfo> statusInfos;
     private Context context;
-    public MessageDetailAdapter(Context context) {
+    public MessageDetailAdapter(Context context,List<StatusInfo> statusInfos) {
         this.context =context;
-       statusVoList = getMessageDetailList();
+        this.statusInfos =statusInfos;
     }
     @Override
     public int getCount() {
-        return statusVoList.size();
+        return statusInfos.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return statusVoList.get(i);
+        return statusInfos.get(i);
     }
 
     @Override
@@ -56,12 +56,14 @@ public class MessageDetailAdapter extends BaseAdapter  {
             new ViewHold(view);
         }
         viewHold= (ViewHold) view.getTag();
-        Map<String,Object> statusVo  = statusVoList.get(i);
-        String name = String.valueOf(statusVo.get("name"));
-        String content= String.valueOf(statusVo.get("content"));
-        String time = String.valueOf(statusVo.get("time"));
+         StatusInfo statusInfo = statusInfos.get(i);
+        String name =statusInfo.getInput_name();
+        String content= statusInfo.getInput_content();
+        String time = statusInfo.getCreate_time();
+        String headImage = statusInfo.getInput_url();
+        String imageUrlContent  = statusInfo.getDynamic_content();
         viewHold.tv_name .setText(name);
-        if (!G.isEmteny(content)){
+        if (!content.equals("#点赞#")){
             viewHold.tv_content.setVisibility(View.VISIBLE);
             viewHold.iv_praise.setVisibility(View.GONE);
             viewHold.tv_content.setText(content);
@@ -70,9 +72,20 @@ public class MessageDetailAdapter extends BaseAdapter  {
             viewHold.iv_picture.setVisibility(View.GONE);
             viewHold.iv_praise.setVisibility(View.VISIBLE);
         }
-        viewHold.tv_time.setText(time);
+        viewHold.tv_time.setText(getFormateDate(time));
+        ImageCache.imageLoader(headImage,viewHold.iv_head);
+        if (statusInfo.getMessage_type().equals("1")){
+            viewHold.iv_picture.setVisibility(View.VISIBLE);
+            viewHold.tv_dynamic_content.setVisibility(View.GONE);
+            ImageCache.imageLoader(imageUrlContent,viewHold.iv_picture);
+        }else {
+            viewHold.tv_dynamic_content.setVisibility(View.VISIBLE);
+            viewHold.tv_dynamic_content.setText(imageUrlContent);
+            viewHold.iv_picture.setVisibility(View.GONE);
+        }
        return view;
     }
+
     class ViewHold{
         ImageView iv_head ;//头像
         TextView tv_name; //姓名
@@ -80,6 +93,7 @@ public class MessageDetailAdapter extends BaseAdapter  {
         TextView tv_content; //评论内容内容
         ImageView iv_praise;//点赞
         ImageView iv_picture;//评论朋友圈的图片
+        TextView tv_dynamic_content;
         public ViewHold(View view) {
             iv_head= (ImageView) view.findViewById(R.id.iv_head);
             tv_name= (TextView) view.findViewById(R.id.tv_name);
@@ -87,23 +101,14 @@ public class MessageDetailAdapter extends BaseAdapter  {
             tv_content= (TextView) view.findViewById(R.id.tv_content);
             iv_praise = (ImageView) view.findViewById(R.id.iv_praise);
             iv_picture = (ImageView) view.findViewById(R.id.iv_picture);
+            tv_dynamic_content =  (TextView) view.findViewById(R.id.tv_dynamic_content);
             view.setTag(this);
         }
     }
-
-    private  List<Map<String,Object>>  getMessageDetailList(){
-        String[] times = new String[]{"刚刚","09:55","15:56","昨天 21：21","10月9日 20:13","2015年12月12日 12:45"};
-        String[] names = new String[]{"王桦","杜尧天","王小二","周玲玲","杨海燕","胡世豪"};
-        String[] contents = new String[]{"哈哈不错哦","我们而我的你就是的呢年底开始你想卡死你你看上下课了收纳","进入失败失败你还上班呢的保时捷的空间你快点才能看到市场","","想好好学吧",""};
-        List<Map<String,Object>> mapList = new ArrayList<>();
-        for (int i = 0;i<times.length;i++){
-            Map<String,Object> map = new HashMap<>();
-            map.put("time",times[i]);
-            map.put("name",names[i]);
-            map.put("content",contents[i]);
-            mapList.add(map);
-        }
-        return mapList;
+    private String getFormateDate(String timeDate){
+        long time = Long.parseLong(timeDate);
+        Date date = new Date(time);
+        SimpleDateFormat format  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return  format.format(date);
     }
-
 }

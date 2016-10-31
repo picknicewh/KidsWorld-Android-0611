@@ -4,6 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="net.hunme.school.activity.CourseArrangeActivity">
+    <include
+        android:id="@+id/rl_nonetwork"
+        layout="@layout/nonetwork"/>
+    <TextView
+        android:id="@+id/tv_nodata"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="没有数据"
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <net.hunme.baselibrary.widget.listview.PullToRefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
@@ -16,6 +28,8 @@
             android:id="@+id/lv_course"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <include layout="@layout/load_more" />
+        <include
+            android:id="@+id/load_more"
+            layout="@layout/load_more" />
     </net.hunme.baselibrary.widget.listview.PullToRefreshLayout>
 </RelativeLayout>

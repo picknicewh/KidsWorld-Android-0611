@@ -93,11 +93,13 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
      * 操作标记 0 清空聊天记录 1解散群 2 退出群，或者是添加新成员
      */
     private int flag;
+
     //清空聊天记录
     public OperationGroupDialog(Activity context, String targetId, int flag){
         this.context  = context;
         this.targetId = targetId;
         this.flag = flag;
+
     }
     //解散群
     public OperationGroupDialog(Activity context, String targetId, String targetGroupId, int flag){
@@ -158,21 +160,7 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
             switch (flag){
                 case FLAG_CLEAN:
                     tv_message.setText("确认清除缓存数据和清除图片？");
-                    if (RongIM.getInstance() != null) {
-                        RongIM.getInstance().clearMessages(Conversation.ConversationType.GROUP, targetId,
-                                new RongIMClient.ResultCallback<Boolean>() {
-                            @Override
-                            public void onSuccess(Boolean aBoolean) {
-                                if (aBoolean) {
-                                    Toast.makeText(context, "删除成功！", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            @Override
-                            public void onError(RongIMClient.ErrorCode errorCode) {
-                                Toast.makeText(context, errorCode.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
+                    cleanMessage(targetId);
                     break;
                 case FLAG_DISSOLVE:
                     tv_message.setText("删除并退出后，将不再接收改群信息!");
@@ -205,7 +193,7 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
         params.put("tsIds",targetIds);
         params.put("groupChatAdmin", UserMessage.getInstance(context).getTsId());
         params.put("groupChatId",targetGroupId);
-        removeConversation(targetGroupId);
+      //  removeConversation(targetGroupId);
         //Log.i("EEEEEEEE","tsIds:"+targetIds+"groupChatAdmin:"+UserMessage.getInstance(context).getTsId()+"groupChatId:"+targetGroupId);
         Type type =new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_EXIT_MEMBER,params,this);
@@ -235,9 +223,6 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
         params.put("tsId",tsId);
         params.put("groupChatId",targetGroupId);
       //  Log.i("EEEEEEEE","tsId:"+tsId+"groupChatId:"+targetGroupId);
-        GroupsDbHelper dbHelper = new GroupsDbHelper();
-        GroupDb groupDb = new GroupDb(context);
-        dbHelper.deleteById(groupDb.getWritableDatabase(),targetGroupId);
         removeConversation(targetGroupId);
         Type type =new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.MESSAGE_DISSORE_GROUP,params,this);
@@ -253,6 +238,9 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
             }else if (flag==FLAG_REMOVE_MEMBER){
                 context.finish();
             }
+            GroupsDbHelper dbHelper = new GroupsDbHelper();
+            GroupDb groupDb = new GroupDb(context);
+            dbHelper.deleteByClassId(groupDb.getWritableDatabase(),targetGroupId);
         }else if (uri.contains(Apiurl.MESSAGE_ADD_MEMBER)){
             result(date);
             context.finish();
@@ -300,6 +288,23 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
                     Log.i("TAG",errorCode.getMessage());
                 }
             });
+        }
+    }
+    private void cleanMessage(String targetId){
+        if (RongIM.getInstance() != null) {
+            RongIM.getInstance().clearMessages(Conversation.ConversationType.GROUP, targetId,
+                    new RongIMClient.ResultCallback<Boolean>() {
+                        @Override
+                        public void onSuccess(Boolean aBoolean) {
+                            if (aBoolean) {
+                                Toast.makeText(context, "删除成功！", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+                            Toast.makeText(context, errorCode.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
 }

@@ -1,15 +1,11 @@
 package net.hunme.baselibrary.base;
 
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +13,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.R;
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.ToolBarHelper;
 import net.hunme.baselibrary.widget.LoadingDialog;
@@ -48,25 +45,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         BaseLibrary.addActivity(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        //取消状态栏背景 状态栏和toolbar重合  toolbar的背景改变状态栏背景也会改变  实现了动态改变状态栏颜色  也是与主流最为相似
-        // 缺点是 由于和toolbar重合 必须设置toolbar的高度 paddingTop 让其空出位置给状态栏  但是  由于baseActivyt是先加入toolbar 再加入布局
-        //这与会让布局背toolbar遮住 所以 但是不用这个baseActivity是可行的
-
-        //最终方案
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        //5.0 全透明实现
-             //getWindow.setStatusBarColor(Color.TRANSPARENT)
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //4.4 全透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+        G.setTranslucent(this);
     }
-
     @Override
     public void setContentView(int layoutResID) {
         mToolBarHelper = new ToolBarHelper(this,layoutResID) ;
@@ -156,10 +136,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         dialog.setLoadingText("数据加载中...");
     }
     public void stopLoadingDialog() {
-        if (dialog!=null){
+        if (dialog!=null) {
             dialog.dismiss();
         }
-
     }
     @Override
     protected void onPause() {

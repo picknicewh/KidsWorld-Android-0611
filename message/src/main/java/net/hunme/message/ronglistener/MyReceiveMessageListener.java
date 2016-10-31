@@ -2,18 +2,21 @@ package net.hunme.message.ronglistener;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.contract.GroupDb;
 import net.hunme.baselibrary.contract.GroupsDbHelper;
+import net.hunme.baselibrary.mode.GroupInfoVo;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.UserMessage;
-import net.hunme.message.bean.GroupInfoVo;
+import net.hunme.message.bean.IMessage;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -51,22 +54,60 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
      */
     @Override
     public boolean onReceived(Message message, int left) {
-        Conversation.ConversationType type = message.getConversationType();
-        String name =message.getContent().getUserInfo().getName();
-        boolean isCreate=false;
-        List<String> nameList = helper.getGroupNames(groupDb.getWritableDatabase());
-        for (int i = 0;i<nameList.size();i++){
-            String myname = nameList.get(i);
-            if (!myname.equals(name)){
-                isCreate =true;
-            }else {
-                isCreate =false;
+        //新创建一个群组，从新获取所有
+        if (message.getContent().getUserInfo()==null){
+            Gson g = new Gson();
+            IMessage m = g.fromJson(g.toJson(message),IMessage.class);
+            Log.i("SSSSSSSSSS",g.toJson(message));
+            if (m!=null){
+                Conversation.ConversationType type = m.getConversationType();
+                String content = m.getContent().getMessage();
+                regetData(type);
+                String userId =m.getTargetId();
+                if (content.equals("该群已被群主解散")){
+                    removeConveration(Conversation.ConversationType.GROUP,userId);
+                }else {
+                    String extra = m.getContent().getExtra();
+                    if (extra.contains(UserMessage.getInstance(activity).getTsId())){
+                        removeConveration(Conversation.ConversationType.GROUP,userId);
+                    }
+                }
+
             }
+            return true;
+        }else {
+            Log.i("SSSSSSSSSS","ZZZZZZZZZZZZZZZZZZZ");
+            return false;
         }
-        if (type.equals(Conversation.ConversationType.GROUP)&&isCreate){
+
+    }
+    /**
+     *重新获取所有群信息
+     *
+     * @param type 会话类型
+     */
+    private void regetData( Conversation.ConversationType type ){
+        if (type.equals(Conversation.ConversationType.GROUP)){
             getClassinfor();
         }
-        return true;
+    }
+    private void removeConveration(Conversation.ConversationType type ,String targetId){
+        if (RongIM.getInstance() != null) {
+            RongIM.getInstance().removeConversation(type,targetId, new RongIMClient.ResultCallback<Boolean>(){
+                @Override
+                public void onSuccess(Boolean aBoolean) {
+                    if (aBoolean){
+                        Log.i("TAG","移除成功！");
+                    }else {
+                        Log.i("TAG","移除失败！");
+                    }
+                }
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    Log.i("TAG",errorCode.getMessage());
+                }
+            });
+        }
     }
     /**
      * 获取所有班级信息
@@ -86,6 +127,9 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
         if (data!=null){
             List<GroupInfoVo> groupJsonList =data.getData();
             if (groupJsonList!=null||groupJsonList.size()!=0){
+                if (helper.isEmpty(groupDb.getWritableDatabase())){
+                    helper.delete(groupDb.getWritableDatabase());
+                }
                for (int i = 0 ; i <groupJsonList.size();i++){
                    GroupInfoVo groupJson = groupJsonList.get(i);
                    final String classId = groupJson.getClassId();

@@ -97,44 +97,54 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if(Apiurl.STATUSDETILS.equals(uri)){
-            view.stopLoadingDialog();
-            Result<StatusDetilsVo> result= (Result<StatusDetilsVo>) date;
-            StatusDetilsVo detilsVo= result.getData();
-            String praisePerson = "";
-            view.setId(detilsVo.getTsType());
-            view.setHeadImageView(detilsVo.getImg());
-            view.setName(detilsVo.getTsName());
-            view.setContent(detilsVo.getText());
-            view.setTime(detilsVo.getDate());
-            boolean ishasPraise=null!=detilsVo.getList()&&detilsVo.getList().size()>0;
-            view.setlinPraiseVis(ishasPraise);
-            if(ishasPraise){
-                for (String s:detilsVo.getList()){
-                    praisePerson=G.isEmteny(praisePerson)?praisePerson+s:praisePerson+"、"+s;
+        if (date!=null){
+            if(Apiurl.STATUSDETILS.equals(uri)){
+                view.stopLoadingDialog();
+                view.setDeleteView(false);
+                Result<StatusDetilsVo> result= (Result<StatusDetilsVo>) date;
+                StatusDetilsVo detilsVo= result.getData();
+                if (detilsVo!=null){
+                    String praisePerson = "";
+                    view.setId(detilsVo.getTsType());
+                    view.setHeadImageView(detilsVo.getImg());
+                    view.setName(detilsVo.getTsName());
+                    view.setContent(detilsVo.getText());
+                    view.setTime(detilsVo.getDate());
+                    boolean ishasPraise=null!=detilsVo.getList()&&detilsVo.getList().size()>0;
+                    view.setlinPraiseVis(ishasPraise);
+                    if(ishasPraise){
+                        for (String s:detilsVo.getList()){
+                            praisePerson=G.isEmteny(praisePerson)?praisePerson+s:praisePerson+"、"+s;
+                        }
+                        view.setPraisePerson(praisePerson);
+                        view.setPiaiseNum(detilsVo.getList().size());
+                    }
+                    if(detilsVo.getDynamidRewList()!=null){
+                        view.setCommentNum(detilsVo.getDynamidRewList().size());
+                        view.setCommentList(detilsVo.getDynamidRewList());
+                    }
+                    view.setImagePrasise(detilsVo.getIsAgree()==1);
+                    view.setCommentVis(!G.isEmteny(detilsVo.getText()));
+                    if(null!=detilsVo.getImgUrl()&&detilsVo.getImgUrl().size()>0){
+                        view.setPictures(detilsVo.getImgUrl());
+                        view.setImageVis(true);
+                    }else {
+                        view.setImageVis(false);
+                    }
+                }else {
+                    view.stopLoadingDialog();
+                    view.setDeleteView(true);
                 }
-                view.setPraisePerson(praisePerson);
-                view.setPiaiseNum(detilsVo.getList().size());
+
+            } else{
+                G.KisTyep.isUpdateComment=true;  //通知statusFragement 当前动态发生了改变  需要刷新数据
+                view.stopLoadingDialog();
+                Result<String> result= (Result<String>) date;
+                G.showToast(context,result.getData());
+                getStatusDetils(tsId,dynamicId);
             }
-            if(detilsVo.getDynamidRewList()!=null){
-                view.setCommentNum(detilsVo.getDynamidRewList().size());
-                view.setCommentList(detilsVo.getDynamidRewList());
-            }
-            view.setImagePrasise(detilsVo.getIsAgree()==1);
-            view.setCommentVis(!G.isEmteny(detilsVo.getText()));
-            if(null!=detilsVo.getImgUrl()&&detilsVo.getImgUrl().size()>0){
-                view.setPictures(detilsVo.getImgUrl());
-                view.setImageVis(true);
-            }else {
-                view.setImageVis(false);
-            }
-        } else{
-            G.KisTyep.isUpdateComment=true;  //通知statusFragement 当前动态发生了改变  需要刷新数据
-            view.stopLoadingDialog();
-            Result<String> result= (Result<String>) date;
-            G.showToast(context,result.getData());
-            getStatusDetils(tsId,dynamicId);
         }
+
     }
 
     @Override

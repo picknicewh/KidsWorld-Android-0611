@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
     <TextView
         android:background="@color/bg_layout"
         android:padding="@dimen/space"
@@ -13,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <EditText
+        android:id="@+id/et_ptitle"
         android:lines="2"
+        android:paddingLeft="@dimen/space_x0.5"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -33,6 +33,42 @@
         android:hint="请输入文字内容"
         android:gravity="left"
         android:layout_height="200dp" />
+    <RelativeLayout
+        android:id="@+id/rl_restrict"
+        android:background="@color/white"
+        android:padding="@dimen/space"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_count"
+            android:padding="@dimen/space_x0.5"
+            android:layout_marginLeft="@dimen/space_x1.5"
+            android:text="0/140"
+            android:layout_gravity="left"
+            android:paddingLeft="@dimen/space_x2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_alignParentRight="true"
+            android:id="@+id/ll_classchoose"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/space"
+            android:layout_marginRight="@dimen/space"
+            android:background="@drawable/bg_choosepermit"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:drawablePadding="@dimen/space_x0.5"
+                android:drawableLeft="@mipmap/ic_status_data"
+                android:padding="@dimen/space_x0.5"
+                android:textColor="@color/main_green"
+                android:text="班级空间"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
     <GridView
         android:layout_marginTop="@dimen/space"
         android:layout_marginLeft="@dimen/space_x2"

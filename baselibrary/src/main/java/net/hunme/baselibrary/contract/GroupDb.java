@@ -17,6 +17,7 @@ public class GroupDb extends SQLiteOpenHelper {
     private static final int version =  302; //数据库版本
     private static final String TABLENAME = "mgroup";//表名
     public GroupDb(Context context) {
+       // super(context, DB_NAME, null, PackageUtils.getVersionCode(context));
         super(context, DB_NAME, null, version);
     }
     @Override

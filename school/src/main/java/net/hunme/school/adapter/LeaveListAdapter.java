@@ -1,14 +1,17 @@
 package net.hunme.school.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.school.R;
+import net.hunme.school.activity.LeaveListActivity;
 import net.hunme.school.bean.LeaveVo;
+import net.hunme.school.widget.DeleteDialog;
 
 import java.util.List;
 
@@ -23,10 +26,10 @@ import java.util.List;
  * ================================================
  */
 public class LeaveListAdapter extends BaseAdapter {
-    private Context context;
+    private LeaveListActivity context;
     private List<LeaveVo> leaveVoList;
 
-    public LeaveListAdapter(Context context, List<LeaveVo> publishList) {
+    public LeaveListAdapter(LeaveListActivity context, List<LeaveVo> publishList) {
         this.context = context;
         this.leaveVoList = publishList;
     }
@@ -47,37 +50,58 @@ public class LeaveListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewHold viewHold;
         if(null==view){
             view= LayoutInflater.from(context).inflate(R.layout.item_leave_list,null);
             new ViewHold(view);
         }
-        LeaveVo vo=leaveVoList.get(i);
+        final LeaveVo vo=leaveVoList.get(i);
         viewHold= (ViewHold) view.getTag();
         viewHold.tv_date.setText(vo.getCreationTime().substring(0,10));
         viewHold.tv_name.setText(vo.getTsName());
         viewHold.tv_timeStart.setText(vo.getStartDate().substring(0,16)+"至");
         viewHold.tv_timeEnd.setText(vo.getEndDate().substring(0,16));
         viewHold.tv_reason.setText(vo.getCause());
+        if (UserMessage.getInstance(context).getType().equals("1")){
+            viewHold.tv_read.setVisibility(View.VISIBLE);
+            if (vo.getStatus()==2){
+                viewHold.tv_read.setBackgroundColor(context.getResources().getColor(R.color.noread_grey));
+                viewHold.tv_read.setText("已阅");
+            }else if (vo.getStatus()==1){
+                viewHold.tv_read.setBackgroundColor(context.getResources().getColor(R.color.main_green));
+                viewHold.tv_read.setText("未阅");
+            }
+        }else {
+            viewHold.tv_read.setVisibility(View.GONE);
+        }
+        viewHold.ll_leave.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                DeleteDialog deleteDialog = new DeleteDialog(context,vo.getVacation_id(),0,i);
+                deleteDialog.initView();
+                return true;
+            }
+        });
         return view;
     }
-
      class ViewHold{
+         LinearLayout ll_leave;
          TextView tv_date;
          TextView tv_name;
          TextView tv_timeStart;
          TextView tv_timeEnd;
          TextView tv_reason;
-
+         TextView tv_read;
         public ViewHold(View view) {
             tv_name = (TextView) view.findViewById(R.id.tv_name);
             tv_timeStart= (TextView) view.findViewById(R.id.tv_timeStart);
             tv_date= (TextView) view.findViewById(R.id.tv_date);
             tv_timeEnd= (TextView) view.findViewById(R.id.tv_timeEnd);
             tv_reason= (TextView) view.findViewById(R.id.tv_reason);
+            tv_read = (TextView) view.findViewById(R.id.tv_read);
+            ll_leave = (LinearLayout) view.findViewById(R.id.ll_leave);
             view.setTag(this);
         }
-
      }
 }

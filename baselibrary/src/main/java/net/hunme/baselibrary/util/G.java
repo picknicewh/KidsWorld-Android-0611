@@ -3,13 +3,17 @@ package net.hunme.baselibrary.util;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.io.File;
@@ -204,6 +208,27 @@ public class G {
             context.deleteFile(appCacheDir.getAbsolutePath());
         }
     }
+    /**
+     * 5.0以下版本的沉浸式顶栏
+     * //取消状态栏背景 状态栏和toolbar重合  toolbar的背景改变状态栏背景也会改变  实现了动态改变状态栏颜色  也是与主流最为相似
+     // 缺点是 由于和toolbar重合 必须设置toolbar的高度 paddingTop 让其空出位置给状态栏  但是  由于baseActivyt是先加入toolbar 再加入布局
+     //这与会让布局背toolbar遮住 所以 但是不用这个baseActivity是可行的
+     //最终方案
+     */
+    public static void setTranslucent(Activity activity){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //5.0 全透明实现
+            //getWindow.setStatusBarColor(Color.TRANSPARENT)
+            Window window = activity.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //4.4 全透明状态栏
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+    }
 
     public static class KisTyep{
         public static  boolean isChooseId=false;  //是否选中身份 用切换用户后刷新数据
@@ -213,6 +238,7 @@ public class G {
         public static  boolean isUpadteHold=false;   //是否修改用户头像
 
         public static boolean isUpdateComment=false;
+        public static  boolean isUpadteContactHold=false;   //是否修改用户头像
     }
 
 }

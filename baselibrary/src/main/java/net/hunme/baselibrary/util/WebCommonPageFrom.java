@@ -249,7 +249,7 @@ public class WebCommonPageFrom {
 
     @JavascriptInterface
     public void sendBroadcast(boolean isVisible){
-        Intent intent = new Intent("net.hunme.kidsworld.hideMainTabReceiver");
+        Intent intent = new Intent(BroadcastConstant.HIDEMAINTAB);
         intent.putExtra("isVisible",isVisible);
         activity.sendBroadcast(intent);
     }
@@ -265,5 +265,22 @@ public class WebCommonPageFrom {
         intent.setComponent(componetName);
         intent.putExtra("dynamicId",dynamicId);
         activity.startActivity(intent);
+    }
+    /**
+     * 前往主页面
+     * @param
+     */
+    @JavascriptInterface
+    public  void goDetailActivity(String targetId){
+        ComponentName componetName = new ComponentName("net.hunme.kidsworld","net.hunme.message.activity.PersonDetailActivity");
+        Intent intent = new Intent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setComponent(componetName);
+        intent.putExtra("targetId",targetId);
+        activity.startActivity(intent);
+    }
+    @JavascriptInterface
+    public void back(){
+        activity.finish();
     }
 }

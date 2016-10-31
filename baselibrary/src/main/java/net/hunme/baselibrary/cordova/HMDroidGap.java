@@ -73,10 +73,10 @@ public class HMDroidGap extends CordovaActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hm_droidgap);
         BaseLibrary.addActivity(this);
+        G.setTranslucent(this);
         super.init();
         String uri=getIntent().getStringExtra("loadUrl");
         G.log("loaduri-----"+uri);
-
         launchUrl =uri;
         initView();
     }
@@ -91,6 +91,11 @@ public class HMDroidGap extends CordovaActivity implements View.OnClickListener{
         pb_web= (ProgressBar) findViewById(R.id.pb_web);
         ll_toolbar= (LinearLayout) findViewById(R.id.rl_toolbar);
         iv_left.setOnClickListener(this);
+        if (launchUrl.contains("medicine")){
+            ll_toolbar.setVisibility(View.GONE);
+        }else {
+            ll_toolbar.setVisibility(View.VISIBLE);
+        }
         setShowView();
         setTabBarText();
         // 抢登监听

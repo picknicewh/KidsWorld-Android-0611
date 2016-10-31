@@ -33,6 +33,7 @@ public interface StatusDetilsContract {
         void setImageVis(boolean isVis);
         void setPiaiseNum(int piaiseNum);
         void setCommentNum(int commentNum);
+        void setDeleteView(boolean isDelete);
         void showLoadingDialog();
         void stopLoadingDialog();
     }

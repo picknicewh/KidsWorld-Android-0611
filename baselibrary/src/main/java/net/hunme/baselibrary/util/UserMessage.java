@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import net.hunme.baselibrary.R;
+import net.hunme.baselibrary.database.PublishDb;
+import net.hunme.baselibrary.database.PublishDbHelp;
 
 /**
  * ================================================

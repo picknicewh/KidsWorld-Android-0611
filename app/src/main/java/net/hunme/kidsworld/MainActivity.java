@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.cordova.HMDroidGap;
+import net.hunme.baselibrary.util.BroadcastConstant;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.UserMessage;
@@ -151,6 +153,7 @@ public class MainActivity extends JPushBaseActivity {
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener(MainActivity.this));
         registerReceiver();
         initCount();
+        Log.i("EEE",userMessage.getTsId());
     }
 
     /**
@@ -185,6 +188,10 @@ public class MainActivity extends JPushBaseActivity {
             initViewpager();
             UserChooseActivity.flag = 0;
             HMDroidGap.flag = 0;
+        }
+        if (G.KisTyep.isUpadteContactHold){
+            initViewpager();
+            G.KisTyep.isUpadteContactHold  = false;
         }
         setNoreadMessage();
     }
@@ -233,7 +240,6 @@ public class MainActivity extends JPushBaseActivity {
                 transaction.hide(mContent).add(R.id.content, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
             else
                 transaction.hide(mContent).show(to).commit(); // 隐藏当前的fragment，显示下一个
-
             mContent = to; //重新赋值
         }
     }
@@ -242,13 +248,15 @@ public class MainActivity extends JPushBaseActivity {
      * 注册监听网络广播广播
      */
     private void registerReceiver() {
-        IntentFilter filter3 = new IntentFilter(MyBroadcasReceiver.HIDEMAINTAB);
-        IntentFilter filter2 = new IntentFilter(MyBroadcasReceiver.STATUSDOSHOW);
+        IntentFilter filter3 = new IntentFilter(BroadcastConstant.HIDEMAINTAB);
+        IntentFilter filter2 = new IntentFilter(BroadcastConstant.MAINSTATUSDOS);
         IntentFilter filter1 = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        IntentFilter filter4 = new IntentFilter(BroadcastConstant.MAINSCHOOLDOS);
         myBroadcasReceiver = new MyBroadcasReceiver();
         this.registerReceiver(myBroadcasReceiver, filter2);
         this.registerReceiver(myBroadcasReceiver, filter3);
         this.registerReceiver(myBroadcasReceiver, filter1);
+        this.registerReceiver(myBroadcasReceiver, filter4);
     }
 
     @Override
@@ -373,32 +381,33 @@ public class MainActivity extends JPushBaseActivity {
             count = -1;
         }
     }
-
     /**
-     * 全屏播放视频隐藏底部tab广播 HIDEMAINTAB
-     * 接收动态小红点的广播  STATUSDOSHOW
+     * 全屏播放视频隐藏底部tab广播
+     * 接收动态小红点的广播
      * 注册监听网络广播广播  ConnectivityManager.CONNECTIVITY_ACTION
      */
     public class MyBroadcasReceiver extends BroadcastReceiver {
-        public static final String HIDEMAINTAB = "net.hunme.kidsworld.hideMainTabReceiver";
-        public static final String STATUSDOSHOW = "net.hunme.kidsworld.MyStatusDosShowReceiver";
-
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals(HIDEMAINTAB)) {
-                Bundle bundle = intent.getExtras();
+            Bundle bundle = intent.getExtras();
+            if (action.equals(BroadcastConstant.HIDEMAINTAB)) {
                 if (bundle.getBoolean("isVisible", false)) {
                     llTab.setVisibility(View.VISIBLE);
                 } else {
                     llTab.setVisibility(View.GONE);
                 }
-            } else if (action.equals(STATUSDOSHOW)) {
-                Bundle bundle = intent.getExtras();
+            } else if (action.equals(BroadcastConstant.MAINSTATUSDOS)) {
                 if (bundle.getInt("count", 0) == 1) {
                     tvStatusDos.setVisibility(View.VISIBLE);
                 } else {
                     tvStatusDos.setVisibility(View.GONE);
+                }
+            }else if (action.equals(BroadcastConstant.MAINSCHOOLDOS)) {
+                if (bundle.getInt("count", 0)==1) {
+                    tvDosSchool.setVisibility(View.VISIBLE);
+                } else {
+                    tvDosSchool.setVisibility(View.GONE);
                 }
             } else if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
                 ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
