@@ -9,8 +9,6 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.umeng.analytics.MobclickAgent;
-
 import org.apache.cordova.engine.SystemWebChromeClient;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
@@ -25,19 +23,19 @@ import org.apache.cordova.engine.SystemWebViewEngine;
  * 主要接口：
  * ================================================
  */
-public class MySystemWebView extends SystemWebChromeClient {
+public class CordovaWebChromeClient extends SystemWebChromeClient {
     private ProgressBar pb_web;
     private View myView = null;
     private CustomViewCallback myCallback = null;
     private SystemWebView mWebView;
     private Activity activity;
     private LinearLayout ll_toolbar;
-    public MySystemWebView(SystemWebViewEngine parentEngine, ProgressBar pb_web) {
+    public CordovaWebChromeClient(SystemWebViewEngine parentEngine, ProgressBar pb_web) {
         super(parentEngine);
         this.pb_web=pb_web;
     }
 
-    public MySystemWebView(SystemWebViewEngine parentEngine, ProgressBar pb_web, SystemWebView mWebView, Activity activity, LinearLayout ll_toolbar) {
+    public CordovaWebChromeClient(SystemWebViewEngine parentEngine, ProgressBar pb_web, SystemWebView mWebView, Activity activity, LinearLayout ll_toolbar) {
         super(parentEngine);
         this.pb_web=pb_web;
         this.mWebView=mWebView;
@@ -52,9 +50,6 @@ public class MySystemWebView extends SystemWebChromeClient {
         } else{
             pb_web.setProgress(newProgress);
             pb_web.setVisibility(View.VISIBLE);
-            if (view.getUrl() != null) {
-                MobclickAgent.onPageStart(view.getUrl());
-            }
         }
         super.onProgressChanged(view, newProgress);
     }

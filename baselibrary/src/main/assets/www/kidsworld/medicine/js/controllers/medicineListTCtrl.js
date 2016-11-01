@@ -12,7 +12,7 @@ angular.module('app.controllers')
         //var tsId = "b6d039a39af64d7295e0f55352ae417a";//测试
         //var tsId = "25c874b12c0043ef87dcdba85db64f51";//测试
         //store.set(tsId,tsId);//测试
-        //var tsIdLogin = "b6d039a39af64d7295e0f55352ae417a";//测试
+        //var tsIdLogin = "cea03c849fd542df8f69174f79072108";//测试
         $scope.item1 = [];
         $scope.item2 = [];
 
@@ -45,20 +45,25 @@ angular.module('app.controllers')
             var res = WebService.getMedicineT(tsIdLogin);
             res.$promise.then(function (response) {
 
-                data1=response.data.data[1];//未喂药列表
-                data2 = response.data.data[2];
+                /*data1=response.data.data[1];//未喂药列表
+                data2 = response.data.data[2];*/
+
+                data1=response.data.data["notMedicine"];//未喂药列表
+                data2 = response.data.data["finishMedicine"];
+
                 var length1 = data1.length,
                     length2 = data2.length;
 
                 if(response.data.code == 0) {
 
-                    if (length1 > 0) {//即没有下一页
+                   /* if (length1 > 0) {//即没有下一页
                         $scope.item1 = data1;
                     }
-
                     if (length2 > 0) {//即没有下一页
                         $scope.item2 = data2;
-                    }
+                    }*/
+                    $scope.item1 = data1;
+                    $scope.item2 = data2;
 
                 }
             });

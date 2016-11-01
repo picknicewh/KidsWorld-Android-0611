@@ -17,8 +17,24 @@ angular.module('app.services').factory('CommonService', function() {
                 setTimeout("$('.kBubble').fadeOut('slow',function(){$('.kBubble').remove();})", this.cfg.speed);
             }
 
-        }
+        },
+       //1秒消失提示框
+        showAlert1: {
+            cfg: {
+                id: ".kBubble",
+                speed: 1000
+            },
+            show: function (str) {
+                var oBubble = $(this.cfg.id);
+                if (!oBubble.length) {
 
+                    oBubble = $('<div class="kBubble" />').appendTo($("body"));
+                    oBubble.html(str).fadeIn();
+                }
+                setTimeout("$('.kBubble').fadeOut('slow',function(){$('.kBubble').remove();})", this.cfg.speed);
+            }
+
+        }
         /*//播放记录服务
         playHisService:{
             //增加音乐播放记录

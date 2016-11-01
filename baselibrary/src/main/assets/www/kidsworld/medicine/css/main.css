@@ -1,1 +1,178 @@
-.pane,.view-container,[nav-view-transition=ios][nav-view-direction=forward].view-container,[nav-view-transition=ios][nav-view-direction=back].view-container,body{background-color:#efeff4}body{font-family:'黑体','微软雅黑',Arial;color:#494949}a{text-decoration:none}input[type=text],textarea{border:0;width:100%;padding-right:8px}[nav-view=cached]{z-index:-1}[nav-view=stage]{z-index:4}.button.button-positive{background-color:#8EC500}.button.button-positive.activated{background-color:#6a9d00}.kBubble{position:fixed;top:25%;margin:auto 20%;width:60%;z-index:100;text-align:center;box-shadow:0 0 6px #666;background:rgba(0,0,0,.75);font-size:14px;color:#fff}.bar.bar-header{background:#8ec500;color:#fff;padding-top:25px;height:64px}.has-header{top:64px;background-color:#fff}.bar .title{top:20px}.bar .title+.buttons{top:25px}.bar .buttons-right span{padding:4px;background:0 0;font-size:16px}.bar .buttons-left span .ion-ios-arrow-left{padding:0 5px;color:#fff;font-size:36px}.loadMoreBox .loadEnd,.loadMoreBox .loadMore{display:inline-block;font-size:16px;line-height:22px}.loadMoreBox{height:52px;text-align:center}.loadMoreBox .loadMore{width:90px;height:22px;margin-bottom:15px;vertical-align:middle}.loadMoreBox .moreIcon{margin-top:15px;display:inline-block;width:22px;height:22px;background:url(../images/icon/loadMore.png) center center no-repeat;background-size:22px}.loadMoreBox .loading{display:inline-block;margin-top:12px}.loadMoreBox .loading.spinner.spinner-balanced{stroke:#8ec500;fill:#8ec500}.loadMoreBox .loadEnd{margin-top:15px}.cont{position:relative;z-index:20;left:0;right:0;top:0;bottom:0}.no-data{position:absolute;left:37%;top:240px;color:#A0A0A0;font-size:24px}
+body{
+    font-family:'黑体','微软雅黑',Arial;
+    color:#494949;
+    background-color: #efeff4;
+}
+a {
+    text-decoration: none;
+}
+input[type="text"],textarea {
+    border: 0;
+    width:100%;
+    padding-right: 8px;
+}
+[nav-view-transition="ios"][nav-view-direction="forward"].view-container, [nav-view-transition="ios"][nav-view-direction="back"].view-container,.view-container{
+    background-color: #efeff4;
+}
+.pane{
+    background-color: #efeff4;
+}
+[nav-view="cached"]{
+    z-index:-1;
+}
+[nav-view="stage"]{
+    z-index:4;
+}
+/*页面跳转效果*/
+/*.animated {*/
+/*-webkit-animation-duration: 1s;*/
+/*animation-duration: 1s;*/
+/*-webkit-animation-fill-mode: both;*/
+/*animation-fill-mode: both;*/
+/*}*/
+/*@-webkit-keyframes fadeIn {*/
+/*from {*/
+/*opacity: 0;*/
+/*}*/
+
+/*to {*/
+/*opacity: 1;*/
+/*}*/
+/*}*/
+
+/*@keyframes fadeIn {*/
+/*from {*/
+/*opacity: 0;*/
+/*}*/
+
+/*to {*/
+/*opacity: 1;*/
+/*}*/
+/*}*/
+
+/*.fadeIn {*/
+/*-webkit-animation-name: fadeIn;*/
+/*animation-name: fadeIn;*/
+/*}*/
+/*修改confirm弹窗按钮为绿色*/
+.button.button-positive {
+    background-color: #8EC500;
+}
+/*修改confirm弹窗按钮按下时为浅绿色*/
+.button.button-positive.activated{
+    background-color: #6a9d00;
+}
+/*2秒自动消失提示框*/
+.kBubble{
+    position:fixed;
+    top:25%;
+    margin:auto 20%;
+    width:60%;
+    z-index:100;
+    text-align:center;
+    box-shadow:0 0 6px #666;
+    background:rgba(0,0,0,.75);
+    font-size:14px;
+    color:#fff;
+}
+/*顶部导航*/
+.bar.bar-header{
+    background: #8ec500;
+    color:white;
+    padding-top: 25px;
+    height: 64px;
+}
+
+.ionic-scroll{
+    /*background-color:white;*/
+}
+.scroll{
+    /*background-color:white;*/
+}
+.has-header{
+    top:64px;
+    background-color:white;
+}
+
+.bar .title{
+    top: 20px;
+}
+.bar .title + .buttons {
+    top: 25px;
+}
+
+/*导航栏右侧按钮*/
+.bar .buttons-right span{
+    padding:4px;
+    background:none;
+    font-size: 16px;
+}
+.bar .buttons-left span .ion-ios-arrow-left{
+    padding:0 5px;
+    color:white;
+    font-size: 36px;
+}
+
+/*.bar .buttons-right span{
+    padding:4px;
+    background:none;
+    font-size: 16px;
+}*/
+/* 加载更多 */
+.loadMoreBox{
+    height:52px;
+    text-align:center;
+}
+.loadMoreBox .loadMore{
+    display:inline-block;
+    width:90px;
+    font-size:16px;
+    line-height:22px;
+    height:22px;
+    margin-bottom:15px;
+    vertical-align:middle;
+}
+.loadMoreBox .moreIcon{
+    margin-top:15px;
+    display:inline-block;
+    width:22px;
+    height:22px;
+    background:url(../images/icon/loadMore.png) no-repeat center center;
+    background-size:22px;
+}
+.loadMoreBox .loading{
+    display: inline-block;
+    margin-top:12px;
+}
+.loadMoreBox .loading.spinner.spinner-balanced {
+    stroke: #8ec500;
+    fill: #8ec500;
+}
+.loadMoreBox .loadEnd{
+    display:inline-block;
+    font-size:16px;
+    line-height:22px;
+    margin-top:15px;
+}
+
+/*空白页面提示*/
+.cont {
+    position: relative;
+    z-index: 20;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    /* height: inherit; */
+}
+.no-data {
+    position: absolute;
+    left: 37%;
+    top: 240px;
+    color: #A0A0A0;
+    font-size: 24px;
+    /* text-shadow: 0 0 1px #9a9a9a; */
+}
+
+
+

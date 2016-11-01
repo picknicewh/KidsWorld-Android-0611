@@ -65,11 +65,10 @@
                     android:layout_weight="4"
                     android:layout_height="match_parent" />
                 <TextView
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:id="@+id/tv_delete"
-                    android:gravity="center_vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
                     android:text="删除"
                     android:textColor="@color/main_green"
                     android:layout_height="match_parent" />
@@ -83,10 +82,10 @@
 
                 <TextView
                     android:id="@+id/tv_praise_num"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="赞"/>
+                    android:gravity="center"
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:text="赞" />
 
                 <ImageView
                     android:padding="@dimen/space_x0.5"
@@ -97,9 +96,9 @@
 
                 <TextView
                     android:id="@+id/tv_comment_num"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
                     android:text="评论"/>
             </LinearLayout>
             <View

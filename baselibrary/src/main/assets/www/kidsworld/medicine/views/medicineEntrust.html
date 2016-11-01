@@ -1,1 +1,108 @@
-<ion-view title=委托喂药><ion-nav-bar class=nav-title-slide-ios7 align-title=center></ion-nav-bar><ion-nav-buttons side=left><span class=extend-right-click ng-click=goBack()><i class=ion-ios-arrow-left></i></span></ion-nav-buttons><ion-content class=hasBottomButton><form class=entrust_form name=entrust_form novalidate><ul class=list-margin><li><div class=input-label><span>喂药日期</span><span class=assertive>*</span></div><textarea placeholder=请选择日期 name=selectedDate id=input1 ng-model=param.selectedDate required>{{param.selectedDate}}</textarea> <small class=error ng-show="entrust_form.medicineName.$dirty && entrust_form.selectedDate.$error.required" value={{entrust_form.selectedDate}}>喂药日期不能为空</small></li><li><div class=input-label><span>药物名称</span><span class=assertive>*</span></div><input type=text placeholder=请输入药物名称 name=medicineName required ng-model=param.medicineName aria-required=true> <small class=error ng-show="entrust_form.medicineName.$dirty && entrust_form.medicineName.$error.required" value={{entrust_form.medicineName}}>药物名称不能为空</small></li><li><div class=input-label><span>药物用量</span><span class=assertive>*</span></div><input type=text placeholder=请输入药物用量 required ng-model=param.medicineCounts name=medicineCounts> <small class=error ng-show="entrust_form.medicineCounts.$dirty && entrust_form.medicineCounts.$error.required">药物用量不能为空</small></li><li class="wrap-meal padding"><span class=radio_meal ng-click=toggleRadio($event)><input type=button name=meal value=1 class=radioclass ng-click=toggleInput($event)>饭前</span> <span class="radio_meal on" ng-click=toggleRadio($event)><input type=button name=meal value=2 class=radioclass ng-click=toggleInput($event)>饭后</span></li><li><textarea class=big-textarea placeholder=备注 name=remark ng-maxlength=200 rows=4 ng-model=param.remark></textarea> <small class=error ng-show=signup_form.remark.$error.maxlength>输入字数不能大于200</small></li></ul><div class=padding><button type=submit ng-disabled=entrust_form.$invalid ng-click=submitData() class="button button-block theme-green">确定</button></div></form></ion-content></ion-view>
+<ion-view title="委托喂药">
+    <ion-nav-bar class="nav-title-slide-ios7" align-title="center"></ion-nav-bar>
+    <ion-nav-buttons side="left">
+        <span class="extend-right-click" ng-click="goBack()"><i class="ion-ios-arrow-left"></i></span>
+        <!--<span ng-click="goBack()"><img src="images/icon/back.png"></span>-->
+    </ion-nav-buttons>
+
+    <!--内容区域-->
+    <ion-content class="hasBottomButton">
+        <!--<div class="list list-margin">
+            <label class="item item-input item-stacked-label">
+                <div class="input-label"><span>喂药日期</span><span class="assertive">*</span></div>
+                <span class="sin-line"></span>
+               &lt;!&ndash; <input type="text" placeholder="请选择日期" id="input1" readonly="readonly" value="">&ndash;&gt;
+                <textarea placeholder="请选择日期" id="input1" readonly="readonly" value="" required></textarea>
+            </label>
+            <label class="item item-input item-stacked-label">
+                <p class="input-label"><span>药物名称</span><span class="assertive">*</span></p>
+                <input type="text" placeholder="请输入药物名称" required>
+            </label>
+            <label class="item item-input item-stacked-label">
+                <p class="input-label"><span>药物用量</span><span class="assertive">*</span></p>
+                <input type="text" placeholder="请输入药物用量" required>
+            </label>
+            <label class="item">
+                <form>
+                    <input type="radio" name="meal" value="饭前" />饭前
+                    <input type="radio" name="meal" value="饭后" />饭后
+                </form>
+
+            </label>
+            <label class="item item-input">
+                <textarea placeholder="备注" required maxlength="200" rows="4"></textarea>
+            </label>
+        </div>-->
+
+
+        <form class="entrust_form" name="entrust_form" novalidate>
+        <ul class="list-margin">
+           <!-- <li>
+                <input style="background-color: red;text-overflow:ellipsis;overflow:hidden;white-space: nowrap;padding:2px">
+            </li>-->
+            <li>
+                <div class="input-label"><span>喂药日期</span><span class="assertive">*</span></div>
+                <!--<textarea placeholder="请选择日期" name="selectedDate" id="input1" ng-model="param.selectedDate" required readonly="readonly">{{param.selectedDateShow}}</textarea>
+                <small class="error" ng-show="entrust_form.selectedDate.$dirty && entrust_form.selectedDate.$error.required" value="{{entrust_form.selectedDate}}">喂药日期不能为空</small>
+-->
+                <textarea type="text" placeholder="请选择日期" name="selectedDate" id="input1" ng-model="param.selectedDate" required></textarea>
+                <small class="error" ng-show="entrust_form.selectedDate.$dirty && entrust_form.selectedDate.$error.required">喂药日期不能为空</small>
+            </li>
+            <li>
+                <div class="input-label"><span>药物名称</span><span class="assertive">*</span></div>
+                <input type="text" placeholder="请输入药物名称" name="medicineName" required ng-model="param.medicineName" required>
+                <small class="error" ng-show="entrust_form.medicineCounts.$dirty && entrust_form.medicineName.$error.required" value="{{entrust_form.medicineName}}">药物名称不能为空</small>
+
+            </li>
+            <li>
+                <div class="input-label"><span>药物用量</span><span class="assertive">*</span></div>
+                <input type="text" placeholder="请输入药物用量" ng-model="param.medicineCounts" name="medicineCounts" required>
+                <small class="error" ng-show="entrust_form.medicineCounts.$dirty && entrust_form.medicineCounts.$error.required">药物用量不能为空</small>
+
+            </li>
+            <li class="wrap-meal padding">
+
+                <!--<form id="radio-meal">
+                    <input type="radio" name="meal" value="1" >饭前
+                    <input type="radio" name="meal" value="2" checked>饭后
+                </form>-->
+
+                <span class="radio_meal" ng-click="toggleRadio($event)">
+                    <input type="button" name="meal" value="1" class="radioclass" ng-click="toggleInput($event)"/>饭前
+                </span>
+                <span class="radio_meal on" ng-click="toggleRadio($event)">
+                    <input type="button" name="meal" value="2" class="radioclass" ng-click="toggleInput($event)"/>饭后
+                </span>
+
+               <!-- <label class="item item-radio">
+                    <input type="radio" name="group" value="go" checked="checked">
+                    &lt;!&ndash;<div class="item-content">
+                        Go
+                    </div>&ndash;&gt; Go
+                    <i class="radio-icon ion-android-radio-button-off"></i>
+                </label>
+                <label class="item item-radio">
+                    <input type="radio" name="group" value="gos">
+                    &lt;!&ndash;<div class="item-content">
+                        Gos
+                    </div>&ndash;&gt; Gos
+                    <i class="radio-icon ion-android-radio-button-off"></i>
+                </label>-->
+
+            </li>
+            <li>
+                <textarea class="big-textarea" placeholder="备注" name="remark" ng-maxlength="200" rows="4" ng-model="param.remark"></textarea>
+                <!--<small class="error" ng-show="signup_form.remark.$error.maxlength">输入字数不能大于200</small>-->
+            </li>
+        </ul>
+
+        <!--<div class="padding" ng-click="submitData()" >-->
+            <div class="padding">
+            <!--<div>-->
+            <button  type="submit"  ng-disabled="entrust_form.$invalid" ng-click="submitData()" class="button button-block theme-green">确定</button>
+        </div>
+
+        </form>
+
+    </ion-content>
+</ion-view>

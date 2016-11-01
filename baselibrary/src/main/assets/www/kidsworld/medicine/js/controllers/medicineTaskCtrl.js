@@ -5,13 +5,14 @@ angular.module('app.controllers')
 
     .controller('medicineTaskCtrl',function($scope, $state,$ionicPopup,$stateParams,$ionicHistory,WebService,CommonService) {
 
-        //var tsIdLogin = "b6d039a39af64d7295e0f55352ae417a";//测试
+        //var tsIdLogin = "cea03c849fd542df8f69174f79072108";//测试
         $scope.$on('$ionicView.beforeEnter',function(){
 
-             $scope.medicineId = $stateParams["medicineId"];//获取页面传参
+            $scope.medicineId = $stateParams["medicineId"];//获取页面传参
             $scope.status = $stateParams["status"];//0未喂药 1已喂药 2家长进入（无头像和按钮）
             $scope.item = [];
             getData($scope.medicineId);
+            //alert($scope.medicineId)
 
 
         });
@@ -36,33 +37,12 @@ angular.module('app.controllers')
             }
         };
 
-       /* $scope.$on('$ionicView.afterEnter',function(){
-
-            var input1=document.getElementById('input1');
-
-            var calendar1=new mCalendar({
-                //可选参数
-                //'setDate':'2014-12-12', //注* 日期格式：2015-01-01
-                'multiple':true,//多选
-                //必填参数
-                'toBind':input1,//绑定触发日历的元素
-                'callback':function(){ //确定选择执行回调
-                    /!*input1.setAttribute('value',this.outputDate);
-                    input1.value = this.outputDate;*!/
-                    //输出日期 this.outputDate
-                }
-            });
-
-        });*/
-        //var input1=document.getElementById('input1');
-        //alert(3);
-
 
         //获取数据
-        function getData(medicineId) {
+        function getData(medId) {
             var data = "";
 
-            var res = WebService.getMedicineTaskDetails(medicineId);
+            var res = WebService.getMedicineTaskDetails(medId);
             res.$promise.then(function (response) {
 
                 data = response.data.data;//喂药详情
@@ -99,15 +79,21 @@ angular.module('app.controllers')
         }
 
         //完成喂药
-        $scope.finishTask = function(event){
-
+        //$scope.finishTask = function(event){
+        $scope.finishTask = function(){
             var res = WebService.finishedMedicine(tsIdLogin,$scope.medicineId);
             res.$promise.then(function (response) {
                 if(response && response.data.code == 0){
                     //提交委托成功
                     //$scope.status == 1;
-                    $(event.target).parent().addClass('ng-hide').next().removeClass('ng-hide');
-                    CommonService.showAlert.show("提交成功");
+                    //$(event.target).parent().addClass('ng-hide').next().removeClass('ng-hide');
+                   /* CommonService.showAlert.show("提交成功");
+                    $ionicHistory.goBack();*/
+                    CommonService.showAlert1.show("提交成功");
+                    setTimeout(function(){
+                        $ionicHistory.goBack();
+                    },2000);
+
 
                 } else {
                     CommonService.showAlert.show("提交失败");

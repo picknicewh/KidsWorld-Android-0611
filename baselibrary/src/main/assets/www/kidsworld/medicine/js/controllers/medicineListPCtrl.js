@@ -9,7 +9,7 @@ angular.module('app.controllers')
         //从url获取参数
         //var tsId = getUrlParam("tsId");
         //store.set(tsId,tsId);//将tsId存入缓存
-        //var tsId = "a1eda6bc285d462698b869564e4592f1";//测试
+        //var tsIdLogin = "a1eda6bc285d462698b869564e4592f1";//测试
         var pageSize = 10;
         var pageNumber = 1;
 
