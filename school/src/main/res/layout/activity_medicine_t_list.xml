@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_layout"
+    tools:context=".activity.MedicineListTActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+   <LinearLayout
+       android:background="@color/white"
+       android:layout_marginTop="@dimen/space"
+       android:layout_marginBottom="@dimen/space"
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+    <TextView
+        android:padding="@dimen/space"
+        android:text="需要喂药"
+        android:textColor="@color/sc_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+       <View
+           android:background="@color/line_gray"
+           android:layout_width="match_parent"
+           android:layout_height="1dp"/>
+    <net.hunme.baselibrary.widget.NoScrollListView
+        android:padding="@dimen/space"
+       android:id="@+id/lv_need"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"/>
+   </LinearLayout>
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/space"
+        android:layout_marginBottom="@dimen/space"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:padding="@dimen/space"
+            android:text="完成喂药"
+            android:textColor="@color/sc_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:background="@color/line_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <net.hunme.baselibrary.widget.NoScrollListView
+            android:padding="@dimen/space"
+            android:id="@+id/lv_finish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

@@ -30,7 +30,11 @@
         <activity android:name=".activity.ClassListActivity" />
         <activity android:name=".activity.PublishFoodActivity" />
         <activity android:name=".activity.PublishInfoActivity" />
-        <activity android:name=".activity.ChooseClassActivity"/>
+        <activity android:name=".activity.ChooseClassActivity" />
+        <activity android:name=".activity.MedicineListTActivity" />
+        <activity android:name=".activity.MedicineListSActivity" />
+        <activity android:name=".activity.MedicineTaskTActivity" />
+        <activity android:name=".activity.MedicineEntrustActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_margin="@dimen/space"
+    android:layout_height="wrap_content">
+   <TextView
+       android:id="@+id/tv_medicine_name"
+
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:textColor="@color/sc_"/>
+    <TextView
+        android:id="@+id/tv_medicine_dosage"
+        android:layout_below="@+id/tv_medicine_name"
+        android:paddingTop="@dimen/space_x0.5"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/sc_"/>
+    <TextView
+        android:id="@+id/tv_medicine_remark"
+        android:layout_below="@+id/tv_medicine_dosage"
+        android:paddingTop="@dimen/space_x0.5"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/default_grey"/>
+    <TextView
+        android:id="@+id/tv_medicine_date"
+        android:layout_below="@+id/tv_medicine_remark"
+        android:paddingTop="@dimen/space_x0.5"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/default_grey"/>
+    <TextView
+        android:id="@+id/tv_medicine_delete"
+        android:layout_below="@+id/tv_medicine_remark"
+        android:paddingTop="@dimen/space"
+        android:text="删除"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/main_green"/>
+</RelativeLayout>

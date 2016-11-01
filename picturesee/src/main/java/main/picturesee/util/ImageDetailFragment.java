@@ -15,6 +15,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import net.hunme.baselibrary.image.ImageCache;
+import net.hunme.baselibrary.util.G;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -108,7 +109,9 @@ public class ImageDetailFragment extends Fragment {
 						default: message = "未知的错误";
 							break;
 					}
-					Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+					if (!G.isEmteny(message)){
+						Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+					}
 					progressBar.setVisibility(View.GONE);
 				}
 				@Override

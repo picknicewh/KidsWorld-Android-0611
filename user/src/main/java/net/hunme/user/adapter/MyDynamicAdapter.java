@@ -118,7 +118,7 @@ public class MyDynamicAdapter extends BaseAdapter implements  OkHttpListener {
                 viewHold.iv_picture.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        PublishPhotoUtil.imageBrowernet(i,dynamicInfoVo.getImgUrl(),context);
+                        PublishPhotoUtil.imageBrowernet(0,dynamicInfoVo.getImgUrl(),context);
                     }
                 });
             }else {

@@ -3,6 +3,7 @@ package net.hunme.baselibrary.util;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
@@ -18,6 +19,10 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * ================================================
@@ -247,5 +252,6 @@ public class G {
         public static boolean isUpdateComment = false;
         public static boolean isUpadteContactHold = false;   //是否修改用户头像
     }
+
 
 }
