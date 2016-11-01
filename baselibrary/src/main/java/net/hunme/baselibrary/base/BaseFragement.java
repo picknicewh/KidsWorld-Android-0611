@@ -49,7 +49,6 @@ public class BaseFragement extends Fragment implements CordovaInterface {
     public void onResume() {
         super.onResume();
         G.setTranslucent(getActivity());
-        MobclickAgent.onResume(getActivity());
         MobclickAgent.onPageStart(this.getClass().getSimpleName());
         // 账号抢登监听
         if (RongIM.getInstance()!=null){
@@ -60,7 +59,6 @@ public class BaseFragement extends Fragment implements CordovaInterface {
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPause(getActivity());
         MobclickAgent.onPageEnd(this.getClass().getSimpleName());
     }
 
