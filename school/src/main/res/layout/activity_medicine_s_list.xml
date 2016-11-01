@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.MedicineListSActivity">
+  <RadioGroup
+      android:background="@color/bg_layout"
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <RadioButton
+          android:text="喂药列表"
+          style="@style/rb_feed_s"
+          android:id="@+id/rb_feed_list"
+          android:checked="true" />
+      <RadioButton
+          android:text="进入喂药进程"
+          android:id="@+id/rb_feed_process"
+          style="@style/rb_feed_s"/>
+   </RadioGroup>
+    <LinearLayout
+        android:layout_marginTop="-5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp">
+        <View
+            android:id="@+id/line_feed"
+            style="@style/tab_line"
+            android:background="@color/main_green"/>
+        <View
+            android:id="@+id/line_process"
+            style="@style/tab_line" />
+    </LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_feed_t"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"/>
+</LinearLayout>

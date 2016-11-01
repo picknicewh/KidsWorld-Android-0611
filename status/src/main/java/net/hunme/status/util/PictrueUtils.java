@@ -42,7 +42,7 @@ public class PictrueUtils implements View.OnClickListener {
             //单张图片
             ImageView imageView=new ImageView(context);
             ImageCache.imageLoader(imageUrl.get(0),imageView);
-            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            imageView.setScaleType(ImageView.ScaleType.FIT_START);
             RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(MAXIMAGESIZE,MAXIMAGESIZE);
             imageView.setTag(0);
             imageView.setOnClickListener(this);
@@ -136,7 +136,7 @@ public class PictrueUtils implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(context, ImagePagerActivity.class);
-        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,getimagepath(imageUrl));
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,getImagePath(imageUrl));
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, String.valueOf(view.getTag()));
         intent.putExtra("source","net");
         context.startActivity(intent);
@@ -144,7 +144,7 @@ public class PictrueUtils implements View.OnClickListener {
     /**
      * 把缩略图转换成为原图
      */
-    private ArrayList<String> getimagepath(List<String> itemList){
+    private ArrayList<String> getImagePath(List<String> itemList){
         ArrayList<String> imagepath = new ArrayList<>();
         for (int i = 0 ; i<itemList.size();i++){
             String pathurl = itemList.get(i);
@@ -153,6 +153,5 @@ public class PictrueUtils implements View.OnClickListener {
             imagepath.add(path);
         }
         return imagepath;
-
     }
 }

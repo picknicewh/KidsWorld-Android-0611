@@ -48,4 +48,21 @@
         <item name="android:padding">@dimen/space</item>
         <item name="android:scaleType">centerInside</item>
     </style>
+    <style name="rb_feed_s">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:padding">@dimen/space_x1.5</item>
+        <item name="android:textColor">@drawable/rb_feed_text_color</item>
+    </style>
+    style>
+    <style name="tab_line">
+        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

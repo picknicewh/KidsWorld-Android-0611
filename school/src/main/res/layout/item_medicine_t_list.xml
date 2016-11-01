@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+   <RelativeLayout
+       android:padding="@dimen/space"
+       android:orientation="horizontal"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <net.hunme.baselibrary.widget.CircleImageView
+           android:id="@+id/civ_image"
+           android:src="@mipmap/person"
+           android:layout_width="40dp"
+           android:layout_height="40dp" />
+       <LinearLayout
+           android:layout_toRightOf="@+id/civ_image"
+           android:paddingLeft="@dimen/space"
+           android:orientation="vertical"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+       <TextView
+           android:id="@+id/tv_tsName"
+           android:textColor="@color/main_green"
+           android:text="杨海燕"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+           <TextView
+               android:id="@+id/tv_medicine_time"
+               android:layout_marginTop="@dimen/space_x0.5"
+               android:padding="2dp"
+               android:textColor="@color/white"
+               android:text="饭后"
+               android:gravity="center"
+               android:textSize="10dp"
+               android:background="@drawable/launch_after_bg"
+               android:layout_width="35dp"
+               android:layout_height="wrap_content" />
+       </LinearLayout>
+     <TextView
+         android:id="@+id/tv_medicine"
+         android:layout_centerVertical="true"
+         android:text="喂药"
+         android:textColor="@color/white"
+         android:layout_alignParentRight="true"
+         android:gravity="center"
+         android:background="@color/main_green"
+         android:layout_width="50dp"
+         android:layout_height="25dp" />
+   </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_medicine_name"
+        android:text="999小儿感冒灵颗粒"
+        android:textColor="@color/sc_"
+        android:paddingLeft="@dimen/space"
+        android:paddingRight="@dimen/space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_medicine_dosage"
+        android:text="板蓝根颗粒一天一包，阿莫西林一日三次，一次一粒"
+        android:padding="@dimen/space"
+        android:textColor="@color/sc_"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:paddingLeft="@dimen/space"
+        android:paddingRight="@dimen/space"
+        android:background="@color/white"
+        android:text="周龙龙同学最近不听话，感冒了，麻烦老师帮忙啦，孩子比较调皮，一定要他吃下药才行哦！"
+        android:id="@+id/tv_remark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

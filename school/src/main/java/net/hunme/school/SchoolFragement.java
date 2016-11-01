@@ -125,8 +125,13 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
         }else if (view.getId()==R.id.rl_medicine){
             intent.setClass(getActivity(), HMDroidGap.class);
             intent.putExtra("loadUrl",geturl());
-            //"http://192.168.1.171:8787/KidsWorld-Web
             schoolDosDisappear(BroadcastConstant.MEDICINEDOS);
+           /* if (UserMessage.getInstance(getActivity()).getType().equals("1")){
+            }else {
+                intent.setClass(getActivity(), MedicineListTActivity.class);
+                //"http://192.168.1.171:8787/KidsWorld-Web
+                schoolDosDisappear(BroadcastConstant.MEDICINEDOS);
+            }*/
         }
         startActivity(intent);
     }
@@ -171,7 +176,6 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             }else if (action.equals(BroadcastConstant.SCHOOLINFODOS)){//   通知
                 ShowDos(isVisible,tsid,tv_dos_info);
             }
-
         }
     }
     private void ShowDos( boolean isVisible, String tsid,TextView textView){

@@ -89,6 +89,30 @@ public class Apiurl {
      *删除请假
      */
     public static final String SCHOOL_DELETELEAVES = "/school/deleteLeave.do" ;
+    /**
+     * 教师端喂药列表
+     */
+    public static final String SCHOOL_MEDICINETLIST = "/school/teacherFeedingMedicine.do" ;
+    /**
+     * 教师端喂药详情
+     */
+    public static final String SCHOOL_MEDICINETDETAIL = "/school/medicineDetails.do" ;
+    /**
+     * 删除喂药
+     */
+    public static final String SCHOOL_MEDICINETDELETE = "/school/deleteMedicine.do" ;
+    /**
+     *完成喂药
+     */
+    public static final String SCHOOL_MEDICINETFINSH = "/school/finishMedicine.do" ;
+    /**
+     *家长获取喂药列表
+     */
+    public static final String SCHOOL_MEDICINESLIST = "/school/patriarchFeedingMedicine.do" ;
+    /**
+     * 发布委托喂药
+     */
+    public static final String SCHOOL_MEDICINEPUBLISH = "/school/publishMedicineCommissioned.do" ;
     //==============================个人中心============================
     /**
      * 意见反馈

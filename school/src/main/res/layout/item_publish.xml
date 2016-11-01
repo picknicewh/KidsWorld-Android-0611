@@ -17,17 +17,16 @@
     <RelativeLayout
         android:layout_marginRight="@dimen/space"
         android:layout_marginTop="@dimen/space"
-
+        android:layout_marginBottom="@dimen/space"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:textColor="@color/black"
+            android:textColor="@color/main_green"
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/ts_x_large"
-          />
+            android:textSize="@dimen/ts_x_large" />
 
         <TextView
             android:textColor="@color/black"
@@ -45,20 +44,18 @@
             android:id="@+id/tv_ptitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/ts_x_large"
-           />
-
+            android:textSize="@dimen/ts_x_large" />
+        <TextView
+            android:paddingRight="@dimen/space"
+            android:id="@+id/tv_content"
+            android:layout_marginTop="@dimen/space_x0.5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ts_large"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_below="@id/tv_ptitle"/>
     </RelativeLayout>
         </LinearLayout>
-    <TextView
-        android:paddingLeft="@dimen/space"
-        android:paddingRight="@dimen/space"
-        android:id="@+id/tv_content"
-        android:layout_marginTop="@dimen/space_x0.5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/ts_large"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:layout_below="@id/tv_title"/>
+
 </LinearLayout>

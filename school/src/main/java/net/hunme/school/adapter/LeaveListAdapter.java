@@ -59,10 +59,11 @@ public class LeaveListAdapter extends BaseAdapter {
         final LeaveVo vo=leaveVoList.get(i);
         viewHold= (ViewHold) view.getTag();
         viewHold.tv_date.setText(vo.getCreationTime().substring(0,10));
-        viewHold.tv_name.setText(vo.getTsName());
-        viewHold.tv_timeStart.setText(vo.getStartDate().substring(0,16)+"至");
+
+        viewHold.tv_timeStart.setText(vo.getStartDate().substring(0,16));
         viewHold.tv_timeEnd.setText(vo.getEndDate().substring(0,16));
         viewHold.tv_reason.setText(vo.getCause());
+
         if (UserMessage.getInstance(context).getType().equals("1")){
             viewHold.tv_read.setVisibility(View.VISIBLE);
             if (vo.getStatus()==2){
@@ -72,8 +73,11 @@ public class LeaveListAdapter extends BaseAdapter {
                 viewHold.tv_read.setBackgroundColor(context.getResources().getColor(R.color.main_green));
                 viewHold.tv_read.setText("未阅");
             }
+            viewHold.ll_name.setVisibility(View.GONE);
         }else {
             viewHold.tv_read.setVisibility(View.GONE);
+            viewHold.tv_name.setText(vo.getTsName());
+
         }
         viewHold.ll_leave.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -83,10 +87,12 @@ public class LeaveListAdapter extends BaseAdapter {
                 return true;
             }
         });
+
         return view;
     }
      class ViewHold{
          LinearLayout ll_leave;
+         LinearLayout ll_name;
          TextView tv_date;
          TextView tv_name;
          TextView tv_timeStart;
@@ -94,6 +100,7 @@ public class LeaveListAdapter extends BaseAdapter {
          TextView tv_reason;
          TextView tv_read;
         public ViewHold(View view) {
+            ll_name = (LinearLayout)view.findViewById(R.id.ll_name);
             tv_name = (TextView) view.findViewById(R.id.tv_name);
             tv_timeStart= (TextView) view.findViewById(R.id.tv_timeStart);
             tv_date= (TextView) view.findViewById(R.id.tv_date);

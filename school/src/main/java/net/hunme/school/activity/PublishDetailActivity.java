@@ -1,9 +1,14 @@
 package net.hunme.school.activity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.image.ImageCache;
@@ -43,6 +48,7 @@ public class PublishDetailActivity extends BaseActivity {
         tv_content= (TextView)findViewById(R.id.tv_content);
         iv_image = (ImageView)findViewById(R.id.iv_image);
         tv_ptitle =(TextView) findViewById(R.id.tv_ptitle);
+
     }
 
     private void initDate(){
@@ -59,6 +65,7 @@ public class PublishDetailActivity extends BaseActivity {
             tv_title.setText(vo.getTsName());
         }
         if (vo.getMessageUrl()!=null&&vo.getMessageUrl().size()>0){
+            setParam (vo.getMessageUrl().get(0),iv_image);
             ImageCache.imageLoader(vo.getMessageUrl().get(0),iv_image);
             iv_image.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,4 +83,33 @@ public class PublishDetailActivity extends BaseActivity {
         tv_date.setText(vo.getDateTime().substring(0,11));
         tv_content.setText(vo.getMessage());
     }
+
+    /**
+     * 设置图片布局参数
+     * @param  url 图片的url
+     * @param  iv_image 图片控件
+     */
+    private void setParam(String  url,ImageView iv_image){
+        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(url);
+        if (bitmap!=null){
+            int imageWidth = bitmap.getWidth();
+            int imageHeight = bitmap.getHeight();
+            LinearLayout.LayoutParams lp ;
+            int viewWidth = G.dp2px(this,160);
+            int viewHeight = G.dp2px(this,160);
+            if (imageHeight>imageWidth){
+                lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,viewHeight*2);
+                iv_image.setScaleType(ImageView.ScaleType.FIT_START);
+            }else if (imageHeight==imageWidth){
+                lp = new LinearLayout.LayoutParams(viewWidth, viewWidth);
+                iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            }else {
+                lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,viewHeight);
+                iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            }
+
+            iv_image.setLayoutParams(lp);
+        }
+    }
+
 }
