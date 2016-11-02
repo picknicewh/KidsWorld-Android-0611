@@ -48,10 +48,13 @@
         <activity
             android:name=".activity.AlbumDetailsActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="net.hunme.baselibrary.cordova.HMDroidGap"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <activity android:name=".activity.MyDynamicActivity"></activity>
         <activity android:name=".activity.StatusDetilsActivity"></activity>
     </application>

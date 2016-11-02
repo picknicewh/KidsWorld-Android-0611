@@ -45,12 +45,12 @@
                 <!--<textarea placeholder="请选择日期" name="selectedDate" id="input1" ng-model="param.selectedDate" required readonly="readonly">{{param.selectedDateShow}}</textarea>
                 <small class="error" ng-show="entrust_form.selectedDate.$dirty && entrust_form.selectedDate.$error.required" value="{{entrust_form.selectedDate}}">喂药日期不能为空</small>
 -->
-                <textarea type="text" placeholder="请选择日期" name="selectedDate" id="input1" ng-model="param.selectedDate" required></textarea>
+                <textarea type="text" placeholder="请选择日期" name="selectedDate" id="input1" ng-model="param.selectedDate" required readonly="readonly"></textarea>
                 <small class="error" ng-show="entrust_form.selectedDate.$dirty && entrust_form.selectedDate.$error.required">喂药日期不能为空</small>
             </li>
             <li>
                 <div class="input-label"><span>药物名称</span><span class="assertive">*</span></div>
-                <input type="text" placeholder="请输入药物名称" name="medicineName" required ng-model="param.medicineName" required>
+                <input type="text" placeholder="请输入药物名称" name="medicineName" ng-model="param.medicineName" required>
                 <small class="error" ng-show="entrust_form.medicineCounts.$dirty && entrust_form.medicineName.$error.required" value="{{entrust_form.medicineName}}">药物名称不能为空</small>
 
             </li>
@@ -91,7 +91,7 @@
 
             </li>
             <li>
-                <textarea class="big-textarea" placeholder="备注" name="remark" ng-maxlength="200" rows="4" ng-model="param.remark"></textarea>
+                <textarea class="big-textarea"id="big-textarea" placeholder="备注" name="remark" ng-maxlength="200" rows="4" ng-model="param.remark" ng-focus="scrollToUp()" ng-blur="scrollBack()"></textarea>
                 <!--<small class="error" ng-show="signup_form.remark.$error.maxlength">输入字数不能大于200</small>-->
             </li>
         </ul>

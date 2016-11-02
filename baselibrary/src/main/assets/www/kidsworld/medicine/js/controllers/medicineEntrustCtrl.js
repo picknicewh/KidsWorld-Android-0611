@@ -55,6 +55,8 @@ angular.module('app.controllers')
 
             }
 
+
+
             //测试
             /*$scope.alertEvent = function(){
                 //alert(entrust_form.$dirty);
@@ -116,7 +118,7 @@ angular.module('app.controllers')
             $state.go('medicineListP');
         };
 
-        //修复bug,textarea被虚拟键盘挡住
+        //修复bug,textarea被虚拟键盘挡住（ios可行，安卓不行）
         /*$('textarea').on('tap', function () {
             var target = this;
             setTimeout(function(){
@@ -124,6 +126,55 @@ angular.module('app.controllers')
                 //console.log('scrollIntoViewIfNeeded');
             },500);
         });*/
+
+        //安卓端虚拟键盘弹出后，盖住输入框，所以让其向上滚动（都行，但安卓的点击完成按钮，输入框下不来）
+        $scope.scrollToUp=function(){
+            /*$scope.positionOrigin = $('.InfDetContent.eduInf>.scroll').css('transform');
+            var hight=$('.InfDetContent.eduInf .InfDetContent').height()+60;
+            var toUp = 'translate3d( 0px,-'+hight+'px,0 ) scale( 1 )';
+            $('.InfDetContent.eduInf>.scroll').css('transform',toUp);*/
+            $scope.positionOrigin = $('.hasBottomButton>.scroll').css('transform');
+            //var hight=$('.hasBottomButton').height()+60;
+            var toUp = 'translate3d( 0px,-300px,0 ) scale( 1 )';//60为虚拟键盘的高度
+            $('.hasBottomButton>.scroll').css('transform',toUp);
+            //$('e.target').preventDefault();
+        };
+
+        $scope.scrollBack=function(){
+            //$('.InfDetContent.eduInf>.scroll').css('transform',$scope.positionOrigin);
+            $('.hasBottomButton>.scroll').css('transform',$scope.positionOrigin);
+
+        };
+
+        //resize事件监测不到
+        /*$(window).resize(function(){
+            $('.hasBottomButton>.scroll').css('transform',$scope.positionOrigin);
+        });*/
+
+        //方案4,也需要失去焦点事件
+        /*var timer, windowInnerHeight;
+        function eventCheck(e) {
+            if (e) { //blur,focus事件触发的
+                //$('#dv').html('android键盘' + (e.type == 'focus' ? '弹出' : '隐藏') + '--通过' + e.type + '事件');
+                if (e.type == 'focus') {//如果是点击事件启动计时器监控是否点击了键盘上的隐藏键盘按钮，没有点击这个按钮的事件可用，keydown中也获取不到keyCode值
+                    setTimeout(function () {//由于键盘弹出是有动画效果的，要获取完全弹出的窗口高度，使用了计时器
+                        windowInnerHeight = window.innerHeight;//获取弹出android软键盘后的窗口高度
+                        timer = setInterval(function () { eventCheck() }, 100);
+                    }, 500);
+                } else clearInterval(timer);
+
+            } else { //计时器执行的，需要判断窗口可视高度，如果改变说明android键盘隐藏了
+                if (window.innerHeight > windowInnerHeight) {
+                    alert(windowInnerHeight);
+                    $('.hasBottomButton>.scroll').css('transform',$scope.positionOrigin);
+                    clearInterval(timer);
+                    //$('#dv').html('android键盘隐藏--通过点击键盘隐藏按钮');
+                }
+            }
+        }
+        $('#big-textarea').focus(eventCheck).blur(eventCheck);*/
+
+
 
 
     });
