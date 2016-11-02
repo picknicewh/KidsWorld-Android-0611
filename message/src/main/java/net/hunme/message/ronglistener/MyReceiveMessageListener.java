@@ -72,8 +72,6 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
                         removeConveration(Conversation.ConversationType.GROUP,userId);
                     }
                 }
-
-
             }
             return true;
         }else {

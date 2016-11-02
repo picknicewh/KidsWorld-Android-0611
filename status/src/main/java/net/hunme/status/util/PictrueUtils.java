@@ -2,9 +2,12 @@ package net.hunme.status.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.util.G;
@@ -41,12 +44,16 @@ public class PictrueUtils implements View.OnClickListener {
         if(imageUrl.size()==1){
             //单张图片
             ImageView imageView=new ImageView(context);
+            RelativeLayout.LayoutParams pl =  setParam(context,imageUrl.get(0),imageView);
             ImageCache.imageLoader(imageUrl.get(0),imageView);
-            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(MAXIMAGESIZE,MAXIMAGESIZE);
+        //    imageView.setScaleType(ImageView.ScaleType.FIT_START);
+           // RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(MAXIMAGESIZE,MAXIMAGESIZE);
             imageView.setTag(0);
             imageView.setOnClickListener(this);
-            rlParams.addView(imageView,pl);
+            if (pl!=null){
+                rlParams.addView(imageView,pl);
+            }
+
         }else if(imageUrl.size()==3||imageUrl.size()==6){
 
             //3张或者6张图片
@@ -153,6 +160,33 @@ public class PictrueUtils implements View.OnClickListener {
             imagepath.add(path);
         }
         return imagepath;
+    }
 
+    /**
+     * 设置图片布局参数,根据不同长宽的图片不同的布局
+     * @param  url 图片的url
+     * @param  iv_image 图片控件
+     */
+    public static   RelativeLayout.LayoutParams setParam(Context context, String url, ImageView iv_image){
+        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(url);
+        if (bitmap!=null){
+            int imageWidth = bitmap.getWidth();
+            int imageHeight = bitmap.getHeight();
+            RelativeLayout.LayoutParams lp ;
+            int viewWidth = G.dp2px(context,180);
+            int viewHeight = G.dp2px(context,180);
+            if (imageHeight>imageWidth){
+                lp = new RelativeLayout.LayoutParams(viewWidth,viewHeight);
+                iv_image.setScaleType(ImageView.ScaleType.FIT_START);
+            }else if (imageHeight==imageWidth){
+                lp = new RelativeLayout.LayoutParams(viewWidth, viewWidth);
+                iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            }else {
+                lp = new RelativeLayout.LayoutParams(viewWidth,viewHeight*2/3);
+                iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            }
+            return  lp;
+        }
+        return  null;
     }
 }

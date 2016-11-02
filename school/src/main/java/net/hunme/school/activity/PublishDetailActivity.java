@@ -1,14 +1,9 @@
 package net.hunme.school.activity;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.image.ImageCache;
@@ -26,6 +21,7 @@ public class PublishDetailActivity extends BaseActivity {
     private TextView tv_content;
     private ImageView iv_image;
     private TextView tv_ptitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,75 +37,48 @@ public class PublishDetailActivity extends BaseActivity {
         setCententTitle("通知详情");
     }
 
-    private void initView(){
-        lv_holad = (ImageView)findViewById(R.id.lv_holad);
-        tv_title= (TextView) findViewById(R.id.tv_title);
-        tv_date= (TextView)findViewById(R.id.tv_date);
-        tv_content= (TextView)findViewById(R.id.tv_content);
-        iv_image = (ImageView)findViewById(R.id.iv_image);
-        tv_ptitle =(TextView) findViewById(R.id.tv_ptitle);
+    private void initView() {
+        lv_holad = (ImageView) findViewById(R.id.lv_holad);
+        tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_date = (TextView) findViewById(R.id.tv_date);
+        tv_content = (TextView) findViewById(R.id.tv_content);
+        iv_image = (ImageView) findViewById(R.id.iv_image);
+        tv_ptitle = (TextView) findViewById(R.id.tv_ptitle);
 
     }
 
-    private void initDate(){
-        final PublishVo vo= (PublishVo) getIntent().getSerializableExtra("publish");
-        ImageCache.imageLoader(vo.getImgUrl(),lv_holad);
-        if (G.isEmteny(vo.getImgUrl())){
+    private void initDate() {
+        final PublishVo vo = (PublishVo) getIntent().getSerializableExtra("publish");
+        ImageCache.imageLoader(vo.getImgUrl(), lv_holad);
+        if (G.isEmteny(vo.getImgUrl())) {
             lv_holad.setImageResource(R.mipmap.ic_headmaster);//校长的头像
-        }else {
-            ImageCache.imageLoader(vo.getImgUrl(),lv_holad);
+        } else {
+            ImageCache.imageLoader(vo.getImgUrl(), lv_holad);
         }
-        if (G.isEmteny(vo.getTsName())){
+        if (G.isEmteny(vo.getTsName())) {
             tv_title.setText("校长");
-        }else {
+        } else {
             tv_title.setText(vo.getTsName());
         }
-        if (vo.getMessageUrl()!=null&&vo.getMessageUrl().size()>0){
-            setParam (vo.getMessageUrl().get(0),iv_image);
-            ImageCache.imageLoader(vo.getMessageUrl().get(0),iv_image);
+        if (vo.getMessageUrl() != null && vo.getMessageUrl().size() > 0) {
+            G.setParam(this, vo.getMessageUrl().get(0), iv_image);
+            ImageCache.imageLoader(vo.getMessageUrl().get(0), iv_image);
             iv_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    PublishPhotoUtil.imageBrowernet(0, (ArrayList<String>) vo.getMessageUrl(),PublishDetailActivity.this);
+                    PublishPhotoUtil.imageBrowernet(0, (ArrayList<String>) vo.getMessageUrl(), PublishDetailActivity.this);
                 }
             });
         }
-        if (!G.isEmteny(vo.getTitle())){
+        if (!G.isEmteny(vo.getTitle())) {
             tv_ptitle.setText(vo.getTitle());
             tv_ptitle.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             tv_ptitle.setVisibility(View.GONE);
         }
-        tv_date.setText(vo.getDateTime().substring(0,11));
+        tv_date.setText(vo.getDateTime().substring(0, 11));
         tv_content.setText(vo.getMessage());
     }
-
-    /**
-     * 设置图片布局参数
-     * @param  url 图片的url
-     * @param  iv_image 图片控件
-     */
-    private void setParam(String  url,ImageView iv_image){
-        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(url);
-        if (bitmap!=null){
-            int imageWidth = bitmap.getWidth();
-            int imageHeight = bitmap.getHeight();
-            LinearLayout.LayoutParams lp ;
-            int viewWidth = G.dp2px(this,160);
-            int viewHeight = G.dp2px(this,160);
-            if (imageHeight>imageWidth){
-                lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,viewHeight*2);
-                iv_image.setScaleType(ImageView.ScaleType.FIT_START);
-            }else if (imageHeight==imageWidth){
-                lp = new LinearLayout.LayoutParams(viewWidth, viewWidth);
-                iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            }else {
-                lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,viewHeight);
-                iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            }
-
-            iv_image.setLayoutParams(lp);
-        }
-    }
-
 }
+
+

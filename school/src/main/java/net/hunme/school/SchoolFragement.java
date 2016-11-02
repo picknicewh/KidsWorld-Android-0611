@@ -127,6 +127,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             intent.putExtra("loadUrl",geturl());
             schoolDosDisappear(BroadcastConstant.MEDICINEDOS);
            /* if (UserMessage.getInstance(getActivity()).getType().equals("1")){
+                intent.setClass(getActivity(), MedicineListSActivity.class);
             }else {
                 intent.setClass(getActivity(), MedicineListTActivity.class);
                 //"http://192.168.1.171:8787/KidsWorld-Web

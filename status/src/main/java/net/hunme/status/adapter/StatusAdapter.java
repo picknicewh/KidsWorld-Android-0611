@@ -273,7 +273,6 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
     public void onError(String uri, String error) {
         Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
     }
-
     class ViewHold{
         CircleImageView cv_head ;//头像
         TextView tv_name; //姓名

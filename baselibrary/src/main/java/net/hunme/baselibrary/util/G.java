@@ -3,7 +3,6 @@ package net.hunme.baselibrary.util;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
@@ -13,16 +12,17 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * ================================================
@@ -253,5 +253,31 @@ public class G {
         public static boolean isUpadteContactHold = false;   //是否修改用户头像
     }
 
+    /**
+     * 设置图片布局参数,根据不同长度的图片不同的布局
+     * @param  url 图片的url
+     * @param  iv_image 图片控件
+     */
+    public static void setParam(Context context, String url, ImageView iv_image){
+        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(url);
+        if (bitmap!=null){
+            int imageWidth = bitmap.getWidth();
+            int imageHeight = bitmap.getHeight();
+            LinearLayout.LayoutParams lp ;
+            int viewWidth = G.dp2px(context,160);
+            int viewHeight = G.dp2px(context,160);
+            if (imageHeight>imageWidth){
+                lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,viewHeight*2);
+                iv_image.setScaleType(ImageView.ScaleType.FIT_START);
+            }else if (imageHeight==imageWidth){
+                lp = new LinearLayout.LayoutParams(viewWidth, viewWidth);
+                iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            }else {
+                lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,viewHeight);
+                iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            }
 
+            iv_image.setLayoutParams(lp);
+        }
+    }
 }
