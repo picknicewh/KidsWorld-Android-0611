@@ -31,10 +31,17 @@ angular.module('app.controllers')
 
 
         $scope.$on("$ionicView.beforeEnter",function(){
+            //友盟统计
+            MobclickAgent.onPageBegin('medicineEntrust');
 
             //获取数据
             getData();
 
+        });
+
+        $scope.$on('$ionicView.beforeLeave',function(){
+            //友盟统计
+            MobclickAgent.onPageEnd('medicineEntrust');
         });
 
 

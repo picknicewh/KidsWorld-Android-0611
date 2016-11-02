@@ -12,15 +12,32 @@ angular.module('app.controllers')
             //alert(new Date());
             $scope.param ={};
 
+            //友盟统计
+            MobclickAgent.onPageBegin('medicineEntrust');
+
              //alert(tsIdLogin);
             //$scope.param.selectedDate = new Date();
 
         });
 
+        $scope.$on('$ionicView.beforeLeave',function(){
+            //友盟统计
+            MobclickAgent.onPageEnd('medicineEntrust');
+        });
 
         $scope.$on('$ionicView.afterEnter',function(){
 
             //初始化日历
+            /*var outputDate = [];
+            var today = new Date();
+            var tempDay = {
+                'day':today.getDate(),
+                'month':today.getMonth(),
+                'year':today.getFullYear()
+            };
+
+            var dayNow = new Date(tempDay.year,tempDay.month,tempDay.day);*/
+
             var input1=document.getElementById('input1');
             var calendar1=new mCalendar({
                 //可选参数
@@ -30,10 +47,19 @@ angular.module('app.controllers')
                 'toBind':input1,//绑定触发日历的元素
                 'callback':function(){ //确定选择执行回调
 
+                    /*for(var t in this.outputDate){
+                        //字符串分割，取出年夜日，生成new Date(yyyy-mm-dd);
+                        var temp = new Date(this.outputDate[t]);
+                        console.log(temp);
+                       if(temp >= dayNow){
+                           outputDate.push(this.outputDate[t]);
+                       }
+                    }
+                    this.outputDate = outputDate.length == 1?outputDate:outputDate.sort().join(";   ");*/
+
+
                     //input1.setAttribute('value',this.outputDate);
                     input1.value = this.outputDate;
-                    //$scope.param.selectedDateShow = this.outputDate;
-                    //$scope.param.selectedDate = this.outputDate.length==1?this.outputDate:this.outputDate.replace(/\s/ig,'');//去掉所有空格
                     $scope.param.selectedDate = this.outputDate;
                     //alert(1);
                     //entrust_form.selectedDate.$error={};
@@ -133,6 +159,7 @@ angular.module('app.controllers')
             var hight=$('.InfDetContent.eduInf .InfDetContent').height()+60;
             var toUp = 'translate3d( 0px,-'+hight+'px,0 ) scale( 1 )';
             $('.InfDetContent.eduInf>.scroll').css('transform',toUp);*/
+
             $scope.positionOrigin = $('.hasBottomButton>.scroll').css('transform');
             //var hight=$('.hasBottomButton').height()+60;
             var toUp = 'translate3d( 0px,-300px,0 ) scale( 1 )';//60为虚拟键盘的高度

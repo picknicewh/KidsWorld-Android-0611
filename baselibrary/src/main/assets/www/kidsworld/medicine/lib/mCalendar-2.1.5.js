@@ -498,6 +498,7 @@ update:2016-01-25
 				};
 			};
 			this_.outputDate=outputDate.length==1?outputDate:outputDate.sort().join(";   ");
+			//this_.outputDate = outputDate;
 			if(this_.hasCallback){
 				(this_.callback)();
 			};

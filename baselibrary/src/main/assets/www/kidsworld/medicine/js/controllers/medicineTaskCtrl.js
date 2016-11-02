@@ -8,6 +8,9 @@ angular.module('app.controllers')
         //var tsIdLogin = "cea03c849fd542df8f69174f79072108";//测试
         $scope.$on('$ionicView.beforeEnter',function(){
 
+            //友盟统计
+            MobclickAgent.onPageBegin('medicineEntrust');
+
             $scope.medicineId = $stateParams["medicineId"];//获取页面传参
             $scope.status = $stateParams["status"];//0未喂药 1已喂药 2家长进入（无头像和按钮）
             $scope.item = [];
@@ -16,6 +19,13 @@ angular.module('app.controllers')
 
 
         });
+
+
+        $scope.$on('$ionicView.beforeLeave',function(){
+            //友盟统计
+            MobclickAgent.onPageEnd('medicineEntrust');
+        });
+
 
         //点击返回按钮，跳转到喂药列表页
         $scope.goBack = function(){

@@ -15,6 +15,9 @@ angular.module('app.controllers')
 
 
         $scope.$on("$ionicView.beforeEnter",function(){
+            //友盟统计
+            MobclickAgent.onPageBegin('medicineEntrust');
+
             $scope.item1 = [];
             $scope.item2 = [];
             $scope.loadState=0;
@@ -22,6 +25,11 @@ angular.module('app.controllers')
             //获取数据
             getData(pageNumber);
 
+        });
+
+        $scope.$on('$ionicView.beforeLeave',function(){
+            //友盟统计
+            MobclickAgent.onPageEnd('medicineEntrust');
         });
 
         //选项卡切换
