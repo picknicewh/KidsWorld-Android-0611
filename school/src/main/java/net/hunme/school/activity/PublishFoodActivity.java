@@ -132,6 +132,7 @@ public class PublishFoodActivity extends BaseFoodActivity {
             }
         }
     }
+
     /**
      * 发布食谱
      */
@@ -152,7 +153,6 @@ public class PublishFoodActivity extends BaseFoodActivity {
         params.put("type",type);
         params.put("title",et_food.getText().toString());
         Type type=new TypeToken<Result<String>>(){}.getType();
-
         List<File> list= BitmapCache.getFileList(itemList);
         OkHttps.sendPost(type, Apiurl.SCHOOL_PUBLISHCOOK,params,list,this);
         showLoadingDialog();
@@ -168,7 +168,7 @@ public class PublishFoodActivity extends BaseFoodActivity {
     }
     @Override
     public void onError(String uri, String error) {
+        stopLoadingDialog();
         Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
     }
-
 }

@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
-import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.contract.GroupDb;
 import net.hunme.baselibrary.contract.GroupsDbHelper;
 import net.hunme.baselibrary.mode.Result;
@@ -173,6 +172,7 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
                 case FLAG_REMOVE:
                     tv_message.setText("删除并退出后，将不再接收改群信息!");
                     removeMember(targetId,targetGroupId);
+                    removeConversation(targetGroupId);
                     break;
                 case FLAG_ADD:
                     tv_message.setText("确认添加成员？");
@@ -233,7 +233,6 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
         if (uri.contains(Apiurl.MESSAGE_EXIT_MEMBER)){
             result(date);
             if (flag==FLAG_REMOVE){
-                BaseLibrary.removeActivity();
                 context.finish();
             }else if (flag==FLAG_REMOVE_MEMBER){
                 context.finish();
@@ -245,7 +244,6 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
             result(date);
             context.finish();
         }else if (uri.contains(Apiurl.MESSAGE_DISSORE_GROUP)){
-            BaseLibrary.removeActivity();
             result(date);
             context.finish();
 

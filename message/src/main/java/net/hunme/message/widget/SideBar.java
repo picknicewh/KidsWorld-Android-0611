@@ -31,13 +31,16 @@ public class SideBar extends View {
 	private int choose = -1;// 选中
 	private Paint paint = new Paint();
 
+
 	private TextView mTextDialog;
 
 	public void setTextView(TextView mTextDialog) {
 		this.mTextDialog = mTextDialog;
 	}
 
-
+	public TextView getmTextDialog() {
+		return mTextDialog;
+	}
 	public SideBar(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}

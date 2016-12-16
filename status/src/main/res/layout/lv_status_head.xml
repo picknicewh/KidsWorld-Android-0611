@@ -25,7 +25,8 @@
             android:layout_marginLeft="@dimen/space_x2.5"
             android:textColor="@color/white"
             android:text="2两条消息"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
+            android:gravity="center"
             android:layout_height="wrap_content" />
         <ImageView
             android:layout_marginLeft="@dimen/space"

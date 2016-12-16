@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             getWindow().setStatusBarColor(color);
         }
     }
-
     private void initView(){
         ed_username= (EditText) findViewById(R.id.ed_username);
         ed_password= (EditText) findViewById(R.id.ed_password);
@@ -149,7 +148,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             UserAction.saveUserMessage(this,data.getName(),
                     data.getImg(),data.getClassName(),data.getSchoolName(),
-                    data.getRyId(),data.getTsId(),data.getType(),sex,data.getSignature());
+                    data.getRyId(),data.getTsId(),data.getType(),sex,data.getSignature(),data.getAccount_id());
             //如果网络连接时，连接融云
             if (G.isNetworkConnected(this)) {
                 BaseLibrary.connect(data.getRyId(), LoginActivity.this, data.getName(), data.getImg());

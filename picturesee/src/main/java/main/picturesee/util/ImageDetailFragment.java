@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public class ImageDetailFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mImageUrl = getArguments() != null ? getArguments().getString("url") : null;
+		Log.i("yyyyyy",mImageUrl);
 		source = getArguments() != null ? getArguments().getString("source") : null;
 	}
 
@@ -109,7 +111,7 @@ public class ImageDetailFragment extends Fragment {
 						default: message = "未知的错误";
 							break;
 					}
-					if (!G.isEmteny(message)){
+					if (!G.isEmteny(message) && getActivity()!=null){
 						Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 					}
 					progressBar.setVisibility(View.GONE);

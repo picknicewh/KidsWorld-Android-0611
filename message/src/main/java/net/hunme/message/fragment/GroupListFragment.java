@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import net.hunme.message.activity.ContractMemberActivity;
 import net.hunme.message.adapter.ClassAdapter;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;import java.util.List;
 import java.util.Map;
 
@@ -52,6 +54,7 @@ public class GroupListFragment extends BaseFragement implements OkHttpListener,V
     private ClassAdapter adapter;
     private SharedPreferences spf;
     private SharedPreferences.Editor editor;
+    private   List<GroupInfoVo> groupInfoVos;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_grouplist, null);
@@ -62,6 +65,8 @@ public class GroupListFragment extends BaseFragement implements OkHttpListener,V
        spf=getActivity().getSharedPreferences("name", Context.MODE_PRIVATE);
        editor=spf.edit();
        lv_class = $(view,R.id.lv_class);
+       groupInfoVos  = new ArrayList<>();
+       getClassinfor();
    }
     private void setlistview(final List<GroupInfoVo> groupJsons){
         adapter = new ClassAdapter(getActivity(),groupJsons);
@@ -97,12 +102,15 @@ public class GroupListFragment extends BaseFragement implements OkHttpListener,V
         });
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
-        getClassinfor();
+        if (groupInfoVos.size()>0){
+            getClassinfor();
+        }
+        Log.i("aaaaaaaa","===========onResume=============");
     }
-
     /**
      * 获取所有班级信息
      */
@@ -118,9 +126,9 @@ public class GroupListFragment extends BaseFragement implements OkHttpListener,V
     public void onSuccess(String uri, Object date) {
         Result<List<GroupInfoVo>> data = (Result<List<GroupInfoVo>>) date;
         if (data!=null){
-            List<GroupInfoVo> groupJsonList =data.getData();
-            if (groupJsonList!=null||groupJsonList.size()!=0){
-                setlistview(groupJsonList);
+             groupInfoVos =data.getData();
+            if (groupInfoVos!=null||groupInfoVos.size()!=0){
+                setlistview(groupInfoVos);
             }
         }
     }

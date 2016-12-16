@@ -78,18 +78,22 @@ public class FoodListActivity extends BaseFoodActivity   {
        tv_calendar= $(R.id.tv_calendar);
        lv_foodlist = $(R.id.lv_foodlist);
        tv_nodata = $(R.id.tv_nodata);
-       setDateView(dateView);
-       setRl_calendar(rl_calendar);
-       setTv_calendar(tv_calendar);
-       setFrom(FOODLISTPAGE);
+       initCalenderView();
        registerboradcast();
        rl_calendar.setOnClickListener(this);
        tv_calendar.setText(dateView.getDate());
        getCookBook(dateView.getFormatDate());
    }
-
+    private void initCalenderView(){
+        setDateView(dateView);
+        setRl_calendar(rl_calendar);
+        setTv_calendar(tv_calendar);
+        setFrom(FOODLISTPAGE);
+        tv_calendar.setText(dateView.getDate());
+    }
     @Override
     protected void onResume() {
+        initCalenderView();
         super.onResume();
         if (flag==1){
             getCookBook(dateView.getFormatDate());
@@ -137,8 +141,8 @@ public class FoodListActivity extends BaseFoodActivity   {
     }
 
     @Override
-    public void onSuccess(String uri, Object date) {
-        Result<CooikeVo> data = (Result<CooikeVo>) date;
+    public void onSuccess(final String uri, Object date) {
+        final Result<CooikeVo> data = (Result<CooikeVo>) date;
         if (data!=null){
             stopLoadingDialog();
             CooikeVo cooikeVo = data.getData();
@@ -154,11 +158,13 @@ public class FoodListActivity extends BaseFoodActivity   {
                 lv_foodlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        PublishPhotoUtil.imageBrowernet(0, (ArrayList<String>) dishesVos.get(position).getCookUrl(),FoodListActivity.this);
+                        List<String> urls = dishesVos.get(position).getCookUrl();
+                        if (urls!=null&& urls.size()>0){
+                            PublishPhotoUtil.imageBrowernet(0, (ArrayList<String>) dishesVos.get(position).getCookUrl(),FoodListActivity.this);
+                        }
                     }
                 });
             }
-
         }
     }
     public void registerboradcast(){
@@ -178,6 +184,7 @@ public class FoodListActivity extends BaseFoodActivity   {
     }
     @Override
     public void onError(String uri, String error) {
+        stopLoadingDialog();
         Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
     }
 

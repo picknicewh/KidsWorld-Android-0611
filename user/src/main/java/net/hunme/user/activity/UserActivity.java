@@ -7,9 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseActivity;
-import net.hunme.baselibrary.cordova.HMDroidGap;
 import net.hunme.baselibrary.image.ImageCache;
-import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
@@ -30,6 +28,8 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout ll_usersetting;   //用户设置
     private LinearLayout ll_mycollection;  //我的收藏
     private LinearLayout ll_mydynamics;    //我的动态
+    private LinearLayout ll_copy_right;   //版权声明
+    private LinearLayout ll_anchor;      //主播认证
     private CircleImageView cv_portrait;
     private TextView tv_id;
     private TextView tv_name;
@@ -54,6 +54,14 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
             }
         });
         setCententTitle("我的");
+       setRightImage(R.mipmap.ic_scan);
+        setRightOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  = new Intent(UserActivity.this,ScanActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initView(){
@@ -62,6 +70,8 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
         ll_usersetting=$(R.id.ll_usersetting);
         ll_mycollection=$(R.id.ll_mycollection);
         ll_mydynamics=$(R.id.ll_mydynamics);
+        ll_copy_right=$(R.id.ll_copyRight);
+        ll_anchor=$(R.id.ll_anchor);
         cv_portrait=$(R.id.cv_portrait);
         tv_id=$(R.id.tv_id);
         tv_name=$(R.id.tv_name);
@@ -71,6 +81,8 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
         ll_usersetting.setOnClickListener(this);
         ll_mycollection.setOnClickListener(this);
         ll_mydynamics.setOnClickListener(this);
+        ll_anchor.setOnClickListener(this);
+        ll_copy_right.setOnClickListener(this);
     }
 
     private void initData(){
@@ -106,20 +118,27 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
         Intent intent=null;
         if(viewId==R.id.ll_userMassage){
             intent=new Intent(UserActivity.this,UMassageActivity.class);
-
         }else if(viewId==R.id.ll_usersetting){
             intent=new Intent(UserActivity.this,USettingActivity.class);
         }else if(viewId==R.id.ll_myphoto){
             intent=new Intent(UserActivity.this,UPhotoActivity.class);
         }else if(viewId==R.id.ll_mycollection){
-            intent=new Intent(UserActivity.this,HMDroidGap.class);
+          /*  intent=new Intent(UserActivity.this,HMDroidGap.class);
             intent.putExtra("loadUrl", Apiurl.MYCOLLECTION+"?tsId="+UserMessage.getInstance(this).getTsId()+"#/collect");
-            intent.putExtra("title","我的收藏");
+            intent.putExtra("title","我的收藏");*/
+             intent=new Intent(UserActivity.this,CollectActivity.class);
+            intent.putExtra("source",0);
         }else if(viewId==R.id.ll_mydynamics){
          /*   intent=new Intent(UserActivity.this,HMDroidGap.class);
             intent.putExtra("loadUrl",Apiurl.MYDYNAMICS+"?tsId="+UserMessage.getInstance(this).getTsId());
             intent.putExtra("title","我的动态");*/
             intent=new Intent(UserActivity.this,MyDynamicActivity.class);
+        }else if (viewId==R.id.ll_anchor){
+            intent=new Intent(UserActivity.this,TextContentActivity.class);
+            intent.putExtra("source",0);
+        }else if (viewId==R.id.ll_copyRight){
+            intent=new Intent(UserActivity.this,TextContentActivity.class);
+            intent.putExtra("source",1);
         }
         if(null!=intent){
             startActivity(intent);

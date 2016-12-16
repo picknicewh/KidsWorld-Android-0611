@@ -87,6 +87,7 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
     private ScrollView scrollView;
     private TextView tv_praise_num;
     private TextView tv_comment_num;
+    private TextView tv_delete_content;
     private TextView tv_delete;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +115,9 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
         scrollView= (ScrollView) findViewById(R.id.scrollView);
         tv_praise_num= (TextView) findViewById(R.id.tv_praise_num);
         tv_comment_num= (TextView) findViewById(R.id.tv_comment_num);
+        tv_delete_content = (TextView)findViewById(R.id.tv_delete_content);
         tv_delete = (TextView)findViewById(R.id.tv_delete);
+        tv_delete.setVisibility(View.GONE);
     }
 
     @Override
@@ -144,7 +147,6 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
             tv_id.setBackgroundResource(R.drawable.user_teach_selecter);
         }
     }
-
     @Override
     public void setContent(String content) {
         tv_content.setText(content);
@@ -152,7 +154,13 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
 
     @Override
     public void setTime(String time) {
+    /*    if (time.length()>10){
+            tv_time.setText(time.substring(0,10));
+        }else {
+
+        }*/
         tv_time.setText(time);
+
     }
 
     private void onClickPraise() {
@@ -173,6 +181,12 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
 
     private void onClickComment() {
         iv_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopWindow(view,null);
+            }
+        });
+        tv_comment_num.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showPopWindow(view,null);
@@ -250,7 +264,7 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
         popWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
         final View conentView= popWindow.getView();
         final EditText td_commnet= (EditText) conentView.findViewById(R.id.et_comment);
-        Button b_comment= (Button) conentView.findViewById(R.id.b_comment);
+        TextView b_comment= (TextView) conentView.findViewById(R.id.b_comment);
         final String rewtype;
         final String rewtsId;
         if(null==bean){
@@ -318,10 +332,10 @@ public class StatusDetilsActivity extends BaseActivity implements StatusDetilsCo
     @Override
     public void setDeleteView(boolean isDelete) {
         if (isDelete){
-            tv_delete.setVisibility(View.VISIBLE);
+            tv_delete_content.setVisibility(View.VISIBLE);
             scrollView.setVisibility(View.GONE);
         }else {
-            tv_delete.setVisibility(View.GONE);
+            tv_delete_content.setVisibility(View.GONE);
             scrollView.setVisibility(View.VISIBLE);
         }
     }

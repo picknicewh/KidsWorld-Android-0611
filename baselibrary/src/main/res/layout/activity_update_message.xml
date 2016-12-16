@@ -9,11 +9,13 @@
         android:id="@+id/tv_type"
         android:textSize="@dimen/ts_x_large"
         android:layout_margin="@dimen/space_x2"
+        android:textColor="@color/minor_text"
         android:text="我们将发送短信验证码到你的手机"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
+        android:textColor="@color/minor_text"
         android:layout_marginLeft="@dimen/space_x2"
         android:text="+86 13735484622"
         android:id="@+id/tv_cp_number"
@@ -35,8 +37,9 @@
         android:id="@+id/et_heckNumber"
         android:layout_width="0dp"
         android:hint="请输入你的验证码"
+        android:textColor="@color/minor_text"
         android:inputType="phone"
-        android:textColorHint="@color/pgrey"
+        android:textColorHint="@color/minor_text"
         android:layout_gravity="center"
         android:layout_height="wrap_content" />
         <Button
@@ -45,6 +48,7 @@
            android:layout_marginTop="@dimen/space"
             android:background="@drawable/conform_selecter"
             android:text="获取验证码"
+
             android:textSize="@dimen/ts_x_large"
             android:textColor="@color/white"
             android:layout_width="0dp"
@@ -58,8 +62,9 @@
         android:layout_marginRight="@dimen/space_x2"
         android:padding="@dimen/space_x1.5"
         android:layout_width="match_parent"
-        android:hint="请输入你的密码"
-        android:textColorHint="@color/pgrey"
+        android:hint="请输入你的新密码"
+        android:textColor="@color/minor_text"
+        android:textColorHint="@color/minor_text"
         android:layout_gravity="center"
         android:layout_height="wrap_content" />
 
@@ -80,7 +85,7 @@
         android:gravity="center"
         android:layout_marginTop="@dimen/space_x0.5"
         android:text="获取验证码"
-        android:textColor="@color/main_green"
+        android:textColor="@color/theme_green"
         android:id="@+id/tv_time"
         android:layout_width="match_parent"
         android:textSize="@dimen/ts_x_large"

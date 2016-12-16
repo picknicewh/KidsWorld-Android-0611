@@ -68,10 +68,10 @@ public class LeaveListAdapter extends BaseAdapter {
             viewHold.tv_read.setVisibility(View.VISIBLE);
             if (vo.getStatus()==2){
                 viewHold.tv_read.setBackgroundColor(context.getResources().getColor(R.color.noread_grey));
-                viewHold.tv_read.setText("已阅");
+                viewHold.tv_read.setText("已读");
             }else if (vo.getStatus()==1){
                 viewHold.tv_read.setBackgroundColor(context.getResources().getColor(R.color.main_green));
-                viewHold.tv_read.setText("未阅");
+                viewHold.tv_read.setText("未读");
             }
             viewHold.ll_name.setVisibility(View.GONE);
         }else {

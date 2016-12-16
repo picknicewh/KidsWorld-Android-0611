@@ -84,7 +84,7 @@ public class GetContractData implements OkHttpListener {
                         return userInfo;
                     }
                   }, true);
-                  if (image!=null && ryid!=null && userName!=null){
+                  if (!G.isEmteny(image) && !G.isEmteny(ryid) && !G.isEmteny(userName)){
                      RongIM.getInstance().refreshUserInfoCache(new UserInfo(ryid, userName, Uri.parse(image)));
                   }
              }

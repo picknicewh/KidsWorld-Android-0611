@@ -1,6 +1,7 @@
 package net.hunme.kidsworld.util;
 
 import android.app.Application;
+import android.util.Log;
 
 import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.util.G;
@@ -50,7 +51,9 @@ public class HunmeApplication extends Application {
 
     @Override
     public void onTerminate() {
+        Log.i("RRRRR","====================onTerminate=======================");
         G.clearWebViewCache(this);
         super.onTerminate();
     }
+
 }

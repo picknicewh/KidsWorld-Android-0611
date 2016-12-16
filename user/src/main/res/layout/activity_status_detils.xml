@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context=".activity.StatusDetilsActivity">
     <TextView
-        android:id="@+id/tv_delete"
+        android:id="@+id/tv_delete_content"
         android:visibility="gone"
         android:gravity="center"
         android:layout_gravity="center"
         android:text="该动态已被删除"
         android:textSize="@dimen/ts_large"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <ScrollView

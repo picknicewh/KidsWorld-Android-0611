@@ -22,7 +22,6 @@ public class LoadingDialog extends Dialog {
     public LoadingDialog(Context context) {
         super(context);
     }
-
     public LoadingDialog(Context context, int themeResId) {
         super(context, themeResId);
     }
@@ -31,7 +30,7 @@ public class LoadingDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_loading);
         this.setCancelable(false);
-        LinearLayout linearLayout = (LinearLayout)this.findViewById(R.id.LinearLayout);
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.Ll_loading);
         tv_prompt= (TextView) this.findViewById(R.id.tv_prompt);
         linearLayout.getBackground().setAlpha(210);
     }

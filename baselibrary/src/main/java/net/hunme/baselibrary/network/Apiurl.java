@@ -191,6 +191,7 @@ public class Apiurl {
      */
     public static  final String  STATUSINFO = "/dynamics/getDynamicLittleWindow.do";
     //=========================登录==============================
+    public static final String GETISPLAY="/app/isPay";
     /**
      * 用户登录
      */
@@ -199,4 +200,57 @@ public class Apiurl {
      * 用户身份选择
      */
     public static final String SELECTUSER="/app/selectUser.do";
+    /**
+     * 扫描二维码登录
+     */
+
+    public static final String SCANLOGIN = "/app/qRCodeLogin.do";
+    /**
+     * 二次确认
+     */
+    public static final String CONFIRMCODELOGIN="/app/qRCodeConfirmLogin.do";
+    /**
+     * 获取二维码
+     */
+    public static final String CETQRCODE = "/app/getQRCode.do";
+
+    public static final String USER_GETRECOMMENDLIST = "/rakuen/getRecommenda.do";
+    //=========================乐园================================
+    /**
+     * 获取banner图
+     */
+    public static final String GETBANNERLIST = "/rakuen/getBanner.do";
+    /**
+     * 获取推荐列表
+     */
+    public static final String GETRECOMMENDLIST = "/rakuen/getRecommenda.do";
+    /**
+     * 获取全部推荐列表
+     */
+    public static final String GETALLRECOMMENDLIST = "/rakuen/getIndexAllRecommenda.do";
+
+    /**
+     * 获取某个专辑下的资源列表
+     */
+    public static final String USER_GETTHENELIST = "/rakuen/getCompilationsAllResource.do";
+    /**
+     * 获取某个资源具体信息
+     */
+    public static final String USER_GETSOURCEDETAIL = "/rakuen/getResourceDetail.do";
+    /**
+     * 收藏音乐专辑
+     */
+    public static final String SUBATTENTION = "/rakuen/saveResourceFavorites.do";
+    /**
+     * 获取收藏列表
+     */
+    public static final String GETATTENTIONLIST = "/rakuen/getResourceFavorites.do";
+    /**
+     *保存播放记录
+     */
+    public static final String SAVEPLAYRECORDING = "/rakuen/savePlayTheRecording.do";
+    /**
+     * 获取播放记录
+     */
+    public static final String GETPLAYRECORDING = "/rakuen/getResourcePlayRecordedCommand.do";
 }

@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     android:background="@color/bg_layout"
     tools:context="net.hunme.user.activity.SystemInfoActivity">
+    <TextView
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:text="暂无数据"
+        android:id="@+id/tv_nodata"
+        android:textSize="@dimen/ts_large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <ListView
         android:id="@+id/lv_systeminfo"
         android:layout_width="match_parent"

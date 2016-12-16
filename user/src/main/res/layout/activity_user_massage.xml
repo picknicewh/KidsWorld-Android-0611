@@ -51,10 +51,12 @@
             android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
+                android:paddingTop="@dimen/space_x0.5"
+                android:paddingBottom="@dimen/space_x0.5"
                 style="@style/TextStyleBase"
                 android:layout_gravity="center"
                 android:layout_width="0dp"
@@ -63,6 +65,8 @@
                 android:text="姓名"/>
 
             <TextView
+                android:paddingTop="@dimen/space_x0.5"
+                android:paddingBottom="@dimen/space_x0.5"
                 android:id="@+id/tv_name"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -80,10 +84,12 @@
             android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
+                android:paddingTop="@dimen/space_x0.5"
+                android:paddingBottom="@dimen/space_x0.5"
                 android:layout_gravity="center"
                 style="@style/TextStyleBase"
                 android:layout_width="0dp"
@@ -92,6 +98,8 @@
                 android:text="性别"/>
 
             <TextView
+                android:paddingTop="@dimen/space_x0.5"
+                android:paddingBottom="@dimen/space_x0.5"
                 android:id="@+id/tv_sex"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -110,27 +118,31 @@
             android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
+                android:paddingTop="@dimen/space_x0.5"
+                android:paddingBottom="@dimen/space_x0.5"
                 android:layout_gravity="center"
                 style="@style/TextStyleBase"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="签名"/>
 
             <TextView
-                android:layout_marginRight="@dimen/space"
-                android:id="@+id/tv_sign"
+                android:paddingTop="@dimen/space_x0.5"
+                android:paddingBottom="@dimen/space_x0.5"
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:gravity="right"
+                android:id="@+id/tv_sign"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="还没有想好啊"/>
+                android:text="你还没有设置签名哦"/>
 
             <ImageView
-                android:layout_gravity="center"
+                android:gravity="right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_arrow_right"/>
@@ -175,7 +187,7 @@
             android:background="@drawable/layout_select_not_line"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView

@@ -6,12 +6,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
+import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.EncryptUtil;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.LoadingDialog;
@@ -19,7 +22,10 @@ import net.hunme.login.mode.CharacterSeleteVo;
 import net.hunme.login.util.UserAction;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserChooseActivity extends BaseActivity implements OkHttpListener {
     private ListView lv_user_choose;
@@ -38,11 +44,16 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
     }
 
     private void initView(){
-        um=UserMessage.getInstance(this);
+         um=UserMessage.getInstance(this);
+         seleteList =  new ArrayList<>();
+         lv_user_choose=$(R.id.lv_user_choose);
+         getSleletList();
         //拿到用户信息再次解析
-        Type type =new TypeToken<List<CharacterSeleteVo>>(){}.getType();
+       /* Type type =new TypeToken<List<CharacterSeleteVo>>(){}.getType();
         seleteList= new Gson().fromJson(um.getUserMessageJsonCache(),type);
-        lv_user_choose=$(R.id.lv_user_choose);
+       */
+    }
+    private void setListView(final List<CharacterSeleteVo> seleteList){
         if (seleteList.size()!=0){
             adapter=new UserChooseAdapter(this,seleteList);
             lv_user_choose.setAdapter(adapter);
@@ -67,7 +78,13 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
             }
         }
     }
-
+    private void getSleletList(){
+        Map<String,Object> map=new HashMap<>();
+        map.put("accountId",um.getLoginName());
+        map.put("password", EncryptUtil.getBase64(um.getPassword()+"hunme"+(int)(Math.random()*900)+100));
+        Type type =new TypeToken<Result<List<CharacterSeleteVo>>>(){}.getType();
+        OkHttps.sendPost(type, Apiurl.APPLOGIN,map,this);
+    }
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
@@ -89,27 +106,36 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
 
     @Override
     public void onSuccess(String uri, Object date) {
-        dialog.dismiss();
-        String sex;
-        if(data.getSex()==1){
-            sex="男";
-        }else{
-            sex="女";
+        if (Apiurl.APPLOGIN.equals(uri)){
+            Result<List<CharacterSeleteVo>> result= (Result<List<CharacterSeleteVo>>) date;
+            seleteList=result.getData();
+            setListView(seleteList);
+        }else {
+            dialog.dismiss();
+            String sex;
+            if(data.getSex()==1){
+                sex="男";
+            }else{
+                sex="女";
+            }
+            //通过用户选择身份保存用户信息
+            UserAction.saveUserMessage(UserChooseActivity.this,data.getName(),
+                    data.getImg(),data.getClassName(),data.getSchoolName(),
+                    data.getRyId(),data.getTsId(),data.getType(),sex,data.getSignature(),data.getAccount_id());
+            //与融云进行连接
+            String image = data.getImg();
+            if (image==null){
+                image = "http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png";
+            }
+            BaseLibrary.connect(data.getRyId(),UserChooseActivity.this,data.getName(),image);
+            G.KisTyep.isChooseId=true;
+           //  flag=1;
+            //更新主界面
+          //  G.runshMian(true,this);
+            UserAction.goMainActivity(this);
+            finish();
         }
-        //通过用户选择身份保存用户信息
-        UserAction.saveUserMessage(UserChooseActivity.this,data.getName(),
-                data.getImg(),data.getClassName(),data.getSchoolName(),
-                data.getRyId(),data.getTsId(),data.getType(),sex,data.getSignature());
-        //与融云进行连接
-        String image = data.getImg();
-        if (image==null){
-            image = "http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png";
-        }
-        BaseLibrary.connect(data.getRyId(),UserChooseActivity.this,data.getName(),image);
-        G.KisTyep.isChooseId=true;
-        flag=1;
-        UserAction.goMainActivity(this);
-        finish();
+
     }
 
     @Override

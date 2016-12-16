@@ -6,8 +6,7 @@
     android:layout_height="74dp"
     android:paddingTop="24dp"
     app:title=" "
-    app:navigationIcon="@mipmap/ic_arrow_lift"
-    android:background="@color/colorAccent">
+    app:navigationIcon="@mipmap/ic_arrow_lift">
 
     <ImageView
         android:visibility="gone"

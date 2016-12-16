@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.util.G;
 
@@ -50,7 +48,9 @@ public class PictrueUtils implements View.OnClickListener {
            // RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(MAXIMAGESIZE,MAXIMAGESIZE);
             imageView.setTag(0);
             imageView.setOnClickListener(this);
-            rlParams.addView(imageView,pl);
+            if (pl!=null){
+                rlParams.addView(imageView,pl);
+            }
         }else if(imageUrl.size()==3||imageUrl.size()==6){
 
             //3张或者6张图片
@@ -152,9 +152,8 @@ public class PictrueUtils implements View.OnClickListener {
         ArrayList<String> imagepath = new ArrayList<>();
         for (int i = 0 ; i<itemList.size();i++){
             String pathurl = itemList.get(i);
-            int index = itemList.get(i).lastIndexOf("/");
-            String path = pathurl.substring(0,index-2)+pathurl.substring(index,pathurl.length());
-            imagepath.add(path);
+            pathurl = pathurl.replace("/s","");
+            imagepath.add(pathurl);
         }
         return imagepath;
     }
@@ -165,7 +164,7 @@ public class PictrueUtils implements View.OnClickListener {
      * @param  iv_image 图片控件
      */
     public static   RelativeLayout.LayoutParams setParam(Context context, String url, ImageView iv_image){
-        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(url);
+        Bitmap bitmap = ImageCache.getBitmap(url);
         if (bitmap!=null){
             int imageWidth = bitmap.getWidth();
             int imageHeight = bitmap.getHeight();

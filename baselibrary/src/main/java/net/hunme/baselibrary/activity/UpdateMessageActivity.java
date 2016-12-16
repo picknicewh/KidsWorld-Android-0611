@@ -179,6 +179,7 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
         map.put("phone",um.getLoginName());
         Type mtype=new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(mtype,UPDATEPHONE,map,this);
+
     }
 
     @Override

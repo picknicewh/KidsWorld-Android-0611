@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 
+import net.hunme.discovery.activity.MainDiscoveryActivity;
+
 import main.jpushlibrary.JPush.JPushBaseActivity;
 
 public class StartActivity extends JPushBaseActivity {
@@ -16,10 +18,10 @@ public class StartActivity extends JPushBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         initWindow();
-       new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
            @Override
            public void run() {
-               startActivity(new Intent(StartActivity.this,MainActivity.class));
+               startActivity(new Intent(StartActivity.this, MainActivity.class));
                finish();
            }
        },1000);
@@ -35,4 +37,5 @@ public class StartActivity extends JPushBaseActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
+
 }

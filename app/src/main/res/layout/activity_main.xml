@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/main_green"
                 android:textSize="@dimen/ts_small"
                 android:id="@+id/tv_discovery"
                 android:text="乐园"
@@ -88,6 +88,7 @@
                 android:textSize="@dimen/ts_small"
                 android:id="@+id/tv_school"
                 android:text="园所"
+                android:textColor="@color/main_text_grey"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -122,6 +123,7 @@
             <TextView
                 android:id="@+id/tv_status"
                 android:text="动态"
+                android:textColor="@color/main_text_grey"
                 android:textSize="@dimen/ts_small"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -157,6 +159,7 @@
                 android:textSize="@dimen/ts_small"
                 android:id="@+id/tv_message"
                 android:text="通讯"
+                android:textColor="@color/main_text_grey"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

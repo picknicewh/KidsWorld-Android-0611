@@ -145,7 +145,7 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
         Map<String,Object> params = new HashMap<>();
         params.put("tsId", UserMessage.getInstance(this).getTsId());
         params.put("pageNumber",count);
-        params.put("pageSize",2);
+        params.put("pageSize",10);
         Type type = new TypeToken<Result<List<SyllabusVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.SCHOOL_GETSYLLABUSLISTS,params,this);
       if (G.isNetworkConnected(this)){
@@ -189,6 +189,7 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
                 dispalynonet(false);
                 adapter.notifyDataSetChanged();
             }
+            refresh_view.setLv_count(syllabusVoList.size());
         }
     }
     /**
@@ -206,6 +207,7 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
     }
     @Override
     public void onError(String uri, String error) {
+        stopLoadingDialog();
         rl_nonetwork.setVisibility(View.VISIBLE);
         Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
     }
@@ -221,7 +223,7 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
                      getArrange(count);
                      pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                  }
-             }.sendEmptyMessageDelayed(0,1000);
+             }.sendEmptyMessageDelayed(0,500);
          }
 
          @Override
@@ -234,7 +236,7 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
                      getArrange(count);
                      pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                  }
-             }.sendEmptyMessageDelayed(0,1000);
+             }.sendEmptyMessageDelayed(0,500);
 
          }
      }

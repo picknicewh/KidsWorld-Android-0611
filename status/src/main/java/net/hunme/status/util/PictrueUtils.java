@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.util.G;
 
@@ -46,8 +44,6 @@ public class PictrueUtils implements View.OnClickListener {
             ImageView imageView=new ImageView(context);
             RelativeLayout.LayoutParams pl =  setParam(context,imageUrl.get(0),imageView);
             ImageCache.imageLoader(imageUrl.get(0),imageView);
-        //    imageView.setScaleType(ImageView.ScaleType.FIT_START);
-           // RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(MAXIMAGESIZE,MAXIMAGESIZE);
             imageView.setTag(0);
             imageView.setOnClickListener(this);
             if (pl!=null){
@@ -55,7 +51,6 @@ public class PictrueUtils implements View.OnClickListener {
             }
 
         }else if(imageUrl.size()==3||imageUrl.size()==6){
-
             //3张或者6张图片
             for (int i=0;i<imageUrl.size();i++){
                 ImageView imageView=new ImageView(context);
@@ -144,10 +139,19 @@ public class PictrueUtils implements View.OnClickListener {
     public void onClick(View view) {
         Intent intent = new Intent(context, ImagePagerActivity.class);
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,getimagepath(imageUrl));
-        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX,(int)view.getTag());
+        int index;
+        try{
+             index = Integer.parseInt(String.valueOf(view.getTag()));
+        }catch (Exception e){
+             index=0;
+        }
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX,index);
         intent.putExtra("source","net");
         context.startActivity(intent);
     }
+    /**
+     * 把缩略图转换成为原图
+     */
     /**
      * 把缩略图转换成为原图
      */
@@ -155,9 +159,8 @@ public class PictrueUtils implements View.OnClickListener {
         ArrayList<String> imagepath = new ArrayList<>();
         for (int i = 0 ; i<itemList.size();i++){
             String pathurl = itemList.get(i);
-            int index = itemList.get(i).lastIndexOf("/");
-            String path = pathurl.substring(0,index-2)+pathurl.substring(index,pathurl.length());
-            imagepath.add(path);
+            pathurl = pathurl.replace("/s","");
+            imagepath.add(pathurl);
         }
         return imagepath;
     }
@@ -168,7 +171,8 @@ public class PictrueUtils implements View.OnClickListener {
      * @param  iv_image 图片控件
      */
     public static   RelativeLayout.LayoutParams setParam(Context context, String url, ImageView iv_image){
-        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(url);
+
+        Bitmap bitmap =ImageCache.getBitmap(url);
         if (bitmap!=null){
             int imageWidth = bitmap.getWidth();
             int imageHeight = bitmap.getHeight();

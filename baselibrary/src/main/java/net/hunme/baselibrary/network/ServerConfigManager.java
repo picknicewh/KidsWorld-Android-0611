@@ -24,9 +24,9 @@ public class ServerConfigManager {
 	 * 主服务器地址
 	 */
 	public static final String SERVER_IP = "http://zhu.hunme.net:8080/KidsWorld";//测试服
-    //public static final String SERVER_IP = "http://192.168.1.200:8080/KidsWorld"; //胡诗昊
+   // public static final String SERVER_IP = "http://192.168.1.200:8080/KidsWorld"; //胡诗昊
 //  public static final String SERVER_IP = "http://192.168.1.108:8080/KidsWorld";  //匡军虹
-   //public static final String SERVER_IP = "https://eduslb.openhunme.com/KidsWorld"; //正式服
+   // public static final String SERVER_IP = "https://eduslb.openhunme.com/KidsWorld"; //正式服
     public static final String WEB_IP = "file:///android_asset/www/kidsworld"; //web本地绝对路径
 //	public static final String WEB_IP = "http://192.168.5.136:8989/webSVN/kidsWorld";//汪建波
 

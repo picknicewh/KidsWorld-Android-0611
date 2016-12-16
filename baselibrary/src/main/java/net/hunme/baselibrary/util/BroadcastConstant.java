@@ -38,6 +38,10 @@ public class BroadcastConstant {
      */
     public static  final String  MAINSTATUSDOS = " net.hunme.kidsworld.MyStatusDosShowReceiver";
     /**
+     *刷新主页
+     */
+    public static  final String  RUSHMIANA = " net.hunme.kidsworld.RUSHMAIN";
+    /**
      *主页学校的红点广播
      */
     public static  final String  MAINSCHOOLDOS = " net.hunme.kidsworld.MySchoolDosShowReceiver";

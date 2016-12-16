@@ -68,7 +68,7 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
     }
     private void initview(){
         lv_dynamic = $(R.id.lv_dynamic);
-        refresh_view = $(R.id.refresh_view);
+        refresh_view = $(R.id.refresview);
         rl_nonetwork = $(R.id.rl_nonetwork);
         tv_nodata = $(R.id.tv_nodata);
         dynamicInfoVoList = new ArrayList<>();
@@ -136,6 +136,7 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
                     adapter.setData(dynamicInfoVoList);
                     adapter.notifyDataSetChanged();
                 }
+                refresh_view.setLv_count(dynamicInfoVoList.size());
             }
         }
     }
@@ -156,7 +157,7 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
                 pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
 
             }
-        }.sendEmptyMessageDelayed(0,1000);
+        }.sendEmptyMessageDelayed(0,500);
     }
 
     @Override
@@ -168,7 +169,7 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
                 getMyDynamic(pageNumber,10);
                 pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
             }
-        }.sendEmptyMessageDelayed(0,1000);
+        }.sendEmptyMessageDelayed(0,500);
     }
 
     @Override

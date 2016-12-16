@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rb_music"
+            style="@style/rb_feed_s"
+            android:checked="true"
+            android:text="幼儿听听" />
+
+        <RadioButton
+            android:id="@+id/rb_lesson"
+            style="@style/rb_feed_s"
+            android:text="幼儿课堂" />
+
+        <RadioButton
+            android:id="@+id/rb_consult"
+            style="@style/rb_feed_s"
+            android:text="教育资讯" />
+    </RadioGroup>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <View
+            android:id="@+id/v_music"
+            style="@style/tab_line"
+            android:background="@color/main_text_green" />
+        <View
+            android:id="@+id/v_lesson"
+            style="@style/tab_line" />
+        <View
+            android:id="@+id/v_consult"
+            style="@style/tab_line" />
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_collect"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

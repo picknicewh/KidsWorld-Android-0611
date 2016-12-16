@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
-import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
@@ -43,7 +42,7 @@ public class GroupMemberDetailActivity extends BaseActivity implements OkHttpLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_member_detail);
-        BaseLibrary.addPartActivity(this);
+
         gv_memberDetail = $(R.id.gv_memberdetail);
         targetGroupId = getIntent().getStringExtra("targetGroupId");
         targetGroupName = getIntent().getStringExtra("targetGroupName");

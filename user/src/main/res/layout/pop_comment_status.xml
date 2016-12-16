@@ -4,7 +4,8 @@
     android:padding="@dimen/space_x0.5"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
     <ImageView
         android:visibility="gone"
         android:layout_gravity="center"
@@ -17,14 +18,28 @@
         android:id="@+id/et_comment"
         android:layout_gravity="center"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_et_comment"
+        android:hint="来说一句吧..."
+        android:textColorHint="@color/minor_text"
+        android:textColor="@color/theme_text"
+        android:paddingLeft="@dimen/space_x0.5"
         android:layout_weight="1"/>
-    <Button
-        android:id="@+id/b_comment"
-        android:layout_gravity="center"
+    <!--<ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar" />-->
+
+    <TextView
+        android:id="@+id/b_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="评论"
+        android:paddingLeft="@dimen/space_x1.5"
+        android:paddingRight="@dimen/space_x1.5"
+        android:paddingTop="@dimen/space"
+        android:paddingBottom="@dimen/space"
         android:textColor="@color/white"
         android:background="@drawable/conform_selecter"/>
 </LinearLayout>

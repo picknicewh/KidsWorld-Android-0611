@@ -11,6 +11,7 @@ import java.util.List;
  * 主要接口：
  */
 public class MedicineVo{
+
     /**
      * 角色ID
      */

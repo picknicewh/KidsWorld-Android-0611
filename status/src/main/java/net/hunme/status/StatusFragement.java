@@ -193,12 +193,6 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         LinearLayout  ll_message_infor= (LinearLayout) layout_head.findViewById(R.id.ll_message);
         iv_head = $(ll_message_infor,R.id.iv_head);
         tv_message = $(ll_message_infor,R.id.tv_message_text);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        int margin = G.dp2px(getActivity(),20);
-        params.setMargins(margin,margin,margin,margin);
-        params.gravity = Gravity.CENTER;
-       // ll_message_infor.setLayoutParams(params);
         ll_message_infor.setOnClickListener(this);
     }
     /**
@@ -208,7 +202,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
     public void setPosition(int position){
         this.position = position;
         statusVoList.clear();
-        loadDDynamicList(position,10,1);
+        loadDDynamicList(position,20,1);
     }
     /**
      * 获取动态列表
@@ -292,7 +286,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         if(G.KisTyep.isReleaseSuccess) {
             G.KisTyep.isReleaseSuccess = false;
             statusVoList.clear();
-            loadDDynamicList(position,10,1);
+            loadDDynamicList(position,20,1);
         }
         // 动态发生改变 刷新数据
         if(G.KisTyep.isUpdateComment){
@@ -331,7 +325,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
                     classlist.add(d.getGroupName());
                 }
                 popWindow = new ChooseClassPopWindow(this, classlist);
-                loadDDynamicList(position,10,pageNum);
+                loadDDynamicList(position,20,pageNum);
                 tv_classname.setText(classlist.get(0));
                  CLASSID=dynamicList.get(0).getGroupId();
              }
@@ -350,6 +344,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
             }
             adapter.setData(statusVoList);
             adapter.notifyDataSetChanged();
+            refresh_view.setLv_count(statusVoList.size());
         }
     }
     /**
@@ -382,11 +377,11 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
                 intent.putExtra("count",0);
                 getActivity().sendBroadcast(intent);
                 pageNum=1;
-                loadDDynamicList(position,10,pageNum);
+                loadDDynamicList(position,20,pageNum);
                 pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
 
             }
-        }.sendEmptyMessageDelayed(0,1000);
+        }.sendEmptyMessageDelayed(0,500);
     }
 
     @Override
@@ -395,9 +390,9 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
             @Override
             public void handleMessage(Message message) {
                 pageNum++;
-                loadDDynamicList(position,10,pageNum);
+                loadDDynamicList(position,20,pageNum);
                 pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
             }
-        }.sendEmptyMessageDelayed(0,1000);
+        }.sendEmptyMessageDelayed(0,500);
     }
 }

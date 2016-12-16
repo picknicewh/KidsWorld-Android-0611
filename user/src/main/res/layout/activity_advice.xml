@@ -11,7 +11,7 @@
         android:background="@drawable/bg_advice_selecter"
         android:id="@+id/et_advice"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:gravity="top"
         android:hint="请输入您的宝贵意见或建议"
         android:inputType="textMultiLine"
@@ -23,9 +23,9 @@
         android:id="@+id/b_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_margin="@dimen/space"
         android:background="@drawable/conform_selecter"
-        android:padding="@dimen/space"
+
         android:text="确认提交"
         android:textColor="@color/white"
         android:textSize="@dimen/ts_xx_large" />

@@ -18,8 +18,7 @@ import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.school.R;
 import net.hunme.school.adapter.MedicineSProcesstAdapter;
 import net.hunme.school.bean.MedicineSVos;
-import net.hunme.school.bean.MedicineVo;
-import net.hunme.school.bean.Schedule;
+import net.hunme.school.bean.MedicineSchedule;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -49,11 +48,7 @@ public class MedicineProcessFragment extends BaseFragement implements OkHttpList
     /**
      *今日喂药流程反馈
      */
-    private List<Schedule> medicineScheduleVos;
-    /**
-     * 喂药leib
-     */
-    private List<MedicineVo> medicineVos;
+    private   List<MedicineSchedule> medicineScheduleVos;
     /**
      * 喂药适配器
      */
@@ -67,7 +62,6 @@ public class MedicineProcessFragment extends BaseFragement implements OkHttpList
     private void initView(View view){
         lv_feed_process = $(view,R.id.lv_feed_procress);
         medicineScheduleVos = new ArrayList<>();
-        medicineVos = new ArrayList<>();
         getFeedList();
     }
     private void getFeedList(){
@@ -78,15 +72,15 @@ public class MedicineProcessFragment extends BaseFragement implements OkHttpList
         Type type=new TypeToken<Result<MedicineSVos>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.SCHOOL_MEDICINESLIST,map,this);
     }
+
     @Override
     public void onSuccess(String uri, Object date) {
         if (Apiurl.SCHOOL_MEDICINESLIST.equals(uri)){
             Result<MedicineSVos> data = (Result<MedicineSVos>) date;
             if (data!=null){
                 MedicineSVos medicineSVos = data.getData();
-                medicineScheduleVos  = medicineSVos.getMedicineScheduleJson();
-                medicineVos = medicineSVos.getMedicineList();
-                adapter = new MedicineSProcesstAdapter(getActivity(),medicineScheduleVos,medicineVos);
+                medicineScheduleVos=medicineSVos.getMedicineScheduleJson();
+                adapter = new MedicineSProcesstAdapter(getActivity(),medicineScheduleVos);
                 lv_feed_process.setAdapter(adapter);
             }
         }

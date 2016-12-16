@@ -61,8 +61,8 @@ public class PublishDetailActivity extends BaseActivity {
             tv_title.setText(vo.getTsName());
         }
         if (vo.getMessageUrl() != null && vo.getMessageUrl().size() > 0) {
-            G.setParam(this, vo.getMessageUrl().get(0), iv_image);
             ImageCache.imageLoader(vo.getMessageUrl().get(0), iv_image);
+            G.setParam(this, vo.getMessageUrl().get(0), iv_image);
             iv_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

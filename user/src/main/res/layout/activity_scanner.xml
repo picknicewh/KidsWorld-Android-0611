@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/rl_scan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <SurfaceView
+        android:id="@+id/sv_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center" />
+        <TextView
+            android:layout_marginTop="@dimen/space"
+            android:id="@+id/tv_close1"
+            android:padding="@dimen/space_x2"
+            android:text="关闭"
+            android:textSize="@dimen/ts_x_large"
+            android:textColor="@color/parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    <net.hunme.baselibrary.widget.ScanView
+        android:id="@+id/cv_capture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rl_conform_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_close2"
+            android:layout_marginTop="@dimen/space"
+            android:padding="@dimen/space_x2"
+            android:text="关闭"
+            android:textSize="@dimen/ts_x_large"
+            android:textColor="@color/parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_marginTop="80dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/iv_conform_image"
+            android:src="@mipmap/ic_pc_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="@dimen/space_x2.5"
+            android:layout_below="@+id/iv_conform_image"
+
+            android:layout_centerHorizontal="true"
+            android:text="TV端贝贝虎登录确认"
+            android:textColor="@color/sc_"
+            android:textSize="@dimen/ts_x_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:background="@drawable/conform_login_selecter"
+            android:id="@+id/tv_conform_login"
+            android:layout_marginBottom="100dp"
+
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="@dimen/space_x0.5"
+            android:paddingBottom="@dimen/space_x0.5"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="登录"
+            android:textSize="@dimen/ts_x_large"
+            android:textColor="@color/parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_concel_login"
+            android:padding="@dimen/space"
+            android:layout_marginBottom="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#cccccc"
+            android:text="取消登录"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        </RelativeLayout>
+</RelativeLayout>

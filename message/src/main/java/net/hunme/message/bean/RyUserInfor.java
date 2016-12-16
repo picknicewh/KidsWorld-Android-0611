@@ -1,5 +1,7 @@
 package net.hunme.message.bean;
 
+import java.util.List;
+
 /**
  * 作者： Administrator
  * 时间： 2016/7/25
@@ -9,13 +11,18 @@ package net.hunme.message.bean;
  * 主要接口：
  */
 public class RyUserInfor {
+    /**
 
-    /**
-     *角色名
-     */
-    private String phone;
-    /**
-     * 手机号
+     * ts_name	String
+     ts_id	String
+     schoolName	String
+     className	String
+     list	List<AccountInfo>
+     img	String
+     tsType	Integer
+     ryId	String
+
+     *
      */
     private String tsName;
     /**
@@ -31,9 +38,9 @@ public class RyUserInfor {
      */
     private String className;
     /**
-     *账户名
+     *家长信息
      */
-    private String accountName;
+    private List<AccountInfo> account_info;
     /**
      *图片地址URL
      */
@@ -41,11 +48,23 @@ public class RyUserInfor {
     /**
      *t1=学生，2=老师
      */
-    private Integer tsType;
+    private int tsType;
     /**
      *融云通讯ID
      */
     private String ryId;
+
+    public void setTsType(int tsType) {
+        this.tsType = tsType;
+    }
+
+    public List<AccountInfo> getAccount_info() {
+        return account_info;
+    }
+
+    public void setAccount_info(List<AccountInfo> account_info) {
+        this.account_info = account_info;
+    }
 
     public String getTsName() {
         return tsName;
@@ -79,13 +98,7 @@ public class RyUserInfor {
         this.className = className;
     }
 
-    public String getAccountName() {
-        return accountName;
-    }
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
-    }
 
     public String getImg() {
         return img;
@@ -110,13 +123,31 @@ public class RyUserInfor {
     public void setRyId(String ryId) {
         this.ryId = ryId;
     }
-    public String getPhone() {
-        return phone;
-    }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+   public class AccountInfo{
+       /**
+        * 手机号
+        */
+       private String phone;
+       /**
+        * 	账户名
+        */
+       private String name;
 
+       public String getPhone() {
+           return phone;
+       }
 
+       public void setPhone(String phone) {
+           this.phone = phone;
+       }
+
+       public String getName() {
+           return name;
+       }
+
+       public void setName(String name) {
+           this.name = name;
+       }
+   }
 }

@@ -10,4 +10,7 @@
         android:src="@mipmap/ic_indexpage"
         android:scaleType="fitXY"
         />
+   <!-- <net.hunme.school.widget.MulSelectDateView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />-->
 </RelativeLayout>

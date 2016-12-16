@@ -1,9 +1,11 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"><title>乐园</title><link rel=stylesheet href=../common/ionic/css/ionic.min.css><link rel=stylesheet href=css/combined.css></head><body ng-app=app class=hideTitleBar><ion-nav-view></ion-nav-view><script src=../common/ionic/js/ionic.bundle.min.js></script><script src=../common/jquery/jquery.js></script><script src=../common/jquery/store.min.js></script><script src=js/combined.js></script><script type=text/javascript>
-      <!-- 判断平台，android为0，ios为1，其他为2-->
-      var platFlag=testPlat();
-      var tsIdLogin=getUrlParam('tsId');
-      checkHistory();
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"><title>乐园</title><link rel=stylesheet href=../common/ionic/css/ionic.min.css><link rel=stylesheet href=css/combined-6aecbf84ac.css></head><body ng-app=app class=hideTitleBar><ion-nav-view></ion-nav-view><script src=../common/ionic/js/ionic.bundle.min.js></script><script src=../common/jquery/jquery.js></script><script src=../common/jquery/store.min.js></script><script src=js/combined-89e3cd193f.js></script><script type=text/javascript>
 
+      var platFlag=testPlat();      //测试浏览器平台，并存为全局变量，方便后续调用，0为安卓，1为ios，2为PC
+      var tsIdLogin=getUrlParam('tsId');    //将tsId存为全局变量，方便后续调用
+      var accountIdLogin=getUrlParam('accountId');    //将accountId存为全局变量，方便后续调用
+      checkHistory();     //检查历史记录
+
+      //测试浏览器平台，0为安卓，1为ios，2为PC
       function testPlat(){
         var u = navigator.userAgent;
         if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){ //android终端
@@ -31,6 +33,7 @@
           }
       }
 
+      //以下5个方法为暴露给原生端点击头部时，页面跳转调用，
       //跳转到播放历史页面
       function goHistory_Origin(){
         window.location.href = '#/history';

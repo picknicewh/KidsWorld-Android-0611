@@ -51,6 +51,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setContentView(int layoutResID) {
         mToolBarHelper = new ToolBarHelper(this,layoutResID) ;
         toolbar = mToolBarHelper.getToolBar() ;
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         setContentView(mToolBarHelper.getContentView());
         /*把 toolbar 设置到Activity 中*/
         setSupportActionBar(toolbar);

@@ -7,21 +7,22 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <RelativeLayout
-        android:layout_marginRight="@dimen/space"
-        android:layout_marginTop="@dimen/space"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <net.hunme.baselibrary.widget.CircleImageView
+      <net.hunme.baselibrary.widget.CircleImageView
+        android:src="@mipmap/person"
         android:layout_margin="@dimen/space"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/lv_holad" />
         <TextView
-            android:layout_toRightOf="@+id/lv_holad"
-            android:layout_marginTop="@dimen/space"
+            android:layout_weight="1"
+
             android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/space"
             android:layout_height="wrap_content"
             android:textSize="@dimen/ts_x_large"
             android:textColor="@color/main_green" />
@@ -31,17 +32,20 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_date"
             android:textSize="@dimen/ts_medium"
+            android:textColor="@color/minor_text"
             android:layout_alignParentRight="true"/>
+
+    </LinearLayout>
         <TextView
-            android:layout_marginTop="-30dp"
+
+            android:layout_gravity="center"
             android:layout_below="@id/lv_holad"
             android:gravity="center"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_ptitle"
             android:textColor="@color/black"
             android:textSize="@dimen/ts_xx_large"/>
-    </RelativeLayout>
     <LinearLayout
         android:layout_marginLeft="@dimen/space_x2"
         android:layout_marginTop="@dimen/space"
@@ -52,7 +56,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:paddingBottom="@dimen/space"
-            android:textColor="@color/sc_"
+            android:textColor="@color/theme_text"
             android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,6 +1,7 @@
 package net.hunme.school.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.image.ImageCache;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.school.R;
+import net.hunme.school.bean.MedicineSchedule;
 import net.hunme.school.bean.MedicineVo;
 import net.hunme.school.bean.Schedule;
 
@@ -27,12 +30,12 @@ import java.util.List;
  */
 public class MedicineSProcesstAdapter extends BaseAdapter {
     private Context context;
-    private List<Schedule> medicineScheduleVos;
-    private List<MedicineVo> medicineVos;
-    public MedicineSProcesstAdapter(Context context, List<Schedule> medicineScheduleVos,List<MedicineVo> medicineVos) {
+
+    private List<MedicineSchedule> medicineScheduleVos;
+    public MedicineSProcesstAdapter(Context context, List<MedicineSchedule>medicineScheduleVos) {
         this.context = context;
         this.medicineScheduleVos = medicineScheduleVos;
-        this.medicineVos = medicineVos;
+
     }
 
     @Override
@@ -58,22 +61,35 @@ public class MedicineSProcesstAdapter extends BaseAdapter {
             new ViewHold(view);
         }
         viewHold = (ViewHold) view.getTag();
-        Schedule schedule =medicineScheduleVos.get(i);
-        MedicineVo medicineVo = medicineVos.get(i);
+
+        MedicineSchedule medicineSchedule =medicineScheduleVos.get(i);
+        MedicineVo medicineVo = medicineSchedule.getMedicine();
+        Schedule schedule = medicineSchedule.getSchedule();
+        Log.i("nnnnnnnnnnnnnn",medicineVo.getMedicine_name());
         ImageCache.imageLoader(medicineVo.getImgUrl(),viewHold.civ_publish_image);
         viewHold.tv_medicine_dosage.setText(medicineVo.getMedicine_dosage());
         viewHold.tv_medicine_name.setText(medicineVo.getMedicine_name());
         viewHold.tv_medicine_remark.setText(medicineVo.getMedicine_doc());
-        ImageCache.imageLoader(schedule.getIssueUrl(),viewHold.civ_publish_image);
+        ImageCache.imageLoader(UserMessage.getInstance(context).getHoldImgUrl(),viewHold.civ_publish_image);
         ImageCache.imageLoader(schedule.getKnowUrl(),viewHold.civ_known_image);
         ImageCache.imageLoader(schedule.getFinishUrl(),viewHold.civ_feed_image);
         viewHold.v_publish_dos.setBackgroundResource(R.drawable.circle_process);
-        viewHold.v_known_dos.setBackgroundResource(R.drawable.circle_process);
-        viewHold.v_feed_dos.setBackgroundResource(R.drawable.circle_process);
+        if (schedule.getFinishId()==null){
+            viewHold.tv_feed_message .setTextColor(context.getResources().getColor(R.color.line_gray));
+            viewHold.v_feed_dos.setBackgroundResource(R.drawable.circle_process_next);
+        }else {
+            viewHold.tv_feed_message .setTextColor(context.getResources().getColor(R.color.main_green));
+            viewHold.v_feed_dos.setBackgroundResource(R.drawable.circle_process);
+        }
+        if (schedule.getKnowId()==null){
+            viewHold.tv_known_message .setTextColor(context.getResources().getColor(R.color.line_gray));
+            viewHold.v_known_dos.setBackgroundResource(R.drawable.circle_process_next);
+        }else {
+            viewHold.tv_known_message .setTextColor(context.getResources().getColor(R.color.main_green));
+            viewHold.v_known_dos.setBackgroundResource(R.drawable.circle_process);
+        }
         viewHold.tv_publish_message .setTextColor(context.getResources().getColor(R.color.main_green));
-        viewHold.tv_known_message .setTextColor(context.getResources().getColor(R.color.main_green));
-        viewHold.tv_feed_message .setTextColor(context.getResources().getColor(R.color.main_green));
-        viewHold.tv_medicine_date.setText(medicineVo.getCreate_time());
+        viewHold.tv_medicine_date.setText(medicineVo.getCreate_time().substring(0,medicineVo.getCreate_time().length()-2));
         return view;
     }
     class ViewHold{

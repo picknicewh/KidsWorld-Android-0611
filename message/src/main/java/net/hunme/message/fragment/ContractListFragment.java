@@ -65,7 +65,7 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
     /**
      * 字母列表控件
      */
-    private SideBar sb_parent;
+    public  SideBar sb_parent;
     /**
      * 上次第一个可见元素，用于滚动时记录标识。
      */
@@ -111,7 +111,6 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
         pinyinComparator = new PinyinComparator();
         sb_parent.setTextView(tv_dialog_parent);
         groupMemberBeanList = new ArrayList<>();
-
         database = new ContractsDb(getActivity()).getWritableDatabase();
         helper = ContractsDbHelper.getinstance();
         List<ContractInfoVo> contractInfoVoa=  helper.getFriendInformVos(database);

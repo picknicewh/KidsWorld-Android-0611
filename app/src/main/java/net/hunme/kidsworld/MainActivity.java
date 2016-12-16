@@ -20,13 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.hunme.baselibrary.BaseLibrary;
-import net.hunme.baselibrary.cordova.HMDroidGap;
 import net.hunme.baselibrary.util.BroadcastConstant;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.UserMessage;
-import net.hunme.discovery.DiscoveryFragement;
-import net.hunme.login.UserChooseActivity;
+import net.hunme.discovery.fragment.DiscoveryFragement;
 import net.hunme.login.util.UserAction;
 import net.hunme.message.fragment.MessageFragement;
 import net.hunme.school.SchoolFragement;
@@ -138,9 +136,15 @@ public class MainActivity extends JPushBaseActivity {
         UserAction.isGoLogin(MainActivity.this, this);
         BaseLibrary.addActivity(this);
         setContentView(R.layout.activity_main);
+        initData();
+        initViewpager();
+        Log.i("EEE",userMessage.getTsId());
+
+    }
+    private void initData(){
+        userMessage = UserMessage.getInstance(this);
         ButterKnife.bind(this);
         timer = new Timer();
-        initViewpager();
         if (null != userMessage.getUserName()) {
             //初始极光推送配置信息
             initJPushConfiguration(userMessage.getLoginName(), "tag");
@@ -153,45 +157,30 @@ public class MainActivity extends JPushBaseActivity {
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener(MainActivity.this));
         registerReceiver();
         initCount();
-        Log.i("EEE",userMessage.getTsId());
     }
-
     /**
      * 初始化viewpager
      */
     private void initViewpager() {
-        userMessage = UserMessage.getInstance(this);
         statusFragement = new StatusFragement();
         schoolFragement = new SchoolFragement();
         discoveryFragement = new DiscoveryFragement();
         messageFragement = new MessageFragement();
-//        fragmentManager = getSupportFragmentManager();
-//        fragmentList = new ArrayList<>();
-//        fragmentList.add(discoveryFragement);
-//        fragmentList.add(schoolFragement);
-//        fragmentList.add(statusFragement);
-//        fragmentList.add(messageFragement);
-//        MyViewPagerAdapter adapter = new MyViewPagerAdapter(fragmentManager, fragmentList);
-//        viewPager.setAdapter(adapter);
-//        viewPager.setOffscreenPageLimit(3);
-//        viewPager.setPagingEnabled(false);
         ft = getSupportFragmentManager().beginTransaction();//获取FragmentTransaction 实例
         ft.replace(R.id.content, discoveryFragement); //使用DetailsFragment 的实例
         ft.commit();
         mContent = discoveryFragement;
     }
-
     @Override
     protected void onResume() {
         super.onResume();
-        if (UserChooseActivity.flag == 1 || HMDroidGap.flag == 1) {
+        if ( G.KisTyep.isChooseId ) {
             initViewpager();
-            UserChooseActivity.flag = 0;
-            HMDroidGap.flag = 0;
+            G.KisTyep.isChooseId = false;
         }
-        if (G.KisTyep.isUpadteContactHold){
+        if (G.KisTyep.isUpadteHold){
             initViewpager();
-            G.KisTyep.isUpadteContactHold  = false;
+            G.KisTyep.isUpadteHold  = false;
         }
         setNoreadMessage();
     }
@@ -248,15 +237,15 @@ public class MainActivity extends JPushBaseActivity {
      * 注册监听网络广播广播
      */
     private void registerReceiver() {
-        IntentFilter filter3 = new IntentFilter(BroadcastConstant.HIDEMAINTAB);
-        IntentFilter filter2 = new IntentFilter(BroadcastConstant.MAINSTATUSDOS);
-        IntentFilter filter1 = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        IntentFilter filter4 = new IntentFilter(BroadcastConstant.MAINSCHOOLDOS);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BroadcastConstant.MAINSTATUSDOS);
+        filter.addAction(BroadcastConstant.HIDEMAINTAB);
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction(BroadcastConstant.MAINSCHOOLDOS);
+        filter.addAction(BroadcastConstant.RUSHMIANA);
         myBroadcasReceiver = new MyBroadcasReceiver();
-        this.registerReceiver(myBroadcasReceiver, filter2);
-        this.registerReceiver(myBroadcasReceiver, filter3);
-        this.registerReceiver(myBroadcasReceiver, filter1);
-        this.registerReceiver(myBroadcasReceiver, filter4);
+        this.registerReceiver(myBroadcasReceiver, filter);
+
     }
 
     @Override
@@ -337,29 +326,29 @@ public class MainActivity extends JPushBaseActivity {
      * @param chooseType
      */
     private void setBaseBar(int chooseType) {
-        tvDiscovery.setTextColor(getResources().getColor(R.color.default_grey));
-        tvMessage.setTextColor(getResources().getColor(R.color.default_grey));
-        tvSchool.setTextColor(getResources().getColor(R.color.default_grey));
-        tvStatus.setTextColor(getResources().getColor(R.color.default_grey));
+        tvDiscovery.setTextColor(getResources().getColor(R.color.main_text_grey));
+        tvMessage.setTextColor(getResources().getColor(R.color.main_text_grey));
+        tvSchool.setTextColor(getResources().getColor(R.color.main_text_grey));
+        tvStatus.setTextColor(getResources().getColor(R.color.main_text_grey));
         ivSchool.setImageResource(R.mipmap.school);
         ivDiscovery.setImageResource(R.mipmap.discovery);
         ivMessage.setImageResource(R.mipmap.message);
         ivStatus.setImageResource(R.mipmap.status);
         switch (chooseType) {
             case 0:
-                tvDiscovery.setTextColor(getResources().getColor(R.color.main_green));
+                tvDiscovery.setTextColor(getResources().getColor(R.color.main_text_green));
                 ivDiscovery.setImageResource(R.mipmap.discovery_p);
                 break;
             case 1:
-                tvSchool.setTextColor(getResources().getColor(R.color.main_green));
+                tvSchool.setTextColor(getResources().getColor(R.color.main_text_green));
                 ivSchool.setImageResource(R.mipmap.school_p);
                 break;
             case 2:
-                tvStatus.setTextColor(getResources().getColor(R.color.main_green));
+                tvStatus.setTextColor(getResources().getColor(R.color.main_text_green));
                 ivStatus.setImageResource(R.mipmap.status_p);
                 break;
             case 3:
-                tvMessage.setTextColor(getResources().getColor(R.color.main_green));
+                tvMessage.setTextColor(getResources().getColor(R.color.main_text_green));
                 ivMessage.setImageResource(R.mipmap.message_p);
                 break;
 
@@ -421,6 +410,8 @@ public class MainActivity extends JPushBaseActivity {
                     //连上网络
                     isconnect = true;
                 }
+            }else if (action.equals(BroadcastConstant.RUSHMIANA)){
+                 initViewpager();
             }
         }
     }

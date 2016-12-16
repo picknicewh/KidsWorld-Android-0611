@@ -1,6 +1,6 @@
 package net.hunme.school.adapter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import net.hunme.school.R;
 import net.hunme.school.bean.MedicineVo;
+import net.hunme.school.widget.DeleteDialog;
 
 import java.util.List;
 
@@ -23,9 +24,9 @@ import java.util.List;
  * ================================================
  */
 public class MedicineSListAdapter extends BaseAdapter {
-    private Context context;
+    private Activity context;
     private List<MedicineVo> medicineVos;
-    public MedicineSListAdapter(Context context, List<MedicineVo> medicineVos) {
+    public MedicineSListAdapter(Activity context, List<MedicineVo> medicineVos) {
         this.context = context;
         this.medicineVos = medicineVos;
     }
@@ -53,10 +54,18 @@ public class MedicineSListAdapter extends BaseAdapter {
         }
         viewHold = (ViewHold) view.getTag();
         final MedicineVo medicineVo = medicineVos.get(i);
-        viewHold.tv_medicine_date.setText(medicineVo.getMedicine_dosage());
+        viewHold.tv_medicine_date.setText(medicineVo.getCreate_time().substring(0,medicineVo.getCreate_time().length()-2));
         viewHold.tv_medicine_dosage.setText(medicineVo.getMedicine_dosage());
         viewHold.tv_medicine_name.setText(medicineVo.getMedicine_name());
         viewHold.tv_medicine_remark.setText(medicineVo.getMedicine_doc());
+        viewHold.tv_medicine_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DeleteDialog deleteDialog = new DeleteDialog(context,medicineVo.getMedicine_id(),2,i);
+                deleteDialog.initView();
+
+            }
+        });
         return view;
     }
 
@@ -75,4 +84,7 @@ public class MedicineSListAdapter extends BaseAdapter {
             view.setTag(this);
         }
      }
+
+
+
 }

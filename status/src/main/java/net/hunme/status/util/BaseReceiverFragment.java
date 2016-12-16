@@ -109,8 +109,6 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
      * 获取动态列表
      * @param groupId 群id
      * @param  groupType 群类型 1=班级 2=学校
-     * @param  mType   1是否第一次请求数据  = 1第一次 =2其他
-     *                  2 怎么形式请求数据 1=加载，2=刷新
      */
     public void getDynamicList(String groupId,String groupType,int pageSize,int pageNum){
         Map<String,Object> map=new HashMap<>();
@@ -159,17 +157,19 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
             if (action.equals(BroadcastConstant.STATUSDOS)) {
                 String targetId = bundle.getString("targetId");
                 Intent myIntent = new Intent(BroadcastConstant.MAINSTATUSDOS);
-                if (groupId.equals(targetId)) {
-                    myIntent.putExtra("count",1);
-                } else{
-                    myIntent.putExtra("count",0);
+                if (!G.isEmteny(groupId)){
+                    if (groupId.equals(targetId)) {
+                        myIntent.putExtra("count",1);
+                    } else{
+                        myIntent.putExtra("count",0);
+                    }
                 }
                 context.sendBroadcast(myIntent);
             }else if(action.equals(BroadcastConstant.COMMENTINFO)){
                 int count = bundle.getInt("count",0);
                 String imageUrl = bundle.getString("imageUrl");
                 if (count>0){
-                    if (lv_status.getHeaderViewsCount()<=1){
+                    if (lv_status.getHeaderViewsCount()<=0){
                         lv_status.addHeaderView(layout_head);
                     }
                     ImageCache.imageLoader(imageUrl,iv_head);

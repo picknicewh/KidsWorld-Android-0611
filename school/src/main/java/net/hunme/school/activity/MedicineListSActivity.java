@@ -110,11 +110,11 @@ public class MedicineListSActivity extends BaseActivity  implements View.OnClick
         }else {
             line_process.setBackgroundColor(getResources().getColor(R.color.main_green));
             line_feed.setBackgroundColor(getResources().getColor(R.color.white));
-            rb_feed_list.setChecked(true);
-            rb_feed_process.setChecked(false);
+            rb_feed_list.setChecked(false);
+            rb_feed_process.setChecked(true);
 
         }
-        vp_vp_feed_t.setCurrentItem(1);
+        vp_vp_feed_t.setCurrentItem(position);
     }
     @Override
     public void onClick(View view) {

@@ -89,7 +89,7 @@ public class MedicineTaskTActivity extends BaseActivity implements MedicineTDeta
     private void initview(){
         iv_image =  $(R.id.civ_image);
         tv_Tsname  = $(R.id.tv_tsName);
-        tv_medicine_date=$(R.id.tv_medicine_date);
+        tv_medicine_date=$(R.id.tv_alldate);
         tv_medicine_name = $(R.id.tv_medicine_name);
         tv_medicine_dos = $(R.id.tv_medicine_dosage);
         tv_remark = $(R.id.tv_remark);

@@ -69,6 +69,7 @@
                 android:layout_gravity="center"
                 android:text="周日活动"/>
             <ImageView
+                android:id="@+id/iv_name_arrow"
                android:layout_gravity="center"
                 android:src="@mipmap/ic_arrow_right"
                 android:paddingLeft="@dimen/space"

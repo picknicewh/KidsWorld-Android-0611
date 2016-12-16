@@ -63,6 +63,7 @@ public class ClassListActivity extends BaseActivity implements OkHttpListener {
         map.put("tsId", UserMessage.getInstance(this).getTsId());
         Type type=new TypeToken<Result<List<DynamicVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.DYNAMICHEAD,map,this,2,"DYNAMIC");
+        showLoadingDialog();
     }
 
     @Override
@@ -74,6 +75,7 @@ public class ClassListActivity extends BaseActivity implements OkHttpListener {
 
     @Override
     public void onSuccess(String uri, Object date) {
+        stopLoadingDialog();
         dynamicList = ((Result<List<DynamicVo>>) date).getData();
         for(int i=0;i<dynamicList.size();i++){
             if(dynamicList.get(i).getGroupType().equals("1"))
@@ -84,6 +86,6 @@ public class ClassListActivity extends BaseActivity implements OkHttpListener {
 
     @Override
     public void onError(String uri, String error) {
-
+        stopLoadingDialog();
     }
 }

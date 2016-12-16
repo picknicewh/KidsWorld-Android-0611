@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,7 +18,6 @@ import android.widget.ToggleButton;
 
 import com.google.gson.reflect.TypeToken;
 
-import net.hunme.baselibrary.BaseLibrary;
 import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.contract.GroupDb;
 import net.hunme.baselibrary.contract.GroupsDbHelper;
@@ -113,6 +113,10 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
      * 群主id
      */
     private   String  ganapatiId;
+    /**
+     *
+     */
+    private ImageView iv_name_arrow;
     private GroupsDbHelper dbHelper;
     private SQLiteDatabase db;
     private SharedPreferences spf;
@@ -121,7 +125,7 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_groupdetail);
-        BaseLibrary.addPartActivity(this);
+
         initView();
     }
     /**
@@ -137,6 +141,7 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
         tv_count = $(R.id.tv_mcount);
         ll_name = $(R.id.ll_mname);
         rl_count = $(R.id.rl_count);
+        iv_name_arrow = $(R.id.iv_name_arrow);
         rl_nodisturb = $(R.id.rl_nodiscribe);
         rl_overhead = $(R.id.rl_overhead);
         tg_Overhead.setOnClickListener(this);
@@ -210,8 +215,10 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
                     if (isganapati(ganapatiId)){
                         groupMemberVoList.addAll(getLast());
                         btn_exit.setText("解散群组");
+                        iv_name_arrow.setVisibility(View.VISIBLE);
                     }else {
                         btn_exit.setText("删除并退出");
+                        iv_name_arrow.setVisibility(View.GONE);
                     }
                     setGirdView(groupMemberVoList);
                 }

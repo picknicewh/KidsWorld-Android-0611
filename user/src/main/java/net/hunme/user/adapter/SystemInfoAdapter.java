@@ -1,7 +1,6 @@
 package net.hunme.user.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,14 +56,14 @@ public class SystemInfoAdapter extends BaseAdapter {
         hold= (ViewHold) view.getTag();
 
         SystemInformVo vo=systemInformVoList.get(i);
-        hold.tv_date.setText(vo.getTime());
+        hold.tv_date.setText(vo.getTime().substring(0,10));
         hold.tv_content.setText(vo.getContent());
         hold.tv_title.setText(vo.getTitle());
          int flag = vo.getFlag();
         if(flag==1){
-            hold.tv_date.setTextColor(Color.BLACK);
-            hold.tv_content.setTextColor(Color.BLACK);
-            hold.tv_title.setTextColor(Color.BLACK);
+            hold.tv_date.setTextColor(context.getResources().getColor(R.color.theme_text));
+            hold.tv_content.setTextColor(context.getResources().getColor(R.color.theme_text));
+            hold.tv_title.setTextColor(context.getResources().getColor(R.color.theme_text));
         }else {
             hold.tv_date.setTextColor(context.getResources().getColor(R.color.default_grey));
             hold.tv_content.setTextColor(context.getResources().getColor(R.color.default_grey));

@@ -8,9 +8,11 @@ import android.view.View;
 
 import com.umeng.analytics.MobclickAgent;
 
+import net.hunme.baselibrary.R;
 import net.hunme.baselibrary.cordova.CordovaInterfaceImpl;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.MyConnectionStatusListener;
+import net.hunme.baselibrary.widget.LoadingDialog;
 
 import org.apache.cordova.ConfigXmlParser;
 import org.apache.cordova.CordovaInterface;
@@ -40,11 +42,10 @@ public class BaseFragement extends Fragment implements CordovaInterface {
     protected boolean keepRunning = true;
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
     private CordovaWebView webView;
+    public LoadingDialog dialog;
     public <T extends View> T $(View layoutView, @IdRes int resId){
         return (T)layoutView.findViewById(resId);
     }
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -114,6 +115,18 @@ public class BaseFragement extends Fragment implements CordovaInterface {
         CordovaPlugin callback = this.activityResultCallback;
         if (callback != null) {
             callback.onActivityResult(requestCode, resultCode, intent);
+        }
+    }
+    public void showLoadingDialog() {
+        if(dialog==null)
+            dialog=new LoadingDialog(getContext(), R.style.LoadingDialogTheme);
+        dialog.show();
+        dialog.setCancelable(true);
+        dialog.setLoadingText("数据加载中...");
+    }
+    public void stopLoadingDialog() {
+        if (dialog!=null) {
+            dialog.dismiss();
         }
     }
 }

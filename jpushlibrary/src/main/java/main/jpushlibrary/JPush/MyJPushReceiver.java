@@ -19,6 +19,7 @@ import net.hunme.baselibrary.database.StatusInfoDbHelper;
 import net.hunme.baselibrary.database.SystemInfomDb;
 import net.hunme.baselibrary.database.SystemInfomDbHelp;
 import net.hunme.baselibrary.util.BroadcastConstant;
+import net.hunme.baselibrary.util.UserMessage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +51,6 @@ public class MyJPushReceiver extends BroadcastReceiver {
             //  sendRegistrationId(regId,context);
         } else if (intent.getAction().equals(JPushInterface.ACTION_MESSAGE_RECEIVED)) {
             Log.i(TAG, "[MyJPushReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
-
             String message = bundle.getString(JPushInterface.EXTRA_EXTRA);
           //  接收到推送下来的自定义消息: {"messagetype":"1","schoolid":"","classid":"298f1648653840fdaa6c396830025af5"}
             try {
@@ -62,7 +62,7 @@ public class MyJPushReceiver extends BroadcastReceiver {
                     myintent.putExtra("targetId",targetId);
                     context.sendBroadcast(myintent);
 
-                }else if (messagetype.equals("2")){//请假
+                }else if (messagetype.equals("2")){//通知
                     schoolDosShow(BroadcastConstant.SCHOOLINFODOS,jsonObject,context);
                 } else if (messagetype.equals("3")) {//系统通知
                     String mycontent = (String) jsonObject.get("content");
@@ -98,18 +98,20 @@ public class MyJPushReceiver extends BroadcastReceiver {
                     String tsId = (String) jsonObject.get("tsId");
                     String createTime = (String) jsonObject.get("createTime");
                     String imgUrl = (String) jsonObject.get("imgUrl");
-                    //添加到数据中
-                    helper.insert(db,createTime,tsId,imgUrl,0);//按时间顺序插入到数据库中，越早推送的数据，存放在下面，先进后出
-                    int count =helper.getNoReadcount(db);
-                    if (count>0){
-                        Intent myintent = new Intent(BroadcastConstant.COMMENTINFO);
-                        myintent.putExtra("count",count);
-                        myintent.putExtra("imageUrl",helper.getLatestUrl(db));
-                        context.sendBroadcast(myintent);
+                    if (tsId!= UserMessage.getInstance(context).getTsId()){
+                        //添加到数据中
+                        helper.insert(db,createTime,tsId,imgUrl,0);//按时间顺序插入到数据库中，越早推送的数据，存放在下面，先进后出
+                        int count =helper.getNoReadcount(db);
+                        if (count>0){
+                            Intent myintent = new Intent(BroadcastConstant.COMMENTINFO);
+                            myintent.putExtra("count",count);
+                            myintent.putExtra("imageUrl",helper.getLatestUrl(db));
+                            context.sendBroadcast(myintent);
+                        }
+                        //删除超过20条时记录的id
+                        helper.deleteOverTime(db);
+                        Log.i("AAAAA","count:"+helper.getcount(db));
                     }
-                    //删除超过20条时记录的id
-                    helper.deleteOverTime(db);
-                    Log.i("AAAAA","count:"+helper.getcount(db));
                     }
             } catch (JSONException e) {
                 e.printStackTrace();

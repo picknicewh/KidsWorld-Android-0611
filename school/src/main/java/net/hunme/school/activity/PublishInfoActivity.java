@@ -89,7 +89,6 @@ public class PublishInfoActivity extends BaseActivity implements OkHttpListener 
        itemList = new ArrayList<>();
        ll_classchoose.setOnClickListener(this);
        flag = 1;
-
        DateUtil.setEditContent(et_content,tv_count);
        PublishPhotoUtil.showPhoto(this,itemList,gv_photo,maxContent);
    }
@@ -132,6 +131,7 @@ public class PublishInfoActivity extends BaseActivity implements OkHttpListener 
     }
     @Override
     public void onSuccess(String uri, Object date) {
+        flag=1;
         stopLoadingDialog();
         Result<String> data = (Result<String>) date;
         if (data!=null){
@@ -142,6 +142,8 @@ public class PublishInfoActivity extends BaseActivity implements OkHttpListener 
     }
     @Override
     public void onError(String uri, String error) {
+        flag=1;
+        stopLoadingDialog();
         Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

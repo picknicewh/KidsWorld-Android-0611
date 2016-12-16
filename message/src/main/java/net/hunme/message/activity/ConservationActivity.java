@@ -10,15 +10,24 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import net.hunme.baselibrary.BaseLibrary;
+import com.google.gson.reflect.TypeToken;
+
+import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
+import net.hunme.baselibrary.network.OkHttpListener;
+import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.MyConnectionStatusListener;
 import net.hunme.baselibrary.util.PermissionsChecker;
-import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.message.R;
+import net.hunme.message.bean.RyUserInfor;
 import net.hunme.message.ronglistener.MyConversationBehaviorListener;
 
+import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
@@ -31,7 +40,7 @@ import io.rong.imlib.model.Conversation;
  * 附加注释：
  * 主要接口：
  */
-public class ConservationActivity extends FragmentActivity implements View.OnClickListener{
+public class ConservationActivity extends FragmentActivity implements View.OnClickListener, OkHttpListener {
     public static final int PERSONDETAIL=2;
     /**
      * 名字view
@@ -61,6 +70,10 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
      *当前的会话类型
      */
     private Conversation.ConversationType mconversationType;
+    /**
+     * 电话号码
+     */
+    private String phoneNumber;
     private final String[] PERMISSIONS = new String[]{
             Manifest.permission.RECORD_AUDIO, //麦克风权限
     };
@@ -71,7 +84,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BaseLibrary.addPartActivity(this);
         setContentView(R.layout.activity_conservation);
         initView();
          PermissionsChecker.getInstance(this).getPerMissions(PERMISSIONS);
@@ -103,13 +115,14 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         Intent intent = getIntent();
         if (targetId.equals("")&& name.equals("") || !targetId.equals(intent.getData().getQueryParameter("targetId"))&&
                 !name.equals(intent.getData().getQueryParameter("title"))){
-              targetId = intent.getData().getQueryParameter("targetId");
-               name = intent.getData().getQueryParameter("title");
+                targetId = intent.getData().getQueryParameter("targetId");
+                name = intent.getData().getQueryParameter("title");
         }
         editor.putString("groupName",name);
         editor.putString("targetGroupId",targetId);
         editor.commit();
         tv_name.setText(name);
+
         mconversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
         showview(mconversationType);
     }
@@ -127,19 +140,28 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
              iv_detail.setImageResource(R.mipmap.ic_member);
              isGroup = true;
          }else if (mconversationType.equals(Conversation.ConversationType.PRIVATE)){
+             getUserInfor(targetId);
              iv_call.setVisibility(View.VISIBLE);
              iv_detail.setVisibility(View.VISIBLE);
              iv_detail.setImageResource(R.mipmap.ic_person);
              isGroup = false;
          }
     }
-
+    /**
+     * 获取用户详情
+     */
+    private void  getUserInfor(String userid){
+        Map<String,Object> param = new HashMap<>();
+        param.put("tsId",userid);
+        Type type = new  TypeToken<Result<RyUserInfor>>(){}.getType();
+        OkHttps.sendPost(type, Apiurl.MESSAGE_GETDETAIL,param,this,2,"phone");
+    }
     @Override
     public void onClick(View v) {
         if (v.getId()==R.id.iv_cback){
             finish();
         }else if (v.getId()==R.id.iv_call){
-            Uri phoneUri =  Uri.parse("tel:"+Uri.parse(UserMessage.getInstance(this).getLoginName()));
+            Uri phoneUri =  Uri.parse("tel:"+phoneNumber);
             Intent intent = new Intent(Intent.ACTION_DIAL,phoneUri);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -150,7 +172,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
                 intent.putExtra("title",name);
                 intent.putExtra("targetGroupId",targetId);
                 startActivityForResult(intent,GroupDetailActivity.EDIT_NMAE);
-
             }else {
                 intent.setClass(this,PersonDetailActivity.class);
                 intent.putExtra("title",name);
@@ -166,4 +187,19 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         }
     }
 
+    @Override
+    public void onSuccess(String uri, Object date) {
+        Result<RyUserInfor> UserInfor = (Result<RyUserInfor>) date;
+        if (UserInfor!=null){
+            if (UserInfor.isSuccess()){
+                RyUserInfor ryUserInfor= UserInfor.getData();
+                phoneNumber = ryUserInfor.getAccount_info().get(0).getPhone();
+            }
+        }
+    }
+
+    @Override
+    public void onError(String uri, String error) {
+        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+    }
 }

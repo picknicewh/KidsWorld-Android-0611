@@ -10,7 +10,7 @@
         android:id="@+id/tv_mainname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/main_green"
+        android:textColor="@color/main_text_green"
         android:textSize="@dimen/ts_x_large"
         android:gravity="center"
         android:padding="@dimen/space_x2" />
@@ -20,7 +20,7 @@
         android:background="@color/line_gray" />
     <TextView
         android:id="@+id/tv_maintop"
-        android:textColor="@color/black"
+        android:textColor="@color/theme_text"
         android:padding="@dimen/space"
         android:textSize="@dimen/ts_x_large"
         android:gravity="center"
@@ -33,7 +33,7 @@
         android:background="@color/line_gray" />
     <TextView
         android:id="@+id/tv_mainremove"
-        android:textColor="@color/black"
+        android:textColor="@color/theme_text"
         android:padding="@dimen/space"
         android:gravity="center"
         android:text="从会话列表中移除"

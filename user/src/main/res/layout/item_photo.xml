@@ -24,13 +24,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
-                android:textColor="@color/black"
+
+                android:textColor="@color/theme_text"
                 android:id="@+id/tv_photoname_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="@dimen/ts_large"/>
             <TextView
+                android:textColor="@color/minor_text"
                 android:id="@+id/tv_photonumber_item"
                 android:layout_marginTop="@dimen/space_x2"
                 android:layout_width="wrap_content"

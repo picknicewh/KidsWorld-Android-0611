@@ -18,13 +18,13 @@ public class MedicineSVos {
     /**
      *今日喂药流程反馈
      */
-    private List<Schedule> medicineScheduleJson;
+    private List<MedicineSchedule> medicineScheduleJson;
 
-    public List<Schedule> getMedicineScheduleJson() {
+    public  List<MedicineSchedule>  getMedicineScheduleJson() {
         return medicineScheduleJson;
     }
 
-    public void setMedicineScheduleJson(List<Schedule> medicineScheduleJson) {
+    public void setMedicineScheduleJson( List<MedicineSchedule>   medicineScheduleJson) {
         this.medicineScheduleJson = medicineScheduleJson;
     }
 

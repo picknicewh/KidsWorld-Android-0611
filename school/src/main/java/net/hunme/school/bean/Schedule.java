@@ -10,51 +10,51 @@ package net.hunme.school.bean;
  */
 public class Schedule {
     /**
-     *喂药已完成
+     * 喂药已完成
      */
-   private String finish;
+    private String finish;
     /**
      * 知晓人融云通讯ID
      */
-    private String	 knowRyId	;
+    private String knowRyId;
     /**
-     *已发布喂药信息
+     * 已发布喂药信息
      */
-    private String issue	;
+    private String issue;
     /**
-     *完成人融云通讯ID
+     * 完成人融云通讯ID
      */
     private String finishRyId;
     /**
-     *发布人ID
+     * 发布人ID
      */
-    private String issueId	;
+    private String issueId;
     /**
-     *完成人头像
+     * 完成人头像
      */
     private String finishUrl;
     /**
-     *知晓人头像
+     * 知晓人头像
      */
-    private String knowUrl	;
+    private String knowUrl;
     /**
-     *发布人头像
+     * 发布人头像
      */
-    private String issueUrl	;
+    private String issueUrl;
     /**
-     *完成人ID
+     * 完成人ID
      */
-      private  String finishId;
+    private String finishId;
     /**
-     *已知晓
+     * 已知晓
      */
-   private String know;
+    private String know;
     /**
-     *发布人融云通讯ID
+     * 发布人融云通讯ID
      */
-     private String issueRyId;
+    private String issueRyId;
     /**
-     *知晓人ID
+     * 知晓人ID
      */
     private String knowId;
 
@@ -153,4 +153,7 @@ public class Schedule {
     public void setKnowRyId(String knowRyId) {
         this.knowRyId = knowRyId;
     }
+
 }
+
+

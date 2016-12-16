@@ -34,6 +34,7 @@ public class UserMessage {
         }
        return userMessage;
     }
+
     /**
      * @param count 用户角色个数
      */
@@ -165,7 +166,17 @@ public class UserMessage {
     public String getUserSign(){
         return spf.getString("userSign","还没有想好啊");
     }
-
+    /**
+     *账户ID
+     * @param  account_id 账号id
+     */
+    public void setAccount_id(String account_id){
+        editor.putString("account_id",account_id);
+        editor.commit();
+    }
+    public String  getAccount_id(){
+        return spf.getString("account_id","");
+    }
     /**
      *  用户登录信息缓存
      * @param jsonCache 用户信息（包含多重身份）
@@ -214,5 +225,22 @@ public class UserMessage {
     public String getPublishDateTime(){
         return  spf.getString("dateTime","2016-08-08 00:00:00");
     }
-
+    public  void setTodayDate(String currentDate){
+        editor.putString("currentDate",currentDate);
+        editor.commit();
+    }
+    public  String getTodayDate(){
+       return spf.getString("currentDate","");
+    }
+    /**
+     * 设置用户是对资源否付费
+     * @param  IsUserPay
+     */
+    public void  setIsUserPay(int IsUserPay){
+       editor.putInt("IsUserPay",IsUserPay);
+       editor.commit();
+    }
+    public int getIsUserPay(){
+        return spf.getInt("IsUserPay",1);
+    }
 }

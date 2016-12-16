@@ -1,9 +1,8 @@
 package net.hunme.school.activity;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +15,7 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.DateUtil;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.LoadingDialog;
@@ -93,6 +93,7 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_informask);
         init();
     }
@@ -101,10 +102,11 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
     protected void setToolBar() {
       setLiftImage(R.mipmap.ic_arrow_lift);
       setLiftOnClickClose();
-      setCententTitle("请假申请");
+      setCententTitle("“我要请假");
       setSubTitle("完成");
     }
     private void initdata(){
+
         tv_name.setText(message.getUserName());
         format = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
         format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -141,7 +143,8 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
         ll_start.setOnClickListener(this);
         setSubTitleOnClickListener(this);
         message = UserMessage.getInstance(this);
-        setEditContent(et_cause);
+       // DateUtil.setEditContent(et_cause,null,200);
+     //   et_cause.setFilters(new InputFilter[]{new InputFilter.LengthFilter(200)});
         initdata();
     }
     /**
@@ -156,6 +159,7 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
         lastClickTime = now;
         return false;
     }
+
     /**
      * 记录最后点击时间
      */
@@ -202,12 +206,16 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
             Toast.makeText(this,"请假开始时间不能比结束时间晚哦！",Toast.LENGTH_SHORT).show();
             return;
         }
+        boolean isallsapce =DateUtil.isallsapce(et_cause);
+        if (isallsapce){
+            Toast.makeText(this,"请假事由不能为全部空格哦！",Toast.LENGTH_SHORT).show();
+            return;
+        }
         //提交角色ID
         UserMessage userMessage = UserMessage.getInstance(this);
         params.put("tsId", userMessage.getTsId());
         //需要请假人员角色ID
         params.put("leaveTsId",userMessage.getTsId());
-
         params.put("endDate",endDate);
         params.put("startDate",starDate);
         //1=早餐，2=中餐，3=晚餐 多选时，用英文逗号分隔
@@ -232,32 +240,5 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
     public void onError(String uri, String error) {
         dialog.dismiss();
         Toast.makeText(LeaveAskActivity.this,error,Toast.LENGTH_SHORT).show();
-    }
-    /**
-     * 计算文字的长度，如果文字的长度大于100则不能再输入
-     * @param  et_content 请假事由
-     */
-    private void setEditContent(final EditText et_content) {
-        et_content.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                String str = s.toString();
-                int count = 0;
-                count = str.length();
-                if (count > 140) {
-                    deleteSelection(s);
-                }
-            }
-            private void deleteSelection(Editable s) {
-                int selection = et_content.getSelectionStart();
-                if (selection > 1) {
-                    s.delete(selection - 1, selection);
-                }
-            }
-        });
     }
 }

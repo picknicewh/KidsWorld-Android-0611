@@ -1,6 +1,7 @@
 package net.hunme.message.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -145,24 +146,24 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     private void setLine(int position){
         switch (position){
             case MESSAGE_PAGE:
-                line_contract.setBackgroundColor(getResources().getColor(R.color.bg_layout));
-                line_group.setBackgroundColor(getResources().getColor(R.color.bg_layout));
-                line_message.setBackgroundColor(getResources().getColor(R.color.main_green));
+                line_contract.setBackgroundColor(getResources().getColor(R.color.main_bg));
+                line_group.setBackgroundColor(getResources().getColor(R.color.main_bg));
+                line_message.setBackgroundColor(getResources().getColor(R.color.main_text_green));
                 iv_search.setVisibility(View.GONE);
                 mPosition = MESSAGE_PAGE;
                 break;
             case CONTRACT_PAGE:
-                line_contract.setBackgroundColor(getResources().getColor(R.color.main_green));
-                line_group.setBackgroundColor(getResources().getColor(R.color.bg_layout));
-                line_message.setBackgroundColor(getResources().getColor(R.color.bg_layout));
+                line_contract.setBackgroundColor(getResources().getColor(R.color.main_text_green));
+                line_group.setBackgroundColor(getResources().getColor(R.color.main_bg));
+                line_message.setBackgroundColor(getResources().getColor(R.color.main_bg));
                 iv_search.setVisibility(View.VISIBLE);
                 iv_search.setImageResource(R.mipmap.search);
                 mPosition = CONTRACT_PAGE;
                 break;
             case GROUP_PAGE:
-                line_contract.setBackgroundColor(getResources().getColor(R.color.bg_layout));
-                line_group.setBackgroundColor(getResources().getColor(R.color.main_green));
-                line_message.setBackgroundColor(getResources().getColor(R.color.bg_layout));
+                line_contract.setBackgroundColor(getResources().getColor(R.color.main_bg));
+                line_group.setBackgroundColor(getResources().getColor(R.color.main_text_green));
+                line_message.setBackgroundColor(getResources().getColor(R.color.main_bg));
                 iv_search.setVisibility(View.VISIBLE);
                 iv_search.setImageResource(R.mipmap.ic_add);
                 mPosition = GROUP_PAGE;
@@ -176,7 +177,7 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
     private void setFrametDetails() {
         fragmentlist = new ArrayList<>();
         ConverationListFragment converationListFragment = new ConverationListFragment();
-        ContractListFragment   contractListFragment = new ContractListFragment();
+        final ContractListFragment   contractListFragment = new ContractListFragment();
         GroupListFragment   groupListFragment = new GroupListFragment();
         fragmentlist.add(converationListFragment);
         fragmentlist.add(contractListFragment);
@@ -195,6 +196,8 @@ public class MessageFragement extends BaseFragement implements View.OnClickListe
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                contractListFragment.sb_parent.getmTextDialog().setVisibility(View.GONE);
+                contractListFragment.sb_parent.setBackgroundDrawable(new ColorDrawable(0x00000000));
             }
             @Override
             public void onPageSelected(int position) {

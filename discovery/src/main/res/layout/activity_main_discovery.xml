@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_cdiscovery"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:background="@color/colorAccent"
+        android:paddingTop="@dimen/space_x2.5">
+
+        <net.hunme.baselibrary.widget.CircleImageView
+            android:id="@+id/iv_dleft"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space" />
+
+        <TextView
+            android:id="@+id/tv_dtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="乐园"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ts_xx_large"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/et_search"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space"
+            android:layout_marginRight="@dimen/space"
+            android:layout_weight="1"
+            android:background="@drawable/bg_login_text"
+            android:drawableLeft="@mipmap/ic_dissearch"
+            android:hint="搜索故事、课堂、资讯"
+            android:paddingLeft="@dimen/space_x2"
+            android:paddingRight="@dimen/space_x2"
+            android:textSize="@dimen/ts_medium" />
+
+        <ImageView
+            android:id="@+id/iv_dright"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingRight="@dimen/space"
+            android:src="@mipmap/ic_history" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp">
+                <net.hunme.baselibrary.widget.BannerViewPager
+                    android:id="@+id/bvp_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/ic_img_error"
+                    android:flipInterval="5000"
+                    android:inAnimation="@anim/page_left_in"
+                    android:outAnimation="@anim/page_left_out"
+                    android:persistentDrawingCache="animation" />
+
+                <LinearLayout
+
+                    android:id="@+id/ll_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/space"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/space_x0.5">
+                    <LinearLayout
+                        android:id="@+id/ll_dots"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:background="@color/red"
+                        android:orientation="horizontal" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_x2">
+
+                <LinearLayout
+                    android:id="@+id/ll_music"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_x0.5"
+                        android:text="幼儿听听" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_class"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_x0.5"
+                        android:text="幼儿课堂" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_consult"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_x0.5"
+                        android:text="幼儿资讯" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/space">
+
+                    <TextView
+                        android:id="@+id/tv_recommend_music"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="推荐听听" />
+
+                    <TextView
+                        android:id="@+id/tv_more_music"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/space_x1.5"
+                        android:text="更多"
+                        android:textColor="@color/minor_text" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_arrow_right" />
+                </RelativeLayout>
+
+                <net.hunme.baselibrary.widget.NoScrollGirdView
+                    android:id="@+id/gv_music"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:numColumns="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/space">
+
+                    <TextView
+                        android:id="@+id/tv_recommend_class"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="推荐课堂" />
+
+                    <TextView
+                        android:id="@+id/tv_more_class"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/space_x1.5"
+                        android:text="更多"
+                        android:textColor="@color/minor_text" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_arrow_right" />
+                </RelativeLayout>
+
+                <net.hunme.baselibrary.widget.NoScrollGirdView
+                    android:id="@+id/gv_class"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:numColumns="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_consult"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/space">
+
+                    <TextView
+                        android:id="@+id/tv_recommend_consult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="推荐资讯" />
+
+                    <TextView
+                        android:id="@+id/tv_more_consult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/space_x1.5"
+                        android:text="更多"
+                        android:textColor="@color/minor_text" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_arrow_right" />
+                </RelativeLayout>
+
+                <net.hunme.baselibrary.widget.NoScrollListView
+
+                    android:id="@+id/lv_consult"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/transparent"
+                    android:dividerHeight="0dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

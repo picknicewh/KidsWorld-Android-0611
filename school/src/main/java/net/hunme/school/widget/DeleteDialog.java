@@ -19,6 +19,7 @@ import net.hunme.baselibrary.widget.MyAlertDialog;
 import net.hunme.school.R;
 import net.hunme.school.activity.CourseArrangeActivity;
 import net.hunme.school.activity.LeaveListActivity;
+import net.hunme.school.fragment.MedicineFeedListFragment;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -71,8 +72,10 @@ public class DeleteDialog implements View.OnClickListener, OkHttpListener {
         TextView content = (TextView) contentView.findViewById(R.id.tv_message);
         if (flag ==1){
             content.setText("确定删除这条课程吗？");
-        }else {
+        }else if (flag==0){
             content.setText("确定删除这条请假吗？");
+        }else if (flag==2){
+            content.setText("确定删除这条委托吗？");
         }
         bt_cancel.setOnClickListener(this);
          bt_conform.setOnClickListener(this);
@@ -83,8 +86,10 @@ public class DeleteDialog implements View.OnClickListener, OkHttpListener {
         if (view.getId()==R.id.bt_conform){
             if (flag ==1){
                 deleteCourse(syllabusId);
-            }else {
+            }else if (flag==0){
                 deleteLeaveAsk(syllabusId);
+            }else if (flag==2){
+                deleteMedicine(syllabusId);
             }
             alertDialog.dismiss();
         }else if (view.getId()==R.id.bt_cancel){
@@ -105,6 +110,9 @@ public class DeleteDialog implements View.OnClickListener, OkHttpListener {
               CourseArrangeActivity arrangeActivity = (CourseArrangeActivity) context;
               arrangeActivity.syllabusVoList.remove(position);
               arrangeActivity.adapter.notifyDataSetChanged();
+          }else {
+              MedicineFeedListFragment.medicineVos.remove(position);
+              MedicineFeedListFragment.adapter.notifyDataSetChanged();
           }
         }
         alertDialog.dismiss();
@@ -136,4 +144,12 @@ public class DeleteDialog implements View.OnClickListener, OkHttpListener {
         Type type = new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.SCHOOL_DETLTESYLLABUSLISTS,params,this);
     }
+    private void deleteMedicine(String medicineId){
+        Map<String,Object> params = new HashMap<>();
+        params.put("tsId", UserMessage.getInstance(context).getTsId());
+        params.put("medicineId",medicineId);
+        Type type = new TypeToken<Result<String >>(){}.getType();
+        OkHttps.sendPost(type, Apiurl.SCHOOL_MEDICINETDELETE,params,this);
+    }
+
 }

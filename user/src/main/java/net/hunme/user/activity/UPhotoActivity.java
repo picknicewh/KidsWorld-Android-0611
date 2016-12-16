@@ -56,9 +56,9 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
     protected void setToolBar() {
         setCententTitle("我的相册");
         setLiftImage(R.mipmap.ic_arrow_lift);
-        setSubTitle("添加");
+        setRightImage(R.mipmap.ic_add);
         setLiftOnClickClose();
-        setSubTitleOnClickListener(this);
+        setRightOnClickListener(this);
     }
 
     private void initView(){
@@ -84,7 +84,7 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View view) {
         int viewID=view.getId();
-        if(viewID==R.id.tv_subtitle){
+        if(viewID==R.id.iv_right){
             OperateDialog dialog =new OperateDialog(this,adapter,photoList);
             dialog.initAlbumview();
           /*  //获取View

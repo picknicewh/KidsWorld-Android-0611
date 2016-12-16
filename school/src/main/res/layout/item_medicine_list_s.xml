@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_margin="@dimen/space"
     android:layout_height="wrap_content">
-   <TextView
+    <RelativeLayout
+        android:padding="@dimen/space"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
        android:id="@+id/tv_medicine_name"
-
+       android:text="999感冒灵"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:textColor="@color/sc_"/>
@@ -13,7 +16,7 @@
         android:id="@+id/tv_medicine_dosage"
         android:layout_below="@+id/tv_medicine_name"
         android:paddingTop="@dimen/space_x0.5"
-
+        android:text="一日三次一次一包"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/sc_"/>
@@ -21,7 +24,7 @@
         android:id="@+id/tv_medicine_remark"
         android:layout_below="@+id/tv_medicine_dosage"
         android:paddingTop="@dimen/space_x0.5"
-
+        android:text="最近天气忽冷忽热的，孩子感冒了，麻烦老师照顾一下。"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/default_grey"/>
@@ -29,7 +32,7 @@
         android:id="@+id/tv_medicine_date"
         android:layout_below="@+id/tv_medicine_remark"
         android:paddingTop="@dimen/space_x0.5"
-
+        android:text="2016-12-12"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/default_grey"/>
@@ -42,4 +45,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/main_green"/>
+    </RelativeLayout>
 </RelativeLayout>

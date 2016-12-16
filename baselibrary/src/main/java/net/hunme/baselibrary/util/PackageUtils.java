@@ -1,7 +1,12 @@
 package net.hunme.baselibrary.util;
 
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 
 public class PackageUtils {
 	/**
@@ -29,5 +34,45 @@ public class PackageUtils {
 		}
 		return versionName;
 	}
-
+	/**
+    * check the app is installed
+    */
+	private boolean isAppInstalled(Context context,String packagename)
+	{
+		PackageInfo packageInfo;
+		try {
+			packageInfo = context.getPackageManager().getPackageInfo(packagename, 0);
+		}catch (NameNotFoundException e) {
+			packageInfo = null;
+			e.printStackTrace();
+		}
+		if(packageInfo ==null){
+			//System.out.println("没有安装");
+			return false;
+		}else{
+			//System.out.println("已经安装");
+			return true;
+		}
+	}
+	/**
+	 * 打开应用程序
+	 * @param  context
+	 * @param  packageName
+	 * @param  resultCode
+	 */
+	private void openApplication(Activity context,String packageName,String mainActivity,int resultCode){
+		Intent i = new Intent();
+		ComponentName cn = new ComponentName(packageName, packageName+"."+mainActivity);
+		i.setComponent(cn);
+		context.startActivityForResult(i, resultCode);
+	}
+	/**
+	 * 未安装，跳转至market下载该程序
+	 * @param context
+	 */
+	private void gotoRemark(Activity context,String url){
+		Uri uri = Uri.parse(url);//id为包名
+		Intent it = new Intent(Intent.ACTION_VIEW, uri);
+		context.startActivity(it);
+	}
 }

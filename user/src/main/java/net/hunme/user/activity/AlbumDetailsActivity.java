@@ -50,8 +50,8 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
         setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickClose();
         setCententTitle("相册详情");
-        setSubTitle("添加");
-        setSubTitleOnClickListener(new View.OnClickListener() {
+        setRightImage(R.mipmap.ic_add);
+        setRightOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PermissionsChecker checker = PermissionsChecker.getInstance(AlbumDetailsActivity.this);

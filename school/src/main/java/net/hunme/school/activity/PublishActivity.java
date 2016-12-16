@@ -144,13 +144,13 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
         if (date!=null){
             stopLoadingDialog();
             List<PublishVo> publishVos=((Result<List<PublishVo>>)date).getData();
-            for (int i=0;i<publishVos.size();i++){
+            for (int i = publishVos.size()-1;i>0;i--){
                 PublishVo vo= publishVos.get(i);
                 boolean isRead= PublishDbHelp.select(PublishActivity.db.getReadableDatabase(),vo.getMessageId()+um.getTsId());
-                if(!isRead)
+              /*  if(!isRead)
                     //将未读信息排在最前列
                     publishList.add(0,vo);
-                else
+                else*/
                     publishList.add(vo);
                 vo.setRead(isRead);
             }
@@ -168,6 +168,7 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
 
     @Override
     public void onError(String uri, String error) {
+        stopLoadingDialog();
         rl_nonetwork.setVisibility(View.VISIBLE);
         G.showToast(this,error);
     }

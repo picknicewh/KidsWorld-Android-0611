@@ -10,6 +10,8 @@
         android:paddingLeft="@dimen/space"
         android:layout_width="match_parent"
         android:hint="请输入文字内容"
+        android:textColor="@color/minor_text"
+        android:textColorHint="@color/minor_text"
         android:gravity="left"
         android:layout_height="200dp" />
     <RelativeLayout
@@ -27,7 +29,8 @@
             android:layout_gravity="left"
             android:paddingLeft="@dimen/space_x2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/minor_text"/>
         <LinearLayout
             android:layout_alignParentRight="true"
             android:id="@+id/ll_permitchoose"
@@ -43,7 +46,7 @@
                 android:drawableLeft="@mipmap/ic_status_data"
                 android:id="@+id/tv_permitchoose"
                 android:padding="@dimen/space_x0.5"
-                android:textColor="@color/main_green"
+                android:textColor="@color/main_text_green"
                 android:text="班级空间"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

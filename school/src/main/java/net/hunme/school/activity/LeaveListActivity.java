@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -103,14 +104,15 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
             getLeave();
         }
     }
+
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (leaveVos.size()>0&&leaveVos!=null){
-            leaveVos.clear();
-            getLeave();
-        }
+    protected void onRestart() {
+        super.onRestart();
+        leaveVos.clear();
+        getLeave();
+        Log.i("sssss","====================onRestart=======================");
     }
+
     /**
      * 获取请假列表
      */
@@ -118,7 +120,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
         Map<String,Object> params = new HashMap<>();
         params.put("tsId", UserMessage.getInstance(this).getTsId());
         params.put("pageNumber",count);
-        params.put("pageSize",3);
+        params.put("pageSize",4);
         Type type = new TypeToken<Result<List<LeaveVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.SCHOOL_GETLEAVES,params,this);
         if (G.isNetworkConnected(this)){
@@ -149,7 +151,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
                     tv_nodata.setVisibility(View.GONE);
 
                 }
-
+                refresh_view.setLv_count(leaveVos.size());
             }
         }
     }
@@ -180,7 +182,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
                     getLeave();
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
-            }.sendEmptyMessageDelayed(0, 1000);
+            }.sendEmptyMessageDelayed(0, 500);
         }
 
         public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
@@ -192,7 +194,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
                     getLeave();
                     pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
-            }.sendEmptyMessageDelayed(0, 1000);
+            }.sendEmptyMessageDelayed(0, 500);
         }
     }
 }

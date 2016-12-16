@@ -96,8 +96,8 @@ public class PublishAdapter extends BaseAdapter {
 
          public void setTextColor(boolean isRead) {
              if (!isRead) {
-                 tv_content.setTextColor(Color.BLACK);
-                 tv_title.setTextColor(Color.BLACK);
+                 tv_content.setTextColor(context.getResources().getColor(R.color.sc_));
+                 tv_title.setTextColor(context.getResources().getColor(R.color.main_green));
                  tv_ptitle.setTextColor(Color.BLACK);
              } else {
                  tv_content.setTextColor(Color.parseColor("#a9a9a9"));

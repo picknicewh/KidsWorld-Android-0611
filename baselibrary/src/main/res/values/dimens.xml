@@ -7,6 +7,7 @@
     <dimen name="space_x1.5">15dp</dimen>
     <dimen name="space_x2">20dp</dimen>
     <dimen name="space_x2.5">25dp</dimen>
+    <dimen name="space_x3">30dp</dimen>
 
     <!-- Text Size -->
     <dimen name="ts_small">12sp</dimen>

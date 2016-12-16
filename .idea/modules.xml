@@ -12,6 +12,7 @@
       <module fileurl="file://$PROJECT_DIR$/jpushlibrary/jpushlibrary.iml" filepath="$PROJECT_DIR$/jpushlibrary/jpushlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/login/login.iml" filepath="$PROJECT_DIR$/login/login.iml" />
       <module fileurl="file://$PROJECT_DIR$/message/message.iml" filepath="$PROJECT_DIR$/message/message.iml" />
+      <module fileurl="file://$PROJECT_DIR$/music/music.iml" filepath="$PROJECT_DIR$/music/music.iml" />
       <module fileurl="file://$PROJECT_DIR$/picturesee/picturesee.iml" filepath="$PROJECT_DIR$/picturesee/picturesee.iml" />
       <module fileurl="file://$PROJECT_DIR$/school/school.iml" filepath="$PROJECT_DIR$/school/school.iml" />
       <module fileurl="file://$PROJECT_DIR$/status/status.iml" filepath="$PROJECT_DIR$/status/status.iml" />

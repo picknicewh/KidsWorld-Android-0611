@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
         <EditText
-            android:id="@+id/tv_alldate"
+            android:id="@+id/et_alldate"
             android:hint="请选择日期"
             android:textSize="@dimen/ts_medium"
             android:padding="@dimen/space"
@@ -129,13 +129,13 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
     <RadioGroup
+        android:id="@+id/rg_meal"
         android:background="@color/white"
         android:layout_marginBottom="@dimen/space"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RadioButton
-
             android:text="饭前"
             android:id="@+id/rb_before"
             android:textColor="@color/default_grey"
@@ -150,11 +150,12 @@
             android:layout_height="wrap_content" />
 
     </RadioGroup>
-    <TextView
+    <EditText
+        android:textSize="@dimen/ts_medium"
         android:padding="@dimen/space"
         android:background="@color/white"
         android:text="麻烦老师帮忙啦，孩子比较调皮，一定要他吃下药才行哦！"
-        android:id="@+id/tv_remark"
+        android:id="@+id/et_medicine_remark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button

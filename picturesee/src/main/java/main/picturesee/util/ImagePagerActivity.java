@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import main.picturesee.R;
 
@@ -31,6 +32,7 @@ public class ImagePagerActivity extends FragmentActivity {
 
 		pagerPosition = getIntent().getIntExtra(EXTRA_IMAGE_INDEX, 0);
 		ArrayList<String> urls = getIntent().getStringArrayListExtra(EXTRA_IMAGE_URLS);
+
 		mPager = (HackyViewPager) findViewById(R.id.pager);
 		ImagePagerAdapter mAdapter = new ImagePagerAdapter(getSupportFragmentManager(), urls);
 		mPager.setAdapter(mAdapter);
@@ -95,4 +97,5 @@ public class ImagePagerActivity extends FragmentActivity {
 		}
 
 	}
+
 }

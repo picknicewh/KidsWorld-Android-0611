@@ -112,6 +112,10 @@ public class PullToRefreshLayout extends RelativeLayout
 
 	private Context mContext;
 
+
+
+	//获取listview中的数据条
+	private int lv_count=0;
 	/**
 	 * 执行自动回滚的handler
 	 */
@@ -277,9 +281,10 @@ public class PullToRefreshLayout extends RelativeLayout
 		{
 		case SUCCEED:
 			// 加载成功
-			loadStateImageView.setVisibility(View.VISIBLE);
-			loadStateTextView.setText(R.string.load_succeed);
-			loadStateImageView.setBackgroundResource(R.mipmap.load_succeed);
+				loadStateImageView.setVisibility(View.VISIBLE);
+				loadStateTextView.setText(R.string.load_succeed);
+				loadStateImageView.setBackgroundResource(R.mipmap.load_succeed);
+
 			break;
 			case NoMORE:
 				// 没有更多
@@ -324,12 +329,17 @@ public class PullToRefreshLayout extends RelativeLayout
 			refreshStateImageView.setVisibility(View.GONE);
 			refreshStateTextView.setText(R.string.pull_to_refresh);
 			pullView.clearAnimation();
-			pullView.setVisibility(View.VISIBLE);
 			// 上拉布局初始状态
-			loadStateImageView.setVisibility(View.GONE);
-			loadStateTextView.setText(R.string.pullup_to_load);
-			pullUpView.clearAnimation();
-			pullUpView.setVisibility(View.VISIBLE);
+			if (getLv_count()==0){
+				loadStateImageView.setVisibility(View.GONE);
+				loadStateTextView.setVisibility(GONE);
+				pullUpView.setVisibility(View.GONE);
+			}else {
+				loadStateImageView.setVisibility(View.GONE);
+				loadStateTextView.setText(R.string.pullup_to_load);
+				pullUpView.clearAnimation();
+				pullUpView.setVisibility(View.VISIBLE);
+			}
 			break;
 		case RELEASE_TO_REFRESH:
 			// 释放刷新状态
@@ -710,5 +720,11 @@ public class PullToRefreshLayout extends RelativeLayout
 		 */
 		void onLoadMore(PullToRefreshLayout pullToRefreshLayout);
 	}
+	public int getLv_count() {
+		return lv_count;
+	}
 
+	public void setLv_count(int lv_count) {
+		this.lv_count = lv_count;
+	}
 }

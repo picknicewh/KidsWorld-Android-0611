@@ -35,7 +35,7 @@
         android:paddingBottom="10dip"
         android:paddingTop="10dip"
         android:text="王小二"
-        android:textColor="#494949" />
+        android:textColor="@color/theme_text" />
     </LinearLayout>
 
 </LinearLayout>

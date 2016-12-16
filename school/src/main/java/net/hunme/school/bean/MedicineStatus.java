@@ -9,6 +9,8 @@ package net.hunme.school.bean;
  * 主要接口：
  */
 public class MedicineStatus {
+
+
     /**
      * 喂药委托ID
      */

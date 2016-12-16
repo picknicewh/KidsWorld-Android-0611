@@ -48,15 +48,6 @@ public class Result<T> implements Serializable {
         this.sign = sign;
     }
 
-//    public Object  getData() {
-//        return data;
-//    }
-//
-//    public void setData(Object  data) {
-//        this.data = data;
-//    }
-
-
     public T getData() {
         return data;
     }

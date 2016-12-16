@@ -120,10 +120,12 @@ public class DateView extends LinearLayout implements View.OnClickListener{
      *  @param  day 日
      */
     private void AddView(int year,int mouth,int day){
+        setLine();
         setDateTextView(year,mouth);
         setWeekView();
         setLine();
         setDateView(year,mouth,day);
+        setLine();
     }
     /**
      * 设置头部星期文字

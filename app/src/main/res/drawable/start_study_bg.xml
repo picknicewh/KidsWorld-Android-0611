@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/space_x2" />
+            <solid android:color="@color/guide_btn"/>
+        </shape>
+    </item>
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/space_x2" />
+            <solid android:color="@color/guide_btn_click"/>
+        </shape>
+    </item>
+</selector>

@@ -64,7 +64,7 @@ public class MedicineTDetailPresenter implements MedicineTDetail.Presenter,OkHtt
              view.setIsFeed(isFeed);
              view.setMedicineName(medicineVo.getMedicine_name());
              view.setLaunchTime(medicineVo.getMeal_before_or_after());
-            // view.setFeedDate(medicineVo.);
+             view.setFeedDate(medicineVo.getCreate_time());
          }
      }else if (uri.equals(Apiurl.SCHOOL_MEDICINETFINSH)){
          Result<String> data = (Result<String>) date;

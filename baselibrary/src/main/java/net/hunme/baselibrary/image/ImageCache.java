@@ -5,6 +5,7 @@ import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import net.hunme.baselibrary.R;
@@ -35,8 +36,9 @@ public class ImageCache {
                     .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
                     .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
                     .considerExifParams(true) // 启用EXIF和JPEG图像格式
+                    .imageScaleType(ImageScaleType.EXACTLY)
                     // .displayer(new RoundedBitmapDisplayer(10)) // 设置成圆角图片
-                    .bitmapConfig(Bitmap.Config.ARGB_4444).build(); // 构建完成
+                    .bitmapConfig(Bitmap.Config.RGB_565).build(); // 构建完成
             imageLoader =ImageLoader.getInstance();
 
         }
@@ -49,9 +51,28 @@ public class ImageCache {
      * @param imageView
      */
     public static void imageLoader( String imageUri,  ImageView imageView){
+        ImageCache().displayImage(getNewUrl(imageUri), imageView, options);
+
+    }
+
+    /**
+     *  显示普通图片
+     * @param imageUri 图片地址
+     * @param imageView
+     */
+    public static void imageLoaderPlay( String imageUri,  ImageView imageView){
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.mipmap.ic_album) // 设置图片下载期间显示的图片
+                .showImageForEmptyUri(R.mipmap.ic_album) // 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.mipmap.ic_album) // 设置图片加载或解码过程中发生错误显示的图片
+                .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
+                .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
+                .considerExifParams(true) // 启用EXIF和JPEG图像格式
+                .imageScaleType(ImageScaleType.EXACTLY)
+                // .displayer(new RoundedBitmapDisplayer(10)) // 设置成圆角图片
+                .bitmapConfig(Bitmap.Config.RGB_565).build(); // 构建完成
         imageView.setTag(imageUri);
         ImageCache().displayImage(imageUri, imageView, options);
-
     }
     /**
      *  获取图片下载进度监听
@@ -60,16 +81,20 @@ public class ImageCache {
      * @param listener 图片下载进度监听
      */
     public static void imageLoader(String uri, ImageView imageView, SimpleImageLoadingListener listener){
-        ImageCache().displayImage(uri, imageView, listener);
+        ImageCache().displayImage(getNewUrl(uri), imageView, listener);
     }
-
     /**
      *  获取一个uri的bitmap对象
      * @param uri
      * @return
      */
     public static Bitmap getBitmap(String uri){
-        return ImageCache().loadImageSync(uri);
+        return ImageCache().loadImageSync(getNewUrl(uri));
     }
-
+    private static String  getNewUrl(String url){
+        if (url.contains("\\")){
+            url = url.replace("\\","/");
+        }
+        return url;
+    }
 }

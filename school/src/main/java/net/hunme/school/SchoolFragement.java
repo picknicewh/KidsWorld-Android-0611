@@ -23,6 +23,9 @@ import net.hunme.school.activity.FoodListActivity;
 import net.hunme.school.activity.LeaveListActivity;
 import net.hunme.school.activity.PublishActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * 作者： wh
@@ -163,6 +166,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             getActivity().unregisterReceiver(recivier);
         }
     }
+    private List<String> tsids = new ArrayList<>();
     private class ShowDosRecivier extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -170,6 +174,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             Bundle bundle = intent.getExtras();
             String tsid   =bundle.getString("tsId");
              isVisible = bundle.getBoolean("isVisible",false);
+
             if (action.equals(BroadcastConstant.LEAVEASEKDOS)){//请假
                 ShowDos(isVisible,tsid,tv_dos_leaveadk);
             }else if (action.equals(BroadcastConstant.MEDICINEDOS)){//喂药
@@ -177,15 +182,22 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             }else if (action.equals(BroadcastConstant.SCHOOLINFODOS)){//   通知
                 ShowDos(isVisible,tsid,tv_dos_info);
             }
+
         }
     }
     private void ShowDos( boolean isVisible, String tsid,TextView textView){
-        if (tsid.equals(UserMessage.getInstance(getActivity()).getTsId())&& isVisible){
-            textView.setVisibility(View.VISIBLE);
-            showSchoolDos(1);
-        }else {
-            textView.setVisibility(View.GONE);
+        tsids.add(tsid);
+      //  Log.i("ssssss",tsid+"============="+UserMessage.getInstance(getActivity()).getTsId());
+        for (int i = 0 ;i<tsids.size();i++){
+            if (tsids.get(i).equals(UserMessage.getInstance(getActivity()).getTsId())&& isVisible){
+                textView.setVisibility(View.VISIBLE);
+                showSchoolDos(1);
+                return;
+            }else {
+                textView.setVisibility(View.GONE);
+            }
         }
+        tsids.clear();
     }
     /**
      * 只要接收到任意一个红点通知发送学校底部的通知红点点广播

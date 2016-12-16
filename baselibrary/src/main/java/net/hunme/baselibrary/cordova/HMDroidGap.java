@@ -62,7 +62,7 @@ public class HMDroidGap extends CordovaActivity implements View.OnClickListener 
      * 标题
      */
     private LinearLayout ll_toolbar;
-    public static int flag = 0;
+ //   public static int flag = 0;
     /**
      * 无网络
      */
@@ -116,11 +116,12 @@ public class HMDroidGap extends CordovaActivity implements View.OnClickListener 
         loadUrl(launchUrl);
         webView.setWebChromeClient(new CordovaWebChromeClient((SystemWebViewEngine) appView.getEngine(), pb_web, webView, this, ll_toolbar));
         webView.setWebViewClient(new CordovaWebViewClien((SystemWebViewEngine) appView.getEngine()));
-
-        if (G.isNetworkConnected(this)) {
-            rl_nonetwork.setVisibility(View.GONE);
-        } else {
-            rl_nonetwork.setVisibility(View.VISIBLE);
+        if (!launchUrl.contains("medicine")) {
+            if (G.isNetworkConnected(this)) {
+                rl_nonetwork.setVisibility(View.GONE);
+            } else {
+                rl_nonetwork.setVisibility(View.VISIBLE);
+            }
         }
     }
 

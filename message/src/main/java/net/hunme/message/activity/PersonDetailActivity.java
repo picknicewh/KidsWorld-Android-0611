@@ -79,7 +79,10 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
      * 头像地址
      */
     private String image;
-
+    /**
+     * 电话号码
+     */
+    private String phone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +113,7 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
       //  username = intent.getStringExtra("title");
         userid = intent.getStringExtra("targetId");
        // tv_pname.setText(username);
+
         getUserInfor(userid);
     }
     /**
@@ -123,13 +127,15 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
     }
     @Override
     public void onClick(View v) {
-        String phone = tv_phone.getText().toString();
+
         int viewId = v.getId();
         if (viewId==R.id.iv_pcall){
-            Uri phoneUri =  Uri.parse("tel:"+phone);
-            Intent intent = new Intent(Intent.ACTION_DIAL,phoneUri);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            if (phone!=null){
+                Uri phoneUri =  Uri.parse("tel:"+phone);
+                Intent intent = new Intent(Intent.ACTION_DIAL,phoneUri);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
         }else if (viewId==R.id.iv_pmessage){
             if (RongIM.getInstance()!=null){
                 RongIM.getInstance().startPrivateChat(this,userid,username);
@@ -158,12 +164,17 @@ public class PersonDetailActivity  extends BaseActivity implements View.OnClickL
                 RyUserInfor ryUserInfor= UserInfor.getData();
                 username =ryUserInfor.getTsName();
                 tv_school.setText(ryUserInfor.getSchoolName());
-                tv_role.setText(ryUserInfor.getTsName());
-                tv_phone.setText(ryUserInfor.getPhone());
                 tv_class.setText(ryUserInfor.getClassName());
                 tv_pname.setText(ryUserInfor.getTsName());
                 image = ryUserInfor.getImg();
                 ImageCache.imageLoader(ryUserInfor.getImg(),iv_phead);
+                phone = ryUserInfor.getAccount_info().get(0).getPhone();
+                StringBuffer buffer = new StringBuffer();
+                for (int i = 0 ; i <ryUserInfor.getAccount_info().size();i++){
+                    RyUserInfor.AccountInfo  accountInfo = ryUserInfor.getAccount_info().get(i);
+                    buffer.append(accountInfo.getName()).append("  ").append(accountInfo.getPhone()).append("\n");
+                }
+                tv_phone.setText(buffer.toString());
             }
         }
 

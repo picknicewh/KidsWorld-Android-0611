@@ -15,13 +15,13 @@
       android:layout_height="wrap_content">
       <net.hunme.baselibrary.widget.CircleImageView
           android:id="@+id/civ_image"
-          android:src="@mipmap/person"
+
           android:layout_width="40dp"
           android:layout_height="40dp" />
       <TextView
           android:paddingLeft="@dimen/space"
           android:textColor="@color/main_green"
-          android:text="杨海燕"
+
           android:layout_gravity="center"
           android:id="@+id/tv_tsName"
           android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
             android:layout_height="1dp"/>
         <TextView
             android:id="@+id/tv_alldate"
-            android:text="2016-10-28;  2016-10-29;  2016-10-30"
+
             android:padding="@dimen/space"
             android:textColor="@color/sc_"
             android:layout_below="@id/v_line"
@@ -97,7 +97,7 @@
             android:layout_height="1dp"/>
         <TextView
             android:id="@+id/tv_medicine_name"
-            android:text="板蓝根颗粒,阿莫西林"
+
             android:padding="@dimen/space"
             android:textColor="@color/sc_"
             android:layout_below="@id/v_line2"
@@ -135,7 +135,7 @@
             android:layout_height="1dp"/>
         <TextView
             android:id="@+id/tv_medicine_dosage"
-            android:text="板蓝根颗粒一天一包，阿莫西林一日三次，一次一粒"
+
             android:padding="@dimen/space"
             android:textColor="@color/sc_"
             android:layout_below="@id/v_line3"
@@ -167,7 +167,6 @@
     <TextView
         android:padding="@dimen/space"
         android:background="@color/white"
-        android:text="麻烦老师帮忙啦，孩子比较调皮，一定要他吃下药才行哦！"
         android:id="@+id/tv_remark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

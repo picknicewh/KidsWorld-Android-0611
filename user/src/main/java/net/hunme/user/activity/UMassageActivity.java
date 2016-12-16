@@ -219,7 +219,6 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
             ContractsDbHelper helper = ContractsDbHelper.getinstance();
             helper.updateImageUrl(db,um.getTsId(),result.getData());
             G.KisTyep.isUpadteHold=true;
-            G.KisTyep.isUpadteContactHold= true;
             G.showToast(this,"头像修改成功");
             flag = 1;
         }

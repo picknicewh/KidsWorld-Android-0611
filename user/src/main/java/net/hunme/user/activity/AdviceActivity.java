@@ -1,6 +1,7 @@
 package net.hunme.user.activity;
 
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,7 +43,7 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
         et_advice=$(R.id.et_advice);
         b_submit=$(R.id.b_submit);
         b_submit.setOnClickListener(this);
-        ;
+        et_advice.setFilters(new InputFilter[]{new InputFilter.LengthFilter(200)});
     }
     @Override
     public void onClick(View view) {

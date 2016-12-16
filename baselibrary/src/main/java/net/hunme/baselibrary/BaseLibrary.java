@@ -49,6 +49,10 @@ public class BaseLibrary {
      * 部分activity同时销毁的
      */
     private static List<Activity> activityPartList= null;
+    /**
+     * 部分activity同时销毁的
+     */
+    public static List<Activity> activityLockList= null;
     private static Application instance;
     public static void initializer(Application application){
         OkHttpUtils.init(application);
@@ -56,7 +60,7 @@ public class BaseLibrary {
         RongPushClient.registerMiPush(application, " 2882303761517505108", "5551750520108");
         RongIM.init(application);
         activitys=new ArrayList<>();
-        activityPartList = new ArrayList<>();
+        activityLockList = new ArrayList<>();
         instance=application;
     }
     public static Application getInstance() {
@@ -73,22 +77,23 @@ public class BaseLibrary {
             activitys.add(activity);
         }
     }
-
-    public  static  void  addPartActivity(Activity activity){
-        // 添加Activity到容器中
-        if (activityPartList != null && activityPartList.size() > 0) {
-            if(!activityPartList.contains(activity)){
-                activityPartList.add(activity);
-            }
-        }else{
-            activityPartList.add(activity);
+    public static  void addLockActivity(Activity activity){
+        if (activityLockList!=null){
+            activityLockList.add(activity);
         }
+
     }
-    public static  void removeActivity(){
-        if (activityPartList != null && activityPartList.size() > 0) {
-            for (Activity activity : activityPartList) {
+    private  static  int count=0;
+    public static  void removeLockActivity(){
+        if (activityLockList != null && activityLockList.size() > 0) {
+            for (Activity activity : activityLockList) {
                 activity.finish();
             }
+        }
+    }
+    public static  void removeLocFirstkActivity(){
+        if (activityLockList != null && activityLockList.size() > 0) {
+            activityLockList.remove(0);
         }
     }
     // 遍历所有Activity并finish

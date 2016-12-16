@@ -15,6 +15,8 @@
  */
 package net.hunme.baselibrary.widget;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -34,6 +36,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 import net.hunme.baselibrary.R;
@@ -82,10 +85,11 @@ public class CircleImageView extends ImageView {
     private boolean mReady;
     private boolean mSetupPending;
     private boolean mBorderOverlay;
+    private ObjectAnimator mRotateAnimator;
+    private long mLastAnimationValue=0;
 
     public CircleImageView(Context context) {
         super(context);
-
         init();
     }
 
@@ -116,8 +120,37 @@ public class CircleImageView extends ImageView {
             setup();
             mSetupPending = false;
         }
+        mRotateAnimator = ObjectAnimator.ofFloat(this, "rotation", 0f, 360f);
+        mRotateAnimator.setDuration(14400);
+        mRotateAnimator.setInterpolator(new LinearInterpolator());
+        mRotateAnimator.setRepeatMode(ValueAnimator.RESTART);
+        mRotateAnimator.setRepeatCount(ValueAnimator.INFINITE);
+    }
+    // Animation
+
+    public void startRotateAnimation() {
+        mRotateAnimator.cancel();
+        mRotateAnimator.start();
     }
 
+    public void cancelRotateAnimation() {
+        mLastAnimationValue = 0;
+        mRotateAnimator.cancel();
+    }
+
+    public long getmLastAnimationValue() {
+        return mLastAnimationValue;
+    }
+
+    public void pauseRotateAnimation() {
+        mLastAnimationValue = mRotateAnimator.getCurrentPlayTime();
+        mRotateAnimator.cancel();
+    }
+
+    public void resumeRotateAnimation() {
+        mRotateAnimator.start();
+        mRotateAnimator.setCurrentPlayTime(mLastAnimationValue);
+    }
     @Override
     public ScaleType getScaleType() {
         return SCALE_TYPE;
@@ -136,20 +169,18 @@ public class CircleImageView extends ImageView {
             throw new IllegalArgumentException("adjustViewBounds not supported.");
         }
     }
-
     @Override
     protected void onDraw(Canvas canvas) {
         if (mBitmap == null) {
             return;
         }
-
         if (mFillColor != Color.TRANSPARENT) {
             canvas.drawCircle(getWidth() / 2.0f, getHeight() / 2.0f, mDrawableRadius, mFillPaint);
         }
-        canvas.drawCircle(getWidth() / 2.0f, getHeight() / 2.0f, mDrawableRadius, mBitmapPaint);
         if (mBorderWidth != 0) {
             canvas.drawCircle(getWidth() / 2.0f, getHeight() / 2.0f, mBorderRadius, mBorderPaint);
         }
+        canvas.drawCircle(getWidth() / 2.0f, getHeight() / 2.0f, mDrawableRadius, mBitmapPaint);
     }
 
     @Override
@@ -253,7 +284,6 @@ public class CircleImageView extends ImageView {
         if (cf == mColorFilter) {
             return;
         }
-
         mColorFilter = cf;
         mBitmapPaint.setColorFilter(mColorFilter);
         invalidate();

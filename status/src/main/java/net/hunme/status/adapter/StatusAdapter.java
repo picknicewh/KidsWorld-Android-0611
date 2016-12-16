@@ -118,7 +118,12 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
         final StatusVo statusVo = statusVoList.get(i);
         ImageCache.imageLoader(statusVo.getImg(),viewHold.cv_head);
         viewHold.tv_name.setText(statusVo.getTsName());
-        viewHold.tv_time.setText(statusVo.getDate());
+        if (statusVo.getDate().length()>10){
+            viewHold.tv_time.setText(statusVo.getDate().substring(0,10));
+        }else {
+            viewHold.tv_time.setText(statusVo.getDate());
+        }
+
         //显示内容
         if (!G.isEmteny(statusVo.getText())){
             viewHold.tv_content.setText(statusVo.getText());

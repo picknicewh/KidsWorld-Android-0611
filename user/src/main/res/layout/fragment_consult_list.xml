@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_nodata"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="你还没有收藏哦，快去收藏吧！"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="false">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <net.hunme.baselibrary.widget.NoScrollListView
+            android:id="@+id/lv_consult_list"
+            android:dividerHeight="0dp"
+            android:divider="@color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"/>
+        <LinearLayout
+           android:padding="@dimen/space"
+            android:gravity="center"
+            android:id="@+id/ll_load_more"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+          <TextView
+              android:id="@+id/tv_load_more"
+              android:text="查看更多"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/iv_load_more"
+                android:layout_marginLeft="@dimen/space"
+                android:src="@mipmap/load_more"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+        </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

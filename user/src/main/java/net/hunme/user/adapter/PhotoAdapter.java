@@ -59,6 +59,7 @@ public class PhotoAdapter extends BaseAdapter {
         viewHold= (ViewHold) view.getTag();
         if(null!=photoList){
             if(null==photoList.get(i).getUrl()){
+
                 viewHold.photo.setImageResource(R.mipmap.ic_album_cover);
             }else{
                 ImageCache.imageLoader(photoList.get(i).getUrl(),viewHold.photo);
@@ -68,7 +69,7 @@ public class PhotoAdapter extends BaseAdapter {
             if(G.isEmteny(photoCount)){
                 photoCount="0";
             }
-            viewHold.photoNumber.setText(photoCount+"张");
+            viewHold.photoNumber.setText("共"+photoCount+"张");
         }
         return view;
     }

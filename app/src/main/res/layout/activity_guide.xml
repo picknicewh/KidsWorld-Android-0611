@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <net.hunme.baselibrary.widget.BannerViewPager
+        android:id="@+id/bvp_guide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/ic_guide1"
+        android:flipInterval="5000"
+        android:inAnimation="@anim/page_left_in"
+        android:outAnimation="@anim/page_left_out"
+        android:persistentDrawingCache="animation"
+        android:visibility="visible" />
+    <TextView
+
+        android:layout_marginTop="@dimen/space_x3"
+        android:layout_marginRight="@dimen/space_x2"
+        android:id="@+id/tv_gohead"
+        android:text="跳过"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:textSize="@dimen/ts_large"
+        android:gravity="center"
+        android:textColor="@color/main_text_green"
+        android:background="@drawable/gohead_bg"
+        android:layout_alignParentRight="true"/>
+    <LinearLayout
+
+        android:id="@+id/ll_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/space"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_x0.5">
+
+        <LinearLayout
+            android:id="@+id/ll_dots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" />
+        <TextView
+            android:visibility="gone"
+            android:background="@drawable/start_study_bg"
+            android:layout_above="@id/ll_title"
+            android:text="开始学习"
+            android:id="@+id/ib_goto"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
+            android:textSize="@dimen/ts_x_large"
+            android:textColor="@color/white"
+            android:gravity="center" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

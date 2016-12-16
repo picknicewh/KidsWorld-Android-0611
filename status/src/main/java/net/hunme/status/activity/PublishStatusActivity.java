@@ -102,7 +102,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
-        setSubTitle("发送");
+        setSubTitle("完成");
         setSubTitleOnClickListener(this);
         setLiftOnClickListener(new View.OnClickListener() {
             @Override

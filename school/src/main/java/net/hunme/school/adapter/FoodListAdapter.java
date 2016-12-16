@@ -59,14 +59,19 @@ public class FoodListAdapter extends BaseAdapter {
         viewHold= (ViewHold) view.getTag();
         viewHold.tv_food.setText(vo.getCookName());
         viewHold.tv_dinner.setText(vo.getDinnerTime());
-        ImageCache.imageLoader(vo.getCookUrl().get(0),viewHold.iv_food_image);
-        viewHold.iv_food_image.setTag(vo.getCookUrl().get(0));
-        viewHold.iv_food_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PublishPhotoUtil.imageBrowernet(0, (ArrayList<String>) vo.getCookUrl(),context);
-            }
-        });
+        if (vo.getCookUrl().size()>0){
+            ImageCache.imageLoader(vo.getCookUrl().get(0),viewHold.iv_food_image);
+            viewHold.iv_food_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PublishPhotoUtil.imageBrowernet(0, (ArrayList<String>) vo.getCookUrl(),context);
+                }
+            });
+        }else {
+            viewHold.iv_food_image.setImageResource(R.mipmap.ic_img_error);
+        }
+        viewHold.iv_food_image.setTag(i);
+
         return view;
     }
 

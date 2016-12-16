@@ -58,7 +58,7 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
         if (message.getContent().getUserInfo()==null){
             Gson g = new Gson();
             IMessage m = g.fromJson(g.toJson(message),IMessage.class);
-            Log.i("SSSSSSSSSS",g.toJson(message));
+
             if (m!=null){
                 Conversation.ConversationType type = m.getConversationType();
                 String content = m.getContent().getMessage();
@@ -75,7 +75,7 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
             }
             return true;
         }else {
-            Log.i("SSSSSSSSSS","ZZZZZZZZZZZZZZZZZZZ");
+
             return false;
         }
 

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:background="@color/bg_layout">
+    android:background="@color/main_bg">
     <RelativeLayout
         android:id="@+id/rl_toolbar"
         android:paddingRight="@dimen/space"
@@ -36,7 +36,7 @@
             android:padding="@dimen/space_x1.5"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height">
+            android:layout_height="wrap_content">
             <ImageView
                 android:layout_centerVertical="true"
                 android:id="@+id/iv_openClass"
@@ -66,7 +66,7 @@
             android:padding="@dimen/space_x1.5"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height">
+            android:layout_height="wrap_content">
             <ImageView
                 android:layout_centerVertical="true"
                 android:id="@+id/iv_inform"
@@ -80,6 +80,7 @@
                 android:text="通知"
                 style="@style/TextStyleBase"
                 android:layout_gravity="center"
+                android:textColor="@color/theme_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
@@ -126,7 +127,8 @@
                 style="@style/TextStyleBase"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/theme_text"/>
             <ImageView
                 android:layout_marginRight="@dimen/space_x0.5"
                 android:layout_centerVertical="true"
@@ -146,7 +148,7 @@
             android:padding="@dimen/space_x1.5"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height">
+            android:layout_height="wrap_content">
             <ImageView
                 android:layout_centerVertical="true"
                 android:id="@+id/iv_arrangement"
@@ -161,8 +163,10 @@
                 style="@style/TextStyleBase"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/theme_text"/>
             <ImageView
+
                 android:layout_marginRight="@dimen/space_x0.5"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
@@ -223,7 +227,7 @@
             android:padding="@dimen/space_x1.5"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height">
+            android:layout_height="wrap_content">
             <ImageView
                 android:layout_centerVertical="true"
                 android:id="@+id/iv_askleave"
@@ -238,7 +242,8 @@
                 style="@style/TextStyleBase"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/theme_text"/>
 
             <TextView
                 android:visibility="gone"
@@ -269,7 +274,7 @@
             android:padding="@dimen/space_x1.5"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height">
+            android:layout_height="wrap_content">
             <ImageView
                 android:layout_centerVertical="true"
                 android:id="@+id/iv_medicine"
@@ -284,7 +289,8 @@
                 style="@style/TextStyleBase"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/theme_text"/>
             <TextView
                 android:id="@+id/tv_dos_medicine"
                 android:visibility="gone"

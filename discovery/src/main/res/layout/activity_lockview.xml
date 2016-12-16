@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/rl_lock_bg"
+    android:background="@color/main_text_green"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/ll_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_marginLeft="@dimen/space_x2"
+        android:layout_marginTop="@dimen/space_x2">
+        <!-- 时间显示 -->
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="60sp" />
+        <!-- 上午、下午显示 -->
+        <TextView
+
+            android:id="@+id/date"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_x1.5"
+            android:ellipsize="none"
+            android:singleLine="true"
+            android:textSize="20sp" />
+        <TextView
+
+            android:textColor="@color/white"
+            android:id="@+id/tv_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_marginLeft="@dimen/space_x1.5"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="14dip"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@+id/ll_time"
+        android:layout_margin="@dimen/space_x2"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+
+            android:id="@+id/music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:singleLine = "true"
+            android:textSize="@dimen/ts_xx_large"
+            android:textColor="#ffffff"
+            />
+        <TextView
+
+            android:id="@+id/artist"
+            android:layout_marginTop="@dimen/space_x0.5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:singleLine = "true"
+            android:textSize="14dip"
+            android:textColor="#ffffff"
+            />
+    </LinearLayout>
+    <net.hunme.baselibrary.widget.CircleImageView
+        android:id="@+id/iv_bg"
+        android:layout_centerInParent="true"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="3dp"/>
+    <RelativeLayout
+        android:layout_marginLeft="@dimen/space_x2.5"
+        android:layout_marginRight="@dimen/space_x2.5"
+        android:layout_marginBottom="60dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_pre"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_play_last"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_play"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_next"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_play_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_unlock"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/iv_slider_image"
+            android:src="@mipmap/slider_arrow_2"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/space_x1.5"/>
+        <TextView
+            android:id="@+id/tv_unlock"
+            android:textSize="@dimen/ts_xx_large"
+            android:text="滑动解锁"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>

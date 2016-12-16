@@ -47,7 +47,6 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
         Type type=new TypeToken<Result<StatusDetilsVo>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.STATUSDETILS,map,this);
     }
-
     /**
      * 点赞
      */
@@ -61,7 +60,6 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
         OkHttps.sendPost(type,Apiurl.SUBPRAISE,map,this);
         view.showLoadingDialog();
     }
-
     /**
      * 评论
      */
@@ -82,7 +80,6 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
         OkHttps.sendPost(type, Apiurl.SUBCOMMENT,map,this);
         view.showLoadingDialog();
     }
-
     /**
      *  删除评论
      */
@@ -131,9 +128,10 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
                     }else {
                         view.setImageVis(false);
                     }
+                    view.setDeleteView(false);
                 }else {
-                    view.stopLoadingDialog();
                     view.setDeleteView(true);
+                    view.stopLoadingDialog();
                 }
 
             } else{
@@ -144,9 +142,7 @@ public class StatusDetilsPresenter implements StatusDetilsContract.Presenter, Ok
                 getStatusDetils(tsId,dynamicId);
             }
         }
-
     }
-
     @Override
     public void onError(String uri, String error) {
         view.stopLoadingDialog();

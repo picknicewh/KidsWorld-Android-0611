@@ -4,6 +4,7 @@ package net.hunme.baselibrary.util;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -240,13 +241,6 @@ public class WebCommonPageFrom {
         intent.putExtra("title","我的收藏");
         activity.startActivity(intent);
     }
-
-    @JavascriptInterface
-    public void noticeChange(){
-       G.log("重新加载动态");
-        HMDroidGap.flag = 1;
-    }
-
     @JavascriptInterface
     public void sendBroadcast(boolean isVisible){
         Intent intent = new Intent(BroadcastConstant.HIDEMAINTAB);
@@ -278,6 +272,16 @@ public class WebCommonPageFrom {
         intent.setComponent(componetName);
         intent.putExtra("targetId",targetId);
         activity.startActivity(intent);
+    }
+    @JavascriptInterface
+    public void startMusicActivity(String themeId,String resourceId) {
+        Intent intent = new Intent();
+        ComponentName componetName = new ComponentName("net.hunme.kidsworld","net.hunme.discovery.MainPlayActivity");
+        intent.setComponent(componetName);
+        intent.putExtra("themeId",themeId);
+        intent.putExtra("resourceId",resourceId);
+        activity.startActivity(intent);
+        Log.i("aaaaaa","===========startMusicActivity=========");
     }
     @JavascriptInterface
     public void back(){

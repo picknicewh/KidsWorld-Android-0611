@@ -6,7 +6,7 @@
       android:id="@+id/tv_class"
       android:padding="@dimen/space_x2"
       android:text="苗苗班"
-      android:textColor="@color/black"
+      android:textColor="@color/theme_text"
       android:textSize="@dimen/ts_x_large"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />

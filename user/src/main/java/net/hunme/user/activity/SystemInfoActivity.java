@@ -47,6 +47,7 @@ public class SystemInfoActivity extends BaseActivity {
     private final String[] PERMISSIONS = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
     };
+    private TextView tv_nodata;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +74,13 @@ public class SystemInfoActivity extends BaseActivity {
        // insert();//插入数据
         systemInformVoList =new ArrayList<>();
         systemInformVoList = dbHelp.getSystemInformVo(infoDb.getReadableDatabase());
+        if (systemInformVoList.size()>0){
+            lv_systeminfo.setVisibility(View.VISIBLE);
+            tv_nodata.setVisibility(View.GONE);
+        }else {
+            lv_systeminfo.setVisibility(View.GONE);
+            tv_nodata.setVisibility(View.VISIBLE);
+        }
         adapter=new SystemInfoAdapter(systemInformVoList,this);
         lv_systeminfo.setAdapter(adapter);
         lv_systeminfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -139,6 +147,7 @@ public class SystemInfoActivity extends BaseActivity {
 
     private void initView(){
         lv_systeminfo=$(R.id.lv_systeminfo);
+        tv_nodata = $(R.id.tv_nodata);
       //  messageList=new ArrayList<>();
 //        adapter=new SystemInfoAdapter(systemInformVoList,this);
 //        lv_systeminfo.setAdapter(adapter);

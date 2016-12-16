@@ -27,9 +27,7 @@ public class UserAction {
      */
     public static void isGoLogin(Activity activity,Context context){
         if (G.isEmteny(UserMessage.getInstance(context).getLoginName())){
-
             activity.startActivity(new Intent(context, LoginActivity.class));
-
             return;
         }
     }
@@ -47,7 +45,7 @@ public class UserAction {
      */
     public static void saveUserMessage(Context context, String userName, String holdImgUrl,
                                        String className, String schoolName,
-                                       String ryId, String tsId,String type,String sex,String signature){
+                                       String ryId, String tsId,String type,String sex,String signature,String account_id){
         UserMessage um =UserMessage.getInstance(context);
         um.setUserName(userName);
         um.setHoldImgUrl(holdImgUrl);
@@ -57,8 +55,8 @@ public class UserAction {
         um.setTsId(tsId);
         um.setType(type);
         um.setSex(sex);
-
         um.setUserSign(signature);
+        um.setAccount_id(account_id);
     }
 
     /**
@@ -84,5 +82,4 @@ public class UserAction {
         intent.setComponent(componetName);
         activity.startActivity(intent);
     }
-
 }

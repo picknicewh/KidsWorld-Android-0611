@@ -11,17 +11,16 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.LeaveAskActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.WebViewActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+          />
+
         <activity
             android:name=".activity.PublishActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.PublishDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.LeaveListActivity" />
+        <activity android:name=".activity.LeaveListActivity"/>
         <activity android:name=".activity.CourseArrangeActivity" />
         <activity android:name=".activity.FoodListActivity" />
         <activity

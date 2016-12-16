@@ -2,11 +2,13 @@ package net.hunme.baselibrary.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -244,13 +246,9 @@ public class G {
 
     public static class KisTyep {
         public static boolean isChooseId = false;  //是否选中身份 用切换用户后刷新数据
-
         public static boolean isReleaseSuccess = false;  //是否成功发布动态 用户刷新数据
-
         public static boolean isUpadteHold = false;   //是否修改用户头像
-
         public static boolean isUpdateComment = false;
-        public static boolean isUpadteContactHold = false;   //是否修改用户头像
     }
 
     /**
@@ -276,8 +274,45 @@ public class G {
                 lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,viewHeight);
                 iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
             }
-
             iv_image.setLayoutParams(lp);
         }
     }
+    /**
+     * 进入权限管理页面
+     * @param context
+     */
+    public static void getAppDetailSettingIntent(Context context) {
+        Intent localIntent = new Intent();
+        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= 9) {
+            localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            localIntent.setData(Uri.fromParts("package", context.getPackageName(), null));
+        } else if (Build.VERSION.SDK_INT <= 8) {
+            localIntent.setAction(Intent.ACTION_VIEW);
+            localIntent.setClassName("com.android.settings","com.android.settings.InstalledAppDetails");
+            localIntent.putExtra("com.android.settings.ApplicationPkgName", context.getPackageName());
+        }
+        context.startActivity(localIntent);
+    }
+    /**
+     * 将时间戳转换时间
+     * @param　time
+     */
+    public static String toTime(int time) {
+        time /= 1000;
+        int minute = time / 60;
+        int second = time % 60;
+        minute %= 60;
+        return String.format("%02d:%02d", minute, second);
+    }
+    /**
+     * 刷新主页
+     * @param  isChange 是否改变
+     *  @param  context 文本
+     */
+   /* public static void runshMian(boolean isChange,Context context){
+        Intent intent = new Intent();
+        intent.putExtra("isChange",isChange);
+        context.sendBroadcast(intent);
+    }*/
 }

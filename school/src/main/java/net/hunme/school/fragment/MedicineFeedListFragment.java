@@ -48,11 +48,11 @@ public class MedicineFeedListFragment extends BaseFragement implements OkHttpLis
     /**
      * 喂药列表数据
      */
-    private List<MedicineVo> medicineVos;
+    public static List<MedicineVo> medicineVos;
     /**
      * 喂药适配器
      */
-    private   MedicineSListAdapter adapter;
+    public  static    MedicineSListAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feed_list_s,null);

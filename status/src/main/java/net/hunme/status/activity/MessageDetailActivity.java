@@ -126,7 +126,10 @@ public class MessageDetailActivity extends BaseActivity implements OkHttpListene
             if (timeList.size()>0){
                 getInforList(timeList.get(timeList.size()-1),timeList.get(0));
             }
-
+            tv_more.setText("没有更多了");
+            if (tv_more.getText().toString().equals("没有更多了")){
+                tv_more.setClickable(false);
+            }
         }
     }
 }

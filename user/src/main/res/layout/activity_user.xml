@@ -191,15 +191,94 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_usersetting"
+        android:background="@drawable/layout_selecter"
+
         android:layout_marginTop="@dimen/space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white">
-
+      >
         <LinearLayout
-            android:background="@drawable/layout_selecter"
+            android:id="@+id/ll_copyRight"
+
+            android:layout_marginTop="@dimen/space"
+            android:padding="@dimen/space"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_marginLeft="@dimen/space"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_copy_right"/>
+
+            <TextView
+                android:layout_marginLeft="@dimen/space"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                style="@style/TextStyleBase"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/sc_"
+                android:layout_height="wrap_content"
+                android:text="版权声明"/>
+
+            <ImageView
+                android:layout_marginRight="@dimen/space"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/iv_anchor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_arrow_right"/>
+        </LinearLayout>
+        <View
+            android:layout_marginLeft="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_gray"/>
+        <LinearLayout
+            android:id="@+id/ll_anchor"
+            android:layout_marginTop="@dimen/space"
+            android:padding="@dimen/space"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_marginLeft="@dimen/space"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_anchor"/>
+
+            <TextView
+                android:layout_marginLeft="@dimen/space"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                style="@style/TextStyleBase"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/sc_"
+                android:layout_height="wrap_content"
+                android:text="主播申请"/>
+
+            <ImageView
+                android:layout_marginRight="@dimen/space"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/iv_copyRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_arrow_right"/>
+        </LinearLayout>
+        <View
+            android:layout_marginLeft="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_gray"/>
+        <LinearLayout
+            android:id="@+id/ll_usersetting"
             android:padding="@dimen/space"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_height"
@@ -230,7 +309,5 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_arrow_right"/>
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

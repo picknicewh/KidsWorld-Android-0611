@@ -41,12 +41,13 @@ public class MyConversationBehaviorListener  implements RongIM.ConversationBehav
     public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo) {
         Intent intent = new Intent(context, ImagePagerActivity.class);
         ArrayList<String> urls = new ArrayList<>();
-        urls.add(userInfo.getPortraitUri().toString());
-        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls);
-        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
-        intent.putExtra("source","message");
-        context.startActivity(intent);
-      ;
+        if (userInfo.getPortraitUri() !=null){
+            urls.add(userInfo.getPortraitUri().toString());
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls);
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
+            intent.putExtra("source","message");
+            context.startActivity(intent);
+        }
         return true;
     }
     /**

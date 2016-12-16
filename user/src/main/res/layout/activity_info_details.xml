@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/ts_xx_large"
-            android:textColor="@color/black"
+            android:textColor="@color/theme_text"
             android:text="7月28日05点停机维护公告"
             android:layout_gravity="center"/>
 
@@ -25,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextStyleBase"
+            android:textColor="@color/minor_text"
             android:text="2016-07-27 18:54:53"/>
 
         <TextView
@@ -33,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/TextStyleBase"
+            android:textColor="@color/theme_text"
             android:text="尊敬的DNF用户：
 
     为了给各位勇士带来更优质的游戏体验，进一步加强游戏的安全性，我们将于7月28(周四)05:00-09:00对所有大区进行停机维护，整个维护过程预计需要4个小时，因开机顺序以及数据维护内容差异，部分大区会提前开放。因停机给大家带来的不便，我们深表歉意。

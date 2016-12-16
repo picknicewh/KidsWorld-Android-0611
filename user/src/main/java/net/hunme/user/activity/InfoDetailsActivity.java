@@ -35,7 +35,7 @@ public class InfoDetailsActivity extends BaseActivity {
     private void initDate(){
         Intent intent=getIntent();
         tv_title.setText(intent.getStringExtra("title"));
-        tv_date.setText(intent.getStringExtra("date"));
+        tv_date.setText(intent.getStringExtra("date").substring(0,10));
         tv_content.setText(intent.getStringExtra("content"));
     }
 }

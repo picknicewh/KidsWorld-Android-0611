@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:windowSoftInputMode="stateHidden|adjustResize"
                 android:hint="请输入您的手机号码"
+                android:singleLine="true"
                 android:background="@drawable/bg_login_text"
                 />
             <EditText
@@ -44,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="请输入您的密码"
+                android:singleLine="true"
                 android:background="@drawable/bg_login_text"
                 />
 
@@ -65,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/space_x2"
-            android:textColor="@color/main_green"
+            android:textColor="@color/main_text_green"
             android:text="忘记密码？"
             />
     </LinearLayout>

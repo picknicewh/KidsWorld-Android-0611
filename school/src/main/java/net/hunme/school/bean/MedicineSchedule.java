@@ -1,7 +1,5 @@
 package net.hunme.school.bean;
 
-import java.util.Map;
-
 /**
  * 作者： wh
  * 时间： 2016/11/1
@@ -18,21 +16,21 @@ public class MedicineSchedule {
     /**
      *今日喂药流程
      */
-    private Map<String,Object> schedule	;
+    private Schedule schedule	;
 
-    public MedicineVo getMedicine() {
+    public  MedicineVo getMedicine() {
         return medicine;
     }
 
-    public void setMedicine(MedicineVo medicine) {
+    public void setMedicine( MedicineVo medicine) {
         this.medicine = medicine;
     }
 
-    public Map<String, Object> getSchedule() {
+    public Schedule getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(Map<String, Object> schedule) {
+    public void setSchedule(Schedule  schedule) {
         this.schedule = schedule;
     }
 }
