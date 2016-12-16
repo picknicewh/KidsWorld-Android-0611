@@ -263,10 +263,10 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         ImageCache.imageLoaderPlay(TextUtil.encodeChineseUrl(url), iv_album);
         String createName = resourceVos.get(position).getCreateName();
         tv_create_name.setText(createName);
-        ll_main.setBackgroundResource(TextUtil.getBgImage(createName));
-        rl_from.setBackgroundResource(TextUtil.getFromImage(createName));
+        ll_main.setBackgroundResource(TextUtil.getInforImage(createName,1));
+        rl_from.setBackgroundResource(TextUtil.getInforImage(createName,2));
         rl_from.setAlpha((float) 0.8);
-        iv_circle.setBackgroundResource(TextUtil.getCircleImage(createName));
+        iv_circle.setBackgroundResource(TextUtil.getInforImage(createName,3));
     }
 
     @Override
