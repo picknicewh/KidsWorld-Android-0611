@@ -199,12 +199,17 @@ public class MainLongClickDialog implements View.OnClickListener{
      * 移除会话
      * @param targetId 会话id
      */
-    private void removeConversation(String targetId){
+    private void removeConversation(final String targetId){
         if (RongIM.getInstance() != null) {
             RongIM.getInstance().removeConversation(type,targetId, new RongIMClient.ResultCallback<Boolean>(){
                 @Override
                 public void onSuccess(Boolean aBoolean) {
                     if (aBoolean){
+                        if (type== Conversation.ConversationType.GROUP){
+                            groupsDbHelper.updateIsTop(db,0,targetId);
+                        }else if (type== Conversation.ConversationType.PRIVATE){
+                            contractsDbHelper.updateIsTop(db,0,targetId);
+                        }
                         Log.i("TAG","移除成功！");
                     }else {
                         Log.i("TAG","移除失败！");

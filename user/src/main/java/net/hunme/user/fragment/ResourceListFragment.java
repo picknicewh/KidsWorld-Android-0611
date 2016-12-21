@@ -145,6 +145,11 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
                 resourceManagerVoList.clear();
                 myResourcePresent.getPlayRecordList(1, pageNumber * pageSize, type);
             }
+            if (source==0){
+                tv_nodata.setText("你还没有收藏哦，快去收藏吧！");
+            }else {
+                tv_nodata.setText("你还没有足迹哦，快去留下足迹吧！");
+            }
             tv_nodata.setVisibility(View.VISIBLE);
             gv_list.setVisibility(View.GONE);
             ll_load_more.setVisibility(View.GONE);

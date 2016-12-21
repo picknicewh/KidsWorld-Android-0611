@@ -95,7 +95,7 @@ public class ConsultListFragment extends BaseFragement implements ResourceContra
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ResourceVo compilationVo = resourceVoList.get(i);
-                myResourcePresent.starConsultActivity(Integer.parseInt(compilationVo.getResourceId()));
+                myResourcePresent.starConsultActivity(compilationVo.getResourceId());
             }
         });
         if (adapter!=null){
@@ -112,6 +112,11 @@ public class ConsultListFragment extends BaseFragement implements ResourceContra
             }else if (source==1&&resourceManagerVoList.size()>0){
                 resourceManagerVoList.clear();
                 myResourcePresent.getPlayRecordList(1,pageNumber*pageSize,3);
+            }
+            if (source==0){
+                tv_nodata.setText("你还没有收藏哦，快去收藏吧！");
+            }else {
+                tv_nodata.setText("你还没有足迹哦，快去留下足迹吧！");
             }
             tv_nodata.setVisibility(View.VISIBLE);
             lv_list.setVisibility(View.GONE);

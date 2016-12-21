@@ -1,5 +1,6 @@
-package net.hunme.discovery.util;
+package net.hunme.baselibrary.widget;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -7,9 +8,9 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import net.hunme.baselibrary.R;
 import net.hunme.baselibrary.util.G;
-import net.hunme.discovery.MainPlayActivity;
-import net.hunme.discovery.R;
+
 
 /**
  * 作者： wh
@@ -19,12 +20,12 @@ import net.hunme.discovery.R;
  * 附加注释：
  * 主要接口：
  */
-public class NoPayComformPopWindow extends PopupWindow {
+public class PromptPopWindow extends PopupWindow {
     private View contentView;
     private int width;
-    private MainPlayActivity context;
+    private Context context;
 
-    public NoPayComformPopWindow(MainPlayActivity context,String content) {
+    public PromptPopWindow(Context context, String content) {
         this.context = context;
         width = (int) (G.size.W * 0.8);
         initView(content);
@@ -40,7 +41,6 @@ public class NoPayComformPopWindow extends PopupWindow {
         btn_conform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.finish();
                 dismiss();
             }
         });

@@ -86,7 +86,7 @@ public class UserMessage {
         editor.commit();
     }
     public String getHoldImgUrl(){
-        return  spf.getString("holdImgUrl","drawable://" + R.drawable.ic_head);
+        return  spf.getString("holdImgUrl","mipmap://" + R.mipmap.ic_head);
     }
 
     /**

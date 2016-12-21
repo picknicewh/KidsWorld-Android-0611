@@ -25,6 +25,6 @@ public class ResourceContract {
         void getPlayRecordList(int pageNumber,int pageSize,int type);
         void starVedioActivity(String themeId);
         void   startMusicActivity(String themeId, String resourceId);
-        void starConsultActivity(int resourceId);
+        void starConsultActivity(String resourceId);
     }
 }

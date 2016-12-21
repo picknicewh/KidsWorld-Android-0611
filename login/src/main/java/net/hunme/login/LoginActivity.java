@@ -1,14 +1,18 @@
 package net.hunme.login;
 
 import android.annotation.TargetApi;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,6 +31,7 @@ import net.hunme.baselibrary.util.FormValidation;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.LoadingDialog;
+import net.hunme.baselibrary.widget.PromptPopWindow;
 import net.hunme.login.mode.CharacterSeleteVo;
 import net.hunme.login.util.UserAction;
 
@@ -38,6 +43,8 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, OkHttpListener {
     private EditText ed_username;
     private EditText ed_password;
+    private CheckBox checkBox;
+    private TextView tv_agree;
     private Button b_login;
     private String username;
     private String password;
@@ -63,9 +70,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ed_username= (EditText) findViewById(R.id.ed_username);
         ed_password= (EditText) findViewById(R.id.ed_password);
         tv_unpassword= (TextView) findViewById(R.id.tv_unpassword);
+        checkBox = (CheckBox)findViewById(R.id.checkbox);
         b_login= (Button) findViewById(R.id.b_login);
+        tv_agree= (TextView) findViewById(R.id.tv_agree);
         b_login.setOnClickListener(this);
         tv_unpassword.setOnClickListener(this);
+        tv_agree.setOnClickListener(this);
         dialog=new LoadingDialog(this,R.style.LoadingDialogTheme);
     }
 
@@ -85,15 +95,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             intent.putExtra("phoneNumber",phoneNumber);
             intent.setClass(this, UpdateMessageActivity.class);
             startActivity(intent);
+        }else if (i==R.id.tv_agree){
+            Intent intent  = new Intent();
+            ComponentName componetName = new ComponentName("net.hunme.kidsworld","net.hunme.user.activity.TextContentActivity");
+            intent.setComponent(componetName);
+            intent.putExtra("source",2);
+            startActivity(intent);
         }
     }
-
     /**
      * 访问服务器
      */
     private void isGoLogin(){
         username=ed_username.getText().toString().trim();
         password=ed_password.getText().toString().trim();
+        if (!checkBox.isChecked()){
+            PromptPopWindow promptPopWindow = new PromptPopWindow(this,"请同意服务条款");
+            promptPopWindow.showAtLocation(checkBox, Gravity.NO_GRAVITY, (int) (G.size.W-promptPopWindow.getWidth())/2, (int) (G.size.H*0.5-promptPopWindow.getHeight())/2);
+            return;
+        }
         if(G.isEmteny(username)||G.isEmteny(password)){
             G.showToast(this,"账号密码不能为空");
             return;
@@ -141,10 +161,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             UserAction.saveLoginMessage(this,username,password);
         }else if(Apiurl.SELECTUSER.equals(uri)){
             String sex;
-            if(data.getSex()==1){
+            if (data.getSex()!=null){
+                if(data.getSex()==1){
+                    sex="男";
+                }else{
+                    sex="女";
+                }
+            }else {
                 sex="男";
-            }else{
-                sex="女";
             }
             UserAction.saveUserMessage(this,data.getName(),
                     data.getImg(),data.getClassName(),data.getSchoolName(),

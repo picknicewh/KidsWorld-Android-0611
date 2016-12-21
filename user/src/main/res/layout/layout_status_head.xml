@@ -23,7 +23,6 @@
                 android:scaleType="centerCrop" />
             <TextView
                 android:id="@+id/tv_id"
-                android:text="学"
                 android:gravity="center"
                 android:layout_centerVertical="true"
                 android:textColor="@color/white"

@@ -20,10 +20,13 @@ public class TextContentActivity extends BaseActivity {
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
-        if (getIntent().getIntExtra("source",0)==0){
+        source = getIntent().getIntExtra("source",0);
+        if (source==0){
             setCententTitle("主播认证");
-        }else {
+        }else if (source==1){
             setCententTitle("版权声明");
+        }else if (source==2){
+            setCententTitle("服务条款");
         }
 
         setLiftOnClickClose();
@@ -31,14 +34,15 @@ public class TextContentActivity extends BaseActivity {
     private void initView(){
         TextView tv_copy_right=$(R.id.tv_txt_content);
         source = getIntent().getIntExtra("source",0);
-        InputStream is;
+        InputStream is=null;
         String text =null;
         try {
             if (source==0){
                 is=getAssets().open("author.txt");
-
-            }else {
+            }else if (source==1){
                 is=getAssets().open("copy_right.txt");
+            }else if (source==2){
+                is=getAssets().open("useragreement.txt");
             }
             int size=is.available();
             byte[] b=new byte[size];

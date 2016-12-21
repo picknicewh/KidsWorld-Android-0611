@@ -150,7 +150,7 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
         if (statusVo.getTsType()==1){
             viewHold.tv_id.setText("学");
             viewHold.tv_id.setBackgroundResource(R.drawable.user_study_selecter);
-        }else if (statusVo.getTsType()==0){
+        }else if (statusVo.getTsType()==2){
             viewHold.tv_id.setText("师");
             viewHold.tv_id.setBackgroundResource(R.drawable.user_teach_selecter);
         }
@@ -197,6 +197,10 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
                     praisesNames.put(i,G.isEmteny(praisePerson)?praisePerson+username:praisePerson+"、"+username);
                     praiseNums.put(i,praiseNums.get(i)+1);
                 }
+
+
+
+
                 personPraise(UserMessage.getInstance(context).getTsId(),statusVo.getDynamicId(), cancle);
             }
         });

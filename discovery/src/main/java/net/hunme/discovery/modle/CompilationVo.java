@@ -3,12 +3,13 @@ package net.hunme.discovery.modle;
 /**
  * 作者： wh
  * 时间： 2016/11/30
- * 名称：
+ * 名称：专辑
  * 版本说明：
  * 附加注释：
  * 主要接口：
  */
 public class CompilationVo {
+
     /**
      * 专辑ID
      */

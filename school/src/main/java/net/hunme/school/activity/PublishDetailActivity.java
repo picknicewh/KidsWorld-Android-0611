@@ -44,9 +44,7 @@ public class PublishDetailActivity extends BaseActivity {
         tv_content = (TextView) findViewById(R.id.tv_content);
         iv_image = (ImageView) findViewById(R.id.iv_image);
         tv_ptitle = (TextView) findViewById(R.id.tv_ptitle);
-
     }
-
     private void initDate() {
         final PublishVo vo = (PublishVo) getIntent().getSerializableExtra("publish");
         ImageCache.imageLoader(vo.getImgUrl(), lv_holad);

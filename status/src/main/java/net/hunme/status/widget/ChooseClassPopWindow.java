@@ -16,7 +16,7 @@ import net.hunme.status.adapter.ChooseClassAdapter;
 import java.util.List;
 
 /**
- * 作者： Administrator
+ * 作者： wh
  * 时间： 2016/7/22
  * 名称：
  * 版本说明：

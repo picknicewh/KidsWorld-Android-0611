@@ -92,8 +92,10 @@ public class ImageCache {
         return ImageCache().loadImageSync(getNewUrl(uri));
     }
     private static String  getNewUrl(String url){
-        if (url.contains("\\")){
-            url = url.replace("\\","/");
+        if (url!=null){
+            if (url.contains("\\")){
+                url = url.replace("\\","/");
+            }
         }
         return url;
     }

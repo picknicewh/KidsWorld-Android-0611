@@ -16,5 +16,6 @@
         <attr name="vphTabBackground" format="reference" />
         <attr name="vphSelectTextColor" format="color" />
         <attr name="vphDefaultTextColor" format="color" />
+        <attr name="vphTabcount" format="integer" />
     </declare-styleable>
 </resources>

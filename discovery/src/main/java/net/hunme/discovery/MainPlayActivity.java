@@ -24,11 +24,11 @@ import net.hunme.baselibrary.mode.ResourceVo;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.CircleImageView;
+import net.hunme.baselibrary.widget.PromptPopWindow;
 import net.hunme.discovery.service.LockScreenService;
 import net.hunme.discovery.util.AnimationUtil;
 import net.hunme.discovery.util.BaseMusicActivity;
 import net.hunme.discovery.util.Constants;
-import net.hunme.discovery.util.NoPayComformPopWindow;
 import net.hunme.discovery.util.PlayListPopuWindow;
 import net.hunme.discovery.util.PlayMode;
 import net.hunme.discovery.util.PlayMusicContract;
@@ -173,7 +173,7 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
             }else {
                 //isResourceFree==2免费==1收费
                 if (isResourceFree==1){
-                    NoPayComformPopWindow payComformPopWindow = new NoPayComformPopWindow(this,"你的资费已到期，为了不影响您收看，请及时购买套餐。");
+                    PromptPopWindow payComformPopWindow = new PromptPopWindow(this,"你的资费已到期，为了不影响您收看，请及时购买套餐。");
                     payComformPopWindow.showAtLocation(view,Gravity.NO_GRAVITY, (int) (G.size.W*0.1), (int) (G.size.H*0.7));
                 }else {
                     play();

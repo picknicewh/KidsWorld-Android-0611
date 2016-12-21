@@ -133,10 +133,6 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
      */
     private int loadpage;
     /**
-     * 未读新消息的推送时间列表
-     */
-    private  ArrayList<String> timeList;
-    /**
      * 数据库
      */
     private  SQLiteDatabase db;
@@ -161,9 +157,14 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         rl_nonetwork= $(view,R.id.rl_nonetwork);
         lv_status = $(view,R.id.lv_status);
         refresh_view = $(view,R.id.refresh_view);
+        ll_classchoose.setOnClickListener(this);
+        refresh_view.setOnRefreshListener(this);
+        iv_right.setOnClickListener(this);
+        rl_nonetwork.setOnClickListener(this);
+        tv_status_bar.setOnClickListener(this);
         classlist = new ArrayList<>();
         statusVoList = new ArrayList<>();
-        timeList = new ArrayList<>();
+        G.initDisplaySize(getActivity());
         setListViewHead();
         getDynamicHead();
         setLayout_head(layout_head);
@@ -173,14 +174,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         setTv_status_bar(tv_status_bar);
         setDynamicList(dynamicList);
         setRl_nonetwork(rl_nonetwork);
-        setTimeList(timeList);
         setMessageInfo();
-        ll_classchoose.setOnClickListener(this);
-        refresh_view.setOnRefreshListener(this);
-        G.initDisplaySize(getActivity());
-        iv_right.setOnClickListener(this);
-        rl_nonetwork.setOnClickListener(this);
-        tv_status_bar.setOnClickListener(this);
         adapter = new StatusAdapter(this,statusVoList);
         lv_status.setAdapter(adapter);
     }
@@ -233,15 +227,17 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         int viewId = view.getId();
         if (viewId==R.id.ll_classchoose) {
             int xPos = G.size.W / 2 - G.dp2px(getActivity(), 75);
-            popWindow.showAsDropDown(rl_toolbar, xPos, -G.dp2px(getActivity(), 10));
-            popWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (!hasFocus) {
-                        popWindow.dismiss();
+            if (rl_toolbar!=null){
+                popWindow.showAsDropDown(rl_toolbar, xPos, -G.dp2px(getActivity(), 10));
+                popWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus) {
+                            popWindow.dismiss();
+                        }
                     }
-                }
-            });
+                });
+            }
         }else if (viewId==R.id.tv_status_bar){
             Intent intent ;
             // 先判断当前系统版本
@@ -259,7 +255,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
             //获取所以没阅读的通知时间，并且点击后把所有未阅读的数据标记为已读
             Intent intent = new Intent();
             intent.setClass(getActivity(), MessageDetailActivity.class);
-            intent.putStringArrayListExtra("timeList", timeList);
+
             getActivity().startActivity(intent);
             isClick = true;
         }
@@ -298,8 +294,10 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
             lv_status.removeHeaderView(layout_head);
         }
         //设置消息通知状态，评论完了要重新获取通知栏的消息
-        lv_status.removeHeaderView(layout_head);
-        setMessageInfo();
+        if (dbHelper.getNoReadcount(db)>0){
+            lv_status.removeHeaderView(layout_head);
+            setMessageInfo();
+        }
     }
 
     /**

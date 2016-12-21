@@ -109,7 +109,7 @@ public class MyResourcePresent implements ResourceContract.Presenter, OkHttpList
     }
 
     @Override
-    public void starConsultActivity(int resourceId) {
+    public void starConsultActivity(String resourceId) {
         Intent intent = new Intent(context ,HMDroidGap.class);
         intent.putExtra("loadUrl", url + "?tsId=" + UserMessage.getInstance(context).getTsId() + "#/eduInformation_Detail?resourceid=" + resourceId);
         context.startActivity(intent);

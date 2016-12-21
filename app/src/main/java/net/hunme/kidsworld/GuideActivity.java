@@ -82,7 +82,7 @@ public class GuideActivity extends JPushBaseActivity {
             initializeMode();
             initializeView();
         } else {
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, StartActivity.class));
             finish();
         }
     }
@@ -149,7 +149,6 @@ public class GuideActivity extends JPushBaseActivity {
             }
         });
     }
-
     /**
      * 标题栏透明
      * 仅支持api大于等于19

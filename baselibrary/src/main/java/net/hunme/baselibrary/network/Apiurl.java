@@ -161,7 +161,6 @@ public class Apiurl {
     public static final String UPDATESYSTEM="/appUser/getVersion.do";
 
     //=========================动态================================
-
     /**
      * 获取动态详情
      */
@@ -253,4 +252,8 @@ public class Apiurl {
      * 获取播放记录
      */
     public static final String GETPLAYRECORDING = "/rakuen/getResourcePlayRecordedCommand.do";
+    /**
+     * 获取专辑资源的列表
+     */
+    public static final String GETALUBMLIST = "/rakuen/getContent.do";
 }

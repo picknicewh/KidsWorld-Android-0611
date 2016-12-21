@@ -28,6 +28,10 @@
                 android:id="@+id/ed_username"
                 android:layout_margin="@dimen/space"
                 android:padding="@dimen/space_x1.5"
+
+
+
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:windowSoftInputMode="stateHidden|adjustResize"
@@ -60,15 +64,34 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/ts_x_large"/>
         </LinearLayout>
-
-        <TextView
-            android:layout_gravity="center"
-            android:id="@+id/tv_unpassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/space_x2"
-            android:textColor="@color/main_text_green"
-            android:text="忘记密码？"
-            />
+      <RelativeLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:padding="@dimen/space">
+          <CheckBox
+              android:id="@+id/checkbox"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="@color/minor_text"
+              android:checked="true"
+             />
+          <TextView
+              android:id="@+id/tv_agree"
+              android:layout_centerVertical="true"
+              android:layout_toRightOf="@+id/checkbox"
+              android:text="我已同意用户协议"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+          <TextView
+              android:layout_centerVertical="true"
+              android:id="@+id/tv_unpassword"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:textColor="@color/main_text_green"
+              android:text="忘记密码？"
+              />
+      </RelativeLayout>
     </LinearLayout>
 </ScrollView>

@@ -27,6 +27,7 @@ import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
 import net.hunme.discovery.R;
+import net.hunme.discovery.activity.MusicAlubmListActivity;
 import net.hunme.user.activity.CollectActivity;
 import net.hunme.user.activity.UserActivity;
 

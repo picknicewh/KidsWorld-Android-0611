@@ -113,10 +113,14 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
         }else {
             dialog.dismiss();
             String sex;
-            if(data.getSex()==1){
+            if (data.getSex()!=null){
+                if(data.getSex()==1){
+                    sex="男";
+                }else{
+                    sex="女";
+                }
+            }else {
                 sex="男";
-            }else{
-                sex="女";
             }
             //通过用户选择身份保存用户信息
             UserAction.saveUserMessage(UserChooseActivity.this,data.getName(),

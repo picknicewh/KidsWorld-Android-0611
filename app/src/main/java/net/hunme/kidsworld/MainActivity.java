@@ -49,8 +49,6 @@ import main.jpushlibrary.JPush.JPushBaseActivity;
  * 主要接口：
  */
 public class MainActivity extends JPushBaseActivity {
-//    @Bind(R.id.vp_main)
-//    NoScrollViewPager viewPager;
     /**
      * 通讯圆点
      */

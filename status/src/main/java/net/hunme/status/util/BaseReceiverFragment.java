@@ -81,10 +81,6 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
      *网络状态监听
      */
     public ConnectionChangeReceiver connectionChangeReceiver;
-    /**
-     * 未读新消息的推送时间列表
-     */
-    public ArrayList<String> timeList;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -217,7 +213,6 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
         if (dialog!=null){
             dialog.dismiss();
         }
-
     }
     public String getGroupId(){
         return this.groupId;
@@ -238,5 +233,4 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
     public void setTv_message(TextView tv_message) {this.tv_message = tv_message;}
     public void setIv_head(ImageView iv_head) {this.iv_head = iv_head;}
     public void setLayout_head(View layout_head) {this.layout_head = layout_head;}
-    public void setTimeList(ArrayList<String> timeList) {this.timeList = timeList;}
 }

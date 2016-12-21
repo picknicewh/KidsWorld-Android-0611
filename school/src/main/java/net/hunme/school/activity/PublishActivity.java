@@ -144,15 +144,11 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
         if (date!=null){
             stopLoadingDialog();
             List<PublishVo> publishVos=((Result<List<PublishVo>>)date).getData();
-            for (int i = publishVos.size()-1;i>0;i--){
-                PublishVo vo= publishVos.get(i);
-                boolean isRead= PublishDbHelp.select(PublishActivity.db.getReadableDatabase(),vo.getMessageId()+um.getTsId());
-              /*  if(!isRead)
-                    //将未读信息排在最前列
-                    publishList.add(0,vo);
-                else*/
-                    publishList.add(vo);
-                vo.setRead(isRead);
+            for (int i = publishVos.size()-1;i>=0;i--){
+                 PublishVo vo= publishVos.get(i);
+                 boolean isRead= PublishDbHelp.select(PublishActivity.db.getReadableDatabase(),vo.getMessageId()+um.getTsId());
+                 vo.setRead(isRead);
+                 publishList.add(vo);
             }
             if (publishList.size()==0){
                 tv_nodata.setVisibility(View.VISIBLE);
@@ -162,7 +158,6 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
                 lv_publish.setVisibility(View.VISIBLE);
                 adapter.notifyDataSetChanged();
             }
-
         }
     }
 

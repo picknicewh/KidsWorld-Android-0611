@@ -66,8 +66,7 @@ public class GridAlbumAdapter extends BaseAdapter {
             holder.clv_delete.setVisibility(View.VISIBLE);
             getBitmapData(holder.image,imageItems.get(position));
         } else {
-            ImageLoader.getInstance().displayImage("drawable://" + R.drawable.ic_unfocused,
-                    holder.image);
+            holder.image.setImageResource(R.mipmap.ic_unfocused);
             holder.clv_delete.setVisibility(View.GONE);
             holder.image.setVisibility(View.VISIBLE);
             if (position >= maxContent) {

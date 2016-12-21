@@ -27,6 +27,7 @@
             android:textSize="@dimen/ts_x_large"
             android:textColor="@color/main_green" />
         <TextView
+            android:paddingRight="@dimen/space"
             android:layout_marginTop="@dimen/space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

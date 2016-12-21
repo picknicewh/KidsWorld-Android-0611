@@ -21,7 +21,7 @@ public class StatusVo implements Serializable{
      */
     private String tsName;
     /**
-     * 1=学生，0=老师
+     * 1=学生，2=老师
      * 	角色类别
      */
      private int tsType	;

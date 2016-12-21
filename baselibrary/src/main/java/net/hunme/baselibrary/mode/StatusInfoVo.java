@@ -27,8 +27,6 @@ public class StatusInfoVo{
      * 用户头像
      */
     private String  imgUrl;
-
-
     /**
      *是否已经阅读
      */
