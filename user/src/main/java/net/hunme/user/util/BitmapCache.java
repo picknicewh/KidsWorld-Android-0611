@@ -78,6 +78,7 @@ public class BitmapCache {
         return false;
     }
     private static List<File> files;
+
     public static List<File> getFileList(List<String>pathList){
         String path=Environment.getExternalStorageDirectory().toString() + "/ChatFile/";
         files=new ArrayList<>();

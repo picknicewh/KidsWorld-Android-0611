@@ -175,7 +175,7 @@ public class MyDynamicAdapter extends BaseAdapter implements  OkHttpListener {
         viewHold.tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DeleteDynamicDialog dialog = new DeleteDynamicDialog(myDynamicActivity,dynamicInfoVo.getDynamicId(),pageNumber);
+                DeleteDynamicDialog dialog = new DeleteDynamicDialog(myDynamicActivity,dynamicInfoVo.getDynamicId(),i);
                 dialog.initView();
             }
         });

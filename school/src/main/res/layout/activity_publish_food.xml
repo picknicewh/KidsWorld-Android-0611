@@ -41,6 +41,7 @@
             android:textSize="@dimen/ts_large"
             android:layout_weight="1"
             android:text="点心"
+            android:checked="true"
             android:textColor="@color/main_green"
             android:id="@+id/rb_sweetFood"
             android:layout_width="wrap_content"
@@ -70,6 +71,7 @@
         android:hint="请输入食谱..."
         android:inputType="textMultiLine"
         android:minLines="5"
+        android:maxLength="140"
         android:layout_margin="@dimen/space"
         android:padding="@dimen/space_x2" />
     <GridView

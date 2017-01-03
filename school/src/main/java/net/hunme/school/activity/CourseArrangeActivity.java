@@ -192,6 +192,20 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
             refresh_view.setLv_count(syllabusVoList.size());
         }
     }
+    public void updateDelete(int position){
+        syllabusVoList.remove(position);
+        if (syllabusVoList.size()==0){
+            tv_nodata.setVisibility(View.VISIBLE);
+            dispalynonet(true);
+        }else {
+            tv_nodata.setVisibility(View.GONE);
+            dispalynonet(false);
+        }
+        if (adapter!=null){
+            adapter.notifyDataSetChanged();
+        }
+        refresh_view.setLv_count(syllabusVoList.size());
+    }
     /**
      * 隐藏列表
      * @param isvisible 是否隐藏

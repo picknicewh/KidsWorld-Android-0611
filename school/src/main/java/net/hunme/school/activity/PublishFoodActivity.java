@@ -101,19 +101,19 @@ public class PublishFoodActivity extends BaseFoodActivity {
         rb_launch=$(R.id.rb_launch);
         itemList = new ArrayList<>();
         flag = 1;
+        setItemList(itemList);
         setDateView(dateView);
         setRl_calendar(rl_calendar);
         setTv_calendar(tv_calendar);
         setFrom(FOODLISTPAGE);
         setEt_food(et_food);
         setType(type);
-        PublishPhotoUtil.showPhoto(this,itemList,gv_food,maxContent);
-        setItemList(itemList);
         rl_calendar.setOnClickListener(this);
         tv_calendar.setText(dateView.getDate());
         rb_launch.setOnClickListener(this);
         rb_sweetFood.setOnClickListener(this);
         setSubTitleOnClickListener(this);
+        PublishPhotoUtil.showPhoto(this,itemList,gv_food,maxContent);
     }
     @Override
     public void onClick(View view) {

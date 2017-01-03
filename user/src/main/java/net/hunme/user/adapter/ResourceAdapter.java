@@ -19,16 +19,30 @@ import java.util.List;
  * ================================================
  * 作    者：wh
  * 时    间：2016/11/28
- * 描    述：
+ * 描    述：我的收藏和播放记录列表的适配器，根据获取的列表数据的判断来源
  * 版    本：
  * 修订历史：
  * 主要接口：
  * ================================================
  */
 public class ResourceAdapter extends BaseAdapter {
+    /**
+     * 文本
+     */
     private Context context;
+    /**
+     * 专辑类列表
+     */
     private List<CompilationsVo> compilationsVos;
+    /**
+     * 资源列表
+     */
     private List<ResourceVo> resourceManagerVos;
+    /**
+     * 来源
+     * source =0 我的收藏
+     * source =1 播放记录
+     */
     private int source;
     public ResourceAdapter(Context context, List<CompilationsVo> compilationsVos, List<ResourceVo> resourceManagerVos) {
         this.context = context;

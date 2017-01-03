@@ -35,9 +35,9 @@ public class StatusInfoDbHelper {
      * 查询所有数据数据,获取列表信息
      * @param  db 数据库
      */
-    public List<StatusInfoVo> getStatusInformVos(SQLiteDatabase db){
+    public List<StatusInfoVo> getStatusInformVos(SQLiteDatabase db,String tsId){
         List<StatusInfoVo> statusInfoVos = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select * from statusInfo order by createTime desc",null);
+        Cursor cursor = db.rawQuery("select * from statusInfo where tsId = '" + tsId +"' order by createTime desc ",null);
         int createTimeIndex = cursor.getColumnIndex("createTime");
         int imgUrlIndex= cursor.getColumnIndex("imgUrl");
         int tsIdIndex= cursor.getColumnIndex("tsId");
@@ -47,12 +47,12 @@ public class StatusInfoDbHelper {
             StatusInfoVo statusInfoVo = new StatusInfoVo();
             String createTime = cursor.getString(createTimeIndex);
             String imgUrl = cursor.getString(imgUrlIndex);
-            String tsId = cursor.getString(tsIdIndex);
+            String mtsId = cursor.getString(tsIdIndex);
             int uid = cursor.getInt(uidIndex);
             int isRead = cursor.getInt(isReadIndex);
             statusInfoVo.setCreateTime(createTime);
             statusInfoVo.setImgUrl(imgUrl);
-            statusInfoVo.setTsId(tsId);
+            statusInfoVo.setTsId(mtsId);
             statusInfoVo.setUid(uid);
             statusInfoVo.setIsRead(isRead);
             statusInfoVos.add(statusInfoVo);
@@ -63,9 +63,9 @@ public class StatusInfoDbHelper {
      * 获取没有阅读的消息数量
      * @param  db 数据库
      */
-    public int getNoReadcount(SQLiteDatabase db){
+    public int getNoReadcount(SQLiteDatabase db,String tsId){
         int count = 0;
-        List<StatusInfoVo> statusInfoVos= getStatusInformVos(db);
+        List<StatusInfoVo> statusInfoVos= getStatusInformVos(db, tsId);
         if (statusInfoVos.size()>0 && statusInfoVos!=null) {
             for (int i = 0; i < statusInfoVos.size(); i++) {
                 StatusInfoVo statusInfoVo = statusInfoVos.get(i);
@@ -80,9 +80,9 @@ public class StatusInfoDbHelper {
      * 获取没有阅读的消息的时间
      * @param  db 数据库
      */
-    public ArrayList<String>  getNoreadTime(SQLiteDatabase db){
+    public ArrayList<String>  getNoreadTime(SQLiteDatabase db,String tsId){
         ArrayList<String> timeList = new ArrayList<>();
-        List<StatusInfoVo> statusInfoVos= getStatusInformVos(db);
+        List<StatusInfoVo> statusInfoVos= getStatusInformVos(db,tsId);
         if (statusInfoVos.size()>0 && statusInfoVos!=null) {
             for (int i = 0; i < statusInfoVos.size(); i++) {
                 StatusInfoVo statusInfoVo = statusInfoVos.get(i);
@@ -100,8 +100,8 @@ public class StatusInfoDbHelper {
      * 更新所有阅读的消息状态
      * @param  db 数据库
      */
-    public void updateAllread(SQLiteDatabase db){
-            List<StatusInfoVo> statusInfoVos= getStatusInformVos(db);
+    public void updateAllread(SQLiteDatabase db,String tsId){
+            List<StatusInfoVo> statusInfoVos= getStatusInformVos(db,tsId);
             if (statusInfoVos.size()>0 && statusInfoVos!=null) {
                 for (int i = 0; i < statusInfoVos.size(); i++) {
                     StatusInfoVo statusInfoVo = statusInfoVos.get(i);
@@ -116,9 +116,9 @@ public class StatusInfoDbHelper {
      * 获取没有阅读的消息数量
      * @param  db 数据库
      */
-    public int getcount(SQLiteDatabase db){
+    public int getcount(SQLiteDatabase db,String tsId){
         int count = 0;
-        List<StatusInfoVo> statusInfoVos= getStatusInformVos(db);
+        List<StatusInfoVo> statusInfoVos= getStatusInformVos(db,tsId);
         if (statusInfoVos.size()>0 && statusInfoVos!=null) {
             count = statusInfoVos.size();
            return count;
@@ -129,8 +129,23 @@ public class StatusInfoDbHelper {
      * 最近一次没有阅读的消息头像
      * @param  db 数据库
      */
-    public String getLatestUrl(SQLiteDatabase db){
-        List<StatusInfoVo> statusInfoVos= getStatusInformVos(db);
+    public List<String> getTsIds(SQLiteDatabase db,String tsId){
+        List<String> tsIds = new ArrayList<>();
+        List<StatusInfoVo> statusInfoVos= getStatusInformVos(db, tsId);
+        if (statusInfoVos.size()>0 && statusInfoVos!=null) {
+            for (int i = 0; i < statusInfoVos.size(); i++) {
+                StatusInfoVo statusInfoVo = statusInfoVos.get(i);
+                tsIds.add(statusInfoVo.getTsId());
+            }
+        }
+        return tsIds;
+    }
+    /**
+     * 最近一次没有阅读的消息头像
+     * @param  db 数据库
+     */
+    public String getLatestUrl(SQLiteDatabase db,String tsId){
+        List<StatusInfoVo> statusInfoVos= getStatusInformVos(db, tsId);
         if (statusInfoVos.size()>0 && statusInfoVos!=null) {
             for (int i = 0; i < statusInfoVos.size(); i++) {
                 StatusInfoVo statusInfoVo = statusInfoVos.get(i);
@@ -162,12 +177,13 @@ public class StatusInfoDbHelper {
         }
         return true;
     }
+
     /**
      *  删除超过20条时记录
      * @param  db 数据库
      */
-    public  void deleteOverTime(SQLiteDatabase db){
-        List<StatusInfoVo> statusInfoVos= getStatusInformVos(db);
+    public  void deleteOverTime(SQLiteDatabase db,String tsId){
+        List<StatusInfoVo> statusInfoVos= getStatusInformVos(db,tsId);
         if (statusInfoVos.size()>0 && statusInfoVos!=null) {
             for (int i = 0; i < statusInfoVos.size(); i++) {
                 if(i>19 && statusInfoVos.get(i).getIsRead()==1){

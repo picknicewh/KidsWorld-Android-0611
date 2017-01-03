@@ -41,5 +41,6 @@
         android:paddingTop="@dimen/space"
         android:paddingBottom="@dimen/space"
         android:textColor="@color/white"
+        android:maxLength="140"
         android:background="@drawable/conform_selecter"/>
 </LinearLayout>

@@ -2,10 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+   <TextView android:id="@+id/tv_nodata"
+   android:visibility="gone"
+   android:gravity="center"
+   android:layout_gravity="center"
+   android:text="没有数据"
+   android:textSize="18sp"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent" />
    <ListView
        android:background="@color/white"
-
-
        android:id="@+id/lv_feed_list"
        android:layout_width="match_parent"
        android:layout_height="match_parent"/>

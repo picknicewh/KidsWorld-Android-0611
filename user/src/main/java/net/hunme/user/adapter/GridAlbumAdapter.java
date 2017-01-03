@@ -7,9 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import net.hunme.baselibrary.image.ImageCache;
+import net.hunme.baselibrary.util.G;
 import net.hunme.user.R;
 
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public class GridAlbumAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
-        ViewHolder holder = null;
+        ViewHolder holder ;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_published_grida, null);
             new ViewHolder(convertView);
@@ -66,19 +65,20 @@ public class GridAlbumAdapter extends BaseAdapter {
             holder.clv_delete.setVisibility(View.VISIBLE);
             getBitmapData(holder.image,imageItems.get(position));
         } else {
-            holder.image.setImageResource(R.mipmap.ic_unfocused);
+            ImageCache.imageLoader("drawable://"+R.drawable.ic_unfocused,holder.image);
+//            holder.image.setImageResource(R.mipmap.ic_unfocused);
             holder.clv_delete.setVisibility(View.GONE);
             holder.image.setVisibility(View.VISIBLE);
+
             if (position >= maxContent) {
                 holder.image.setVisibility(View.GONE);
             }
+            G.log("xxxxxxxxxxxxxxxx");
         }
-
         holder.clv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 imageItems.remove(position);
-
                 notifyDataSetChanged();
             }
         });

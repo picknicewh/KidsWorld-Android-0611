@@ -15,11 +15,13 @@ import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.UserMessage;
+import net.hunme.baselibrary.widget.BaseConformDialog;
 import net.hunme.baselibrary.widget.MyAlertDialog;
 import net.hunme.school.R;
 import net.hunme.school.activity.CourseArrangeActivity;
 import net.hunme.school.activity.LeaveListActivity;
 import net.hunme.school.fragment.MedicineFeedListFragment;
+import net.hunme.user.activity.MyDynamicActivity;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -33,21 +35,8 @@ import java.util.Map;
  * 附加注释：
  * 主要接口：1.删除课程表
  */
-public class DeleteDialog implements View.OnClickListener, OkHttpListener {
+public class DeleteDialog extends BaseConformDialog implements View.OnClickListener, OkHttpListener {
    private Activity context;
-
-    /**
-     * 确定
-     */
-    private Button bt_conform;
-    /**
-     * 取消
-     */
-    private Button bt_cancel;
-    /**
-     * 对话框
-     */
-    private AlertDialog alertDialog;
     /**
      * 课程id
      */
@@ -60,26 +49,19 @@ public class DeleteDialog implements View.OnClickListener, OkHttpListener {
         this.flag = flag;
         this.position = position;
     }
-
-    /**
-     * 初始化view
-     */
-    public void  initView(){
-        View contentView = LayoutInflater.from(context).inflate(R.layout.dialog_delete_course, null);
-        alertDialog = MyAlertDialog.getDialog(contentView, context,1);
-        bt_conform = (Button) contentView.findViewById(R.id.bt_conform);
-         bt_cancel = (Button) contentView.findViewById(R.id.bt_cancel);
-        TextView content = (TextView) contentView.findViewById(R.id.tv_message);
+    public void initView(){
+        initView(context,getContent(flag));
+    }
+    private String getContent(int flag){
+        String content=null;
         if (flag ==1){
-            content.setText("确定删除这条课程吗？");
+            content="确定删除这条课程吗？";
         }else if (flag==0){
-            content.setText("确定删除这条请假吗？");
+            content="确定删除这条请假吗？";
         }else if (flag==2){
-            content.setText("确定删除这条委托吗？");
+            content="确定删除这条委托吗？";
         }
-        bt_cancel.setOnClickListener(this);
-         bt_conform.setOnClickListener(this);
-
+        return content;
     }
     @Override
     public void onClick(View view) {
@@ -92,8 +74,6 @@ public class DeleteDialog implements View.OnClickListener, OkHttpListener {
                 deleteMedicine(syllabusId);
             }
             alertDialog.dismiss();
-        }else if (view.getId()==R.id.bt_cancel){
-            alertDialog.dismiss();
         }
     }
     @Override
@@ -104,15 +84,19 @@ public class DeleteDialog implements View.OnClickListener, OkHttpListener {
             Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
           if (context instanceof LeaveListActivity){
               LeaveListActivity   activity = (LeaveListActivity) context;
-              activity.leaveVos.remove(position);
-              activity.adapter.notifyDataSetChanged();
+            //  activity.leaveVos.remove(position);
+             // activity.adapter.notifyDataSetChanged();
+              activity.deleteUpdate(position);
           }else if (context instanceof CourseArrangeActivity){
               CourseArrangeActivity arrangeActivity = (CourseArrangeActivity) context;
-              arrangeActivity.syllabusVoList.remove(position);
-              arrangeActivity.adapter.notifyDataSetChanged();
-          }else {
+             // arrangeActivity.syllabusVoList.remove(position);
+            //  arrangeActivity.adapter.notifyDataSetChanged();
+              arrangeActivity.updateDelete(position);
+          }
+          else {
               MedicineFeedListFragment.medicineVos.remove(position);
               MedicineFeedListFragment.adapter.notifyDataSetChanged();
+
           }
         }
         alertDialog.dismiss();

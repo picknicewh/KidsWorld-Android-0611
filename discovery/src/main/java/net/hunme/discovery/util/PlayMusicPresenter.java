@@ -41,17 +41,53 @@ import java.util.Map;
  * 主要接口：
  */
 public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttpListener {
+    /**
+     * 播放页面View
+     */
     private PlayMusicContract.View view;
+    /**
+     * 文本
+     */
     private Context context;
+    /**
+     * 当前专辑播放的歌曲位置
+     */
     public static int position=0;
+    /**
+     * 用户角色id
+     */
     private String tsId;
+    /**
+     * 当前音乐是否播放
+     */
     public static boolean  isPlaying=false;
+    /**
+     * 音乐接受服务广播
+     */
     private MainPlayActivity.MyMusicReceiver myMusicReceiver;
+    /**
+     * 资源id
+     */
     public    static  List<ResourceVo>  resourceVos;
+    /**
+     * 通知管理类
+     */
     public  static     NotificationManager manager;
+    /**
+     * 跳转服务的事件
+     */
     private      Intent intent;
+    /**
+     * 资源id
+     */
     private String resourceId;
+    /**
+     * 专辑id
+     */
     private String  themeId;
+    /**
+     * 用户信息类
+     */
     private UserMessage userMessage;
     public  PlayMusicPresenter(PlayMusicContract.View view , Context context, int position, MainPlayActivity.MyMusicReceiver myMusicReceiver, String themeId, String resourceId){
         this.context  =context;
@@ -68,6 +104,13 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         getSongList(tsId,themeId);
         getUserPaly();
     }
+    /**
+     * 保存播放记录列表
+     * @param  tsId 角色id
+     * @param resourceId 资源id
+     * @param  broadcastPace 当前播放音乐的秒数
+     * @param  type 播放音乐开始/结束 type = 1 播放开始 type=2播放结束
+     */
     @Override
     public void savePlayTheRecord(String tsId, String resourceId,int broadcastPace,int type) {
         Map<String,Object> map=new HashMap<>();
@@ -80,6 +123,11 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         Type mType=new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(mType, Apiurl.SAVEPLAYRECORDING,map,this);
     }
+    /**
+     * 根据专辑id获取专辑中的资源列表
+     * @param  tsId 角色id
+     * @param themeId 专辑id
+     */
     @Override
     public void getSongList(String tsId, String  themeId) {
         Map<String,Object> map=new HashMap<>();
@@ -92,6 +140,11 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         OkHttps.sendPost(mType, Apiurl.USER_GETTHENELIST,map,this);
         view.showLoadingDialog();
     }
+    /**
+     * 根据资源id获取资源详情
+     * @param  tsId 角色id
+     * @param resourceId 资源id
+     */
     @Override
     public void getResourceDetail(String tsId, String resourceId) {
         Map<String,Object> map=new HashMap<>();
@@ -100,6 +153,11 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         Type mType=new TypeToken<Result<ResourceVo>>(){}.getType();
         OkHttps.sendPost(mType, Apiurl.USER_GETSOURCEDETAIL,map,this);
     }
+    /**
+     * 根据资源用户的计费id获取是否已经付费
+     * @param  tsId 角色id
+     * @param accountId 计费id
+     */
     @Override
     public void getIsUserPay(String tsId,String accountId){
         Map<String,Object> params = new HashMap<>();
@@ -108,6 +166,9 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         Type type = new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.GETISPLAY,params,this);
     }
+    /**
+     *初始化音乐播放服务数据
+     */
     @Override
     public void setup() {
         ResourceVo resourceVo = resourceVos.get(position);
@@ -119,6 +180,9 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         intent.putParcelableArrayListExtra("musicInfoVos", (ArrayList<? extends Parcelable>) resourceVos);
         context.startService(intent);
     }
+    /**
+     * 通过发送广播的形式播放音乐
+     */
     @Override
     public void play() {
         isPlaying = true;
@@ -128,6 +192,9 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         intent.setAction(Constants.ACTION_PLAY);
         context.sendBroadcast(intent);
     }
+    /**
+     * 通过发送广播的形式暂停音乐
+     */
     @Override
     public void pause() {
         isPlaying = false;
@@ -137,6 +204,9 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         intent.setAction(Constants.ACTION_PAUSE);
         context.sendBroadcast(intent);
     }
+    /**
+     * 通过发送广播的形式切换下一首歌曲
+     */
     @Override
     public  void nextSong() {
         isPlaying = true;
@@ -146,6 +216,9 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         context.sendBroadcast(intent);
 
     }
+    /**
+     * 通过发送广播的形式切换上一首音乐
+     */
     @Override
     public  void preSong() {
         isPlaying = true;
@@ -154,6 +227,10 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         intent.setAction(Constants.ACTION_PRV);
         context.sendBroadcast(intent);
     }
+    /**
+     * 通过发送广播的形式改变播放页面的播放进度条
+     * @param  progress 播放进度
+     */
     @Override
     public  void changeSeeBar(int progress) {
         Intent intent = new Intent();
@@ -161,11 +238,18 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         intent.putExtra("progress",progress);
         context.sendBroadcast(intent);
     }
+    /**
+     * 停止服务
+     */
     public  void stopService(){
         if (intent!=null){
             context.stopService(intent);
         }
     }
+    /**
+     * 设置当前播放歌曲的位置
+     * @param  position 播放位置
+     */
     public  void setPosition(int position){
         this.position =  position;
     }
@@ -181,6 +265,9 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         intent.putExtra("isPlaying",isPlaying);
         context.sendBroadcast(intent);
     }
+    /**
+     * 注册所有的广播
+     */
     @Override
     public void registerReceiver() {
         IntentFilter filter = new IntentFilter();
@@ -194,6 +281,9 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         mScreenFilter.addAction(Constants.MUSIC_UPDATE);
         context.registerReceiver(PoaitionChangeReceiver, mScreenFilter);
     }
+    /**
+     * 注销所有的广播
+     */
     @Override
     public void unRisterReceiver() {
         if (myMusicReceiver!=null){
@@ -241,12 +331,12 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
                          isUserPay=1;
                      }else if (code.equals("4")){
                          isUserPay=1;
-                         Toast.makeText(context,"到期时间（7天内）",Toast.LENGTH_SHORT).show();
+                       //  Toast.makeText(context,"到期时间（7天内）",Toast.LENGTH_SHORT).show();
                      }else if (code.equals("5")){
                          Toast.makeText(context,"已过期",Toast.LENGTH_SHORT).show();
                          isUserPay=0;
                      }else if (code.equals("6")){
-                         Toast.makeText(context,"校方已退订（老师角色）",Toast.LENGTH_SHORT).show();
+                      //   Toast.makeText(context,"校方已退订（老师角色）",Toast.LENGTH_SHORT).show();
                          isUserPay=0;
                      }else if (code.equals("7")){
                          isUserPay=0;
@@ -259,6 +349,9 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
              }
          }
     }
+    /**
+     * 设置今天日期
+     */
     private void getUserPaly(){
       UserMessage   userMessage = UserMessage.getInstance(context);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -269,11 +362,17 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
             userMessage.setTodayDate(today);
         }
     }
+
     @Override
     public void onError(String uri, String error) {
         view.stopLoadingDialog();
         Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
     }
+    /**
+     *根据资源信息创建通知栏
+     * @param  isPlaying 是的播放
+     * @param  resourceVo 资源信息类
+     */
    @Override
     public void showNotification(boolean isPlaying ,ResourceVo resourceVo) {
         Bitmap  bitmap = ImageCache.getBitmap(TextUtil.encodeChineseUrl(resourceVo.getImageUrl()));
@@ -291,7 +390,8 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         manager.notify(1, notification);
     }
     /**
-     * 屏幕变亮的广播
+     * 监听屏幕的广播，发送信息初始化的
+     * 给锁屏屏幕变亮的广播
      */
     private BroadcastReceiver PoaitionChangeReceiver = new BroadcastReceiver() {
         @Override
@@ -303,6 +403,9 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
             }
         }
     };
+    /**
+     * 清除通知栏
+     */
     @Override
     public void cleanNotification() {
         if (manager!=null){

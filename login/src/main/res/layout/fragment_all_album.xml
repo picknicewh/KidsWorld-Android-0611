@@ -13,40 +13,6 @@
        android:text="没有专辑哦"
        android:layout_width="match_parent"
        android:layout_height="match_parent" />
-   <RelativeLayout
-       android:background="@color/main_text_green"
-       android:orientation="horizontal"
-       android:layout_width="match_parent"
-       android:layout_height="74dp"
-       android:paddingTop="24dp"
-       android:paddingLeft="@dimen/space"
-       android:paddingRight="@dimen/space">
-      <ImageView
-          android:src="@mipmap/ic_arrow_lift"
-          android:id="@+id/iv_left"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_centerVertical="true"
-          />
-
-      <TextView
-          android:text="幼儿听听"
-          android:layout_centerInParent="true"
-          android:id="@+id/tv_title"
-          android:layout_centerVertical="true"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:textColor="@color/white"
-          android:textSize="@dimen/ts_xx_large" />
-      <ImageView
-          android:src="@mipmap/ic_search"
-          android:layout_alignParentRight="true"
-          android:layout_centerVertical="true"
-          android:id="@+id/iv_right"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
-
-   </RelativeLayout>
    <ScrollView
        android:layout_width="match_parent"
        android:layout_height="match_parent">
@@ -54,14 +20,14 @@
        android:orientation="vertical"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
-   <net.hunme.baselibrary.widget.NoScrollGirdView
+   <net.hunme.baselibrary.widget.NoScrollListView
        android:id="@+id/lv_album"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:divider="@color/transparent"
        android:dividerHeight="0dp"
        android:numColumns="2"/>
-      <LinearLayout
+     <!-- <LinearLayout
           android:padding="@dimen/space"
           android:gravity="center"
           android:id="@+id/ll_load_more"
@@ -79,7 +45,7 @@
              android:src="@mipmap/load_more"
              android:layout_width="25dp"
              android:layout_height="25dp" />
-      </LinearLayout>
+      </LinearLayout>-->
    </LinearLayout>
    </ScrollView>
 </LinearLayout>

@@ -34,9 +34,11 @@ public class StatusPublishPopWindow extends CommonPubishPopWindow {
      */
     public static final int COURSE=4;
     private Activity context;
-    public StatusPublishPopWindow(Activity context) {
+    private String classId;
+    public StatusPublishPopWindow(Activity context,String classId) {
         super(context);
         this.context = context;
+        this.classId = classId;
         init();
     }
 
@@ -46,9 +48,11 @@ public class StatusPublishPopWindow extends CommonPubishPopWindow {
         intent.setClass(context, PublishStatusActivity.class);
         if (view.getId()== R.id.iv_text){
             intent.putExtra("type",WORDS);
+            intent.putExtra("groupId",classId);
         }else if (view.getId()==  R.id.iv_photo){
            // intent.setClass(context,)
             intent.putExtra("type",PICTURE);
+            intent.putExtra("groupId",classId);
         }/*else if (view.getId()==  R.id.iv_move){
             intent.putExtra("type",VEDIO);
         }*/

@@ -32,7 +32,12 @@
             android:exported="false"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.MainDiscoveryActivity"></activity>
+        <activity android:name=".activity.MainDiscoveryActivity" />
+        <activity android:name=".activity.MusicAlubmListActivity" />
+        <activity android:name=".activity.PlayVideoActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
+    </activity>
     </application>
 
 </manifest>

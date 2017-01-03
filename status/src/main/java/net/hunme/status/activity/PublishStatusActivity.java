@@ -28,7 +28,6 @@ import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.LoadingDialog;
 import net.hunme.baselibrary.widget.MyAlertDialog;
 import net.hunme.status.R;
-import net.hunme.status.StatusFragement;
 import net.hunme.status.widget.StatusPublishPopWindow;
 import net.hunme.user.adapter.GridAlbumAdapter;
 import net.hunme.user.util.BitmapCache;
@@ -86,6 +85,10 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     private RelativeLayout rl_restrict;
     private LoadingDialog loadingDialog;
     private TextView tv_subtilte;
+    /**
+     * 班级id
+     */
+    private String classId;
  /*   // 访问相册所需的全部权限
     private final String[] PERMISSIONS = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
@@ -170,6 +173,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         ll_permitchoose.setOnClickListener(this);
         DateUtil.setEditContent(et_content,tv_count);
         rl_restrict.setVisibility(View.VISIBLE);
+        classId = getIntent().getStringExtra("groupId");
         itemList=new ArrayList<>();
         showView(getIntent().getIntExtra("type",1));
         loadingDialog =new LoadingDialog(this,R.style.LoadingDialogTheme);
@@ -251,7 +255,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         map.put("tsId",UserMessage.getInstance(this).getTsId());
         map.put("text",dyContent);
         map.put("dynamicVisicty",dynamicVisicty);
-        map.put("classId", StatusFragement.CLASSID);
+        map.put("classId", classId);
         Type type =new TypeToken<Result<String>>(){}.getType();
         if(dynamicType.equals("1")&&itemList.size()>0){
             List<File>list= BitmapCache.getFileList(itemList);
@@ -266,8 +270,9 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     }
     @Override
     public void onSuccess(String uri, Object date) {
-        tv_subtilte.setEnabled(true);
+
         G.showToast(this,"发布成功!");
+        tv_subtilte.setEnabled(true);
         G.KisTyep.isReleaseSuccess=true;
         loadingDialog.dismiss();
         finish();

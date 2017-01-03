@@ -18,7 +18,8 @@
             android:layout_gravity="center"
             android:src="@mipmap/person"
             android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            android:scaleType="centerCrop"/>
         <TextView
             android:id="@+id/tv_message_text"
             android:layout_gravity="center"

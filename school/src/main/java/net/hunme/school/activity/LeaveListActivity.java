@@ -126,10 +126,10 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
         if (G.isNetworkConnected(this)){
             showLoadingDialog();
             rl_nonetwork.setVisibility(View.GONE);
-            dispalynonet(false);
+            dispalynoList(false);
         }else {
             rl_nonetwork.setVisibility(View.VISIBLE);
-            dispalynonet(true);
+            dispalynoList(true);
         }
     }
     @Override
@@ -144,18 +144,37 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
                 }
                 if (leaveVos.size()==0){
                     tv_nodata.setVisibility(View.VISIBLE);
-                    dispalynonet(true);
+                    dispalynoList(true);
                 }else {
-                    dispalynonet(false);
+                    dispalynoList(false);
                     adapter.notifyDataSetChanged();
                     tv_nodata.setVisibility(View.GONE);
 
                 }
+
                 refresh_view.setLv_count(leaveVos.size());
             }
         }
     }
-    private void dispalynonet(boolean isvisible){
+    /**
+     * 删除课程，更新界面
+     */
+    public void deleteUpdate(int position){
+        leaveVos.remove(position);
+        if (leaveVos.size()==0){
+            tv_nodata.setVisibility(View.VISIBLE);
+            dispalynoList(true);
+        }else {
+            dispalynoList(false);
+            tv_nodata.setVisibility(View.GONE);
+        }
+        if (adapter!=null){
+
+            adapter.notifyDataSetChanged();
+        }
+        refresh_view.setLv_count(leaveVos.size());
+    }
+    private void dispalynoList(boolean isvisible){
         if (isvisible){
             lv_leaves.setVisibility(View.GONE);
             ll_loadmore.setVisibility(View.GONE);

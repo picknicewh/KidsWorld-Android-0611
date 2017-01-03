@@ -2,6 +2,7 @@ package net.hunme.status.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,7 +124,6 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
         }else {
             viewHold.tv_time.setText(statusVo.getDate());
         }
-
         //显示内容
         if (!G.isEmteny(statusVo.getText())){
             viewHold.tv_content.setText(statusVo.getText());
@@ -150,10 +150,11 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
         if (statusVo.getTsType()==1){
             viewHold.tv_id.setText("学");
             viewHold.tv_id.setBackgroundResource(R.drawable.user_study_selecter);
-        }else if (statusVo.getTsType()==2){
+        }else if (statusVo.getTsType()==2||statusVo.getTsType()==0){
             viewHold.tv_id.setText("师");
             viewHold.tv_id.setBackgroundResource(R.drawable.user_teach_selecter);
         }
+        Log.i("sssss",statusVo.getTsType()+"====================");
         //是否点赞
          if(praises.get(i)==1){
              viewHold.iv_praise.setImageResource(R.mipmap.ic_heat_on);
@@ -197,10 +198,6 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
                     praisesNames.put(i,G.isEmteny(praisePerson)?praisePerson+username:praisePerson+"、"+username);
                     praiseNums.put(i,praiseNums.get(i)+1);
                 }
-
-
-
-
                 personPraise(UserMessage.getInstance(context).getTsId(),statusVo.getDynamicId(), cancle);
             }
         });
@@ -211,7 +208,6 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
                 Intent intent = new Intent(context, StatusDetilsActivity.class);
                 intent.putExtra("dynamicId",statusVo.getDynamicId());
                 statusFragement.setScrollPosition(getScrollPosition(statusVo));
-
                 context.startActivity(intent);
             }
         });
@@ -233,8 +229,7 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
         viewHold.tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DeleteStatusDialog dialog = new DeleteStatusDialog(statusFragement,statusVo.getDynamicId(),
-                        statusFragement.getGroupId(),statusFragement.getGroupType());
+                DeleteStatusDialog dialog = new DeleteStatusDialog(statusFragement,statusVo.getDynamicId(),i);
                 dialog.initView();
             }
         });
@@ -277,7 +272,6 @@ public class StatusAdapter extends BaseAdapter implements  OkHttpListener {
             }
         }
     }
-
     @Override
     public void onError(String uri, String error) {
         Toast.makeText(context,error,Toast.LENGTH_SHORT).show();

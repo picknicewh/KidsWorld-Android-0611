@@ -58,7 +58,7 @@ public class PictrueUtils implements View.OnClickListener {
                 imageView.setTag(i);
                 ImageCache.imageLoader(imageUrl.get(i),imageView);
                 imageView.setOnClickListener(this);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 RelativeLayout.LayoutParams pl;
                 if(i==0){
                     pl=new RelativeLayout.LayoutParams(MAXIMAGESIZE,MAXIMAGESIZE);
@@ -97,7 +97,7 @@ public class PictrueUtils implements View.OnClickListener {
                 imageView.setId(i+100);
                 imageView.setOnClickListener(this);
                 imageView.setTag(i);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(IMAGESIZE,IMAGESIZE);
                 if(i%2==0){
                     pl.setMargins(5,5,5,5);
@@ -118,7 +118,7 @@ public class PictrueUtils implements View.OnClickListener {
                 imageView.setId(i+100);
                 imageView.setOnClickListener(this);
                 imageView.setTag(i);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(IMAGESIZE,IMAGESIZE);
                 if(i%3==0){
                     pl.setMargins(5,5,5,5);
@@ -171,7 +171,6 @@ public class PictrueUtils implements View.OnClickListener {
      * @param  iv_image 图片控件
      */
     public static   RelativeLayout.LayoutParams setParam(Context context, String url, ImageView iv_image){
-
         Bitmap bitmap =ImageCache.getBitmap(url);
         if (bitmap!=null){
             int imageWidth = bitmap.getWidth();

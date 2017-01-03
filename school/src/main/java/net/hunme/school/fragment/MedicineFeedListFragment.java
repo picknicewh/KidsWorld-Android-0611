@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 import net.hunme.baselibrary.base.BaseFragement;
@@ -53,6 +54,7 @@ public class MedicineFeedListFragment extends BaseFragement implements OkHttpLis
      * 喂药适配器
      */
     public  static    MedicineSListAdapter adapter;
+    private TextView tv_nodata;
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feed_list_s,null);
@@ -61,6 +63,7 @@ public class MedicineFeedListFragment extends BaseFragement implements OkHttpLis
     }
    private void initView(View view){
        lv_feed_list = $(view,R.id.lv_feed_list);
+       tv_nodata = $(view,R.id.tv_nodata);
        medicineVos = new ArrayList<>();
        getFeedList();
    }
@@ -89,10 +92,14 @@ public class MedicineFeedListFragment extends BaseFragement implements OkHttpLis
               medicineVos  = medicineSVos.getMedicineList();
               adapter = new MedicineSListAdapter(getActivity(),medicineVos);
               lv_feed_list.setAdapter(adapter);
+              if (medicineVos.size()>0){
+                  tv_nodata.setVisibility(View.VISIBLE);
+              }else {
+                  tv_nodata.setVisibility(View.GONE);
+              }
           }
       }
     }
-
     @Override
     public void onError(String uri, String error) {
         Toast.makeText(getActivity(),error,Toast.LENGTH_SHORT).show();

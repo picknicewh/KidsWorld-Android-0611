@@ -49,8 +49,8 @@ import main.jpushlibrary.JPush.JPushBaseActivity;
  * 主要接口：
  */
 public class MainActivity extends JPushBaseActivity {
-    /**
-     * 通讯圆点
+     /**
+    * 通讯圆点
      */
     @Bind(R.id.tv_dos_message)
     TextView tvMeaasgeDos;
@@ -240,7 +240,6 @@ public class MainActivity extends JPushBaseActivity {
         filter.addAction(BroadcastConstant.HIDEMAINTAB);
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(BroadcastConstant.MAINSCHOOLDOS);
-        filter.addAction(BroadcastConstant.RUSHMIANA);
         myBroadcasReceiver = new MyBroadcasReceiver();
         this.registerReceiver(myBroadcasReceiver, filter);
 
@@ -378,38 +377,38 @@ public class MainActivity extends JPushBaseActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             Bundle bundle = intent.getExtras();
-            if (action.equals(BroadcastConstant.HIDEMAINTAB)) {
-                if (bundle.getBoolean("isVisible", false)) {
-                    llTab.setVisibility(View.VISIBLE);
-                } else {
-                    llTab.setVisibility(View.GONE);
+            if (bundle!=null){
+                if (action.equals(BroadcastConstant.HIDEMAINTAB)) {
+                    if (bundle.getBoolean("isVisible", false)) {
+                        llTab.setVisibility(View.VISIBLE);
+                    } else {
+                        llTab.setVisibility(View.GONE);
+                    }
+                } else if (action.equals(BroadcastConstant.MAINSTATUSDOS)) {
+                    if (bundle.getInt("count", 0) == 1) {
+                        tvStatusDos.setVisibility(View.VISIBLE);
+                    } else {
+                        tvStatusDos.setVisibility(View.GONE);
+                    }
+                }else if (action.equals(BroadcastConstant.MAINSCHOOLDOS)) {
+                    if (bundle.getInt("count", 0)==1) {
+                        tvDosSchool.setVisibility(View.VISIBLE);
+                    } else {
+                        tvDosSchool.setVisibility(View.GONE);
+                    }
+                } else if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+                    ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo mobNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+                    NetworkInfo wifiNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                    if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
+                        isconnect = false;
+                        //断网
+                        count++;
+                    } else {
+                        //连上网络
+                        isconnect = true;
+                    }
                 }
-            } else if (action.equals(BroadcastConstant.MAINSTATUSDOS)) {
-                if (bundle.getInt("count", 0) == 1) {
-                    tvStatusDos.setVisibility(View.VISIBLE);
-                } else {
-                    tvStatusDos.setVisibility(View.GONE);
-                }
-            }else if (action.equals(BroadcastConstant.MAINSCHOOLDOS)) {
-                if (bundle.getInt("count", 0)==1) {
-                    tvDosSchool.setVisibility(View.VISIBLE);
-                } else {
-                    tvDosSchool.setVisibility(View.GONE);
-                }
-            } else if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-                ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo mobNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-                NetworkInfo wifiNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-                if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
-                    isconnect = false;
-                    //断网
-                    count++;
-                } else {
-                    //连上网络
-                    isconnect = true;
-                }
-            }else if (action.equals(BroadcastConstant.RUSHMIANA)){
-                 initViewpager();
             }
         }
     }

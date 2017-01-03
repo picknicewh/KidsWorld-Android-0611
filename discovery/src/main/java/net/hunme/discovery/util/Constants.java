@@ -1,8 +1,6 @@
 package net.hunme.discovery.util;
 
 public class Constants {
-
-	//musicservice的name
 	public static String MUSIC_SERVICE = "com.service.MusicService";
 	//本地歌曲listview点击
 	public static String ACTION_STOP = "com.music.stop";
@@ -16,18 +14,14 @@ public class Constants {
 	public static String ACTION_UPDATE = "com.music.update";
 	//上一曲
 	public static String ACTION_PRV = "com.music.prv";
-
 	public static final String ACTION_PROCRESSBAR = "com.music.procress";
 	public static final String ACTION_POSITION = "com.music.position";
 	//播放模式
 	public static final String MUSIC_NEXT = "com.music.next2";
 	//当前时间
 	public static final String MUSIC_CURRENT = "com.music.currentTime";
-
-
 	//播放的动画
 	public static final String MUSIC_ANIAMATION = "com.music.animation";
-
 	public static final String MUSIC_UPDATE = "com.music.update";
 	public static final String ACTION_CALLING = "com.music.calling";
 	public static final String ACTION_NOTIFICATION = "android.intent.action.music.ACTION.NOTIFICATION ";
@@ -43,5 +37,9 @@ public class Constants {
 	public static boolean isPlay = false;
 	public static PlayMode  playMode = PlayMode.LOOP;
 	public static int position;
+
+
+	public static int TYPE_MUSIC = 1;
+	public static int TYPE_VEDIO = 2;
 
 }

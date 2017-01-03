@@ -330,7 +330,7 @@ public class PullToRefreshLayout extends RelativeLayout
 			refreshStateTextView.setText(R.string.pull_to_refresh);
 			pullView.clearAnimation();
 			// 上拉布局初始状态
-			if (getLv_count()==0){
+			if (getLv_count()<10){
 				loadStateImageView.setVisibility(View.GONE);
 				loadStateTextView.setVisibility(GONE);
 				pullUpView.setVisibility(View.GONE);

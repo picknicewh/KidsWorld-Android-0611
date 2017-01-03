@@ -16,6 +16,7 @@
         android:paddingBottom="10dp"
         android:paddingLeft="@dimen/space"
         android:paddingRight="@dimen/space"
+        android:gravity="center"
         />
 
     <Button

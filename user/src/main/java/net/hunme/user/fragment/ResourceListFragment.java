@@ -31,21 +31,57 @@ import java.util.List;
  * 主要接口：
  */
 public class ResourceListFragment extends BaseFragement implements ResourceContract.View, View.OnClickListener {
+    /**
+     * 资源列表显示控件
+     */
     private NoScrollGirdView gv_list;
+    /**
+     * 没有资源
+     */
     private TextView tv_nodata;
+    /**
+     * 分页加载，加载更多
+     */
     private LinearLayout ll_load_more;
+    /**
+     * 显示是否有数据
+     */
     private TextView tv_load_more;
+    /**
+     * 显示数据控件
+     */
     private ImageView iv_load_more;
+    /**
+     * 数据资源列表
+     */
     private List<ResourceVo> resourceManagerVoList;
+    /**
+     * 专辑资源列表
+     */
     private List<CompilationsVo> compilationsVoList;
+    /**
+     * 资源适配器
+     */
     private ResourceAdapter adapter;
+    /**
+     * 页面数
+     */
     private int pageNumber = 1;
     /**
      * source=0收藏 source = 1记录
      */
     private int source;
+    /**
+     * 数据处理类
+     */
     private MyResourcePresent myResourcePresent;
+    /**
+     * 一页资源条数
+     */
     private int pageSize = 10;
+    /**
+     * 资源类型 1 视频 2 音乐
+     */
     private  int type ;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,7 +89,10 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
         initView(view);
         return view;
     }
-
+    /**
+     * 初始化控件
+     * @param  view
+     */
     private void initView(View view) {
         gv_list = $(view, R.id.gv_resource_list);
         tv_nodata = $(view, R.id.tv_nodata);
@@ -63,6 +102,9 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
         ll_load_more.setOnClickListener(this);
         initData();
     }
+    /**
+     * 初始化数据
+     */
     private void initData(){
         Bundle bundle = getArguments();
         source = bundle.getInt("source");
@@ -85,17 +127,26 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
             }
         }
     }
-
+    /**
+     * 显示加载dialog
+     */
     @Override
     public void showLoadingDialog() {
         super.showLoadingDialog();
 
     }
+    /**
+     * 停止加载dialog
+     */
     @Override
     public void stopLoadingDialog() {
         super.stopLoadingDialog();
     }
-
+    /**
+     *设置根据资源列表
+     * @param  resourceVoList 数据资源列表
+     * @param compilationsVos 专辑资源列表
+     */
     @Override
     public void setResourceVoList(final List<ResourceVo> resourceVoList, final List<CompilationsVo> compilationsVos) {
         this.resourceManagerVoList = resourceVoList;
@@ -133,7 +184,12 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
             adapter.notifyDataSetChanged();
         }
     }
-
+    /**
+     * 根据每次加载资源列表的数据做出相应的处理
+     * @param  size 每次加载更多，获取数据的条数
+     * size==0 说明上一页数据是10条，本页数据为0条，那么，加载更多的话，加载数据前一页乘以页面数据
+     *size<10 说明上一页数据是10条 ，本页数据不满10条那么本页是最后一页，显示相应得加载更多得数据形式
+     */
     @Override
     public void setResourceSize(int size) {
         if (size==0){
@@ -150,6 +206,7 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
             }else {
                 tv_nodata.setText("你还没有足迹哦，快去留下足迹吧！");
             }
+            //没有数据时显示没有数据
             tv_nodata.setVisibility(View.VISIBLE);
             gv_list.setVisibility(View.GONE);
             ll_load_more.setVisibility(View.GONE);

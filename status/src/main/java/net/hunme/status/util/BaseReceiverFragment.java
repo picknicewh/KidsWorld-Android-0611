@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,7 +34,6 @@ import net.hunme.status.mode.StatusVo;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -106,25 +106,30 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
      * @param groupId 群id
      * @param  groupType 群类型 1=班级 2=学校
      */
-    public void getDynamicList(String groupId,String groupType,int pageSize,int pageNum){
+    public void getDynamicList(String groupId,String groupType,int pageSize,int pageNum,int type,String dynamicId){
         Map<String,Object> map=new HashMap<>();
         if(G.isEmteny(um.getTsId())){
             return;
         }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String  data = format.format(new Date());
-        createTime = data;
+
+
         map.put("tsId", um.getTsId());
         map.put("groupId",groupId);
         map.put("groupType", groupType);
         map.put("pageNumber", pageNum);
         map.put("pageSize", pageSize);
-        map.put("createTime", createTime);
-        map.put("type", 1);
-        Type type=new TypeToken<Result<List<StatusVo>>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.STATUSLIST,map,this,2,"status");
+        map.put("createTime", data);
+        map.put("type", type);
+        if (type==2){
+            map.put("dynamicId", dynamicId);
+        }
+        Type mType=new TypeToken<Result<List<StatusVo>>>(){}.getType();
+        OkHttps.sendPost(mType, Apiurl.STATUSLIST,map,this,2,"status");
         showLoadingDialog();
     }
+
     /**
      * 有无网络监听广播
      */

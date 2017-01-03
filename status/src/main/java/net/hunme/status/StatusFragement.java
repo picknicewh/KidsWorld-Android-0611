@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.BroadcastConstant;
 import net.hunme.baselibrary.util.G;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.listview.PullToRefreshLayout;
 import net.hunme.baselibrary.widget.listview.PullableListView;
 import net.hunme.status.activity.MessageDetailActivity;
@@ -51,6 +53,7 @@ import java.util.Map;
  * 主要接口：
  */
 public class StatusFragement extends BaseReceiverFragment implements PullToRefreshLayout.OnRefreshListener {
+    private static  final int PAGESIZE = 20;
     /**
      * 动态列表
      */
@@ -107,11 +110,11 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
     /**
      * 动态列表选项
      */
-    public   List<StatusVo> statusVoList;
+    public     List<StatusVo> statusVoList;
     /**
      * 适配器
      */
-    public StatusAdapter adapter;
+    private StatusAdapter adapter;
     /**
      * 未读消息的头像
      */
@@ -140,6 +143,16 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
      * 动态通知数据
      */
     private StatusInfoDbHelper dbHelper;
+    /**
+     *没有数据
+     */
+    private TextView tv_nodata;
+    /**
+     * type = 1加载 type=2 刷新
+     */
+    private int type;
+    private String tsId;
+    private String groupId;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LayoutInflater localInflater = inflater.cloneInContext(new CordovaInterfaceImpl(getActivity(), this));
@@ -157,6 +170,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         rl_nonetwork= $(view,R.id.rl_nonetwork);
         lv_status = $(view,R.id.lv_status);
         refresh_view = $(view,R.id.refresh_view);
+        tv_nodata = $(view,R.id.tv_nodata);
         ll_classchoose.setOnClickListener(this);
         refresh_view.setOnRefreshListener(this);
         iv_right.setOnClickListener(this);
@@ -164,6 +178,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         tv_status_bar.setOnClickListener(this);
         classlist = new ArrayList<>();
         statusVoList = new ArrayList<>();
+        tsId = UserMessage.getInstance(getActivity()).getTsId();
         G.initDisplaySize(getActivity());
         setListViewHead();
         getDynamicHead();
@@ -195,8 +210,9 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
      */
     public void setPosition(int position){
         this.position = position;
+        groupId  =dynamicList.get(position).getGroupId();
         statusVoList.clear();
-        loadDDynamicList(position,20,1);
+        loadDDynamicList(position,PAGESIZE,1,1,null);
     }
     /**
      * 获取动态列表
@@ -204,13 +220,14 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
      * @param  pageSize 一页加载多少条数据
      * @param  pageNumber 加载第几页第几页
      */
-    private void loadDDynamicList(int position,int pageSize,int pageNumber){
+    private void loadDDynamicList(int position,int pageSize,int pageNumber,int type,String dynamicId){
+        this.type = type;
         loadpage = pageSize;
         if (dynamicList!=null && dynamicList.size()>0){
             groupId = dynamicList.get(position).getGroupId();
             groupType = dynamicList.get(position).getGroupType();
             if (!G.isEmteny(groupId)&&!G.isEmteny(groupType)){
-                getDynamicList(groupId,groupType,pageSize,pageNumber);
+                getDynamicList(groupId,groupType,pageSize,pageNumber,type,dynamicId);
             }
         }
     }
@@ -249,13 +266,12 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
             }
             getActivity().startActivity(intent);
         }else if (viewId==R.id.iv_right){
-            final StatusPublishPopWindow pubishPopWindow = new StatusPublishPopWindow(getActivity());
+            final StatusPublishPopWindow pubishPopWindow = new StatusPublishPopWindow(getActivity(),groupId);
             pubishPopWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
         }else if (viewId==R.id.ll_message){
             //获取所以没阅读的通知时间，并且点击后把所有未阅读的数据标记为已读
             Intent intent = new Intent();
             intent.setClass(getActivity(), MessageDetailActivity.class);
-
             getActivity().startActivity(intent);
             isClick = true;
         }
@@ -267,12 +283,12 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         //设置初始状态
          db = new StatusInfoDb(getActivity()).getWritableDatabase();
          dbHelper = StatusInfoDbHelper.getInstance();
-         if (dbHelper.getNoReadcount(db)>0){
+         if (dbHelper.getNoReadcount(db,tsId)>0){
             if (lv_status.getHeaderViewsCount()==0){
                 lv_status.addHeaderView(layout_head);
             }
-            ImageCache.imageLoader(dbHelper.getLatestUrl(db),iv_head);
-            tv_message.setText(dbHelper.getNoReadcount(db)+"条新消息");
+            ImageCache.imageLoader(dbHelper.getLatestUrl(db,tsId),iv_head);
+            tv_message.setText(dbHelper.getNoReadcount(db,tsId)+"条新消息");
         }
     }
     @Override
@@ -281,20 +297,22 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         //用户发布动态成功 重新刷新数据
         if(G.KisTyep.isReleaseSuccess) {
             G.KisTyep.isReleaseSuccess = false;
-            statusVoList.clear();
-            loadDDynamicList(position,20,1);
+           // statusVoList.clear();
+            if (statusVoList.size()>0){
+                loadDDynamicList(position,PAGESIZE,1,2,statusVoList.get(0).getDynamicId());
+            }
         }
         // 动态发生改变 刷新数据
         if(G.KisTyep.isUpdateComment){
             //页码从1开始所以pageNumber加一
-            loadDDynamicList(position,1,scrollPosition+1);
+            loadDDynamicList(position,1,scrollPosition+1,1,null);
             G.KisTyep.isUpdateComment=false;
         }
         if (isClick){
             lv_status.removeHeaderView(layout_head);
         }
         //设置消息通知状态，评论完了要重新获取通知栏的消息
-        if (dbHelper.getNoReadcount(db)>0){
+        if (dbHelper.getNoReadcount(db,tsId)>0){
             lv_status.removeHeaderView(layout_head);
             setMessageInfo();
         }
@@ -323,27 +341,52 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
                     classlist.add(d.getGroupName());
                 }
                 popWindow = new ChooseClassPopWindow(this, classlist);
-                loadDDynamicList(position,20,pageNum);
+                loadDDynamicList(position,PAGESIZE,pageNum,1,null);
                 tv_classname.setText(classlist.get(0));
-                 CLASSID=dynamicList.get(0).getGroupId();
+                CLASSID=dynamicList.get(0).getGroupId();
              }
          }else if (Apiurl.STATUSLIST.equals(uri)){
             stopLoadingDialog();
             Result<List<StatusVo>> data = (Result<List<StatusVo>>) date;
             List<StatusVo> statusVos = data.getData();
             if (statusVos!=null&& statusVos.size()>0){
-                if (loadpage==1){
-                    if (statusVoList.size()>0){
-                        statusVoList.set(scrollPosition,statusVos.get(0));
+                if (type==1){
+                    if (loadpage==1){
+                        if (statusVoList.size()>0){
+                            statusVoList.set(scrollPosition,statusVos.get(0));
+                        }
+                    }else {
+                        statusVoList.addAll(statusVos);
                     }
-                }else {
-                    statusVoList.addAll(statusVos);
+                }else if (type==2){
+                    statusVoList.addAll(0,statusVos);
+                }
+                Log.i("SSSSSS","被点赞人的tsId："+statusVoList.get(0).getTsId());
+            }else {
+                pageNum--;
+                if (pageNum<=1){
+                    pageNum=1;
                 }
             }
+            setListData();
+        }
+    }
+
+    private void setListData(){
+        if (statusVoList.size()==0){
+            tv_nodata.setVisibility(View.VISIBLE);
+        }else {
+            tv_nodata.setVisibility(View.GONE);
+        }
+        if (adapter!=null){
             adapter.setData(statusVoList);
             adapter.notifyDataSetChanged();
-            refresh_view.setLv_count(statusVoList.size());
         }
+        refresh_view.setLv_count(statusVoList.size());
+    }
+    public void updateDelete(int position){
+        statusVoList.remove(position);
+        setListData();
     }
     /**
      * 设置当前点击进入详情页面的位置
@@ -375,7 +418,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
                 intent.putExtra("count",0);
                 getActivity().sendBroadcast(intent);
                 pageNum=1;
-                loadDDynamicList(position,20,pageNum);
+                loadDDynamicList(position,PAGESIZE,pageNum,1,null);
                 pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
 
             }
@@ -388,7 +431,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
             @Override
             public void handleMessage(Message message) {
                 pageNum++;
-                loadDDynamicList(position,20,pageNum);
+                loadDDynamicList(position,PAGESIZE,pageNum,1,null);
                 pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
             }
         }.sendEmptyMessageDelayed(0,500);

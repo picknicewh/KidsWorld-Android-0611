@@ -61,7 +61,6 @@ public class MyJPushReceiver extends BroadcastReceiver {
                     Intent myintent = new Intent(BroadcastConstant.STATUSDOS);
                     myintent.putExtra("targetId",targetId);
                     context.sendBroadcast(myintent);
-
                 }else if (messagetype.equals("2")){//通知
                     schoolDosShow(BroadcastConstant.SCHOOLINFODOS,jsonObject,context);
                 } else if (messagetype.equals("3")) {//系统通知
@@ -98,20 +97,20 @@ public class MyJPushReceiver extends BroadcastReceiver {
                     String tsId = (String) jsonObject.get("tsId");
                     String createTime = (String) jsonObject.get("createTime");
                     String imgUrl = (String) jsonObject.get("imgUrl");
-                    if (tsId!= UserMessage.getInstance(context).getTsId()){
-                        //添加到数据中
-                        helper.insert(db,createTime,tsId,imgUrl,0);//按时间顺序插入到数据库中，越早推送的数据，存放在下面，先进后出
-                        int count =helper.getNoReadcount(db);
-                        if (count>0){
+                    //添加到数据中
+                    helper.insert(db,createTime,tsId,imgUrl,0);//按时间顺序插入到数据库中，越早推送的数据，存放在下面，先进后出
+                    int count =helper.getNoReadcount(db, UserMessage.getInstance(context).getTsId());
+                    if (count>0 ){
                             Intent myintent = new Intent(BroadcastConstant.COMMENTINFO);
                             myintent.putExtra("count",count);
-                            myintent.putExtra("imageUrl",helper.getLatestUrl(db));
+                            myintent.putExtra("imageUrl",helper.getLatestUrl(db,UserMessage.getInstance(context).getTsId()));
                             context.sendBroadcast(myintent);
-                        }
-                        //删除超过20条时记录的id
-                        helper.deleteOverTime(db);
-                        Log.i("AAAAA","count:"+helper.getcount(db));
                     }
+                    //删除超过20条时记录
+                    helper.deleteOverTime(db,UserMessage.getInstance(context).getTsId());
+                    Log.i("AAAAA","count:"+helper.getcount(db,UserMessage.getInstance(context).getTsId()));
+                    Log.i("SSSSSS","推送下来的tsId："+tsId);
+                    Log.i("SSSSSS","点赞的tsId："+tsId);
                     }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -128,6 +127,8 @@ public class MyJPushReceiver extends BroadcastReceiver {
             Log.i(TAG, "[MyJPushReceiver] Unhandled intent - " + intent.getAction());
         }
     }
+    //29f45bed96f6463da1ff0da2986e061f
+    //29f45bed96f6463da1ff0da2986e061f
      /**
      *  处理返回过来的数据，并发送通知
      */

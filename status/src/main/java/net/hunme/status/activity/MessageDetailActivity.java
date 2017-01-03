@@ -48,6 +48,7 @@ public class MessageDetailActivity extends BaseActivity implements OkHttpListene
     private MessageDetailAdapter adapter;
     private SQLiteDatabase db;
     private  StatusInfoDbHelper helper;
+    private String tsid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,10 +60,11 @@ public class MessageDetailActivity extends BaseActivity implements OkHttpListene
          tv_more = $(R.id.tv_more);
          tv_more.setOnClickListener(this);
          statusInfos = new ArrayList<>();
+         tsid = UserMessage.getInstance(this).getTsId();
          db = new StatusInfoDb(this).getWritableDatabase();
          helper =  StatusInfoDbHelper.getInstance();
-         timeList =helper.getNoreadTime(db);
-         helper.updateAllread(db);
+         timeList =helper.getNoreadTime(db,tsid);
+         helper.updateAllread(db,tsid);
          if (timeList.size()>0){
              getInforList(timeList.get(timeList.size()-1),timeList.get(0));
              adapter = new MessageDetailAdapter(this,statusInfos);
@@ -118,7 +120,7 @@ public class MessageDetailActivity extends BaseActivity implements OkHttpListene
         if (view.getId()==R.id.tv_more){
             SQLiteDatabase db = new StatusInfoDb(this).getWritableDatabase();
             StatusInfoDbHelper helper =  StatusInfoDbHelper.getInstance();
-            List<StatusInfoVo> statusInfovs = helper.getStatusInformVos(db);
+            List<StatusInfoVo> statusInfovs = helper.getStatusInformVos(db,tsid);
             timeList.clear();
             for (int i =statusInfos.size() ; i <statusInfovs.size();i++){
                 timeList.add(statusInfovs.get(i).getCreateTime());

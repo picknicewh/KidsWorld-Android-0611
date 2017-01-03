@@ -38,42 +38,144 @@ import net.hunme.discovery.util.TextUtil;
 import java.util.List;
 
 public class MainPlayActivity extends BaseMusicActivity implements View.OnClickListener, PlayMusicContract.View {
+    /**
+     * 导航栏左边的按钮
+     */
     private ImageView iv_left;
+    /**
+     * 导航栏的标题----歌曲名
+     */
     private TextView tv_content;
     private TextView tv_song_name;
+    /**
+     * 上一曲按钮
+     */
     private ImageView iv_preSong;
+    /**
+     * 下一曲按钮
+     */
     private ImageView iv_nextSong;
+    /**
+     * 播放/暂停 按钮
+     */
     private ImageView iv_play;
+    /**
+     * 专辑封面布局控件
+     */
     private FrameLayout fl_album;
+    /**
+     * 专辑封面
+     */
     private CircleImageView iv_album;
+    /**
+     * 当前播放的时间显示
+     */
     private TextView tv_currentTime;
+    /**
+     * 当前播放音乐总时长显示
+     */
     private TextView tv_durationTime;
+    /**
+     * 音乐播放拖动进度条
+     */
     private SeekBar seekBar;
+    /**
+     * 音乐播放模式
+     */
     private ImageView iv_play_mode;
+    /**
+     * 圆形加载控件
+     */
     private ImageView iv_circle;
+    /**
+     * 创建人播放音乐的姓名
+     */
     private TextView tv_create_name;
+    /**
+     * 专辑列表展示按钮
+     */
     private ImageView iv_more;
+    /**
+     * 上传者布局
+     */
     private RelativeLayout rl_from;
     private RelativeLayout rl_play;
+    /**
+     * 界面布局
+     */
     private LinearLayout ll_main;
+    /**
+     * 加载音乐动画
+     */
     private ImageView iv_loading;
     private boolean isVisible = true;
+    /**
+     * 音乐播放数据处理
+     */
     private PlayMusicPresenter presenter;
+    /**
+     * 当前音乐播放位置
+     */
     private int position = 0;
+    /**
+     * 音乐是否正在播放
+     */
     public static boolean isPlaying = false;
+    /**
+     * 资源列表
+     */
     private List<ResourceVo> resourceVos;
+    /**
+     * 音乐监听广播
+     */
     private MyMusicReceiver myMusicReceiver;
+    /**
+     * 当前播放专辑id
+     */
     private String themeId;
+    /**
+     * 当前播放资源id
+     */
     private String resourceId;
+    /**
+     * 播放模式
+     */
     private PlayMode playMode;
+    /**
+     * 启动锁屏意图
+     */
     private Intent mLockScreenIntent;
+    /**
+     * 封面旋转动画
+     */
     private Animation operatingAnim;
+    /**
+     * 是否第一次播放专辑的第一首歌曲
+     */
     private boolean isFirst = true;
+    /**
+     * 已经播放时长
+     */
     public int hasplayTime = 0;
+    /**
+     * 是否已经播放
+     */
     public boolean ishasPlay = false;
+    /**
+     * 用户角色id
+     */
     private String tsId;
+    /**
+     * 是否免费资源-----如果普通用户非免费资源不能播放。如果会员用户所有资源都可光看
+     */
     private int isResourceFree;
+    /**
+     * 旋转动画工具类
+     */
     private AnimationUtil animationUtil;
+    /**
+     * 用户信息类
+     */
     private UserMessage userMessage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +185,9 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         initView();
         getData();
     }
+    /**
+     * 初始化控件
+     */
     private void initView() {
         tv_content = $(R.id.tv_title);
         iv_left = $(R.id.iv_left);
@@ -129,6 +234,9 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
             }
         });
     }
+    /**
+     * 是否vivoX5
+     */
     private boolean isVivoX5(){
         if ( android.os.Build.MODEL.equals("vivo X5Max+")){
             return true;
@@ -136,6 +244,9 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
             return false;
         }
     }
+    /**
+     * 数据获取
+     */
     private void getData() {
         operatingAnim = AnimationUtils.loadAnimation(this, R.anim.loading);
         LinearInterpolator lin = new LinearInterpolator();
@@ -150,12 +261,16 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         myMusicReceiver = new MyMusicReceiver();
         presenter = new PlayMusicPresenter(this, this, position, myMusicReceiver, themeId, resourceId);
     }
-
+    /**
+     * 启动锁屏
+     */
     private void startLockScreenService() {
         mLockScreenIntent = new Intent(this, LockScreenService.class);
         startService(mLockScreenIntent);
     }
-
+    /**
+     * 关闭锁屏
+     */
     private void stopLockScreenService() {
         if (mLockScreenIntent != null) {
             stopService(mLockScreenIntent);
@@ -173,8 +288,8 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
             }else {
                 //isResourceFree==2免费==1收费
                 if (isResourceFree==1){
-                    PromptPopWindow payComformPopWindow = new PromptPopWindow(this,"你的资费已到期，为了不影响您收看，请及时购买套餐。");
-                    payComformPopWindow.showAtLocation(view,Gravity.NO_GRAVITY, (int) (G.size.W*0.1), (int) (G.size.H*0.7));
+                   PromptPopWindow promptPopWindow = new PromptPopWindow(this,"你的资费已到期，为了不影响您收看，请及时购买套餐。");
+                    promptPopWindow.showAtLocation(view,Gravity.NO_GRAVITY, (int) (G.size.W*0.1), (int) (G.size.H*0.7));
                 }else {
                     play();
                 }
@@ -199,6 +314,9 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
             close();
         }
     }
+    /**
+     * 播放
+     */
     private void play(){
         //当第一次播放时点击按钮开始播放，记录当前播放记录
         if (position == 0 && isFirst) {
@@ -223,7 +341,10 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         }
     }
     private long clickTime = 0;
-
+    /**
+     * 是否快速点击
+     * @param  clickTime 第一次点击时间
+     */
     private boolean isFastClick(long clickTime) {
         long currentTime = System.currentTimeMillis();
         long between = currentTime - clickTime;
@@ -244,7 +365,10 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         startLockScreenService();
         Log.i("sssss", "====================onRestart=======================");
     }
-
+    /**
+     * 根据播放资源列表
+     * @param  resourceVos 资源
+     */
     @Override
     public void setSongList(List<ResourceVo> resourceVos) {
         this.resourceVos = resourceVos;
@@ -255,6 +379,10 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
             setSongInfo(position);
         }
     }
+    /**
+     * 设置所有控件的数据
+     * @param  position 当前播放音乐的位置
+     */
     @Override
     public void setSongInfo(int position) {
         isResourceFree = resourceVos.get(position).getPay();
@@ -268,7 +396,10 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         rl_from.setAlpha((float) 0.8);
         iv_circle.setBackgroundResource(TextUtil.getInforImage(createName,3));
     }
-
+    /**
+     * 根据不同的是否播放显示相对于的播放/暂停图标
+     * @param  isPlay
+     */
     @Override
     public void setIsPlay(boolean isPlay) {
         isPlaying = isPlay;
@@ -278,6 +409,10 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
             iv_play.setImageResource(R.mipmap.ic_play);
         }
     }
+    /**
+     * 设置当前播放位置
+     * @param  position 当前播放位置
+     */
     @Override
     public void setPosition(int position) {
         this.position = position;
@@ -286,6 +421,10 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
             setSongInfo(position);
         }
     }
+    /**
+     * 设置当前播放模式
+     * @param  playMode 当前播放模式
+     */
     @Override
     public void setPlayMode(PlayMode playMode) {
         switch (playMode) {
@@ -300,7 +439,6 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
                 break;
         }
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -310,7 +448,6 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
             Log.i("ssssssssss", "tsId:" + tsId + "===========resourceId:" + resourceId + "==========hasplayTime:" + hasplayTime + "==========直接终止");
             presenter.savePlayTheRecord(tsId, resourceId, hasplayTime, 2);
         }
-        Log.i("RRRRR", "====================onDestroy=======================");
     }
 
     private int duration;
@@ -401,6 +538,9 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
             }
         }
     }
+    /**
+     * 关闭通知栏，音乐播放服务，锁屏服务
+     */
     private void close() {
         if (resourceVos != null) {
             presenter.stopService();

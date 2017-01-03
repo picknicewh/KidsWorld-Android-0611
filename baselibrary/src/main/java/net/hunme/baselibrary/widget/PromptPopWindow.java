@@ -24,7 +24,6 @@ public class PromptPopWindow extends PopupWindow {
     private View contentView;
     private int width;
     private Context context;
-
     public PromptPopWindow(Context context, String content) {
         this.context = context;
         width = (int) (G.size.W * 0.8);
@@ -33,7 +32,7 @@ public class PromptPopWindow extends PopupWindow {
     }
 
     private void initView(String content) {
-        contentView = LayoutInflater.from(context).inflate(R.layout.dialog_exit, null);
+        contentView = LayoutInflater.from(context).inflate(R.layout.dialog_prompt, null);
         Button btn_conform = (Button) contentView.findViewById(R.id.btn_conform);
         TextView pop_title = (TextView) contentView.findViewById(R.id.tv_title);
         btn_conform.setText("我知道了");

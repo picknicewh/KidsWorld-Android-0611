@@ -127,16 +127,7 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
                         dynamicInfoVoList.addAll(dynamicInfoVos);
                     }
                 }
-                if (dynamicInfoVoList.size()==0){
-                    tv_nodata.setVisibility(View.VISIBLE);
-                    lv_dynamic.setVisibility(View.GONE);
-                }else {
-                    tv_nodata.setVisibility(View.GONE);
-                    lv_dynamic.setVisibility(View.VISIBLE);
-                    adapter.setData(dynamicInfoVoList);
-                    adapter.notifyDataSetChanged();
-                }
-                refresh_view.setLv_count(dynamicInfoVoList.size());
+                setListData();
             }
         }
     }
@@ -145,7 +136,23 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
         rl_nonetwork.setVisibility(View.VISIBLE);
         Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
     }
+    private void setListData(){
+        if (dynamicInfoVoList.size()==0){
+            tv_nodata.setVisibility(View.VISIBLE);
+        }else {
+            tv_nodata.setVisibility(View.GONE);
+            adapter.setData(dynamicInfoVoList);
+        }
+        if (adapter!=null){
+            adapter.notifyDataSetChanged();
+        }
+        refresh_view.setLv_count(dynamicInfoVoList.size());
+    }
+    public void updateDelete(int position){
+        dynamicInfoVoList.remove(position);
+        setListData();
 
+    }
     @Override
     public void onRefresh( final PullToRefreshLayout pullToRefreshLayout) {
         new Handler() {

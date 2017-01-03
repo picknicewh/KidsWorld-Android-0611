@@ -12,7 +12,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -57,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setStatusBar(Color.parseColor("#fafafa"));
         setContentView(R.layout.activity_login);
         BaseLibrary.addActivity(this);
+
         initView();
     }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -110,8 +110,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         username=ed_username.getText().toString().trim();
         password=ed_password.getText().toString().trim();
         if (!checkBox.isChecked()){
+            G.initDisplaySize(this);
             PromptPopWindow promptPopWindow = new PromptPopWindow(this,"请同意服务条款");
-            promptPopWindow.showAtLocation(checkBox, Gravity.NO_GRAVITY, (int) (G.size.W-promptPopWindow.getWidth())/2, (int) (G.size.H*0.5-promptPopWindow.getHeight())/2);
+            promptPopWindow.showAtLocation(checkBox, Gravity.NO_GRAVITY,  (G.size.W-promptPopWindow.getWidth())/2, (int) (G.size.H*0.2));
             return;
         }
         if(G.isEmteny(username)||G.isEmteny(password)){
@@ -187,7 +188,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onError(String uri, String error) {
-        dialog.dismiss();
+        if( dialog!=null){
+            dialog.dismiss();
+        }
         b_login.setEnabled(true);
         G.showToast(this,error);
     }

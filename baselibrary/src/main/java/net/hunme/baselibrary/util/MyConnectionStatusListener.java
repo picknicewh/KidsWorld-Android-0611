@@ -71,7 +71,7 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
         if (context==null){
           return;
         }
-        View coupons_view = LayoutInflater.from(context).inflate(R.layout.dialog_exit, null);
+        View coupons_view = LayoutInflater.from(context).inflate(R.layout.dialog_prompt, null);
          final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, context,0);
         Button btn_conform = (Button) coupons_view.findViewById(net.hunme.baselibrary.R.id.btn_conform);
         TextView pop_title = (TextView) coupons_view.findViewById(net.hunme.baselibrary.R.id.tv_title);

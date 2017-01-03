@@ -1,5 +1,6 @@
 package net.hunme.status.widget;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.UserMessage;
+import net.hunme.baselibrary.widget.BaseConformDialog;
 import net.hunme.baselibrary.widget.MyAlertDialog;
 import net.hunme.status.R;
 import net.hunme.status.StatusFragement;
@@ -30,55 +32,35 @@ import java.util.Map;
  * 附加注释：
  * 主要接口：1.删除我的动态
  */
-public class DeleteStatusDialog implements View.OnClickListener, OkHttpListener {
+public class DeleteStatusDialog extends BaseConformDialog implements View.OnClickListener, OkHttpListener {
     private StatusFragement statusFragement;
-    private Context context;
-    /**
-     * 确定
-     */
-    private Button bt_conform;
-    /**
-     * 取消
-     */
-    private Button bt_cancel;
-    /**
-     * 对话框
-     */
-    private AlertDialog alertDialog;
+    private Activity context;
     /**
      * 课程id
      */
     private String dynamicId;
-    /**
-     * 页码数
-     */
 
-    private String groupId;
-    private String groupType;
-    public DeleteStatusDialog(StatusFragement statusFragement, String dynamicId,String  groupId,String  groupType){
+    /**
+     * 位置
+     */
+    private int position;
+    public DeleteStatusDialog(StatusFragement statusFragement, String dynamicId,int position){
         this.statusFragement  = statusFragement;
         context = statusFragement.getActivity();
         this.dynamicId = dynamicId;
-        this.groupId = groupId;
-        this.groupType =groupType;
+        this.position = position;
     }
     /**
      * 初始化view
      */
     public void  initView(){
-         View contentView = LayoutInflater.from(context).inflate(R.layout.dialog_delete_status, null);
-         alertDialog = MyAlertDialog.getDialog(contentView, statusFragement.getActivity(),1);
-         bt_conform = (Button) contentView.findViewById(R.id.bt_conform);
-         bt_cancel = (Button) contentView.findViewById(R.id.bt_cancel);
-         bt_cancel.setOnClickListener(this);
-        bt_conform.setOnClickListener(this);
+        String content = "确定删除这条动态吗？";
+        initView(context,content);
     }
     @Override
     public void onClick(View view) {
         if (view.getId()==R.id.bt_conform){
             deletedynamic(dynamicId);
-            alertDialog.dismiss();
-        }else if (view.getId()==R.id.bt_cancel){
             alertDialog.dismiss();
         }
     }
@@ -88,12 +70,7 @@ public class DeleteStatusDialog implements View.OnClickListener, OkHttpListener 
         if (data!=null){
             String  result = data.getData();
             Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
-            for (int i = 0 ; i<statusFragement.statusVoList.size();i++){
-                if (statusFragement.statusVoList.get(i).getDynamicId().equals(dynamicId)){
-                    statusFragement.statusVoList.remove(i);
-                }
-            }
-            statusFragement.adapter.notifyDataSetChanged();
+            statusFragement.updateDelete(position);
         }
         alertDialog.dismiss();
     }

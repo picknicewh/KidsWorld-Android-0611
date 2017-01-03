@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <RelativeLayout
         android:id="@+id/rl_toolbar"
         android:paddingRight="@dimen/space"
@@ -57,22 +58,35 @@
         android:textSize="14sp"
         android:visibility="gone"
        />
-
-
-    <net.hunme.baselibrary.widget.listview.PullToRefreshLayout
-        android:id="@+id/refresh_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <include layout="@layout/refresh_head" />
-        <!-- 支持所有实现Pullable接口的View -->
-        <net.hunme.baselibrary.widget.listview.PullableListView
-            android:divider="@color/transparent"
-            android:dividerHeight="0dp"
-            android:id="@+id/lv_status"
+        android:layout_height="wrap_content">
+        <net.hunme.baselibrary.widget.listview.PullToRefreshLayout
+            android:id="@+id/refresh_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <include layout="@layout/load_more" />
-    </net.hunme.baselibrary.widget.listview.PullToRefreshLayout>
+            android:layout_height="wrap_content">
+            <include layout="@layout/refresh_head" />
+            <!-- 支持所有实现Pullable接口的View -->
+            <net.hunme.baselibrary.widget.listview.PullableListView
+                android:divider="@color/transparent"
+                android:dividerHeight="0dp"
+                android:id="@+id/lv_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <include layout="@layout/load_more" />
+        </net.hunme.baselibrary.widget.listview.PullToRefreshLayout>
+        <TextView
+            android:layout_centerInParent="true"
+            android:id="@+id/tv_nodata"
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="没有数据"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+    </RelativeLayout>
+
 
     <include
         android:id="@+id/rl_nonetwork"

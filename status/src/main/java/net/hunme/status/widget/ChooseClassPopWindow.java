@@ -53,7 +53,7 @@ public class ChooseClassPopWindow extends PopupWindow {
 
     }
     public void init() {
-        initview();
+         initview();
         //设置SignPopupWindow的View
         this.setContentView(conentView);
         //设置SignPopupWindow弹出窗体的高

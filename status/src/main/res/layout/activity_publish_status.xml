@@ -42,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
+                android:visibility="gone"
                 android:drawablePadding="@dimen/space_x0.5"
                 android:drawableLeft="@mipmap/ic_status_data"
                 android:id="@+id/tv_permitchoose"
