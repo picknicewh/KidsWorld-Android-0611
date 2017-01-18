@@ -28,10 +28,11 @@ public class MedicineSListAdapter extends BaseAdapter {
     private List<MedicineVo> medicineVos;
     public MedicineSListAdapter(Activity context, List<MedicineVo> medicineVos) {
         this.context = context;
-        this.medicineVos = medicineVos;
+        this.medicineVos=medicineVos;
     }
     @Override
     public int getCount() {
+
         return medicineVos.size();
     }
 
@@ -47,6 +48,7 @@ public class MedicineSListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
+
         ViewHold viewHold;
         if(null==view){
             view= LayoutInflater.from(context).inflate(R.layout.item_medicine_list_s,null);
@@ -84,7 +86,4 @@ public class MedicineSListAdapter extends BaseAdapter {
             view.setTag(this);
         }
      }
-
-
-
 }

@@ -4,6 +4,7 @@ package net.hunme.baselibrary.util;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -267,17 +268,31 @@ public class DateUtil {
      * @param mouth 月
      */
     public static int getMouthDays(int year, int mouth) {
-        int days = 31;
-        if (mouth == 1 || mouth == 3 || mouth == 5 || mouth == 7 || mouth == 8 || mouth == 10 || mouth == 12) {
-            days = 31;
-        } else if (mouth == 4 || mouth == 6 || mouth == 9 || mouth == 11) {
-            days = 30;
-        } else if (mouth == 2) {
-            if (isleap(year)) {
-                days = 29;
-            } else {
-                days = 28;
-            }
+        int days = 0;
+        Log.i("ssssss", "year:" + year + "====" + "mouth:" + mouth);
+        switch (mouth) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                days = 31;
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                days=30;
+                break;
+            case 2:
+                if (isleap(year)) {
+                    days = 29;
+                } else {
+                    days = 28;
+                }
+                break;
         }
         return days;
     }
@@ -389,5 +404,24 @@ public class DateUtil {
             return true;
         }
         return false;
+    }
+
+    public static String getFromatDate(int year, int mouth, int day) {
+        String m;
+        String d;
+        String date;
+
+        if (mouth < 10) {
+            m = "0" + mouth;
+        } else {
+            m = "" + mouth;
+        }
+        if (day < 10) {
+            d = "0" + day;
+        } else {
+            d = "" + day;
+        }
+        date = year + "-" + m + "-" + d;
+        return date;
     }
 }

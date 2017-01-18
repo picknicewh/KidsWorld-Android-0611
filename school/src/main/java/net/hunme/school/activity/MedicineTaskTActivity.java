@@ -76,7 +76,7 @@ public class MedicineTaskTActivity extends BaseActivity implements MedicineTDeta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine_task_t);
-        initview();
+        initView();
         presenter = new MedicineTDetailPresenter(this,this,medicineId,tsId,isFeed);
     }
 
@@ -86,7 +86,7 @@ public class MedicineTaskTActivity extends BaseActivity implements MedicineTDeta
         setCententTitle("喂药");
         setLiftOnClickClose();
     }
-    private void initview(){
+    private void initView(){
         iv_image =  $(R.id.civ_image);
         tv_Tsname  = $(R.id.tv_tsName);
         tv_medicine_date=$(R.id.tv_alldate);

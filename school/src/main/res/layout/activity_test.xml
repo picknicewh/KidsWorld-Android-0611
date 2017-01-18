@@ -1,13 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="net.hunme.school.TestActivity">
-
-    <net.hunme.school.widget.CustomVideoView
+    android:layout_height="wrap_content"
+    android:background="@color/bg_layout">
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/ll_top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rtsp_player"/>
-</LinearLayout>
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="74dp">
+            <ImageView
+                android:layout_marginLeft="@dimen/space"
+                android:src="@mipmap/ic_arrow_lift"
+                android:id="@+id/iv_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:text="委托喂药"
+                android:layout_gravity="center"
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/ts_xx_large" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space"
+            android:layout_marginTop="@dimen/space"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_medicine_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/space"
+                android:paddingLeft="@dimen/space"
+                android:paddingTop="@dimen/space"
+                android:text="喂药日期" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_medicine_date"
+                android:paddingTop="@dimen/space_x0.5"
+                android:text="*"
+                android:textColor="@color/red"
+                android:textSize="@dimen/ts_x_large" />
+
+            <View
+                android:id="@+id/v_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/tv_medicine_date"
+                android:layout_marginLeft="@dimen/space"
+                android:background="@color/line_gray" />
+
+            <TextView
+                android:id="@+id/tv_alldate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/v_line"
+                android:background="@color/white"
+                android:hint="请选择日期最多5个日期"
+                android:padding="@dimen/space"
+                android:textColor="@color/sc_"
+                android:textSize="@dimen/ts_medium" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_medicine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_date"
+            android:layout_marginBottom="@dimen/space"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_medicine_name2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/space"
+                android:paddingLeft="@dimen/space"
+                android:paddingTop="@dimen/space"
+                android:text="喂药名称" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_medicine_name2"
+                android:paddingTop="@dimen/space_x0.5"
+                android:text="*"
+                android:textColor="@color/red"
+                android:textSize="@dimen/ts_x_large" />
+
+            <View
+                android:id="@+id/v_line2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/tv_medicine_name2"
+                android:layout_marginLeft="@dimen/space"
+                android:background="@color/line_gray" />
+
+            <EditText
+                android:id="@+id/et_medicine_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/v_line2"
+                android:background="@color/white"
+                android:hint="请输入药物名称"
+                android:padding="@dimen/space"
+                android:textColor="@color/sc_"
+                android:textSize="@dimen/ts_medium" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_medicine"
+            android:layout_marginBottom="@dimen/space"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_medicine_dosage1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/space"
+                android:paddingLeft="@dimen/space"
+                android:paddingTop="@dimen/space"
+                android:text="药物用量" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_medicine_dosage1"
+                android:paddingTop="@dimen/space_x0.5"
+                android:text="*"
+                android:textColor="@color/red"
+                android:textSize="@dimen/ts_x_large" />
+
+            <View
+                android:id="@+id/v_line3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/tv_medicine_dosage1"
+                android:layout_marginLeft="@dimen/space"
+                android:background="@color/line_gray" />
+
+            <EditText
+                android:id="@+id/et_medicine_dosage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/v_line3"
+                android:background="@color/white"
+                android:hint="请输入药物用量"
+                android:padding="@dimen/space"
+                android:textColor="@color/sc_"
+                android:textSize="@dimen/ts_medium"
+                android:windowSoftInputMode="stateHidden|adjustResize" />
+        </RelativeLayout>
+
+        <RadioGroup
+            android:id="@+id/rg_meal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_"
+            android:layout_marginBottom="@dimen/space"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_before"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="饭前"
+                android:textColor="@color/default_grey" />
+
+            <RadioButton
+                android:id="@+id/rb_after"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="饭后"
+                android:textColor="@color/default_grey" />
+
+        </RadioGroup>
+        <RelativeLayout
+            android:layout_below="@+id/rg_meal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/et_medicine_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/space"
+                android:text="麻烦老师帮忙啦，孩子比较调皮，一定要他吃下药才行哦！"
+                android:textSize="@dimen/ts_medium" />
+            <Button
+                android:id="@+id/btn_conform"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/et_medicine_remark"
+                android:layout_margin="@dimen/space"
+                android:background="@drawable/trust_medicine_bg"
+                android:clickable="false"
+                android:text="确定"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+        <net.hunme.school.widget.CustomVideoView
+            android:visibility="gone"
+            android:id="@+id/rtsp_player"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</ScrollView>

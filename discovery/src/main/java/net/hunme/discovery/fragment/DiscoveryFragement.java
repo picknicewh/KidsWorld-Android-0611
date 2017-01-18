@@ -27,7 +27,7 @@ import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.util.WebCommonPageFrom;
 import net.hunme.discovery.R;
-import net.hunme.discovery.activity.PlayVideoActivity;
+import net.hunme.user.activity.CollectActivity;
 import net.hunme.user.activity.UserActivity;
 
 import org.apache.cordova.engine.SystemWebView;
@@ -181,7 +181,7 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
             } else if (!webView.getUrl().contains("#/") || webView.getUrl().contains("paradiseHome")) {
                // webView.loadUrl("javascript:goHistory_Origin()");
               //  Toast.makeText(getActivity(),"该功能正在升级中!",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), PlayVideoActivity.class);
+                Intent intent = new Intent(getActivity(), CollectActivity.class);
                 intent.putExtra("source",1);
                 startActivity(intent);
             }

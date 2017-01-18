@@ -318,7 +318,6 @@ public class MusicService extends Service implements OnPreparedListener,
         Log.i("TTTTTTTTTT",isFirst+"================isFirst==========");
         if (player != null) {
             if (isFirst){
-
                 isFirst = false;
             }
             Log.i("TTTTTTTTTT",isFirst+"================isFirst==========");

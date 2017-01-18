@@ -1,34 +1,41 @@
 package net.hunme.school.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
-import net.hunme.baselibrary.base.BaseActivity;
 import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
+import net.hunme.baselibrary.widget.LoadingDialog;
 import net.hunme.school.R;
+import net.hunme.school.widget.DatePopWindow;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MedicineEntrustActivity extends BaseActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener, OkHttpListener, TextWatcher {
+public class MedicineEntrustActivity extends Activity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener, OkHttpListener, TextWatcher {
+    private ImageView iv_left;
     /**
      * 委托喂药日期
      */
-    private EditText et_alldate;
+    private static EditText et_alldate;
     /**
      * 喂药的名称
      */
@@ -46,18 +53,19 @@ public class MedicineEntrustActivity extends BaseActivity implements View.OnClic
      */
     private Button btn_medicine_submit;
     /**
-     * 饭前喂药
-     */
-    private RadioButton rb_before_launch;
-    /**
-     * 饭后喂药
-     */
-    private RadioButton rb_after_launch;
-    /**
      * beforeOrAfte r1=餐前 2=餐后
      */
-    private int beforeOrAfter=2;
+    private int beforeOrAfter = 2;
     private RadioGroup rg_meal;
+    /**
+     * 日期弹窗
+     */
+    private DatePopWindow datePopWindow;
+    /**
+     * 加载
+     */
+    public LoadingDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,44 +73,45 @@ public class MedicineEntrustActivity extends BaseActivity implements View.OnClic
         initview();
     }
 
-    @Override
-    protected void setToolBar() {
-        setLiftImage(R.mipmap.ic_arrow_lift);
-        setLiftOnClickClose();
-        setCententTitle("委托喂药");
+    public static EditText getEditText() {
+        return et_alldate;
     }
-    private void entrustMedicine(int beforeOrAfter){
+
+    private void entrustMedicine(int beforeOrAfter) {
         String name = et_medicine_name.getText().toString();
         String dosage = et_medicine_dosage.getText().toString();
         String remark = et_medicine_remark.getText().toString();
-        String date =et_alldate.getText().toString();
-        if (!check()){
-            Toast.makeText(this,"必填信息不能为空哦",Toast.LENGTH_SHORT).show();
+        String date = et_alldate.getText().toString();
+        if (G.isEmteny(name) || G.isEmteny(dosage) || G.isEmteny(date)) {
+            Toast.makeText(this, "必填信息不能为空哦", Toast.LENGTH_SHORT).show();
             return;
         }
-        Map<String,Object> params = new HashMap<>();
-        params.put("createTime",date);
-        params.put("medicineName",name);
-        params.put("medicineDosage",dosage);
-        params.put("medicineDoc",remark);
-        params.put("mealBeforeOrAfter",beforeOrAfter);
+        Map<String, Object> params = new HashMap<>();
+        params.put("createTime", date);
+        params.put("medicineName", name);
+        params.put("medicineDosage", dosage);
+        params.put("medicineDoc", remark);
+        params.put("mealBeforeOrAfter", beforeOrAfter);
         params.put("tsId", UserMessage.getInstance(this).getTsId());
-        Type type = new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.SCHOOL_MEDICINEPUBLISH,params,this);
+        Type type = new TypeToken<Result<String>>() {
+        }.getType();
+        OkHttps.sendPost(type, Apiurl.SCHOOL_MEDICINEPUBLISH, params, this);
         showLoadingDialog();
     }
-    private void initview(){
-        et_alldate = $(R.id.et_alldate);
-        et_medicine_name = $(R.id.et_medicine_name);
-        et_medicine_dosage = $(R.id.et_medicine_dosage);
-        et_medicine_remark = $(R.id.et_medicine_remark);
-        btn_medicine_submit = $(R.id.btn_conform);
-        rb_before_launch = $(R.id.rb_before);
-        rb_after_launch = $(R.id.rb_after);
-        rg_meal=  $(R.id.rg_meal);
+
+    private void initview() {
+        et_alldate = (EditText) findViewById(R.id.et_alldate);
+        et_medicine_name = (EditText) findViewById(R.id.et_medicine_name);
+        et_medicine_dosage = (EditText) findViewById(R.id.et_medicine_dosage);
+        et_medicine_remark = (EditText) findViewById(R.id.et_medicine_remark);
+        btn_medicine_submit = (Button) findViewById(R.id.btn_conform);
+        iv_left = (ImageView) findViewById(R.id.iv_left);
+        et_alldate.setInputType(InputType.TYPE_DATETIME_VARIATION_NORMAL);
+        rg_meal = (RadioGroup) findViewById(R.id.rg_meal);
         rg_meal.setOnCheckedChangeListener(this);
         btn_medicine_submit.setOnClickListener(this);
-        et_alldate.addTextChangedListener(this);
+        iv_left.setOnClickListener(this);
+        et_alldate.setOnClickListener(this);
         et_medicine_name.addTextChangedListener(this);
         et_medicine_dosage.addTextChangedListener(this);
         et_medicine_remark.addTextChangedListener(this);
@@ -111,34 +120,22 @@ public class MedicineEntrustActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
-        if (viewId==R.id.btn_conform){
-          entrustMedicine(beforeOrAfter);
+        if (viewId == R.id.btn_conform) {
+            entrustMedicine(beforeOrAfter);
+        } else if (viewId == R.id.iv_left) {
+            finish();
+        } else if (viewId == R.id.et_alldate) {
+            datePopWindow = new DatePopWindow(this);
+            datePopWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
         }
     }
+
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-        if (checkedId==R.id.rb_before){
-         //   rb_before_launch.setChecked(true);
+        if (checkedId == R.id.rb_before) {
             beforeOrAfter = 1;
-        }else if (checkedId==R.id.rb_after){
-           beforeOrAfter  =2;
-        }
-    }
-
-
-    private boolean check(){
-        String name = et_medicine_name.getText().toString();
-        String dosage = et_medicine_dosage.getText().toString();
-        String remark = et_medicine_remark.getText().toString();
-        String date =et_alldate.getText().toString();
-        if (name==null||dosage==null||remark==null ||date ==null){
-            btn_medicine_submit.setClickable(false);
-            btn_medicine_submit.setBackgroundResource(R.drawable.trust_medicine_bg);
-            return false;
-        }else {
-            btn_medicine_submit.setClickable(true);
-            btn_medicine_submit.setBackgroundResource(R.drawable.finish_medicine_bg);
-            return true;
+        } else if (checkedId == R.id.rb_after) {
+            beforeOrAfter = 2;
         }
     }
 
@@ -147,14 +144,14 @@ public class MedicineEntrustActivity extends BaseActivity implements View.OnClic
         stopLoadingDialog();
         Result<String> data = (Result<String>) date;
         String result = data.getData();
-        Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
         finish();
     }
 
     @Override
     public void onError(String uri, String error) {
         stopLoadingDialog();
-        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -164,11 +161,45 @@ public class MedicineEntrustActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        check();
+        String name = et_medicine_name.getText().toString();
+        String dosage = et_medicine_dosage.getText().toString();
+        String date = et_alldate.getText().toString();
+        if (!G.isEmteny(name) && !G.isEmteny(dosage)  && !G.isEmteny(date)) {
+            btn_medicine_submit.setClickable(true);
+            btn_medicine_submit.setBackgroundResource(R.drawable.finish_medicine_bg);
+            Log.i("ssssss", "=====================全部都有数据");
+
+        } else {
+            btn_medicine_submit.setClickable(false);
+            btn_medicine_submit.setBackgroundResource(R.drawable.trust_medicine_bg);
+            Log.i("ssssss", "=====================部分或者全部没有数据");
+        }
     }
 
     @Override
     public void afterTextChanged(Editable editable) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (datePopWindow != null) {
+            datePopWindow.unregisteReceiver();
+        }
+    }
+
+    public void showLoadingDialog() {
+        if (dialog == null)
+            dialog = new LoadingDialog(this, net.hunme.baselibrary.R.style.LoadingDialogTheme);
+        dialog.show();
+        dialog.setCancelable(true);
+        dialog.setLoadingText("数据加载中...");
+    }
+
+    public void stopLoadingDialog() {
+        if (dialog != null) {
+            dialog.dismiss();
+        }
     }
 }

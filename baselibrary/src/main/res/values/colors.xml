@@ -14,7 +14,8 @@
     <color name="b_gray">#787878</color>
     <color name="line_gray">#e1e1e1</color>
     <color name="harf_white">#80ffffff</color>
-    <color name="harf_black">#50000000</color>
+    <color name="harf_black">#80000000</color>
+    <color name="black_0.8">#E6000000</color>
     <color name="_black">#DD000000</color>
     <color name="pop_black">#DD494949</color>
     <color name="bg_message">#535353</color>
@@ -25,7 +26,8 @@
     <color name="light_gray">#eeeeee</color>
     <color name="parent">#8ec500</color>
 
-    <color name="haft_main_green">#888dc700</color>
+    <color name="haft_main_green">#808dc700</color>
+    <color name="main_green_0.8">#E68dc700</color>
     <color name="noread_grey">#c6c6c6</color>
     <!--主题页面背景-->
     <color name="bg_layout">#efeff4</color>
@@ -53,7 +55,7 @@
     <color name="default_btn">#8ec500</color><!--按钮默认颜色-->
     <color name="touch_btn">#6d9a00</color><!--按钮触摸状态-->
     <color name="unclick_btn">#c6c6c6</color><!--不可点击按钮状态-->
-
+    <color name="guide">#70c7e1</color>
     <color name="guide_btn">#8070c7e1</color>
     <color name="guide_btn_click">#8031acd1</color>
     <!--首页字体颜色-->

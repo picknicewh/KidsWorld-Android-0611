@@ -99,8 +99,6 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
         userMessage = UserMessage.getInstance(context);
          tsId = userMessage.getTsId();
         registerReceiver();
-      //  tsId = "c14dceea93e244b6be7ceed3d65bf037";
-    //   getSongList(tsId,String.valueOf(17));
         getSongList(tsId,themeId);
         getUserPaly();
     }

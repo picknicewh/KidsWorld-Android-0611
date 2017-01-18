@@ -180,7 +180,7 @@ public class DateView extends LinearLayout implements View.OnClickListener{
        int rows = DateUtil.getRows(year,mouth);
        int week  = DateUtil.getWeekofday(year,mouth);
        int days =DateUtil.getMouthDays(year,mouth);
-       int lastMouthday = DateUtil.getMouthDays(year,mouth-1)-week+1;
+       int lastMouthday = DateUtil.getMouthDays(year,mouth)-week;
        int date =1;
        int countdate;
        for (int row=1;row<=rows;row++) {

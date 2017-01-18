@@ -61,7 +61,6 @@ public class MedicineSProcesstAdapter extends BaseAdapter {
             new ViewHold(view);
         }
         viewHold = (ViewHold) view.getTag();
-
         MedicineSchedule medicineSchedule =medicineScheduleVos.get(i);
         MedicineVo medicineVo = medicineSchedule.getMedicine();
         Schedule schedule = medicineSchedule.getSchedule();

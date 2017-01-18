@@ -3,179 +3,214 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_layout"
     android:orientation="vertical"
-   android:background="@color/bg_layout"
     tools:context="net.hunme.school.activity.MedicineTaskTActivity">
-  <LinearLayout
-      android:background="@color/white"
-      android:layout_marginTop="@dimen/space"
-      android:padding="@dimen/space"
-      android:orientation="horizontal"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-      <net.hunme.baselibrary.widget.CircleImageView
-          android:id="@+id/civ_image"
 
-          android:layout_width="40dp"
-          android:layout_height="40dp" />
-      <TextView
-          android:paddingLeft="@dimen/space"
-          android:textColor="@color/main_green"
-
-          android:layout_gravity="center"
-          android:id="@+id/tv_tsName"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
-    </LinearLayout>
-    <RelativeLayout
-        android:background="@color/white"
-        android:layout_marginTop="@dimen/space"
-        android:layout_marginBottom="@dimen/space"
-        android:orientation="horizontal"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-      <TextView
-          android:id="@+id/tv_medicine_date"
-          android:text="喂药日期"
-          android:paddingTop="@dimen/space"
-          android:paddingBottom="@dimen/space"
-          android:paddingLeft="@dimen/space"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
-        <TextView
-            android:textColor="@color/red"
-            android:text="*"
-            android:paddingTop="@dimen/space_x0.5"
-            android:textSize="@dimen/ts_x_large"
-            android:layout_width="wrap_content"
-            android:layout_toRightOf="@id/tv_medicine_date"
-            android:layout_height="wrap_content" />
-        <View
-            android:layout_marginLeft="@dimen/space"
-            android:id="@+id/v_line"
-            android:layout_below="@+id/tv_medicine_date"
-            android:background="@color/line_gray"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
-        <TextView
-            android:id="@+id/tv_alldate"
+        android:layout_height="match_parent">
 
-            android:padding="@dimen/space"
-            android:textColor="@color/sc_"
-            android:layout_below="@id/v_line"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:background="@color/white"
-        android:layout_marginBottom="@dimen/space"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tv_medicine_name2"
-            android:text="喂药名称"
-            android:paddingTop="@dimen/space"
-            android:paddingBottom="@dimen/space"
-            android:paddingLeft="@dimen/space"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:textColor="@color/red"
-            android:text="*"
-            android:paddingTop="@dimen/space_x0.5"
-            android:textSize="@dimen/ts_x_large"
-            android:layout_width="wrap_content"
-            android:layout_toRightOf="@id/tv_medicine_name2"
-            android:layout_height="wrap_content" />
-        <View
-            android:layout_marginLeft="@dimen/space"
-            android:id="@+id/v_line2"
-            android:layout_below="@+id/tv_medicine_name2"
-            android:background="@color/line_gray"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
-        <TextView
-            android:id="@+id/tv_medicine_name"
+            android:layout_height="wrap_content"
 
-            android:padding="@dimen/space"
-            android:textColor="@color/sc_"
-            android:layout_below="@id/v_line2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:background="@color/white"
-        android:layout_marginBottom="@dimen/space"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tv_medicine_dosage1"
-            android:text="药物用量"
-            android:paddingTop="@dimen/space"
-            android:paddingBottom="@dimen/space"
-            android:paddingLeft="@dimen/space"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:textColor="@color/red"
-            android:text="*"
-            android:paddingTop="@dimen/space_x0.5"
-            android:textSize="@dimen/ts_x_large"
-            android:layout_width="wrap_content"
-            android:layout_toRightOf="@id/tv_medicine_dosage1"
-            android:layout_height="wrap_content" />
-        <View
-            android:layout_marginLeft="@dimen/space"
-            android:id="@+id/v_line3"
-            android:layout_below="@+id/tv_medicine_dosage1"
-            android:background="@color/line_gray"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
-        <TextView
-            android:id="@+id/tv_medicine_dosage"
+            android:orientation="vertical">
 
-            android:padding="@dimen/space"
-            android:textColor="@color/sc_"
-            android:layout_below="@id/v_line3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-    <RadioGroup
-        android:background="@color/white"
-        android:layout_marginBottom="@dimen/space"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RadioButton
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/space">
 
-            android:text="饭前"
-            android:id="@+id/rb_before"
-            android:textColor="@color/default_grey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-            <RadioButton
-            android:text="饭后"
-            android:textColor="@color/default_grey"
-            android:checked="true"
-            android:id="@+id/rb_after"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                <net.hunme.baselibrary.widget.CircleImageView
+                    android:id="@+id/civ_image"
 
-    </RadioGroup>
-    <TextView
-        android:padding="@dimen/space"
-        android:background="@color/white"
-        android:id="@+id/tv_remark"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/btn_finish"
-        android:text="喂药"
-        android:layout_margin="@dimen/space"
-        android:textColor="@color/white"
-        android:background="@drawable/finish_medicine_bg"
-        android:layout_width="match_parent"
-        android:layout_height="40dp" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+
+                <TextView
+                    android:id="@+id/tv_tsName"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="@dimen/space"
+                    android:textColor="@color/main_green" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space"
+                android:layout_marginTop="@dimen/space"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_medicine_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/space"
+                    android:paddingLeft="@dimen/space"
+                    android:paddingTop="@dimen/space"
+                    android:text="喂药日期" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tv_medicine_date"
+                    android:paddingTop="@dimen/space_x0.5"
+                    android:text="*"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/ts_x_large" />
+
+                <View
+                    android:id="@+id/v_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/tv_medicine_date"
+                    android:layout_marginLeft="@dimen/space"
+                    android:background="@color/line_gray" />
+
+                <TextView
+                    android:id="@+id/tv_alldate"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/v_line"
+                    android:padding="@dimen/space"
+                    android:textColor="@color/sc_" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_medicine_name2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/space"
+                    android:paddingLeft="@dimen/space"
+                    android:paddingTop="@dimen/space"
+                    android:text="喂药名称" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tv_medicine_name2"
+                    android:paddingTop="@dimen/space_x0.5"
+                    android:text="*"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/ts_x_large" />
+
+                <View
+                    android:id="@+id/v_line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/tv_medicine_name2"
+                    android:layout_marginLeft="@dimen/space"
+                    android:background="@color/line_gray" />
+
+                <TextView
+                    android:id="@+id/tv_medicine_name"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/v_line2"
+                    android:padding="@dimen/space"
+                    android:textColor="@color/sc_" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_medicine_dosage1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/space"
+                    android:paddingLeft="@dimen/space"
+                    android:paddingTop="@dimen/space"
+                    android:text="药物用量" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tv_medicine_dosage1"
+                    android:paddingTop="@dimen/space_x0.5"
+                    android:text="*"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/ts_x_large" />
+
+                <View
+                    android:id="@+id/v_line3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/tv_medicine_dosage1"
+                    android:layout_marginLeft="@dimen/space"
+                    android:background="@color/line_gray" />
+
+                <TextView
+                    android:id="@+id/tv_medicine_dosage"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/v_line3"
+                    android:padding="@dimen/space"
+                    android:textColor="@color/sc_" />
+            </RelativeLayout>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <RadioButton
+
+                    android:id="@+id/rb_before"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="饭前"
+                    android:textColor="@color/default_grey" />
+
+                <RadioButton
+                    android:id="@+id/rb_after"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="饭后"
+                    android:textColor="@color/default_grey" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/space" />
+
+            <Button
+                android:id="@+id/btn_finish"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="@dimen/space"
+                android:background="@drawable/finish_medicine_bg"
+                android:text="喂药"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -284,6 +284,16 @@ public class WebCommonPageFrom {
         Log.i("aaaaaa","===========startMusicActivity=========");
     }
     @JavascriptInterface
+    public void startVideoActivity(String themeId,String resourceId) {
+        Intent intent = new Intent();
+        ComponentName componetName = new ComponentName("net.hunme.kidsworld","net.hunme.discovery.activity.FullPlayVideoActivity");
+        intent.setComponent(componetName);
+        intent.putExtra("albumId",themeId);
+        intent.putExtra("resourceId",resourceId);
+        activity.startActivity(intent);
+        Log.i("aaaaaa","===========startVideoActivity=========");
+    }
+    @JavascriptInterface
     public void back(){
         activity.finish();
     }

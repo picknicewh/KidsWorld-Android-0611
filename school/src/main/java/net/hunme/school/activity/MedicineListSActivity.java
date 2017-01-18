@@ -6,16 +6,31 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.Toast;
+
+import com.google.gson.reflect.TypeToken;
 
 import net.hunme.baselibrary.base.BaseActivity;
+import net.hunme.baselibrary.mode.Result;
+import net.hunme.baselibrary.network.Apiurl;
+import net.hunme.baselibrary.network.OkHttpListener;
+import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.school.R;
+import net.hunme.school.bean.MedicineSVos;
+import net.hunme.school.bean.MedicineSchedule;
+import net.hunme.school.bean.MedicineVo;
 import net.hunme.school.fragment.MedicineFeedListFragment;
 import net.hunme.school.fragment.MedicineProcessFragment;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 作者： wh
@@ -24,8 +39,12 @@ import java.util.List;
  * 版本说明：
  * 附加注释：
  * 主要接口：
-*/
-public class MedicineListSActivity extends BaseActivity  implements View.OnClickListener {
+ */
+public class MedicineListSActivity extends BaseActivity implements View.OnClickListener, OkHttpListener {
+    /**
+     * 一页条数
+     */
+    private static final int pageSize = 999;
     /**
      * 页面
      */
@@ -46,6 +65,15 @@ public class MedicineListSActivity extends BaseActivity  implements View.OnClick
      * 喂药进程下划线
      */
     private View line_process;
+    /**
+     * 页码
+     */
+    private int pageNumber = 1;
+    /**
+     * 当前页面位置
+     */
+    private int currentPage = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,79 +90,138 @@ public class MedicineListSActivity extends BaseActivity  implements View.OnClick
         setSubTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MedicineListSActivity.this,MedicineEntrustActivity.class);
+                Intent intent = new Intent(MedicineListSActivity.this, MedicineEntrustActivity.class);
                 startActivity(intent);
             }
         });
     }
-    private void initView(){
+
+    private void initView() {
         vp_vp_feed_t = $(R.id.vp_feed_t);
         rb_feed_list = $(R.id.rb_feed_list);
-        rb_feed_process=  $(R.id.rb_feed_process);
+        rb_feed_process = $(R.id.rb_feed_process);
         line_feed = $(R.id.line_feed);
         line_process = $(R.id.line_process);
         rb_feed_list.setOnClickListener(this);
         rb_feed_process.setOnClickListener(this);
-        setViewpager();
+        setViewpager(currentPage);
     }
-    private void setViewpager(){
-        final List<Fragment> fragments = new ArrayList<>();
-        MedicineFeedListFragment listFragment = new MedicineFeedListFragment();
-        MedicineProcessFragment processFragment = new MedicineProcessFragment();
+
+    private void getFeedList() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("tsId", UserMessage.getInstance(this).getTsId());
+        map.put("pageNumber", pageNumber);
+        map.put("pageSize", pageSize);
+        Type type = new TypeToken<Result<MedicineSVos>>() {
+        }.getType();
+        OkHttps.sendPost(type, Apiurl.SCHOOL_MEDICINESLIST, map, this);
+        showLoadingDialog();
+    }
+    private   MedicineFeedListFragment listFragment;
+    private   MedicineProcessFragment processFragment;
+    private void setViewpager(int currentPage) {
+         List<Fragment> fragments = new ArrayList<>();
+         listFragment = new MedicineFeedListFragment();
+         processFragment = new MedicineProcessFragment();
+      /*  Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("medicineVos", (ArrayList<? extends Parcelable>) medicineVos);
+        listFragment.setArguments(bundle);*/
+
+       /* Bundle bundle2 = new Bundle();
+        bundle2.putParcelableArrayList("medicineScheduleVos", (ArrayList<? extends Parcelable>) medicineScheduleVos);
+        processFragment.setArguments(bundle2);*/
         fragments.add(listFragment);
         fragments.add(processFragment);
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(),fragments);
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
         vp_vp_feed_t.setAdapter(adapter);
-        vp_vp_feed_t.setCurrentItem(0);
+        vp_vp_feed_t.setCurrentItem(currentPage);
         vp_vp_feed_t.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
             @Override
             public void onPageSelected(int position) {
                 setline(position);
             }
+
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
     }
+
     /**
-     *设置下划线
+     * 设置下划线
+     *
      * @param position 页面的位置
      */
-    private void setline(int position){
-        if (position==0){
+    private void setline(int position) {
+        currentPage = position;
+        if (position == 0) {
             line_feed.setBackgroundColor(getResources().getColor(R.color.main_green));
             line_process.setBackgroundColor(getResources().getColor(R.color.white));
             rb_feed_list.setChecked(true);
             rb_feed_process.setChecked(false);
-        }else {
+        } else {
             line_process.setBackgroundColor(getResources().getColor(R.color.main_green));
             line_feed.setBackgroundColor(getResources().getColor(R.color.white));
             rb_feed_list.setChecked(false);
             rb_feed_process.setChecked(true);
-
         }
         vp_vp_feed_t.setCurrentItem(position);
     }
+
     @Override
     public void onClick(View view) {
-        int viewId =  view.getId();
-        if (viewId==R.id.rb_feed_list){
+        int viewId = view.getId();
+        if (viewId == R.id.rb_feed_list) {
             setline(0);
-        }else if (viewId==R.id.rb_feed_process){
+        } else if (viewId == R.id.rb_feed_process) {
             setline(1);
         }
+    }
+
+    @Override
+    public void onSuccess(String uri, Object date) {
+        stopLoadingDialog();
+        if (Apiurl.SCHOOL_MEDICINESLIST.equals(uri)) {
+            Result<MedicineSVos> data = (Result<MedicineSVos>) date;
+            if (data != null) {
+                MedicineSVos medicineSVos = data.getData();
+                List<MedicineVo> medicineVos = medicineSVos.getMedicineList();
+                List<MedicineSchedule> medicineScheduleVos = medicineSVos.getMedicineScheduleJson();
+                listFragment.setMedicineVo(medicineVos);
+                processFragment.setMedicineScheduleVos(medicineScheduleVos);
+                Log.i("nnnnnnnn", "============222222=================="+medicineVos.size());
+            }
+        }
+    }
+
+    @Override
+    public void onError(String uri, String error) {
+        stopLoadingDialog();
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("nnnnnnnn", "================onResume===================");
+        getFeedList();
     }
 
     /**
      * 适配器
      */
-    private class  FragmentAdapter extends FragmentPagerAdapter{
+    private class FragmentAdapter extends FragmentPagerAdapter {
         private List<Fragment> fragmentList;
-        public FragmentAdapter(FragmentManager fm,List<Fragment> fragmentList) {
+
+        public FragmentAdapter(FragmentManager fm, List<Fragment> fragmentList) {
             super(fm);
-            this.fragmentList  =fragmentList;
+            this.fragmentList = fragmentList;
         }
+
         @Override
         public Fragment getItem(int position) {
             return fragmentList.get(position);

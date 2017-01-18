@@ -11,8 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.LeaveAskActivity"
-            android:screenOrientation="portrait"
-          />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.PublishActivity"
@@ -26,6 +25,7 @@
         <activity
             android:name=".TestActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".activity.TestActivity" />
         <activity android:name=".activity.ClassListActivity" />
         <activity android:name=".activity.PublishFoodActivity" />
         <activity android:name=".activity.PublishInfoActivity" />
@@ -33,7 +33,8 @@
         <activity android:name=".activity.MedicineListTActivity" />
         <activity android:name=".activity.MedicineListSActivity" />
         <activity android:name=".activity.MedicineTaskTActivity" />
-        <activity android:name=".activity.MedicineEntrustActivity"></activity>
+        <activity android:name=".activity.MedicineEntrustActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

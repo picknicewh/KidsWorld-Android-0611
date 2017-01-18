@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
+
+            <TextView
+                android:id="@+id/tv_current"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_x0.5"
+                android:text="00:00"
+                android:textColor="@color/white" />
+
+            <SeekBar
+                android:id="@+id/sb_video"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:maxHeight="2dp"
+                android:progressDrawable="@drawable/po_seekbar"
+                android:thumb="@drawable/thumbdos" />
+
+            <TextView
+                android:id="@+id/tv_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_x0.5"
+                android:text="00:00"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_play"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
+
+            <ImageView
+                android:id="@+id/iv_pre"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/ll_play"
+                android:src="@mipmap/ic_pre" />
+
+            <ImageView
+                android:id="@+id/iv_play"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_pause" />
+
+            <ImageView
+                android:id="@+id/iv_next"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/ll_play"
+                android:src="@mipmap/ic_next" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,9 +1,7 @@
 package net.hunme.school.activity;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -44,17 +42,12 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
      * 是否被删除
      */
     public  static String  COURSEDELETE = "net.hunme.school.activity.delete";
-    /**
-     * 确认删除广播
-     */
-    private DeleteBroadcast deleteBroadcast;
     private PullToRefreshLayout refresh_view;
     private PullableListView lv_course;
     /**
      * 数据列表
      */
     public   List<SyllabusVo> syllabusVoList;
-    private int count = 1;
     public    CourseListAdapter adapter;
     private RelativeLayout rl_nonetwork;
     /**
@@ -65,6 +58,7 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
      * 加载更多
      */
     private LinearLayout ll_loadmore;
+    private int count = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,12 +72,10 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
        ll_loadmore =$(R.id.load_more);
        tv_nodata = $(R.id.tv_nodata);
        refresh_view.setOnRefreshListener(new MyListener());
-       registerReceiver();
        syllabusVoList = new ArrayList<>();
        showLoadingDialog();
        getArrange(count);
        setlist();
-
    }
     private void setlist(){
         adapter = new CourseListAdapter(this,syllabusVoList);
@@ -129,15 +121,6 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
         }
     }
     /**
-     * 注册监听网络广播广播
-     */
-    private void registerReceiver() {
-        IntentFilter filter = new IntentFilter(COURSEDELETE);
-        deleteBroadcast = new DeleteBroadcast();
-        this.registerReceiver(deleteBroadcast, filter);
-    }
-
-    /**
      *获取课程表
      * @param  count
      */
@@ -148,13 +131,13 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
         params.put("pageSize",10);
         Type type = new TypeToken<Result<List<SyllabusVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.SCHOOL_GETSYLLABUSLISTS,params,this);
-      if (G.isNetworkConnected(this)){
+       if (G.isNetworkConnected(this)){
           showLoadingDialog();
           rl_nonetwork.setVisibility(View.GONE);
           dispalynonet(false);
-      }else {
-          dispalynonet(true);
-          rl_nonetwork.setVisibility(View.VISIBLE);
+       }else {
+           dispalynonet(true);
+           rl_nonetwork.setVisibility(View.VISIBLE);
       }
     }
     @Override
@@ -169,7 +152,6 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(deleteBroadcast);
     }
 
     @Override
@@ -192,6 +174,10 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
             refresh_view.setLv_count(syllabusVoList.size());
         }
     }
+    /**
+     * 删除
+     * @param  position 当前位置
+     */
     public void updateDelete(int position){
         syllabusVoList.remove(position);
         if (syllabusVoList.size()==0){
@@ -254,12 +240,4 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
 
          }
      }
-    private class  DeleteBroadcast extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(COURSEDELETE)){
-                getArrange(count);
-            }
-        }
-    }
 }

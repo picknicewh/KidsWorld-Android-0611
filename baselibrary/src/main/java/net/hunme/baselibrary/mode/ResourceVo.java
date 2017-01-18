@@ -12,6 +12,7 @@ import android.os.Parcelable;
  * 主要接口：
  */
 public class ResourceVo implements Parcelable {
+
     /**
      * 资源ID
      */

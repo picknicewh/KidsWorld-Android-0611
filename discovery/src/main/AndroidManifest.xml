@@ -25,7 +25,6 @@
                 <action android:name="com.service.MusicService" />
             </intent-filter>
         </service>
-
         <activity
             android:name=".LockActivity"
             android:excludeFromRecents="true"
@@ -34,10 +33,14 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.MainDiscoveryActivity" />
         <activity android:name=".activity.MusicAlubmListActivity" />
-        <activity android:name=".activity.PlayVideoActivity"
+        <activity
+            android:name=".activity.PlayVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
-    </activity>
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".activity.FullPlayVideoActivity"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

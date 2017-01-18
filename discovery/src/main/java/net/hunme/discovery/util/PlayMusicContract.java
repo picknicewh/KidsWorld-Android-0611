@@ -14,7 +14,6 @@ import java.util.List;
  */
 public interface PlayMusicContract  {
     interface View {
-
         void setSongList(List<ResourceVo> resourceVos);
         void setSongInfo(int position);
         void setIsPlay(boolean isPlay);

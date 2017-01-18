@@ -297,7 +297,6 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         //用户发布动态成功 重新刷新数据
         if(G.KisTyep.isReleaseSuccess) {
             G.KisTyep.isReleaseSuccess = false;
-           // statusVoList.clear();
             if (statusVoList.size()>0){
                 loadDDynamicList(position,PAGESIZE,1,2,statusVoList.get(0).getDynamicId());
             }
@@ -312,10 +311,11 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
             lv_status.removeHeaderView(layout_head);
         }
         //设置消息通知状态，评论完了要重新获取通知栏的消息
-        if (dbHelper.getNoReadcount(db,tsId)>0){
+        if (dbHelper.getNoReadcount(db,tsId)>0) {
             lv_status.removeHeaderView(layout_head);
             setMessageInfo();
         }
+
     }
 
     /**

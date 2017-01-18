@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/rl_full_srceen"
+    tools:context="net.hunme.discovery.activity.FullPlayVideoActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <SurfaceView
+            android:id="@+id/sv_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <net.hunme.discovery.widget.VerticalSeekBar
+            android:id="@+id/vsb_light"
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginLeft="@dimen/space_x2"
+            android:progress="20"
+            android:progressDrawable="@drawable/po_ver_seekbar"
+            android:thumb="@drawable/thumb_dos_vsb"
+            />
+        <net.hunme.discovery.widget.VerticalSeekBar
+            android:id="@+id/vsb_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="45dp"
+            android:layout_marginRight="@dimen/space_x2"
+            android:progress="10"
+            android:progressDrawable="@drawable/po_ver_seekbar"
+            android:thumb="@drawable/thumb_dos_vsb" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/harf_black"
+        android:paddingLeft="@dimen/space"
+        android:paddingRight="@dimen/space">
+        <ImageView
+            android:id="@+id/iv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_arrow_lift"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_video_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40dp"
+
+            android:textColor="@color/white" />
+         <ImageView
+             android:visibility="gone"
+             android:id="@+id/iv_theme"
+             android:layout_marginRight="@dimen/space_x3"
+             android:layout_centerVertical="true"
+             android:layout_alignParentRight="true"
+             android:src="@mipmap/person"
+             android:layout_width="40dp"
+             android:layout_height="40dp" />
+        <ImageView
+            android:id="@+id/iv_collect"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/ll_contorl"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/harf_black"
+        android:paddingTop="@dimen/space_x0.5">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/space_x2.5"
+            android:paddingRight="@dimen/space_x2.5">
+
+            <ImageView
+                android:id="@+id/iv_play"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="@dimen/space"
+                android:src="@mipmap/ic_video_full_pause" />
+            <SeekBar
+                android:id="@+id/sb_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:maxHeight="15dp"
+                android:progressDrawable="@drawable/po_seekbar"
+                android:thumb="@drawable/thumb_dos_video"/>
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="@dimen/space_x0.5"
+            android:id="@+id/rv_video_album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</RelativeLayout>
+

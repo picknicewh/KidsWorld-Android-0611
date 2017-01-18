@@ -1,11 +1,7 @@
 package net.hunme.school.widget;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -16,12 +12,11 @@ import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.baselibrary.widget.BaseConformDialog;
-import net.hunme.baselibrary.widget.MyAlertDialog;
 import net.hunme.school.R;
 import net.hunme.school.activity.CourseArrangeActivity;
 import net.hunme.school.activity.LeaveListActivity;
 import net.hunme.school.fragment.MedicineFeedListFragment;
-import net.hunme.user.activity.MyDynamicActivity;
+import net.hunme.school.fragment.MedicineProcessFragment;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -84,19 +79,16 @@ public class DeleteDialog extends BaseConformDialog implements View.OnClickListe
             Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
           if (context instanceof LeaveListActivity){
               LeaveListActivity   activity = (LeaveListActivity) context;
-            //  activity.leaveVos.remove(position);
-             // activity.adapter.notifyDataSetChanged();
               activity.deleteUpdate(position);
           }else if (context instanceof CourseArrangeActivity){
               CourseArrangeActivity arrangeActivity = (CourseArrangeActivity) context;
-             // arrangeActivity.syllabusVoList.remove(position);
-            //  arrangeActivity.adapter.notifyDataSetChanged();
               arrangeActivity.updateDelete(position);
           }
           else {
               MedicineFeedListFragment.medicineVos.remove(position);
+              MedicineProcessFragment.medicineScheduleVos.remove(position);
               MedicineFeedListFragment.adapter.notifyDataSetChanged();
-
+              MedicineProcessFragment.adapter.notifyDataSetChanged();
           }
         }
         alertDialog.dismiss();
@@ -128,6 +120,10 @@ public class DeleteDialog extends BaseConformDialog implements View.OnClickListe
         Type type = new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.SCHOOL_DETLTESYLLABUSLISTS,params,this);
     }
+    /**
+     * 删除喂药
+     * @param  medicineId 喂药id
+     */
     private void deleteMedicine(String medicineId){
         Map<String,Object> params = new HashMap<>();
         params.put("tsId", UserMessage.getInstance(context).getTsId());
@@ -135,5 +131,4 @@ public class DeleteDialog extends BaseConformDialog implements View.OnClickListe
         Type type = new TypeToken<Result<String >>(){}.getType();
         OkHttps.sendPost(type, Apiurl.SCHOOL_MEDICINETDELETE,params,this);
     }
-
 }

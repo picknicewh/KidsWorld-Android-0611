@@ -149,9 +149,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
                     dispalynoList(false);
                     adapter.notifyDataSetChanged();
                     tv_nodata.setVisibility(View.GONE);
-
                 }
-
                 refresh_view.setLv_count(leaveVos.size());
             }
         }
@@ -169,11 +167,11 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
             tv_nodata.setVisibility(View.GONE);
         }
         if (adapter!=null){
-
             adapter.notifyDataSetChanged();
         }
         refresh_view.setLv_count(leaveVos.size());
     }
+
     private void dispalynoList(boolean isvisible){
         if (isvisible){
             lv_leaves.setVisibility(View.GONE);
@@ -182,7 +180,6 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
             lv_leaves.setVisibility(View.VISIBLE);
             ll_loadmore.setVisibility(View.VISIBLE);
         }
-
     }
     @Override
     public void onError(String uri, String error) {
@@ -190,7 +187,6 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
         Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
     }
     class MyListener implements PullToRefreshLayout.OnRefreshListener {
-
         public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
             // 下拉刷新操作
             new Handler() {

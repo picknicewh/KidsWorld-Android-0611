@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
-import net.hunme.baselibrary.cordova.HMDroidGap;
 import net.hunme.baselibrary.network.ServerConfigManager;
 import net.hunme.baselibrary.util.BroadcastConstant;
 import net.hunme.baselibrary.util.UserMessage;
@@ -21,6 +20,8 @@ import net.hunme.school.activity.ClassListActivity;
 import net.hunme.school.activity.CourseArrangeActivity;
 import net.hunme.school.activity.FoodListActivity;
 import net.hunme.school.activity.LeaveListActivity;
+import net.hunme.school.activity.MedicineListSActivity;
+import net.hunme.school.activity.MedicineListTActivity;
 import net.hunme.school.activity.PublishActivity;
 
 import java.util.ArrayList;
@@ -82,7 +83,6 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_school, null);
         init(view);
-
         return view;
     }
     private void init(View v){
@@ -126,16 +126,18 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
         }else if(view.getId()==R.id.rl_openClass){
             intent.setClass(getActivity(), ClassListActivity.class);
         }else if (view.getId()==R.id.rl_medicine){
-            intent.setClass(getActivity(), HMDroidGap.class);
+           //  intent.setClass(getActivity(), net.hunme.school.activity.TestActivity.class);
+       /*     intent.setClass(getActivity(), HMDroidGap.class);
             intent.putExtra("loadUrl",geturl());
             schoolDosDisappear(BroadcastConstant.MEDICINEDOS);
-           /* if (UserMessage.getInstance(getActivity()).getType().equals("1")){
+           */
+            if (UserMessage.getInstance(getActivity()).getType().equals("1")){
                 intent.setClass(getActivity(), MedicineListSActivity.class);
             }else {
                 intent.setClass(getActivity(), MedicineListTActivity.class);
                 //"http://192.168.1.171:8787/KidsWorld-Web
                 schoolDosDisappear(BroadcastConstant.MEDICINEDOS);
-            }*/
+            }
         }
         startActivity(intent);
     }

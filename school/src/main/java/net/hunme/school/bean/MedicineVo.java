@@ -1,5 +1,8 @@
 package net.hunme.school.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -10,7 +13,7 @@ import java.util.List;
  * 附加注释：
  * 主要接口：
  */
-public class MedicineVo{
+public class MedicineVo implements Parcelable {
 
     /**
      * 角色ID
@@ -56,7 +59,47 @@ public class MedicineVo{
      *	服药时间列表
      */
     private List<MedicineStatus> medicineStatusList;
+    protected MedicineVo(Parcel in) {
+        ts_id = in.readString();
+        ts_name = in.readString();
+        imgUrl = in.readString();
+        ry_id = in.readString();
+        medicine_id = in.readString();
+        medicine_name = in.readString();
+        medicine_dosage = in.readString();
+        medicine_doc = in.readString();
+        meal_before_or_after = in.readInt();
+        create_time = in.readString();
+    }
+    public static final Creator<MedicineVo> CREATOR = new Creator<MedicineVo>() {
+        @Override
+        public MedicineVo createFromParcel(Parcel in) {
+            return new MedicineVo(in);
+        }
 
+        @Override
+        public MedicineVo[] newArray(int size) {
+            return new MedicineVo[size];
+        }
+    };
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(ts_id);
+        parcel.writeString(ts_name);
+        parcel.writeString(imgUrl);
+        parcel.writeString(ry_id);
+        parcel.writeString(medicine_id);
+        parcel.writeString(medicine_name);
+        parcel.writeString(medicine_dosage);
+        parcel.writeString(medicine_doc);
+        parcel.writeInt(meal_before_or_after);
+        parcel.writeString(create_time);
+    }
     public String getTs_id() {
         return ts_id;
     }
@@ -144,61 +187,4 @@ public class MedicineVo{
     public void setTs_name(String ts_name) {
         this.ts_name = ts_name;
     }
-
-   /*  public static final String KEY_TS_ID = "ts_id";
-    public static final String KEY_TS_NAME = "ts_name";
-    public static final String KEY_IMGURL = "imgUrl";
-    public static final String KEY_RY_ID = "ry_id";
-    public static final String KEY_MEDICINE_ID = "medicine_id";
-    public static final String KEY_MEDICINE_NAME = "medicine_name";
-    public static final String KEY_MEDICINE_DOSAFE = "medicine_dosage";
-    public static final String KEY_MEDICINE_DOC = "medicine_doc";
-    public static final String KEY_MEAL = "meal_before_or_after";
-    public static final String KEY_CREATE_TIME = "create_time";
-
-      /*  @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int i) {
-        Bundle bundle = new Bundle();
-        bundle.putString(KEY_TS_ID,ts_id);
-        bundle.putString(KEY_TS_NAME, ts_name);
-        bundle.putString(KEY_IMGURL, imgUrl);
-        bundle.putString(KEY_RY_ID, ry_id);
-        bundle.putString(KEY_MEDICINE_ID, medicine_id);
-        bundle.putString(KEY_MEDICINE_NAME, medicine_name);
-        bundle.putString(KEY_MEDICINE_DOSAFE, medicine_dosage);
-        bundle.putString(KEY_MEDICINE_DOC, medicine_doc);
-        bundle.putInt(KEY_MEAL, meal_before_or_after);
-        bundle.putString(KEY_CREATE_TIME, create_time);
-        dest.writeBundle(bundle);
-    }
-    public static final Parcelable.Creator<MedicineVo> CREATOR = new Parcelable.Creator<MedicineVo>() {
-
-        @Override
-        public MedicineVo createFromParcel(Parcel source) {
-            MedicineVo medicineVo = new MedicineVo();
-            Bundle bundle = new Bundle();
-            bundle = source.readBundle();
-            medicineVo.ts_id = bundle.getString(KEY_TS_ID);
-            medicineVo.ts_name = bundle.getString(KEY_TS_NAME);
-            medicineVo.imgUrl = bundle.getString(KEY_IMGURL);
-            medicineVo.ry_id = bundle.getString(KEY_RY_ID);
-            medicineVo.medicine_id = bundle.getString(KEY_MEDICINE_ID);
-            medicineVo.medicine_name = bundle.getString(KEY_MEDICINE_NAME);
-            medicineVo.medicine_dosage = bundle.getString(KEY_MEDICINE_DOSAFE);
-            medicineVo.medicine_doc = bundle.getString(KEY_MEDICINE_DOC);
-            medicineVo.meal_before_or_after = bundle.getInt(KEY_MEAL);
-            medicineVo.create_time = bundle.getString(KEY_CREATE_TIME);
-            return medicineVo;
-        }
-
-        @Override
-        public MedicineVo[] newArray(int size) {
-            return new MedicineVo[size];
-        }
-    };*/
 }

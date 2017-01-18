@@ -1,6 +1,6 @@
 package net.hunme.school.util;
 
-import android.content.Context;
+import android.app.Activity;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -25,9 +25,9 @@ import java.util.Map;
  */
 public class MedicineTDetailPresenter implements MedicineTDetail.Presenter,OkHttpListener {
     private MedicineTDetail.View view;
-    private Context context;
+    private Activity context;
     private int isFeed;
-    public  MedicineTDetailPresenter(MedicineTDetail.View view, Context context,String medicineId,String tsId,int isFeed){
+    public  MedicineTDetailPresenter(MedicineTDetail.View view, Activity context,String medicineId,String tsId,int isFeed){
         this.view = view;
         this.context = context;
         this.isFeed = isFeed;
@@ -64,7 +64,11 @@ public class MedicineTDetailPresenter implements MedicineTDetail.Presenter,OkHtt
              view.setIsFeed(isFeed);
              view.setMedicineName(medicineVo.getMedicine_name());
              view.setLaunchTime(medicineVo.getMeal_before_or_after());
-             view.setFeedDate(medicineVo.getCreate_time());
+             StringBuffer buffer = new StringBuffer();
+             for (int i = 0 ; i<medicineVo.getMedicineStatusList().size();i++){
+                 buffer.append(medicineVo.getMedicineStatusList().get(i).getCreate_time().substring(0,11)).append(";");
+             }
+             view.setFeedDate(buffer.toString());
          }
      }else if (uri.equals(Apiurl.SCHOOL_MEDICINETFINSH)){
          Result<String> data = (Result<String>) date;
@@ -72,6 +76,7 @@ public class MedicineTDetailPresenter implements MedicineTDetail.Presenter,OkHtt
              String result =data.getData();
              if (result.contains("成功")){
                  view.setIsFeed(1);
+                 context.finish();
              }
          }
      }

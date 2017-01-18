@@ -1,5 +1,8 @@
 package net.hunme.school.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 作者： wh
  * 时间： 2016/11/1
@@ -8,7 +11,7 @@ package net.hunme.school.bean;
  * 附加注释：
  * 主要接口：
  */
-public class Schedule {
+public class Schedule implements Parcelable{
     /**
      * 喂药已完成
      */
@@ -57,6 +60,55 @@ public class Schedule {
      * 知晓人ID
      */
     private String knowId;
+
+    protected Schedule(Parcel in) {
+        finish = in.readString();
+        knowRyId = in.readString();
+        issue = in.readString();
+        finishRyId = in.readString();
+        issueId = in.readString();
+        finishUrl = in.readString();
+        knowUrl = in.readString();
+        issueUrl = in.readString();
+        finishId = in.readString();
+        know = in.readString();
+        issueRyId = in.readString();
+        knowId = in.readString();
+    }
+
+    public static final Creator<Schedule> CREATOR = new Creator<Schedule>() {
+        @Override
+        public Schedule createFromParcel(Parcel in) {
+            return new Schedule(in);
+        }
+
+        @Override
+        public Schedule[] newArray(int size) {
+            return new Schedule[size];
+        }
+    };
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(finish);
+        parcel.writeString(knowRyId);
+        parcel.writeString(issue);
+        parcel.writeString(finishRyId);
+        parcel.writeString(issueId);
+        parcel.writeString(finishUrl);
+        parcel.writeString(knowUrl);
+        parcel.writeString(issueUrl);
+        parcel.writeString(finishId);
+        parcel.writeString(know);
+        parcel.writeString(issueRyId);
+        parcel.writeString(knowId);
+    }
 
     public String getFinish() {
         return finish;
@@ -153,7 +205,6 @@ public class Schedule {
     public void setKnowRyId(String knowRyId) {
         this.knowRyId = knowRyId;
     }
-
 }
 
 

@@ -213,7 +213,6 @@ public class Apiurl {
      */
     public static final String CETQRCODE = "/app/getQRCode.do";
 
-    public static final String USER_GETRECOMMENDLIST = "/rakuen/getRecommenda.do";
     //=========================乐园================================
     /**
      * 获取banner图
@@ -222,7 +221,7 @@ public class Apiurl {
     /**
      * 获取推荐列表
      */
-    public static final String GETRECOMMENDLIST = "/rakuen/getRecommenda.do";
+    public static final String GETRECOMMENDLIST = "/rakuen/getRecommendAblum.do";
     /**
      * 获取全部推荐列表
      */
@@ -232,6 +231,7 @@ public class Apiurl {
      * 获取某个专辑下的资源列表
      */
     public static final String USER_GETTHENELIST = "/rakuen/getCompilationsAllResource.do";
+
     /**
      * 获取某个资源具体信息
      */
@@ -256,4 +256,16 @@ public class Apiurl {
      * 获取专辑资源的列表
      */
     public static final String GETALUBMLIST = "/rakuen/getContent.do";
+    /**
+     * 提交评论
+     */
+    public static final String SUBMENTCOMMENT = "/rakuen/subComment.do";
+    /**
+     * 获取评论列表
+     */
+    public static final String GETCOMMENTLIST = "/rakuen/getCommentList.do";
+    /**
+     * 获取某个专辑下的的列表
+     */
+    public static final String GEALBUMLIST = "/rakuen/getAlbumByTheme.do";
 }
