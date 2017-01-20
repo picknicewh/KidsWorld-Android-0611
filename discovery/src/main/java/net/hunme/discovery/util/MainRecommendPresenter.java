@@ -12,7 +12,8 @@ import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.discovery.MainPlayActivity;
-import net.hunme.discovery.modle.RecommendVo;
+import net.hunme.discovery.activity.PlayVideoActivity;
+import net.hunme.discovery.modle.CompilationVo;
 import net.hunme.user.activity.CollectActivity;
 import net.hunme.user.activity.UserActivity;
 import net.hunme.user.mode.BannerVo;
@@ -32,9 +33,9 @@ import java.util.Map;
  */
 public class MainRecommendPresenter implements MainRecommendContract.Presenter, OkHttpListener {
     private Context context;
-    public static final int TYPE_MUISC = 1;
-    public static final int  TYPE_VIDEO= 0;
-    public static final int  TYPE_CONSULT = 2;
+    public static final int TYPE_MUISC = 2;
+    public static final int  TYPE_VIDEO= 1;
+    public static final int  TYPE_CONSULT = 3;
     private int type;
     private String tsid;
     private MainRecommendContract.View view;
@@ -43,17 +44,18 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
         this.view =view ;
         tsid  = UserMessage.getInstance(context).getTsId();
         type = TYPE_MUISC;
+        getBanner(tsid);
         getRecommendResource(tsid,4,TYPE_MUISC);
-
     }
 
     @Override
-    public void getRecommendResource(String tsId, int size, int type) {
+    public void getRecommendResource(String tsId, int pageSize, int type) {
         Map<String, Object> map = new HashMap<>();
         map.put("tsId", tsId);
-        map.put("size", size);
+        map.put("pageNumber", 1);
+        map.put("pageSize",pageSize);
         map.put("type", type);
-        Type mType = new TypeToken<Result<List<RecommendVo>>>() {}.getType();
+        Type mType = new TypeToken<Result<List<CompilationVo>>>() {}.getType();
         OkHttps.sendPost(mType, Apiurl.GETRECOMMENDLIST, map, this);
         view.showLoadingDialog();
     }
@@ -62,8 +64,7 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
     public void getBanner(String tsId) {
         Map<String, Object> map = new HashMap<>();
         map.put("tsId", tsId);
-        Type mType = new TypeToken<Result<List<BannerVo>>>() {
-        }.getType();
+        Type mType = new TypeToken<Result<List<BannerVo>>>() {}.getType();
         OkHttps.sendPost(mType, Apiurl.GETBANNERLIST, map, this);
     }
 
@@ -90,7 +91,7 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
 
     @Override
     public void startVideoActivity(String AlbumId) {
-        Intent intent = new Intent();
+        Intent intent = new Intent(context, PlayVideoActivity.class);
         intent.putExtra("AlbumId", AlbumId);
         context.startActivity(intent);
     }
@@ -134,18 +135,18 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
         view.stopLoadingDialog();
         if (uri.equals(Apiurl.GETRECOMMENDLIST)) {
            if (date!=null){
-               Result<List<RecommendVo>> data = (Result<List<RecommendVo>>) date;
-               List<RecommendVo> recommendVos = data.getData();
+               Result<List<CompilationVo>> data = (Result<List<CompilationVo>>) date;
+               List<CompilationVo> compilationVos = data.getData();
                if (type==TYPE_MUISC){
-                   view.setRecommendVoMusicList(recommendVos);
+                   view.setRecommendVoMusicList(compilationVos);
                    type = TYPE_VIDEO;
                   getRecommendResource(tsid,4,type);
                }else if (type==TYPE_VIDEO){
-                  view.setRecommendVoClassList(recommendVos);
+                  view.setRecommendVoClassList(compilationVos);
                    type = TYPE_CONSULT;
                    getRecommendResource(tsid,6,type);
                }else if (type==TYPE_CONSULT){
-                   view.setRecommendVoConsultList(recommendVos);
+                   view.setRecommendVoConsultList(compilationVos);
                }
            }
         } else if (uri.equals(Apiurl.GETBANNERLIST)) {

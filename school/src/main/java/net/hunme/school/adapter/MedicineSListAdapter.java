@@ -56,7 +56,7 @@ public class MedicineSListAdapter extends BaseAdapter {
         }
         viewHold = (ViewHold) view.getTag();
         final MedicineVo medicineVo = medicineVos.get(i);
-        viewHold.tv_medicine_date.setText(medicineVo.getCreate_time().substring(0,medicineVo.getCreate_time().length()-2));
+        viewHold.tv_medicine_date.setText(medicineVo.getCreate_time().substring(0,11));
         viewHold.tv_medicine_dosage.setText(medicineVo.getMedicine_dosage());
         viewHold.tv_medicine_name.setText(medicineVo.getMedicine_name());
         viewHold.tv_medicine_remark.setText(medicineVo.getMedicine_doc());

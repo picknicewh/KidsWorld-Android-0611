@@ -63,39 +63,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <RelativeLayout
+
+            <net.hunme.discovery.widget.BannerView
+                android:id="@+id/bv_home"
                 android:layout_width="match_parent"
-                android:layout_height="180dp">
-                <net.hunme.baselibrary.widget.BannerViewPager
-                    android:id="@+id/bvp_banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@mipmap/ic_img_error"
-                    android:flipInterval="5000"
-                    android:inAnimation="@anim/page_left_in"
-                    android:outAnimation="@anim/page_left_out"
-                    android:persistentDrawingCache="animation" />
-
-                <LinearLayout
-
-                    android:id="@+id/ll_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/space"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/space_x0.5">
-                    <LinearLayout
-                        android:id="@+id/ll_dots"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:background="@color/red"
-                        android:orientation="horizontal" />
-                </LinearLayout>
-            </RelativeLayout>
+                android:layout_height="180dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

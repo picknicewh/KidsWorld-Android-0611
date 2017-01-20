@@ -1,6 +1,6 @@
 package net.hunme.discovery.util;
 
-import net.hunme.discovery.modle.RecommendVo;
+import net.hunme.discovery.modle.CompilationVo;
 import net.hunme.user.mode.BannerVo;
 
 import java.util.List;
@@ -15,9 +15,9 @@ import java.util.List;
  */
 public class MainRecommendContract {
     public  interface View{
-        void setRecommendVoMusicList(List<RecommendVo> recommendVos);
-        void setRecommendVoClassList(List<RecommendVo> recommendVos);
-        void setRecommendVoConsultList(List<RecommendVo> recommendVos);
+        void setRecommendVoMusicList(List<CompilationVo> compilationVos );
+        void setRecommendVoClassList(List<CompilationVo> compilationVos);
+        void setRecommendVoConsultList(List<CompilationVo> compilationVos);
         void setBannerList(List<BannerVo> bannerList);
         void rushData();
         void showLoadingDialog();

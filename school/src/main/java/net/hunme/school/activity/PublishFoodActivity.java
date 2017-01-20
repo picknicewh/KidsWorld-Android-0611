@@ -76,7 +76,7 @@ public class PublishFoodActivity extends BaseFoodActivity {
     /**
      * 发布食谱的类型
      */
-    private int type;
+    private int type=1;
     private int flag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

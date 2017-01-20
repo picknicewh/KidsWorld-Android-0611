@@ -10,27 +10,75 @@ package net.hunme.user.mode;
  */
 public class BannerVo {
     /**
-     * 图片地址
+     * 图片ID
      */
-    String imgUrl;
+    private String banner_id;
     /**
-     * 图片跳转地址
+     *图片地址
      */
-    private String   jumpAddress;
+    private String banner_url;
+    /**
+     *图片跳转地址
+     */
+    private String  banner_jump;
+    /**
+     *状态1=显示，2=不显示
+     */
+    private int status;
+    /**
+     *创建时间
+     */
+    private String create_time ;
+    /**
+     * 1=原生，2=内部web页面，3=内嵌web页面，4=外部web页面
+     */
+    private int  type;
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getBanner_id() {
+        return banner_id;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setBanner_id(String banner_id) {
+        this.banner_id = banner_id;
     }
 
-    public String getJumpAddress() {
-        return jumpAddress;
+    public String getCreate_time() {
+        return create_time;
     }
 
-    public void setJumpAddress(String jumpAddress) {
-        this.jumpAddress = jumpAddress;
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getBanner_jump() {
+        return banner_jump;
+    }
+
+    public void setBanner_jump(String banner_jump) {
+        this.banner_jump = banner_jump;
+    }
+
+    public String getBanner_url() {
+        return banner_url;
+    }
+
+    public void setBanner_url(String banner_url) {
+        this.banner_url = banner_url;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

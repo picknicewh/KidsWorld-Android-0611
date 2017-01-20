@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -18,6 +19,7 @@ import net.hunme.baselibrary.mode.Result;
 import net.hunme.baselibrary.network.Apiurl;
 import net.hunme.baselibrary.network.OkHttpListener;
 import net.hunme.baselibrary.network.OkHttps;
+import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
 import net.hunme.school.R;
 import net.hunme.school.bean.MedicineSVos;
@@ -73,7 +75,12 @@ public class MedicineListSActivity extends BaseActivity implements View.OnClickL
      * 当前页面位置
      */
     private int currentPage = 0;
-
+    private MedicineFeedListFragment listFragment;
+    private MedicineProcessFragment processFragment;
+    /**
+     *  无网络状态
+     */
+    private RelativeLayout rl_nonetwork;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +104,7 @@ public class MedicineListSActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initView() {
+        rl_nonetwork = $(R.id.rl_nonetwork);
         vp_vp_feed_t = $(R.id.vp_feed_t);
         rb_feed_list = $(R.id.rb_feed_list);
         rb_feed_process = $(R.id.rb_feed_process);
@@ -115,21 +123,17 @@ public class MedicineListSActivity extends BaseActivity implements View.OnClickL
         Type type = new TypeToken<Result<MedicineSVos>>() {
         }.getType();
         OkHttps.sendPost(type, Apiurl.SCHOOL_MEDICINESLIST, map, this);
-        showLoadingDialog();
+        if (G.isNetworkConnected(this)){
+            rl_nonetwork.setVisibility(View.GONE);
+            showLoadingDialog();
+        }else {
+            rl_nonetwork.setVisibility(View.VISIBLE);
+        }
     }
-    private   MedicineFeedListFragment listFragment;
-    private   MedicineProcessFragment processFragment;
     private void setViewpager(int currentPage) {
-         List<Fragment> fragments = new ArrayList<>();
-         listFragment = new MedicineFeedListFragment();
-         processFragment = new MedicineProcessFragment();
-      /*  Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("medicineVos", (ArrayList<? extends Parcelable>) medicineVos);
-        listFragment.setArguments(bundle);*/
-
-       /* Bundle bundle2 = new Bundle();
-        bundle2.putParcelableArrayList("medicineScheduleVos", (ArrayList<? extends Parcelable>) medicineScheduleVos);
-        processFragment.setArguments(bundle2);*/
+        List<Fragment> fragments = new ArrayList<>();
+        listFragment = new MedicineFeedListFragment();
+        processFragment = new MedicineProcessFragment();
         fragments.add(listFragment);
         fragments.add(processFragment);
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
@@ -193,7 +197,7 @@ public class MedicineListSActivity extends BaseActivity implements View.OnClickL
                 List<MedicineSchedule> medicineScheduleVos = medicineSVos.getMedicineScheduleJson();
                 listFragment.setMedicineVo(medicineVos);
                 processFragment.setMedicineScheduleVos(medicineScheduleVos);
-                Log.i("nnnnnnnn", "============222222=================="+medicineVos.size());
+                Log.i("nnnnnnnn", "============222222==================" + medicineVos.size());
             }
         }
     }

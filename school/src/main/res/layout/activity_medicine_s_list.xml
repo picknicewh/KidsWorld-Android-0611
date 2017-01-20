@@ -16,10 +16,13 @@
           android:id="@+id/rb_feed_list"
           android:checked="true" />
       <RadioButton
-          android:text="进入喂药进程"
+          android:text="今日喂药进程"
           android:id="@+id/rb_feed_process"
           style="@style/rb_feed_s"/>
    </RadioGroup>
+    <include
+        android:id="@+id/rl_nonetwork"
+        layout="@layout/nonetwork"/>
     <LinearLayout
         android:layout_marginTop="-5dp"
         android:orientation="horizontal"

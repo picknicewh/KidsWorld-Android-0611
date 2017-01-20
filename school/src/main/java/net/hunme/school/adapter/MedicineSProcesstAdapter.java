@@ -88,7 +88,7 @@ public class MedicineSProcesstAdapter extends BaseAdapter {
             viewHold.v_known_dos.setBackgroundResource(R.drawable.circle_process);
         }
         viewHold.tv_publish_message .setTextColor(context.getResources().getColor(R.color.main_green));
-        viewHold.tv_medicine_date.setText(medicineVo.getCreate_time().substring(0,medicineVo.getCreate_time().length()-2));
+        viewHold.tv_medicine_date.setText(medicineVo.getCreate_time().substring(0,11));
         return view;
     }
     class ViewHold{

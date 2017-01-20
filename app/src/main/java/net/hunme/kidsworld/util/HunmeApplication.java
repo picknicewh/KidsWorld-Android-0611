@@ -55,5 +55,4 @@ public class HunmeApplication extends Application {
         G.clearWebViewCache(this);
         super.onTerminate();
     }
-
 }

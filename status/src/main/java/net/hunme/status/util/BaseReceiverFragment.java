@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -112,13 +113,13 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
         }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String  data = format.format(new Date());
-
         map.put("tsId", um.getTsId());
         map.put("groupId",groupId);
         map.put("groupType", groupType);
         map.put("pageNumber", pageNum);
         map.put("pageSize", pageSize);
         map.put("createTime", data);
+        Log.i("ssssss",data+"=======================");
         map.put("type", type);
         if (type==2){
             map.put("dynamicId", dynamicId);

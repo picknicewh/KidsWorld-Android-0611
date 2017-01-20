@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -69,9 +70,7 @@ public class MedicineTaskTActivity extends BaseActivity implements MedicineTDeta
      *饭后
      */
     private RadioButton rb_after;
-    /**
-     * 喂药按钮
-     */
+    private LinearLayout ll_anchor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,10 +95,15 @@ public class MedicineTaskTActivity extends BaseActivity implements MedicineTDeta
         btn_feed = $(R.id.btn_finish);
         rb_after = $(R.id.rb_after);
         rb_before = $(R.id.rb_before);
+        ll_anchor =  $(R.id.ll_anchor);
         Intent intent = getIntent();
         medicineId = intent.getStringExtra("medicineId");
         tsId = intent.getStringExtra("tsId");
-        isFeed = intent.getIntExtra("isFeed",1);
+        isFeed = intent.getIntExtra("isFeed",-1);
+        if (isFeed==-1){
+            btn_feed.setVisibility(View.GONE);
+            ll_anchor.setVisibility(View.GONE);
+        }
     }
     @Override
     public void setHeadImageView(String url) {
@@ -171,4 +175,5 @@ public class MedicineTaskTActivity extends BaseActivity implements MedicineTDeta
             presenter.finishFeedMedicine(UserMessage.getInstance(this).getTsId(),medicineId);
         }
     }
+
 }

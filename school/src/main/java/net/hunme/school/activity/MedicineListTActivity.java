@@ -1,6 +1,7 @@
 package net.hunme.school.activity;
 
 import android.os.Bundle;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -58,6 +59,7 @@ public class MedicineListTActivity extends BaseActivity implements OkHttpListene
      * 需要喂药数据
      */
    private List<MedicineVo> needmedicineVos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +69,6 @@ public class MedicineListTActivity extends BaseActivity implements OkHttpListene
     private void initView(){
         lv_finish = $(R.id.lv_finish);
         lv_need = $(R.id.lv_need);
-
         finishmedicineVos = new ArrayList<>();
         needmedicineVos = new ArrayList<>();
         getMedicineList();
@@ -83,11 +84,10 @@ public class MedicineListTActivity extends BaseActivity implements OkHttpListene
     @Override
     protected void onResume() {
         super.onResume();
-        if (finishmedicineVos.size()>0&&needmedicineVos.size()>0){
+        if (finishmedicineVos!=null &&needmedicineVos!=null){
             getMedicineList();
         }
     }
-
     private void getMedicineList(){
         Map<String,Object> params = new HashMap<>();
         params.put("tsId", UserMessage.getInstance(this).getTsId());

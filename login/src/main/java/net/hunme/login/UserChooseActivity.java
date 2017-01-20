@@ -111,7 +111,10 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
             seleteList=result.getData();
             setListView(seleteList);
         }else {
-            dialog.dismiss();
+            if (dialog!=null){
+                dialog.dismiss();
+
+            }
             String sex;
             if (data.getSex()!=null){
                 if(data.getSex()==1){
@@ -144,7 +147,10 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
 
     @Override
     public void onError(String uri, String error) {
-        dialog.dismiss();
+        if (dialog!=null){
+            dialog.dismiss();
+
+        }
         G.showToast(this,"身份选择失败，请重新选择");
     }
 

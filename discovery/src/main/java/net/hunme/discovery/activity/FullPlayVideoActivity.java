@@ -2,6 +2,7 @@ package net.hunme.discovery.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.OrientationEventListener;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
@@ -32,6 +34,7 @@ import net.hunme.discovery.util.PlayVideoPresenter;
 import net.hunme.discovery.widget.ChooseAlbumPopWindow;
 import net.hunme.discovery.widget.VerticalSeekBar;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -143,16 +146,23 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
      * 当前时间
      */
     private int currentPosition;
+    private MyEventListener listener;
+    private RelativeLayout rl_full_srceen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_full_play_video);
+        Log.i("fffff", "===========onCreate=============");
         initView();
     }
 
+    /**
+     * 初始化控件
+     */
     private void initView() {
+        rl_full_srceen = (RelativeLayout) findViewById(R.id.rl_full_srceen);
         surfaceView = (SurfaceView) findViewById(R.id.sv_preview);
         iv_left = (ImageView) findViewById(R.id.iv_left);
         tv_name = (TextView) findViewById(R.id.tv_video_name);
@@ -170,14 +180,18 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         iv_play.setOnClickListener(this);
         iv_theme.setOnClickListener(this);
         initData();
-
     }
 
+    /**
+     * 初始化数据
+     */
     public void initData() {
         G.initDisplaySize(this);
         mDate = new Date();
         alubumId = getIntent().getStringExtra("albumId");
         resourceId = getIntent().getStringExtra("resourceId");
+        resourceVos = new ArrayList<>();
+        listener = new MyEventListener(this);
         presenter = new PlayVideoPresenter(this, surfaceView, this, alubumId, resourceId);
         presenter.setScreenDirection(this.getResources().getConfiguration().orientation, surfaceView);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -194,24 +208,17 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
     }
 
     @Override
-    protected void onResume() {
-        if (resourceVos != null) {
-            presenter = new PlayVideoPresenter(this, surfaceView, this, alubumId, resourceId);
-        }
-        super.onResume();
-    }
-
-    @Override
     public void onClick(View view) {
         int viewId = view.getId();
         if (viewId == R.id.iv_play) {
+            //播放/暂停
             if (isPlaying) {
                 presenter.pause();
             } else {
                 presenter.play();
             }
-
         } else if (viewId == R.id.iv_collect) {
+            //收藏数据
             if (cancel == 1) {
                 cancel = 2;
                 iv_collect.setImageResource(R.mipmap.ic_video_full_collect);
@@ -219,8 +226,10 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
                 cancel = 1;
                 iv_collect.setImageResource(R.mipmap.ic_video_full_collect_full);
             }
+            //取消或者点赞
             presenter.subFavorate(resourceVos.get(position).getAlbumId(), cancel);
         } else if (viewId == R.id.iv_left) {
+            //保持播放记录
             presenter.savePlayTheRecord(UserMessage.getInstance(this).getTsId(), resourceId, currentPosition, 2);
             finish();
         } else if (viewId == R.id.iv_theme) {
@@ -228,17 +237,24 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
             albumPopWindow.showAtLocation(view, Gravity.NO_GRAVITY, G.dp2px(this, 50), G.dp2px(this, 45));
         }
     }
-   private  void  timerStart(){
-       timer = new Timer();
-       TimerTask timerTask = new TimerTask() {
-           @Override
-           public void run() {
-               handler.sendEmptyMessage(0x01);
-           }
-       };
-       timer.schedule(timerTask, mDate, 10000);
-   }
 
+    /**
+     * 启动计时器
+     */
+    private void timerStart() {
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.sendEmptyMessage(0x01);
+            }
+        };
+        timer.schedule(timerTask, mDate, 10000);
+    }
+    /**
+     * 设置视频播放信息是否可见
+     * @param  isVisible 是否可见
+     */
     private void setInfoIsVisible(int isVisible) {
         rl_toolbar.setVisibility(isVisible);
         ll_contorl.setVisibility(isVisible);
@@ -255,6 +271,12 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
             super.handleMessage(msg);
         }
     };
+
+    /**
+     * 设置视频列表
+     *
+     * @param resourceVos 视频列表
+     */
     @Override
     public void setVideoList(List<ResourceVo> resourceVos) {
         this.resourceVos = resourceVos;
@@ -276,6 +298,12 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         });
     }
 
+    /**
+     * 设置视频信息
+     *
+     * @param resourceVo 当前播放视频信息
+     * @param position   当前播放的列表播放的位置
+     */
     @Override
     public void setvideoInfo(ResourceVo resourceVo, int position) {
         resourceId = resourceVo.getResourceId();
@@ -291,6 +319,11 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         }
     }
 
+    /**
+     * 设置播放状态
+     *
+     * @param isPlay 是否播放
+     */
     @Override
     public void setIsPlay(boolean isPlay) {
         isPlaying = isPlay;
@@ -299,6 +332,43 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         } else {
             iv_play.setImageResource(R.mipmap.ic_video_full_pause);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //开启屏幕旋转监听
+        listener.enable();
+        Log.i("fffff", "===========onResume=============");
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i("fffff", "===========onStart=============");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //结束屏幕旋转监听
+        listener.disable();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        presenter.pause();
+        Log.i("fffff", "===========onStop=============");
+    }
+
+    @Override
+    protected void onRestart() {
+        Log.i("fffff", "===========onRestart=============");
+        super.onRestart();
+        presenter.play();
+        presenter.setActivityRestart(true);
     }
 
     @Override
@@ -331,6 +401,8 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.i("fffff", "===========onDestroy=============");
+        presenter.destroy();
         presenter.savePlayTheRecord(UserMessage.getInstance(this).getTsId(), resourceId, currentPosition, 2);
         if (timerTask != null) {
             timerTask.cancel();
@@ -345,14 +417,14 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         if (b) {
             if (seekBar.getId() == R.id.sb_video) {
                 presenter.changeSeeBar(progress);
-                Log.i("qq", "=======================222222=========================");
+                //   Log.i("qq", "=======================222222=========================");
             }
         }
         if (seekBar.getId() == R.id.vsb_volume) {
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
             int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);//获取当前值  
             seekBar.setProgress(currentVolume);
-            Log.i("qq", currentVolume + "==============currentVolume");
+            // Log.i("qq", currentVolume + "==============currentVolume");
         } else if (seekBar.getId() == R.id.vsb_light) {
             int tempInt = progress;
             // 当进度小于80时，设置成80，防止太黑看不见的后果
@@ -367,7 +439,7 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
                 wl.screenBrightness = tempFloat;
             }
             getWindow().setAttributes(wl);
-            Log.i("qq", tempFloat + "==============tempFloat");
+            //  Log.i("qq", tempFloat + "==============tempFloat");
         }
     }
 
@@ -391,10 +463,9 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             int y = (int) event.getY();
             int top = G.dp2px(this, 50);
-            ll_contorl.measure(0,0);
-            int bottom = G.size.H -  ll_contorl.getMeasuredHeight();
+            ll_contorl.measure(0, 0);
+            int bottom = G.size.H - ll_contorl.getMeasuredHeight();
             if (y > top && y < bottom) {
-                Log.i("sssss",top+"========================="+bottom);
                 if (isclick) {
                     setInfoIsVisible(View.VISIBLE);
                     isclick = false;
@@ -405,5 +476,21 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
             }
         }
         return false;
+    }
+
+    private class MyEventListener extends OrientationEventListener {
+
+        public MyEventListener(Context context) {
+            super(context);
+        }
+        @Override
+        public void onOrientationChanged(int orientation) {
+            //屏幕旋转角度，如果0-180度正面如果大于180度就方面
+            if (orientation >= 0 && orientation <= 180) {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+            } else if (orientation > 180 && orientation < 360) {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            }
+        }
     }
 }

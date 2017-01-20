@@ -39,6 +39,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/minor_text"
                 android:id="@+id/tv_medicine_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,8 +71,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/v_line"
                 android:background="@color/white"
-                android:hint="请选择日期最多5个日期"
+                android:hint="最多可选择5个日期"
                 android:padding="@dimen/space"
+                android:maxLength="80"
                 android:textColor="@color/sc_"
                 android:textSize="@dimen/ts_medium" />
         </RelativeLayout>
@@ -89,10 +91,11 @@
                 android:id="@+id/tv_medicine_name2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/minor_text"
                 android:paddingBottom="@dimen/space"
                 android:paddingLeft="@dimen/space"
                 android:paddingTop="@dimen/space"
-                android:text="喂药名称" />
+                android:text="药物名称" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -121,6 +124,7 @@
                 android:windowSoftInputMode="stateHidden|adjustResize"
                 android:padding="@dimen/space"
                 android:textColor="@color/sc_"
+                android:maxLength="50"
                 android:textSize="@dimen/ts_medium" />
         </RelativeLayout>
 
@@ -135,6 +139,7 @@
 
             <TextView
                 android:id="@+id/tv_medicine_dosage1"
+                android:textColor="@color/minor_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/space"
@@ -169,6 +174,7 @@
                 android:padding="@dimen/space"
                 android:textColor="@color/sc_"
                 android:textSize="@dimen/ts_medium"
+                android:maxLength="50"
                 android:windowSoftInputMode="stateHidden|adjustResize" />
         </RelativeLayout>
 
@@ -212,10 +218,12 @@
             <EditText
                 android:id="@+id/et_medicine_remark"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:background="@color/white"
                 android:padding="@dimen/space"
-                android:hint="请输入备注"
+                android:maxLength="100"
+                android:hint="请输入备注(0-100个字)"
+                android:gravity="left"
                 android:windowSoftInputMode="stateHidden|adjustResize"
                 android:textSize="@dimen/ts_medium" />
             <LinearLayout

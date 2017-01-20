@@ -294,26 +294,27 @@ public class PlayMusicPresenter  implements  PlayMusicContract.Presenter, OkHttp
     @Override
     public void onSuccess(String uri, Object date) {
         view.stopLoadingDialog();
-         if (uri.equals(Apiurl.USER_GETTHENELIST)){
-            if (date!=null){
-                Result<ArrayList<ResourceVo>> data  = (Result<ArrayList<ResourceVo>>) date;
-                ArrayList<ResourceVo>  resourceVos = data.getData();
-                if (resourceVos.size()>0&&resourceVos!=null){
-                    this.resourceVos = resourceVos;
-                    view.setSongList(resourceVos);
-                    if (resourceId!=null){
-                        for (int i = 0 ;i<resourceVos.size();i++){
-                            ResourceVo resourceVo = resourceVos.get(i);
-                            if (String.valueOf(resourceVo.getResourceId()).equals(resourceId)){
-                                position =i;
-                            }
-                        }
-                    }else {
-                        position=0;
-                    }
-                    view.setPosition(position);
-                    setup();
-                }
+         if (uri.equals(Apiurl.USER_GETTHENELIST)) {
+             if (date != null) {
+
+                 Result<ArrayList<ResourceVo>> data = (Result<ArrayList<ResourceVo>>) date;
+                 ArrayList<ResourceVo> resourceVos = data.getData();
+                 if (resourceVos.size() > 0 && resourceVos != null) {
+                     this.resourceVos = resourceVos;
+                     view.setSongList(resourceVos);
+                     if (resourceId != null) {
+                         for (int i = 0; i < resourceVos.size(); i++) {
+                             ResourceVo resourceVo = resourceVos.get(i);
+                             if (String.valueOf(resourceVo.getResourceId()).equals(resourceId)) {
+                                 position = i;
+                             }
+                         }
+                     } else {
+                         position = 0;
+                     }
+                     view.setPosition(position);
+                     setup();
+                 }
             }
         }else if (uri.equals(Apiurl.SAVEPLAYRECORDING)){
                 Result<String> data = (Result<String>) date;

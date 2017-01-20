@@ -27,7 +27,7 @@
         android:text="最近天气忽冷忽热的，孩子感冒了，麻烦老师照顾一下。"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/default_grey"/>
+        android:textColor="@color/minor_text"/>
     <TextView
         android:id="@+id/tv_medicine_date"
         android:layout_below="@+id/tv_medicine_remark"
@@ -35,7 +35,7 @@
         android:text="2016-12-12"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/default_grey"/>
+        android:textColor="@color/minor_text"/>
     <TextView
         android:id="@+id/tv_medicine_delete"
         android:layout_below="@+id/tv_medicine_remark"

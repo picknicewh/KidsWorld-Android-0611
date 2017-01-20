@@ -120,6 +120,7 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
      */
     private DateDb dateDb;
     private SQLiteDatabase db;
+
     public MulSelectDateView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context, attrs, 0);
@@ -168,7 +169,12 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
         getTextView(TGA_FINISH, context, linearLayout);
 
     }
-
+    /**
+     * 获取头部不同内容的textView
+     * @param  tag 标签
+     * @param  context
+     * @param  linearLayout
+     */
     private TextView getTextView(int tag, Context context, LinearLayout linearLayout) {
         TextView textView = new TextView(context);
         switch (tag) {
@@ -202,7 +208,12 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
         linearLayout.addView(textView);
         return textView;
     }
-
+    /**
+     * 获取头部不同内容的ImageView
+     * @param  tag 标签
+     * @param  context
+     * @param  ll
+     */
     private ImageView getImageView(int tag, Context context, LinearLayout ll) {
         ImageView imageView = new ImageView(context);
         switch (tag) {
@@ -256,6 +267,7 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
 
     /**
      * 绘画主体
+     * @param  context
      */
     private void addMainView(Context context) {
         this.setBackgroundColor(MASK_COLOR);
@@ -378,37 +390,34 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
             tv_day.setBackgroundColor(Color.WHITE);
         }
         linearLayout.addView(tv_day);
-        if (dateDb.getSelectedSize(db, 2) < 5) {
-            if (state == 1 || state == 2) {
-                tv_day.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //  int state = dateDb.getState(db,tag);
-                        if (dateDb.getSign(db, tag) == 1) {
-                            dateDb.updateSign(db, tag, 0);
-                            dateDb.updateState(db, tag, 2);
-                        } else {
-                            dateDb.updateSign(db, tag, 1);
-                            dateDb.updateState(db, tag, 1);
-                        }
-                        rushData();
+        if (state == 1 || state == 2) {
+            tv_day.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (dateDb.getSign(db, tag) == 1 && dateDb.getSelectedSize(db, 2) < 5) {
+                        dateDb.updateSign(db, tag, 0);
+                        dateDb.updateState(db, tag, 2);
+                    } else {
+                        dateDb.updateSign(db, tag, 1);
+                        dateDb.updateState(db, tag, 1);
                     }
-                });
-            } else if (state == 3) {
-                tv_day.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (dateDb.getSign(db, tag) == 1) {
-                            dateDb.updateSign(db, tag, 0);
-                            dateDb.updateState(db, tag, 2);
-                        } else {
-                            dateDb.updateSign(db, tag, 1);
-                            dateDb.updateState(db, tag, 3);
-                        }
-                        rushData();
+                    rushData();
+                }
+            });
+        } else if (state == 3) {
+            tv_day.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (dateDb.getSign(db, tag) == 1 && dateDb.getSelectedSize(db, 2) < 5) {
+                        dateDb.updateSign(db, tag, 0);
+                        dateDb.updateState(db, tag, 2);
+                    } else {
+                        dateDb.updateSign(db, tag, 1);
+                        dateDb.updateState(db, tag, 3);
                     }
-                });
-            }
+                    rushData();
+                }
+            });
         }
     }
 
@@ -586,10 +595,12 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
             }
         }
     }
+
     int dwonx = 0;
     int upx = 0;
     int dwony = 0;
     int upy = 0;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int mimBetween = 10;
@@ -633,6 +644,7 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
     public void show() {
         this.setVisibility(VISIBLE);
     }
+
     public void dismiss() {
         this.setVisibility(GONE);
         Intent intent = new Intent(DatePopWindow.DISMISS);

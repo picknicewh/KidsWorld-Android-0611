@@ -1,15 +1,18 @@
 package net.hunme.school.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import net.hunme.baselibrary.base.BaseFragement;
 import net.hunme.school.R;
+import net.hunme.school.activity.MedicineTaskTActivity;
 import net.hunme.school.adapter.MedicineSListAdapter;
 import net.hunme.school.bean.MedicineVo;
 
@@ -57,10 +60,19 @@ public class MedicineFeedListFragment extends BaseFragement {
     }
 
     private void setListView() {
-       // medicineVos = getArguments().getParcelableArrayList("medicineVos");
-        Log.i("nnnnnnnn", "=============11111111111=================" + medicineVos.size());
         adapter = new MedicineSListAdapter(getActivity(), medicineVos);
         lv_feed_list.setAdapter(adapter);
+        lv_feed_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), MedicineTaskTActivity.class);
+                 MedicineVo medicineVo = medicineVos.get(i);
+                intent.putExtra("medicineId",medicineVo.getMedicine_id());
+                intent.putExtra("tsId",medicineVo.getTs_id());
+                intent.putExtra("isFeed",-1);
+                startActivity(intent);
+            }
+        });
     }
 
     public void setMedicineVo(List<MedicineVo> medicineList) {

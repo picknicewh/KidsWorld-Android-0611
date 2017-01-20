@@ -175,7 +175,12 @@ public class OkHttps {
                                 okHttpListener.onSuccess(uri,o);
                             else
                             if(!isSendError) //否则请求失败  但是必须是之前没有发送错误信息  不能重复发送 会报错
+                            try {
                                 okHttpListener.onError(uri,((Result<String>)o).getData());
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+
 //                            else
 //                               okHttpListener.onError(uri,"非法访问");
                     }
@@ -222,7 +227,4 @@ public class OkHttps {
 //        G.log("-----msec---------"+msec);
         return  params;
     }
-
-
-
 }

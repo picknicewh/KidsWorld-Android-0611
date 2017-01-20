@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -253,32 +254,35 @@ public class G {
 
     /**
      * 设置图片布局参数,根据不同长度的图片不同的布局
-     * @param  url 图片的url
-     * @param  iv_image 图片控件
+     *
+     * @param url      图片的url
+     * @param iv_image 图片控件
      */
-    public static void setParam(Context context, String url, ImageView iv_image){
+    public static void setParam(Context context, String url, ImageView iv_image) {
         Bitmap bitmap = ImageLoader.getInstance().loadImageSync(url);
-        if (bitmap!=null){
+        if (bitmap != null) {
             int imageWidth = bitmap.getWidth();
             int imageHeight = bitmap.getHeight();
-            LinearLayout.LayoutParams lp ;
-            int viewWidth = G.dp2px(context,160);
-            int viewHeight = G.dp2px(context,160);
-            if (imageHeight>imageWidth){
-                lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,viewHeight*2);
+            LinearLayout.LayoutParams lp;
+            int viewWidth = G.dp2px(context, 160);
+            int viewHeight = G.dp2px(context, 160);
+            if (imageHeight > imageWidth) {
+                lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, viewHeight * 2);
                 iv_image.setScaleType(ImageView.ScaleType.FIT_START);
-            }else if (imageHeight==imageWidth){
+            } else if (imageHeight == imageWidth) {
                 lp = new LinearLayout.LayoutParams(viewWidth, viewWidth);
                 iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            }else {
-                lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,viewHeight);
+            } else {
+                lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, viewHeight);
                 iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
             }
             iv_image.setLayoutParams(lp);
         }
     }
+
     /**
      * 进入权限管理页面
+     *
      * @param context
      */
     public static void getAppDetailSettingIntent(Context context) {
@@ -289,13 +293,15 @@ public class G {
             localIntent.setData(Uri.fromParts("package", context.getPackageName(), null));
         } else if (Build.VERSION.SDK_INT <= 8) {
             localIntent.setAction(Intent.ACTION_VIEW);
-            localIntent.setClassName("com.android.settings","com.android.settings.InstalledAppDetails");
+            localIntent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
             localIntent.putExtra("com.android.settings.ApplicationPkgName", context.getPackageName());
         }
         context.startActivity(localIntent);
     }
+
     /**
      * 将时间戳转换时间
+     *
      * @param　time
      */
     public static String toTime(int time) {
@@ -305,14 +311,55 @@ public class G {
         minute %= 60;
         return String.format("%02d:%02d", minute, second);
     }
-    /**
-     * 刷新主页
-     * @param  isChange 是否改变
-     *  @param  context 文本
-     */
-   /* public static void runshMian(boolean isChange,Context context){
-        Intent intent = new Intent();
-        intent.putExtra("isChange",isChange);
-        context.sendBroadcast(intent);
-    }*/
+
+    public static String GetNetworkType(Activity activity) {
+        String strNetworkType = "";
+        ConnectivityManager connectivityManager = (ConnectivityManager)  activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                strNetworkType = "WIFI";
+            } else if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                String _strSubTypeName = networkInfo.getSubtypeName();
+                Log.e("cocos2d-x", "Network getSubtypeName : " + _strSubTypeName);
+                int networkType = networkInfo.getSubtype();
+                switch (networkType) {
+                    case TelephonyManager.NETWORK_TYPE_GPRS:
+                    case TelephonyManager.NETWORK_TYPE_EDGE:
+                    case TelephonyManager.NETWORK_TYPE_CDMA:
+                    case TelephonyManager.NETWORK_TYPE_1xRTT:
+                    case TelephonyManager.NETWORK_TYPE_IDEN: //api<8 : replace by 11
+                        strNetworkType = "2G";
+                        break;
+                    case TelephonyManager.NETWORK_TYPE_UMTS:
+                    case TelephonyManager.NETWORK_TYPE_EVDO_0:
+                    case TelephonyManager.NETWORK_TYPE_EVDO_A:
+                    case TelephonyManager.NETWORK_TYPE_HSDPA:
+                    case TelephonyManager.NETWORK_TYPE_HSUPA:
+                    case TelephonyManager.NETWORK_TYPE_HSPA:
+                    case TelephonyManager.NETWORK_TYPE_EVDO_B: //api<9 : replace by 14
+                    case TelephonyManager.NETWORK_TYPE_EHRPD: //api<11 : replace by 12
+                    case TelephonyManager.NETWORK_TYPE_HSPAP: //api<13 : replace by 15
+                        strNetworkType = "3G";
+                        break;
+                    case TelephonyManager.NETWORK_TYPE_LTE: //api<11 : replace by 13
+                        strNetworkType = "4G";
+                        break;
+                    default:
+                        // http://baike.baidu.com/item/TD-SCDMA 中国移动 联通 电信 三种3G制式
+                        if (_strSubTypeName.equalsIgnoreCase("TD-SCDMA") || _strSubTypeName.equalsIgnoreCase("WCDMA") || _strSubTypeName.equalsIgnoreCase("CDMA2000")) {
+                            strNetworkType = "3G";
+                        } else {
+                            strNetworkType = _strSubTypeName;
+                        }
+
+                        break;
+                }
+                Log.e("cocos2d-x", "Network getSubtype : " + Integer.valueOf(networkType).toString());
+            }
+        }
+
+        Log.e("cocos2d-x", "Network Type : " + strNetworkType);
+        return strNetworkType;
+    }
 }

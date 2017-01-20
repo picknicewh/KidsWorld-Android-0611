@@ -114,7 +114,6 @@ public class MedicineTListAdapter extends BaseAdapter {
         intent.putExtra("medicineId",medicineVo.getMedicine_id());
         intent.putExtra("tsId",medicineVo.getTs_id());
         intent.putExtra("isFeed",status);
-      //  intent.putExtra("date",)
         context.startActivity(intent);
     }
 }

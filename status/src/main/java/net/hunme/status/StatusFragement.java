@@ -356,7 +356,7 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
                             statusVoList.set(scrollPosition,statusVos.get(0));
                         }
                     }else {
-                        statusVoList.addAll(statusVos);
+                        statusVoList.addAll(0,statusVos);
                     }
                 }else if (type==2){
                     statusVoList.addAll(0,statusVos);
@@ -413,12 +413,12 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
         new Handler() {
             @Override
             public void handleMessage(Message message) {
-                statusVoList.clear();
+                //statusVoList.clear();
                 Intent intent = new Intent(BroadcastConstant.MAINSTATUSDOS);
                 intent.putExtra("count",0);
                 getActivity().sendBroadcast(intent);
                 pageNum=1;
-                loadDDynamicList(position,PAGESIZE,pageNum,1,null);
+                loadDDynamicList(position,PAGESIZE,pageNum,2,statusVoList.get(0).getDynamicId());
                 pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
 
             }

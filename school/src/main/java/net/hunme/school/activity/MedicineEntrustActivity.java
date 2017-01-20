@@ -65,6 +65,7 @@ public class MedicineEntrustActivity extends Activity implements View.OnClickLis
      * 加载
      */
     public LoadingDialog dialog;
+    private boolean isallspace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,10 @@ public class MedicineEntrustActivity extends Activity implements View.OnClickLis
         String date = et_alldate.getText().toString();
         if (G.isEmteny(name) || G.isEmteny(dosage) || G.isEmteny(date)) {
             Toast.makeText(this, "必填信息不能为空哦", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (isallspace){
+            Toast.makeText(this,"参数不能全部为空格哦！，请重新输入",Toast.LENGTH_SHORT).show();
             return;
         }
         Map<String, Object> params = new HashMap<>();
@@ -164,11 +169,10 @@ public class MedicineEntrustActivity extends Activity implements View.OnClickLis
         String name = et_medicine_name.getText().toString();
         String dosage = et_medicine_dosage.getText().toString();
         String date = et_alldate.getText().toString();
-        if (!G.isEmteny(name) && !G.isEmteny(dosage)  && !G.isEmteny(date)) {
+        if (!G.isEmteny(name) && !G.isEmteny(dosage) && !G.isEmteny(date)) {
             btn_medicine_submit.setClickable(true);
             btn_medicine_submit.setBackgroundResource(R.drawable.finish_medicine_bg);
             Log.i("ssssss", "=====================全部都有数据");
-
         } else {
             btn_medicine_submit.setClickable(false);
             btn_medicine_submit.setBackgroundResource(R.drawable.trust_medicine_bg);
@@ -176,9 +180,29 @@ public class MedicineEntrustActivity extends Activity implements View.OnClickLis
         }
     }
 
+
+
     @Override
     public void afterTextChanged(Editable editable) {
-
+        String data = editable.toString();
+        char[] arr = data.toCharArray();
+        int length = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == ' ') {
+                length++;
+            }
+        }
+        if (length == arr.length) {
+            data = "";
+            isallspace = true;
+        }else {
+            isallspace = false;
+        }
+        if (editable.equals(et_medicine_dosage.getText())) {
+            et_medicine_dosage.setText(data);
+        } else if (editable.equals(et_medicine_name.getText())) {
+            et_medicine_name.setText(data);
+        }
     }
 
     @Override
@@ -202,4 +226,6 @@ public class MedicineEntrustActivity extends Activity implements View.OnClickLis
             dialog.dismiss();
         }
     }
+
+
 }

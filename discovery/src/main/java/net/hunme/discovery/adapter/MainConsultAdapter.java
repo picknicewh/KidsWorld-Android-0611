@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.discovery.R;
-import net.hunme.discovery.modle.RecommendVo;
+import net.hunme.discovery.modle.CompilationVo;
 
 import java.util.List;
 
@@ -26,15 +26,15 @@ import java.util.List;
  */
 public class MainConsultAdapter extends BaseAdapter {
     private Context context;
-    private List<RecommendVo> recommendVos;
-    public MainConsultAdapter(Context context, List<RecommendVo> recommendVos) {
+    private List<CompilationVo> compilationVos;
+    public MainConsultAdapter(Context context,  List<CompilationVo> compilationVos) {
         this.context = context;
-        this.recommendVos = recommendVos;
+        this.compilationVos = compilationVos;
     }
 
     @Override
     public int getCount() {
-        return recommendVos.size();
+        return compilationVos.size();
     }
 
     @Override
@@ -55,9 +55,9 @@ public class MainConsultAdapter extends BaseAdapter {
             new ViewHolder(view);
         }
         holder = (ViewHolder) view.getTag();
-        RecommendVo recommendVo = recommendVos.get(i);
-        ImageCache.imageLoader(recommendVo.getImgUrl(),holder.iv_image);
-        holder.tv_title.setText(recommendVo.getName());
+        CompilationVo compilationVo = compilationVos.get(i);
+        ImageCache.imageLoader(compilationVo.getImageUrl(),holder.iv_image);
+        holder.tv_title.setText(compilationVo.getAlbumName());
         return view;
     }
 

@@ -12,17 +12,16 @@ import android.widget.TextView;
 import net.hunme.baselibrary.image.ImageCache;
 import net.hunme.baselibrary.util.G;
 import net.hunme.baselibrary.util.UserMessage;
-import net.hunme.baselibrary.widget.BannerViewPager;
 import net.hunme.baselibrary.widget.LoadingDialog;
 import net.hunme.baselibrary.widget.NoScrollGirdView;
 import net.hunme.baselibrary.widget.NoScrollListView;
-import net.hunme.baselibrary.widget.SimplePagerAdapter;
 import net.hunme.discovery.R;
 import net.hunme.discovery.adapter.MainConsultAdapter;
 import net.hunme.discovery.adapter.MainResourceAdapter;
-import net.hunme.discovery.modle.RecommendVo;
+import net.hunme.discovery.modle.CompilationVo;
 import net.hunme.discovery.util.MainRecommendContract;
 import net.hunme.discovery.util.MainRecommendPresenter;
+import net.hunme.discovery.widget.BannerView;
 import net.hunme.user.mode.BannerVo;
 
 import java.util.ArrayList;
@@ -48,11 +47,8 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
     /**
      * 广告栏
      */
-    private BannerViewPager bannerViewPager;
-    /**
-     * 广告指示圆点
-     */
-    private LinearLayout ll_dots;
+    private BannerView bannerView;
+
     /**
      * 幼儿听听专辑页
      */
@@ -121,13 +117,9 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
      */
     private UserMessage userMessage;
     /**
-     * viewpager适配器
-     */
-    private SimplePagerAdapter adapter;
-    /**
      * 装载需要展示导航图
      */
-    private List<View> guideList;
+    private List<ImageView> guideList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,8 +131,8 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
         iv_left = (ImageView) findViewById(R.id.iv_dleft);
         tv_title = (TextView) findViewById(R.id.tv_dtitle);
         iv_right = (ImageView) findViewById(R.id.iv_dright);
-        bannerViewPager = (BannerViewPager)findViewById(R.id.bvp_banner);
-        ll_dots = (LinearLayout)findViewById(R.id.ll_dots);
+        bannerView = (BannerView)findViewById(R.id.bv_home);
+
         bt_search = (Button) findViewById(R.id.et_search);
         ll_music = (LinearLayout) findViewById(R.id.ll_music);
         ll_class = (LinearLayout) findViewById(R.id.ll_class);
@@ -190,42 +182,50 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
     }
 
     @Override
-    public void setRecommendVoMusicList(final List<RecommendVo> recommendVos) {
-        music_recommend_id = String.valueOf(recommendVos.get(0).getId());
-        MainResourceAdapter adapter = new MainResourceAdapter(this, recommendVos);
-        gv_music.setAdapter(adapter);
-        gv_music.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                presenter.startMusicActivity(String.valueOf(recommendVos.get(i).getId()), null);
-            }
-        });
+    public void setRecommendVoMusicList(final List<CompilationVo> compilationVos) {
+        if (compilationVos!=null &&compilationVos.size()>0){
+            music_recommend_id = String.valueOf(compilationVos.get(0).getAlbumId());
+            MainResourceAdapter adapter = new MainResourceAdapter(this, compilationVos);
+            gv_music.setAdapter(adapter);
+            gv_music.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    presenter.startMusicActivity(String.valueOf(compilationVos.get(i).getAlbumId()), null);
+                }
+            });
+        }
     }
 
     @Override
-    public void setRecommendVoClassList(final List<RecommendVo> recommendVos) {
-        video_recommend_id = String.valueOf(recommendVos.get(0).getId());
-        MainResourceAdapter adapter = new MainResourceAdapter(this, recommendVos);
-        gv_class.setAdapter(adapter);
-        gv_class.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                presenter.startVideoActivity(String.valueOf(recommendVos.get(i).getId()));
-            }
-        });
+    public void setRecommendVoClassList(final List<CompilationVo> compilationVos) {
+        if (compilationVos!=null &&compilationVos.size()>0){
+            video_recommend_id = String.valueOf(compilationVos.get(0).getAlbumId());
+            MainResourceAdapter adapter = new MainResourceAdapter(this, compilationVos);
+            gv_class.setAdapter(adapter);
+            gv_class.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    presenter.startVideoActivity(String.valueOf(compilationVos.get(i).getAlbumId()));
+                }
+            });
+        }
+
     }
 
     @Override
-    public void setRecommendVoConsultList(final List<RecommendVo> recommendVos) {
-        consult_recommend_id = String.valueOf(recommendVos.get(0).getId());
-        MainConsultAdapter adapter = new MainConsultAdapter(this, recommendVos);
-        lv_consult.setAdapter(adapter);
-        lv_consult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                presenter.startConsultActivity(recommendVos.get(i).getId());
-            }
-        });
+    public void setRecommendVoConsultList(final List<CompilationVo> compilationVos) {
+        if (compilationVos!=null &&compilationVos.size()>0){
+            consult_recommend_id = String.valueOf(compilationVos.get(0).getAlbumId());
+            MainConsultAdapter adapter = new MainConsultAdapter(this, compilationVos);
+            lv_consult.setAdapter(adapter);
+            lv_consult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    presenter.startConsultActivity(Integer.parseInt(compilationVos.get(i).getAlbumId()));
+                }
+            });
+        }
+
     }
     @Override
     public void setBannerList(List<BannerVo> bannerList) {
@@ -233,30 +233,13 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
         for (int i = 0; i < bannerList.size(); i++) {
             ImageView iv = new ImageView(this);
             iv.setLayoutParams(mParams);
-            ImageCache.imageLoader(bannerList.get(i).getImgUrl(),iv);
+            ImageCache.imageLoader(bannerList.get(i).getBanner_url(),iv);
             iv.setScaleType(ImageView.ScaleType.FIT_XY);
             guideList.add(iv);
         }
-        adapter = new SimplePagerAdapter(guideList);
-        bannerViewPager.setAdapter(adapter);
-        bannerViewPager.setDotsLayout(ll_dots, guideList.size());
-      /*  bannerViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-            @Override
-            public void onPageSelected(int position) {
-                if (position == guideList.size() - 1) {
-                    ll_dots.setVisibility(View.GONE);
-                } else {
-                    ll_dots.setVisibility(View.VISIBLE);
-                }
-            }
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });*/
+        bannerView.setViewList(guideList);
+        bannerView.addViewPager(this);
+        bannerView.requestFocus();
     }
     @Override
     public void rushData() {

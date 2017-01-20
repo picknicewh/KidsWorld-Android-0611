@@ -40,6 +40,7 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activity.FullPlayVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"/>
     </application>
 

@@ -113,7 +113,9 @@ public class DateDb extends SQLiteOpenHelper {
                 String date = cursor.getString(dateIndex);
                 buffer.append(date).append(";");
             }
-            buffer.deleteCharAt(buffer.length()-1);
+            if (buffer.length()>0){
+                buffer.deleteCharAt(buffer.length()-1);
+            }
             return buffer.toString();
         }finally {
             if (cursor!=null){
@@ -141,6 +143,9 @@ public class DateDb extends SQLiteOpenHelper {
                     return state;
                 }
             }
+            return -1;
+        }catch (Exception e){
+            e.printStackTrace();
             return -1;
         }finally {
             if (cursor!=null){

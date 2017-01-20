@@ -217,11 +217,15 @@ public class Apiurl {
     /**
      * 获取banner图
      */
-    public static final String GETBANNERLIST = "/rakuen/getBanner.do";
+    public static final String GETBANNERLIST = "/rakuen/newGetBanner.do";
     /**
      * 获取推荐列表
      */
     public static final String GETRECOMMENDLIST = "/rakuen/getRecommendAblum.do";
+    /**
+     * 获取资讯
+     */
+    public static final String x  = "/rakuen/getInformation.do";
     /**
      * 获取全部推荐列表
      */

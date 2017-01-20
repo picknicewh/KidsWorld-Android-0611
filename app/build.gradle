@@ -7,8 +7,8 @@ android {
         applicationId "net.hunme.kidsworld"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 20161230
-        versionName "3.2.1"
+        versionCode 20170120
+        versionName "3.2.2"
     }
     buildTypes {
         release {

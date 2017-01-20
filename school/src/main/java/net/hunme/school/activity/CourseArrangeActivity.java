@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -73,8 +74,8 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
        tv_nodata = $(R.id.tv_nodata);
        refresh_view.setOnRefreshListener(new MyListener());
        syllabusVoList = new ArrayList<>();
-       showLoadingDialog();
        getArrange(count);
+       showLoadingDialog();
        setlist();
    }
     private void setlist(){
@@ -113,13 +114,17 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (syllabusVoList.size()>0){
-            syllabusVoList.clear();
+    protected void onRestart() {
+        super.onRestart();
+        if (syllabusVoList!=null){
+            if (syllabusVoList.size()>0){
+                syllabusVoList.clear();
+            }
             getArrange(count);
         }
+        Log.i("ssssss","==============onRestart=================");
     }
+
     /**
      *获取课程表
      * @param  count
