@@ -132,7 +132,6 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
         tv_title = (TextView) findViewById(R.id.tv_dtitle);
         iv_right = (ImageView) findViewById(R.id.iv_dright);
         bannerView = (BannerView)findViewById(R.id.bv_home);
-
         bt_search = (Button) findViewById(R.id.et_search);
         ll_music = (LinearLayout) findViewById(R.id.ll_music);
         ll_class = (LinearLayout) findViewById(R.id.ll_class);
