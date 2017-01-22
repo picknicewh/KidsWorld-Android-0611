@@ -177,6 +177,8 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
      * 用户信息类
      */
     private UserMessage userMessage;
+    private LinearLayout ll_play;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,6 +187,7 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         initView();
         getData();
     }
+
     /**
      * 初始化控件
      */
@@ -197,16 +200,17 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         iv_play = $(R.id.iv_play);
         iv_album = $(R.id.image_view_album);
         iv_play_mode = $(R.id.iv_play_mode);
-        ll_main =$(R.id.ll_main);
+        ll_main = $(R.id.ll_main);
         rl_from = $(R.id.rl_from);
         iv_more = $(R.id.iv_more);
         rl_play = $(R.id.rl_play);
         iv_loading = $(R.id.iv_loading);
-        tv_currentTime= $(R.id.tv_current);
+        tv_currentTime = $(R.id.tv_current);
         tv_durationTime = $(R.id.tv_duration);
-        iv_circle  = $(R.id.iv_circle);
+        iv_circle = $(R.id.iv_circle);
         seekBar = $(R.id.sb_music);
         fl_album = $(R.id.fl_album);
+        ll_play = $(R.id.ll_play);
         tv_create_name = $(R.id.tv_create_name);
         iv_more.setOnClickListener(this);
         iv_play.setOnClickListener(this);
@@ -214,15 +218,17 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         iv_preSong.setOnClickListener(this);
         iv_play_mode.setOnClickListener(this);
         ll_main.setOnClickListener(this);
-        animationUtil= new AnimationUtil(fl_album);
+        ll_play.setOnClickListener(this);
+        animationUtil = new AnimationUtil(fl_album);
         iv_left.setOnClickListener(this);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                if (b){
+                if (b) {
                     presenter.changeSeeBar(progress);
                 }
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 presenter.pause();
@@ -230,20 +236,22 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                 presenter.play();
+                presenter.play();
             }
         });
     }
+
     /**
      * 是否vivoX5
      */
-    private boolean isVivoX5(){
-        if ( android.os.Build.MODEL.equals("vivo X5Max+")){
+    private boolean isVivoX5() {
+        if (android.os.Build.MODEL.equals("vivo X5Max+")) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
+
     /**
      * 数据获取
      */
@@ -251,7 +259,7 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         operatingAnim = AnimationUtils.loadAnimation(this, R.anim.loading);
         LinearInterpolator lin = new LinearInterpolator();
         operatingAnim.setInterpolator(lin);
-        userMessage =  UserMessage.getInstance(this);
+        userMessage = UserMessage.getInstance(this);
         tsId = userMessage.getTsId();
         playMode = PlayMode.getDefault();
         Intent intent = getIntent();
@@ -261,6 +269,7 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         myMusicReceiver = new MyMusicReceiver();
         presenter = new PlayMusicPresenter(this, this, position, myMusicReceiver, themeId, resourceId);
     }
+
     /**
      * 启动锁屏
      */
@@ -268,6 +277,7 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         mLockScreenIntent = new Intent(this, LockScreenService.class);
         startService(mLockScreenIntent);
     }
+
     /**
      * 关闭锁屏
      */
@@ -276,23 +286,25 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
             stopService(mLockScreenIntent);
         }
     }
+
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
         if (viewId == R.id.iv_more) {
             PlayListPopuWindow playListPopuWindow = new PlayListPopuWindow(this, resourceVos, themeId, position);
             playListPopuWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
-        } else if (viewId == R.id.iv_play) {
-            if (userMessage.getIsUserPay()==1){
+        } else if (viewId == R.id.iv_play || viewId == R.id.ll_play) {
+            //isResourceFree==2免费==1收费
+            if (isResourceFree == 2) {
                 play();
-            }else {
-                //isResourceFree==2免费==1收费
-                if (isResourceFree==1){
-                   PromptPopWindow promptPopWindow = new PromptPopWindow(this,"你的资费已到期，为了不影响您收看，请及时购买套餐。");
-                    promptPopWindow.showAtLocation(view,Gravity.NO_GRAVITY, (int) (G.size.W*0.1), (int) (G.size.H*0.7));
+            } else {
+                PromptPopWindow promptPopWindow = new PromptPopWindow(this, "小主人，您的套餐已到期暂不能收看了。别难受，尽快续订，和贝贝虎一起愉快的玩耍吧!");
+                promptPopWindow.showAtLocation(view, Gravity.NO_GRAVITY, (int) (G.size.W * 0.1), (int) (G.size.H * 0.7));
+              /*  if (isResourceFree==1){
+
                 }else {
                     play();
-                }
+                }*/
             }
         } else if (viewId == R.id.iv_nextSong) {
             boolean isFastClick = isFastClick(clickTime);
@@ -310,14 +322,15 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
             PlayMode mPlayMode = PlayMode.switchNextMode(Constants.playMode);
             setPlayMode(mPlayMode);
             Constants.playMode = mPlayMode;
-        }else if (viewId==R.id.iv_left){
+        } else if (viewId == R.id.iv_left) {
             close();
         }
     }
+
     /**
      * 播放
      */
-    private void play(){
+    private void play() {
         //当第一次播放时点击按钮开始播放，记录当前播放记录
         if (position == 0 && isFirst) {
             ishasPlay = true;
@@ -328,22 +341,25 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         if (isPlaying) {
             presenter.pause();
             isPlaying = false;
-            if (!isVivoX5()){
+            if (!isVivoX5()) {
                 animationUtil.pauseRotateAnimation();
             }
         } else {
             ishasPlay = true;
             presenter.play();
             isPlaying = true;
-            if (!isVivoX5()){
+            if (!isVivoX5()) {
                 animationUtil.resumeRotateAnimation();
             }
         }
     }
+
     private long clickTime = 0;
+
     /**
      * 是否快速点击
-     * @param  clickTime 第一次点击时间
+     *
+     * @param clickTime 第一次点击时间
      */
     private boolean isFastClick(long clickTime) {
         long currentTime = System.currentTimeMillis();
@@ -353,6 +369,7 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         }
         return false;
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -365,23 +382,27 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         startLockScreenService();
         Log.i("sssss", "====================onRestart=======================");
     }
+
     /**
      * 根据播放资源列表
-     * @param  resourceVos 资源
+     *
+     * @param resourceVos 资源
      */
     @Override
     public void setSongList(List<ResourceVo> resourceVos) {
         this.resourceVos = resourceVos;
-        if (resourceVos.size()>0&& resourceVos!=null){
-            if (resourceId==null){
+        if (resourceVos.size() > 0 && resourceVos != null) {
+            if (resourceId == null) {
                 resourceId = String.valueOf(resourceVos.get(position).getResourceId());
             }
             setSongInfo(position);
         }
     }
+
     /**
      * 设置所有控件的数据
-     * @param  position 当前播放音乐的位置
+     *
+     * @param position 当前播放音乐的位置
      */
     @Override
     public void setSongInfo(int position) {
@@ -391,14 +412,16 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         ImageCache.imageLoaderPlay(TextUtil.encodeChineseUrl(url), iv_album);
         String createName = resourceVos.get(position).getCreateName();
         tv_create_name.setText(createName);
-        ll_main.setBackgroundResource(TextUtil.getInforImage(createName,1));
-        rl_from.setBackgroundResource(TextUtil.getInforImage(createName,2));
+        ll_main.setBackgroundResource(TextUtil.getInforImage(createName, 1));
+        rl_from.setBackgroundResource(TextUtil.getInforImage(createName, 2));
         rl_from.setAlpha((float) 0.8);
-        iv_circle.setBackgroundResource(TextUtil.getInforImage(createName,3));
+        iv_circle.setBackgroundResource(TextUtil.getInforImage(createName, 3));
     }
+
     /**
      * 根据不同的是否播放显示相对于的播放/暂停图标
-     * @param  isPlay
+     *
+     * @param isPlay
      */
     @Override
     public void setIsPlay(boolean isPlay) {
@@ -409,21 +432,25 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
             iv_play.setImageResource(R.mipmap.ic_play);
         }
     }
+
     /**
      * 设置当前播放位置
-     * @param  position 当前播放位置
+     *
+     * @param position 当前播放位置
      */
     @Override
     public void setPosition(int position) {
         this.position = position;
-        if (resourceVos.size()>0&&resourceVos!=null){
+        if (resourceVos.size() > 0 && resourceVos != null) {
             resourceId = String.valueOf(resourceVos.get(position).getResourceId());
             setSongInfo(position);
         }
     }
+
     /**
      * 设置当前播放模式
-     * @param  playMode 当前播放模式
+     *
+     * @param playMode 当前播放模式
      */
     @Override
     public void setPlayMode(PlayMode playMode) {
@@ -439,6 +466,7 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
                 break;
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -451,6 +479,7 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
     }
 
     private int duration;
+
     public class MyMusicReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -485,11 +514,11 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
                     seekBar.setMax(duration);
                     tv_durationTime.setText(G.toTime(duration));
                     if (state == -1) {
-                        if (!isVivoX5()){
+                        if (!isVivoX5()) {
                             iv_loading.startAnimation(operatingAnim);
                             iv_loading.setVisibility(View.VISIBLE);
                             iv_play.setClickable(false);
-                        }else {
+                        } else {
                             iv_play.setClickable(true);
                         }
                     } else if (state == 0) {
@@ -502,10 +531,10 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
                         presenter.savePlayTheRecord(tsId, resourceId, hasplayTime, 1);
                     } else if (state == 1) {
                         iv_loading.clearAnimation();
-                         iv_loading.setVisibility(View.GONE);
+                        iv_loading.setVisibility(View.GONE);
                         iv_play.setClickable(true);
                     } else if (state == 3) {
-                        if (!isVivoX5()){
+                        if (!isVivoX5()) {
                             animationUtil.cancelRotateAnimation();
                         }
                     }
@@ -517,13 +546,13 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
                         if (isPlaying) {
                             presenter.pause();
                             isPlaying = false;
-                            if (!isVivoX5()){
+                            if (!isVivoX5()) {
                                 animationUtil.pauseRotateAnimation();
                             }
                         } else {
                             presenter.play();
                             isPlaying = true;
-                            if (!isVivoX5()){
+                            if (!isVivoX5()) {
                                 animationUtil.resumeRotateAnimation();
                             }
                         }
@@ -538,6 +567,7 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
             }
         }
     }
+
     /**
      * 关闭通知栏，音乐播放服务，锁屏服务
      */
@@ -551,6 +581,7 @@ public class MainPlayActivity extends BaseMusicActivity implements View.OnClickL
         }
         finish();
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {

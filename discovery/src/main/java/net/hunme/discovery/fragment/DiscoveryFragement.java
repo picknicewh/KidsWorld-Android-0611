@@ -77,7 +77,6 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
     private boolean isQuit = false;
     private Timer timer;
     @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
-    //http://192.168.5.136:8989/KidsWorld-Web/paradise/indexH.html?tsId=87173800204642a381b47d8aca4c89d9&accountId=xxxxxxxxx
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         inflater.cloneInContext(new CordovaInterfaceImpl(getActivity(), this));

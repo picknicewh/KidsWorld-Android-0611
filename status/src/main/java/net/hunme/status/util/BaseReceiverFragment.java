@@ -105,6 +105,7 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
      * 获取动态列表
      * @param groupId 群id
      * @param  groupType 群类型 1=班级 2=学校
+     * @param type 1.加载 2 刷新
      */
     public void getDynamicList(String groupId,String groupType,int pageSize,int pageNum,int type,String dynamicId){
         Map<String,Object> map=new HashMap<>();

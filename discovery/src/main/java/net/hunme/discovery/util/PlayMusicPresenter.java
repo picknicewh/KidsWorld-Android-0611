@@ -97,10 +97,10 @@ public class PlayMusicPresenter implements PlayMusicContract.Presenter, OkHttpLi
         this.resourceId = resourceId;
         this.myMusicReceiver = myMusicReceiver;
         this.themeId = themeId;
-        getUserPaly();
         userMessage = UserMessage.getInstance(context);
         tsId = userMessage.getTsId();
         registerReceiver();
+      //  getUserPaly();
         getSongList(tsId, themeId);
     }
 
@@ -372,11 +372,11 @@ public class PlayMusicPresenter implements PlayMusicContract.Presenter, OkHttpLi
                     isUserPay = 0;
                     Toast.makeText(context, "信息查询不全，无法判断", Toast.LENGTH_SHORT).show();
                 }
+                Log.i("sssss",isUserPay+"=----------------------------");
                 userMessage.setIsUserPay(isUserPay);
             }
         }
     }
-
     /**
      * 设置今天日期
      */

@@ -102,7 +102,7 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
     protected void setToolBar() {
       setLiftImage(R.mipmap.ic_arrow_lift);
       setLiftOnClickClose();
-      setCententTitle("“我要请假");
+      setCententTitle("我要请假");
       setSubTitle("完成");
     }
     private void initdata(){
