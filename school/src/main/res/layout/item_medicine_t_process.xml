@@ -33,7 +33,7 @@
                 android:layout_width="10dp"
                 android:layout_height="10dp"/>
             </FrameLayout>
-            <net.hunme.baselibrary.widget.CircleImageView
+            <net.hongzhang.baselibrary.widget.CircleImageView
                 android:id="@+id/civ_publish_image"
                 android:layout_marginTop="@dimen/space"
                 android:src="@mipmap/person"
@@ -73,7 +73,7 @@
                 android:layout_width="10dp"
                 android:layout_height="10dp"/>
             </FrameLayout>
-            <net.hunme.baselibrary.widget.CircleImageView
+            <net.hongzhang.baselibrary.widget.CircleImageView
                 android:id="@+id/civ_known_image"
                 android:layout_marginTop="@dimen/space"
                 android:src="@mipmap/person"
@@ -111,7 +111,7 @@
                 android:layout_width="10dp"
                 android:layout_height="10dp"/>
             </FrameLayout>
-            <net.hunme.baselibrary.widget.CircleImageView
+            <net.hongzhang.baselibrary.widget.CircleImageView
                 android:id="@+id/civ_feed_image"
                 android:layout_marginTop="@dimen/space"
                 android:src="@mipmap/person"

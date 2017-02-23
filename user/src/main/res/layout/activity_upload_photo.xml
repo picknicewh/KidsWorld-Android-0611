@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.hunme.user.activity.UploadPhotoActivity">
+    tools:context="net.hongzhang.user.activity.UploadPhotoActivity">
     <GridView
         android:id="@+id/gv_photo"
         android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.hunme.message.activity.ClassActivity">
+    tools:context="net.hongzhang.message.activity.ClassActivity">
 
     <ListView
         android:divider="@color/line_gray"

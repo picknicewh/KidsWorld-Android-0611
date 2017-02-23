@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@color/bg_layout"
-    tools:context="net.hunme.user.activity.AdviceActivity">
+    tools:context="net.hongzhang.user.activity.AdviceActivity">
     <EditText
         android:layout_marginTop="@dimen/space"
         android:background="@drawable/bg_advice_selecter"

@@ -3,10 +3,10 @@
     package="main.jpushlibrary" >
 
     <permission
-        android:name="net.hunme.kidsworld.permission.JPUSH_MESSAGE"
+        android:name="net.hongzhang.bbhow.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
     <!-- 极光推送  一些系统要求的权限，如访问网络等 -->
-    <uses-permission android:name="net.hunme.kidsworld.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="net.hongzhang.bbhow.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -50,7 +50,7 @@
                 <action android:name="cn.jpush.android.ui.PushActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="net.hunme.kidsworld" />
+                <category android:name="net.hongzhang.bbhow" />
             </intent-filter>
         </activity>
         <!-- Required  SDK核心功能 -->
@@ -82,8 +82,7 @@
             android:exported="true" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.DaemonService" />
-
-                <category android:name="net.hunme.kidsworld" />
+                <category android:name="net.hongzhang.bbhow" />
             </intent-filter>
         </service>
         <!-- Required SDK核心功能 -->
@@ -94,7 +93,7 @@
             <intent-filter android:priority="1000" >
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
                 <!-- Required  显示通知栏 -->
-                <category android:name="net.hunme.kidsworld" />
+                <category android:name="net.hongzhang.bbhow" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -131,7 +130,7 @@
                 <!-- Optional 用户接受Rich Push Javascript 回调函数的intent -->
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
                 <!-- 接收网络变化 连接/断开 since 1.6.3 -->
-                <category android:name="net.hunme.kidsworld" />
+                <category android:name="net.hongzhang.bbhow" />
             </intent-filter>
         </receiver>
         <!-- Required  . Enable it you can get statistics data with channel -->
@@ -140,7 +139,7 @@
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="cd2fed4e3dd80d619df50bd8" />
+            android:value="2002c4f2241d791f35630ca1" />
         <!-- </>值来自开发者平台取得的AppKey -->
         <!-- 极光推送的配置文件结束 -->
         <activity android:name=".JPush.EmptyActivity" >

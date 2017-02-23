@@ -9,7 +9,7 @@
         android:padding="@dimen/space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <net.hunme.baselibrary.widget.CircleImageView
+        <net.hongzhang.baselibrary.widget.CircleImageView
             android:id="@+id/iv_phead"
 
             android:layout_width="60dp"

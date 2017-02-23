@@ -31,7 +31,7 @@
             android:src="@mipmap/ic_arrow_right"
             android:layout_alignParentRight="true"/>
 
-        <net.hunme.baselibrary.widget.CircleImageView
+        <net.hongzhang.baselibrary.widget.CircleImageView
             android:id="@+id/cv_head"
             android:background="@drawable/bg_head_portrait"
             android:layout_toLeftOf="@id/iv_right"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.hunme.status">
+    package="net.hongzhang.status">
 
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.PublishStatusActivity"
+            android:name="net.hongzhang.status.activity.PublishStatusActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ChoosePermitActivity"
+            android:name="net.hongzhang.status.activity.ChoosePermitActivity"
             android:screenOrientation="portrait" />
 
         <PreferenceScreen
@@ -25,7 +25,7 @@
                 android:targetPackage="com.android.settings" />
         </PreferenceScreen>
 
-        <activity android:name=".activity.MessageDetailActivity"></activity>
+        <activity android:name="net.hongzhang.status.activity.MessageDetailActivity"></activity>
     </application>
 
 </manifest>

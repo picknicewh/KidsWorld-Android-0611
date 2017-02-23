@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/rl_full_srceen"
-    tools:context="net.hunme.discovery.activity.FullPlayVideoActivity">
+    tools:context="net.hongzhang.discovery.activity.FullPlayVideoActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,7 +14,8 @@
             android:id="@+id/sv_preview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        <net.hunme.discovery.widget.VerticalSeekBar
+        <net.hongzhang.discovery.widget.VerticalSeekBar
+            android:visibility="gone"
             android:id="@+id/vsb_light"
             android:layout_width="wrap_content"
             android:layout_height="180dp"
@@ -24,7 +25,8 @@
             android:progressDrawable="@drawable/po_ver_seekbar"
             android:thumb="@drawable/thumb_dos_vsb"
             />
-        <net.hunme.discovery.widget.VerticalSeekBar
+        <net.hongzhang.discovery.widget.VerticalSeekBar
+            android:visibility="gone"
             android:id="@+id/vsb_volume"
             android:layout_width="wrap_content"
             android:layout_height="180dp"

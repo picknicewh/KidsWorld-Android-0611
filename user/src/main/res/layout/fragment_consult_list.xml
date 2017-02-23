@@ -19,7 +19,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <net.hunme.baselibrary.widget.NoScrollListView
+        <net.hongzhang.baselibrary.widget.NoScrollListView
             android:id="@+id/lv_consult_list"
             android:dividerHeight="0dp"
             android:divider="@color/transparent"

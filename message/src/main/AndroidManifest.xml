@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.hunme.message">
+    package="net.hongzhang.message">
 
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <!--  -->
         <activity
-            android:name=".activity.ConservationActivity"
+            android:name="net.hongzhang.message.activity.ConservationActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -18,35 +17,28 @@
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data
-                    android:host="net.hunme.kidsworld"
+                    android:host="net.hongzhang.bbhow"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.ClassActivity"
+            android:name="net.hongzhang.message.activity.PersonDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ParentActivity"
+            android:name="net.hongzhang.message.activity.GroupDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.PersonDetailActivity"
+            android:name="net.hongzhang.message.activity.SearchActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.GroupDetailActivity"
+            android:name="net.hongzhang.message.activity.ModifyNameActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SearchActivity"
+            android:name="net.hongzhang.message.activity.ContractMemberActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ModifyNameActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ContractMemberActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".activity.GroupMemberDetailActivity"></activity>
+        <activity android:name="net.hongzhang.message.activity.GroupMemberDetailActivity"/>
     </application>
 
 </manifest>

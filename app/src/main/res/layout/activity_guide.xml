@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <net.hunme.baselibrary.widget.BannerViewPager
+    <net.hongzhang.baselibrary.widget.BannerViewPager
         android:id="@+id/bvp_guide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

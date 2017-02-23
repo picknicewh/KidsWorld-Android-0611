@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/bg_layout"
-    tools:context="net.hunme.user.activity.ProvsionActivity">
+    tools:context="net.hongzhang.user.activity.ProvsionActivity">
     <LinearLayout
         android:layout_marginLeft="@dimen/space"
         android:orientation="vertical"

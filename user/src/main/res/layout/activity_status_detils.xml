@@ -26,12 +26,12 @@
         android:orientation="vertical">
         <include layout="@layout/layout_status_head"/>
 
-       <net.hunme.baselibrary.widget.NoScrollListView
+       <net.hongzhang.baselibrary.widget.NoScrollListView
             android:id="@+id/lv_commment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:dividerHeight="0.3dp">
-        </net.hunme.baselibrary.widget.NoScrollListView>
+        </net.hongzhang.baselibrary.widget.NoScrollListView>
         <View
             android:layout_width="match_parent"
             android:layout_height="100dp"/>

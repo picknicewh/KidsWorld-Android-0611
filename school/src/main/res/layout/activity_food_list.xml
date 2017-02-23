@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.hunme.school.activity.FoodListActivity">
+    tools:context="net.hongzhang.school.activity.FoodListActivity">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -29,13 +29,13 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content" />
     </RelativeLayout>
-    <net.hunme.school.widget.DateView
+    <net.hongzhang.school.widget.DateView
         android:visibility="gone"
         android:id="@+id/dateview"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <net.hunme.baselibrary.widget.NoScrollListView
+    <net.hongzhang.baselibrary.widget.NoScrollListView
         android:id="@+id/lv_foodlist"
         android:dividerHeight="0dp"
         android:divider="@color/transparent"

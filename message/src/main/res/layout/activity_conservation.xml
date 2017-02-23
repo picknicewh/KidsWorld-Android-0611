@@ -5,11 +5,11 @@
     android:layout_height="match_parent">
     <RelativeLayout
         android:background="@color/colorAccent"
-        android:layout_height="74dp"
-        android:paddingTop="24dp"
+        android:layout_height="50dp"
+
         android:layout_width="match_parent">
         <ImageView
-            android:paddingTop="24dp"
+
             android:layout_marginLeft="@dimen/space"
             android:src="@mipmap/ic_arrow_lift"
             android:layout_alignParentLeft="true"
@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:layout_height="wrap_content" />
         <TextView
-          android:layout_marginTop="@dimen/space"
+            android:layout_centerVertical="true"
             android:id="@+id/tv_cname"
             android:layout_width="wrap_content"
             android:textColor="@color/white"
@@ -27,7 +27,7 @@
             android:layout_centerHorizontal="true"
             android:layout_height="30dp"/>
         <ImageView
-            android:paddingTop="@dimen/space_x1.5"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:id="@+id/iv_call"
             android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
             android:textColor="@color/white"
             android:layout_height="wrap_content" />
         <ImageView
-            android:paddingTop="@dimen/space_x1.5"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:id="@+id/iv_detail"
             android:layout_width="wrap_content"

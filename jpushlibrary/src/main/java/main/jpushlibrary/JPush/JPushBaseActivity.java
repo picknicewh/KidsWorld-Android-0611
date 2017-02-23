@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentActivity;
 
 import com.umeng.analytics.MobclickAgent;
 
-import net.hunme.baselibrary.util.G;
+import net.hongzhang.baselibrary.util.G;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;

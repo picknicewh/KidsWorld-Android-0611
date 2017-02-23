@@ -220,7 +220,7 @@
                 android:text="确定"
                 android:textColor="@color/white" />
         </RelativeLayout>
-        <net.hunme.school.widget.CustomVideoView
+        <net.hongzhang.school.widget.CustomVideoView
             android:visibility="gone"
             android:id="@+id/rtsp_player"
             android:layout_width="match_parent"

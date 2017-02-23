@@ -25,4 +25,8 @@
         <attr name="dv_mouth" format="integer"/>
         <attr name="dv_day" format="integer"/>
     </declare-styleable>
+    <declare-styleable name="CircleDiskView">
+        <attr name="cdv_part" format="integer"/>
+        <attr name="cdv_circle_color" format="color"/>
+    </declare-styleable>
 </resources>

@@ -19,7 +19,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <net.hunme.baselibrary.widget.CircleImageView
+        <net.hongzhang.baselibrary.widget.CircleImageView
             android:id="@+id/iv_image_item"
             android:src="@mipmap/ic_head"
             android:layout_width="50dp"

@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="net.hunme.status.activity.MessageDetailActivity">
+    tools:context="net.hongzhang.status.activity.MessageDetailActivity">
      <RelativeLayout
          android:layout_width="match_parent"
          android:layout_height="match_parent">
-     <net.hunme.baselibrary.widget.NoScrollListView
+     <net.hongzhang.baselibrary.widget.NoScrollListView
          android:id="@+id/lv_message_detail"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"/>

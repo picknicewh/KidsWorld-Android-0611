@@ -15,8 +15,8 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-import net.hunme.baselibrary.image.ImageCache;
-import net.hunme.baselibrary.util.G;
+import net.hongzhang.baselibrary.image.ImageCache;
+import net.hongzhang.baselibrary.util.G;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

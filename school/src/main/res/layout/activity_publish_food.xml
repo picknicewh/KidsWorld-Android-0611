@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.hunme.school.activity.PublishFoodActivity">
+    tools:context="net.hongzhang.school.activity.PublishFoodActivity">
     <RelativeLayout
         android:id="@+id/rl_calendar"
         android:background="@color/bg_layout"
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
-    <net.hunme.school.widget.DateView
+    <net.hongzhang.school.widget.DateView
         android:visibility="gone"
         android:id="@+id/dv_date"
         android:orientation="vertical"

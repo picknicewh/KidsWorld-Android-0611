@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.hunme.school.activity.FoodListActivity">
-    <net.hunme.school.widget.DateView
+    tools:context="net.hongzhang.school.activity.FoodListActivity">
+    <net.hongzhang.school.widget.DateView
         android:visibility="gone"
         android:id="@+id/dv_pop"
         android:orientation="vertical"

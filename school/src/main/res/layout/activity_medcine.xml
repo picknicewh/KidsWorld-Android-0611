@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.hunme.school.activity.MedcineActivity">
+    tools:context="net.hongzhang.school.activity.MedcineActivity">
   <WebView
       android:id="@+id/wb_medicine"
       android:layout_width="match_parent"

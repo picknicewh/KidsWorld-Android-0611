@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.hunme.user.activity.AlbumDetailsActivity">
+    tools:context="net.hongzhang.user.activity.AlbumDetailsActivity">
     <GridView
         android:id="@+id/gv_photo"
         android:layout_width="match_parent"

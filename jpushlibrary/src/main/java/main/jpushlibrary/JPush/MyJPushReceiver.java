@@ -14,12 +14,12 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import net.hunme.baselibrary.database.StatusInfoDb;
-import net.hunme.baselibrary.database.StatusInfoDbHelper;
-import net.hunme.baselibrary.database.SystemInfomDb;
-import net.hunme.baselibrary.database.SystemInfomDbHelp;
-import net.hunme.baselibrary.util.BroadcastConstant;
-import net.hunme.baselibrary.util.UserMessage;
+import net.hongzhang.baselibrary.database.StatusInfoDb;
+import net.hongzhang.baselibrary.database.StatusInfoDbHelper;
+import net.hongzhang.baselibrary.database.SystemInfomDb;
+import net.hongzhang.baselibrary.database.SystemInfomDbHelp;
+import net.hongzhang.baselibrary.util.BroadcastConstant;
+import net.hongzhang.baselibrary.util.UserMessage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -133,7 +133,7 @@ public class MyJPushReceiver extends BroadcastReceiver {
      *  处理返回过来的数据，并发送通知
      */
     public  void receivingNotification(Context context,String message,String title){
-        ComponentName componetName = new ComponentName("net.hunme.kidsworld","net.hunme.user.activity.SystemInfoActivity");
+        ComponentName componetName = new ComponentName("net.hongzhang.bbhow","net.hongzhang.user.activity.SystemInfoActivity");
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.setComponent(componetName);

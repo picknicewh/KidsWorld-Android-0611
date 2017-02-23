@@ -224,7 +224,6 @@
                 android:maxLength="100"
                 android:hint="请输入备注(0-100个字)"
                 android:gravity="left"
-                android:windowSoftInputMode="stateHidden|adjustResize"
                 android:textSize="@dimen/ts_medium" />
             <LinearLayout
                 android:layout_margin="@dimen/space"

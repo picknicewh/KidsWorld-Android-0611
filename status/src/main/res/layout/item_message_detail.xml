@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="@dimen/space"
-    tools:context="net.hunme.status.activity.MessageDetailActivity">
+    tools:context="net.hongzhang.status.activity.MessageDetailActivity">
      <ImageView
          android:id="@+id/iv_head"
          android:src="@mipmap/person"

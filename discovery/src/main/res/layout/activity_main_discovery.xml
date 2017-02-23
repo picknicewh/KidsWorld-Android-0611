@@ -12,7 +12,7 @@
         android:background="@color/colorAccent"
         android:paddingTop="@dimen/space_x2.5">
 
-        <net.hunme.baselibrary.widget.CircleImageView
+        <net.hongzhang.baselibrary.widget.CircleImageView
             android:id="@+id/iv_dleft"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -64,7 +64,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <net.hunme.discovery.widget.BannerView
+            <net.hongzhang.discovery.widget.BannerView
                 android:id="@+id/bv_home"
                 android:layout_width="match_parent"
                 android:layout_height="180dp" />
@@ -172,7 +172,7 @@
                         android:src="@mipmap/ic_arrow_right" />
                 </RelativeLayout>
 
-                <net.hunme.baselibrary.widget.NoScrollGirdView
+                <net.hongzhang.baselibrary.widget.NoScrollGirdView
                     android:id="@+id/gv_music"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -216,7 +216,7 @@
                         android:src="@mipmap/ic_arrow_right" />
                 </RelativeLayout>
 
-                <net.hunme.baselibrary.widget.NoScrollGirdView
+                <net.hongzhang.baselibrary.widget.NoScrollGirdView
                     android:id="@+id/gv_class"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -260,7 +260,7 @@
                         android:src="@mipmap/ic_arrow_right" />
                 </RelativeLayout>
 
-                <net.hunme.baselibrary.widget.NoScrollListView
+                <net.hongzhang.baselibrary.widget.NoScrollListView
 
                     android:id="@+id/lv_consult"
                     android:layout_width="match_parent"

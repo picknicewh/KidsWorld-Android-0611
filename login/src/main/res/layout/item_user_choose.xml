@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <net.hunme.baselibrary.widget.CircleImageView
+    <net.hongzhang.baselibrary.widget.CircleImageView
         android:id="@+id/cv_head"
         android:src="@mipmap/person"
         android:padding="@dimen/space_x2"

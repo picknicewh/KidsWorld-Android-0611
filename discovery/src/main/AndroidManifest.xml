@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.hunme.discovery">
+    package="net.hongzhang.discovery">
 
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
 
     <application
         android:allowBackup="true"
@@ -12,34 +13,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainPlayActivity"
+            android:name="net.hongzhang.discovery.MainPlayActivity"
             android:screenOrientation="portrait" />
 
-        <service android:name=".service.LockScreenService">
+        <service android:name="net.hongzhang.discovery.service.LockScreenService">
             <intent-filter>
                 <action android:name="android.intent.action.lockScreen" />
             </intent-filter>
         </service>
-        <service android:name=".service.MusicService">
+        <service android:name="net.hongzhang.discovery.service.MusicService">
             <intent-filter>
                 <action android:name="com.service.MusicService" />
             </intent-filter>
         </service>
         <activity
-            android:name=".LockActivity"
+            android:name="net.hongzhang.discovery.LockActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.MainDiscoveryActivity" />
-        <activity android:name=".activity.MusicAlubmListActivity" />
+        <activity android:name="net.hongzhang.discovery.activity.MainDiscoveryActivity" />
+        <activity android:name="net.hongzhang.discovery.activity.MusicAlubmListActivity" />
         <activity
-            android:name=".activity.PlayVideoActivity"
+            android:name="net.hongzhang.discovery.activity.PlayVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".activity.FullPlayVideoActivity"
+            android:name="net.hongzhang.discovery.activity.FullPlayVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"/>
     </application>

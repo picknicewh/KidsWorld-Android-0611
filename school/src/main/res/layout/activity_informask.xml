@@ -6,7 +6,6 @@
     android:fillViewport="true"
     android:orientation="vertical">
 
-
     <LinearLayout
         android:layout_marginTop="@dimen/space"
         android:background="@color/white"
@@ -128,7 +127,6 @@
        >
     <TextView
         android:layout_height="wrap_content"
-
         android:layout_width="match_parent"
         android:gravity="left"
         android:padding="@dimen/space"
@@ -137,6 +135,7 @@
         android:textSize="@dimen/ts_large"
         />
     <EditText
+
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:id="@+id/et_cause"
