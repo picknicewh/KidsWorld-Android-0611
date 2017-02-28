@@ -8,8 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@mipmap/ic_start"
-        android:scaleType="fitXY"
-        />
+        android:scaleType="fitXY" />
    <!-- <net.hunme.school.widget.MulSelectDateView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />-->

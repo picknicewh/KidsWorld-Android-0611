@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 
+import com.umeng.analytics.MobclickAgent;
+
 import net.hongzhang.baselibrary.widget.CommonPubishPopWindow;
 import net.hongzhang.status.R;
 import net.hongzhang.status.activity.PublishStatusActivity;
@@ -49,10 +51,12 @@ public class StatusPublishPopWindow extends CommonPubishPopWindow {
         if (view.getId()== R.id.iv_text){
             intent.putExtra("type",WORDS);
             intent.putExtra("groupId",classId);
+            MobclickAgent.onEvent(context, "releaseTextDynamic");
         }else if (view.getId()==  R.id.iv_photo){
            // intent.setClass(context,)
             intent.putExtra("type",PICTURE);
             intent.putExtra("groupId",classId);
+            MobclickAgent.onEvent(context, "releasePhotoDynamic");
         }/*else if (view.getId()==  R.id.iv_move){
             intent.putExtra("type",VEDIO);
         }*/

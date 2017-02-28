@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.reflect.TypeToken;
+import com.umeng.analytics.MobclickAgent;
 
 import net.hongzhang.baselibrary.BaseLibrary;
 import net.hongzhang.baselibrary.base.BaseActivity;
@@ -163,5 +164,11 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
             }
         }
         return super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MobclickAgent.onEvent(this, "openChangeAccount");
     }
 }

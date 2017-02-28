@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
+import com.umeng.analytics.MobclickAgent;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
@@ -211,5 +212,11 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
                 }
             }.sendEmptyMessageDelayed(0, 500);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MobclickAgent.onEvent(this, "openLeave");
     }
 }

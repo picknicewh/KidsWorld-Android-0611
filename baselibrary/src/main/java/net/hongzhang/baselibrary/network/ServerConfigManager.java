@@ -28,7 +28,7 @@ public class ServerConfigManager {
 	/**
 	 * 主服务器地址
 	 */
-//	public static final String SERVER_IP = "http://zhu.hunme.net:8080/KidsWorld";//测试服
+//	public static final String SERVER_IP = "http://zhu.hunme.net:8082/KidsWorld";//测试服
 //	public static final String SERVER_IP = "http://zhu.hunme.net:12345/KidsWorld/";//准生产
     // public static final String SERVER_IP = "http://192.168.1.200:8080/KidsWorld"; //胡诗昊
 //    public static final String SERVER_IP = "http://192.168.1.134:8090/KidsWorldUserCenter";  //马路

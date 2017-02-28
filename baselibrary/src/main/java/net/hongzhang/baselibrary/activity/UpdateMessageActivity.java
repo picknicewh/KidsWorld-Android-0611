@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
+import com.umeng.analytics.MobclickAgent;
 
 import net.hongzhang.baselibrary.R;
 import net.hongzhang.baselibrary.base.BaseActivity;
@@ -241,4 +242,14 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if("1".equals(type)){
+            MobclickAgent.onEvent(this, "openUpdateUserPhoneNumber");
+        }else if("2".equals(type)){
+            MobclickAgent.onEvent(this, "openUpdateUserPassword");
+        }
+
+    }
 }

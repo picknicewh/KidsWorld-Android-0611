@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.gson.reflect.TypeToken;
+import com.umeng.analytics.MobclickAgent;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
@@ -75,5 +76,11 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onError(String uri, String error) {
         G.showToast(this,error);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MobclickAgent.onEvent(this, "openUserAdvice");
     }
 }

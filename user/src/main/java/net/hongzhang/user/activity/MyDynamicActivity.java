@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
+import com.umeng.analytics.MobclickAgent;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
@@ -187,5 +188,11 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener,Pu
             dynamicInfoVoList.clear();
             getMyDynamic(pageNumber,10);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MobclickAgent.onEvent(this, "openUserDynamic");
     }
 }

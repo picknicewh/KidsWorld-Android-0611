@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.SystemInformVo;
 import net.hongzhang.baselibrary.widget.MyAlertDialog;
@@ -191,4 +193,10 @@ public class SystemInfoActivity extends BaseActivity {
         adapter.notifyDataSetChanged();
     }
 */
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MobclickAgent.onEvent(this, "openSystemMessage");
+    }
 }

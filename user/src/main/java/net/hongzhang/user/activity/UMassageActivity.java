@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.pizidea.imagepicker.AndroidImagePicker;
+import com.umeng.analytics.MobclickAgent;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.contract.ContractsDb;
@@ -228,5 +229,11 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     public void onError(String uri, String error) {
         G.showToast(this,error);
         flag = 0;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MobclickAgent.onEvent(this, "openUserMessage");
     }
 }
