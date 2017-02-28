@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
+import com.umeng.analytics.MobclickAgent;
 
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
@@ -193,5 +194,6 @@ public class FoodListActivity extends BaseFoodActivity   {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(recevier);
+        MobclickAgent.onEvent(this, "openFoodList");
     }
 }

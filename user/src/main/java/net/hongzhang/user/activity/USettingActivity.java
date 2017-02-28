@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import net.hongzhang.baselibrary.activity.UpdateMessageActivity;
 import net.hongzhang.baselibrary.base.BaseActivity;
@@ -149,6 +150,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
     protected void onDestroy() {
         super.onDestroy();
         this.unregisterReceiver(showSysDosReceiver);
+        MobclickAgent.onEvent(this, "openUserSetting");
     }
 
     private void initDate(){
@@ -189,7 +191,6 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
             intent.setClass(this, UserChooseActivity.class);
             intent.putExtra("type",true);
             startActivity(intent);
-
         } else if (viewID == R.id.ll_changepasswd) {
             Intent intent = new Intent();
             intent.putExtra("type", "pw");
@@ -211,12 +212,15 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
         } else if (viewID == R.id.ll_exit) {
             OperateDialog dialog = new OperateDialog(this,1);
             dialog.initexitView();
+            MobclickAgent.onEvent(this, "exitAccount");
         } else if (viewID == R.id.ll_cleancache) {
             OperateDialog dialog = new OperateDialog(this,2);
             dialog.initexitView();
+            MobclickAgent.onEvent(this, "openCleanCache");
         } else if (viewID == R.id.ll_checkupadte) {
 //            String url = "http://apkegg.mumayi.com/cooperation/2016/06/17/101/1013262/doupocangqiong_V1.4.1_mumayi_64934.apk";
             new CheckUpdate(this,true);
+            MobclickAgent.onEvent(this, "openCheckUpdate");
         }else if(viewID==R.id.tv_provsion){
             startActivity(new Intent(this,ProvsionActivity.class));
         }

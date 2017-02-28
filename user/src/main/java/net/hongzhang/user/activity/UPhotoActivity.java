@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.reflect.TypeToken;
+import com.umeng.analytics.MobclickAgent;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
@@ -174,5 +175,6 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
        /* if(alertDialog!=null){
             alertDialog.cancel();
         }*/
+        MobclickAgent.onEvent(this, "openUserPhoto");
     }
 }

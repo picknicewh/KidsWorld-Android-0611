@@ -12,6 +12,7 @@ import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.CircleImageView;
 import net.hongzhang.user.R;
+
 /**
  * ================================================
  * 作    者：ZLL
@@ -34,6 +35,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_id;
     private TextView tv_name;
     private TextView tv_address;//http://192.168.5.136:8989/webSVN/kidsWorld/paradise/indexH.html?tsId=6b64f21d7bc54e108fecbcf77e28e55e#/collect
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
-       // setLiftOnClickClose();
+        // setLiftOnClickClose();
         setLiftOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,28 +56,28 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
             }
         });
         setCententTitle("我的");
-       setRightImage(R.mipmap.ic_scan);
+        setRightImage(R.mipmap.ic_scan);
         setRightOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(UserActivity.this,ScanActivity.class);
+                Intent intent = new Intent(UserActivity.this, ScanActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    private void initView(){
-        ll_userMassage=$(R.id.ll_userMassage);
-        ll_myphoto=$(R.id.ll_myphoto);
-        ll_usersetting=$(R.id.ll_usersetting);
-        ll_mycollection=$(R.id.ll_mycollection);
-        ll_mydynamics=$(R.id.ll_mydynamics);
-        ll_copy_right=$(R.id.ll_copyRight);
-        ll_anchor=$(R.id.ll_anchor);
-        cv_portrait=$(R.id.cv_portrait);
-        tv_id=$(R.id.tv_id);
-        tv_name=$(R.id.tv_name);
-        tv_address=$(R.id.tv_address);
+    private void initView() {
+        ll_userMassage = $(R.id.ll_userMassage);
+        ll_myphoto = $(R.id.ll_myphoto);
+        ll_usersetting = $(R.id.ll_usersetting);
+        ll_mycollection = $(R.id.ll_mycollection);
+        ll_mydynamics = $(R.id.ll_mydynamics);
+        ll_copy_right = $(R.id.ll_copyRight);
+        ll_anchor = $(R.id.ll_anchor);
+        cv_portrait = $(R.id.cv_portrait);
+        tv_id = $(R.id.tv_id);
+        tv_name = $(R.id.tv_name);
+        tv_address = $(R.id.tv_address);
         ll_userMassage.setOnClickListener(this);
         ll_myphoto.setOnClickListener(this);
         ll_usersetting.setOnClickListener(this);
@@ -85,63 +87,64 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
         ll_copy_right.setOnClickListener(this);
     }
 
-    private void initData(){
+    private void initData() {
         UserMessage um = UserMessage.getInstance(this);
-        ImageCache.imageLoader(um.getHoldImgUrl(),cv_portrait);
-        if("1".equals(um.getType())){
+        ImageCache.imageLoader(um.getHoldImgUrl(), cv_portrait);
+        if ("1".equals(um.getType())) {
             tv_id.setText("学");
             tv_id.setBackgroundResource(R.drawable.user_study_selecter);
-        }else{
-           tv_id.setText("师");
-           tv_id.setBackgroundResource(R.drawable.user_teach_selecter);
+        } else {
+            tv_id.setText("师");
+            tv_id.setBackgroundResource(R.drawable.user_teach_selecter);
         }
         tv_name.setText(um.getUserName());
-        if(G.isEmteny(um.getClassName())){
+        if (G.isEmteny(um.getClassName())) {
             tv_address.setText(um.getSchoolName());
             return;
         }
-        tv_address.setText(um.getSchoolName()+"-"+um.getClassName());
+        tv_address.setText(um.getSchoolName() + "-" + um.getClassName());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         //用户选择好了身份立即刷新数据
-        if(G.KisTyep.isChooseId||G.KisTyep.isUpadteHold){
+        if (G.KisTyep.isChooseId || G.KisTyep.isUpadteHold) {
             initData();
         }
     }
 
     @Override
     public void onClick(View v) {
-        int viewId=v.getId();
-        Intent intent=null;
-        if(viewId==R.id.ll_userMassage){
-            intent=new Intent(UserActivity.this,UMassageActivity.class);
-        }else if(viewId==R.id.ll_usersetting){
-            intent=new Intent(UserActivity.this,USettingActivity.class);
-        }else if(viewId==R.id.ll_myphoto){
-            intent=new Intent(UserActivity.this,UPhotoActivity.class);
-        }else if(viewId==R.id.ll_mycollection){
+        int viewId = v.getId();
+        Intent intent = null;
+        if (viewId == R.id.ll_userMassage) {
+            intent = new Intent(UserActivity.this, UMassageActivity.class);
+        } else if (viewId == R.id.ll_usersetting) {
+            intent = new Intent(UserActivity.this, USettingActivity.class);
+        } else if (viewId == R.id.ll_myphoto) {
+            intent = new Intent(UserActivity.this, UPhotoActivity.class);
+        } else if (viewId == R.id.ll_mycollection) {
           /*  intent=new Intent(UserActivity.this,HMDroidGap.class);
             intent.putExtra("loadUrl", Apiurl.MYCOLLECTION+"?tsId="+UserMessage.getInstance(this).getTsId()+"#/collect");
             intent.putExtra("title","我的收藏");*/
-             intent=new Intent(UserActivity.this,CollectActivity.class);
-            intent.putExtra("source",0);
-        }else if(viewId==R.id.ll_mydynamics){
+            intent = new Intent(UserActivity.this, CollectActivity.class);
+            intent.putExtra("source", 0);
+        } else if (viewId == R.id.ll_mydynamics) {
          /*   intent=new Intent(UserActivity.this,HMDroidGap.class);
             intent.putExtra("loadUrl",Apiurl.MYDYNAMICS+"?tsId="+UserMessage.getInstance(this).getTsId());
             intent.putExtra("title","我的动态");*/
-            intent=new Intent(UserActivity.this,MyDynamicActivity.class);
-        }else if (viewId==R.id.ll_anchor){
-            intent=new Intent(UserActivity.this,TextContentActivity.class);
-            intent.putExtra("source",0);
-        }else if (viewId==R.id.ll_copyRight){
-            intent=new Intent(UserActivity.this,TextContentActivity.class);
-            intent.putExtra("source",1);
+            intent = new Intent(UserActivity.this, MyDynamicActivity.class);
+        } else if (viewId == R.id.ll_anchor) {
+            intent = new Intent(UserActivity.this, TextContentActivity.class);
+            intent.putExtra("source", 0);
+        } else if (viewId == R.id.ll_copyRight) {
+            intent = new Intent(UserActivity.this, TextContentActivity.class);
+            intent.putExtra("source", 1);
         }
-        if(null!=intent){
+        if (null != intent) {
             startActivity(intent);
+//            EncryptUtil.a
         }
     }
 }

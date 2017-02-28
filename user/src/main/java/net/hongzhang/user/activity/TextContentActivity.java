@@ -3,6 +3,8 @@ package net.hongzhang.user.activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.user.R;
 
@@ -54,7 +56,18 @@ public class TextContentActivity extends BaseActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (source==0){
+            MobclickAgent.onEvent(this, "openAnchorCertification");
+        }else if (source==1){
+            MobclickAgent.onEvent(this, "openCopyright");
+        }else if (source==2){
+            MobclickAgent.onEvent(this, "openTermsOfService");
+        }
+
+    }
 }

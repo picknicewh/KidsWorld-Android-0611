@@ -36,10 +36,10 @@ import java.util.List;
  * 附加注释：
  * 主要接口：
  */
-public class SchoolFragement extends BaseFragement implements View.OnClickListener{
+public class SchoolFragement extends BaseFragement implements View.OnClickListener {
 
     /**
-     *考勤
+     * 考勤
      */
     private RelativeLayout rl_check;
     /**
@@ -51,7 +51,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
      * 通知
      */
     private RelativeLayout rl_inform;
-    private TextView  tv_dos_info;
+    private TextView tv_dos_info;
     /**
      * 食谱
      */
@@ -68,16 +68,17 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
      * 喂药
      */
     private RelativeLayout rl_medicine;
-    private TextView  tv_dos_medicine;
+    private TextView tv_dos_medicine;
 
     private ShowDosRecivier recivier;
     /**
      * 基本url
      */
-    public static final String baseurl = ServerConfigManager.WEB_IP+"/medicine/index.html?";
+    public static final String baseurl = ServerConfigManager.WEB_IP + "/medicine/index.html?";
     public static final String MEDCINERS = "medicineListT";
     public static final String MEDCINERP = "medicineListP";
-    private   static  boolean isVisible = false;
+    private static boolean isVisible = false;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,18 +86,18 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
         init(view);
         return view;
     }
-    private void init(View v){
 
-        rl_check = $(v,R.id.rl_check);
-        rl_openClass=$(v,R.id.rl_openClass);
-        rl_leave = $(v,R.id.rl_leave);
-        rl_inform = $(v,R.id.rl_info);
-        rl_food = $(v,R.id.rl_food);
-        rl_arrangement = $(v,R.id.rl_arrangement);
-        rl_medicine = $(v,R.id.rl_medicine);
-        tv_dos_info = $(v,R.id.tv_dos_info);
-        tv_dos_leaveadk=$(v,R.id.tv_dos_leaveadk);
-        tv_dos_medicine = $(v,R.id.tv_dos_medicine);
+    private void init(View v) {
+        rl_check = $(v, R.id.rl_check);
+        rl_openClass = $(v, R.id.rl_openClass);
+        rl_leave = $(v, R.id.rl_leave);
+        rl_inform = $(v, R.id.rl_info);
+        rl_food = $(v, R.id.rl_food);
+        rl_arrangement = $(v, R.id.rl_arrangement);
+        rl_medicine = $(v, R.id.rl_medicine);
+        tv_dos_info = $(v, R.id.tv_dos_info);
+        tv_dos_leaveadk = $(v, R.id.tv_dos_leaveadk);
+        tv_dos_medicine = $(v, R.id.tv_dos_medicine);
         rl_check.setOnClickListener(this);
         rl_leave.setOnClickListener(this);
         rl_inform.setOnClickListener(this);
@@ -110,30 +111,36 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
     @Override
     public void onClick(View view) {
         Intent intent = new Intent();
-        if (view.getId()==R.id.rl_check){
+        if (view.getId() == R.id.rl_check) {
+            //考勤
             intent.setClass(getActivity(), TestActivity.class);
-        }else if (view.getId()==R.id.rl_leave){
+        } else if (view.getId() == R.id.rl_leave) {
+            //请假
             intent.setClass(getActivity(), LeaveListActivity.class);
             schoolDosDisappear(BroadcastConstant.LEAVEASEKDOS);
-
-        }else if (view.getId()==R.id.rl_info){
+        } else if (view.getId() == R.id.rl_info) {
+            //通知
             intent.setClass(getActivity(), PublishActivity.class);
             schoolDosDisappear(BroadcastConstant.SCHOOLINFODOS);
-        }else if (view.getId()==R.id.rl_food){
+        } else if (view.getId() == R.id.rl_food) {
+            //食谱
             intent.setClass(getActivity(), FoodListActivity.class);
-        }else if (view.getId()==R.id.rl_arrangement){
+        } else if (view.getId() == R.id.rl_arrangement) {
+            //课程安排
             intent.setClass(getActivity(), CourseArrangeActivity.class);
-        }else if(view.getId()==R.id.rl_openClass){
+        } else if (view.getId() == R.id.rl_openClass) {
+            //开放课堂
             intent.setClass(getActivity(), ClassListActivity.class);
-        }else if (view.getId()==R.id.rl_medicine){
-           //  intent.setClass(getActivity(), net.hunme.school.activity.TestActivity.class);
+        } else if (view.getId() == R.id.rl_medicine) {
+            //  intent.setClass(getActivity(), net.hunme.school.activity.TestActivity.class);
        /*     intent.setClass(getActivity(), HMDroidGap.class);
             intent.putExtra("loadUrl",geturl());
             schoolDosDisappear(BroadcastConstant.MEDICINEDOS);
            */
-            if (UserMessage.getInstance(getActivity()).getType().equals("1")){
+            //喂药
+            if (UserMessage.getInstance(getActivity()).getType().equals("1")) {
                 intent.setClass(getActivity(), MedicineListSActivity.class);
-            }else {
+            } else {
                 intent.setClass(getActivity(), MedicineListTActivity.class);
                 //"http://192.168.1.171:8787/KidsWorld-Web
                 schoolDosDisappear(BroadcastConstant.MEDICINEDOS);
@@ -141,82 +148,92 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
         }
         startActivity(intent);
     }
+
     /**
-     *学校红点消失
-     * @param  action
+     * 学校红点消失
+     *
+     * @param action
      */
-    private void schoolDosDisappear(String action){
+    private void schoolDosDisappear(String action) {
         Intent myintent = new Intent(action);
-        myintent.putExtra("isVisible",false);
-        myintent.putExtra("tsId",UserMessage.getInstance(getActivity()).getTsId());
+        myintent.putExtra("isVisible", false);
+        myintent.putExtra("tsId", UserMessage.getInstance(getActivity()).getTsId());
         getActivity().sendBroadcast(myintent);
         showSchoolDos(0);
     }
-    private void registerReceiver(){
+
+    private void registerReceiver() {
         IntentFilter leave = new IntentFilter(BroadcastConstant.LEAVEASEKDOS);
         IntentFilter medicine = new IntentFilter(BroadcastConstant.MEDICINEDOS);
         IntentFilter info = new IntentFilter(BroadcastConstant.SCHOOLINFODOS);
         recivier = new ShowDosRecivier();
-        getActivity().registerReceiver(recivier,leave);
-        getActivity().registerReceiver(recivier,medicine);
-        getActivity().registerReceiver(recivier,info);
+        getActivity().registerReceiver(recivier, leave);
+        getActivity().registerReceiver(recivier, medicine);
+        getActivity().registerReceiver(recivier, info);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (recivier!=null){
+        if (recivier != null) {
             getActivity().unregisterReceiver(recivier);
         }
     }
+
     private List<String> tsids = new ArrayList<>();
-    private class ShowDosRecivier extends BroadcastReceiver{
+
+    private class ShowDosRecivier extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             Bundle bundle = intent.getExtras();
-            String tsid   =bundle.getString("tsId");
-             isVisible = bundle.getBoolean("isVisible",false);
+            String tsid = bundle.getString("tsId");
+            isVisible = bundle.getBoolean("isVisible", false);
 
-            if (action.equals(BroadcastConstant.LEAVEASEKDOS)){//请假
-                ShowDos(isVisible,tsid,tv_dos_leaveadk);
-            }else if (action.equals(BroadcastConstant.MEDICINEDOS)){//喂药
-                ShowDos(isVisible,tsid,tv_dos_medicine);
-            }else if (action.equals(BroadcastConstant.SCHOOLINFODOS)){//   通知
-                ShowDos(isVisible,tsid,tv_dos_info);
+            if (action.equals(BroadcastConstant.LEAVEASEKDOS)) {//请假
+                ShowDos(isVisible, tsid, tv_dos_leaveadk);
+            } else if (action.equals(BroadcastConstant.MEDICINEDOS)) {//喂药
+                ShowDos(isVisible, tsid, tv_dos_medicine);
+            } else if (action.equals(BroadcastConstant.SCHOOLINFODOS)) {//   通知
+                ShowDos(isVisible, tsid, tv_dos_info);
             }
 
         }
     }
-    private void ShowDos( boolean isVisible, String tsid,TextView textView){
+
+    private void ShowDos(boolean isVisible, String tsid, TextView textView) {
         tsids.add(tsid);
-      //  Log.i("ssssss",tsid+"============="+UserMessage.getInstance(getActivity()).getTsId());
-        for (int i = 0 ;i<tsids.size();i++){
-            if (tsids.get(i).equals(UserMessage.getInstance(getActivity()).getTsId())&& isVisible){
+        //  Log.i("ssssss",tsid+"============="+UserMessage.getInstance(getActivity()).getTsId());
+        for (int i = 0; i < tsids.size(); i++) {
+            if (tsids.get(i).equals(UserMessage.getInstance(getActivity()).getTsId()) && isVisible) {
                 textView.setVisibility(View.VISIBLE);
                 showSchoolDos(1);
                 return;
-            }else {
+            } else {
                 textView.setVisibility(View.GONE);
             }
         }
         tsids.clear();
     }
+
     /**
      * 只要接收到任意一个红点通知发送学校底部的通知红点点广播
+     *
      * @param count
      */
-    private void showSchoolDos(int count){
+    private void showSchoolDos(int count) {
         Intent myIntent = new Intent(BroadcastConstant.MAINSCHOOLDOS);
-        myIntent.putExtra("count",count);
+        myIntent.putExtra("count", count);
         getActivity().sendBroadcast(myIntent);
     }
-    private String  geturl(){
-        String url =baseurl+"tsId="+ UserMessage.getInstance(getActivity()).getTsId()+"#/";
-        if (UserMessage.getInstance(getActivity()).getType().equals("1")){
-          url = url+MEDCINERP;
-        }else {
-            url = url+MEDCINERS;
+
+    private String geturl() {
+        String url = baseurl + "tsId=" + UserMessage.getInstance(getActivity()).getTsId() + "#/";
+        if (UserMessage.getInstance(getActivity()).getType().equals("1")) {
+            url = url + MEDCINERP;
+        } else {
+            url = url + MEDCINERS;
         }
-        return  url;
+        return url;
     }
 }

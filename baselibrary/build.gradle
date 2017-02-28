@@ -33,5 +33,4 @@ dependencies {
     compile project(':IMKit')
     compile project(':CordovaLib')
     compile files('lib/zxing.jar')
-
 }

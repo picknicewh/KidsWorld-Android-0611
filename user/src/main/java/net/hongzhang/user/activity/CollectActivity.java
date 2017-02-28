@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.RadioButton;
 
+import com.umeng.analytics.MobclickAgent;
+
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.user.R;
 import net.hongzhang.user.fragment.ConsultListFragment;
@@ -44,7 +46,8 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
      * 页面
      */
     private ViewPager vp_collect;
-    private   int source;
+    private int source;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,41 +66,47 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
         rb_consult.setOnClickListener(this);
         rb_lesson.setOnClickListener(this);
         rb_music.setOnClickListener(this);
-        source =  getIntent().getIntExtra("source",0);
+        source = getIntent().getIntExtra("source", 0);
         setviewPager();
     }
-    private ResourceListFragment getResourceListFragment(int source,int type){
+
+    private ResourceListFragment getResourceListFragment(int source, int type) {
         ResourceListFragment resourceListFragment = new ResourceListFragment();
-        resourceListFragment.setArguments(getBundle(source,type));
+        resourceListFragment.setArguments(getBundle(source, type));
         return resourceListFragment;
     }
-    private  Bundle  getBundle(int source,int type){
+
+    private Bundle getBundle(int source, int type) {
         Bundle bundle = new Bundle();
-        bundle.putInt("source",source);
-        bundle.putInt("type",type);
+        bundle.putInt("source", source);
+        bundle.putInt("type", type);
         return bundle;
     }
+
     private void setviewPager() {
         List<Fragment> fragmentList = new ArrayList<>();
         ConsultListFragment consultFragment = new ConsultListFragment();
-        consultFragment.setArguments(getBundle(source,3));
-        fragmentList.add(getResourceListFragment(source,2));
-        fragmentList.add(getResourceListFragment(source,1));
+        consultFragment.setArguments(getBundle(source, 3));
+        fragmentList.add(getResourceListFragment(source, 2));
+        fragmentList.add(getResourceListFragment(source, 1));
         fragmentList.add(consultFragment);
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
         vp_collect.setAdapter(adapter);
         vp_collect.setCurrentItem(0);
-        vp_collect.setOffscreenPageLimit(fragmentList.size()-1);
+        vp_collect.setOffscreenPageLimit(fragmentList.size() - 1);
         vp_collect.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
             public void onPageSelected(int position) {
                 setline(position);
             }
+
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
     }
 
@@ -135,10 +144,10 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
-         source =  getIntent().getIntExtra("source",0);
-        if (source==0){
+        source = getIntent().getIntExtra("source", 0);
+        if (source == 0) {
             setCententTitle("收藏");
-        }else {
+        } else {
             setCententTitle("播放记录");
         }
         setLiftOnClickClose();
@@ -155,6 +164,7 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
             setline(2);
         }
     }
+
     /**
      * 适配器
      */
@@ -174,6 +184,16 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
         @Override
         public int getCount() {
             return fragmentList.size();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (source == 0) {
+            MobclickAgent.onEvent(this, "openUserCollect");
+        } else {
+            MobclickAgent.onEvent(this, "openPlayRecord");
         }
     }
 }

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bg_layout"
+    android:orientation="vertical"
     tools:context=".activity.UserActivity">
 
     <LinearLayout
-        android:layout_marginTop="@dimen/space"
-        android:background="@drawable/layout_selecter"
         android:id="@+id/ll_userMassage"
-        android:padding="@dimen/space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginTop="@dimen/space"
+        android:background="@drawable/layout_selecter"
+        android:orientation="horizontal"
+        android:padding="@dimen/space">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -25,289 +25,289 @@
                 android:id="@+id/cv_portrait"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:civ_border_width="1dp"
                 android:scaleType="centerCrop"
-                app:civ_border_color="#ffffff"/>
+                app:civ_border_color="#ffffff"
+                app:civ_border_width="1dp" />
 
             <TextView
                 android:id="@+id/tv_id"
-                android:text="学"
-                android:gravity="center"
-                android:textColor="@color/white"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_alignBottom="@id/cv_portrait"
-                android:layout_alignRight="@id/cv_portrait"/>
+                android:layout_alignRight="@id/cv_portrait"
+                android:gravity="center"
+                android:text="学"
+                android:textColor="@color/white" />
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_marginLeft="@dimen/space"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/space"
+            android:layout_weight="1"
             android:orientation="vertical">
+
             <TextView
-                android:textColor="@color/sc_"
                 android:id="@+id/tv_name"
+                style="@style/TextStyleBase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="龙马"
-                android:textSize="@dimen/ts_large"
-                style="@style/TextStyleBase" />
+                android:textColor="@color/sc_"
+                android:textSize="@dimen/ts_large" />
 
             <TextView
                 android:id="@+id/tv_address"
-                android:layout_marginTop="@dimen/space"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="世纪幼儿园-小小班" />
+                android:layout_marginTop="@dimen/space" />
         </LinearLayout>
 
         <ImageView
-            android:layout_marginRight="@dimen/space"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_arrow_right"/>
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/space"
+            android:src="@mipmap/ic_arrow_right" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_mycollection"
-        android:layout_marginTop="@dimen/space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/layout_select_line">
+        android:layout_marginTop="@dimen/space"
+        android:background="@drawable/layout_select_line"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:background="@drawable/layout_select_not_line"
-            android:padding="@dimen/space"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_height"
-            android:orientation="horizontal">
+            android:background="@drawable/layout_select_not_line"
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
 
             <ImageView
-                android:layout_marginLeft="@dimen/space"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_collection"/>
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space"
+                android:src="@mipmap/ic_collection" />
 
             <TextView
-                android:layout_marginLeft="@dimen/space"
-                android:layout_gravity="center"
                 style="@style/TextStyleBase"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textColor="@color/sc_"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="我的收藏"/>
+                android:text="我的收藏"
+                android:textColor="@color/sc_" />
 
             <ImageView
-                android:layout_marginRight="@dimen/space"
-                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_arrow_right"/>
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/space"
+                android:src="@mipmap/ic_arrow_right" />
         </LinearLayout>
 
         <View
-            android:layout_marginLeft="40dp"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/line_gray"/>
+            android:layout_marginLeft="40dp"
+            android:background="@color/line_gray" />
 
         <LinearLayout
             android:id="@+id/ll_mydynamics"
-            android:background="@drawable/layout_select_not_line"
-            android:padding="@dimen/space"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_height"
-            android:orientation="horizontal">
+            android:background="@drawable/layout_select_not_line"
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
 
             <ImageView
-                android:layout_marginLeft="@dimen/space"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_dynamic"/>
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space"
+                android:src="@mipmap/ic_dynamic" />
 
             <TextView
-                android:layout_marginLeft="@dimen/space"
-                android:layout_gravity="center"
                 style="@style/TextStyleBase"
-                android:textColor="@color/sc_"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="我的动态"/>
+                android:text="我的动态"
+                android:textColor="@color/sc_" />
 
             <ImageView
-                android:layout_marginRight="@dimen/space"
-                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_arrow_right"/>
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/space"
+                android:src="@mipmap/ic_arrow_right" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_myphoto"
-        android:background="@drawable/layout_selecter"
-        android:layout_marginTop="@dimen/space"
-        android:padding="@dimen/space"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
-        android:orientation="horizontal">
+        android:layout_marginTop="@dimen/space"
+        android:background="@drawable/layout_selecter"
+        android:orientation="horizontal"
+        android:padding="@dimen/space">
 
         <ImageView
-            android:layout_marginLeft="@dimen/space"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_photo"/>
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space"
+            android:src="@mipmap/ic_photo" />
 
         <TextView
-            android:layout_marginLeft="@dimen/space"
-            android:layout_gravity="center"
-            android:gravity="center_vertical"
             style="@style/TextStyleBase"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textColor="@color/sc_"
             android:layout_height="wrap_content"
-            android:text="我的相册"/>
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="我的相册"
+            android:textColor="@color/sc_" />
 
         <ImageView
-            android:layout_marginRight="@dimen/space"
-            android:layout_gravity="center_vertical"
             android:id="@+id/iv_into"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_arrow_right"/>
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/space"
+            android:src="@mipmap/ic_arrow_right" />
     </LinearLayout>
 
     <LinearLayout
-        android:background="@drawable/layout_selecter"
-
-        android:layout_marginTop="@dimen/space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-      >
+        android:layout_marginTop="@dimen/space"
+        android:background="@drawable/layout_selecter"
+        android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/ll_copyRight"
-
-            android:layout_marginTop="@dimen/space"
-            android:padding="@dimen/space"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_height"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
 
             <ImageView
-                android:layout_marginLeft="@dimen/space"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_copy_right"/>
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space"
+                android:src="@mipmap/ic_copy_right" />
 
             <TextView
-                android:layout_marginLeft="@dimen/space"
-                android:layout_gravity="center"
-                android:gravity="center_vertical"
                 style="@style/TextStyleBase"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textColor="@color/sc_"
                 android:layout_height="wrap_content"
-                android:text="版权声明"/>
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="版权声明"
+                android:textColor="@color/sc_" />
 
             <ImageView
-                android:layout_marginRight="@dimen/space"
-                android:layout_gravity="center_vertical"
                 android:id="@+id/iv_anchor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_arrow_right"/>
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/space"
+                android:src="@mipmap/ic_arrow_right" />
         </LinearLayout>
+
         <View
-            android:layout_marginLeft="40dp"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/line_gray"/>
+            android:layout_marginLeft="40dp"
+            android:background="@color/line_gray" />
+
         <LinearLayout
             android:id="@+id/ll_anchor"
-            android:layout_marginTop="@dimen/space"
-            android:padding="@dimen/space"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_height"
-            android:orientation="horizontal">
+            android:layout_marginTop="@dimen/space"
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
 
             <ImageView
-                android:layout_marginLeft="@dimen/space"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_anchor"/>
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space"
+                android:src="@mipmap/ic_anchor" />
 
             <TextView
-                android:layout_marginLeft="@dimen/space"
-                android:layout_gravity="center"
-                android:gravity="center_vertical"
                 style="@style/TextStyleBase"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textColor="@color/sc_"
                 android:layout_height="wrap_content"
-                android:text="主播申请"/>
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="主播申请"
+                android:textColor="@color/sc_" />
 
             <ImageView
-                android:layout_marginRight="@dimen/space"
-                android:layout_gravity="center_vertical"
                 android:id="@+id/iv_copyRight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_arrow_right"/>
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/space"
+                android:src="@mipmap/ic_arrow_right" />
         </LinearLayout>
+
         <View
-            android:layout_marginLeft="40dp"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/line_gray"/>
+            android:layout_marginLeft="40dp"
+            android:background="@color/line_gray" />
+
         <LinearLayout
             android:id="@+id/ll_usersetting"
-            android:padding="@dimen/space"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_height"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/space">
 
             <ImageView
-                android:layout_marginLeft="@dimen/space"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_my"/>
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space"
+                android:src="@mipmap/ic_my" />
 
             <TextView
-                android:layout_marginLeft="@dimen/space"
-                android:layout_gravity="center"
                 style="@style/TextStyleBase"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textColor="@color/sc_"
-                android:gravity="center_vertical"
                 android:layout_height="wrap_content"
-                android:text="账户设置"/>
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="账户设置"
+                android:textColor="@color/sc_" />
 
             <ImageView
-                android:layout_marginRight="@dimen/space"
-                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_arrow_right"/>
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/space"
+                android:src="@mipmap/ic_arrow_right" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

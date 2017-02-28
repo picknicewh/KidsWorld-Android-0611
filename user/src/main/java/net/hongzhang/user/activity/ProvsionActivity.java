@@ -3,6 +3,8 @@ package net.hongzhang.user.activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.user.R;
 
@@ -39,5 +41,11 @@ public class ProvsionActivity extends BaseActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MobclickAgent.onEvent(this, "openTermsOfService");
     }
 }
