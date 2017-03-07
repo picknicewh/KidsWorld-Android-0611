@@ -44,7 +44,7 @@
             android:name=".activity.FullPlayVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.ConsultListActivity"></activity>
+        <activity android:name=".activity.ConsultActivity"></activity>
     </application>
 
 </manifest>

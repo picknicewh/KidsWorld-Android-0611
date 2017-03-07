@@ -12,6 +12,7 @@ import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.MainPlayActivity;
+import net.hongzhang.discovery.activity.ConsultActivity;
 import net.hongzhang.discovery.activity.ResourceAlubmListActivity;
 import net.hongzhang.discovery.activity.PlayVideoActivity;
 import net.hongzhang.discovery.modle.CompilationVo;
@@ -119,8 +120,8 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
     }
 
     @Override
-    public void startConsultActivity(int resourceId) {
-        Intent intent = new Intent();
+    public void startConsultActivity(String resourceId) {
+        Intent intent = new Intent(context,ConsultActivity.class);
         intent.putExtra("resourceId", resourceId);
         context.startActivity(intent);
     }
