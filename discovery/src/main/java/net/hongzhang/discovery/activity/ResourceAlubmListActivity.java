@@ -3,16 +3,18 @@ package net.hongzhang.discovery.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.widget.ViewPagerHead;
 import net.hongzhang.discovery.R;
+import net.hongzhang.discovery.fragment.AllAlubmFramgment;
 import net.hongzhang.discovery.fragment.SelectAlubmFramgment;
-import net.hongzhang.discovery.util.Constants;
+import net.hongzhang.discovery.util.MainRecommendPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MusicAlubmListActivity extends BaseActivity {
+public class ResourceAlubmListActivity extends BaseActivity {
     /**
      * 页面的头部tab
      */
@@ -33,6 +35,10 @@ public class MusicAlubmListActivity extends BaseActivity {
      * 类型
      */
     private int type;
+    /**
+     * 主题id
+     */
+    private String themeId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,10 +49,10 @@ public class MusicAlubmListActivity extends BaseActivity {
     @Override
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
-        type = getIntent().getIntExtra("type",Constants.TYPE_MUSIC);
-        if (type== Constants.TYPE_MUSIC){
+        type = getIntent().getIntExtra("type", MainRecommendPresenter.TYPE_MUISC);
+        if (type==MainRecommendPresenter.TYPE_MUISC){
             setCententTitle("幼儿听听");
-        }else if (type==Constants.TYPE_VEDIO){
+        }else if (type==MainRecommendPresenter.TYPE_MUISC){
             setCententTitle("幼儿课堂");
         }
         setRightImage(R.mipmap.ic_search);
@@ -55,6 +61,7 @@ public class MusicAlubmListActivity extends BaseActivity {
     private void initview(){
         viewPagerHead = $(R.id.vph_music);
         viewPager = $(R.id.vp_music);
+        themeId = getIntent().getStringExtra("themeId");
         initViewPager();
     }
     private void initViewPager(){
@@ -62,8 +69,12 @@ public class MusicAlubmListActivity extends BaseActivity {
         titles = new ArrayList<>();
         titles.add("全部");
         titles.add("精选");
-        fragments.add(new SelectAlubmFramgment());
-        fragments.add(new SelectAlubmFramgment());
+        Bundle bundle = new Bundle();
+        bundle.putInt("type",type);
+        SelectAlubmFramgment alubmFramgment =  new SelectAlubmFramgment();
+        alubmFramgment.setArguments(bundle);
+        fragments.add(alubmFramgment);
+        fragments.add(new AllAlubmFramgment());
         viewPagerHead.setTitles(titles);
         viewPagerHead.setViewPager(viewPager);
         viewPagerHead.setAdapter(this,fragments,getSupportFragmentManager());

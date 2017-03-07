@@ -8,9 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import net.hongzhang.baselibrary.image.ImageCache;
+import net.hongzhang.baselibrary.image.GlideUtils;
 import net.hongzhang.discovery.R;
-import net.hongzhang.discovery.modle.CompilationVo;
+import net.hongzhang.discovery.modle.ConsultInfoVo;
 
 import java.util.List;
 
@@ -26,15 +26,15 @@ import java.util.List;
  */
 public class MainConsultAdapter extends BaseAdapter {
     private Context context;
-    private List<CompilationVo> compilationVos;
-    public MainConsultAdapter(Context context,  List<CompilationVo> compilationVos) {
+    private List<ConsultInfoVo> consultInfoVos;
+    public MainConsultAdapter(Context context,  List<ConsultInfoVo> consultInfoVos) {
         this.context = context;
-        this.compilationVos = compilationVos;
+        this.consultInfoVos = consultInfoVos;
     }
 
     @Override
     public int getCount() {
-        return compilationVos.size();
+        return consultInfoVos.size();
     }
 
     @Override
@@ -55,12 +55,11 @@ public class MainConsultAdapter extends BaseAdapter {
             new ViewHolder(view);
         }
         holder = (ViewHolder) view.getTag();
-        CompilationVo compilationVo = compilationVos.get(i);
-        ImageCache.imageLoader(compilationVo.getImageUrl(),holder.iv_image);
-        holder.tv_title.setText(compilationVo.getAlbumName());
+        ConsultInfoVo consultInfoVo = consultInfoVos.get(i);
+        GlideUtils.loadImageView(context,consultInfoVo.getImageUrl(),holder.iv_image);
+        holder.tv_title.setText(consultInfoVo.getResourceName());
         return view;
     }
-
     class ViewHolder {
         public ImageView iv_image;
         private TextView tv_title;

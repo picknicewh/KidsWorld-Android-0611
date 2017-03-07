@@ -12,11 +12,9 @@ import java.util.List;
  */
 public class ViewPagerAdapter extends PagerAdapter {
     private List<ImageView> viewList;
-
-    public ViewPagerAdapter(List<ImageView> viewList) {
+    public ViewPagerAdapter(List<ImageView> viewList){
         this.viewList = viewList;
     }
-
     @Override
     public int getCount() {
         return Integer.MAX_VALUE;
@@ -29,9 +27,9 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        int newposition = position % viewList.size();
+        int newposition = position%viewList.size();
         ImageView imageView = viewList.get(newposition);
-        container.addView(imageView,0);
+        container.addView(imageView);
         return imageView;
     }
 

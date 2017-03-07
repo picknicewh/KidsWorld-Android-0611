@@ -83,6 +83,8 @@ public class ImageCache {
     public static void imageLoader(String uri, ImageView imageView, SimpleImageLoadingListener listener){
         ImageCache().displayImage(getNewUrl(uri), imageView, listener);
     }
+
+
     /**
      *  获取一个uri的bitmap对象
      * @param uri

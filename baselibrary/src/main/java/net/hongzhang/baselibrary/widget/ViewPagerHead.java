@@ -165,6 +165,7 @@ public class ViewPagerHead extends LinearLayout {
         int padding = G.dp2px(context,15);
         layoutParams.setMargins(padding,padding,padding,padding);
         textView.setLayoutParams(layoutParams);
+        textView.setGravity(Gravity.CENTER);
         textView.setTag(i);
         if (titles.size()>0){
             textView.setText(titles.get(i));

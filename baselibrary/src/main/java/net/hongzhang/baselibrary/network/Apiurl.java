@@ -225,7 +225,7 @@ public class Apiurl {
     /**
      * 获取资讯
      */
-    public static final String x  = "/rakuen/getInformation.do";
+    public static final String GETRECONSULT = "/rakuen/getInformation.do";
     /**
      * 获取全部推荐列表
      */

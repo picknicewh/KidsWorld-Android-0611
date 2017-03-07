@@ -164,7 +164,7 @@ public class PlayMusicPresenter implements PlayMusicContract.Presenter, OkHttpLi
 
     /**
      * 根据资源用户的计费id获取是否已经付费
-     *
+      *此接口取消
      * @param tsId      角色id
      * @param accountId 计费id
      */

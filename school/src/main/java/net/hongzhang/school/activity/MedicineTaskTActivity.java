@@ -96,6 +96,8 @@ public class MedicineTaskTActivity extends BaseActivity implements MedicineTDeta
         rb_after = $(R.id.rb_after);
         rb_before = $(R.id.rb_before);
         ll_anchor =  $(R.id.ll_anchor);
+        rb_after.setClickable(false);
+        rb_before.setClickable(false);
         Intent intent = getIntent();
         medicineId = intent.getStringExtra("medicineId");
         tsId = intent.getStringExtra("tsId");

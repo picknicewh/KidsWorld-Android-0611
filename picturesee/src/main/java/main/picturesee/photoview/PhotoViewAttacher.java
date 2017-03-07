@@ -145,7 +145,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, OnGe
     private ScaleType mScaleType = ScaleType.FIT_CENTER;
 
     public PhotoViewAttacher(ImageView imageView) {
-        mImageView = new WeakReference<ImageView>(imageView);
+        mImageView = new WeakReference<>(imageView);
 
         imageView.setDrawingCacheEnabled(true);
         imageView.setOnTouchListener(this);
@@ -346,12 +346,9 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, OnGe
         if (mScaleDragDetector.isScaling()) {
             return; // Do not drag if we are already scaling
         }
-
         if (DEBUG) {
-            LogManager.getLogger().d(LOG_TAG,
-                    String.format("onDrag: dx: %.2f. dy: %.2f", dx, dy));
+            LogManager.getLogger().d(LOG_TAG, String.format("onDrag: dx: %.2f. dy: %.2f", dx, dy));
         }
-
         ImageView imageView = getImageView();
         mSuppMatrix.postTranslate(dx, dy);
         checkAndDisplayMatrix();
@@ -689,7 +686,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, OnGe
         if (null == imageView) {
             return false;
         }
-
+        //标记。。。。。。。。。。
         final RectF rect = getDisplayRect(getDrawMatrix());
         if (null == rect) {
             return false;
@@ -758,6 +755,9 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, OnGe
         if (null != imageView) {
             Drawable d = imageView.getDrawable();
             if (null != d) {
+                ///标记。。。。。。。。。。
+             /*   mDisplayRect.set(0, 0, d.getIntrinsicWidth(),
+                        d.getIntrinsicHeight());*/
                 mDisplayRect.set(0, 0, d.getIntrinsicWidth(),
                         d.getIntrinsicHeight());
                 matrix.mapRect(mDisplayRect);
@@ -1032,11 +1032,12 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, OnGe
             } else {
                 minX = maxX = startX;
             }
-
             final int startY = Math.round(-rect.top);
             if (viewHeight < rect.height()) {
                 minY = 0;
+                ///标记。。。。。。。。。。。。。
                 maxY = Math.round(rect.height() - viewHeight);
+            //    maxY = G.size.H;
             } else {
                 minY = maxY = startY;
             }

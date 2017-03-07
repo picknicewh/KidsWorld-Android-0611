@@ -67,7 +67,7 @@
             <net.hongzhang.discovery.widget.BannerView
                 android:id="@+id/bv_home"
                 android:layout_width="match_parent"
-                android:layout_height="180dp" />
+                android:layout_height="150dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

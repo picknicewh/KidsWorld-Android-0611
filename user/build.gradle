@@ -20,10 +20,11 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
     compile project(':baselibrary')
     //圆形图片
     compile project(':imagepickerModule')
     compile project(':login')
     compile project(':picturesee')
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    testCompile 'junit:junit:4.12'
 }

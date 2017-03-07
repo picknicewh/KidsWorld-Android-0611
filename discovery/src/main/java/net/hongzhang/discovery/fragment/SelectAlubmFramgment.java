@@ -30,18 +30,6 @@ public class SelectAlubmFramgment extends BaseFragement implements AlbumContract
      */
    private NoScrollGirdView gridView;
     /**
-     * 左边按钮
-     */
-    private ImageView iv_left;
-    /**
-     * 中间标题
-     */
-    private TextView tv_title;
-    /**
-     *右边按钮
-     */
-    private ImageView iv_right;
-    /**
      * 加载更多
      */
     private LinearLayout ll_load_more;
@@ -77,21 +65,16 @@ public class SelectAlubmFramgment extends BaseFragement implements AlbumContract
     private SelectAlbumAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_all_album,null);
+        View view = inflater.inflate(R.layout.fragment_select_album,null);
         initView(view);
         return view;
     }
     private void initView(View view){
         gridView = $(view,R.id.gridview);
-        iv_right= $(view,R.id.iv_right);
-        tv_title=$(view,R.id.tv_title);
-        iv_left= $(view,R.id.iv_left);
         ll_load_more = $(view, R.id.ll_load_more);
         tv_load_more = $(view,R.id.tv_load_more);
         iv_load_more = $(view,R.id.iv_load_more);
         tv_nodata = $(view, R.id.tv_nodata);
-        iv_left.setOnClickListener(this);
-        iv_right.setOnClickListener(this);
         recommendVos=  new ArrayList<>();
         initData();
 
@@ -101,7 +84,6 @@ public class SelectAlubmFramgment extends BaseFragement implements AlbumContract
         type  =bundle.getInt("type");
         presenter = new AlbumPresenter(getActivity(),this);
         presenter.getAlbumList(type,pageSize,pageNumber);
-
     }
     @Override
     public void setAlbum(final List<RecommendVo> recommendVos) {

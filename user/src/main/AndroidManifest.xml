@@ -10,54 +10,55 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="net.hongzhang.user.activity.UserActivity"
+            android:name=".activity.UserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="net.hongzhang.user.activity.UMassageActivity"
+            android:name=".activity.UMassageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="net.hongzhang.user.activity.USettingActivity"
+            android:name=".activity.USettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="net.hongzhang.user.activity.UPhotoActivity"
+            android:name=".activity.UPhotoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="net.hongzhang.user.activity.UploadPhotoActivity"
+            android:name=".activity.UploadPhotoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="net.hongzhang.user.activity.AlbumSelectActivity"
+            android:name=".activity.AlbumSelectActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="net.hongzhang.login.UserChooseActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="net.hongzhang.user.activity.SystemInfoActivity"
+            android:name=".activity.SystemInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="net.hongzhang.user.activity.AdviceActivity"
+            android:name=".activity.AdviceActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="net.hongzhang.baselibrary.activity.UpdateMessageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="net.hongzhang.user.activity.ProvsionActivity"
+            android:name=".activity.ProvsionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="net.hongzhang.user.activity.InfoDetailsActivity"
+            android:name=".activity.InfoDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="net.hongzhang.user.activity.AlbumDetailsActivity"
+            android:name=".activity.AlbumDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="net.hongzhang.baselibrary.cordova.HMDroidGap"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name="net.hongzhang.user.activity.MyDynamicActivity" />
-        <activity android:name="net.hongzhang.user.activity.StatusDetilsActivity" />
-        <activity android:name="net.hongzhang.user.activity.ScanActivity" />
-        <activity android:name="net.hongzhang.user.activity.CollectActivity" />
-        <activity android:name="net.hongzhang.user.activity.TextContentActivity"></activity>
+        <activity android:name=".activity.MyDynamicActivity" />
+        <activity android:name=".activity.StatusDetilsActivity" />
+        <activity android:name=".activity.ScanActivity" />
+        <activity android:name=".activity.CollectActivity" />
+        <activity android:name=".activity.TextContentActivity" />
+        <activity android:name=".activity.WebViewActivity"></activity>
     </application>
 
 </manifest>

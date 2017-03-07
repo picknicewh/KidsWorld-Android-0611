@@ -19,6 +19,7 @@ import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.MainConsultAdapter;
 import net.hongzhang.discovery.adapter.MainResourceAdapter;
 import net.hongzhang.discovery.modle.CompilationVo;
+import net.hongzhang.discovery.modle.ConsultInfoVo;
 import net.hongzhang.discovery.util.MainRecommendContract;
 import net.hongzhang.discovery.util.MainRecommendPresenter;
 import net.hongzhang.discovery.widget.BannerView;
@@ -212,15 +213,15 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
     }
 
     @Override
-    public void setRecommendVoConsultList(final List<CompilationVo> compilationVos) {
-        if (compilationVos!=null &&compilationVos.size()>0){
-            consult_recommend_id = String.valueOf(compilationVos.get(0).getAlbumId());
-            MainConsultAdapter adapter = new MainConsultAdapter(this, compilationVos);
+    public void setRecommendVoConsultList(final List<ConsultInfoVo> consultInfovos) {
+        if (consultInfovos!=null &&consultInfovos.size()>0){
+            consult_recommend_id = String.valueOf(consultInfovos.get(0).getAlbumId());
+            MainConsultAdapter adapter = new MainConsultAdapter(this, consultInfovos);
             lv_consult.setAdapter(adapter);
             lv_consult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    presenter.startConsultActivity(Integer.parseInt(compilationVos.get(i).getAlbumId()));
+                    presenter.startConsultActivity(Integer.parseInt(consultInfovos.get(i).getAlbumId()));
                 }
             });
         }
@@ -242,18 +243,18 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
     }
     @Override
     public void rushData() {
-        type = MainRecommendPresenter.TYPE_MUISC;
+         type = MainRecommendPresenter.TYPE_MUISC;
         if (type == MainRecommendPresenter.TYPE_MUISC) {
+            presenter.getRecommendResource(tsid, 4, type);
             type = MainRecommendPresenter.TYPE_VIDEO;
-            presenter.getRecommendResource(tsid, 4, type);
         } else if (type == MainRecommendPresenter.TYPE_VIDEO) {
-            type = MainRecommendPresenter.TYPE_CONSULT;
             presenter.getRecommendResource(tsid, 4, type);
+            type = MainRecommendPresenter.TYPE_CONSULT;
         } else if (type == MainRecommendPresenter.TYPE_CONSULT) {
-            presenter.getRecommendResource(tsid, 6, type);
+            presenter.getRecommendConsult(tsid,6,userMessage.getAccount_id());
         }
+       // 1视频 2音频 3资讯 4视频和音频
     }
-
     @Override
     public void showLoadingDialog() {
         if (dialog == null)

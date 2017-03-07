@@ -136,11 +136,13 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
             intent.putExtra("title","我的动态");*/
             intent = new Intent(UserActivity.this, MyDynamicActivity.class);
         } else if (viewId == R.id.ll_anchor) {
-            intent = new Intent(UserActivity.this, TextContentActivity.class);
+            intent = new Intent(UserActivity.this, WebViewActivity.class);
             intent.putExtra("source", 0);
+            intent.putExtra("url","file:///android_asset/author.html");
         } else if (viewId == R.id.ll_copyRight) {
-            intent = new Intent(UserActivity.this, TextContentActivity.class);
+            intent = new Intent(UserActivity.this, WebViewActivity.class);
             intent.putExtra("source", 1);
+            intent.putExtra("url","file:///android_asset/copy_right.html");
         }
         if (null != intent) {
             startActivity(intent);

@@ -222,7 +222,10 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
             new CheckUpdate(this,true);
             MobclickAgent.onEvent(this, "openCheckUpdate");
         }else if(viewID==R.id.tv_provsion){
-            startActivity(new Intent(this,ProvsionActivity.class));
+           Intent intent = new Intent(this, WebViewActivity.class);
+            intent.putExtra("source", 2);
+            intent.putExtra("url","file:///android_asset/provison.html");
+            startActivity(intent);
         }
     }
     private class ShowSysDosReceiver extends BroadcastReceiver{

@@ -7,12 +7,6 @@
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
-        <ListView
-            android:id="@+id/lv_parent"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:divider="@null" />
 
         <TextView
             android:id="@+id/tv_no_parent"
@@ -60,5 +54,12 @@
             android:layout_width="30.0dip"
             android:layout_height="fill_parent"
             android:layout_gravity="right|center" />
+
+        <ListView
+            android:id="@+id/lv_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:divider="@null" />
     </FrameLayout>
 </LinearLayout>

@@ -180,7 +180,7 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
                 startActivity(intent);
                 //保留一个activity，其他切换都界面，都给销毁
                 if (spf.getInt("count",0)==1){
-                   finish();
+                //   finish();
                 }
                 editor.putInt("count",1);
                 editor.commit();

@@ -62,7 +62,7 @@ public class BannerView extends FrameLayout implements OnPageChangeListener {
     };
 
     public void addViewPager(Context context) {
-        int height = G.dp2px(context, 180);
+        int height = G.dp2px(context, 150);
         LayoutParams lps = new LayoutParams(LayoutParams.MATCH_PARENT, height);
         viewPager = new ViewPager(context);
         viewPager.setLayoutParams(lps);
@@ -84,10 +84,13 @@ public class BannerView extends FrameLayout implements OnPageChangeListener {
         ll_dot_group = new LinearLayout(context);
         ll_dot_group.setOrientation(LinearLayout.HORIZONTAL);
         LayoutParams lps = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        int padding = G.dp2px(context, 10);
-        lps.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+        int padding = G.dp2px(context,10);
+        lps.gravity = Gravity.BOTTOM | Gravity.CENTER;
         lps.setMargins(padding, padding, padding, padding);
         ll_dot_group.setLayoutParams(lps);
+        if (ll_dot_group.getChildCount()!=0){
+            ll_dot_group.removeAllViews();
+        }
         for (int i = 0; i < viewList.size(); i++) {
             ImageView ivDos = getDos(context, i);
             ll_dot_group.addView(ivDos);
@@ -99,12 +102,13 @@ public class BannerView extends FrameLayout implements OnPageChangeListener {
     private ImageView getDos(Context context, int position) {
         ImageView imageView = new ImageView(context);
         imageView.setImageResource(R.drawable.selector_dot);
-        int size = G.dp2px(context, 10);
+        int size = G.dp2px(context, 5);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(size, size);
         if (position != 0) {
-            layoutParams.leftMargin = size;
+            layoutParams.leftMargin = size*2;
         }
         imageView.setLayoutParams(layoutParams);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView.setEnabled(false);
         return imageView;
     }

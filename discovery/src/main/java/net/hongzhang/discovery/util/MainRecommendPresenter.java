@@ -12,8 +12,10 @@ import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.MainPlayActivity;
+import net.hongzhang.discovery.activity.ResourceAlubmListActivity;
 import net.hongzhang.discovery.activity.PlayVideoActivity;
 import net.hongzhang.discovery.modle.CompilationVo;
+import net.hongzhang.discovery.modle.ConsultInfoVo;
 import net.hongzhang.user.activity.CollectActivity;
 import net.hongzhang.user.activity.UserActivity;
 import net.hongzhang.user.mode.BannerVo;
@@ -61,6 +63,19 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
     }
 
     @Override
+    public void getRecommendConsult(String tsId, int pageSize, String account_id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("tsId", tsId);
+        map.put("pageNumber", 1);
+        map.put("pageSize",pageSize);
+        map.put("type", 1);
+        map.put("account_id",account_id);
+        Type mType = new TypeToken<Result<List<ConsultInfoVo>>>() {}.getType();
+        OkHttps.sendPost(mType, Apiurl.GETRECONSULT, map, this);
+        view.showLoadingDialog();
+    }
+
+    @Override
     public void getBanner(String tsId) {
         Map<String, Object> map = new HashMap<>();
         map.put("tsId", tsId);
@@ -70,29 +85,31 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
 
     @Override
     public void startVideoListActivity(String AlbumId) {
-        Intent intent = new Intent();
-        intent.putExtra("AlbumId", AlbumId);
+        Intent intent = new Intent(context, ResourceAlubmListActivity.class);
+        intent.putExtra("themeId", AlbumId);
+        intent.putExtra("type",TYPE_VIDEO);
         context.startActivity(intent);
     }
 
     @Override
     public void startMusicListActivity(String AlbumId) {
-        Intent intent = new Intent();
-        intent.putExtra("AlbumId", AlbumId);
+        Intent intent = new Intent(context, ResourceAlubmListActivity.class);
+        intent.putExtra("themeId", AlbumId);
+        intent.putExtra("type",TYPE_MUISC);
         context.startActivity(intent);
     }
 
     @Override
     public void startConsultListActivity(String AlbumId) {
-        Intent intent = new Intent();
-        intent.putExtra("AlbumId", AlbumId);
+        Intent intent = new Intent(context, ResourceAlubmListActivity.class);
+        intent.putExtra("themeId", AlbumId);
         context.startActivity(intent);
     }
 
     @Override
     public void startVideoActivity(String AlbumId) {
         Intent intent = new Intent(context, PlayVideoActivity.class);
-        intent.putExtra("AlbumId", AlbumId);
+        intent.putExtra("themeId", AlbumId);
         context.startActivity(intent);
     }
 
@@ -140,13 +157,11 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
                if (type==TYPE_MUISC){
                    view.setRecommendVoMusicList(compilationVos);
                    type = TYPE_VIDEO;
-                  getRecommendResource(tsid,4,type);
+                   getRecommendResource(tsid,4,type);
                }else if (type==TYPE_VIDEO){
-                  view.setRecommendVoClassList(compilationVos);
+                   view.setRecommendVoClassList(compilationVos);
                    type = TYPE_CONSULT;
-                   getRecommendResource(tsid,6,type);
-               }else if (type==TYPE_CONSULT){
-                   view.setRecommendVoConsultList(compilationVos);
+                   getRecommendConsult(tsid,6,UserMessage.getInstance(context).getAccount_id());
                }
            }
         } else if (uri.equals(Apiurl.GETBANNERLIST)) {
@@ -155,6 +170,13 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
                 List<BannerVo> bannerVos = data.getData();
                 view.setBannerList(bannerVos);
             }
+        }else if (uri.equals(Apiurl.GETRECONSULT)){
+            if (date!=null){
+                Result<List<ConsultInfoVo>> result = (Result<List<ConsultInfoVo>>) date;
+                List<ConsultInfoVo> consultInfoVos  = result.getData();
+                view.setRecommendVoConsultList(consultInfoVos);
+            }
+
         }
     }
     @Override

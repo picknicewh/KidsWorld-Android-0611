@@ -38,8 +38,4 @@ public class Constants {
 	public static PlayMode  playMode = PlayMode.LOOP;
 	public static int position;
 
-
-	public static int TYPE_MUSIC = 1;
-	public static int TYPE_VEDIO = 2;
-
 }

@@ -33,7 +33,7 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity android:name="net.hongzhang.discovery.activity.MainDiscoveryActivity" />
-        <activity android:name="net.hongzhang.discovery.activity.MusicAlubmListActivity" />
+        <activity android:name="net.hongzhang.discovery.activity.ResourceAlubmListActivity" />
         <activity
             android:name="net.hongzhang.discovery.activity.PlayVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
