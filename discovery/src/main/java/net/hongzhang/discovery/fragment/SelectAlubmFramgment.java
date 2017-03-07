@@ -14,9 +14,10 @@ import net.hongzhang.baselibrary.base.BaseFragement;
 import net.hongzhang.baselibrary.widget.NoScrollGirdView;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.SelectAlbumAdapter;
-import net.hongzhang.discovery.modle.RecommendVo;
-import net.hongzhang.discovery.util.AlbumContract;
-import net.hongzhang.discovery.util.AlbumPresenter;
+
+import net.hongzhang.discovery.modle.CompilationVo;
+import net.hongzhang.discovery.util.AlbumSelectContract;
+import net.hongzhang.discovery.util.AlbumSelectPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
 /**
  * Created by wanghua on 2016/12/19.
  */
-public class SelectAlubmFramgment extends BaseFragement implements AlbumContract.View,View.OnClickListener{
+public class SelectAlubmFramgment extends BaseFragement implements AlbumSelectContract.View, View.OnClickListener {
     /**
      * 专辑列表
      */
@@ -42,7 +43,7 @@ public class SelectAlubmFramgment extends BaseFragement implements AlbumContract
     /**
      * 一页显示数据条数
      */
-    private final  static int pageSize=10;
+    private final  static int pageSize=6;
     /**
      * 没有数据
      */
@@ -50,11 +51,11 @@ public class SelectAlubmFramgment extends BaseFragement implements AlbumContract
     /**
      * 数据列表
      */
-    private List<RecommendVo> recommendVos;
+    private List<CompilationVo> compilationVos;
     /**
      * 数据处理
      */
-    private AlbumPresenter presenter;
+    private AlbumSelectPresenter presenter;
     /**
      * 类型
      */
@@ -70,31 +71,32 @@ public class SelectAlubmFramgment extends BaseFragement implements AlbumContract
         return view;
     }
     private void initView(View view){
-        gridView = $(view,R.id.gridview);
+        gridView = $(view,R.id.gv_album);
         ll_load_more = $(view, R.id.ll_load_more);
         tv_load_more = $(view,R.id.tv_load_more);
         iv_load_more = $(view,R.id.iv_load_more);
         tv_nodata = $(view, R.id.tv_nodata);
-        recommendVos=  new ArrayList<>();
+        compilationVos=  new ArrayList<>();
+        ll_load_more.setOnClickListener(this);
         initData();
 
     }
     private void initData(){
         Bundle bundle = getArguments();
         type  =bundle.getInt("type");
-        presenter = new AlbumPresenter(getActivity(),this);
+        presenter = new AlbumSelectPresenter(getActivity(),this);
         presenter.getAlbumList(type,pageSize,pageNumber);
     }
     @Override
-    public void setAlbum(final List<RecommendVo> recommendVos) {
-      this.recommendVos  = recommendVos;
-        adapter = new SelectAlbumAdapter(getActivity(),recommendVos);
+    public void setAlbum(final List<CompilationVo> compilationVos) {
+      this.compilationVos  = compilationVos;
+        adapter = new SelectAlbumAdapter(getActivity(),compilationVos);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                RecommendVo recommendVo = recommendVos.get(position);
-                presenter.startMusicActivity(String.valueOf(recommendVo.getId()),null);
+                CompilationVo compilationVo = compilationVos.get(position);
+                presenter.startMusicActivity(String.valueOf(compilationVo.getAlbumId()),null);
             }
         });
         if (adapter!=null){
@@ -103,25 +105,26 @@ public class SelectAlubmFramgment extends BaseFragement implements AlbumContract
     }
     @Override
     public void setResourceSize(int size) {
-        if (size==0){
-            pageNumber--;
-            if (recommendVos.size()>0){
-                recommendVos.clear();
-                presenter.getAlbumList(1,pageNumber*pageSize,3);
+        if (size == 0) {
+            if (compilationVos.size() > 0) {
+                tv_nodata.setVisibility(View.GONE);
+            } else {
+                tv_nodata.setVisibility(View.VISIBLE);
+                tv_nodata.setText("你还没有收藏哦，快去收藏吧！");
             }
-            tv_nodata.setVisibility(View.VISIBLE);
-            gridView.setVisibility(View.GONE);
-            ll_load_more.setVisibility(View.GONE);
-        }else {
-            if (size<10){
-                ll_load_more.setVisibility(View.VISIBLE);
-                tv_load_more.setText("没有更多数据了");
-                iv_load_more.setVisibility(View.GONE);
-                ll_load_more.setClickable(false);
+            lastPage();
+        } else {
+            if (size < pageSize) {
+                lastPage();
             }
             tv_nodata.setVisibility(View.GONE);
-            gridView.setVisibility(View.VISIBLE);
         }
+    }
+    private void lastPage() {
+        ll_load_more.setVisibility(View.VISIBLE);
+        tv_load_more.setText("没有更多数据了");
+        iv_load_more.setVisibility(View.GONE);
+        ll_load_more.setClickable(false);
     }
     @Override
     public void showLoadingDialog() {
@@ -132,13 +135,12 @@ public class SelectAlubmFramgment extends BaseFragement implements AlbumContract
     public void stopLoadingDialog() {
         super.stopLoadingDialog();
     }
+
     @Override
     public void onClick(View view) {
-        int viewId = view.getId();
-        if (viewId==R.id.iv_left){
-            getActivity().finish();
-        }else if (viewId==R.id.iv_right){
-
+        if (view.getId()==R.id.ll_load_more){
+            pageNumber++;
+            presenter.getAlbumList(type,pageSize,pageNumber);
         }
     }
 }

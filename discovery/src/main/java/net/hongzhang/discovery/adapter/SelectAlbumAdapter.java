@@ -10,8 +10,7 @@ import android.widget.TextView;
 
 import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.discovery.R;
-import net.hongzhang.discovery.modle.RecommendVo;
-
+import net.hongzhang.discovery.modle.CompilationVo;
 
 import java.util.List;
 
@@ -27,14 +26,14 @@ import java.util.List;
  */
 public class SelectAlbumAdapter extends BaseAdapter {
     private Context context;
-    private List<RecommendVo> recommendVos;
-    public SelectAlbumAdapter(Context context, List<RecommendVo> recommendVos){
+    private List<CompilationVo> compilationVos;
+    public SelectAlbumAdapter(Context context, List<CompilationVo> compilationVos){
         this.context = context;
-        this.recommendVos = recommendVos;
+        this.compilationVos = compilationVos;
     }
     @Override
     public int getCount() {
-        return recommendVos.size();
+        return compilationVos.size();
     }
 
     @Override
@@ -55,10 +54,10 @@ public class SelectAlbumAdapter extends BaseAdapter {
             new ViewHolder(view);
         }
         holder= (ViewHolder) view.getTag();
-        RecommendVo recommendVo = recommendVos.get(i);
-        ImageCache.imageLoader(recommendVo.getImgUrl(),holder.iv_image);
-        holder.tv_album_name.setText(recommendVo.getName());
-      //  holder.tv_count.setText(String.valueOf(recommendVo.getIsrecommend()));
+        CompilationVo compilationVo = compilationVos.get(i);
+        ImageCache.imageLoader(compilationVo.getImageUrl(),holder.iv_image);
+        holder.tv_album_name.setText(compilationVo.getAlbumName());
+        holder.tv_count.setText("已有"+compilationVo.getPvcount()+"人播放");
         return view;
     }
 

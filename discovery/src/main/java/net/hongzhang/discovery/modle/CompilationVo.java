@@ -3,22 +3,28 @@ package net.hongzhang.discovery.modle;
 /**
  * 作者： wh
  * 时间： 2016/11/30
- * 名称：专辑
+ * 名称：推荐专辑
  * 版本说明：
  * 附加注释：
  * 主要接口：
  */
 public class CompilationVo {
-   /*
-
-            "brief":"Muffin Songs美国家喻户晓的童谣启蒙早教，国内很多英语启蒙早教都引用了其中的部分经典歌谣，比如清华的语感启蒙中绝大部分都是Muffin Songs中的童谣。
-
-
-           ,"currentProgress":"1","albumId":"119",
-            "albumName":"Muffin Songs A-D",
-            "imageUrl":"http://zhu.hunme.net:8080/resource/albumManage/Image/英语专栏/Muffin Songs A-D.jpg",
-            "createTime":null,"pvcount":201
-    */
+    /**
+     * albumId : 181
+     * albumName : 顽皮公主不出嫁
+     * imageUrl : http://eduslb.openhunme.com/resource/albumManage/Image/世界绘本馆/顽皮公主不出嫁.jpg
+     * searchCount : 4382
+     * createTime : 2017-02-28 09:51:02
+     * pvcount : 7023
+     * isFavorites : 1
+     * currentProgress : 1
+     * isEnd : 1
+     * brief : 顽皮酷公主可不是这么认为，她喜欢穿背带裤，喜欢养宠物，还喜欢飙车和马术，但她就是不想嫁人……可是，有一天女王跟她说：“你也该好好打扮一下自己了，赶紧找个老公才是真的！”求婚者也络绎不绝地来到城堡下面，顽皮酷公主会怎么做呢？
+     * favorites : 14600
+     * isUpdate : 2
+     * isTheme : 1
+     * size : 1
+     */
     /**
      * 该专辑资源数量
      */

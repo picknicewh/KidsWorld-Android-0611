@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.discovery.R;
-import net.hongzhang.discovery.modle.RecommendVo;
+import net.hongzhang.discovery.modle.CompilationVo;
 
 import java.util.List;
 
@@ -18,9 +18,9 @@ import java.util.List;
  */
 public class AllAlbumAdapter extends BaseAdapter {
     private Context context;
-    private List<RecommendVo> recommendVos;
+    private List<CompilationVo> recommendVos;
 
-    public AllAlbumAdapter(Context context, List<RecommendVo> recommendVos) {
+    public AllAlbumAdapter(Context context, List<CompilationVo> recommendVos) {
         this.context = context;
         this.recommendVos = recommendVos;
     }
@@ -48,8 +48,8 @@ public class AllAlbumAdapter extends BaseAdapter {
             new ViewHolder(view);
         }
         holder = (ViewHolder) view.getTag();
-        RecommendVo recommendVo = recommendVos.get(i);
-        ImageCache.imageLoader(recommendVo.getImgUrl(), holder.iv_album_image);
+        CompilationVo recommendVo = recommendVos.get(i);
+        ImageCache.imageLoader(recommendVo.getImageUrl(), holder.iv_album_image);
         return view;
     }
 

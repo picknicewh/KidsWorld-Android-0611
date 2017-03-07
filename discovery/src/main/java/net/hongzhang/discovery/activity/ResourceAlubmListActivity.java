@@ -35,10 +35,6 @@ public class ResourceAlubmListActivity extends BaseActivity {
      * 类型
      */
     private int type;
-    /**
-     * 主题id
-     */
-    private String themeId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,14 +57,13 @@ public class ResourceAlubmListActivity extends BaseActivity {
     private void initview(){
         viewPagerHead = $(R.id.vph_music);
         viewPager = $(R.id.vp_music);
-        themeId = getIntent().getStringExtra("themeId");
         initViewPager();
     }
     private void initViewPager(){
         fragments = new ArrayList<>();
         titles = new ArrayList<>();
-        titles.add("全部");
         titles.add("精选");
+        titles.add("全部");
         Bundle bundle = new Bundle();
         bundle.putInt("type",type);
         SelectAlubmFramgment alubmFramgment =  new SelectAlubmFramgment();

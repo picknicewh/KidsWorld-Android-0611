@@ -84,25 +84,22 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
     }
 
     @Override
-    public void startVideoListActivity(String AlbumId) {
+    public void startVideoListActivity() {
         Intent intent = new Intent(context, ResourceAlubmListActivity.class);
-        intent.putExtra("themeId", AlbumId);
         intent.putExtra("type",TYPE_VIDEO);
         context.startActivity(intent);
     }
 
     @Override
-    public void startMusicListActivity(String AlbumId) {
+    public void startMusicListActivity() {
         Intent intent = new Intent(context, ResourceAlubmListActivity.class);
-        intent.putExtra("themeId", AlbumId);
+
         intent.putExtra("type",TYPE_MUISC);
         context.startActivity(intent);
     }
-
     @Override
-    public void startConsultListActivity(String AlbumId) {
+    public void startConsultListActivity() {
         Intent intent = new Intent(context, ResourceAlubmListActivity.class);
-        intent.putExtra("themeId", AlbumId);
         context.startActivity(intent);
     }
 

@@ -29,9 +29,9 @@ public class MainRecommendContract {
 
         void getRecommendConsult(String tsId,int pageSize ,String account_id);
         void getBanner(String tsId);
-        void startVideoListActivity(String AlbumId);
-        void startMusicListActivity(String AlbumId);
-        void startConsultListActivity(String AlbumId);
+        void startVideoListActivity();
+        void startMusicListActivity();
+        void startConsultListActivity();
         void startVideoActivity(String AlbumId);
         void startMusicActivity(String AlbumId, String resourceId);
         void startConsultActivity(int resourceId);

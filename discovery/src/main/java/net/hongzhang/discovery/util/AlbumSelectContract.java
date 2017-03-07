@@ -1,15 +1,15 @@
 package net.hongzhang.discovery.util;
 
-import net.hongzhang.discovery.modle.RecommendVo;
+import net.hongzhang.discovery.modle.CompilationVo;
 
 import java.util.List;
 
 /**
  * Created by wanghua on 2016/12/20.
  */
-public class AlbumContract {
+public class AlbumSelectContract {
     public  interface  View{
-        void setAlbum(List<RecommendVo> recommendVos);
+        void setAlbum(List<CompilationVo> compilationVos);
         void setResourceSize(int size);
         void showLoadingDialog();
         void stopLoadingDialog();
