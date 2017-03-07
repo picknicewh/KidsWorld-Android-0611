@@ -3,6 +3,8 @@ package net.hongzhang.bbhow.util;
 import android.app.Application;
 import android.util.Log;
 
+import com.umeng.analytics.MobclickAgent;
+
 import net.hongzhang.baselibrary.BaseLibrary;
 import net.hongzhang.baselibrary.util.G;
 
@@ -24,24 +26,27 @@ import io.rong.imlib.model.Conversation;
  */
 public class HunmeApplication extends Application {
     private static HunmeApplication instance;
+
     public static HunmeApplication getInstance() {
         return instance;
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
-
-        RongIM.init(this,"x18ywvqfxlloc");//初始化消息中的信息
+        RongIM.init(this, "x18ywvqfxlloc");//初始化消息中的信息
         setExtendProvide();
         BaseLibrary.initializer(this);
-        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);// 初始化 JPush
 //        SchoolLib.initializer();
+        MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式，这样将不会再自动统计Activity。
+
     }
 
     //回话扩展功能自定义
-    private void setExtendProvide(){
+    private void setExtendProvide() {
         InputProvider.ExtendProvider[] provider = {
                 new ImageInputProvider(RongContext.getInstance()),//图片
                 new CameraInputProvider(RongContext.getInstance()),//相机
@@ -52,7 +57,7 @@ public class HunmeApplication extends Application {
 
     @Override
     public void onTerminate() {
-        Log.i("RRRRR","====================onTerminate=======================");
+        Log.i("RRRRR", "====================onTerminate=======================");
         G.clearWebViewCache(this);
         super.onTerminate();
     }

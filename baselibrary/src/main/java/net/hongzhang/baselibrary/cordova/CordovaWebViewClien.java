@@ -2,8 +2,6 @@ package net.hongzhang.baselibrary.cordova;
 
 import android.webkit.WebView;
 
-import com.umeng.analytics.MobclickAgent;
-
 import net.hongzhang.baselibrary.util.UMHybrid;
 
 import org.apache.cordova.engine.SystemWebViewClient;
@@ -24,14 +22,9 @@ public class CordovaWebViewClien extends SystemWebViewClient {
         super(parentEngine);
     }
 
-
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-
-        if (url != null) {
-            MobclickAgent.onPageStart(url);
-        }
     }
 
     @Override
@@ -43,6 +36,6 @@ public class CordovaWebViewClien extends SystemWebViewClient {
         } catch (Exception e) {
             e.printStackTrace();
         }
-       return true;
+        return false;
     }
 }
