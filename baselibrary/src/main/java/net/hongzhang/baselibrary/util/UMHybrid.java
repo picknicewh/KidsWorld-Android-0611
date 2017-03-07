@@ -62,7 +62,13 @@ public class UMHybrid {
             // args.toString());
             if (functionName.equals("getDeviceId")) {
                 getDeviceId(args, webView);
-            } else {
+            } else if (functionName.equals("onPageBegin")) {
+                String pageName = args.getString(0);
+                MobclickAgent.onPageStart(pageName);
+            } else if (functionName.equals("onPageEnd")) {
+                String pageName = args.getString(0);
+                MobclickAgent.onPageEnd(pageName);
+            }else {
                 Class<UMHybrid> classType = UMHybrid.class;
                 Method method = classType.getDeclaredMethod(functionName, JSONArray.class);
                 method.invoke(getInstance(mContext), args);

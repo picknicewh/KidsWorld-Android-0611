@@ -27,85 +27,92 @@ import io.rong.imkit.RongIM;
  * 时    间：2016/7/13
  * 描    述：所有Activity父类
  * 版    本：1.0 添加Toolbar代码
- *          1.2 添加友盟统计
+ * 1.2 添加友盟统计
  * 修订历史：
  * 主要接口：
  * ================================================
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    private ToolBarHelper mToolBarHelper ;
-    public Toolbar toolbar ;
+    private ToolBarHelper mToolBarHelper;
+    public Toolbar toolbar;
     private ImageView iv_left;
     private TextView tv_title;
     private ImageView iv_right;
     private TextView tv_subTitle;
-    public     LoadingDialog dialog;
+    public LoadingDialog dialog;
+    private String className;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         BaseLibrary.addActivity(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         G.setTranslucent(this);
+        className = this.getLocalClassName();
+        if (className != null)
+            className = className.substring((className.lastIndexOf(".") + 1), className.length());//截取类名
     }
+
     @Override
     public void setContentView(int layoutResID) {
-        mToolBarHelper = new ToolBarHelper(this,layoutResID) ;
-        toolbar = mToolBarHelper.getToolBar() ;
+        mToolBarHelper = new ToolBarHelper(this, layoutResID);
+        toolbar = mToolBarHelper.getToolBar();
         toolbar.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         setContentView(mToolBarHelper.getContentView());
         /*把 toolbar 设置到Activity 中*/
         setSupportActionBar(toolbar);
         /*自定义的一些操作*/
-        onCreateCustomToolBar(toolbar) ;
+        onCreateCustomToolBar(toolbar);
         initToolbar(toolbar);
         setToolBar();
         // 账号抢登监听
-        if (RongIM.getInstance()!=null){
+        if (RongIM.getInstance() != null) {
             RongIM.setConnectionStatusListener(new MyConnectionStatusListener(this));
         }
     }
 
-    public void onCreateCustomToolBar(Toolbar toolbar){
-        toolbar.setContentInsetsRelative(0,0);
+    public void onCreateCustomToolBar(Toolbar toolbar) {
+        toolbar.setContentInsetsRelative(0, 0);
     }
 
-    private void initToolbar(Toolbar toolbar){
+    private void initToolbar(Toolbar toolbar) {
 //        iv_left= (ImageView) toolbar.findViewById(R.id.iv_left);
-        iv_right= (ImageView) toolbar.findViewById(R.id.iv_right);
-        tv_title= (TextView) toolbar.findViewById(R.id.tv_title);
-        tv_subTitle= (TextView) toolbar.findViewById(R.id.tv_subtitle);
+        iv_right = (ImageView) toolbar.findViewById(R.id.iv_right);
+        tv_title = (TextView) toolbar.findViewById(R.id.tv_title);
+        tv_subTitle = (TextView) toolbar.findViewById(R.id.tv_subtitle);
     }
 
-    public void setLiftImage(int imageResource){
+    public void setLiftImage(int imageResource) {
         toolbar.setNavigationIcon(imageResource);
 //        iv_left.setImageResource(imageResource);
 //        iv_left.setVisibility(View.VISIBLE);
     }
 
-    public void setRightImage(int imageResource){
+    public void setRightImage(int imageResource) {
         iv_right.setImageResource(imageResource);
         iv_right.setVisibility(View.VISIBLE);
     }
 
-    public void setCententTitle(String title){
+    public void setCententTitle(String title) {
         tv_title.setText(title);
         tv_title.setVisibility(View.VISIBLE);
     }
 
-    public void setSubTitle(String title){
+    public void setSubTitle(String title) {
         tv_subTitle.setText(title);
         tv_subTitle.setVisibility(View.VISIBLE);
     }
 
-    public void setSubTitleOnClickListener(View.OnClickListener listener){
+    public void setSubTitleOnClickListener(View.OnClickListener listener) {
         tv_subTitle.setOnClickListener(listener);
     }
 
-    public void setLiftOnClickListener(View.OnClickListener listener){
+    public void setLiftOnClickListener(View.OnClickListener listener) {
 //        iv_left.setOnClickListener(listener);
         toolbar.setNavigationOnClickListener(listener);
     }
-    public void setLiftOnClickClose(){
+
+    public void setLiftOnClickClose() {
 //        iv_left.setOnClickListener(listener);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,12 +121,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         });
     }
-    public void setRightOnClickListener(View.OnClickListener listener){
+
+    public void setRightOnClickListener(View.OnClickListener listener) {
         iv_right.setOnClickListener(listener);
     }
 
-    public <T extends View> T $(@IdRes int resId){
-        return (T)super.findViewById(resId);
+    public <T extends View> T $(@IdRes int resId) {
+        return (T) super.findViewById(resId);
     }
 
     protected abstract void setToolBar();
@@ -127,23 +135,28 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(className);
         MobclickAgent.onResume(this);
     }
+
     public void showLoadingDialog() {
-        if(dialog==null)
-            dialog=new LoadingDialog(this, R.style.LoadingDialogTheme);
+        if (dialog == null)
+            dialog = new LoadingDialog(this, R.style.LoadingDialogTheme);
         dialog.show();
         dialog.setCancelable(true);
         dialog.setLoadingText("数据加载中...");
     }
+
     public void stopLoadingDialog() {
-        if (dialog!=null) {
+        if (dialog != null) {
             dialog.dismiss();
         }
     }
+
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPageEnd(className);
         MobclickAgent.onPause(this);
     }
 }

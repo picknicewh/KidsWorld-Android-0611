@@ -37,6 +37,7 @@ public class JPushBaseActivity extends FragmentActivity {
         super.onResume();
         JPushInterface.onResume(this);
         //友盟统计时长
+        MobclickAgent.onPageStart(this.getLocalClassName());
         MobclickAgent.onResume(this);
     }
 
@@ -45,6 +46,7 @@ public class JPushBaseActivity extends FragmentActivity {
         super.onPause();
         JPushInterface.onPause(this);
         //友盟统计时长
+        MobclickAgent.onPageEnd(this.getLocalClassName());
         MobclickAgent.onPause(this);
     }
 
