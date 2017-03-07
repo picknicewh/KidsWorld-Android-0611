@@ -21,7 +21,10 @@ public class AllAlubmFramgment extends BaseFragement {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_album,null);
-        noScrollListView = $(view,R.id.lv_album);
+        initView(view);
         return view;
+    }
+    private void initView(View view){
+        noScrollListView = $(view,R.id.lv_album);
     }
 }

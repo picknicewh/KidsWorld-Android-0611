@@ -223,6 +223,10 @@ public class Apiurl {
      */
     public static final String GETRECOMMENDLIST = "/rakuen/getRecommendAblum.do";
     /**
+     * 获取主题列表
+     */
+    public static final String GETHEMELIST= "  /rakuen/getThemeList.do";
+    /**
      * 获取资讯
      */
     public static final String GETRECONSULT = "/rakuen/getInformation.do";
@@ -257,9 +261,9 @@ public class Apiurl {
      */
     public static final String GETPLAYRECORDING = "/rakuen/getResourcePlayRecordedCommand.do";
     /**
-     * 获取专辑资源的列表
+     * 获取最新上架资源
      */
-    public static final String GETALUBMLIST = "/rakuen/getContent.do";
+    public static final String GETNEWALUBMLIST = "/rakuen/newReleases.do";
     /**
      * 提交评论
      */

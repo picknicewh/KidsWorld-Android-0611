@@ -14,7 +14,7 @@ import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.network.ServerConfigManager;
 import net.hongzhang.baselibrary.util.UserMessage;
-import net.hongzhang.discovery.modle.RecommendVo;
+import net.hongzhang.discovery.modle.CompilationVo;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -25,26 +25,25 @@ import java.util.Map;
 /**
  * Created by wanghua on 2016/12/20.
  */
-public class AlbumPresenter implements AlbumContract.Presenter, OkHttpListener {
+public class AlbumSelectPresenter implements AlbumSelectContract.Presenter, OkHttpListener {
     private Context context;
-    private AlbumContract.View view;
-    private List<RecommendVo> recommendVoList;
+    private AlbumSelectContract.View view;
+    private List<CompilationVo> compilationVoList;
     private static final String url = ServerConfigManager.WEB_IP + "/paradise/index.html";
-    public AlbumPresenter(Context context, AlbumContract.View view){
-        recommendVoList = new ArrayList<>();
+    public AlbumSelectPresenter(Context context, AlbumSelectContract.View view){
+        compilationVoList = new ArrayList<>();
         this.context = context;
         this.view = view;
     }
     @Override
     public void getAlbumList( int type,int pageSize,int pageNumber) {
-       Map<String,Object> params = new HashMap<>();
-        params.put("tsId", UserMessage.getInstance(context).getTsId());
-        params.put("pageSize",10);
-        params.put("type",type);
-        params.put("pageNumber",1);
-        params.put("typeid",type);
-        Type mtype = new TypeToken<Result<List<RecommendVo>>>(){}.getType();
-        OkHttps.sendPost(mtype, Apiurl.GETALUBMLIST,params,this);
+        Map<String, Object> map = new HashMap<>();
+        map.put("tsId", UserMessage.getInstance(context).getTsId());
+        map.put("pageNumber", pageNumber);
+        map.put("pageSize",pageSize);
+        map.put("type", type);
+        Type mType = new TypeToken<Result<List<CompilationVo>>>() {}.getType();
+        OkHttps.sendPost(mType, Apiurl.GETRECOMMENDLIST, map, this);
         view.showLoadingDialog();
     }
     @Override
@@ -73,15 +72,16 @@ public class AlbumPresenter implements AlbumContract.Presenter, OkHttpListener {
     @Override
     public void onSuccess(String uri, Object date) {
         view.stopLoadingDialog();
-        if (uri.equals(Apiurl.GETALUBMLIST)){
+        if (uri.equals(Apiurl.GETRECOMMENDLIST)){
             if (date!=null){
-                Result<List<RecommendVo>> data  = (Result<List<RecommendVo>>) date;
-                List<RecommendVo> recommendVos = data.getData();
-                if (recommendVos.size()>0&&recommendVos!=null){
-                    recommendVoList.addAll(recommendVos);
-                    view.setAlbum(recommendVoList);
+                Result<List<CompilationVo>> data  = (Result<List<CompilationVo>>) date;
+                List<CompilationVo> compilationVos = data.getData();
+                if (compilationVos.size()>0&&compilationVos!=null){
+                    compilationVoList.addAll(compilationVos);
+                    view.setAlbum(compilationVoList);
+
                 }
-                view.setResourceSize(recommendVos.size());
+                view.setResourceSize(compilationVos.size());
             }
         }
     }

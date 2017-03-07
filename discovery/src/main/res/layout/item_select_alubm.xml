@@ -27,6 +27,7 @@
             android:text="已有0.7万人播放"
             android:lines="1"
             android:ellipsize="end"
+            android:textColor="@color/minor_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

@@ -113,6 +113,8 @@ public class ViewPagerHead extends LinearLayout {
     }
     private void init(final Context context){
         titles = new ArrayList<>();
+        titles.add("全部");
+        titles.add("精选");
         this.setOrientation(LinearLayout.VERTICAL);
         this.setBackgroundColor(Color.WHITE);
         drawHead(context,0);
@@ -214,11 +216,13 @@ public class ViewPagerHead extends LinearLayout {
         public FragmentAdapter(FragmentManager fm, List<Fragment> fragmentList) {
             super(fm);
             this.fragmentList  =fragmentList;
+
         }
         @Override
         public Fragment getItem(int position) {
             return fragmentList.get(position);
         }
+
         @Override
         public int getCount() {
             return fragmentList.size();

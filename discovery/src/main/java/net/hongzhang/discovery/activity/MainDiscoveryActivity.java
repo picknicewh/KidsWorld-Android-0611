@@ -173,11 +173,11 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
         } else if (viewId == R.id.et_search) {
           presenter.startSearchActivity();
         }  else if (viewId == R.id.ll_music || viewId == R.id.tv_more_music) {
-            presenter.startMusicListActivity(music_recommend_id);
+            presenter.startMusicListActivity();
         } else if (viewId == R.id.ll_class || viewId == R.id.tv_more_class) {
-            presenter.startVideoListActivity(video_recommend_id);
+            presenter.startVideoListActivity();
         } else if (viewId == R.id.ll_consult || viewId == R.id.tv_more_consult) {
-            presenter.startConsultListActivity(consult_recommend_id);
+            presenter.startConsultListActivity();
         }
     }
 
