@@ -14,9 +14,9 @@ import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.activity.ConsultActivity;
 import net.hongzhang.discovery.activity.ConsultListActivity;
 import net.hongzhang.discovery.activity.MainPlayMusicActivity;
-import net.hongzhang.discovery.activity.ResourceAlubmListActivity;
 import net.hongzhang.discovery.activity.PlayVideoListActivity;
-import net.hongzhang.discovery.activity.SearchResourceActivity;
+import net.hongzhang.discovery.activity.ResourceAlubmListActivity;
+import net.hongzhang.discovery.activity.SearchResourceActivity2;
 import net.hongzhang.discovery.modle.CompilationVo;
 import net.hongzhang.discovery.modle.ConsultInfoVo;
 import net.hongzhang.user.activity.CollectActivity;
@@ -131,7 +131,7 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
 
     @Override
     public void startSearchActivity() {
-        Intent intent = new Intent(context, SearchResourceActivity.class);
+        Intent intent = new Intent(context, SearchResourceActivity2.class);
         context.startActivity(intent);
     }
 

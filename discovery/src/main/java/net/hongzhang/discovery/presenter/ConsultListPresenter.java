@@ -47,7 +47,7 @@ public class ConsultListPresenter implements ConsultListContract.Presenter, OkHt
         Type mType = new TypeToken<Result<List<ThemeVo>>>() {
         }.getType();
         OkHttps.sendPost(mType, Apiurl.GETHEMELIST, map, this);
-        view.showLoadingDialog();
+      //  view.showLoadingDialog();
     }
 
 
@@ -60,7 +60,7 @@ public class ConsultListPresenter implements ConsultListContract.Presenter, OkHt
 
     @Override
     public void onSuccess(String uri, Object date) {
-        view.stopLoadingDialog();
+       // view.stopLoadingDialog();
          if (uri.equals(Apiurl.GETHEMELIST)) {
             Result<List<ThemeVo>> result = (Result<List<ThemeVo>>) date;
             List<ThemeVo> themeVos = result.getData();
@@ -71,7 +71,7 @@ public class ConsultListPresenter implements ConsultListContract.Presenter, OkHt
 
     @Override
     public void onError(String uri, String error) {
-        view.stopLoadingDialog();
+       // view.stopLoadingDialog();
         Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
     }
 }

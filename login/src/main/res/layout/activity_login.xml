@@ -1,93 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
     tools:context=".LoginActivity">
-    <LinearLayout
-        android:layout_gravity="center"
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
-            android:layout_centerInParent="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:orientation="vertical">
-            <ImageView
-                android:layout_marginBottom="@dimen/space_x2.5"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/ic_login"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
 
-            <EditText
-                android:maxLength="11"
-                android:id="@+id/ed_username"
-                android:layout_margin="@dimen/space"
-                android:padding="@dimen/space_x1.5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:windowSoftInputMode="stateHidden|adjustResize"
-                android:hint="请输入您的手机号码"
-                android:singleLine="true"
-                android:background="@drawable/bg_login_text"
-                />
-            <EditText
-                android:maxLength="16"
-                android:windowSoftInputMode="stateHidden|adjustResize"
-                android:inputType="textPassword"
-                android:id="@+id/ed_password"
-                android:layout_margin="@dimen/space"
-                android:padding="@dimen/space_x1.5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="请输入您的密码"
-                android:singleLine="true"
-                android:background="@drawable/bg_login_text"
-                />
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/space_x2.5"
+                    android:src="@mipmap/ic_login" />
 
-            <Button
-                android:id="@+id/b_login"
-                android:background="@drawable/bg_login_btn"
-                android:padding="@dimen/space"
-                android:layout_margin="@dimen/space_x1.5"
+                <EditText
+                    android:id="@+id/ed_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/space"
+                    android:background="@drawable/bg_login_text"
+                    android:hint="请输入您的手机号码"
+                    android:lines="1"
+                    android:maxLength="11"
+                    android:padding="@dimen/space_x1.5"
+                    android:windowSoftInputMode="stateHidden|adjustResize" />
+
+                <EditText
+                    android:id="@+id/ed_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/space"
+                    android:background="@drawable/bg_login_text"
+                    android:hint="请输入您的密码"
+                    android:inputType="textPassword"
+                    android:lines="1"
+                    android:maxLength="16"
+                    android:padding="@dimen/space_x1.5"
+                    android:windowSoftInputMode="stateHidden|adjustResize" />
+
+                <Button
+                    android:id="@+id/b_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/space_x1.5"
+                    android:background="@drawable/bg_login_btn"
+                    android:padding="@dimen/space"
+                    android:text="登录"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/ts_x_large" />
+            </LinearLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="登录"
-                android:textColor="@color/white"
-                android:textSize="@dimen/ts_x_large"/>
+                android:orientation="horizontal"
+                android:padding="@dimen/space">
+
+                <CheckBox
+                    android:id="@+id/checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:textColor="@color/minor_text" />
+
+                <TextView
+                    android:id="@+id/tv_agree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/checkbox"
+                    android:text="我已同意用户协议" />
+
+                <TextView
+                    android:id="@+id/tv_unpassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="忘记密码？"
+                    android:textColor="@color/main_text_green" />
+            </RelativeLayout>
         </LinearLayout>
-      <RelativeLayout
-          android:orientation="horizontal"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:padding="@dimen/space">
-          <CheckBox
-              android:id="@+id/checkbox"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:textColor="@color/minor_text"
-              android:checked="true"
-             />
-          <TextView
-              android:id="@+id/tv_agree"
-              android:layout_centerVertical="true"
-              android:layout_toRightOf="@+id/checkbox"
-              android:text="我已同意用户协议"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content" />
-          <TextView
-              android:layout_centerVertical="true"
-              android:id="@+id/tv_unpassword"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignParentRight="true"
-              android:textColor="@color/main_text_green"
-              android:text="忘记密码？"
-              />
-      </RelativeLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

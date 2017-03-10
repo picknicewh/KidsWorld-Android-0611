@@ -85,7 +85,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conservation);
-       // G.setTranslucent(this);
         initView();
          PermissionsChecker.getInstance(this).getPerMissions(PERMISSIONS);
         if (RongIM.getInstance()!=null){
@@ -94,11 +93,13 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
             // 账号抢登监听
             RongIM.setConnectionStatusListener(new MyConnectionStatusListener(this));
         }
+
     }
     /**
      * 初始化数据
      */
     private  void initView(){
+        //设置导航栏的颜色
         iv_back = (ImageView) findViewById(R.id.iv_cback);
         tv_name = (TextView) findViewById(R.id.tv_cname);
         iv_detail = (ImageView) findViewById(R.id.iv_detail);
@@ -187,7 +188,6 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
             }
         }
     }
-
     @Override
     public void onSuccess(String uri, Object date) {
         Result<RyUserInfor> UserInfor = (Result<RyUserInfor>) date;

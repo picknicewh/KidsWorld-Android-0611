@@ -1,5 +1,7 @@
 package net.hongzhang.discovery.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -65,7 +67,7 @@ public class SearchResourceListFragment extends BaseFragement implements View.On
     private ResourceSearchAdapter adapter;
     private UserMessage userMessage;
     private String tag;
-
+   private SharedPreferences sp;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_resource_search_list, null);
@@ -81,13 +83,15 @@ public class SearchResourceListFragment extends BaseFragement implements View.On
         tv_nodata = $(view, R.id.tv_nodata);
         compilationVos = new ArrayList<>();
         ll_load_more.setOnClickListener(this);
+        sp = getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
+        pageNumber=1;
         initData();
     }
     private void initData() {
         userMessage = UserMessage.getInstance(getActivity());
         Bundle bundle = getArguments();
         type = bundle.getInt("type");
-        tag = bundle.getString("tag");
+        tag = sp.getString("tag","");
         presenter = new SearchResourcePresenter(getActivity(), this);
         presenter.getSearchResourceList(userMessage.getTsId(), type, pageSize, pageNumber, userMessage.getAccount_id(), tag);
     }

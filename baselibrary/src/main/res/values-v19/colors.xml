@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#8ec500</color>
+    <color name="colorPrimaryDark">#8ec500</color>
+    <color name="colorAccent">#8ec500</color>
+
+    <!-- 主题颜色-->
+    <color name="red">#FF3B30</color>
+    <color name="text_">#848484</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="red_x0.005">#FFD9D6</color>
+    <color name="gray">#F6F6F6</color>
+    <color name="b_gray">#787878</color>
+    <color name="line_gray">#e1e1e1</color>
+    <color name="harf_white">#80ffffff</color>
+    <color name="harf_black">#80000000</color>
+    <color name="black_0.8">#E6000000</color>
+    <color name="_black">#DD000000</color>
+    <color name="pop_black">#DD494949</color>
+    <color name="bg_message">#535353</color>
+    <color name="sc_">#494949</color>
+    <color name="myteacher">#f6af00</color>
+    <color name="myclass">#005bb1</color>
+    <color name="dark_gray">#555555</color>
+    <color name="light_gray">#eeeeee</color>
+    <color name="parent">#8ec500</color>
+
+    <color name="haft_main_green">#808dc700</color>
+    <color name="main_green_0.8">#E68dc700</color>
+    <color name="noread_grey">#c6c6c6</color>
+    <!--主题页面背景-->
+    <color name="bg_layout">#efeff4</color>
+    <!--tab选项颜色-->
+    <color name="default_grey">#646464</color>
+    <color name="background_tab_pressed">#6633B5E5</color>
+    <color name="transparent">#0000</color><!-- 透明 -->
+    <color name="transparent2">#8000</color><!-- 透明 -->
+    <color name="bg_layout_">#e1e1e1</color><!--淡灰色 -->
+    <color name="pgrey">#f3f3f3</color>
+
+    <color name="bg_line">#e1e1e1</color>
+    <color name="blue">#0000FF</color><!--蓝色 -->
+
+    <!--主题颜色-->
+    <color name="theme_text">#494949</color><!-- 主要的字体的颜色 -->
+    <color name="minor_text">#a0a0a0</color><!-- 次要的字体的颜色 -->
+    <color name="line_divide">#e1e1e1</color><!--分割线颜色-->
+    <color name="main_bg">#efeff4</color><!--背景底色-->
+    <color name="remark_text">#cccccc</color><!--备注信息-->
+    <color name="tag_text">#f6f6f6</color><!--用于标签颜色-->
+    <color name="theme_green">#8dc700</color><!-- 主题的的颜色 -->
+
+    <!--按钮状态-->
+    <color name="default_btn">#8ec500</color><!--按钮默认颜色-->
+    <color name="touch_btn">#6d9a00</color><!--按钮触摸状态-->
+    <color name="unclick_btn">#c6c6c6</color><!--不可点击按钮状态-->
+    <color name="guide">#70c7e1</color>
+    <color name="guide_btn">#8070c7e1</color>
+    <color name="guide_btn_click">#8031acd1</color>
+    <!--首页字体颜色-->
+    <color name="main_text_grey">#646464</color>
+    <color name="main_text_green">#8ec500</color>
+    <color name="text_blue">#5a6197</color>
+    <color name="icon_teacher">#f7ab08</color>
+</resources>

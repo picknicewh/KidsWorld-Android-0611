@@ -8,7 +8,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="net.hongzhang.login.LoginActivity"
-            android:screenOrientation="portrait"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
     </application>
 
 </manifest>

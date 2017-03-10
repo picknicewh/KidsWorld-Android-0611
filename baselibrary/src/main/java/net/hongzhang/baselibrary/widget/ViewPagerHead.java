@@ -80,9 +80,6 @@ public class ViewPagerHead extends LinearLayout {
      * 下滑线的高度
      */
     private int underLineHeight;
-
-
-
     /**
      * 选项卡的个数
      */
@@ -108,9 +105,9 @@ public class ViewPagerHead extends LinearLayout {
         defaultTextcolor = array.getColor(R.styleable.ViewPagerHead_vphDefaultTextColor,DEFAULTTEXTCOLOR);
         backgroundColor = array.getColor(R.styleable.ViewPagerHead_vphTabBackground,BACKGROUNDCOLOR);
         Tabcount = array.getInt(R.styleable.ViewPagerHead_vphTabcount,2);
-        init(context);
+        init();
     }
-    private void init(final Context context){
+    private void init(){
         this.setOrientation(LinearLayout.VERTICAL);
         this.setBackgroundColor(Color.WHITE);
     }
@@ -134,11 +131,9 @@ public class ViewPagerHead extends LinearLayout {
                 }
             });
         }
-        if (this.getChildCount()==0){
-            drawHead(context,0);
-            drawLine(context,0);
-        }
-
+        ViewPagerHead.this.removeAllViews();
+        drawHead(context,0);
+        drawLine(context,0);
     }
     private void drawHead(Context context,int checkedPosition){
         LinearLayout linearLayout = new LinearLayout(context);
@@ -149,7 +144,6 @@ public class ViewPagerHead extends LinearLayout {
         linearLayout.setLayoutParams(layoutParams);
         for (int i= 0 ;i < Tabcount;i++ ){
             TextView textView = getTextView(context,i);
-
             if (i==checkedPosition){
                 textView.setTextColor(selectTextcolor);
             }else {

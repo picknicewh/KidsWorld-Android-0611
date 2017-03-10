@@ -108,9 +108,10 @@ public class MyJPushReceiver extends BroadcastReceiver {
                     }
                     //删除超过20条时记录
                     helper.deleteOverTime(db,UserMessage.getInstance(context).getTsId());
-                    Log.i("AAAAA","count:"+helper.getcount(db,UserMessage.getInstance(context).getTsId()));
+                    Log.i("TAHHHHG","count:"+helper.getcount(db,UserMessage.getInstance(context).getTsId()));
                     Log.i("SSSSSS","推送下来的tsId："+tsId);
                     Log.i("SSSSSS","点赞的tsId："+tsId);
+
                     }
             } catch (JSONException e) {
                 e.printStackTrace();

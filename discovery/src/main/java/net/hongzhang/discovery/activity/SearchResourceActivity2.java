@@ -1,31 +1,38 @@
-package net.hongzhang.user.activity;
+package net.hongzhang.discovery.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
-
-import com.umeng.analytics.MobclickAgent;
+import android.widget.TextView;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.util.FragmentAdapter;
-import net.hongzhang.user.R;
-import net.hongzhang.user.fragment.ConsultListFragment;
-import net.hongzhang.user.fragment.ResourceListFragment;
+import net.hongzhang.baselibrary.util.UserMessage;
+import net.hongzhang.discovery.R;
+import net.hongzhang.discovery.fragment.SearchConsultListFragment;
+import net.hongzhang.discovery.fragment.SearchResourceListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 作者： wh
- * 时间： 2016/11/25
- * 名称：我的收藏和园所记录页面
- * 版本说明：
- * 附加注释：通过传递不同的source值来判断是哪个页面
- * 主要接口：
- */
-public class CollectActivity extends BaseActivity implements View.OnClickListener {
+public class SearchResourceActivity2 extends BaseActivity implements View.OnClickListener {
+    /**
+     * 搜索框
+     */
+    private EditText et_search_key;
+    /**
+     * 搜索
+     */
+    private TextView tv_search;
+    /**
+     * 清除
+     */
+    private TextView tv_clean;
     /**
      * 幼儿听听
      */
@@ -45,16 +52,31 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
      * 页面
      */
     private ViewPager vp_collect;
-    private int source;
-
+    /**
+     * 角色id
+     */
+    private UserMessage userMessage;
+    private SharedPreferences sp;
+    private LinearLayout ll_search_content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_collect);
+        setContentView(R.layout.activity_search_resource2);
         initView();
     }
 
+    @Override
+    protected void setToolBar() {
+        setLiftImage(R.mipmap.ic_arrow_lift);
+        setCententTitle("搜索");
+        setLiftOnClickClose();
+    }
+
     private void initView() {
+        et_search_key = $(R.id.et_search_key);
+        tv_search = $(R.id.tv_search);
+     //   viewPager = $(R.id.vp_search);
+        tv_clean = $(R.id.tv_clean);
         rb_music = $(R.id.rb_music);
         v_music = $(R.id.v_music);
         rb_lesson = $(R.id.rb_lesson);
@@ -62,37 +84,31 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
         rb_consult = $(R.id.rb_consult);
         v_consult = $(R.id.v_consult);
         vp_collect = $(R.id.vp_collect);
+        ll_search_content = $(R.id.ll_search_content);
         rb_consult.setOnClickListener(this);
         rb_lesson.setOnClickListener(this);
         rb_music.setOnClickListener(this);
-        source = getIntent().getIntExtra("source", 0);
-        setviewPager();
+        tv_search.setOnClickListener(this);
+        tv_clean.setOnClickListener(this);
+        userMessage = UserMessage.getInstance(this);
+        sp = getSharedPreferences("USER",MODE_PRIVATE);
+        editor = sp.edit();
     }
 
-    private ResourceListFragment getResourceListFragment(int source, int type) {
-        ResourceListFragment resourceListFragment = new ResourceListFragment();
-        resourceListFragment.setArguments(getBundle(source, type));
-        return resourceListFragment;
-    }
-
-    private Bundle getBundle(int source, int type) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("source", source);
-        bundle.putInt("type", type);
-        return bundle;
-    }
-
-    private void setviewPager() {
-        List<Fragment> fragmentList = new ArrayList<>();
-        ConsultListFragment consultFragment = new ConsultListFragment();
-        consultFragment.setArguments(getBundle(source, 3));
-        fragmentList.add(getResourceListFragment(source, 2));
-        fragmentList.add(getResourceListFragment(source, 1));
-        fragmentList.add(consultFragment);
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
+    private void initViewPager() {
+        List<Fragment> fragments = new ArrayList<>();
+        for (int i = 1; i <= 2; i++) {
+            SearchResourceListFragment fragment = new SearchResourceListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("type", i);
+            fragment.setArguments(bundle);
+            fragments.add(fragment);
+        }
+        fragments.add(new SearchConsultListFragment());
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
         vp_collect.setAdapter(adapter);
         vp_collect.setCurrentItem(0);
-        vp_collect.setOffscreenPageLimit(fragmentList.size() - 1);
+        vp_collect.setOffscreenPageLimit(fragments.size() - 1);
         vp_collect.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -100,7 +116,7 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onPageSelected(int position) {
-                setline(position);
+                setLine(position);
             }
 
             @Override
@@ -108,13 +124,12 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
             }
         });
     }
-
     /**
      * 设置下划线
      *
      * @param position 页面的位置
      */
-    private void setline(int position) {
+    private void setLine(int position) {
         if (position == 0) {
             v_music.setBackgroundColor(getResources().getColor(R.color.main_text_green));
             v_lesson.setBackgroundColor(getResources().getColor(R.color.white));
@@ -140,36 +155,24 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
         vp_collect.setCurrentItem(position);
     }
 
-    @Override
-    protected void setToolBar() {
-        setLiftImage(R.mipmap.ic_arrow_lift);
-        source = getIntent().getIntExtra("source", 0);
-        if (source == 0) {
-            setCententTitle("收藏");
-        } else {
-            setCententTitle("播放记录");
-        }
-        setLiftOnClickClose();
-    }
-
+    private SharedPreferences.Editor editor;
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
-        if (viewId == R.id.rb_music) {
-            setline(0);
+        if (viewId == R.id.tv_search) {
+            ll_search_content.setVisibility(View.VISIBLE);
+            String tag = et_search_key.getText().toString();
+            editor.putString("tag", tag);
+            editor.commit();
+            initViewPager();
+        } else if (viewId == R.id.tv_clean) {
+            et_search_key.setText("");
+        }else  if (viewId == R.id.rb_music) {
+            setLine(0);
         } else if (viewId == R.id.rb_lesson) {
-            setline(1);
+            setLine(1);
         } else if (viewId == R.id.rb_consult) {
-            setline(2);
-        }
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (source == 0) {
-            MobclickAgent.onEvent(this, "openUserCollect");
-        } else {
-            MobclickAgent.onEvent(this, "openPlayRecord");
+            setLine(2);
         }
     }
 }

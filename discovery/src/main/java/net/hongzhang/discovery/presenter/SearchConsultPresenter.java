@@ -51,7 +51,7 @@ public class SearchConsultPresenter implements SearchConsultContract.Presenter, 
         map.put("account_id", account_id);
         Type mType = new TypeToken<Result<ResourceVos>>() {
         }.getType();
-        OkHttps.sendPost(mType, Apiurl.SERACHRESOURCE, map, this);
+        OkHttps.sendPost(mType, Apiurl.SERACHRESOURCE, map, this,2,"search");
         view.showLoadingDialog();
     }
 

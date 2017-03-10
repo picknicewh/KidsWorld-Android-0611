@@ -5,46 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="horizontal"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/space">
-        <RelativeLayout
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/et_search_key"
-            android:drawableLeft="@mipmap/ic_search_grey"
-            android:padding="@dimen/space_x0.5"
-            android:hint="请输入关键词"
-            android:textColor="@color/text_"
-            android:textSize="@dimen/ts_small"
-            android:background="@drawable/ic_search_bg"
-            android:drawablePadding="@dimen/space_x0.5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/tv_clean"
-                android:layout_marginRight="@dimen/space_x0.5"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:background="@mipmap/ic_clear_icon"
-                android:layout_width="15dp"
-                android:layout_height="15dp" />
-        </RelativeLayout>
-        <TextView
-            android:id="@+id/tv_search"
-            android:paddingLeft="@dimen/space"
-            android:layout_gravity="center"
-            android:text="搜索"
-            android:textColor="@color/minor_text"
-            android:gravity="center"
-            android:layout_width="40dp"
-            android:layout_height="20dp" />
-    </LinearLayout>
+    <include layout="@layout/layout_search"/>
     <net.hongzhang.baselibrary.widget.ViewPagerHead
         android:visibility="gone"
         android:id="@+id/vph_search"

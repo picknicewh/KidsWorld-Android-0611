@@ -43,6 +43,7 @@
             android:screenOrientation="landscape" />
         <activity android:name=".activity.ConsultListActivity" />
         <activity android:name=".activity.SearchResourceActivity"></activity>
+        <activity android:name=".activity.SearchResourceActivity2"></activity>
     </application>
 
 </manifest>

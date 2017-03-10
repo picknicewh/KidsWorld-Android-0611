@@ -1,5 +1,7 @@
 package net.hongzhang.discovery.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -60,7 +62,7 @@ public class SearchConsultListFragment extends BaseFragement implements SearchCo
     private List<ConsultInfoVo> consultInfoVoList;
     private UserMessage userMessage;
     private String tag;
-
+    private SharedPreferences sp;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mconsult_list, null);
@@ -74,18 +76,19 @@ public class SearchConsultListFragment extends BaseFragement implements SearchCo
         tv_load_more = $(view, R.id.tv_load_more);
         iv_load_more = $(view, R.id.iv_load_more);
         tv_nodata = $(view, R.id.tv_nodata);
+        ll_load_more.setOnClickListener(this);
         initData();
     }
 
     private void initData() {
+        sp = getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
         consultInfoVoList = new ArrayList<>();
         userMessage = UserMessage.getInstance(getActivity());
-        Bundle bundle = getArguments();
         presenter = new SearchConsultPresenter(getActivity(), this);
-        tag = bundle.getString("tag");
+        pageNumber=1;
+        tag = sp.getString("tag","");
         presenter.getSearchResourceList(userMessage.getTsId(), 3, pageSize, pageNumber,userMessage.getAccount_id(), tag);
     }
-
     @Override
     public void setConsultList(final List<ConsultInfoVo> consultList) {
         consultInfoVoList = consultList;
@@ -98,7 +101,6 @@ public class SearchConsultListFragment extends BaseFragement implements SearchCo
             }
         });
     }
-
     @Override
     public void setConsultInfoSize(int size) {
         if (size == 0) {
@@ -116,7 +118,6 @@ public class SearchConsultListFragment extends BaseFragement implements SearchCo
             tv_nodata.setVisibility(View.GONE);
         }
     }
-
     private void lastPage() {
         ll_load_more.setVisibility(View.VISIBLE);
         tv_load_more.setText("没有更多数据了");

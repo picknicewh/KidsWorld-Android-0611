@@ -34,8 +34,7 @@
         <activity android:name="net.hongzhang.school.activity.MedicineListSActivity" />
         <activity android:name="net.hongzhang.school.activity.MedicineTaskTActivity" />
         <activity android:name="net.hongzhang.school.activity.MedicineEntrustActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:screenOrientation="portrait"/>
+          />
     </application>
 
 </manifest>
