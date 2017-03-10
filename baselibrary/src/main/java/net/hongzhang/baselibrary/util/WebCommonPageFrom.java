@@ -276,7 +276,7 @@ public class WebCommonPageFrom {
     @JavascriptInterface
     public void startMusicActivity(String themeId,String resourceId) {
         Intent intent = new Intent();
-        ComponentName componetName = new ComponentName("net.hongzhang.bbhow","net.hongzhang.discovery.MainPlayActivity");
+        ComponentName componetName = new ComponentName("net.hongzhang.bbhow","net.hongzhang.discovery.activity.MainPlayMusicActivity");
         intent.setComponent(componetName);
         intent.putExtra("themeId",themeId);
         intent.putExtra("resourceId",resourceId);

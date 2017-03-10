@@ -11,7 +11,7 @@ public class ConsultActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consult_list);
+        setContentView(R.layout.activity_consult);
         String resId=getIntent().getStringExtra("resourceId");
         G.showToast(this,resId);
         G.log("======resID====="+resId);

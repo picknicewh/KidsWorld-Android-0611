@@ -26,7 +26,6 @@ public class MainRecommendContract {
     }
     public interface Presenter{
         void getRecommendResource(String tsId,int size,int type);
-
         void getRecommendConsult(String tsId,int pageSize ,String account_id);
         void getBanner(String tsId);
         void startVideoListActivity();

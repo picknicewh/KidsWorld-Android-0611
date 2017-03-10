@@ -11,6 +11,7 @@ import net.hongzhang.baselibrary.network.Apiurl;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
+import net.hongzhang.discovery.activity.ConsultActivity;
 import net.hongzhang.discovery.activity.ConsultListActivity;
 import net.hongzhang.discovery.activity.MainPlayMusicActivity;
 import net.hongzhang.discovery.activity.ResourceAlubmListActivity;
@@ -120,11 +121,13 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
     }
 
     @Override
-    public void startConsultActivity(int resourceId) {
-        Intent intent = new Intent();
+    public void startConsultActivity(String resourceId) {
+        Intent intent = new Intent(context, ConsultActivity.class);
         intent.putExtra("resourceId", resourceId);
         context.startActivity(intent);
     }
+
+
 
     @Override
     public void startSearchActivity() {
@@ -140,11 +143,6 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
     }
 
     @Override
-
-
-
-
-
     public void startUserActivity() {
         Intent intent = new Intent(context, UserActivity.class);
         context.startActivity(intent);

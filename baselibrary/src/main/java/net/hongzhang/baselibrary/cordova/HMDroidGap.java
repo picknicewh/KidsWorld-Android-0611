@@ -3,6 +3,7 @@ package net.hongzhang.baselibrary.cordova;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.widget.ImageView;
@@ -179,6 +180,14 @@ public class HMDroidGap extends CordovaActivity implements View.OnClickListener 
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction()==KeyEvent.ACTION_DOWN){
+            from.sendBroadcast(true);
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
     public void onClick(View view) {
         int viewId = view.getId();
         if (viewId == R.id.iv_left) {
@@ -194,4 +203,5 @@ public class HMDroidGap extends CordovaActivity implements View.OnClickListener 
             }
         }
     }
+
 }

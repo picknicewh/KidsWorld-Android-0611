@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import net.hongzhang.baselibrary.BaseLibrary;
 import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.baselibrary.mode.ResourceVo;
