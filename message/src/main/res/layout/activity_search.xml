@@ -1,66 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:padding="@dimen/space"
-        android:background="@color/colorAccent"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
         android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:padding="@dimen/space">
+
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_marginRight="@dimen/space"
-            android:layout_gravity="center"
-            android:src="@mipmap/ic_arrow_lift"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    <LinearLayout
-        android:layout_weight="1"
-        android:background="@drawable/search_bg"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_gravity="center"
-            android:paddingLeft="@dimen/space"
-            android:src="@mipmap/ic_seek"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
-       <EditText
-           android:id="@+id/et_contract"
-           android:hint="请输入搜索的联系人"
-           android:textSize="@dimen/ts_small"
-           android:layout_gravity="center"
-           android:padding="@dimen/space_x0.5"
-           android:background="@color/white"
-           android:layout_weight="1"
-           android:layout_width="0dp"
-           android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/iv_delete"
-            android:layout_marginRight="@dimen/space_x0.5"
-            android:layout_gravity="center"
-            android:src="@mipmap/ic_clear_icon"
-            android:layout_width="15dp"
-            android:layout_height="15dp" />
-    </LinearLayout>
-        <TextView
-            android:layout_marginLeft="@dimen/space"
-            android:id="@+id/tv_cancel"
-            android:layout_width="40dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/space"
+            android:src="@mipmap/ic_arrow_lift" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/search_bg"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/space"
+                android:src="@mipmap/ic_seek" />
+
+            <EditText
+                android:id="@+id/et_contract"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:hint="请输入搜索的联系人"
+                android:padding="@dimen/space_x0.5"
+                android:textSize="@dimen/ts_small" />
+
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/space_x0.5"
+                android:src="@mipmap/ic_clear_icon" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space"
+            android:background="#00000000"
             android:text="取消"
-            android:textSize="@dimen/ts_medium"
             android:textColor="@color/white"
-            android:layout_gravity="center_vertical"
-            android:background="#00000000"/>
+            android:textSize="@dimen/ts_medium" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/lv_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

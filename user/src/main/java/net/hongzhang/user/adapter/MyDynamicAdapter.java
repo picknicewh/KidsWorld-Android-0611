@@ -45,40 +45,43 @@ import java.util.Map;
  * 主要接口：
  * ================================================
  */
-public class MyDynamicAdapter extends BaseAdapter implements  OkHttpListener {
+public class MyDynamicAdapter extends BaseAdapter implements OkHttpListener {
     private MyDynamicActivity myDynamicActivity;
-    private   List<DynamicInfoVo> dynamicInfoVos;
+    private List<DynamicInfoVo> dynamicInfoVos;
     private int pageNumber;
     private Context context;
     /**
      * 点赞集合
      */
-    private  Map<Integer,Integer> praises;
+    private Map<Integer, Integer> praises;
     /**
      * 点赞数量集合
      */
-    private  Map<Integer,Integer> praiseNums;
-    public MyDynamicAdapter(MyDynamicActivity myDynamicActivity,List<DynamicInfoVo> dynamicInfoVos, int pageNumber) {
+    private Map<Integer, Integer> praiseNums;
+
+    public MyDynamicAdapter(MyDynamicActivity myDynamicActivity, List<DynamicInfoVo> dynamicInfoVos, int pageNumber) {
         this.myDynamicActivity = myDynamicActivity;
         this.dynamicInfoVos = dynamicInfoVos;
         this.pageNumber = pageNumber;
-         this.context = myDynamicActivity;
-         praiseNums = new HashMap<>();
-         praises = new HashMap<>();
+        this.context = myDynamicActivity;
+        praiseNums = new HashMap<>();
+        praises = new HashMap<>();
     }
+
     /**
      * 设置相对于的数据
      */
-    public  void setData(List<DynamicInfoVo> dynamicInfoVos ){
-        if (dynamicInfoVos!=null){
-            for (int i = 0 ; i<dynamicInfoVos.size();i++){
+    public void setData(List<DynamicInfoVo> dynamicInfoVos) {
+        if (dynamicInfoVos != null) {
+            for (int i = 0; i < dynamicInfoVos.size(); i++) {
                 DynamicInfoVo statusVo = dynamicInfoVos.get(i);
-                praises.put(i,statusVo.getIsAgree());
-                int size=statusVo.getList().size();
-                praiseNums.put(i,size);
+                praises.put(i, statusVo.getIsAgree());
+                int size = statusVo.getList().size();
+                praiseNums.put(i, size);
             }
         }
     }
+
     @Override
     public int getCount() {
         return dynamicInfoVos.size();
@@ -97,128 +100,133 @@ public class MyDynamicAdapter extends BaseAdapter implements  OkHttpListener {
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewHold viewHold = null;
-        if(view==null){
-            view= LayoutInflater.from(context).inflate(R.layout.item_mydynamic,viewGroup,false);
+        if (view == null) {
+            view = LayoutInflater.from(context).inflate(R.layout.item_mydynamic, viewGroup, false);
             new ViewHold(view);
         }
-        viewHold= (ViewHold) view.getTag();
+        viewHold = (ViewHold) view.getTag();
         final DynamicInfoVo dynamicInfoVo = dynamicInfoVos.get(i);
         viewHold.tv_day.setText(DateUtil.getMyDay(dynamicInfoVo.getCreateTime()));
         viewHold.tv_mouth.setText(DateUtil.getMyMouth(dynamicInfoVo.getCreateTime()));
         //显示内容+加载图片
-        if (!G.isEmteny(dynamicInfoVo.getText())){
+        if (!G.isEmteny(dynamicInfoVo.getText())) {
             viewHold.tv_content.setText(dynamicInfoVo.getText());
             viewHold.rl_picture.setVisibility(View.GONE);
             viewHold.tv_content.setVisibility(View.VISIBLE);
-            if (dynamicInfoVo.getImgUrl()!=null&&dynamicInfoVo.getImgUrl().size()>0){
+            if (dynamicInfoVo.getImgUrl() != null && dynamicInfoVo.getImgUrl().size() > 0) {
                 viewHold.iv_picture.setVisibility(View.VISIBLE);
                 viewHold.tv_pic_count.setVisibility(View.VISIBLE);
-                viewHold.tv_pic_count.setText("共"+dynamicInfoVo.getImgUrl().size()+"张");
+                viewHold.tv_pic_count.setText("共" + dynamicInfoVo.getImgUrl().size() + "张");
                 ImageCache.imageLoader(dynamicInfoVo.getImgUrl().get(0), viewHold.iv_picture);
                 viewHold.iv_picture.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        PublishPhotoUtil.imageBrowernet(0,dynamicInfoVo.getImgUrl(),context);
+                        PublishPhotoUtil.imageBrowernet(0, dynamicInfoVo.getImgUrl(), context);
                     }
                 });
-            }else {
+            } else {
                 viewHold.iv_picture.setVisibility(View.GONE);
                 viewHold.tv_pic_count.setVisibility(View.GONE);
 
             }
-        }else {
+        } else {
             viewHold.tv_pic_count.setVisibility(View.GONE);
             viewHold.iv_picture.setVisibility(View.GONE);
             viewHold.tv_content.setVisibility(View.GONE);
-            if (dynamicInfoVo.getImgUrl()!=null&&dynamicInfoVo.getImgUrl().size()>0){
+            if (dynamicInfoVo.getImgUrl() != null && dynamicInfoVo.getImgUrl().size() > 0) {
                 viewHold.rl_picture.setVisibility(View.VISIBLE);
-                new PictrueUtils().setPictrueLoad(context,dynamicInfoVo.getImgUrl(),viewHold.rl_picture);
-            }else {
+                new PictrueUtils().setPictrueLoad(context, dynamicInfoVo.getImgUrl(), viewHold.rl_picture);
+            } else {
                 viewHold.rl_picture.setVisibility(View.GONE);
             }
         }
         //显示点赞
-        if (praiseNums.get(i)>0){
+        if (praiseNums.get(i) > 0) {
             viewHold.tv_praise_num.setText(String.valueOf(praiseNums.get(i)));
-        }else {
+        } else {
             viewHold.tv_praise_num.setText("赞");
         }
         //显示评论
-        if (dynamicInfoVo.getRewCount()>0){
+        if (dynamicInfoVo.getRewCount() > 0) {
             viewHold.tv_comment_num.setText(String.valueOf(dynamicInfoVo.getRewCount()));
-        }else {
+        } else {
             viewHold.tv_comment_num.setText("评论");
         }
         //是否点赞
-        if (praises.get(i)==1){
+        if (praises.get(i) == 1) {
             viewHold.iv_praise.setImageResource(R.mipmap.ic_heat_on);
-        }else if (praises.get(i)==2){
+        } else if (praises.get(i) == 2) {
             viewHold.iv_praise.setImageResource(R.mipmap.ic_heat_off);
         }
-      //点赞按钮事件
+        //点赞按钮事件
         viewHold.iv_praise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String  cancle =null ;
-                if (praises.get(i)==1){
-                    cancle="2";
-                    praises.put(i,2);
-                    praiseNums.put(i,praiseNums.get(i)-1);
-                }else if (praises.get(i)==2){
+                String cancle = null;
+                if (praises.get(i) == 1) {
+                    cancle = "2";
+                    praises.put(i, 2);
+                    praiseNums.put(i, praiseNums.get(i) - 1);
+                } else if (praises.get(i) == 2) {
                     cancle = "1";
-                    praises.put(i,1);
-                    praiseNums.put(i,praiseNums.get(i)+1);
+                    praises.put(i, 1);
+                    praiseNums.put(i, praiseNums.get(i) + 1);
                 }
-                personPraise(UserMessage.getInstance(context).getTsId(),dynamicInfoVo.getDynamicId(), cancle);
+                personPraise(UserMessage.getInstance(context).getTsId(), dynamicInfoVo.getDynamicId(), cancle);
             }
         });
         viewHold.tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DeleteDynamicDialog dialog = new DeleteDynamicDialog(myDynamicActivity,dynamicInfoVo.getDynamicId(),i);
+                DeleteDynamicDialog dialog = new DeleteDynamicDialog(myDynamicActivity, dynamicInfoVo.getDynamicId(), i);
                 dialog.initView();
             }
         });
         viewHold.ll_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(context, StatusDetilsActivity.class);
-                intent.putExtra("dynamicId",dynamicInfoVo.getDynamicId());
+                Intent intent = new Intent(context, StatusDetilsActivity.class);
+                intent.putExtra("dynamicId", dynamicInfoVo.getDynamicId());
                 myDynamicActivity.setScrollPosition(getScrollPosition(dynamicInfoVo));
                 context.startActivity(intent);
             }
         });
         return view;
     }
+
     /**
      * 获取当前点击修改状态在数据的位置
+     *
      * @param dynamicInfoVo
      */
-    private int  getScrollPosition(DynamicInfoVo dynamicInfoVo){
-        for (int i = 0;i<myDynamicActivity.dynamicInfoVoList.size();i++){
-            if (myDynamicActivity.dynamicInfoVoList.get(i).getDynamicId().equals(dynamicInfoVo.getDynamicId())){
-                return  i;
+    private int getScrollPosition(DynamicInfoVo dynamicInfoVo) {
+        for (int i = 0; i < myDynamicActivity.dynamicInfoVoList.size(); i++) {
+            if (myDynamicActivity.dynamicInfoVoList.get(i).getDynamicId().equals(dynamicInfoVo.getDynamicId())) {
+                return i;
             }
         }
         return 1;
     }
+
     /**
      * 点赞
      */
-    public void personPraise(String tsId,String dynamicId,String cancel) {
-        Map<String,Object> map=new HashMap<>();
-        map.put("tsId",tsId);
-        map.put("dynamicId",dynamicId);
-        map.put("cancel",cancel);
-        Type type=new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.SUBPRAISE,map,this);
+    public void personPraise(String tsId, String dynamicId, String cancel) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("tsId", tsId);
+        map.put("dynamicId", dynamicId);
+        map.put("cancel", cancel);
+        Type type = new TypeToken<Result<String>>() {
+        }.getType();
+        OkHttps.sendPost(type, Apiurl.SUBPRAISE, map, this);
     }
+
     @Override
     public void onSuccess(String uri, Object date) {
-        if (uri.equals(Apiurl.SUBPRAISE)){
-            String result = ((Result<String>)date).getData();
-            if (result.contains("成功")){
-                Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
+        if (uri.equals(Apiurl.SUBPRAISE)) {
+            String result = ((Result<String>) date).getData();
+            if (result.contains("成功")) {
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
                 MyDynamicAdapter.this.notifyDataSetChanged();
             }
         }
@@ -226,9 +234,10 @@ public class MyDynamicAdapter extends BaseAdapter implements  OkHttpListener {
 
     @Override
     public void onError(String uri, String error) {
-        Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
     }
-    class ViewHold{
+
+    class ViewHold {
         TextView tv_day; //时间
         TextView tv_mouth; //时间
         TextView tv_content; //内容
@@ -241,19 +250,20 @@ public class MyDynamicAdapter extends BaseAdapter implements  OkHttpListener {
         TextView tv_pic_count;
         TextView tv_delete;
         LinearLayout ll_comment;
+
         public ViewHold(View view) {
-            tv_day= (TextView) view.findViewById(R.id.tv_day);
-            tv_mouth= (TextView) view.findViewById(R.id.tv_mouth);
-            tv_content= (TextView) view.findViewById(R.id.tv_content);
-            tv_praise_num = (TextView)view.findViewById(R.id.tv_praise_num);
-            tv_comment_num = (TextView)view.findViewById(R.id.tv_comment_num);
+            tv_day = (TextView) view.findViewById(R.id.tv_day);
+            tv_mouth = (TextView) view.findViewById(R.id.tv_mouth);
+            tv_content = (TextView) view.findViewById(R.id.tv_content);
+            tv_praise_num = (TextView) view.findViewById(R.id.tv_praise_num);
+            tv_comment_num = (TextView) view.findViewById(R.id.tv_comment_num);
             iv_praise = (ImageView) view.findViewById(R.id.iv_praise);
-            iv_comment = (ImageView)view.findViewById(R.id.iv_comment);
+            iv_comment = (ImageView) view.findViewById(R.id.iv_comment);
             rl_picture = (RelativeLayout) view.findViewById(R.id.rl_picture);
             iv_picture = (ImageView) view.findViewById(R.id.iv_picture);
-            tv_pic_count= (TextView) view.findViewById(R.id.tv_pic_count);
-            tv_delete= (TextView) view.findViewById(R.id.tv_delete);
-            ll_comment=(LinearLayout)view.findViewById(R.id.ll_comment);
+            tv_pic_count = (TextView) view.findViewById(R.id.tv_pic_count);
+            tv_delete = (TextView) view.findViewById(R.id.tv_delete);
+            ll_comment = (LinearLayout) view.findViewById(R.id.ll_comment);
             view.setTag(this);
         }
     }

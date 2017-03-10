@@ -34,71 +34,80 @@ public class PublishPhotoUtil {
             Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
             Manifest.permission.CAMERA
     };
+
     /**
      * 发布照片页面
      */
-    public static void showPhoto(final Activity context, final ArrayList<String> itemList , final GridView gridView, final int maxContent){
-        final GridAlbumAdapter  adapter=new GridAlbumAdapter(itemList,context,maxContent);
+    public static void showPhoto(final Activity context, final ArrayList<String> itemList, final GridView gridView, final int maxContent) {
+        final GridAlbumAdapter adapter = new GridAlbumAdapter(itemList, context, maxContent);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == itemList.size()) {
-                    goSelectImager(itemList,context,gridView,maxContent);
-                }else {
-                    imageBrower(i,itemList,context);
+                    goSelectImager(itemList, context, gridView, maxContent);
+                } else {
+                    imageBrower(i, itemList, context);
                 }
             }
         });
     }
-    public static void imageBrower(int position, ArrayList<String> urls,Context context) {
+
+    public static void imageBrower(int position, ArrayList<String> urls, Context context) {
         Intent intent = new Intent(context, ImagePagerActivity.class);
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls);
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
-        intent.putExtra("source","local");
+        intent.putExtra("source", "local");
         context.startActivity(intent);
     }
-    public static void imageBrowernet(int position, ArrayList<String> urls,Context context) {
+
+    public static void imageBrowernet(int position, ArrayList<String> urls, Context context) {
         Intent intent = new Intent(context, ImagePagerActivity.class);
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, getimagepath(urls));
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
-        intent.putExtra("source","net");
+        intent.putExtra("source", "net");
         context.startActivity(intent);
     }
+
     /**
      * 把缩略图转换成为原图
      */
-    private  static ArrayList<String> getimagepath(List<String> itemList){
+    private static ArrayList<String> getimagepath(List<String> itemList) {
         ArrayList<String> imagepath = new ArrayList<>();
-        for (int i = 0 ; i<itemList.size();i++){
+        for (int i = 0; i < itemList.size(); i++) {
             String pathurl = itemList.get(i);
-            int index = itemList.get(i).lastIndexOf("/");
-            String path = pathurl.substring(0,index-2)+pathurl.substring(index,pathurl.length());
+            int index = itemList.get(i).lastIndexOf("/s");
+            String path;
+            if (index != -1)
+                path = pathurl.substring(0, index - 2) + pathurl.substring(index, pathurl.length());
+            else
+                path = pathurl;
             imagepath.add(path);
         }
         return imagepath;
 
     }
+
     /**
      * 前往获取图片
      */
-    public static void goSelectImager(final ArrayList<String> itemList, final Activity context,final GridView gridView, final int maxContent){
-        PermissionsChecker checker=PermissionsChecker.getInstance(context);
-        if(checker.lacksPermissions(PERMISSIONS)){
+    public static void goSelectImager(final ArrayList<String> itemList, final Activity context, final GridView gridView, final int maxContent) {
+        PermissionsChecker checker = PermissionsChecker.getInstance(context);
+        if (checker.lacksPermissions(PERMISSIONS)) {
             checker.getPerMissions(PERMISSIONS);
             return;
         }
-        AndroidImagePicker androidImagePicker =   AndroidImagePicker.getInstance();
-        androidImagePicker.setSelectLimit(maxContent-itemList.size());
+        AndroidImagePicker androidImagePicker = AndroidImagePicker.getInstance();
+        androidImagePicker.setSelectLimit(maxContent - itemList.size());
         androidImagePicker.pickMulti(context, true, new AndroidImagePicker.OnImagePickCompleteListener() {
             @Override
             public void onImagePickComplete(List<ImageItem> items) {
-                if(items != null && items.size() > 0){
-                    for(ImageItem item:items){
-                        G.log("选择了===="+item.path);
+                if (items != null && items.size() > 0) {
+                    for (ImageItem item : items) {
+                        G.log("选择了====" + item.path);
                         itemList.add(item.path);
                     }
-                   showPhoto(context,itemList,gridView,maxContent);
+                    showPhoto(context, itemList, gridView, maxContent);
                 }
             }
         });

@@ -30,7 +30,7 @@ import java.util.List;
  * 附加注释：
  * 主要接口：
  */
-public class SearchActivity extends Activity implements View.OnClickListener{
+public class SearchActivity extends Activity implements View.OnClickListener {
     /**
      * 搜索的联系人
      */
@@ -63,14 +63,16 @@ public class SearchActivity extends Activity implements View.OnClickListener{
     /**
      * 数据列表
      */
-   private List<ContractInfoVo> friendInforVos;
+    private List<ContractInfoVo> friendInforVos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         initview();
     }
-    private void initview(){
+
+    private void initview() {
         et_contract = (EditText) findViewById(R.id.et_contract);
         iv_delete = (ImageView) findViewById(R.id.iv_delete);
         iv_back = (ImageView) findViewById(R.id.iv_back);
@@ -85,7 +87,8 @@ public class SearchActivity extends Activity implements View.OnClickListener{
         setlistview();
         setFriendInforVos();
     }
-    private void setFriendInforVos(){
+
+    private void setFriendInforVos() {
         et_contract.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -99,32 +102,34 @@ public class SearchActivity extends Activity implements View.OnClickListener{
             @Override
             public void afterTextChanged(Editable editable) {
                 String name = editable.toString();
-                friendInforVos = helper.getFriendInform(db,name);
-                apapter = new SearchApapter(SearchActivity.this,friendInforVos);
+                friendInforVos = helper.getFriendInform(db, name);
+                apapter = new SearchApapter(SearchActivity.this, friendInforVos);
                 lv_serach.setAdapter(apapter);
             }
         });
     }
-   private void setlistview(){
-       lv_serach.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-           public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               ContractInfoVo friendInforVo = friendInforVos.get(i);
-               String userid = friendInforVo.getTsId();
-               Intent intent = new Intent();
-               intent.setClass(SearchActivity.this,PersonDetailActivity.class);
-               intent.putExtra("targetId",userid);
-               startActivity(intent);
-           }
-       });
-   }
+
+    private void setlistview() {
+        lv_serach.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ContractInfoVo friendInforVo = friendInforVos.get(i);
+                String userid = friendInforVo.getTsId();
+                Intent intent = new Intent();
+                intent.setClass(SearchActivity.this, PersonDetailActivity.class);
+                intent.putExtra("targetId", userid);
+                startActivity(intent);
+            }
+        });
+    }
+
     @Override
     public void onClick(View view) {
-        if (view.getId()==R.id.tv_cancel){
+        if (view.getId() == R.id.tv_cancel) {
             finish();
-        }else if (view.getId()==R.id.iv_delete){
+        } else if (view.getId() == R.id.iv_delete) {
             et_contract.setText("");
-        }else if (view.getId()==R.id.iv_back){
+        } else if (view.getId() == R.id.iv_back) {
             finish();
         }
     }

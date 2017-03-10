@@ -1,6 +1,7 @@
 package net.hongzhang.user.mode;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * 附加注释：
  * 主要接口：
  */
-public class DynamicInfoVo {
+public class DynamicInfoVo implements Serializable{
     private String createTime;
     /**
      *角色类别
