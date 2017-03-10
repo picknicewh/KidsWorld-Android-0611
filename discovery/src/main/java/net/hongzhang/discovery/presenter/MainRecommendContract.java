@@ -34,7 +34,7 @@ public class MainRecommendContract {
         void startConsultListActivity();
         void startVideoActivity(String AlbumId);
         void startMusicActivity(String AlbumId, String resourceId);
-        void startConsultActivity(int resourceId);
+        void startConsultActivity(String resourceId);
         void startSearchActivity();
         void startHistoryActivity();
         void startUserActivity();

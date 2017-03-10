@@ -221,7 +221,7 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
             lv_consult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    presenter.startConsultActivity(Integer.parseInt(consultInfovos.get(i).getAlbumId()));
+                    presenter.startConsultActivity(consultInfovos.get(i).getResourceId());
                 }
             });
         }
