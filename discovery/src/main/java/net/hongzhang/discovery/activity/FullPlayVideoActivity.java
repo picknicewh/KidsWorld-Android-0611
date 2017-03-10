@@ -30,8 +30,8 @@ import net.hongzhang.baselibrary.widget.LoadingDialog;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.VideoAlbumAdapter;
 import net.hongzhang.discovery.util.MyGestureListener;
-import net.hongzhang.discovery.util.PlayVideoContract;
-import net.hongzhang.discovery.util.PlayVideoPresenter;
+import net.hongzhang.discovery.presenter.PlayVideoContract;
+import net.hongzhang.discovery.presenter.PlayVideoPresenter;
 import net.hongzhang.discovery.widget.ChooseAlbumPopWindow;
 
 import java.util.ArrayList;

@@ -22,9 +22,9 @@ import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
-import net.hongzhang.discovery.MainPlayActivity;
-import net.hongzhang.discovery.MyMusicAdapter;
 import net.hongzhang.discovery.R;
+import net.hongzhang.discovery.activity.MainPlayMusicActivity;
+import net.hongzhang.discovery.adapter.MyMusicAdapter;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -40,7 +40,7 @@ import java.util.Map;
  * 主要接口：
  */
 public class PlayListPopuWindow extends PopupWindow implements OkHttpListener,View.OnClickListener {
-    private MainPlayActivity context;
+    private MainPlayMusicActivity context;
     public  static  List<ResourceVo> resourceVos;
     private  View contentView ;
     private   int height ;
@@ -52,7 +52,7 @@ public class PlayListPopuWindow extends PopupWindow implements OkHttpListener,Vi
     private ImageView iv_collect;
     private   static  int isCollect;
     private String themeId ;
-    public  PlayListPopuWindow(MainPlayActivity context, List<ResourceVo> resourceVos, String themeId, int position){
+    public  PlayListPopuWindow(MainPlayMusicActivity context, List<ResourceVo> resourceVos, String themeId, int position){
         this.context =context;
         this.position = position;
         this.themeId = themeId;

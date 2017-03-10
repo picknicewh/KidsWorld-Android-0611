@@ -77,7 +77,9 @@ public class CourseListAdapter extends BaseAdapter  {
         });
         viewHold.tv_describle.setText(vo.getTitle());
         if (vo.getImgs().size()>0){
-            ImageCache.imageLoader(vo.getImgs().get(0),viewHold.iv_course);
+         //   ImageCache.imageLoader(vo.getImgs().get(0),viewHold.iv_course);
+            viewHold.iv_course.setImageBitmap(ImageCache.getBitmap(vo.getImgs().get(0)));
+            viewHold.iv_course.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
         return view;
     }
@@ -87,7 +89,6 @@ public class CourseListAdapter extends BaseAdapter  {
          ImageView iv_course;
          TextView tv_delete;
          TextView tv_describle;
-
         public ViewHold(View view) {
             tv_delete = (TextView) view.findViewById(R.id.tv_delete);
             tv_date= (TextView) view.findViewById(R.id.tv_date);

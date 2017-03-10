@@ -215,6 +215,10 @@ public class Apiurl {
 
     //=========================乐园================================
     /**
+     * 搜索资源
+     */
+    public static final String SERACHRESOURCE = "/rakuen/resourceSearch.do";
+    /**
      * 获取banner图
      */
     public static final String GETBANNERLIST = "/rakuen/newGetBanner.do";
@@ -225,7 +229,7 @@ public class Apiurl {
     /**
      * 获取主题列表
      */
-    public static final String GETHEMELIST= "  /rakuen/getThemeList.do";
+    public static final String GETHEMELIST= "/rakuen/getThemeList.do";
     /**
      * 获取资讯
      */

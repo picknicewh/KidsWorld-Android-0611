@@ -63,9 +63,9 @@ public class ConsultInfoVo {
         private int pay;
         private int searchCount;
         private String updateName;
-        private long updateTime;
+        private String updateTime;
         private String createName;
-        private long createTime;
+        private String createTime;
         private String subtitlesUrl;
         private int commentCount;
         private int pvcount;
@@ -81,10 +81,10 @@ public class ConsultInfoVo {
         private String labelName;
         private String labelId;
         private String resourceUrl;
-        private int fileSize;
+        private String fileSize;
         private String resourceId;
         private int source;
-        private int length;
+        private String length;
         private int type;
         private String content;
         private String description;
@@ -171,11 +171,11 @@ public class ConsultInfoVo {
         this.searchCount = searchCount;
     }
 
-    public long getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(long updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -203,11 +203,11 @@ public class ConsultInfoVo {
         this.subtitlesUrl = subtitlesUrl;
     }
 
-    public long getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(long createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
@@ -331,11 +331,11 @@ public class ConsultInfoVo {
         this.resourceId = resourceId;
     }
 
-    public int getFileSize() {
+    public String getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(int fileSize) {
+    public void setFileSize(String fileSize) {
         this.fileSize = fileSize;
     }
 
@@ -347,11 +347,11 @@ public class ConsultInfoVo {
         this.source = source;
     }
 
-    public int getLength() {
+    public String getLength() {
         return length;
     }
 
-    public void setLength(int length) {
+    public void setLength(String length) {
         this.length = length;
     }
 

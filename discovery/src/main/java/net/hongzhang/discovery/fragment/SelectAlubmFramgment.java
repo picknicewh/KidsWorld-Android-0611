@@ -16,14 +16,16 @@ import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.SelectAlbumAdapter;
 
 import net.hongzhang.discovery.modle.CompilationVo;
-import net.hongzhang.discovery.util.AlbumSelectContract;
-import net.hongzhang.discovery.util.AlbumSelectPresenter;
+import net.hongzhang.discovery.presenter.AlbumSelectContract;
+import net.hongzhang.discovery.presenter.AlbumSelectPresenter;
+import net.hongzhang.discovery.presenter.MainRecommendPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by wanghua on 2016/12/19.
+ * 精选资源列表
  */
 public class SelectAlubmFramgment extends BaseFragement implements AlbumSelectContract.View, View.OnClickListener {
     /**
@@ -96,7 +98,12 @@ public class SelectAlubmFramgment extends BaseFragement implements AlbumSelectCo
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 CompilationVo compilationVo = compilationVos.get(position);
-                presenter.startMusicActivity(String.valueOf(compilationVo.getAlbumId()),null);
+                if (type== MainRecommendPresenter.TYPE_MUISC){
+                    presenter.startMusicActivity(String.valueOf(compilationVo.getAlbumId()),null);
+                }else if (type== MainRecommendPresenter.TYPE_VIDEO){
+                    presenter.starVedioActivity(String.valueOf(compilationVo.getAlbumId()));
+                }
+
             }
         });
         if (adapter!=null){
@@ -126,16 +133,6 @@ public class SelectAlubmFramgment extends BaseFragement implements AlbumSelectCo
         iv_load_more.setVisibility(View.GONE);
         ll_load_more.setClickable(false);
     }
-    @Override
-    public void showLoadingDialog() {
-        super.showLoadingDialog();
-    }
-
-    @Override
-    public void stopLoadingDialog() {
-        super.stopLoadingDialog();
-    }
-
     @Override
     public void onClick(View view) {
         if (view.getId()==R.id.ll_load_more){

@@ -2,8 +2,6 @@ package net.hongzhang.user.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.RadioButton;
@@ -11,6 +9,7 @@ import android.widget.RadioButton;
 import com.umeng.analytics.MobclickAgent;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
+import net.hongzhang.baselibrary.util.FragmentAdapter;
 import net.hongzhang.user.R;
 import net.hongzhang.user.fragment.ConsultListFragment;
 import net.hongzhang.user.fragment.ResourceListFragment;
@@ -165,27 +164,6 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    /**
-     * 适配器
-     */
-    private class FragmentAdapter extends FragmentPagerAdapter {
-        private List<Fragment> fragmentList;
-
-        public FragmentAdapter(FragmentManager fm, List<Fragment> fragmentList) {
-            super(fm);
-            this.fragmentList = fragmentList;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragmentList.size();
-        }
-    }
 
     @Override
     protected void onDestroy() {

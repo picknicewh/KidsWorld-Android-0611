@@ -10,7 +10,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import net.hongzhang.baselibrary.BaseLibrary;
-import net.hongzhang.discovery.LockActivity;
+import net.hongzhang.discovery.activity.LockActivity;
 
 public class LockScreenService extends Service {
     private final static String TAG = "LockScreenService";

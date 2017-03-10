@@ -1,5 +1,8 @@
 package net.hongzhang.discovery.modle;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 作者： wh
  * 时间： 2016/11/30
@@ -8,7 +11,7 @@ package net.hongzhang.discovery.modle;
  * 附加注释：
  * 主要接口：
  */
-public class CompilationVo {
+public class CompilationVo  implements Parcelable{
     /**
      * albumId : 181
      * albumName : 顽皮公主不出嫁
@@ -85,6 +88,35 @@ public class CompilationVo {
 
     private int pvcount;
 
+
+    protected CompilationVo(Parcel in) {
+        size = in.readString();
+        isEnd = in.readInt();
+        brief = in.readString();
+        favorites = in.readInt();
+        isUpdate = in.readInt();
+        isTheme = in.readInt();
+        searchCount = in.readInt();
+        isFavorites = in.readInt();
+        currentProgress = in.readString();
+        albumId = in.readString();
+        albumName = in.readString();
+        imageUrl = in.readString();
+        createTime = in.readString();
+        pvcount = in.readInt();
+    }
+
+    public static final Creator<CompilationVo> CREATOR = new Creator<CompilationVo>() {
+        @Override
+        public CompilationVo createFromParcel(Parcel in) {
+            return new CompilationVo(in);
+        }
+
+        @Override
+        public CompilationVo[] newArray(int size) {
+            return new CompilationVo[size];
+        }
+    };
 
     public int getPvcount() {
         return pvcount;
@@ -197,5 +229,28 @@ public class CompilationVo {
 
     public void setSearchCount(int searchCount) {
         this.searchCount = searchCount;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(size);
+        parcel.writeInt(isEnd);
+        parcel.writeString(brief);
+        parcel.writeInt(favorites);
+        parcel.writeInt(isUpdate);
+        parcel.writeInt(isTheme);
+        parcel.writeInt(searchCount);
+        parcel.writeInt(isFavorites);
+        parcel.writeString(currentProgress);
+        parcel.writeString(albumId);
+        parcel.writeString(albumName);
+        parcel.writeString(imageUrl);
+        parcel.writeString(createTime);
+        parcel.writeInt(pvcount);
     }
 }

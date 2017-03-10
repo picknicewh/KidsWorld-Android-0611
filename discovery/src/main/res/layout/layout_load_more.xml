@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:padding="@dimen/space"
+        android:gravity="center"
+        android:id="@+id/ll_load_more"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_load_more"
+            android:text="查看更多"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_load_more"
+            android:layout_marginLeft="@dimen/space"
+            android:src="@mipmap/load_more"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+    </LinearLayout>
+</LinearLayout>

@@ -159,4 +159,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         MobclickAgent.onPageEnd(className);
         MobclickAgent.onPause(this);
     }
+
 }

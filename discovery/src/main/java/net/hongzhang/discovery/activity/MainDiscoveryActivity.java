@@ -20,8 +20,8 @@ import net.hongzhang.discovery.adapter.MainConsultAdapter;
 import net.hongzhang.discovery.adapter.MainResourceAdapter;
 import net.hongzhang.discovery.modle.CompilationVo;
 import net.hongzhang.discovery.modle.ConsultInfoVo;
-import net.hongzhang.discovery.util.MainRecommendContract;
-import net.hongzhang.discovery.util.MainRecommendPresenter;
+import net.hongzhang.discovery.presenter.MainRecommendContract;
+import net.hongzhang.discovery.presenter.MainRecommendPresenter;
 import net.hongzhang.discovery.widget.BannerView;
 import net.hongzhang.user.mode.BannerVo;
 

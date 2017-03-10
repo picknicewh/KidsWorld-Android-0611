@@ -13,7 +13,8 @@
         android:id="@+id/iv_course"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_img_error"
         />
     <LinearLayout
         android:padding="@dimen/space"

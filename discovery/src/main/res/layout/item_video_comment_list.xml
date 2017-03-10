@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/rl_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space">
+        <RelativeLayout
+            android:id="@+id/fl"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginRight="@dimen/space">
+            <net.hongzhang.baselibrary.widget.CircleImageView
+                android:id="@+id/iv_head_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/person" />
+            <TextView
+                android:id="@+id/tv_ts_type"
+                android:textColor="@color/white"
+                android:background="@drawable/user_study_selecter"
+                android:layout_alignParentRight="true"
+                android:text="学"
+                android:textSize="12dp"
+                android:gravity="center"
+                android:layout_alignParentBottom="true"
+                android:layout_width="15dp"
+                android:layout_height="15dp" />
+        </RelativeLayout>
+        <TextView
+            android:textColor="@color/theme_text"
+            android:id="@+id/tv_ts_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/fl"
+            android:text="龙龙" />
+
+        <TextView
+            android:textColor="@color/minor_text"
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_ts_name"
+            android:layout_marginTop="@dimen/space_x0.5"
+            android:layout_toRightOf="@+id/fl"
+            android:text="真好看" />
+
+        <TextView
+            android:textColor="@color/minor_text"
+            android:id="@+id/tv_comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="1小时前" />
+
+
+    </RelativeLayout>
+</LinearLayout>

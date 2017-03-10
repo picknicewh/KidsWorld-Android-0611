@@ -12,9 +12,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import net.hongzhang.baselibrary.R;
 import net.hongzhang.baselibrary.util.G;
-import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -79,15 +80,13 @@ public class ViewPagerHead extends LinearLayout {
      * 下滑线的高度
      */
     private int underLineHeight;
+
+
+
     /**
      * 选项卡的个数
      */
     private int Tabcount;
-
-    /**
-     * 选项卡的title
-     */
-    private List<String>  titles;
     /**
      * 每个选项页面
      */
@@ -112,17 +111,12 @@ public class ViewPagerHead extends LinearLayout {
         init(context);
     }
     private void init(final Context context){
-        titles = new ArrayList<>();
-        titles.add("全部");
-        titles.add("精选");
         this.setOrientation(LinearLayout.VERTICAL);
         this.setBackgroundColor(Color.WHITE);
-        drawHead(context,0);
-        drawLine(context,0);
     }
-    public void setAdapter(final Context context,List<Fragment> fragments,FragmentManager fragmentManager){
+    public void setAdapter(final Context context,List<Fragment> fragments,FragmentManager fragmentManager,List<String> titles){
         if (fragmentManager!=null&& fragments!=null){
-            viewPager.setAdapter(new FragmentAdapter(fragmentManager,fragments));
+            viewPager.setAdapter(new FragmentAdapter(fragmentManager,fragments,titles));
             viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -140,6 +134,11 @@ public class ViewPagerHead extends LinearLayout {
                 }
             });
         }
+        if (this.getChildCount()==0){
+            drawHead(context,0);
+            drawLine(context,0);
+        }
+
     }
     private void drawHead(Context context,int checkedPosition){
         LinearLayout linearLayout = new LinearLayout(context);
@@ -150,6 +149,7 @@ public class ViewPagerHead extends LinearLayout {
         linearLayout.setLayoutParams(layoutParams);
         for (int i= 0 ;i < Tabcount;i++ ){
             TextView textView = getTextView(context,i);
+
             if (i==checkedPosition){
                 textView.setTextColor(selectTextcolor);
             }else {
@@ -169,9 +169,7 @@ public class ViewPagerHead extends LinearLayout {
         textView.setLayoutParams(layoutParams);
         textView.setGravity(Gravity.CENTER);
         textView.setTag(i);
-        if (titles.size()>0){
-            textView.setText(titles.get(i));
-        }
+        textView.setText(viewPager.getAdapter().getPageTitle(i).toString());
         textView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -213,14 +211,20 @@ public class ViewPagerHead extends LinearLayout {
      */
     private class  FragmentAdapter extends FragmentPagerAdapter {
         private List<Fragment> fragmentList;
-        public FragmentAdapter(FragmentManager fm, List<Fragment> fragmentList) {
+        private List<String> titles;
+        public FragmentAdapter(FragmentManager fm, List<Fragment> fragmentList,List<String> titles) {
             super(fm);
             this.fragmentList  =fragmentList;
-
+            this.titles = titles;
         }
         @Override
         public Fragment getItem(int position) {
             return fragmentList.get(position);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles.get(position);
         }
 
         @Override
@@ -229,13 +233,6 @@ public class ViewPagerHead extends LinearLayout {
         }
     }
 
-    public List<String> getTitles() {
-        return titles;
-    }
-
-    public void setTitles(List<String> titles) {
-        this.titles = titles;
-    }
     public ViewPager getViewPager() {
         return viewPager;
     }
@@ -256,5 +253,12 @@ public class ViewPagerHead extends LinearLayout {
 
     public void setFragmentManager(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
+    }
+    public int getTabcount() {
+        return Tabcount;
+    }
+
+    public void setTabcount(int tabcount) {
+        Tabcount = tabcount;
     }
 }

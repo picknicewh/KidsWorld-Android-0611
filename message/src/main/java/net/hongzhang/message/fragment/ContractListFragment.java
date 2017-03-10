@@ -7,9 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
@@ -32,6 +30,8 @@ import java.util.List;
 
 import io.rong.imkit.RongIM;
 
+;
+
 /**
  * 作者： wh
  * 时间： 2016/7/15
@@ -53,11 +53,11 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
     /**
      * 显示的标题
      */
-    private LinearLayout ll_title;
+  //  private LinearLayout ll_title;
     /**
      * 显示大写字母
      */
-    private TextView tv_title_cat;
+  //  private TextView tv_title_cat;
     /**
      * 字母对话框
      */
@@ -103,9 +103,9 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
     private void init(View view){
         lv_parent = $(view,R.id.lv_parent);
         tv_noparent = $(view,R.id.tv_no_parent);
-        tv_title_cat = $(view,R.id.tv_title_cat);
-        tv_dialog_parent =  $(view,R.id.tv_dialog_parent);
-        ll_title = $(view,R.id.ll_title_parent);
+        tv_dialog_parent = $(view,R.id.tv_dialog_parent);
+    //    tv_title_cat = $(view, tv_title_cat);
+   //     ll_title = $(view,R.id.ll_title_parent);
         sb_parent = $(view,R.id.sb_parent);
         characterParser = CharacterParser.getInstance();
         pinyinComparator = new PinyinComparator();
@@ -116,21 +116,7 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
         List<ContractInfoVo> contractInfoVoa=  helper.getFriendInformVos(database);
         setFriendList(contractInfoVoa);
         initList();
-        //  getfriendinfor()
     }
-  /*  *//**
-     * 获取所有所有好友信息
-     *//*
-    private  void getfriendinfor(){
-        String dbname;
-        Map<String,Object> params = new HashMap<>();
-        params.put("tsId",UserMessage.getInstance(getActivity()).getTsId());
-        //1=群，2=老师，3=家长
-        params.put("type",0);
-        dbname  = "contract_teacher";
-        Type type =new TypeToken<Result<List<GroupInfoVo>>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.MESSAGE_GETGTOUP,params,this,2,dbname);
-    }*/
     /**
      * 显示列表
      */
@@ -150,12 +136,12 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
             }
         });
         itemclick();
-        itemScroll();
+      //  itemScroll();
     }
     /**
      * 列表滑动事件
      */
-    private void itemScroll(){
+  /*  private void itemScroll(){
         lv_parent.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -198,7 +184,7 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
                 lastFirstVisibleItem = firstVisibleItem;
             }
         });
-    }
+    }*/
     /**
      * 列表点击事件
      */
@@ -282,21 +268,6 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
         }
         return groupMember;
     }
-  /*  @Override
-    public void onSuccess(String uri, Object date) {
-        Result<List<GroupInfoVo>> data = (Result<List<GroupInfoVo>>) date;
-        if (data!=null){
-            List<GroupInfoVo>  groupJsonList = data.getData();
-            if (groupJsonList!=null||groupJsonList.size()!=0){
-                setFriendList(groupJsonList.get(0).getMenberList());
-                initList();
-            }
-        }
-    }
 
-    @Override
-    public void onError(String uri, String error) {
-        Toast.makeText(getActivity(),error,Toast.LENGTH_SHORT).show();
-    }*/
 }
 

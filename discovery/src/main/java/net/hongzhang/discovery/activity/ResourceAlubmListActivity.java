@@ -7,9 +7,9 @@ import android.support.v4.view.ViewPager;
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.widget.ViewPagerHead;
 import net.hongzhang.discovery.R;
-import net.hongzhang.discovery.fragment.AllAlubmFramgment;
+import net.hongzhang.discovery.fragment.AllAlubmListFragment;
 import net.hongzhang.discovery.fragment.SelectAlubmFramgment;
-import net.hongzhang.discovery.util.MainRecommendPresenter;
+import net.hongzhang.discovery.presenter.MainRecommendPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class ResourceAlubmListActivity extends BaseActivity {
         type = getIntent().getIntExtra("type", MainRecommendPresenter.TYPE_MUISC);
         if (type==MainRecommendPresenter.TYPE_MUISC){
             setCententTitle("幼儿听听");
-        }else if (type==MainRecommendPresenter.TYPE_MUISC){
+        }else if (type==MainRecommendPresenter.TYPE_VIDEO){
             setCententTitle("幼儿课堂");
         }
         setRightImage(R.mipmap.ic_search);
@@ -68,10 +68,11 @@ public class ResourceAlubmListActivity extends BaseActivity {
         bundle.putInt("type",type);
         SelectAlubmFramgment alubmFramgment =  new SelectAlubmFramgment();
         alubmFramgment.setArguments(bundle);
+        AllAlubmListFragment allAlubmFramgment =  new AllAlubmListFragment();
+        allAlubmFramgment.setArguments(bundle);
         fragments.add(alubmFramgment);
-        fragments.add(new AllAlubmFramgment());
-        viewPagerHead.setTitles(titles);
+        fragments.add(allAlubmFramgment);
         viewPagerHead.setViewPager(viewPager);
-        viewPagerHead.setAdapter(this,fragments,getSupportFragmentManager());
+        viewPagerHead.setAdapter(this,fragments,getSupportFragmentManager(),titles);
     }
 }
