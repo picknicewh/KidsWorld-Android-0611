@@ -94,9 +94,11 @@ public class ImageDetailFragment extends Fragment implements View.OnLongClickLis
                     progressBar.setVisibility(View.GONE);
                 }
             });
-
-            if (ImageCache.getBitmap(mImageUrl)==null){
-
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final Bitmap bitmap = ImageCache.getBitmap(mImageUrl);
+                    if (bitmap == null) {
               /*  ImageCache.imageLoader(mImageUrl, mImageView, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
@@ -148,9 +150,17 @@ public class ImageDetailFragment extends Fragment implements View.OnLongClickLis
                         mAttacher.update();
                     }
                 });*/
-            }else {
-                mImageView.setImageBitmap(ImageCache.getBitmap(mImageUrl));
-            }
+                    } else {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mImageView.setImageBitmap(bitmap);
+                            }
+                        });
+                    }
+                }
+            }).start();
+
         } else if (source.equals("local")) {
             Bitmap bitmap = getLoacalBitmap(mImageUrl);
             mImageView.setImageBitmap(bitmap);
@@ -159,6 +169,7 @@ public class ImageDetailFragment extends Fragment implements View.OnLongClickLis
 
     /**
      * 加载本地图片
+     *
      * @param url
      * @return
      */
