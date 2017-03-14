@@ -40,12 +40,12 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ScanActivity extends Activity implements  CameraManager.PreviewFrameShotListener, SurfaceHolder.Callback, DecodeThread.DecodeListener, OkHttpListener, CameraManager2.PreviewFrameShotListener ,View.OnClickListener{
+public class ScanActivity extends Activity implements CameraManager.PreviewFrameShotListener, SurfaceHolder.Callback, DecodeThread.DecodeListener, OkHttpListener, CameraManager2.PreviewFrameShotListener, View.OnClickListener {
     private static final long VIBRATE_DURATION = 200L;
     /**
      * 预览view
      */
-   private SurfaceView preView;
+    private SurfaceView preView;
     /**
      * 扫描view
      */
@@ -70,7 +70,7 @@ public class ScanActivity extends Activity implements  CameraManager.PreviewFram
     private final static String[] PERMISSIONS = new String[]{
             Manifest.permission.CAMERA
     };
-    private   String sign;
+    private String sign;
     private String AND_KEY = "9FHGghjGHJgjy57JBKnjklmkllkjnHKLM";
     /**
      * 扫描
@@ -100,15 +100,15 @@ public class ScanActivity extends Activity implements  CameraManager.PreviewFram
      * 关闭
      */
     private TextView tv_close2;
-    private  String token;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
         G.setTranslucent(this);
-        PermissionsChecker checker=PermissionsChecker.getInstance(this);
-        if(checker.lacksPermissions(PERMISSIONS)){
+        PermissionsChecker checker = PermissionsChecker.getInstance(this);
+        if (checker.lacksPermissions(PERMISSIONS)) {
             checker.getPerMissions(PERMISSIONS);
             return;
         }
@@ -116,7 +116,7 @@ public class ScanActivity extends Activity implements  CameraManager.PreviewFram
     }
 
 
-    private void initview(){
+    private void initview() {
         preView = (SurfaceView) findViewById(R.id.sv_preview);
         scanView = (ScanView) findViewById(R.id.cv_capture);
         rl_scan = (RelativeLayout) findViewById(R.id.rl_scan);
@@ -151,13 +151,14 @@ public class ScanActivity extends Activity implements  CameraManager.PreviewFram
         mDecodeThread.execute();
         //解析完成
     }
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        if (!  mCameraManager.initCamera(holder)){
+        if (!mCameraManager.initCamera(holder)) {
             G.getAppDetailSettingIntent(this);
         }
         if (!mCameraManager.isCameraAvailable()) {
-            Toast.makeText(this,"相机不存在!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "相机不存在!", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -166,8 +167,11 @@ public class ScanActivity extends Activity implements  CameraManager.PreviewFram
             mCameraManager.requestPreviewFrameShot();
         }
     }
+
     @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {}
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+    }
+
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         mCameraManager.stopPreview();
@@ -182,22 +186,24 @@ public class ScanActivity extends Activity implements  CameraManager.PreviewFram
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         vibrator.vibrate(VIBRATE_DURATION);
         isDecoding = false;
-        long time  = System.currentTimeMillis();
+        long time = System.currentTimeMillis();
         String path = result.getText().toString();
-        if (path.contains("sign=")&&path.contains("&pushId=")&&path.contains("&create_time=")){
-            String hashValue="/app/qRCodeLogin"+time+AND_KEY;
-            String sign = time+"-"+MD5Utils.encode(hashValue);
-            String md5 = getmd5Code(path);
-            scanLogin(md5,sign);
-        }else {
-            Toast.makeText(this,"二维码错误！",Toast.LENGTH_SHORT).show();
+        if (path.contains("sign=") && path.contains("&pushId=") && path.contains("&create_time=")) {
+            String hashValue = "/app/qRCodeLogin" + time + AND_KEY;
+            String sign = time + "-" + MD5Utils.encode(hashValue);
+            String md5 = getMD5Code(path);
+            scanLogin(md5, sign);
+        } else {
+            Toast.makeText(this, "二维码错误！", Toast.LENGTH_SHORT).show();
         }
 
 
     }
-    /**@param  path
+
+    /**
+     * @param path
      */
-    private String  getmd5Code(String path){
+    private String getMD5Code(String path) {
         Uri uri = Uri.parse(path);
         String sign = uri.getQueryParameter("sign");
         String pushId = uri.getQueryParameter("pushId");
@@ -205,36 +211,41 @@ public class ScanActivity extends Activity implements  CameraManager.PreviewFram
         sign = MD5Utils.encode(sign);
         pushId = MD5Utils.encode(pushId);
         create_time = MD5Utils.encode(create_time);
-        String md5 = create_time+sign + pushId;
-        return  md5;
-    }
-    private void qRCodeConformLogin(String token,String sign){
-        Map<String,Object> param = new HashMap<>();
-        param.put("token",token);
-        param.put("sign",sign );
-        param.put("requestSource","android");
-        Type type = new TypeToken<net.hongzhang.baselibrary.mode.Result<String>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.CONFIRMCODELOGIN,param,this);
+        String md5 = create_time + sign + pushId;
+        return md5;
     }
 
-    private void scanLogin(String md5,String sign){
-        Map<String,Object> param = new HashMap<>();
-        param.put("md5",md5);
-        param.put("tsId", UserMessage.getInstance(this).getTsId());
-        param.put("requestSource","android");
-        param.put("sign",sign);
-        Type type = new TypeToken<net.hongzhang.baselibrary.mode.Result<ScanVo>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.SCANLOGIN,param,this);
+    private void qRCodeConformLogin(String token, String sign) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("token", token);
+        param.put("sign", sign);
+        param.put("requestSource", "android");
+        Type type = new TypeToken<net.hongzhang.baselibrary.mode.Result<String>>() {
+        }.getType();
+        OkHttps.sendPost(type, Apiurl.CONFIRMCODELOGIN, param, this);
     }
+
+    private void scanLogin(String md5, String sign) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("md5", md5);
+        param.put("tsId", UserMessage.getInstance(this).getTsId());
+        param.put("requestSource", "android");
+        param.put("sign", sign);
+        Type type = new TypeToken<net.hongzhang.baselibrary.mode.Result<ScanVo>>() {
+        }.getType();
+        OkHttps.sendPost(type, Apiurl.SCANLOGIN, param, this);
+    }
+
     @Override
     public void onDecodeFailed(LuminanceSource luminanceSource) {
-        if ( !(luminanceSource instanceof PlanarYUVLuminanceSource)) {
+        if (!(luminanceSource instanceof PlanarYUVLuminanceSource)) {
             Toast.makeText(this, "没有找到二维码", Toast.LENGTH_SHORT).show();
         }
         isDecoding = false;
         //继续扫描
         mCameraManager.requestPreviewFrameShot();
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -250,19 +261,19 @@ public class ScanActivity extends Activity implements  CameraManager.PreviewFram
 
     @Override
     public void onSuccess(String uri, Object date) {
-        if (uri.equals(Apiurl.SCANLOGIN)){
-            if (date!=null){
+        if (uri.equals(Apiurl.SCANLOGIN)) {
+            if (date != null) {
                 net.hongzhang.baselibrary.mode.Result<ScanVo> data = (net.hongzhang.baselibrary.mode.Result<ScanVo>) date;
-                ScanVo  scanVo = data.getData();
+                ScanVo scanVo = data.getData();
                 token = scanVo.getToken();
                 rl_conform_login.setVisibility(View.VISIBLE);
                 rl_scan.setVisibility(View.GONE);
             }
-        }else if (uri.equals(Apiurl.CONFIRMCODELOGIN)){
-            if (date!=null){
+        } else if (uri.equals(Apiurl.CONFIRMCODELOGIN)) {
+            if (date != null) {
                 net.hongzhang.baselibrary.mode.Result<String> data = (net.hongzhang.baselibrary.mode.Result<String>) date;
-                String  result = data.getData();
-                Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+                String result = data.getData();
+                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
@@ -270,25 +281,25 @@ public class ScanActivity extends Activity implements  CameraManager.PreviewFram
 
     @Override
     public void onError(String uri, String error) {
-        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onClick(View view) {
-         int   viewId = view.getId();
-        if (viewId==R.id.tv_conform_login){
-            long time  = System.currentTimeMillis();
-            String hasvalue ="/app/qRCodeConfirmLogin"+time+AND_KEY;
-            String sign = time+"-"+MD5Utils.encode(hasvalue);
+        int viewId = view.getId();
+        if (viewId == R.id.tv_conform_login) {
+            long time = System.currentTimeMillis();
+            String hasValue = "/app/qRCodeConfirmLogin" + time + AND_KEY;
+            String sign = time + "-" + MD5Utils.encode(hasValue);
             String mToken = MD5Utils.encode(token);
-            qRCodeConformLogin(mToken,sign);
-        }else if (viewId==R.id.tv_concel_login){
+            qRCodeConformLogin(mToken, sign);
+        } else if (viewId == R.id.tv_concel_login) {
             rl_scan.setVisibility(View.VISIBLE);
             rl_conform_login.setVisibility(View.GONE);
-        }else if (viewId==R.id.tv_close1){
-             finish();
-        }else if (viewId==R.id.tv_close2){
-              finish();
+        } else if (viewId == R.id.tv_close1) {
+            finish();
+        } else if (viewId == R.id.tv_close2) {
+            finish();
         }
     }
 }
