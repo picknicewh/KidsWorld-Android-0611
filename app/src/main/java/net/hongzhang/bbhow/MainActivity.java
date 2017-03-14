@@ -24,7 +24,7 @@ import net.hongzhang.baselibrary.util.BroadcastConstant;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.MyConnectionStatusListener;
 import net.hongzhang.baselibrary.util.UserMessage;
-import net.hongzhang.discovery.fragment.DiscoveryFragement;
+import net.hongzhang.discovery.activity.MainDiscoveryFragment;
 import net.hongzhang.login.util.UserAction;
 import net.hongzhang.message.fragment.MessageFragement;
 import net.hongzhang.school.SchoolFragement;
@@ -93,7 +93,8 @@ public class MainActivity extends JPushBaseActivity {
     /**
      * 乐园
      */
-    private DiscoveryFragement discoveryFragement;
+    //private DiscoveryFragement discoveryFragement;
+    private MainDiscoveryFragment discoveryFragement;
     @Bind(R.id.tv_discovery)
     TextView tvDiscovery;
     @Bind(R.id.iv_discovery)
@@ -167,7 +168,8 @@ public class MainActivity extends JPushBaseActivity {
     private void initViewpager() {
         statusFragement = new StatusFragement();
         schoolFragement = new SchoolFragement();
-        discoveryFragement = new DiscoveryFragement();
+        //discoveryFragement = new DiscoveryFragement();
+        discoveryFragement = new MainDiscoveryFragment();
         messageFragement = new MessageFragement();
         ft = getSupportFragmentManager().beginTransaction();//获取FragmentTransaction 实例
         ft.replace(R.id.content, discoveryFragement); //使用DetailsFragment 的实例
