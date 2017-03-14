@@ -1,7 +1,7 @@
 package net.hongzhang.discovery.presenter;
 
 import net.hongzhang.discovery.modle.CompilationVo;
-import net.hongzhang.discovery.modle.ConsultInfoVo;
+import net.hongzhang.discovery.modle.ResourceVo;
 import net.hongzhang.user.mode.BannerVo;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class MainRecommendContract {
     public  interface View{
         void setRecommendVoMusicList(List<CompilationVo> compilationVos );
         void setRecommendVoClassList(List<CompilationVo> compilationVos);
-        void setRecommendVoConsultList(List<ConsultInfoVo> consultList);
+        void setRecommendVoConsultList(List<ResourceVo> resourceVoList);
         void setBannerList(List<BannerVo> bannerList);
         void rushData();
         void showLoadingDialog();

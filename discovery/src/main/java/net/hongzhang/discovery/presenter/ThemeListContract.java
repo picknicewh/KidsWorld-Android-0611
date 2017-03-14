@@ -14,15 +14,15 @@ import java.util.List;
  */
 
 
-public class AlbumAllContract {
+public class ThemeListContract {
 public  interface  View{
-    void setAllAlbumList(List<ThemeVo> themeVos);
+    void setThemeList(List<ThemeVo> themeVos);
     void showLoadingDialog();
     void stopLoadingDialog();
 }
 public interface Presenter{
-    void getAllAlbumList( int type,int pageSize,int pageNumber);
-    void startMusicActivity(String themeId,String resourceId);
-    void starVedioActivity(String themeId);
+    void getThemeList( int type,int pageSize,int pageNumber);
+    void starThemeVoListActivity(String themeId,String themeName,int type);
+
 }
 }

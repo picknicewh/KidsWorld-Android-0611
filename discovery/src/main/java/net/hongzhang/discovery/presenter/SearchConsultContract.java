@@ -1,6 +1,7 @@
 package net.hongzhang.discovery.presenter;
 
-import net.hongzhang.discovery.modle.ConsultInfoVo;
+import net.hongzhang.discovery.modle.ResourceVo;
+import net.hongzhang.discovery.modle.SearchKeyVo;
 
 import java.util.List;
 
@@ -15,14 +16,17 @@ import java.util.List;
 
 
 public interface SearchConsultContract {
-    public  interface  View{
-        void setConsultList(List<ConsultInfoVo> consultInfoVoList);
+    public interface View {
+        void setConsultList(List<ResourceVo> consultInfoVoList);
+        void setSearchHistoryList(List<SearchKeyVo> searchKeyVoList);
         void setConsultInfoSize(int size);
         void showLoadingDialog();
         void stopLoadingDialog();
     }
-    public interface Presenter{
+    public interface Presenter {
         void getSearchResourceList(String tsId, int type, int pageSize, int pageNumber, String account_id, String tag);
+        void getSearchHistoryList();
+        void insertKey(String tag);
         void startConsultActivity(String resourceId);
     }
 }

@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorAccent"
     android:orientation="vertical">
 
     <LinearLayout
@@ -64,10 +66,15 @@
             android:textColor="@color/white"
             android:textSize="@dimen/ts_medium" />
     </LinearLayout>
-
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ListView
+
         android:id="@+id/lv_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </LinearLayout>

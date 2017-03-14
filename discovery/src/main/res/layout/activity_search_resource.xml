@@ -3,18 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_search_resource"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
-    <include layout="@layout/layout_search"/>
-    <net.hongzhang.baselibrary.widget.ViewPagerHead
-        android:visibility="gone"
-        android:id="@+id/vph_search"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_search" />
+
+    <ListView
+        android:id="@+id/lv_search_history_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/ll_search_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:vphTabcount="3"/>
-    <android.support.v4.view.ViewPager
-        android:visibility="gone"
-        android:id="@+id/vp_search"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <net.hongzhang.baselibrary.widget.ViewPagerHead
+            android:id="@+id/vph_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:vphTabcount="3" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
 </LinearLayout>

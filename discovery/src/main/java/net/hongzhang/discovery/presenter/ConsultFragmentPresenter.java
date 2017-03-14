@@ -1,6 +1,7 @@
 package net.hongzhang.discovery.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -10,7 +11,8 @@ import net.hongzhang.baselibrary.network.Apiurl;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
-import net.hongzhang.discovery.modle.ConsultInfoVo;
+import net.hongzhang.discovery.activity.ConsultActivity;
+import net.hongzhang.discovery.modle.ResourceVo;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -30,12 +32,12 @@ public class ConsultFragmentPresenter implements ConsultFragmentContract.Present
 
     private Context context;
     private ConsultFragmentContract.View view;
-    private List<ConsultInfoVo> consultInfoVoList;
+    private List<ResourceVo> resourceVoList;
 
     public ConsultFragmentPresenter(Context context, ConsultFragmentContract.View view) {
         this.context = context;
         this.view = view;
-        consultInfoVoList = new ArrayList<>();
+        resourceVoList = new ArrayList<>();
     }
 
     @Override
@@ -47,7 +49,7 @@ public class ConsultFragmentPresenter implements ConsultFragmentContract.Present
         map.put("themeId", themeId);
         map.put("type", 1);
         map.put("account_id", account_id);
-        Type mType = new TypeToken<Result<List<ConsultInfoVo>>>() {
+        Type mType = new TypeToken<Result<List<ResourceVo>>>() {
         }.getType();
         OkHttps.sendPost(mType, Apiurl.GETRECONSULT, map, this);
         view.showLoadingDialog();
@@ -56,18 +58,20 @@ public class ConsultFragmentPresenter implements ConsultFragmentContract.Present
 
     @Override
     public void starConsultActivity(String resourceId) {
-
+        Intent intent = new Intent(context ,ConsultActivity.class);
+        intent.putExtra("resourceId",resourceId);
+        context.startActivity(intent);
     }
     @Override
     public void onSuccess(String uri, Object date) {
         view.stopLoadingDialog();
         if (uri.equals(Apiurl.GETRECONSULT)) {
             if (date != null) {
-                Result<List<ConsultInfoVo>> result = (Result<List<ConsultInfoVo>>) date;
-                List<ConsultInfoVo> consultInfoVos = result.getData();
-                consultInfoVoList.addAll(consultInfoVos);
-                view.setConsultList(consultInfoVoList);
-                view.setConsultInfoSize(consultInfoVos.size());
+                Result<List<ResourceVo>> result = (Result<List<ResourceVo>>) date;
+                List<ResourceVo> resourceVos = result.getData();
+                resourceVoList.addAll(resourceVos);
+                view.setConsultList(resourceVos);
+                view.setConsultInfoSize(resourceVos.size());
             }
         }
 

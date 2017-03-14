@@ -10,8 +10,12 @@ import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
-import net.hongzhang.discovery.modle.ConsultInfoVo;
+import net.hongzhang.discovery.activity.ConsultActivity;
+import net.hongzhang.discovery.modle.ResourceVo;
 import net.hongzhang.discovery.modle.ResourceVos;
+import net.hongzhang.discovery.modle.SearchKeyVo;
+import net.hongzhang.discovery.util.SearchHistoryDb;
+import net.hongzhang.discovery.util.SearchHistoryDbHelper;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -32,12 +36,17 @@ import java.util.Map;
 public class SearchConsultPresenter implements SearchConsultContract.Presenter, OkHttpListener {
     private Context context;
     private SearchConsultContract.View view;
-    private List<ConsultInfoVo> consultInfoVoList;
+    private List<ResourceVo> resourceVoList;
+    private SearchHistoryDb db;
+    private SearchHistoryDbHelper helper;
 
     public SearchConsultPresenter(Context context, SearchConsultContract.View view) {
         this.context = context;
         this.view = view;
-        consultInfoVoList = new ArrayList<>();
+        resourceVoList = new ArrayList<>();
+        db = new SearchHistoryDb(context);
+        helper = SearchHistoryDbHelper.getinstance();
+        getSearchHistoryList();
     }
 
     @Override
@@ -51,15 +60,25 @@ public class SearchConsultPresenter implements SearchConsultContract.Presenter, 
         map.put("account_id", account_id);
         Type mType = new TypeToken<Result<ResourceVos>>() {
         }.getType();
-        OkHttps.sendPost(mType, Apiurl.SERACHRESOURCE, map, this,2,"search");
+        OkHttps.sendPost(mType, Apiurl.SERACHRESOURCE, map, this, 2, "search");
         view.showLoadingDialog();
     }
 
     @Override
     public void startConsultActivity(String resourceId) {
-        Intent intent = new Intent();
+        Intent intent = new Intent(context, ConsultActivity.class);
         intent.putExtra("resourceId", resourceId);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void getSearchHistoryList() {
+        List<SearchKeyVo> searchKeyVos = helper.getKeyList(db.getReadableDatabase(), SearchHistoryDb.TABLENAME3);
+        view.setSearchHistoryList(searchKeyVos);
+    }
+    @Override
+    public void insertKey(String tag) {
+        helper.insert(db.getWritableDatabase(), tag, SearchHistoryDb.TABLENAME3);
     }
 
     @Override
@@ -69,10 +88,10 @@ public class SearchConsultPresenter implements SearchConsultContract.Presenter, 
             if (date != null) {
                 Result<ResourceVos> result = (Result<ResourceVos>) date;
                 ResourceVos resourceVos = result.getData();
-                List<ConsultInfoVo> consultInfoVos = resourceVos.getResourceManageList();
-                consultInfoVoList.addAll(consultInfoVos);
-                view.setConsultList(consultInfoVos);
-                view.setConsultInfoSize(consultInfoVos.size());
+                List<ResourceVo> resourceVos1 = resourceVos.getResourceManageList();
+                resourceVoList.addAll(resourceVos1);
+                view.setConsultList(resourceVoList);
+                view.setConsultInfoSize(resourceVos1.size());
             }
         }
     }

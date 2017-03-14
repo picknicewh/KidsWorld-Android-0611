@@ -26,16 +26,16 @@ import java.util.List;
  * 主要接口：
  * ================================================
  */
-public class ResourceSearchAdapter extends RecyclerView.Adapter<ResourceSearchAdapter.ViewHolder>{
+public class CompilationAdapter extends RecyclerView.Adapter<CompilationAdapter.ViewHolder>{
     private Context context;
     private List<CompilationVo> compilationVos;
     private onItemClickListener itemClickListener = null;
-    public ResourceSearchAdapter(Context context, List<CompilationVo> compilationVos) {
+    public CompilationAdapter(Context context, List<CompilationVo> compilationVos) {
         this.context = context;
         this.compilationVos = compilationVos;
     }
     @Override
-    public ResourceSearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CompilationAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(
                 context).inflate(R.layout.item_resource_search_list,parent,false);
         ViewHolder holder = new ViewHolder(view);
@@ -43,7 +43,7 @@ public class ResourceSearchAdapter extends RecyclerView.Adapter<ResourceSearchAd
 
     }
     @Override
-    public void onBindViewHolder(final ResourceSearchAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final CompilationAdapter.ViewHolder holder, final int position) {
         CompilationVo compilationVo  = compilationVos.get(position);
         ImageCache.imageLoader(TextUtil.encodeChineseUrl(compilationVo.getImageUrl()), holder.iv_image);
         holder.tv_title.setText(compilationVo.getAlbumName());

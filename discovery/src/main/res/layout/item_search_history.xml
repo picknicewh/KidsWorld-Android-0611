@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+       android:paddingLeft="@dimen/space"
+        android:id="@+id/ll_alumb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:padding="@dimen/space">
+        <TextView
+            android:textColor="@color/text_"
+            android:id="@+id/tv_search_key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索的字" />
+    </LinearLayout>
+</LinearLayout>

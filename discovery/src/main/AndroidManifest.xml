@@ -35,15 +35,17 @@
         <activity
             android:name=".activity.PlayVideoListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
+           />
         <activity
             android:name=".activity.FullPlayVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape" />
         <activity android:name=".activity.ConsultListActivity" />
-        <activity android:name=".activity.SearchResourceActivity"></activity>
-        <activity android:name=".activity.SearchResourceActivity2"></activity>
+        <activity android:name=".activity.SearchResourceActivity" />
+        <activity android:name=".activity.SearchPlayActivity" />
+        <activity android:name=".activity.SearchConsultActivity" />
+        <activity android:name=".activity.ThemeVoListActivity"/>
+        <activity android:name=".activity.ConsultActivity"/>
     </application>
 
 </manifest>

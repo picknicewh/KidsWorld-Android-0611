@@ -1,6 +1,6 @@
 package net.hongzhang.discovery.presenter;
 
-import net.hongzhang.discovery.modle.ConsultInfoVo;
+import net.hongzhang.discovery.modle.ResourceVo;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
 
 public interface ConsultFragmentContract {
     public  interface  View{
-        void setConsultList(List<ConsultInfoVo> consultList);
+        void setConsultList(List<ResourceVo> resourceVos);
         void setConsultInfoSize(int size);
         void showLoadingDialog();
         void stopLoadingDialog();

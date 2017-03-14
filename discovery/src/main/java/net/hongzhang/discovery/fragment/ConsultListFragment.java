@@ -14,12 +14,11 @@ import android.widget.TextView;
 import net.hongzhang.baselibrary.base.BaseFragement;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
-import net.hongzhang.discovery.adapter.ConsultListAdapter;
-import net.hongzhang.discovery.modle.ConsultInfoVo;
+import net.hongzhang.discovery.adapter.ConsultAdapter;
+import net.hongzhang.discovery.modle.ResourceVo;
 import net.hongzhang.discovery.presenter.ConsultFragmentContract;
 import net.hongzhang.discovery.presenter.ConsultFragmentPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,7 +40,7 @@ public class ConsultListFragment extends BaseFragement implements ConsultFragmen
     /**
      * 适配器
      */
-    private ConsultListAdapter adapter;
+    private ConsultAdapter adapter;
     /**
      * 主题id
      */
@@ -54,14 +53,7 @@ public class ConsultListFragment extends BaseFragement implements ConsultFragmen
     private LinearLayout ll_load_more;
     private TextView tv_load_more;
     private ImageView iv_load_more;
-    /**
-     * 没有数据
-     */
-    private TextView tv_nodata;
-    /**
-     * 数据列表
-     */
-    private List<ConsultInfoVo> consultInfoVoList;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,45 +67,33 @@ public class ConsultListFragment extends BaseFragement implements ConsultFragmen
         ll_load_more = $(view, R.id.ll_load_more);
         tv_load_more = $(view, R.id.tv_load_more);
         iv_load_more = $(view, R.id.iv_load_more);
-        tv_nodata = $(view, R.id.tv_nodata);
         initData();
     }
 
     private void initData() {
-        consultInfoVoList = new ArrayList<>();
+
         presenter = new ConsultFragmentPresenter(getActivity(), this);
         themeId = getArguments().getString("themeId");
         presenter.getConsultList(pageNumber, pageSize, themeId, UserMessage.getInstance(getActivity()).getAccount_id());
     }
 
     @Override
-    public void setConsultList(final List<ConsultInfoVo> consultList) {
-        consultInfoVoList = consultList;
-        adapter = new ConsultListAdapter(getActivity(), consultList);
+    public void setConsultList(final List<ResourceVo> resourceVos) {
+
+        adapter = new ConsultAdapter(getActivity(), resourceVos);
         lv_consult.setAdapter(adapter);
         lv_consult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                presenter.starConsultActivity(consultList.get(i).getResourceId());
+                presenter.starConsultActivity(resourceVos.get(i).getResourceId());
             }
         });
     }
 
     @Override
     public void setConsultInfoSize(int size) {
-        if (size == 0) {
-            if (consultInfoVoList.size() > 0) {
-                tv_nodata.setVisibility(View.GONE);
-            } else {
-                tv_nodata.setVisibility(View.VISIBLE);
-                tv_nodata.setText("你还没有收藏哦，快去收藏吧！");
-            }
+        if (size == 0 || size<pageSize) {
             lastPage();
-        } else {
-            if (size < pageSize) {
-                lastPage();
-            }
-            tv_nodata.setVisibility(View.GONE);
         }
     }
 

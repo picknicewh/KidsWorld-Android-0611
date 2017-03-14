@@ -16,9 +16,9 @@ import net.hongzhang.discovery.activity.ConsultListActivity;
 import net.hongzhang.discovery.activity.MainPlayMusicActivity;
 import net.hongzhang.discovery.activity.PlayVideoListActivity;
 import net.hongzhang.discovery.activity.ResourceAlubmListActivity;
-import net.hongzhang.discovery.activity.SearchResourceActivity2;
+import net.hongzhang.discovery.activity.SearchResourceActivity;
 import net.hongzhang.discovery.modle.CompilationVo;
-import net.hongzhang.discovery.modle.ConsultInfoVo;
+import net.hongzhang.discovery.modle.ResourceVo;
 import net.hongzhang.user.activity.CollectActivity;
 import net.hongzhang.user.activity.UserActivity;
 import net.hongzhang.user.mode.BannerVo;
@@ -73,7 +73,7 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
         map.put("pageSize",pageSize);
         map.put("type", 1);
         map.put("account_id",account_id);
-        Type mType = new TypeToken<Result<List<ConsultInfoVo>>>() {}.getType();
+        Type mType = new TypeToken<Result<List<ResourceVo>>>() {}.getType();
         OkHttps.sendPost(mType, Apiurl.GETRECONSULT, map, this);
         view.showLoadingDialog();
     }
@@ -131,7 +131,7 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
 
     @Override
     public void startSearchActivity() {
-        Intent intent = new Intent(context, SearchResourceActivity2.class);
+        Intent intent = new Intent(context, SearchResourceActivity.class);
         context.startActivity(intent);
     }
 
@@ -173,9 +173,9 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
             }
         }else if (uri.equals(Apiurl.GETRECONSULT)){
             if (date!=null){
-                Result<List<ConsultInfoVo>> result = (Result<List<ConsultInfoVo>>) date;
-                List<ConsultInfoVo> consultInfoVos  = result.getData();
-                view.setRecommendVoConsultList(consultInfoVos);
+                Result<List<ResourceVo>> result = (Result<List<ResourceVo>>) date;
+                List<ResourceVo> resourceVoList  = result.getData();
+                view.setRecommendVoConsultList(resourceVoList);
             }
 
         }

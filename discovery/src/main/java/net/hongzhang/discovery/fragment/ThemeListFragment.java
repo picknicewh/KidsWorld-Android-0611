@@ -13,16 +13,15 @@ import net.hongzhang.baselibrary.widget.NoScrollListView;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.AllAlbumListAdapter;
 import net.hongzhang.discovery.modle.ThemeVo;
-import net.hongzhang.discovery.presenter.AlbumAllContract;
-import net.hongzhang.discovery.presenter.AlbumAllPresenter;
-import net.hongzhang.discovery.presenter.MainRecommendPresenter;
+import net.hongzhang.discovery.presenter.ThemeListContract;
+import net.hongzhang.discovery.presenter.ThemeListPresenter;
 
 import java.util.List;
 
 /**
  * Created by wanghua on 2016/12/19.
  */
-public class AllAlubmListFragment extends BaseFragement implements AlbumAllContract.View {
+public class ThemeListFragment extends BaseFragement implements ThemeListContract.View {
     /**
      * 专辑列表
      */
@@ -31,7 +30,7 @@ public class AllAlubmListFragment extends BaseFragement implements AlbumAllContr
     /**
      * 数据处理
      */
-    private AlbumAllPresenter present;
+    private ThemeListPresenter present;
     /**
      * 类型
      */
@@ -54,16 +53,16 @@ public class AllAlubmListFragment extends BaseFragement implements AlbumAllContr
 
     private void initView(View view) {
         noScrollListView = $(view, R.id.lv_album);
-        tv_nodata=  $(view, R.id.tv_nodata);
-        present = new AlbumAllPresenter(getActivity(), this);
+        tv_nodata = $(view, R.id.tv_nodata);
+        present = new ThemeListPresenter(getActivity(), this);
         Bundle bundle = getArguments();
         type = bundle.getInt("type");
-        present.getAllAlbumList(type, pageSize, pageNumber);
+        present.getThemeList(type, pageSize, pageNumber);
     }
 
     @Override
-    public void setAllAlbumList(final List<ThemeVo> themeVos) {
-        if (themeVos.size()!=0){
+    public void setThemeList(final List<ThemeVo> themeVos) {
+        if (themeVos.size() != 0) {
             tv_nodata.setVisibility(View.GONE);
             AllAlbumListAdapter allAlbumAdapter = new AllAlbumListAdapter(getActivity(), themeVos);
             noScrollListView.setAdapter(allAlbumAdapter);
@@ -71,14 +70,11 @@ public class AllAlubmListFragment extends BaseFragement implements AlbumAllContr
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     String themeId = themeVos.get(i).getThemeId();
-                    if (type == MainRecommendPresenter.TYPE_MUISC) {
-                        present.startMusicActivity(themeId, null);
-                    } else {
-                        present.starVedioActivity(themeId);
-                    }
+                    String themeName = themeVos.get(i).getThemeName();
+                    present.starThemeVoListActivity(themeId, themeName, type);
                 }
             });
-        }else {
+        } else {
             tv_nodata.setVisibility(View.VISIBLE);
         }
 

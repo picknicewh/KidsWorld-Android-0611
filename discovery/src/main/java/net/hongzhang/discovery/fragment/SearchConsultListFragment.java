@@ -16,12 +16,13 @@ import android.widget.TextView;
 import net.hongzhang.baselibrary.base.BaseFragement;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
-import net.hongzhang.discovery.adapter.ConsultListAdapter;
-import net.hongzhang.discovery.modle.ConsultInfoVo;
+import net.hongzhang.discovery.activity.SearchResourceActivity;
+import net.hongzhang.discovery.adapter.ConsultAdapter;
+import net.hongzhang.discovery.modle.ResourceVo;
+import net.hongzhang.discovery.modle.SearchKeyVo;
 import net.hongzhang.discovery.presenter.SearchConsultContract;
 import net.hongzhang.discovery.presenter.SearchConsultPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,8 +33,6 @@ import java.util.List;
  * 附加注释：
  * 主要接口：
  */
-
-
 public class SearchConsultListFragment extends BaseFragement implements SearchConsultContract.View, View.OnClickListener {
     private ListView lv_consult;
     /**
@@ -43,7 +42,7 @@ public class SearchConsultListFragment extends BaseFragement implements SearchCo
     /**
      * 适配器
      */
-    private ConsultListAdapter adapter;
+    private ConsultAdapter adapter;
     private int pageNumber = 1;
     private int pageSize = 10;
     /**
@@ -52,14 +51,7 @@ public class SearchConsultListFragment extends BaseFragement implements SearchCo
     private LinearLayout ll_load_more;
     private TextView tv_load_more;
     private ImageView iv_load_more;
-    /**
-     * 没有数据
-     */
-    private TextView tv_nodata;
-    /**
-     * 数据列表
-     */
-    private List<ConsultInfoVo> consultInfoVoList;
+
     private UserMessage userMessage;
     private String tag;
     private SharedPreferences sp;
@@ -75,47 +67,38 @@ public class SearchConsultListFragment extends BaseFragement implements SearchCo
         ll_load_more = $(view, R.id.ll_load_more);
         tv_load_more = $(view, R.id.tv_load_more);
         iv_load_more = $(view, R.id.iv_load_more);
-        tv_nodata = $(view, R.id.tv_nodata);
         ll_load_more.setOnClickListener(this);
         initData();
     }
 
     private void initData() {
         sp = getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
-        consultInfoVoList = new ArrayList<>();
         userMessage = UserMessage.getInstance(getActivity());
         presenter = new SearchConsultPresenter(getActivity(), this);
         pageNumber=1;
-        tag = sp.getString("tag","");
+        tag = SearchResourceActivity.tag;
         presenter.getSearchResourceList(userMessage.getTsId(), 3, pageSize, pageNumber,userMessage.getAccount_id(), tag);
     }
     @Override
-    public void setConsultList(final List<ConsultInfoVo> consultList) {
-        consultInfoVoList = consultList;
-        adapter = new ConsultListAdapter(getActivity(), consultList);
+    public void setConsultList(final List<ResourceVo> resourceVos) {
+        adapter = new ConsultAdapter(getActivity(), resourceVos);
         lv_consult.setAdapter(adapter);
         lv_consult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                presenter.startConsultActivity(consultList.get(i).getResourceId());
+                presenter.startConsultActivity(resourceVos.get(i).getResourceId());
             }
         });
     }
+
+    @Override
+    public void setSearchHistoryList(List<SearchKeyVo> searchKeyVoList) {
+    }
+
     @Override
     public void setConsultInfoSize(int size) {
-        if (size == 0) {
-            if (consultInfoVoList.size() > 0) {
-                tv_nodata.setVisibility(View.GONE);
-            } else {
-                tv_nodata.setVisibility(View.VISIBLE);
-                tv_nodata.setText("没有资讯哦！");
-            }
+        if (size == 0 ||size < pageSize) {
             lastPage();
-        } else {
-            if (size < pageSize) {
-                lastPage();
-            }
-            tv_nodata.setVisibility(View.GONE);
         }
     }
     private void lastPage() {

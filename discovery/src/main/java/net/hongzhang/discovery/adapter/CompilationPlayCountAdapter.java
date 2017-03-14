@@ -2,7 +2,6 @@ package net.hongzhang.discovery.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.image.ImageCache;
-import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.modle.CompilationVo;
 import net.hongzhang.discovery.util.TextUtil;
@@ -28,16 +26,16 @@ import java.util.List;
  * 主要接口：
  * ================================================
  */
-public class PlayDetailRecommedAdapter extends RecyclerView.Adapter<PlayDetailRecommedAdapter.ViewHolder>{
+public class CompilationPlayCountAdapter extends RecyclerView.Adapter<CompilationPlayCountAdapter.ViewHolder>{
     private Context context;
     private List<CompilationVo> compilationVos;
     private onItemClickListener itemClickListener = null;
-    public PlayDetailRecommedAdapter(Context context,List<CompilationVo> compilationVos) {
+    public CompilationPlayCountAdapter(Context context, List<CompilationVo> compilationVos) {
         this.context = context;
         this.compilationVos = compilationVos;
     }
     @Override
-    public PlayDetailRecommedAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CompilationPlayCountAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(
                 context).inflate(R.layout.item_video_detail_recommed,parent,false);
         ViewHolder holder = new ViewHolder(view);
@@ -45,7 +43,7 @@ public class PlayDetailRecommedAdapter extends RecyclerView.Adapter<PlayDetailRe
 
     }
     @Override
-    public void onBindViewHolder(final PlayDetailRecommedAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final CompilationPlayCountAdapter.ViewHolder holder, final int position) {
         CompilationVo compilationVo  = compilationVos.get(position);
         ImageCache.imageLoader(TextUtil.encodeChineseUrl(compilationVo.getImageUrl()), holder.iv_image);
         holder.tv_title.setText(compilationVo.getAlbumName());
@@ -85,12 +83,12 @@ public class PlayDetailRecommedAdapter extends RecyclerView.Adapter<PlayDetailRe
             tv_title = (TextView) view.findViewById(R.id.tv_title);
             tv_play_count = (TextView) view.findViewById(R.id.tv_play_count);
             ll_alumb = (LinearLayout)view.findViewById(R.id.ll_alumb);
-            int itemWidth = (G.size.W-G.dp2px(context,40))/2;
-            LinearLayout.LayoutParams  lps= new LinearLayout.LayoutParams(itemWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
-            int margin = G.dp2px(context,5);
-            lps.setMargins(margin,margin,margin,margin);
-            lps.gravity = Gravity.CENTER;
-            ll_alumb.setLayoutParams(lps);
+           // int itemWidth = (G.size.W-G.dp2px(context,40))/2;
+            //LinearLayout.LayoutParams  lps= new LinearLayout.LayoutParams(itemWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
+          //  int margin = G.dp2px(context,5);
+           // lps.setMargins(margin,margin,margin,margin);
+           // lps.gravity = Gravity.CENTER;
+           // ll_alumb.setLayoutParams(lps);
             view.setTag(this);
         }
     }

@@ -31,7 +31,7 @@ import java.util.Map;
  * 附加注释：
  * 主要接口：
  */
-public class MyMusicAdapter extends BaseAdapter implements OkHttpListener{
+public class MusicNameAdapter extends BaseAdapter implements OkHttpListener{
     private Context context;
     private List<ResourceVo> resourceVos;
     private int mposition;
@@ -39,7 +39,7 @@ public class MyMusicAdapter extends BaseAdapter implements OkHttpListener{
      * 点赞集合
      */
     private  Map<Integer,Integer> attentionids;
-    public MyMusicAdapter(Context context, List<ResourceVo> resourceVos, int mposition){
+    public MusicNameAdapter(Context context, List<ResourceVo> resourceVos, int mposition){
         this.context = context;
         this.resourceVos = resourceVos;
         this.mposition = mposition;

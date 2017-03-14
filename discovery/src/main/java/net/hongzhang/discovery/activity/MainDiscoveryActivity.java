@@ -2,6 +2,8 @@ package net.hongzhang.discovery.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -13,13 +15,12 @@ import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.LoadingDialog;
-import net.hongzhang.baselibrary.widget.NoScrollGirdView;
 import net.hongzhang.baselibrary.widget.NoScrollListView;
 import net.hongzhang.discovery.R;
-import net.hongzhang.discovery.adapter.MainConsultAdapter;
-import net.hongzhang.discovery.adapter.MainResourceAdapter;
+import net.hongzhang.discovery.adapter.CompilationAdapter;
+import net.hongzhang.discovery.adapter.ConsultAdapter;
 import net.hongzhang.discovery.modle.CompilationVo;
-import net.hongzhang.discovery.modle.ConsultInfoVo;
+import net.hongzhang.discovery.modle.ResourceVo;
 import net.hongzhang.discovery.presenter.MainRecommendContract;
 import net.hongzhang.discovery.presenter.MainRecommendPresenter;
 import net.hongzhang.discovery.widget.BannerView;
@@ -65,11 +66,11 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
     /**
      * 推荐听听列表
      */
-    private NoScrollGirdView gv_music;
+    private RecyclerView gv_music;
     /**
      * 推荐课堂列表
      */
-    private NoScrollGirdView gv_class;
+    private RecyclerView gv_class;
     /**
      * 推荐资讯列表
      */
@@ -137,8 +138,8 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
         ll_music = (LinearLayout) findViewById(R.id.ll_music);
         ll_class = (LinearLayout) findViewById(R.id.ll_class);
         ll_consult = (LinearLayout) findViewById(R.id.ll_consult);
-        gv_music = (NoScrollGirdView) findViewById(R.id.gv_music);
-        gv_class = (NoScrollGirdView) findViewById(R.id.gv_class);
+        gv_music = (RecyclerView) findViewById(R.id.gv_music);
+        gv_class = (RecyclerView) findViewById(R.id.gv_class);
         lv_consult = (NoScrollListView) findViewById(R.id.lv_consult);
         tv_more_music = (TextView) findViewById(R.id.tv_more_music);
         tv_more_clsss = (TextView) findViewById(R.id.tv_more_class);
@@ -185,12 +186,13 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
     public void setRecommendVoMusicList(final List<CompilationVo> compilationVos) {
         if (compilationVos!=null &&compilationVos.size()>0){
             music_recommend_id = String.valueOf(compilationVos.get(0).getAlbumId());
-            MainResourceAdapter adapter = new MainResourceAdapter(this, compilationVos);
+            CompilationAdapter adapter = new CompilationAdapter(this, compilationVos);
             gv_music.setAdapter(adapter);
-            gv_music.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            gv_music.setLayoutManager(new GridLayoutManager(this,2));
+            adapter.setOnItemClickListener(new CompilationAdapter.onItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    presenter.startMusicActivity(String.valueOf(compilationVos.get(i).getAlbumId()), null);
+                public void OnItemClick(View view, int position) {
+                    presenter.startMusicActivity(String.valueOf(compilationVos.get(position).getAlbumId()), null);
                 }
             });
         }
@@ -200,12 +202,13 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
     public void setRecommendVoClassList(final List<CompilationVo> compilationVos) {
         if (compilationVos!=null &&compilationVos.size()>0){
             video_recommend_id = String.valueOf(compilationVos.get(0).getAlbumId());
-            MainResourceAdapter adapter = new MainResourceAdapter(this, compilationVos);
+            CompilationAdapter adapter = new CompilationAdapter(this, compilationVos);
             gv_class.setAdapter(adapter);
-            gv_class.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            gv_class.setLayoutManager(new GridLayoutManager(this,2));
+            adapter.setOnItemClickListener(new CompilationAdapter.onItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    presenter.startVideoActivity(String.valueOf(compilationVos.get(i).getAlbumId()));
+                public void OnItemClick(View view, int position) {
+                    presenter.startVideoActivity(String.valueOf(compilationVos.get(position).getAlbumId()));
                 }
             });
         }
@@ -213,10 +216,10 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
     }
 
     @Override
-    public void setRecommendVoConsultList(final List<ConsultInfoVo> consultInfovos) {
+    public void setRecommendVoConsultList(final List<ResourceVo> consultInfovos) {
         if (consultInfovos!=null &&consultInfovos.size()>0){
             consult_recommend_id = String.valueOf(consultInfovos.get(0).getAlbumId());
-            MainConsultAdapter adapter = new MainConsultAdapter(this, consultInfovos);
+            ConsultAdapter adapter = new ConsultAdapter(this, consultInfovos);
             lv_consult.setAdapter(adapter);
             lv_consult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

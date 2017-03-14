@@ -65,7 +65,7 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
         Type mType = new TypeToken<Result<List<CompilationVo>>>() {
         }.getType();
         OkHttps.sendPost(mType, Apiurl.GETRECOMMENDLIST, map, this);
-        view.showLoadingDialog();
+       // view.showLoadingDialog();
     }
 
     @Override
@@ -77,7 +77,7 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
         Type mType = new TypeToken<Result<List<CommentInfoVo>>>() {
         }.getType();
         OkHttps.sendPost(mType, Apiurl.GETCOMMENTLIST, map, this);
-        view.showLoadingDialog();
+     //   view.showLoadingDialog();
     }
 
     @Override

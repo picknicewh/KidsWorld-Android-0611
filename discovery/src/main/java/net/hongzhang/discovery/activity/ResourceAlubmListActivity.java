@@ -1,26 +1,28 @@
 package net.hongzhang.discovery.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.widget.ViewPagerHead;
 import net.hongzhang.discovery.R;
-import net.hongzhang.discovery.fragment.AllAlubmListFragment;
-import net.hongzhang.discovery.fragment.SelectAlubmFramgment;
+import net.hongzhang.discovery.fragment.ThemeListFragment;
+import net.hongzhang.discovery.fragment.SelectAlubmFragment;
 import net.hongzhang.discovery.presenter.MainRecommendPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResourceAlubmListActivity extends BaseActivity {
+public class ResourceAlubmListActivity extends BaseActivity implements View.OnClickListener {
     /**
      * 页面的头部tab
      */
     private ViewPagerHead viewPagerHead;
     /**
-     *页面
+     * 页面
      */
     private ViewPager viewPager;
     /**
@@ -35,6 +37,7 @@ public class ResourceAlubmListActivity extends BaseActivity {
      * 类型
      */
     private int type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,33 +49,43 @@ public class ResourceAlubmListActivity extends BaseActivity {
     protected void setToolBar() {
         setLiftImage(R.mipmap.ic_arrow_lift);
         type = getIntent().getIntExtra("type", MainRecommendPresenter.TYPE_MUISC);
-        if (type==MainRecommendPresenter.TYPE_MUISC){
+        if (type == MainRecommendPresenter.TYPE_MUISC) {
             setCententTitle("幼儿听听");
-        }else if (type==MainRecommendPresenter.TYPE_VIDEO){
+        } else if (type == MainRecommendPresenter.TYPE_VIDEO) {
             setCententTitle("幼儿课堂");
         }
         setRightImage(R.mipmap.ic_search);
+        setRightOnClickListener(this);
         setLiftOnClickClose();
     }
-    private void initview(){
+
+    private void initview() {
         viewPagerHead = $(R.id.vph_music);
         viewPager = $(R.id.vp_music);
         initViewPager();
     }
-    private void initViewPager(){
+
+    private void initViewPager() {
         fragments = new ArrayList<>();
         titles = new ArrayList<>();
         titles.add("精选");
         titles.add("全部");
         Bundle bundle = new Bundle();
-        bundle.putInt("type",type);
-        SelectAlubmFramgment alubmFramgment =  new SelectAlubmFramgment();
-        alubmFramgment.setArguments(bundle);
-        AllAlubmListFragment allAlubmFramgment =  new AllAlubmListFragment();
+        bundle.putInt("type", type);
+        SelectAlubmFragment alubmFragment = new SelectAlubmFragment();
+        alubmFragment.setArguments(bundle);
+        ThemeListFragment allAlubmFramgment = new ThemeListFragment();
         allAlubmFramgment.setArguments(bundle);
-        fragments.add(alubmFramgment);
+        fragments.add(alubmFragment);
         fragments.add(allAlubmFramgment);
         viewPagerHead.setViewPager(viewPager);
-        viewPagerHead.setAdapter(this,fragments,getSupportFragmentManager(),titles);
+        viewPagerHead.setAdapter(this, fragments, getSupportFragmentManager(), titles);
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(this, SearchPlayActivity.class);
+        intent.putExtra("type", type);
+        startActivity(intent);
     }
 }

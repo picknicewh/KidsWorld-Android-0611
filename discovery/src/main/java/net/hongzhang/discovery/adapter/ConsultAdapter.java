@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import net.hongzhang.baselibrary.image.GlideUtils;
 import net.hongzhang.discovery.R;
-import net.hongzhang.discovery.modle.ConsultInfoVo;
+import net.hongzhang.discovery.modle.ResourceVo;
 
 import java.util.List;
 
@@ -24,17 +24,17 @@ import java.util.List;
  * 主要接口：
  * ================================================
  */
-public class MainConsultAdapter extends BaseAdapter {
+public class ConsultAdapter extends BaseAdapter {
     private Context context;
-    private List<ConsultInfoVo> consultInfoVos;
-    public MainConsultAdapter(Context context,  List<ConsultInfoVo> consultInfoVos) {
+    private List<ResourceVo> resourceVoList;
+    public ConsultAdapter(Context context, List<ResourceVo> resourceVoList) {
         this.context = context;
-        this.consultInfoVos = consultInfoVos;
+        this.resourceVoList = resourceVoList;
     }
 
     @Override
     public int getCount() {
-        return consultInfoVos.size();
+        return resourceVoList.size();
     }
 
     @Override
@@ -55,9 +55,9 @@ public class MainConsultAdapter extends BaseAdapter {
             new ViewHolder(view);
         }
         holder = (ViewHolder) view.getTag();
-        ConsultInfoVo consultInfoVo = consultInfoVos.get(i);
-        GlideUtils.loadImageView(context,consultInfoVo.getImageUrl(),holder.iv_image);
-        holder.tv_title.setText(consultInfoVo.getResourceName());
+        ResourceVo resourceVo = resourceVoList.get(i);
+        GlideUtils.loadImageView(context,resourceVo.getImageUrl(),holder.iv_image);
+        holder.tv_title.setText(resourceVo.getResourceName());
         return view;
     }
     class ViewHolder {

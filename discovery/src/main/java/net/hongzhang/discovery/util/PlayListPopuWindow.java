@@ -24,7 +24,7 @@ import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.activity.MainPlayMusicActivity;
-import net.hongzhang.discovery.adapter.MyMusicAdapter;
+import net.hongzhang.discovery.adapter.MusicNameAdapter;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public class PlayListPopuWindow extends PopupWindow implements OkHttpListener,Vi
     private  View contentView ;
     private   int height ;
     private int position;
-    public  static MyMusicAdapter adapter;
+    public  static MusicNameAdapter adapter;
     private    ListView lv_song;
     private  TextView tv_song_size;
     public static boolean isEdit =false;
@@ -134,7 +134,7 @@ public class PlayListPopuWindow extends PopupWindow implements OkHttpListener,Vi
         Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
     }
     private void setListViewData(List<ResourceVo> resourceVos){
-        adapter = new MyMusicAdapter(context,resourceVos,position);
+        adapter = new MusicNameAdapter(context,resourceVos,position);
         lv_song.setAdapter(adapter);
         tv_song_size.setText("播放列表("+resourceVos.size()+")");
     }

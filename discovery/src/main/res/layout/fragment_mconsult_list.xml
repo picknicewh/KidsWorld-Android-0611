@@ -3,14 +3,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
-     <TextView
-         android:visibility="gone"
-         android:id="@+id/tv_nodata"
-         android:gravity="center"
-         android:layout_gravity="center"
-         android:text="没有资讯哦"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent" />
      <ScrollView
          android:layout_width="match_parent"
          android:layout_height="match_parent">

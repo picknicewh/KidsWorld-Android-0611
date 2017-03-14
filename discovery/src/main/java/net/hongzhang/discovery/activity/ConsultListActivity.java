@@ -1,8 +1,10 @@
 package net.hongzhang.discovery.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.widget.ViewPagerHead;
@@ -16,7 +18,7 @@ import net.hongzhang.discovery.presenter.MainRecommendPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsultListActivity extends BaseActivity implements ConsultListContract.View {
+public class ConsultListActivity extends BaseActivity implements ConsultListContract.View, View.OnClickListener {
 
     /**
      * 页面的头部tab
@@ -47,6 +49,8 @@ public class ConsultListActivity extends BaseActivity implements ConsultListCont
         setLiftImage(R.mipmap.ic_arrow_lift);
         setCententTitle("教育资讯");
         setLiftOnClickClose();
+        setRightImage(R.mipmap.ic_search);
+        setRightOnClickListener(this);
     }
 
     private void initView() {
@@ -75,5 +79,11 @@ public class ConsultListActivity extends BaseActivity implements ConsultListCont
         viewPagerHead.setViewPager(viewPager);
         viewPagerHead.setAdapter(this, fragmentList, getSupportFragmentManager(), titles);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent  = new Intent(this,SearchConsultActivity.class);
+        startActivity(intent);
     }
 }

@@ -1,6 +1,8 @@
 package net.hongzhang.discovery.presenter;
 
 import net.hongzhang.discovery.modle.CompilationVo;
+import net.hongzhang.discovery.modle.ResourceVo;
+import net.hongzhang.discovery.modle.SearchKeyVo;
 
 import java.util.List;
 
@@ -15,16 +17,21 @@ import java.util.List;
 
 
 public interface SearchResourceContract {
-    public  interface  View{
-        void setResourceList(List<CompilationVo> musicCompilationVos);
-        void setResourceSize(int size);
+      interface  View{
+        void setCompilationVoList(List<CompilationVo> musicCompilationVos);
+        void setResourceList(List<ResourceVo> resourceList);
+        void setResourceSize(int compilationVo);
+        void setSearchHistoryList(List<SearchKeyVo> searchKeyVoList) ;
         void showLoadingDialog();
         void stopLoadingDialog();
     }
-    public interface Presenter{
-        void getSearchResourceList(String tsId,int type,int pageSize, int pageNumber, String account_id,String tag);
-        void startVideoActivity(String themeId);
+     interface Presenter{
+        void getSearchResourceList(String tsId,int type,int pageSize, int pageNumber, String account_id,String tag,int flag);
+        void  getSearchHistoryList(int type);
+        void insertKey(int type,String tag);
+        void startVideoActivity(String themeId, String resourceId);
         void startMusicActivity(String themeId, String resourceId);
+
 
     }
 }

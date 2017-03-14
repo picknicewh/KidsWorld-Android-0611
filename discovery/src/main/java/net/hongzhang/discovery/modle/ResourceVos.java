@@ -26,7 +26,7 @@ public class ResourceVos {
     private String type;
     private int end;
     private List<CompilationVo> albumManageList;
-    private List<ConsultInfoVo> resourceManageList;
+    private List<ResourceVo> resourceManageList;
 
     public int getStart() {
         return start;
@@ -76,11 +76,11 @@ public class ResourceVos {
         this.albumManageList = albumManageList;
     }
 
-    public List<ConsultInfoVo> getResourceManageList() {
+    public List<ResourceVo> getResourceManageList() {
         return resourceManageList;
     }
 
-    public void setResourceManageList(List<ConsultInfoVo> resourceManageList) {
+    public void setResourceManageList(List<ResourceVo> resourceManageList) {
         this.resourceManageList = resourceManageList;
     }
 }

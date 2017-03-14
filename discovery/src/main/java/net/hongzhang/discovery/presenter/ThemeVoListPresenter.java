@@ -13,9 +13,10 @@ import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.activity.MainPlayMusicActivity;
 import net.hongzhang.discovery.activity.PlayVideoListActivity;
-import net.hongzhang.discovery.modle.ThemeVo;
+import net.hongzhang.discovery.modle.CompilationVo;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,34 +29,36 @@ import java.util.Map;
  * 附加注释：
  * 主要接口：
  */
-public class AlbumAllPresenter implements AlbumAllContract.Presenter, OkHttpListener {
+public class ThemeVoListPresenter implements ThemeVoListContract.Presenter, OkHttpListener {
     private Context context;
-    private AlbumAllContract.View view;
-
-    public AlbumAllPresenter(Context context, AlbumAllContract.View view) {
+    private ThemeVoListContract.View view;
+    private  List<CompilationVo> compilationVoList;
+    public ThemeVoListPresenter(Context context, ThemeVoListContract.View view) {
         this.context = context;
         this.view = view;
+        compilationVoList  =new ArrayList<>();
 
     }
 
     @Override
-    public void getAllAlbumList(int type, int pageSize, int pageNumber) {
+    public void starVedioActivity(String themeId,String resourceId) {
+        Intent intent = new Intent(context, PlayVideoListActivity.class);
+        intent.putExtra("themeId", themeId);
+        intent.putExtra("resourceId", resourceId);
+        context.startActivity(intent);
+    }
+
+    @Override
+    public void getThemVoList(String themeId, int pageSize, int pageNumber) {
         Map<String, Object> map = new HashMap<>();
         map.put("tsId", UserMessage.getInstance(context).getTsId());
         map.put("pageNumber", pageNumber);
         map.put("pageSize", pageSize);
-        map.put("type", type);
-        Type mType = new TypeToken<Result<List<ThemeVo>>>() {
+        map.put("themeId", themeId);
+        Type mType = new TypeToken<Result<List<CompilationVo>>>() {
         }.getType();
-        OkHttps.sendPost(mType, Apiurl.GETHEMELIST, map, this);
+        OkHttps.sendPost(mType, Apiurl.GETHEMELISTBYID, map, this);
         view.showLoadingDialog();
-    }
-
-    @Override
-    public void starVedioActivity(String themeId) {
-        Intent intent = new Intent(context, PlayVideoListActivity.class);
-        intent.putExtra("themeId", themeId);
-        context.startActivity(intent);
     }
 
     @Override
@@ -69,10 +72,12 @@ public class AlbumAllPresenter implements AlbumAllContract.Presenter, OkHttpList
     @Override
     public void onSuccess(String uri, Object date) {
         view.stopLoadingDialog();
-        if (date!=null){
-            Result<List<ThemeVo>> result = (Result<List<ThemeVo>>) date;
-            List<ThemeVo> themeVos = result.getData();
-            view.setAllAlbumList(themeVos);
+        if (date != null) {
+            Result<List<CompilationVo>> result = (Result<List<CompilationVo>>) date;
+            List<CompilationVo> compilationVos = result.getData();
+            compilationVoList.addAll(compilationVos);
+            view.setThemeVoList(compilationVoList);
+            view.setThemeVoSize(compilationVos.size());
         }
     }
 

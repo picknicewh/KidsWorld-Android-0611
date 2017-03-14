@@ -231,6 +231,10 @@ public class Apiurl {
      */
     public static final String GETHEMELIST= "/rakuen/getThemeList.do";
     /**
+     * 根据主题ID获取对应专辑
+     */
+    public static final String GETHEMELISTBYID= "/rakuen/getAlbumByTheme.do";
+    /**
      * 获取资讯
      */
     public static final String GETRECONSULT = "/rakuen/getInformation.do";

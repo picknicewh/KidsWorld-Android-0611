@@ -172,7 +172,7 @@
                         android:src="@mipmap/ic_arrow_right" />
                 </RelativeLayout>
 
-                <net.hongzhang.baselibrary.widget.NoScrollGirdView
+                <android.support.v7.widget.RecyclerView
                     android:id="@+id/gv_music"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -216,7 +216,7 @@
                         android:src="@mipmap/ic_arrow_right" />
                 </RelativeLayout>
 
-                <net.hongzhang.baselibrary.widget.NoScrollGirdView
+                <android.support.v7.widget.RecyclerView
                     android:id="@+id/gv_class"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

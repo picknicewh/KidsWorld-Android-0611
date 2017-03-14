@@ -19,7 +19,7 @@ public class StatusInfoDb extends SQLiteOpenHelper {
     private static final int version = 1; //数据库版本
     private static final String TABLENAME = "statusInfo";//表名
     public StatusInfoDb(Context context) {
-        super(context, DB_NAME, null, 302);
+        super(context, DB_NAME, null, 323);
     }
 
     //创建数据库

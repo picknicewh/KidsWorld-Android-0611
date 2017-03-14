@@ -1,5 +1,6 @@
 package net.hongzhang.discovery.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.util.G;
@@ -19,7 +19,7 @@ import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.CircleImageView;
 import net.hongzhang.baselibrary.widget.LoadingDialog;
 import net.hongzhang.discovery.R;
-import net.hongzhang.discovery.adapter.PlayDetailRecommedAdapter;
+import net.hongzhang.discovery.adapter.CompilationPlayCountAdapter;
 import net.hongzhang.discovery.adapter.VideoAlbumDetailAdapter;
 import net.hongzhang.discovery.adapter.VideoCommentListAdapter;
 import net.hongzhang.discovery.modle.CommentInfoVo;
@@ -32,8 +32,9 @@ import java.util.List;
 
 import static net.hongzhang.discovery.R.id.iv_album_more;
 
-public class PlayVideoListActivity extends BaseActivity implements View.OnClickListener,
+public class PlayVideoListActivity extends Activity implements View.OnClickListener,
         PlayVideoDetailContract.View {
+    private ImageView iv_left;
     /**
      * 专辑封面
      */
@@ -110,7 +111,7 @@ public class PlayVideoListActivity extends BaseActivity implements View.OnClickL
     /**
      * 推荐列表适配器
      */
-    private PlayDetailRecommedAdapter adapter;
+    private CompilationPlayCountAdapter adapter;
     /**
      * 用户角色id
      */
@@ -140,13 +141,8 @@ public class PlayVideoListActivity extends BaseActivity implements View.OnClickL
         initSurfView();
     }
 
-    @Override
-    protected void setToolBar() {
-        setLiftImage(R.mipmap.ic_arrow_lift);
-        setLiftOnClickClose();
-    }
-
     private void initSurfView() {
+        iv_left = (ImageView) findViewById(R.id.iv_left);
         iv_album = (ImageView) findViewById(R.id.iv_album);
         iv_alubm_collect = (ImageView) findViewById(R.id.iv_album_collect);
         iv_alubm_more = (ImageView) findViewById(iv_album_more);
@@ -166,6 +162,7 @@ public class PlayVideoListActivity extends BaseActivity implements View.OnClickL
         tv_comment.setOnClickListener(this);
         iv_play_full.setOnClickListener(this);
         iv_alubm_more.setOnClickListener(this);
+        iv_left.setOnClickListener(this);
         resourceVos = new ArrayList<>();
         tsId = UserMessage.getInstance(this).getTsId();
         themeId = getIntent().getStringExtra("themeId");
@@ -198,17 +195,21 @@ public class PlayVideoListActivity extends BaseActivity implements View.OnClickL
             intent.putExtra("resourceId", resourceVos.get(position).getResourceId());
             startActivity(intent);
         } else if (viewId == R.id.iv_album_more) {
-            if (visible==0){
+            if (visible == 0) {
                 tv_copy_right.setVisibility(View.VISIBLE);
-                visible =1;
-            }else {
+                visible = 1;
+            } else {
                 tv_copy_right.setVisibility(View.GONE);
-                visible =0;
+                visible = 0;
             }
 
+        } else if (viewId == R.id.iv_left) {
+            finish();
         }
     }
-    private int visible=0;
+
+    private int visible = 0;
+
     @Override
     public void setVideoList(final List<ResourceVo> resourceVos) {
         if (resourceVos != null && resourceVos.size() > 0) {
@@ -248,11 +249,11 @@ public class PlayVideoListActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void setRecommendList(final List<CompilationVo> compilationVos) {
-        adapter = new PlayDetailRecommedAdapter(this, compilationVos);
+        adapter = new CompilationPlayCountAdapter(this, compilationVos);
         ry_recommend.setAdapter(adapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         ry_recommend.setLayoutManager(gridLayoutManager);
-        adapter.setOnItemClickListener(new PlayDetailRecommedAdapter.onItemClickListener() {
+        adapter.setOnItemClickListener(new CompilationPlayCountAdapter.onItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {
                 presenter.getVideoList(tsId, String.valueOf(compilationVos.get(position).getAlbumId()));
@@ -266,6 +267,20 @@ public class PlayVideoListActivity extends BaseActivity implements View.OnClickL
         rv_comment_list.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rv_comment_list.setLayoutManager(manager);
+    }
+
+    public void showLoadingDialog() {
+        if (dialog == null)
+            dialog = new LoadingDialog(this, net.hongzhang.baselibrary.R.style.LoadingDialogTheme);
+        dialog.show();
+        dialog.setCancelable(true);
+        dialog.setLoadingText("数据加载中...");
+    }
+
+    public void stopLoadingDialog() {
+        if (dialog != null) {
+            dialog.dismiss();
+        }
     }
 
 }

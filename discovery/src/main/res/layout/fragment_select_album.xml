@@ -21,8 +21,8 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <net.hongzhang.baselibrary.widget.NoScrollGirdView
-                android:id="@+id/gv_album"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_album"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:divider="@color/transparent"

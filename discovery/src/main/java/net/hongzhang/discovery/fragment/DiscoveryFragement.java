@@ -27,7 +27,7 @@ import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.util.WebCommonPageFrom;
 import net.hongzhang.discovery.R;
-import net.hongzhang.user.activity.CollectActivity;
+import net.hongzhang.discovery.activity.MainDiscoveryActivity;
 import net.hongzhang.user.activity.UserActivity;
 
 import org.apache.cordova.engine.SystemWebView;
@@ -186,8 +186,8 @@ public class DiscoveryFragement extends BaseFragement implements View.OnClickLis
             } else if (!webView.getUrl().contains("#/") || webView.getUrl().contains("paradiseHome")) {
                 // webView.loadUrl("javascript:goHistory_Origin()");
                 //  Toast.makeText(getActivity(),"该功能正在升级中!",Toast.LENGTH_SHORT).show();
-              // Intent intent = new Intent(getActivity(), MainDiscoveryActivity.class);
-                Intent intent = new Intent(getActivity(), CollectActivity.class);
+                Intent intent = new Intent(getActivity(), MainDiscoveryActivity.class);
+                //Intent intent = new Intent(getActivity(), CollectActivity.class);
                 intent.putExtra("source", 1);
                 startActivity(intent);
             }
