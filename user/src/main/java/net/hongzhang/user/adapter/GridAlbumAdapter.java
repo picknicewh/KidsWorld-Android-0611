@@ -7,8 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
 import net.hongzhang.baselibrary.image.ImageCache;
-import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.user.R;
 
 import java.util.ArrayList;
@@ -65,7 +66,8 @@ public class GridAlbumAdapter extends BaseAdapter {
             holder.clv_delete.setVisibility(View.VISIBLE);
             getBitmapData(holder.image,imageItems.get(position));
         } else {
-            ImageCache.imageLoader("drawable://"+R.drawable.ic_unfocused,holder.image);
+//            ImageCache.imageLoader(R.drawable.ic_unfocused,holder.image);
+            Glide.with(context).load(R.drawable.ic_unfocused).into(holder.image);
 //            holder.image.setImageResource(R.mipmap.ic_unfocused);
             holder.clv_delete.setVisibility(View.GONE);
             holder.image.setVisibility(View.VISIBLE);
@@ -73,7 +75,7 @@ public class GridAlbumAdapter extends BaseAdapter {
             if (position >= maxContent) {
                 holder.image.setVisibility(View.GONE);
             }
-            G.log("xxxxxxxxxxxxxxxx");
+
         }
         holder.clv_delete.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -24,6 +24,7 @@ public interface SearchResourceContract {
         void setSearchHistoryList(List<SearchKeyVo> searchKeyVoList) ;
         void showLoadingDialog();
         void stopLoadingDialog();
+        void setloadMoreVis(boolean isVis);
     }
      interface Presenter{
         void getSearchResourceList(String tsId,int type,int pageSize, int pageNumber, String account_id,String tag,int flag);

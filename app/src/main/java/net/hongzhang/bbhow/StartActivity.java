@@ -11,18 +11,25 @@ import main.jpushlibrary.JPush.JPushBaseActivity;
 
 public class StartActivity extends JPushBaseActivity {
 
+//    private SharedPreferences spf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+//        spf = getSharedPreferences("FirstApp", Context.MODE_PRIVATE);
         initWindow();
-        new Handler().postDelayed(new Runnable() {
-           @Override
-           public void run() {
-               startActivity(new Intent(StartActivity.this, MainActivity.class));
-               finish();
-           }
-       },1000);
+//        if (spf.getBoolean("firstApp", true)) {
+//            startActivity(new Intent(this, GuideActivity.class));
+//            finish();
+//        }else{
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(StartActivity.this, MainActivity.class));
+                    finish();
+                }
+            },1000);
+//        }
     }
     /**
      * 标题栏透明

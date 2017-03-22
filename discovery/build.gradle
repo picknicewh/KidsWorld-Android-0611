@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion '25.0.0'
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 24
@@ -25,4 +25,5 @@ dependencies {
     compile project(':user')
     compile 'com.android.support:appcompat-v7:24.0.0'
     testCompile 'junit:junit:4.12'
+    compile 'com.youth.banner:banner:1.4.9'  //最新版本
 }

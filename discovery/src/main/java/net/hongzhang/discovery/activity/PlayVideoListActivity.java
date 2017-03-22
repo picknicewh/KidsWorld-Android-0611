@@ -1,8 +1,8 @@
 package net.hongzhang.discovery.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.umeng.analytics.MobclickAgent;
 
 import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.baselibrary.mode.ResourceVo;
@@ -32,7 +34,8 @@ import java.util.List;
 
 import static net.hongzhang.discovery.R.id.iv_album_more;
 
-public class PlayVideoListActivity extends Activity implements View.OnClickListener,
+
+public class PlayVideoListActivity extends AppCompatActivity implements View.OnClickListener,
         PlayVideoDetailContract.View {
     private ImageView iv_left;
     /**
@@ -136,6 +139,13 @@ public class PlayVideoListActivity extends Activity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Window window = getWindow();
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.setStatusBarColor(Color.TRANSPARENT);
+//        }
         setContentView(R.layout.activity_play_video_list);
         G.initDisplaySize(this);
         initSurfView();
@@ -158,6 +168,7 @@ public class PlayVideoListActivity extends Activity implements View.OnClickListe
         tv_album_num = (TextView) findViewById(R.id.tv_album_num);
         tv_copy_right = (TextView) findViewById(R.id.tv_copy_right);
         iv_play_full = (ImageView) findViewById(R.id.iv_play_full);
+
         iv_alubm_collect.setOnClickListener(this);
         tv_comment.setOnClickListener(this);
         iv_play_full.setOnClickListener(this);
@@ -170,6 +181,22 @@ public class PlayVideoListActivity extends Activity implements View.OnClickListe
         presenter = new PlayVideoDetailPresenter(this, this, themeId, resourceId);
         presenter.getVideoList(tsId, themeId);
 
+//        final int endOffset = PlayVideoListActivity.this.getResources().
+//                getDimensionPixelOffset(R.dimen.head_height) - rlActionbar.getHeight(); //图片高度减toolbar高度 透明度改变分界点
+//        svContent.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(View view, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                if (scrollY <= 0) {  //alpha为0
+//                    rlActionbar.getBackground().setAlpha(0);
+//                } else if (scrollY > 0 && scrollY < endOffset) { //alpha为0到255
+//                    float precent = (float) scrollY / endOffset;
+//                    int alpha = Math.round(precent * 255);
+//                    rlActionbar.getBackground().setAlpha(alpha);
+//                } else if (scrollY >= endOffset) {  //alpha为255
+//                    rlActionbar.getBackground().setAlpha(255);
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -190,11 +217,15 @@ public class PlayVideoListActivity extends Activity implements View.OnClickListe
                 presenter.subComment(tsId, resourceVos.get(position).getResourceId(), content);
             }
         } else if (viewId == R.id.iv_play_full) {
-            Intent intent = new Intent(this, FullPlayVideoActivity.class);
-            intent.putExtra("albumId", resourceVos.get(position).getAlbumId());
-            intent.putExtra("resourceId", resourceVos.get(position).getResourceId());
-            startActivity(intent);
-        } else if (viewId == R.id.iv_album_more) {
+            if (resourceVos != null && resourceVos.size() > 0) {
+                Intent intent = new Intent(this, FullPlayVideoActivity.class);
+//                G.log("=======AlbumId========="+resourceVos.get(position).getAlbumId());
+                //返回的AlbumId为空   themeId
+                intent.putExtra("albumId", themeId);
+                intent.putExtra("resourceId", resourceVos.get(position).getResourceId());
+                startActivity(intent);
+            }
+        } else if (viewId == iv_album_more) {
             if (visible == 0) {
                 tv_copy_right.setVisibility(View.VISIBLE);
                 visible = 1;
@@ -202,7 +233,6 @@ public class PlayVideoListActivity extends Activity implements View.OnClickListe
                 tv_copy_right.setVisibility(View.GONE);
                 visible = 0;
             }
-
         } else if (viewId == R.id.iv_left) {
             finish();
         }
@@ -233,7 +263,6 @@ public class PlayVideoListActivity extends Activity implements View.OnClickListe
 
     @Override
     public void setVideoInfo(ResourceVo resourceVo, int position) {
-
         this.position = position;
         tv_album_num.setText(resourceVo.getResourceName());
         ImageCache.imageLoader(resourceVo.getImageUrl(), iv_album);
@@ -252,6 +281,7 @@ public class PlayVideoListActivity extends Activity implements View.OnClickListe
         adapter = new CompilationPlayCountAdapter(this, compilationVos);
         ry_recommend.setAdapter(adapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        ry_recommend.setNestedScrollingEnabled(false);
         ry_recommend.setLayoutManager(gridLayoutManager);
         adapter.setOnItemClickListener(new CompilationPlayCountAdapter.onItemClickListener() {
             @Override
@@ -263,10 +293,11 @@ public class PlayVideoListActivity extends Activity implements View.OnClickListe
 
     @Override
     public void setCommentList(List<CommentInfoVo> commentInfoVos) {
+        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rv_comment_list.setNestedScrollingEnabled(false);
+        rv_comment_list.setLayoutManager(manager);
         VideoCommentListAdapter adapter = new VideoCommentListAdapter(this, commentInfoVos);
         rv_comment_list.setAdapter(adapter);
-        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rv_comment_list.setLayoutManager(manager);
     }
 
     public void showLoadingDialog() {
@@ -281,6 +312,21 @@ public class PlayVideoListActivity extends Activity implements View.OnClickListe
         if (dialog != null) {
             dialog.dismiss();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //向友盟提供统计参数
+        MobclickAgent.onPageStart(G.getClassName(this));
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(G.getClassName(this));
+        MobclickAgent.onPause(this);
     }
 
 }

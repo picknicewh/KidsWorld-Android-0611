@@ -5,13 +5,10 @@ import android.content.pm.ActivityInfo;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-
-import org.apache.cordova.engine.SystemWebChromeClient;
-import org.apache.cordova.engine.SystemWebView;
-import org.apache.cordova.engine.SystemWebViewEngine;
 
 /**
  * ================================================
@@ -23,20 +20,21 @@ import org.apache.cordova.engine.SystemWebViewEngine;
  * 主要接口：
  * ================================================
  */
-public class CordovaWebChromeClient extends SystemWebChromeClient {
+public class CordovaWebChromeClient extends WebChromeClient {  //SystemWebChromeClient
     private ProgressBar pb_web;
     private View myView = null;
     private CustomViewCallback myCallback = null;
-    private SystemWebView mWebView;
+//    private SystemWebView mWebView;
+    private WebView mWebView;
     private Activity activity;
     private LinearLayout ll_toolbar;
-    public CordovaWebChromeClient(SystemWebViewEngine parentEngine, ProgressBar pb_web) {
-        super(parentEngine);
+    public CordovaWebChromeClient(WebChromeClient parentEngine, ProgressBar pb_web) {
+//        super(parentEngine);
         this.pb_web=pb_web;
     }
 
-    public CordovaWebChromeClient(SystemWebViewEngine parentEngine, ProgressBar pb_web, SystemWebView mWebView, Activity activity, LinearLayout ll_toolbar) {
-        super(parentEngine);
+    public CordovaWebChromeClient(WebChromeClient parentEngine, ProgressBar pb_web, WebView mWebView, Activity activity, LinearLayout ll_toolbar) {
+//        super(parentEngine);
         this.pb_web=pb_web;
         this.mWebView=mWebView;
         this.activity=activity;

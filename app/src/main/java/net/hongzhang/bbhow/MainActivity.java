@@ -24,7 +24,7 @@ import net.hongzhang.baselibrary.util.BroadcastConstant;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.MyConnectionStatusListener;
 import net.hongzhang.baselibrary.util.UserMessage;
-import net.hongzhang.discovery.activity.MainDiscoveryFragment;
+import net.hongzhang.discovery.fragment.MainDiscoveryFragment;
 import net.hongzhang.login.util.UserAction;
 import net.hongzhang.message.fragment.MessageFragement;
 import net.hongzhang.school.SchoolFragement;

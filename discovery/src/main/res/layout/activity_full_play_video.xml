@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:maxHeight="15dp"
+                android:maxHeight="5dp"
                 android:progressDrawable="@drawable/po_seekbar"
                 android:thumb="@drawable/thumb_dos_video"/>
         </LinearLayout>

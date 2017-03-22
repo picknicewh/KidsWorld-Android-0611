@@ -30,7 +30,7 @@ public class SelectAlubmFragment extends BaseFragement implements AlbumSelectCon
     /**
      * 专辑列表
      */
-   private RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     /**
      * 加载更多
      */
@@ -44,7 +44,7 @@ public class SelectAlubmFragment extends BaseFragement implements AlbumSelectCon
     /**
      * 一页显示数据条数
      */
-    private final  static int pageSize=6;
+    private final static int pageSize = 6;
     /**
      * 没有数据
      */
@@ -65,50 +65,56 @@ public class SelectAlubmFragment extends BaseFragement implements AlbumSelectCon
      * 适配器
      */
     private CompilationPlayCountAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_select_album,null);
+        View view = inflater.inflate(R.layout.fragment_select_album, null);
         initView(view);
         return view;
     }
-    private void initView(View view){
-        recyclerView = $(view,R.id.rv_album);
+
+    private void initView(View view) {
+        recyclerView = $(view, R.id.rv_album);
         ll_load_more = $(view, R.id.ll_load_more);
-        tv_load_more = $(view,R.id.tv_load_more);
-        iv_load_more = $(view,R.id.iv_load_more);
+        tv_load_more = $(view, R.id.tv_load_more);
+        iv_load_more = $(view, R.id.iv_load_more);
         tv_nodata = $(view, R.id.tv_nodata);
-        compilationVos=  new ArrayList<>();
+        compilationVos = new ArrayList<>();
         ll_load_more.setOnClickListener(this);
         initData();
 
     }
-    private void initData(){
+
+    private void initData() {
         Bundle bundle = getArguments();
-        type  =bundle.getInt("type");
-        presenter = new AlbumSelectPresenter(getActivity(),this);
-        presenter.getAlbumList(type,pageSize,pageNumber);
+        type = bundle.getInt("type");
+        presenter = new AlbumSelectPresenter(getActivity(), this);
+        presenter.getAlbumList(type, pageSize, pageNumber);
     }
+
     @Override
     public void setAlbum(final List<CompilationVo> compilationVos) {
-      this.compilationVos  = compilationVos;
-        adapter = new CompilationPlayCountAdapter(getActivity(),compilationVos);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        this.compilationVos = compilationVos;
+        adapter = new CompilationPlayCountAdapter(getActivity(), compilationVos);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new CompilationPlayCountAdapter.onItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {
                 CompilationVo compilationVo = compilationVos.get(position);
-                if (type== MainRecommendPresenter.TYPE_MUISC){
-                    presenter.startMusicActivity(String.valueOf(compilationVo.getAlbumId()),null);
-                }else if (type== MainRecommendPresenter.TYPE_VIDEO){
+                if (type == MainRecommendPresenter.TYPE_MUISC) {
+                    presenter.startMusicActivity(String.valueOf(compilationVo.getAlbumId()), null);
+                } else if (type == MainRecommendPresenter.TYPE_VIDEO) {
                     presenter.starVedioActivity(String.valueOf(compilationVo.getAlbumId()));
                 }
             }
         });
-        if (adapter!=null){
+        if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
     }
+
     @Override
     public void setResourceSize(int size) {
         if (size == 0) {
@@ -126,17 +132,19 @@ public class SelectAlubmFragment extends BaseFragement implements AlbumSelectCon
             tv_nodata.setVisibility(View.GONE);
         }
     }
+
     private void lastPage() {
         ll_load_more.setVisibility(View.VISIBLE);
         tv_load_more.setText("没有更多数据了");
         iv_load_more.setVisibility(View.GONE);
         ll_load_more.setClickable(false);
     }
+
     @Override
     public void onClick(View view) {
-        if (view.getId()==R.id.ll_load_more){
+        if (view.getId() == R.id.ll_load_more) {
             pageNumber++;
-            presenter.getAlbumList(type,pageSize,pageNumber);
+            presenter.getAlbumList(type, pageSize, pageNumber);
         }
     }
 }

@@ -3,6 +3,8 @@ package net.hongzhang.discovery.modle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * 作者： wh
  * 时间： 2016/11/30
@@ -11,7 +13,7 @@ import android.os.Parcelable;
  * 附加注释：
  * 主要接口：
  */
-public class ResourceVo implements Parcelable {
+public class ResourceVo implements Parcelable ,Serializable{
 
     /**
      * code : null
@@ -144,7 +146,7 @@ public class ResourceVo implements Parcelable {
     /**
      * 播放时长
      */
-    private int broadcastPace;
+    private String broadcastPace;
     /**
      * 1已点赞 2=未点赞
      */
@@ -233,7 +235,7 @@ public class ResourceVo implements Parcelable {
         grade = in.readInt();
         author = in.readString();
         sets = in.readInt();
-        broadcastPace = in.readInt();
+        broadcastPace = in.readString();
         isPraise = in.readInt();
         praiseNumber = in.readInt();
         isFavorites = in.readInt();
@@ -275,7 +277,7 @@ public class ResourceVo implements Parcelable {
         dest.writeInt(grade);
         dest.writeString(author);
         dest.writeInt(sets);
-        dest.writeInt(broadcastPace);
+        dest.writeString(broadcastPace);
         dest.writeInt(isPraise);
         dest.writeInt(praiseNumber);
         dest.writeInt(isFavorites);
@@ -486,11 +488,11 @@ public class ResourceVo implements Parcelable {
         this.sets = sets;
     }
 
-    public int getBroadcastPace() {
+    public String getBroadcastPace() {
         return broadcastPace;
     }
 
-    public void setBroadcastPace(int broadcastPace) {
+    public void setBroadcastPace(String broadcastPace) {
         this.broadcastPace = broadcastPace;
     }
 

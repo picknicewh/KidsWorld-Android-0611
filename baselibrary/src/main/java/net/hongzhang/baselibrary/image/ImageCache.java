@@ -30,7 +30,7 @@ public class ImageCache {
     private static ImageLoader ImageCache() {
         if(imageLoader==null){
             options = new DisplayImageOptions.Builder()
-                    .showImageOnLoading(R.mipmap.ic_img_error) // 设置图片下载期间显示的图片
+                    .showImageOnLoading(R.mipmap.ic_imgloading) // 设置图片下载期间显示的图片
                     .showImageForEmptyUri(R.mipmap.ic_img_error) // 设置图片Uri为空或是错误的时候显示的图片
                     .showImageOnFail(R.mipmap.ic_img_error) // 设置图片加载或解码过程中发生错误显示的图片
                     .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
@@ -38,7 +38,7 @@ public class ImageCache {
                     .considerExifParams(true) // 启用EXIF和JPEG图像格式
                     .imageScaleType(ImageScaleType.EXACTLY)
                     // .displayer(new RoundedBitmapDisplayer(10)) // 设置成圆角图片
-                    .bitmapConfig(Bitmap.Config.RGB_565).build(); // 构建完成
+                    .bitmapConfig(Bitmap.Config.ARGB_8888).build(); // 构建完成
             imageLoader =ImageLoader.getInstance();
 
         }
@@ -51,8 +51,8 @@ public class ImageCache {
      * @param imageView
      */
     public static void imageLoader( String imageUri,  ImageView imageView){
-        ImageCache().displayImage(getNewUrl(imageUri), imageView, options);
-
+//        ImageCache().displayImage(getNewUrl(imageUri), imageView, options);
+            GlideUtils.loadImageView(imageView.getContext(),getNewUrl(imageUri),imageView);
     }
 
     /**

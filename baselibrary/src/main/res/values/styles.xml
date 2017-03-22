@@ -79,4 +79,8 @@
         <attr name="pstsShouldExpand" format="boolean" />
         <attr name="pstsTextAllCaps" format="boolean" />
     </declare-styleable>
+
+    <style name="AppWelcome" parent="AppTheme">
+        <item name="android:windowBackground">@mipmap/ic_start</item>
+    </style>
 </resources>

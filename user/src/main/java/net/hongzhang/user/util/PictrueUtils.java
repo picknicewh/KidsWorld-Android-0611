@@ -7,8 +7,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+
 import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.baselibrary.util.G;
+import net.hongzhang.baselibrary.widget.RecyclerImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,110 +33,106 @@ import main.picturesee.util.ImagePagerActivity;
 public class PictrueUtils implements View.OnClickListener {
     private Context context;
     private List<String> imageUrl;
-    private int MAXIMAGESIZE=0;
-    private int IMAGESIZE=0;
+    private int MAXIMAGESIZE = 0;
+    private int IMAGESIZE = 0;
+    private int SPACE = 0;
+    private final int Base = 90;
+    private final int LineBase = 2;
 
-    public void setPictrueLoad(Context context, List<String> imageUrl, RelativeLayout rlParams){
-        this.context=context;
-        this.imageUrl=imageUrl;
-        MAXIMAGESIZE=G.dp2px(context,180);
-        IMAGESIZE=G.dp2px(context,90);
-        if (rlParams!=null){
+    public void setPictrueLoad(Context context, List<String> imageUrl, final RelativeLayout rlParams) {
+        this.context = context;
+        this.imageUrl = imageUrl;
+        SPACE = G.dp2px(context, LineBase);
+        MAXIMAGESIZE = G.dp2px(context, Base * 2 + LineBase);
+        IMAGESIZE = G.dp2px(context, Base);
+        if (rlParams != null) {
             rlParams.removeAllViews();
         }
-        if(imageUrl.size()==1){
+        if (imageUrl.size() == 1) {
             //单张图片
-            ImageView imageView=new ImageView(context);
-            RelativeLayout.LayoutParams pl =  setParam(context,imageUrl.get(0),imageView);
-            ImageCache.imageLoader(imageUrl.get(0),imageView);
-        //    imageView.setScaleType(ImageView.ScaleType.FIT_START);
-           // RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(MAXIMAGESIZE,MAXIMAGESIZE);
-            imageView.setTag(0);
+            final RecyclerImageView imageView = new RecyclerImageView(context);
+//            RelativeLayout.LayoutParams pl = setParam(context, imageUrl.get(0), imageView);
+            ImageCache.imageLoader(imageUrl.get(0), imageView);
+            // imageView.setScaleType(ImageView.ScaleType.FIT_START);
+            // RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(MAXIMAGESIZE,MAXIMAGESIZE);
+            imageView.setIndex(0);
             imageView.setOnClickListener(this);
-            if (pl!=null){
-                rlParams.addView(imageView,pl);
-            }
-        }else if(imageUrl.size()==3||imageUrl.size()==6){
+            Glide.with(context).load(imageUrl.get(0)).asBitmap().into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    RelativeLayout.LayoutParams pl = getLayoutParams(resource, imageView);
+                    if (pl != null) {
+                        rlParams.addView(imageView, pl);
+                    }
+                }
+            });
+
+        } else if (imageUrl.size() == 3 || imageUrl.size() == 6) {
 
             //3张或者6张图片
-            for (int i=0;i<imageUrl.size();i++){
-                ImageView imageView=new ImageView(context);
-                imageView.setId(i+100);
-                imageView.setTag(i);
-                ImageCache.imageLoader(imageUrl.get(i),imageView);
-                imageView.setOnClickListener(this);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            for (int i = 0; i < imageUrl.size(); i++) {
+                RecyclerImageView imageView = getImageView(i);
                 RelativeLayout.LayoutParams pl;
-                if(i==0){
-                    pl=new RelativeLayout.LayoutParams(MAXIMAGESIZE,MAXIMAGESIZE);
-                    pl.setMargins(5,5,5,5);
-                }else if(i<=2){
-                    pl=new RelativeLayout.LayoutParams(IMAGESIZE,IMAGESIZE);
-                    if(i==2){
-                        pl.addRule(RelativeLayout.BELOW,i+100-1);
-                        pl.addRule(RelativeLayout.ALIGN_LEFT,i+100-1);
-                        pl.addRule(RelativeLayout.ALIGN_BOTTOM,i+100-2);
-                        pl.setMargins(0,5,0,0);
-                    }else if(i==1){
-                        pl.addRule(RelativeLayout.RIGHT_OF,i+100-1);
-                        pl.addRule(RelativeLayout.ALIGN_TOP,i+100-1);
+                if (i == 0) {
+                    pl = new RelativeLayout.LayoutParams(MAXIMAGESIZE, MAXIMAGESIZE);
+                    pl.setMargins(SPACE, SPACE, SPACE, SPACE);
+                } else if (i <= 2) {
+                    pl = new RelativeLayout.LayoutParams(IMAGESIZE, IMAGESIZE);
+                    if (i == 2) {
+                        pl.addRule(RelativeLayout.BELOW, i + 100 - 1);
+                        pl.addRule(RelativeLayout.ALIGN_LEFT, i + 100 - 1);
+                        pl.addRule(RelativeLayout.ALIGN_BOTTOM, i + 100 - 2);
+                        pl.setMargins(0, SPACE, 0, 0);
+                    } else if (i == 1) {
+                        pl.addRule(RelativeLayout.RIGHT_OF, i + 100 - 1);
+                        pl.addRule(RelativeLayout.ALIGN_TOP, i + 100 - 1);
                     }
-                }else {
-                    pl=new RelativeLayout.LayoutParams(IMAGESIZE,IMAGESIZE);
-                    if(i==3){
-                        pl.addRule(RelativeLayout.BELOW,i+100-3);
-                        pl.addRule(RelativeLayout.ALIGN_LEFT,i+100-3);
-                        pl.setMargins(0,0,0,5);
-                    }else{
-                        pl.setMargins(5,0,2,0);
-                        pl.addRule(RelativeLayout.RIGHT_OF,i+100-1);
-                        pl.addRule(RelativeLayout.ALIGN_TOP,i+100-1);
+                } else {
+                    pl = new RelativeLayout.LayoutParams(IMAGESIZE, IMAGESIZE);
+                    if (i == 3) {
+                        pl.addRule(RelativeLayout.BELOW, i + 100 - 3);
+                        pl.addRule(RelativeLayout.ALIGN_LEFT, i + 100 - 3);
+                        pl.setMargins(0, 0, 0, SPACE);
+                    } else {
+                        pl.setMargins(SPACE, 0, SPACE, 0);
+                        pl.addRule(RelativeLayout.RIGHT_OF, i + 100 - 1);
+                        pl.addRule(RelativeLayout.ALIGN_TOP, i + 100 - 1);
                     }
                 }
-                rlParams.addView(imageView,pl);
+                rlParams.addView(imageView, pl);
             }
-        }else if(imageUrl.size()==4){
+        } else if (imageUrl.size() == 4) {
 
             //4张图片
-            for (int i=0;i<imageUrl.size();i++){
-                ImageView imageView=new ImageView(context);
-                ImageCache.imageLoader(imageUrl.get(i),imageView);
-                imageView.setId(i+100);
-                imageView.setOnClickListener(this);
-                imageView.setTag(i);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(IMAGESIZE,IMAGESIZE);
-                if(i%2==0){
-                    pl.setMargins(5,5,5,5);
-                    pl.addRule(RelativeLayout.BELOW,i+100-1);
-                }else{
-                    pl.setMargins(0,0,5,0);
-                    pl.addRule(RelativeLayout.RIGHT_OF,i+100-1);
-                    pl.addRule(RelativeLayout.ALIGN_TOP,i+100-1);
+            for (int i = 0; i < imageUrl.size(); i++) {
+                RecyclerImageView imageView = getImageView(i);
+                RelativeLayout.LayoutParams pl = new RelativeLayout.LayoutParams(IMAGESIZE, IMAGESIZE);
+                if (i % 2 == 0) {
+                    pl.setMargins(SPACE, SPACE, SPACE, SPACE);
+                    pl.addRule(RelativeLayout.BELOW, i + 100 - 1);
+                } else {
+                    pl.setMargins(0, 0, SPACE, 0);
+                    pl.addRule(RelativeLayout.RIGHT_OF, i + 100 - 1);
+                    pl.addRule(RelativeLayout.ALIGN_TOP, i + 100 - 1);
                 }
-                rlParams.addView(imageView,pl);
+                rlParams.addView(imageView, pl);
             }
-        }else {
+        } else {
 
             //去除上面的情况
-            for (int i=0;i<imageUrl.size();i++){
-                ImageView imageView=new ImageView(context);
-                ImageCache.imageLoader(imageUrl.get(i),imageView);
-                imageView.setId(i+100);
-                imageView.setOnClickListener(this);
-                imageView.setTag(i);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                RelativeLayout.LayoutParams pl=new RelativeLayout.LayoutParams(IMAGESIZE,IMAGESIZE);
-                if(i%3==0){
-                    pl.setMargins(5,5,5,5);
-                    pl.addRule(RelativeLayout.BELOW,i+100-1);
-                }else{
-                    pl.setMargins(0,0,5,0);
-                    pl.addRule(RelativeLayout.RIGHT_OF,i+100-1);
-                    pl.addRule(RelativeLayout.ALIGN_TOP,i+100-1);
+            for (int i = 0; i < imageUrl.size(); i++) {
+                RecyclerImageView imageView = getImageView(i);
+                RelativeLayout.LayoutParams pl = new RelativeLayout.LayoutParams(IMAGESIZE, IMAGESIZE);
+                if (i % 3 == 0) {
+                    pl.setMargins(SPACE, SPACE, SPACE, SPACE);
+                    pl.addRule(RelativeLayout.BELOW, i + 100 - 1);
+                } else {
+                    pl.setMargins(0, 0, SPACE, 0);
+                    pl.addRule(RelativeLayout.RIGHT_OF, i + 100 - 1);
+                    pl.addRule(RelativeLayout.ALIGN_TOP, i + 100 - 1);
                 }
 
-                rlParams.addView(imageView,pl);
+                rlParams.addView(imageView, pl);
             }
 
         }
@@ -140,19 +141,36 @@ public class PictrueUtils implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(context, ImagePagerActivity.class);
-        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,getimagepath(imageUrl));
-        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX,(int)view.getTag());
-        intent.putExtra("source","net");
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, getimagepath(imageUrl));
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, ((RecyclerImageView) view).getIndex());
+        intent.putExtra("source", "net");
         context.startActivity(intent);
     }
+
+    /**
+     * 实例化 RecyclerImageView
+     *
+     * @param i 当前ImageView的位置
+     * @return RecyclerImageView
+     */
+    private RecyclerImageView getImageView(int i) {
+        RecyclerImageView imageView = new RecyclerImageView(context);
+        ImageCache.imageLoader(imageUrl.get(i), imageView);
+        imageView.setId(i + 100);
+        imageView.setOnClickListener(this);
+        imageView.setIndex(i);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        return imageView;
+    }
+
     /**
      * 把缩略图转换成为原图
      */
-    private ArrayList<String> getimagepath(List<String> itemList){
+    private ArrayList<String> getimagepath(List<String> itemList) {
         ArrayList<String> imagepath = new ArrayList<>();
-        for (int i = 0 ; i<itemList.size();i++){
+        for (int i = 0; i < itemList.size(); i++) {
             String pathurl = itemList.get(i);
-            pathurl = pathurl.replace("/s","");
+            pathurl = pathurl.replace("/s", "");
             imagepath.add(pathurl);
         }
         return imagepath;
@@ -160,29 +178,52 @@ public class PictrueUtils implements View.OnClickListener {
 
     /**
      * 设置图片布局参数,根据不同长宽的图片不同的布局
-     * @param  url 图片的url
-     * @param  iv_image 图片控件
+     *
+     * @param url      图片的url
+     * @param iv_image 图片控件
      */
-    public static   RelativeLayout.LayoutParams setParam(Context context, String url, ImageView iv_image){
+    public static RelativeLayout.LayoutParams setParam(Context context, String url, ImageView iv_image) {
         Bitmap bitmap = ImageCache.getBitmap(url);
-        if (bitmap!=null){
+        if (bitmap != null) {
             int imageWidth = bitmap.getWidth();
             int imageHeight = bitmap.getHeight();
-            RelativeLayout.LayoutParams lp ;
-            int viewWidth = G.dp2px(context,180);
-            int viewHeight = G.dp2px(context,180);
-            if (imageHeight>imageWidth){
-                lp = new RelativeLayout.LayoutParams(viewWidth,viewHeight);
+            RelativeLayout.LayoutParams lp;
+            int viewWidth = G.dp2px(context, 180);
+            int viewHeight = G.dp2px(context, 180);
+            if (imageHeight > imageWidth) {
+                lp = new RelativeLayout.LayoutParams(viewWidth, viewHeight);
                 iv_image.setScaleType(ImageView.ScaleType.FIT_START);
-            }else if (imageHeight==imageWidth){
+            } else if (imageHeight == imageWidth) {
                 lp = new RelativeLayout.LayoutParams(viewWidth, viewWidth);
                 iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            }else {
-                lp = new RelativeLayout.LayoutParams(viewWidth,viewHeight*2/3);
+            } else {
+                lp = new RelativeLayout.LayoutParams(viewWidth, viewHeight * 2 / 3);
                 iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
             }
-            return  lp;
+            return lp;
         }
-        return  null;
+        return null;
+    }
+
+    private RelativeLayout.LayoutParams getLayoutParams(Bitmap bitmap, ImageView imageView) {
+        if (bitmap != null) {
+            int imageWidth = bitmap.getWidth();
+            int imageHeight = bitmap.getHeight();
+            RelativeLayout.LayoutParams lp;
+            int viewWidth = G.dp2px(context, 180);
+            int viewHeight = G.dp2px(context, 180);
+            if (imageHeight > imageWidth) {
+                lp = new RelativeLayout.LayoutParams(viewWidth, viewHeight);
+                imageView.setScaleType(ImageView.ScaleType.FIT_START);
+            } else if (imageHeight == imageWidth) {
+                lp = new RelativeLayout.LayoutParams(viewWidth, viewWidth);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            } else {
+                lp = new RelativeLayout.LayoutParams(viewWidth, viewHeight * 2 / 3);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            }
+            return lp;
+        }
+        return null;
     }
 }

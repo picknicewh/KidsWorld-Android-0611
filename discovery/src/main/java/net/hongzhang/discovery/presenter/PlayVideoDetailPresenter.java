@@ -116,7 +116,8 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
         if (uri.equals(Apiurl.USER_GETTHENELIST)) {
             if (date != null) {
                 Result<ArrayList<ResourceVo>> data = (Result<ArrayList<ResourceVo>>) date;
-                ArrayList<ResourceVo> resourceVos = data.getData();
+//                G.log(data.getData()+"xxxxxxxxxxxx");
+                List<ResourceVo> resourceVos = data.getData();
                 if (resourceVos.size() > 0 && resourceVos != null) {
                     this.resourceVos = resourceVos;
                     view.setVideoList(resourceVos);
@@ -139,6 +140,7 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
                 Result<List<CompilationVo>> data = (Result<List<CompilationVo>>) date;
                 List<CompilationVo> compilationVos = data.getData();
                 view.setRecommendList(compilationVos);
+                G.log("=========CompialtionVos======");
             }
         } else if (uri.equals(Apiurl.SUBATTENTION)) {
             if (date != null) {

@@ -26,36 +26,40 @@ import java.util.List;
  * 主要接口：
  * ================================================
  */
-public class CompilationAdapter extends RecyclerView.Adapter<CompilationAdapter.ViewHolder>{
+public class CompilationAdapter extends RecyclerView.Adapter<CompilationAdapter.ViewHolder> {
     private Context context;
     private List<CompilationVo> compilationVos;
     private onItemClickListener itemClickListener = null;
+    private ViewHolder holder;
+
     public CompilationAdapter(Context context, List<CompilationVo> compilationVos) {
         this.context = context;
         this.compilationVos = compilationVos;
     }
+
     @Override
     public CompilationAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(
-                context).inflate(R.layout.item_resource_search_list,parent,false);
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.item_resource_search_list, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
 
     }
+
     @Override
     public void onBindViewHolder(final CompilationAdapter.ViewHolder holder, final int position) {
-        CompilationVo compilationVo  = compilationVos.get(position);
+        CompilationVo compilationVo = compilationVos.get(position);
         ImageCache.imageLoader(TextUtil.encodeChineseUrl(compilationVo.getImageUrl()), holder.iv_image);
         holder.tv_title.setText(compilationVo.getAlbumName());
         holder.ll_alumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (itemClickListener!=null){
+                if (itemClickListener != null) {
                     itemClickListener.OnItemClick(view, position);
                 }
             }
         });
-
+        this.holder = holder;
     }
 
     @Override
@@ -72,19 +76,26 @@ public class CompilationAdapter extends RecyclerView.Adapter<CompilationAdapter.
         public ImageView iv_image;
         private TextView tv_title;
         private LinearLayout ll_alumb;
+
         public ViewHolder(View view) {
             super(view);
             iv_image = (ImageView) view.findViewById(R.id.iv_image);
             tv_title = (TextView) view.findViewById(R.id.tv_title);
-            ll_alumb = (LinearLayout)view.findViewById(R.id.ll_alumb);
+            ll_alumb = (LinearLayout) view.findViewById(R.id.ll_alumb);
             view.setTag(this);
         }
     }
-    public  void setOnItemClickListener(onItemClickListener itemClickListener){
-     this.itemClickListener = itemClickListener;
+
+    public void setOnItemClickListener(onItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
-    public  interface onItemClickListener{
+
+    public interface onItemClickListener {
         void OnItemClick(View view, int position);
+    }
+
+    public ImageView getAlbumImageView() {
+        return holder.iv_image;
     }
 
 }

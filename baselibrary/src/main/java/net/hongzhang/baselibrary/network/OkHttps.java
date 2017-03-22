@@ -175,7 +175,7 @@ public class OkHttps {
 //                            if(isSuccess)
 
                         //服务端正常返回或者是缓存的 请求成功
-                        if (isSuccess || isFromCache)
+                        if (((Result)o).getCode().equals("0")|| isFromCache)
                             okHttpListener.onSuccess(uri, o);
                         else if (!isSendError) //否则请求失败  但是必须是之前没有发送错误信息  不能重复发送 会报错
                             try {
@@ -221,7 +221,12 @@ public class OkHttps {
         Iterator<Map.Entry<String, Object>> iterator = set.iterator();
         while (iterator.hasNext()) {
             Map.Entry<String, Object> entry = iterator.next();
-            params.put(entry.getKey(), entry.getValue().toString());
+            try {
+                params.put(entry.getKey(), entry.getValue().toString());
+            }catch (Exception e){
+                G.log("==参数异常=="+entry.getKey());
+            }
+
             G.log(entry.getKey() + "------请求参数-------" + entry.getValue());
         }
 //        params.put("msec",msec);

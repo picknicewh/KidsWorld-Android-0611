@@ -371,16 +371,9 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i("sssss", "====================onResume=======================");
-    }
-
-    @Override
     protected void onRestart() {
         super.onRestart();
         startLockScreenService();
-        Log.i("sssss", "====================onRestart=======================");
     }
 
     /**
@@ -526,12 +519,12 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
                         animationUtil.startRotateAnimation();
                         iv_loading.clearAnimation();
                         iv_play.setClickable(true);
-                        iv_loading.setVisibility(View.GONE);
+                        iv_loading.setVisibility(View.INVISIBLE);
                         //非第一次播放,切换歌曲时，记录
                         presenter.savePlayTheRecord(tsId, resourceId, hasplayTime, 1);
                     } else if (state == 1) {
                         iv_loading.clearAnimation();
-                        iv_loading.setVisibility(View.GONE);
+                        iv_loading.setVisibility(View.INVISIBLE);
                         iv_play.setClickable(true);
                     } else if (state == 3) {
                         if (!isVivoX5()) {

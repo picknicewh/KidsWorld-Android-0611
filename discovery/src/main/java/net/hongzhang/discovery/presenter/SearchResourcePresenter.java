@@ -68,6 +68,7 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
         }.getType();
         OkHttps.sendPost(mType, Apiurl.SERACHRESOURCE, map, this, 2, "search" + type);
         view.showLoadingDialog();
+        view.setloadMoreVis(false);
     }
 
     @Override
@@ -112,6 +113,7 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
     @Override
     public void onSuccess(String uri, Object date) {
         view.stopLoadingDialog();
+        view.setloadMoreVis(true);
         if (Apiurl.SERACHRESOURCE.equals(uri)) {
             if (date != null) {
                 Result<ResourceVos> result = (Result<ResourceVos>) date;
@@ -124,14 +126,16 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
                     }
                     compilationVoList.addAll(compilationVos);
                     view.setCompilationVoList(compilationVoList);
-                    if (resourceVos1 != null && resourceVos1.size() > 0) {
-                        if (flag == 1) {
-                            resourceVoList.clear();
-                        }
-                        resourceVoList.addAll(resourceVos1);
-                        view.setResourceList(resourceVoList);
-                    }
-                } else if (resourceVos1 != null && resourceVos1.size() > 0) {
+//                    if (resourceVos1 != null && resourceVos1.size() > 0) {
+//                        if (flag == 1) {
+//                            resourceVoList.clear();
+//                        }
+//                        resourceVoList.addAll(resourceVos1);
+//                        view.setResourceList(resourceVoList);
+//                    }
+                }
+
+                if (resourceVos1 != null && resourceVos1.size() > 0) {
                     if (flag == 1) {
                         resourceVoList.clear();
                     }
@@ -144,9 +148,8 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
                         compilationVoList.addAll(compilationVos);
                         view.setCompilationVoList(compilationVoList);
                     }*/
-                    view.setResourceSize((resourceVos1.size() + compilationVos.size()));
                 }
-
+                view.setResourceSize((resourceVos1.size() + compilationVos.size()));
             }
         }
     }
@@ -154,6 +157,7 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
     @Override
     public void onError(String uri, String error) {
         view.stopLoadingDialog();
+        view.setloadMoreVis(true);
         Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
     }
 }

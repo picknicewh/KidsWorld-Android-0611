@@ -186,13 +186,13 @@ public class MainDiscoveryActivity extends Activity implements View.OnClickListe
     public void setRecommendVoMusicList(final List<CompilationVo> compilationVos) {
         if (compilationVos!=null &&compilationVos.size()>0){
             music_recommend_id = String.valueOf(compilationVos.get(0).getAlbumId());
-            CompilationAdapter adapter = new CompilationAdapter(this, compilationVos);
+           final CompilationAdapter adapter = new CompilationAdapter(this, compilationVos);
             gv_music.setAdapter(adapter);
             gv_music.setLayoutManager(new GridLayoutManager(this,2));
             adapter.setOnItemClickListener(new CompilationAdapter.onItemClickListener() {
                 @Override
                 public void OnItemClick(View view, int position) {
-                    presenter.startMusicActivity(String.valueOf(compilationVos.get(position).getAlbumId()), null);
+                    presenter.startMusicActivity(String.valueOf(compilationVos.get(position).getAlbumId()), null,adapter.getAlbumImageView());
                 }
             });
         }

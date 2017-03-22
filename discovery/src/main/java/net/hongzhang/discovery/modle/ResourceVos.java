@@ -1,5 +1,6 @@
 package net.hongzhang.discovery.modle;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * 附加注释：
  * 主要接口：
  */
-public class ResourceVos {
+public class ResourceVos implements Serializable{
     /**
      * albumManageList : []
      * resourceManageList : []

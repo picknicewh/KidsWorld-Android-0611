@@ -29,6 +29,9 @@ public class ViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         int newposition = position%viewList.size();
         ImageView imageView = viewList.get(newposition);
+//        if(imageView.getParent()!=null){
+//            ((ViewGroup)imageView.getParent()).removeView(imageView);
+//        }
         container.addView(imageView);
         return imageView;
     }

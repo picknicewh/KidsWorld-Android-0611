@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/main_bg"
     android:orientation="vertical">
 
@@ -59,15 +60,25 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <net.hongzhang.discovery.widget.BannerView
+            <!--<net.hongzhang.discovery.widget.BannerView-->
+            <!--android:id="@+id/bv_home"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="150dp" />-->
+            <com.youth.banner.Banner
                 android:id="@+id/bv_home"
                 android:layout_width="match_parent"
-                android:layout_height="150dp" />
+                android:layout_height="150dp"
+                app:indicator_width="8dp"
+                app:indicator_height="8dp"
+                app:indicator_margin="8dp"
+                app:indicator_drawable_selected="@drawable/dot_enable"
+                app:indicator_drawable_unselected="@drawable/dot_normal"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -261,7 +272,6 @@
                 </RelativeLayout>
 
                 <net.hongzhang.baselibrary.widget.NoScrollListView
-
                     android:id="@+id/lv_consult"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -120,7 +120,7 @@ public class ResourceVo implements Parcelable {
     /**
      * 播放时长
      */
-    private int broadcastPace;
+    private String broadcastPace;
     /**
      * 专辑名称
      */
@@ -170,7 +170,7 @@ public class ResourceVo implements Parcelable {
         createName = in.readString();
         createTime = in.readString();
         searchCount = in.readString();
-        broadcastPace = in.readInt();
+        broadcastPace = in.readString();
         albumName = in.readString();
         albumId = in.readString();
         isPraise = in.readInt();
@@ -206,7 +206,7 @@ public class ResourceVo implements Parcelable {
         dest.writeString(createName);
         dest.writeString(createTime);
         dest.writeString(searchCount);
-        dest.writeInt(broadcastPace);
+        dest.writeString(broadcastPace);
         dest.writeString(albumName);
         dest.writeString(albumId);
         dest.writeInt(isPraise);
@@ -431,11 +431,11 @@ public class ResourceVo implements Parcelable {
         this.albumName = albumName;
     }
 
-    public int getBroadcastPace() {
+    public String getBroadcastPace() {
         return broadcastPace;
     }
 
-    public void setBroadcastPace(int broadcastPace) {
+    public void setBroadcastPace(String broadcastPace) {
         this.broadcastPace = broadcastPace;
     }
 

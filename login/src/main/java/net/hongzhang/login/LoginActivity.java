@@ -57,7 +57,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setStatusBar(Color.parseColor("#fafafa"));
         setContentView(R.layout.activity_login);
         BaseLibrary.addActivity(this);
-
         initView();
     }
 

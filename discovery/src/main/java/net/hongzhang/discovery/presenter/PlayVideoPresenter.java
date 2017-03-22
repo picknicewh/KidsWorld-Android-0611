@@ -79,6 +79,7 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
 
     @Override
     public void getVideoList(String tsId, String themeId) {
+        G.log("====themeId=="+themeId);
         Map<String, Object> map = new HashMap<>();
         map.put("tsId", tsId);
         map.put("pageSize", 999);

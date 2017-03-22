@@ -3,6 +3,7 @@ package net.hongzhang.baselibrary.base;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -57,7 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setContentView(int layoutResID) {
         mToolBarHelper = new ToolBarHelper(this, layoutResID);
         toolbar = mToolBarHelper.getToolBar();
-        toolbar.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.colorAccent));
         setContentView(mToolBarHelper.getContentView());
         /*把 toolbar 设置到Activity 中*/
         setSupportActionBar(toolbar);
@@ -159,5 +160,4 @@ public abstract class BaseActivity extends AppCompatActivity {
         MobclickAgent.onPageEnd(className);
         MobclickAgent.onPause(this);
     }
-
 }

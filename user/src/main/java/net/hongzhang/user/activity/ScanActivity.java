@@ -192,12 +192,10 @@ public class ScanActivity extends Activity implements CameraManager.PreviewFrame
             String hashValue = "/app/qRCodeLogin" + time + AND_KEY;
             String sign = time + "-" + MD5Utils.encode(hashValue);
             String md5 = getMD5Code(path);
-            scanLogin(md5, sign);
+            scanLogin(md5, sign,UserMessage.getInstance(this).getAccount_id());
         } else {
             Toast.makeText(this, "二维码错误！", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     /**
@@ -225,12 +223,13 @@ public class ScanActivity extends Activity implements CameraManager.PreviewFrame
         OkHttps.sendPost(type, Apiurl.CONFIRMCODELOGIN, param, this);
     }
 
-    private void scanLogin(String md5, String sign) {
+    private void scanLogin(String md5, String sign,String accountId) {
         Map<String, Object> param = new HashMap<>();
         param.put("md5", md5);
         param.put("tsId", UserMessage.getInstance(this).getTsId());
         param.put("requestSource", "android");
         param.put("sign", sign);
+        param.put("accountId",accountId);
         Type type = new TypeToken<net.hongzhang.baselibrary.mode.Result<ScanVo>>() {
         }.getType();
         OkHttps.sendPost(type, Apiurl.SCANLOGIN, param, this);

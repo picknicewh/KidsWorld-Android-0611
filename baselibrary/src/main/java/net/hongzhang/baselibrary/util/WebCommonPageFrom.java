@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.R;
-import net.hongzhang.baselibrary.cordova.HMDroidGap;
 import net.hongzhang.baselibrary.image.ImageCache;
 
 /**
@@ -191,15 +190,15 @@ public class WebCommonPageFrom {
                     LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     layoutParams2.gravity = Gravity.CENTER_VERTICAL;
-                    if (activity instanceof  HMDroidGap ||
-                            activity instanceof  HMDroidGap&&view.equals(Constant.CONSULTDETAIL)
-                            ||activity instanceof  HMDroidGap&&view.equals(Constant.VEDIO)||
-                             activity instanceof  HMDroidGap&&view.equals(Constant.MEDIAPLAYING)){
-                        layoutParams2.setMargins(G.dp2px(activity,0),0,0,0);
-                    }
-                    else {
+//                    if (activity instanceof  HMDroidGap ||
+//                            activity instanceof  HMDroidGap&&view.equals(Constant.CONSULTDETAIL)
+//                            ||activity instanceof  HMDroidGap&&view.equals(Constant.VEDIO)||
+//                             activity instanceof  HMDroidGap&&view.equals(Constant.MEDIAPLAYING)){
+//                        layoutParams2.setMargins(G.dp2px(activity,0),0,0,0);
+//                    }
+//                    else {
                         layoutParams2.setMargins(G.dp2px(activity,10),0,0,0);
-                    }
+//                    }
                     iv_left.setLayoutParams(layoutParams2);
 
                     if (et_search!=null){
@@ -236,10 +235,10 @@ public class WebCommonPageFrom {
 
     @JavascriptInterface
     public void setWebLoading(String url){
-        Intent intent=new Intent(activity,HMDroidGap.class);
-        intent.putExtra("loadUrl",url);
-        intent.putExtra("title","我的收藏");
-        activity.startActivity(intent);
+//        Intent intent=new Intent(activity,HMDroidGap.class);
+//        intent.putExtra("loadUrl",url);
+//        intent.putExtra("title","我的收藏");
+//        activity.startActivity(intent);
     }
     @JavascriptInterface
     public void sendBroadcast(boolean isVisible){

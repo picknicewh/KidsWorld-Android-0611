@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <LinearLayout
-        android:padding="@dimen/space"
         android:id="@+id/ll_alumb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:paddingTop="@dimen/space">
+
         <ImageView
-            android:src="@mipmap/ic_img_error"
             android:id="@+id/iv_image"
-            android:layout_width="wrap_content"
-            android:layout_height="85dp"
-            android:scaleType="centerCrop"/>
+            android:layout_width="160dp"
+            android:layout_height="90dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_img_error" />
+
         <TextView
             android:id="@+id/tv_title"
-            android:text="两只笨狗熊"
-            android:lines="1"
-            android:ellipsize="end"
-            android:textColor="@color/main_text_grey"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_x0.5"/>
-        <TextView
             android:layout_marginTop="@dimen/space_x0.5"
-            android:id="@+id/tv_play_count"
-            android:text="已有198人播放"
-            android:lines="1"
             android:ellipsize="end"
-            android:textSize="@dimen/ts_small"
+            android:lines="1"
+            android:text="两只笨狗熊"
+            android:textColor="@color/main_text_grey" />
+
+        <TextView
+            android:id="@+id/tv_play_count"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_x0.5"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="已有198人播放"
             android:textColor="@color/minor_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/ts_small" />
     </LinearLayout>
 </LinearLayout>

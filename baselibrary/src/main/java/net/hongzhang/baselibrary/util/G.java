@@ -315,7 +315,7 @@ public class G {
 
     public static String GetNetworkType(Activity activity) {
         String strNetworkType = "";
-        ConnectivityManager connectivityManager = (ConnectivityManager)  activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
@@ -363,24 +363,37 @@ public class G {
         Log.e("cocos2d-x", "Network Type : " + strNetworkType);
         return strNetworkType;
     }
-    /**  
-      * 先判断是否安装，已安装则启动目标应用程序，否则先安装  
-      * @param packageName 目标应用安装后的包名  
-      * @param appPath 目标应用apk安装文件所在的路径  
-      * @author zuolongsnail  
-      */
-    public static void launchApp(String packageName ,String appPath,Context context){
+
+    /**
+     *   
+     *  * 先判断是否安装，已安装则启动目标应用程序，否则先安装  
+     *  * @param packageName 目标应用安装后的包名  
+     *  * @param appPath 目标应用apk安装文件所在的路径  
+     *  * @author zuolongsnail  
+     *  
+     */
+    public static void launchApp(String packageName, String appPath, Context context) {
         boolean isinstall = new File("/data/data/" + packageName).exists();
         // 启动目标应用   
-        if(isinstall){
+        if (isinstall) {
             // 获取目标应用安装包的Intent    
             Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
             context.startActivity(intent);
-        }else{
+        } else {
             // 安装目标应用   
             Intent intent = new Intent();
-            intent.setDataAndType(Uri.fromFile(new  File(appPath)), "application/vnd.android.package-archive");
+            intent.setDataAndType(Uri.fromFile(new File(appPath)), "application/vnd.android.package-archive");
             context.startActivity(intent);
         }
+    }
+
+    public static String getClassName(Activity activity) {
+        String className = activity.getLocalClassName();
+        return className.substring((className.lastIndexOf(".") + 1), className.length());//截取类名
+    }
+
+    public static String getImageUrlOriinal(String imageUrl) {
+        int index = imageUrl.lastIndexOf("/s");
+        return imageUrl.substring(0, index) + imageUrl.substring(index + 2, imageUrl.length());
     }
 }

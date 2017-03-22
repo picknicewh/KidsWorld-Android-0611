@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.widget.BannerViewPager;
@@ -52,6 +54,9 @@ public class GuideActivity extends JPushBaseActivity {
      */
     @Bind(R.id.ib_goto)
     TextView ibGoto;
+
+    @Bind(R.id.rl_bg)
+    RelativeLayout rlBg;
     /**
      * 显示立即前往动画
      */
@@ -73,17 +78,27 @@ public class GuideActivity extends JPushBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppWelcome);
+        setContentView(R.layout.activity_guide);
+        ButterKnife.bind(this);
+        initWindow();
         //判断是否是第一次打开app
         spf = getSharedPreferences("FirstApp", Context.MODE_PRIVATE);
         if (spf.getBoolean("firstApp", true)) {
-            setContentView(R.layout.activity_guide);
-            ButterKnife.bind(this);
-            initWindow();
+            rlBg.setVisibility(View.VISIBLE);
             initializeMode();
             initializeView();
         } else {
-            startActivity(new Intent(this, StartActivity.class));
-            finish();
+            rlBg.setVisibility(View.GONE);
+//            startActivity(new Intent(this, StartActivity.class));
+//            finish();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(GuideActivity.this, MainActivity.class));
+                    finish();
+                }
+            },800);
         }
     }
 
@@ -149,6 +164,7 @@ public class GuideActivity extends JPushBaseActivity {
             }
         });
     }
+
     /**
      * 标题栏透明
      * 仅支持api大于等于19
@@ -160,6 +176,7 @@ public class GuideActivity extends JPushBaseActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
+
     @OnClick({R.id.tv_gohead, R.id.ib_goto})
     public void onClick(View view) {
         editor.putBoolean("firstApp", false);

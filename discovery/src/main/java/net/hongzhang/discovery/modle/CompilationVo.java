@@ -3,6 +3,8 @@ package net.hongzhang.discovery.modle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * 作者： wh
  * 时间： 2016/11/30
@@ -11,7 +13,7 @@ import android.os.Parcelable;
  * 附加注释：
  * 主要接口：
  */
-public class CompilationVo  implements Parcelable{
+public class CompilationVo  implements Parcelable,Serializable{
     /**
      * albumId : 181
      * albumName : 顽皮公主不出嫁

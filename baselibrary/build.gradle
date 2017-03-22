@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '24.0.0'
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         minSdkVersion 15
@@ -33,6 +33,5 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile files('lib/sun.misc.BASE64Decoder.jar')
     compile project(':IMKit')
-    compile project(':CordovaLib')
     compile files('lib/zxing.jar')
 }

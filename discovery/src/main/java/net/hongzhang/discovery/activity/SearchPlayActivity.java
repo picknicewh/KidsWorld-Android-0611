@@ -117,7 +117,7 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
     public void onClick(View view) {
         int viewId = view.getId();
         if (viewId == R.id.tv_search) {
-            pageNumber=1;
+            pageNumber = 1;
             lv_search_play_history.setVisibility(View.GONE);
             ll_search_content.setVisibility(View.VISIBLE);
             tag = et_search_key.getText().toString();
@@ -141,7 +141,7 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
         lv_search_play_history.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                pageNumber=1;
+                pageNumber = 1;
                 ll_search_content.setVisibility(View.VISIBLE);
                 lv_search_play_history.setVisibility(View.GONE);
                 tag = searchKeyVoList.get(position).getKey();
@@ -151,12 +151,18 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
     }
 
     @Override
+    public void setloadMoreVis(boolean isVis) {
+        ll_load_more.setVisibility(isVis ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
     public void setCompilationVoList(final List<CompilationVo> musicCompilationVos) {
         lv_search_play_history.setVisibility(View.GONE);
         if (musicCompilationVos.size() > 0 && musicCompilationVos != null) {
             CompilationAdapter adapter = new CompilationAdapter(this, musicCompilationVos);
             rv_search_play.setLayoutManager(new GridLayoutManager(this, 2));
             rv_search_play.setAdapter(adapter);
+            rv_search_play.setNestedScrollingEnabled(false);
             adapter.setOnItemClickListener(new CompilationAdapter.onItemClickListener() {
                 @Override
                 public void OnItemClick(View view, int position) {

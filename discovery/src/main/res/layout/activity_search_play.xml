@@ -15,23 +15,29 @@
         android:layout_height="wrap_content" />
 
     <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/ll_search_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/ll_search_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <!-- 嵌套一个 RelativeLayout 解决6.0 RecyclerView显示不全-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_search_play"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+            </RelativeLayout>
 
-                <include layout="@layout/layout_load_more" />
-            </LinearLayout>
-        </ScrollView>
+            <include layout="@layout/layout_load_more" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

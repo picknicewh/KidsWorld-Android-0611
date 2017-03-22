@@ -25,19 +25,20 @@ import io.rong.imkit.RongIM;
  * 时    间：2016/7/13
  * 描    述：所有Activity父类
  * 版    本：1.0 添加Toolbar代码
- *          1.2 添加友盟统计
+ * 1.2 添加友盟统计
  * 修订历史：
  * 主要接口：
  * ================================================
  */
 public abstract class BaseMusicActivity extends AppCompatActivity {
 
-    public     LoadingDialog dialog;
+    public LoadingDialog dialog;
     // 访问所需的全部权限
     private final static String[] PERMISSIONS = new String[]{
             Manifest.permission.INTERNET,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,34 +51,40 @@ public abstract class BaseMusicActivity extends AppCompatActivity {
             return;
         }
         // 账号抢登监听
-        if (RongIM.getInstance()!=null){
+        if (RongIM.getInstance() != null) {
             RongIM.setConnectionStatusListener(new MyConnectionStatusListener(this));
         }
     }
-    public <T extends View> T $(@IdRes int resId){
-        return (T)super.findViewById(resId);
+
+    public <T extends View> T $(@IdRes int resId) {
+        return (T) super.findViewById(resId);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(G.getClassName(this));
         MobclickAgent.onResume(this);
     }
+
     public void showLoadingDialog() {
-        if(dialog==null)
-            dialog=new LoadingDialog(this, R.style.LoadingDialogTheme);
+        if (dialog == null)
+            dialog = new LoadingDialog(this, R.style.LoadingDialogTheme);
         dialog.show();
         dialog.setCancelable(true);
         dialog.setLoadingText("数据加载中...");
     }
+
     public void stopLoadingDialog() {
-        if (dialog!=null) {
+        if (dialog != null) {
             dialog.dismiss();
         }
     }
+
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPageStart(G.getClassName(this));
         MobclickAgent.onPause(this);
     }
 }

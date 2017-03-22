@@ -1,4 +1,4 @@
-package net.hongzhang.discovery.activity;
+package net.hongzhang.discovery.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.youth.banner.Banner;
+
 import net.hongzhang.baselibrary.base.BaseFragement;
 import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.baselibrary.util.G;
@@ -26,12 +28,17 @@ import net.hongzhang.discovery.modle.CompilationVo;
 import net.hongzhang.discovery.modle.ResourceVo;
 import net.hongzhang.discovery.presenter.MainRecommendContract;
 import net.hongzhang.discovery.presenter.MainRecommendPresenter;
-import net.hongzhang.discovery.widget.BannerView;
+import net.hongzhang.discovery.util.BannerImageLoaderUtil;
 import net.hongzhang.user.mode.BannerVo;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 修改时间：2017/3/15
+ * 修改:首页banner滑动bug 将首页banner修改其它第三方库 github地址：https://github.com/youth5201314/banner
+ * 新增音乐播放Trans过度动画 5.0系统才支持
+ */
 public class MainDiscoveryFragment extends BaseFragement implements View.OnClickListener, MainRecommendContract.View {
     /**
      * 左边图片
@@ -52,7 +59,7 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
     /**
      * 广告栏
      */
-    private BannerView bannerView;
+    private Banner bannerView;
 
     /**
      * 幼儿听听专辑页
@@ -117,7 +124,6 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
      */
     private String consult_recommend_id;
     /**
-     *
      * 用户信息
      */
     private UserMessage userMessage;
@@ -135,20 +141,20 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_main_discovery,null);
+        View view = inflater.inflate(R.layout.activity_main_discovery, null);
         initView(view);
         return view;
     }
 
     private void initView(View view) {
-        iv_left = (ImageView)view. findViewById(R.id.iv_dleft);
+        iv_left = (ImageView) view.findViewById(R.id.iv_dleft);
         tv_title = (TextView) view.findViewById(R.id.tv_dtitle);
         iv_right = (ImageView) view.findViewById(R.id.iv_dright);
-        bannerView = (BannerView)view.findViewById(R.id.bv_home);
+        bannerView = (Banner) view.findViewById(R.id.bv_home);
         bt_search = (Button) view.findViewById(R.id.et_search);
         ll_music = (LinearLayout) view.findViewById(R.id.ll_music);
         ll_class = (LinearLayout) view.findViewById(R.id.ll_class);
-        ll_consult = (LinearLayout)view. findViewById(R.id.ll_consult);
+        ll_consult = (LinearLayout) view.findViewById(R.id.ll_consult);
         gv_music = (RecyclerView) view.findViewById(R.id.gv_music);
         gv_class = (RecyclerView) view.findViewById(R.id.gv_class);
         lv_consult = (NoScrollListView) view.findViewById(R.id.lv_consult);
@@ -166,25 +172,26 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
         tv_more_consult.setOnClickListener(this);
         initData();
     }
+
     private void initData() {
         G.setTranslucent(getActivity());
         guideList = new ArrayList<>();
         presenter = new MainRecommendPresenter(getActivity(), this);
-        userMessage =  UserMessage.getInstance(getActivity());
+        userMessage = UserMessage.getInstance(getActivity());
         tsid = userMessage.getTsId();
-        ImageCache.imageLoader(userMessage.getHoldImgUrl(),iv_left);
+        ImageCache.imageLoader(userMessage.getHoldImgUrl(), iv_left);
     }
 
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
         if (viewId == R.id.iv_dleft) {
-          presenter.startUserActivity();
+            presenter.startUserActivity();
         } else if (viewId == R.id.iv_dright) {
-          presenter.startHistoryActivity();
+            presenter.startHistoryActivity();
         } else if (viewId == R.id.et_search) {
-          presenter.startSearchActivity();
-        }  else if (viewId == R.id.ll_music || viewId == R.id.tv_more_music) {
+            presenter.startSearchActivity();
+        } else if (viewId == R.id.ll_music || viewId == R.id.tv_more_music) {
             presenter.startMusicListActivity();
         } else if (viewId == R.id.ll_class || viewId == R.id.tv_more_class) {
             presenter.startVideoListActivity();
@@ -195,15 +202,16 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
 
     @Override
     public void setRecommendVoMusicList(final List<CompilationVo> compilationVos) {
-        if (compilationVos!=null &&compilationVos.size()>0){
+        if (compilationVos != null && compilationVos.size() > 0) {
             music_recommend_id = String.valueOf(compilationVos.get(0).getAlbumId());
-            CompilationAdapter adapter = new CompilationAdapter(getActivity(), compilationVos);
+            final CompilationAdapter adapter = new CompilationAdapter(getActivity(), compilationVos);
             gv_music.setAdapter(adapter);
-            gv_music.setLayoutManager(new GridLayoutManager(getActivity(),2));
+            gv_music.setNestedScrollingEnabled(false);
+            gv_music.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             adapter.setOnItemClickListener(new CompilationAdapter.onItemClickListener() {
                 @Override
                 public void OnItemClick(View view, int position) {
-                    presenter.startMusicActivity(String.valueOf(compilationVos.get(position).getAlbumId()), null);
+                    presenter.startMusicActivity(String.valueOf(compilationVos.get(position).getAlbumId()), null,adapter.getAlbumImageView());
                 }
             });
         }
@@ -211,11 +219,12 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
 
     @Override
     public void setRecommendVoClassList(final List<CompilationVo> compilationVos) {
-        if (compilationVos!=null &&compilationVos.size()>0){
+        if (compilationVos != null && compilationVos.size() > 0) {
             video_recommend_id = String.valueOf(compilationVos.get(0).getAlbumId());
             CompilationAdapter adapter = new CompilationAdapter(getActivity(), compilationVos);
             gv_class.setAdapter(adapter);
-            gv_class.setLayoutManager(new GridLayoutManager(getActivity(),2));
+            gv_class.setNestedScrollingEnabled(false);
+            gv_class.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             adapter.setOnItemClickListener(new CompilationAdapter.onItemClickListener() {
                 @Override
                 public void OnItemClick(View view, int position) {
@@ -228,7 +237,7 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
 
     @Override
     public void setRecommendVoConsultList(final List<ResourceVo> consultInfovos) {
-        if (consultInfovos!=null &&consultInfovos.size()>0){
+        if (consultInfovos != null && consultInfovos.size() > 0) {
             consult_recommend_id = String.valueOf(consultInfovos.get(0).getAlbumId());
             ConsultAdapter adapter = new ConsultAdapter(getActivity(), consultInfovos);
             lv_consult.setAdapter(adapter);
@@ -241,23 +250,45 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
         }
 
     }
+
     @Override
     public void setBannerList(List<BannerVo> bannerList) {
-        LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+//        LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        List<String> bannerImgUrlList = new ArrayList<>();
         for (int i = 0; i < bannerList.size(); i++) {
-            ImageView iv = new ImageView(getActivity());
-            iv.setLayoutParams(mParams);
-            ImageCache.imageLoader(bannerList.get(i).getBanner_url(),iv);
-            iv.setScaleType(ImageView.ScaleType.FIT_XY);
-            guideList.add(iv);
+//            ImageView iv = new ImageView(getActivity());
+//            iv.setLayoutParams(mParams);
+//            ImageCache.imageLoader(bannerList.get(i).getBanner_url(),iv);
+//            iv.setScaleType(ImageView.ScaleType.FIT_XY);
+//            guideList.add(iv);
+            bannerImgUrlList.add(bannerList.get(i).getBanner_url());
         }
-        bannerView.setViewList(guideList);
-        bannerView.addViewPager(getActivity());
-        bannerView.requestFocus();
+//        bannerView.setViewList(guideList);
+//        bannerView.addViewPager(getActivity());
+//        bannerView.requestFocus();
+        bannerView.setImageLoader(new BannerImageLoaderUtil())//设置图片加载方式
+                .setImages(bannerImgUrlList)//设置轮播图片
+                .setDelayTime(3000)//设置轮播时间
+                .start();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //开始轮播
+        bannerView.startAutoPlay();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //停止轮播
+        bannerView.stopAutoPlay();
+    }
+
     @Override
     public void rushData() {
-         type = MainRecommendPresenter.TYPE_MUISC;
+        type = MainRecommendPresenter.TYPE_MUISC;
         if (type == MainRecommendPresenter.TYPE_MUISC) {
             presenter.getRecommendResource(tsid, 4, type);
             type = MainRecommendPresenter.TYPE_VIDEO;
@@ -265,14 +296,15 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
             presenter.getRecommendResource(tsid, 4, type);
             type = MainRecommendPresenter.TYPE_CONSULT;
         } else if (type == MainRecommendPresenter.TYPE_CONSULT) {
-            presenter.getRecommendConsult(tsid,6,userMessage.getAccount_id());
+            presenter.getRecommendConsult(tsid, 6, userMessage.getAccount_id());
         }
-       // 1视频 2音频 3资讯 4视频和音频
+        // 1视频 2音频 3资讯 4视频和音频
     }
+
     @Override
     public void showLoadingDialog() {
         if (dialog == null)
-            dialog = new LoadingDialog(getActivity(), net.hongzhang.baselibrary.R.style.LoadingDialogTheme);
+            dialog = new LoadingDialog(getActivity(), R.style.LoadingDialogTheme);
         dialog.show();
         dialog.setCancelable(true);
         dialog.setLoadingText("数据加载中...");

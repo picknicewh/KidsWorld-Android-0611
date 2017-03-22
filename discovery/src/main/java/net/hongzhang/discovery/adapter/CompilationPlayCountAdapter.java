@@ -26,37 +26,38 @@ import java.util.List;
  * 主要接口：
  * ================================================
  */
-public class CompilationPlayCountAdapter extends RecyclerView.Adapter<CompilationPlayCountAdapter.ViewHolder>{
+public class CompilationPlayCountAdapter extends RecyclerView.Adapter<CompilationPlayCountAdapter.ViewHolder> {
     private Context context;
     private List<CompilationVo> compilationVos;
     private onItemClickListener itemClickListener = null;
+
     public CompilationPlayCountAdapter(Context context, List<CompilationVo> compilationVos) {
         this.context = context;
         this.compilationVos = compilationVos;
     }
+
     @Override
     public CompilationPlayCountAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(
-                context).inflate(R.layout.item_video_detail_recommed,parent,false);
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.item_video_detail_recommed, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
-
     }
+
     @Override
     public void onBindViewHolder(final CompilationPlayCountAdapter.ViewHolder holder, final int position) {
-        CompilationVo compilationVo  = compilationVos.get(position);
+        CompilationVo compilationVo = compilationVos.get(position);
         ImageCache.imageLoader(TextUtil.encodeChineseUrl(compilationVo.getImageUrl()), holder.iv_image);
         holder.tv_title.setText(compilationVo.getAlbumName());
-        holder.tv_play_count.setText("已有"+String.valueOf(compilationVo.getPvcount())+"人播放");
+        holder.tv_play_count.setText("已有" + String.valueOf(compilationVo.getPvcount()) + "人播放");
         holder.ll_alumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (itemClickListener!=null){
+                if (itemClickListener != null) {
                     itemClickListener.OnItemClick(view, position);
                 }
             }
         });
-
     }
 
     @Override
@@ -70,32 +71,33 @@ public class CompilationPlayCountAdapter extends RecyclerView.Adapter<Compilatio
     }
 
 
-
-
     class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView iv_image;
         private TextView tv_title;
         private TextView tv_play_count;
         private LinearLayout ll_alumb;
+
         public ViewHolder(View view) {
             super(view);
             iv_image = (ImageView) view.findViewById(R.id.iv_image);
             tv_title = (TextView) view.findViewById(R.id.tv_title);
             tv_play_count = (TextView) view.findViewById(R.id.tv_play_count);
-            ll_alumb = (LinearLayout)view.findViewById(R.id.ll_alumb);
-           // int itemWidth = (G.size.W-G.dp2px(context,40))/2;
+            ll_alumb = (LinearLayout) view.findViewById(R.id.ll_alumb);
+            // int itemWidth = (G.size.W-G.dp2px(context,40))/2;
             //LinearLayout.LayoutParams  lps= new LinearLayout.LayoutParams(itemWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
-          //  int margin = G.dp2px(context,5);
-           // lps.setMargins(margin,margin,margin,margin);
-           // lps.gravity = Gravity.CENTER;
-           // ll_alumb.setLayoutParams(lps);
+            //  int margin = G.dp2px(context,5);
+            // lps.setMargins(margin,margin,margin,margin);
+            // lps.gravity = Gravity.CENTER;
+            // ll_alumb.setLayoutParams(lps);
             view.setTag(this);
         }
     }
-    public  void setOnItemClickListener(onItemClickListener itemClickListener){
-     this.itemClickListener = itemClickListener;
+
+    public void setOnItemClickListener(onItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
-    public  interface onItemClickListener{
+
+    public interface onItemClickListener {
         void OnItemClick(View view, int position);
     }
 

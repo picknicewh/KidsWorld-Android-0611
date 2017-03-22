@@ -1,5 +1,7 @@
 package net.hongzhang.discovery.presenter;
 
+import android.widget.ImageView;
+
 import net.hongzhang.discovery.modle.CompilationVo;
 import net.hongzhang.discovery.modle.ResourceVo;
 import net.hongzhang.user.mode.BannerVo;
@@ -32,7 +34,7 @@ public class MainRecommendContract {
         void startMusicListActivity();
         void startConsultListActivity();
         void startVideoActivity(String AlbumId);
-        void startMusicActivity(String AlbumId, String resourceId);
+        void startMusicActivity(String AlbumId, String resourceId, ImageView imageView);
         void startConsultActivity(String resourceId);
         void startSearchActivity();
         void startHistoryActivity();

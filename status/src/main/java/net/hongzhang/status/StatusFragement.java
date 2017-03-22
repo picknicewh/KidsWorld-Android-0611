@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 
-import net.hongzhang.baselibrary.cordova.CordovaInterfaceImpl;
 import net.hongzhang.baselibrary.database.StatusInfoDb;
 import net.hongzhang.baselibrary.database.StatusInfoDbHelper;
 import net.hongzhang.baselibrary.image.ImageCache;
@@ -155,8 +154,8 @@ public class StatusFragement extends BaseReceiverFragment implements PullToRefre
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        LayoutInflater localInflater = inflater.cloneInContext(new CordovaInterfaceImpl(getActivity(), this));
-        View view = localInflater.inflate(R.layout.fragment_status, container, false);
+//        LayoutInflater localInflater = inflater.cloneInContext(new CordovaInterfaceImpl(getActivity(), this));
+        View view = inflater.inflate(R.layout.fragment_status, container, false);
         initView(view);
         return view;
     }

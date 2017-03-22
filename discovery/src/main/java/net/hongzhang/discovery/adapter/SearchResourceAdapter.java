@@ -58,7 +58,6 @@ public class SearchResourceAdapter extends RecyclerView.Adapter<SearchResourceAd
                 }
             }
         });
-
     }
 
     @Override

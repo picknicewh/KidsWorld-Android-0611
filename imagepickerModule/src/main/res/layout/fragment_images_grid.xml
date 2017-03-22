@@ -19,48 +19,51 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#111111" >
+    android:background="#111111">
 
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:clipToPadding="false"
         android:horizontalSpacing="2dp"
-        android:verticalSpacing="2dp"
         android:listSelector="@android:color/transparent"
-        android:stretchMode="columnWidth"
-        android:paddingTop="2dp"
+        android:numColumns="3"
+        android:paddingBottom="50dp"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
-        android:paddingBottom="50dp"
-        android:clipToPadding="false"
-        android:numColumns="3" />
+        android:paddingTop="2dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dp" />
 
-    <RelativeLayout android:id="@+id/footer_panel"
+    <RelativeLayout
+        android:id="@+id/footer_panel"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
-        android:background="#fc22292c"
-        >
+        android:background="#80000000">
 
         <Button
             android:id="@+id/btn_dir"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:drawablePadding="4dp"
+            android:drawableRight="@drawable/text_indicator"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:layout_centerVertical="true"
-            android:text="全部图片"
-            android:textSize="16dp"
-            android:textColor="#ffffff"
-            android:gravity="center_vertical"
-            android:drawableRight="@drawable/text_indicator"
-            android:drawablePadding="4dp"
-            android:background="@null"
             android:singleLine="true"
-            android:ellipsize="end"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-
-
+            android:text="全部图片"
+            android:textColor="#ffffff"
+            android:textSize="16dp" />
     </RelativeLayout>
 
 </RelativeLayout>

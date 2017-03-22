@@ -1,11 +1,9 @@
 package net.hongzhang.baselibrary.cordova;
 
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import net.hongzhang.baselibrary.util.UMHybrid;
-
-import org.apache.cordova.engine.SystemWebViewClient;
-import org.apache.cordova.engine.SystemWebViewEngine;
 
 /**
  * ================================================
@@ -16,11 +14,7 @@ import org.apache.cordova.engine.SystemWebViewEngine;
  * 修订历史：
  * ================================================
  */
-public class CordovaWebViewClien extends SystemWebViewClient {
-
-    public CordovaWebViewClien(SystemWebViewEngine parentEngine) {
-        super(parentEngine);
-    }
+public class CordovaWebViewClien extends WebViewClient {  //SystemWebViewClient
 
     @Override
     public void onPageFinished(WebView view, String url) {

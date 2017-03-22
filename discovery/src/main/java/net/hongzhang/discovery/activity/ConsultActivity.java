@@ -1,5 +1,6 @@
 package net.hongzhang.discovery.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -36,8 +37,8 @@ public class ConsultActivity extends BaseActivity {
         setWebView();
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void setWebView() {
-
         wb_consult.getSettings().setJavaScriptEnabled(true);
         wb_consult.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

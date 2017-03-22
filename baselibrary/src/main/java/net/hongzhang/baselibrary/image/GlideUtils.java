@@ -36,17 +36,20 @@ public class GlideUtils {
      */
     //默认加载
     public static void loadImageView(Context mContext, String path, ImageView mImageView) {
-        Glide.with(mContext).load(path).
-                placeholder(R.mipmap.ic_img_error).
-                error(R.mipmap.ic_img_error).
-                diskCacheStrategy(DiskCacheStrategy.ALL).
-                thumbnail(0.1f).
-                into(mImageView);
+        Glide.with(mContext).load(path)
+//                .placeholder(R.mipmap.ic_imgloading)
+                .error(R.mipmap.ic_img_error)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+//                .centerCrop()
+//                .thumbnail(0.1f)
+                .into(mImageView);
     }
     //加载指定大小
     public static void loadImageViewSize(Context mContext, String path, int width, int height, ImageView mImageView) {
-        Glide.with(mContext).load(path).override(width, height).into(mImageView);
+            Glide.with(mContext).load(path).override(width, height).into(mImageView);
     }
+
     //设置加载中以及加载失败图片并且指定大小
     public static void loadImageViewLodingSize(Context mContext, String path, int width, int height, ImageView mImageView, int lodingImage, int errorImageView) {
         Glide.with(mContext).load(path).
@@ -54,6 +57,7 @@ public class GlideUtils {
                 placeholder(lodingImage).
                 error(errorImageView).into(mImageView);
     }
+
     //设置跳过内存缓存
     public static void loadImageViewCache(Context mContext, String path, ImageView mImageView) {
         Glide.with(mContext).load(path).skipMemoryCache(true).into(mImageView);
@@ -63,6 +67,7 @@ public class GlideUtils {
     public static void loadImageViewPriority(Context mContext, String path, ImageView mImageView) {
         Glide.with(mContext).load(path).priority(Priority.NORMAL).into(mImageView);
     }
+
     /**
      * 策略解说：
      * <p>
@@ -79,6 +84,7 @@ public class GlideUtils {
         Glide.with(mContext).load(path).
                 diskCacheStrategy(DiskCacheStrategy.ALL).into(mImageView);
     }
+
     /**
      * api也提供了几个常用的动画：比如crossFade()
      */
@@ -87,6 +93,7 @@ public class GlideUtils {
     public static void loadImageViewAnim(Context mContext, String path, int anim, ImageView mImageView) {
         Glide.with(mContext).load(path).animate(anim).into(mImageView);
     }
+
     /**
      * 会先加载缩略图
      */
@@ -95,6 +102,7 @@ public class GlideUtils {
     public static void loadImageViewThumbnail(Context mContext, String path, ImageView mImageView) {
         Glide.with(mContext).load(path).thumbnail(0.1f).into(mImageView);
     }
+
     /**
      * api提供了比如：centerCrop()、fitCenter()等
      */

@@ -2,24 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
     <RelativeLayout
-        android:background="@color/colorAccent"
+        android:id="@+id/rl_actionbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@color/colorAccent">
+
         <ImageView
             android:id="@+id/iv_left"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/ic_arrow_lift"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/space"
+            android:src="@mipmap/ic_arrow_lift" />
     </RelativeLayout>
     <ScrollView
-        android:background="@color/main_bg"
+        android:id="@+id/sv_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/main_bg">
 
         <LinearLayout
             android:id="@+id/ll_detail"
@@ -27,10 +29,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <RelativeLayout
+            <RelativeLayout
                 android:id="@+id/rl_media"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="@dimen/head_height"
                 android:background="@color/transparent"
                 android:orientation="vertical">
 
@@ -69,6 +71,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textSize="@dimen/ts_large"
                         android:textColor="@color/main_text_grey" />
 
                     <ImageView
@@ -111,9 +114,8 @@
                     <TextView
                         android:id="@+id/tv_play_count"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
-
                         android:textColor="@color/main_text_grey" />
                 </LinearLayout>
 
@@ -127,17 +129,16 @@
                         android:id="@+id/tv_brief"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space"
                         android:textColor="@color/main_text_grey" />
 
                     <TextView
                         android:id="@+id/tv_copy_right"
-                        android:visibility="gone"
-                        android:layout_marginLeft="@dimen/space"
-                        android:textColor="@color/minor_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/copy_right" />
+                        android:layout_marginLeft="@dimen/space"
+                        android:text="@string/copy_right"
+                        android:textColor="@color/minor_text"
+                        android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -163,7 +164,6 @@
             </LinearLayout>
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/space"
@@ -174,14 +174,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/space_x0.5"
                     android:text="为你推荐"
                     android:textColor="@color/main_text_grey" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/ry_recommend"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:descendantFocusability="blocksDescendants">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/ry_recommend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -255,10 +260,17 @@
                     android:layout_height="1dp"
                     android:background="@color/line_divide" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_comment_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:descendantFocusability="blocksDescendants">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_comment_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

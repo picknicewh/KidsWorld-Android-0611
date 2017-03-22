@@ -59,8 +59,8 @@ public class BaseLibrary {
         OkHttpUtils.init(application);
         initImageLoader(application);
         RongPushClient.registerMiPush(application, " 2882303761517505108", "5551750520108");
-        RongIM.init(application,"x18ywvqfxlloc");//初始化消息中的信息
-
+        RongIM.init(application,"e0x9wycfeaamq");//初始化消息中的信息
+        //e0x9wycfeaamq 测试   x18ywvqfxlloc 生产
         activitys=new ArrayList<>();
         activityLockList = new ArrayList<>();
         instance=application;
@@ -73,7 +73,6 @@ public class BaseLibrary {
         if (activitys != null && activitys.size() > 0) {
             if(!activitys.contains(activity)){
                 activitys.add(activity);
-
             }
         }else{
             activitys.add(activity);
@@ -83,7 +82,6 @@ public class BaseLibrary {
         if (activityLockList!=null){
             activityLockList.add(activity);
         }
-
     }
     private  static  int count=0;
     public static  void removeLockActivity(){

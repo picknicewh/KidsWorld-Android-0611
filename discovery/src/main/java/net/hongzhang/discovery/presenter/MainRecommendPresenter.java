@@ -1,7 +1,10 @@
 package net.hongzhang.discovery.presenter;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -39,18 +42,19 @@ import java.util.Map;
 public class MainRecommendPresenter implements MainRecommendContract.Presenter, OkHttpListener {
     private Context context;
     public static final int TYPE_MUISC = 2;
-    public static final int  TYPE_VIDEO= 1;
-    public static final int  TYPE_CONSULT = 3;
+    public static final int TYPE_VIDEO = 1;
+    public static final int TYPE_CONSULT = 3;
     private int type;
     private String tsid;
     private MainRecommendContract.View view;
-    public MainRecommendPresenter(Context context,MainRecommendContract.View view) {
+
+    public MainRecommendPresenter(Context context, MainRecommendContract.View view) {
         this.context = context;
-        this.view =view ;
-        tsid  = UserMessage.getInstance(context).getTsId();
+        this.view = view;
+        tsid = UserMessage.getInstance(context).getTsId();
         type = TYPE_MUISC;
         getBanner(tsid);
-        getRecommendResource(tsid,4,TYPE_MUISC);
+        getRecommendResource(tsid, 4, TYPE_MUISC);
     }
 
     @Override
@@ -58,9 +62,10 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
         Map<String, Object> map = new HashMap<>();
         map.put("tsId", tsId);
         map.put("pageNumber", 1);
-        map.put("pageSize",pageSize);
+        map.put("pageSize", pageSize);
         map.put("type", type);
-        Type mType = new TypeToken<Result<List<CompilationVo>>>() {}.getType();
+        Type mType = new TypeToken<Result<List<CompilationVo>>>() {
+        }.getType();
         OkHttps.sendPost(mType, Apiurl.GETRECOMMENDLIST, map, this);
         view.showLoadingDialog();
     }
@@ -70,10 +75,11 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
         Map<String, Object> map = new HashMap<>();
         map.put("tsId", tsId);
         map.put("pageNumber", 1);
-        map.put("pageSize",pageSize);
+        map.put("pageSize", pageSize);
         map.put("type", 1);
-        map.put("account_id",account_id);
-        Type mType = new TypeToken<Result<List<ResourceVo>>>() {}.getType();
+        map.put("account_id", account_id);
+        Type mType = new TypeToken<Result<List<ResourceVo>>>() {
+        }.getType();
         OkHttps.sendPost(mType, Apiurl.GETRECONSULT, map, this);
         view.showLoadingDialog();
     }
@@ -82,23 +88,25 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
     public void getBanner(String tsId) {
         Map<String, Object> map = new HashMap<>();
         map.put("tsId", tsId);
-        Type mType = new TypeToken<Result<List<BannerVo>>>() {}.getType();
+        Type mType = new TypeToken<Result<List<BannerVo>>>() {
+        }.getType();
         OkHttps.sendPost(mType, Apiurl.GETBANNERLIST, map, this);
     }
 
     @Override
     public void startVideoListActivity() {
         Intent intent = new Intent(context, ResourceAlubmListActivity.class);
-        intent.putExtra("type",TYPE_VIDEO);
+        intent.putExtra("type", TYPE_VIDEO);
         context.startActivity(intent);
     }
 
     @Override
     public void startMusicListActivity() {
         Intent intent = new Intent(context, ResourceAlubmListActivity.class);
-        intent.putExtra("type",TYPE_MUISC);
+        intent.putExtra("type", TYPE_MUISC);
         context.startActivity(intent);
     }
+
     @Override
     public void startConsultListActivity() {
         Intent intent = new Intent(context, ConsultListActivity.class);
@@ -113,11 +121,16 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
     }
 
     @Override
-    public void startMusicActivity(String AlbumId, String resourceId) {
+    public void startMusicActivity(String AlbumId, String resourceId, ImageView imageView) {
         Intent intent = new Intent(context, MainPlayMusicActivity.class);
         intent.putExtra("themeId", AlbumId);
         intent.putExtra("resourceId", resourceId);
-        context.startActivity(intent);
+//        context.startActivity(intent);
+        if (android.os.Build.VERSION.SDK_INT > 20) {
+            context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation((Activity) context, imageView, "album_trans").toBundle());
+        } else {
+            context.startActivity(intent);
+        }
     }
 
     @Override
@@ -126,7 +139,6 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
         intent.putExtra("resourceId", resourceId);
         context.startActivity(intent);
     }
-
 
 
     @Override
@@ -152,37 +164,37 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
     public void onSuccess(String uri, Object date) {
         view.stopLoadingDialog();
         if (uri.equals(Apiurl.GETRECOMMENDLIST)) {
-           if (date!=null){
-               Result<List<CompilationVo>> data = (Result<List<CompilationVo>>) date;
-               List<CompilationVo> compilationVos = data.getData();
-               if (type==TYPE_MUISC){
-                   view.setRecommendVoMusicList(compilationVos);
-                   type = TYPE_VIDEO;
-                   getRecommendResource(tsid,4,type);
-               }else if (type==TYPE_VIDEO){
-                   view.setRecommendVoClassList(compilationVos);
-                   type = TYPE_CONSULT;
-                   getRecommendConsult(tsid,6,UserMessage.getInstance(context).getAccount_id());
-               }
-           }
+            if (date != null) {
+                Result<List<CompilationVo>> data = (Result<List<CompilationVo>>) date;
+                List<CompilationVo> compilationVos = data.getData();
+                if (type == TYPE_MUISC) {
+                    view.setRecommendVoMusicList(compilationVos);
+                    type = TYPE_VIDEO;
+                    getRecommendResource(tsid, 4, type);
+                } else if (type == TYPE_VIDEO) {
+                    view.setRecommendVoClassList(compilationVos);
+                    type = TYPE_CONSULT;
+                    getRecommendConsult(tsid, 6, UserMessage.getInstance(context).getAccount_id());
+                }
+            }
         } else if (uri.equals(Apiurl.GETBANNERLIST)) {
-            if (date!=null){
-                Result< List<BannerVo>> data = (Result< List<BannerVo>>) date;
+            if (date != null) {
+                Result<List<BannerVo>> data = (Result<List<BannerVo>>) date;
                 List<BannerVo> bannerVos = data.getData();
                 view.setBannerList(bannerVos);
             }
-        }else if (uri.equals(Apiurl.GETRECONSULT)){
-            if (date!=null){
+        } else if (uri.equals(Apiurl.GETRECONSULT)) {
+            if (date != null) {
                 Result<List<ResourceVo>> result = (Result<List<ResourceVo>>) date;
-                List<ResourceVo> resourceVoList  = result.getData();
+                List<ResourceVo> resourceVoList = result.getData();
                 view.setRecommendVoConsultList(resourceVoList);
             }
-
         }
     }
+
     @Override
     public void onError(String uri, String error) {
         view.stopLoadingDialog();
-        Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
     }
 }

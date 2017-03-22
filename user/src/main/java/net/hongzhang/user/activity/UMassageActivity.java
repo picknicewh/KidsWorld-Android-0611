@@ -78,6 +78,8 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     };
     /**
      * 标记位，一定要等待修改头像成功后才能返回
+     *
+     *  当头像修改失败的时候无法返回  这是一个BUG...
      */
     private int flag=1;
     @Override
@@ -120,14 +122,15 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
     protected void setToolBar() {
         setCententTitle("个人信息");
         setLiftImage(R.mipmap.ic_arrow_lift);
-        setLiftOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (flag==1){
-                    finish();
-                }
-            }
-        });
+        setLiftOnClickClose();
+//        setLiftOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (flag==1){
+//                    finish();
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -153,7 +156,7 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
                 }
             });
         }else if(viewID==R.id.ll_sex){
-//            showSexDialog();
+          //  showSexDialog();
         }else if(viewID==R.id.ll_sign){
          //   showSignDialog();
             SignDialog dialog = new SignDialog(this);
@@ -199,7 +202,6 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
         Type type=new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.AVATAR,map,list,this);
         flag = 0;
-        G.log("=============");
     }
 
     @Override

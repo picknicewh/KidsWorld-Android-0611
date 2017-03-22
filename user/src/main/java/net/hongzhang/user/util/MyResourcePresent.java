@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
-import net.hongzhang.baselibrary.cordova.HMDroidGap;
 import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
@@ -35,34 +34,36 @@ import java.util.Map;
 public class MyResourcePresent implements ResourceContract.Presenter, OkHttpListener {
     public Context context;
     private ResourceContract.View view;
-    private   List<CompilationsVo> compilationVoList;
-    private  List<ResourceVo> resourceVoList;
-    private int  type;
+    private List<CompilationsVo> compilationVoList;
+    private List<ResourceVo> resourceVoList;
+    private int type;
     private static final String url = ServerConfigManager.WEB_IP + "/paradise/index.html";
-    public MyResourcePresent(Context context, ResourceContract.View view, int source,int type){
+
+    public MyResourcePresent(Context context, ResourceContract.View view, int source, int type) {
         this.context = context;
         this.view = view;
         this.type = type;
-        Log.i("sssssssssss",type+"=-====0");
-        if (type==3){
+        Log.i("sssssssssss", type + "=-====0");
+        if (type == 3) {
             resourceVoList = new ArrayList<>();
             if (source == 0) {
-                getCollectResourceList(1,10,type);
-            } else if (source==1){
-                getPlayRecordList(1,10,type);
+                getCollectResourceList(1, 10, type);
+            } else if (source == 1) {
+                getPlayRecordList(1, 10, type);
             }
-        }else {
+        } else {
             if (source == 0) {
                 compilationVoList = new ArrayList<>();
-                getCollectResourceList(1,10,type);
-            } else if (source==1){
+                getCollectResourceList(1, 10, type);
+            } else if (source == 1) {
                 resourceVoList = new ArrayList<>();
-                getPlayRecordList(1,10,type);
+                getPlayRecordList(1, 10, type);
             }
         }
 
 
     }
+
     @Override
     public void getCollectResourceList(int pageNumber, int pageSize, int type) {
         Map<String, Object> params = new HashMap<>();
@@ -70,16 +71,19 @@ public class MyResourcePresent implements ResourceContract.Presenter, OkHttpList
         params.put("tsId", UserMessage.getInstance(context).getTsId());
         params.put("pageSize", pageSize);
         params.put("pageNumber", pageNumber);
-        params.put("account_id",UserMessage.getInstance(context).getAccount_id());
+        params.put("account_id", UserMessage.getInstance(context).getAccount_id());
         Type mType;
-        if (type==3){
-             mType = new TypeToken<Result<List<ResourceVo>>>() {}.getType();
-        }else {
-            mType = new TypeToken<Result<List<CompilationsVo>>>() {}.getType();
+        if (type == 3) {
+            mType = new TypeToken<Result<List<ResourceVo>>>() {
+            }.getType();
+        } else {
+            mType = new TypeToken<Result<List<CompilationsVo>>>() {
+            }.getType();
         }
         OkHttps.sendPost(mType, Apiurl.GETATTENTIONLIST, params, this, 2, "resource");
         view.showLoadingDialog();
     }
+
     @Override
     public void getPlayRecordList(int pageNumber, int pageSize, int type) {
         Map<String, Object> params = new HashMap<>();
@@ -87,21 +91,28 @@ public class MyResourcePresent implements ResourceContract.Presenter, OkHttpList
         params.put("tsId", UserMessage.getInstance(context).getTsId());
         params.put("pageSize", pageSize);
         params.put("pageNumber", pageNumber);
-        Type mType = new TypeToken<Result<List<ResourceVo>>>() {}.getType();
+        Type mType = new TypeToken<Result<List<ResourceVo>>>() {
+        }.getType();
         OkHttps.sendPost(mType, Apiurl.GETPLAYRECORDING, params, this, 2, "resource");
         view.showLoadingDialog();
     }
 
     @Override
     public void starVedioActivity(String themeId) {
-        Intent intent = new Intent(context, HMDroidGap.class);
-        intent.putExtra("loadUrl", url + "?tsId=" + UserMessage.getInstance(context).getTsId() + "#/videoPlay?themeid=" + themeId );
+//        Intent intent = new Intent(context, HMDroidGap.class);
+//        intent.putExtra("loadUrl", url + "?tsId=" + UserMessage.getInstance(context).getTsId() + "#/videoPlay?themeid=" + themeId );
+//        context.startActivity(intent);
+        ComponentName componetName = new ComponentName("net.hongzhang.bbhow", "net.hongzhang.discovery.activity.PlayVideoListActivity");
+        Intent intent = new Intent();
+        intent.setComponent(componetName);
+        intent.putExtra("themeId", themeId);
         context.startActivity(intent);
     }
+
     @Override
     public void startMusicActivity(String themeId, String resourceId) {
         Intent intent = new Intent();
-        ComponentName componetName = new ComponentName("net.hongzhang.bbhow", "net.hongzhang.discovery.MainPlayActivity");
+        ComponentName componetName = new ComponentName("net.hongzhang.bbhow", "net.hongzhang.discovery.activity.MainPlayMusicActivity");
         intent.setComponent(componetName);
         intent.putExtra("themeId", themeId);
         intent.putExtra("resourceId", resourceId);
@@ -110,22 +121,28 @@ public class MyResourcePresent implements ResourceContract.Presenter, OkHttpList
 
     @Override
     public void starConsultActivity(String resourceId) {
-        Intent intent = new Intent(context ,HMDroidGap.class);
-        intent.putExtra("loadUrl", url + "?tsId=" + UserMessage.getInstance(context).getTsId() + "#/eduInformation_Detail?resourceid=" + resourceId);
+//        Intent intent = new Intent(context ,HMDroidGap.class);
+//        intent.putExtra("loadUrl", url + "?tsId=" + UserMessage.getInstance(context).getTsId() + "#/eduInformation_Detail?resourceid=" + resourceId);
+//        context.startActivity(intent);
+
+        ComponentName componentName = new ComponentName("net.hongzhang.bbhow","net.hongzhang.discovery.activity.ConsultActivity");
+        Intent intent=new Intent();
+        intent.setComponent(componentName);
+        intent.putExtra("resourceId", resourceId);
         context.startActivity(intent);
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
         view.stopLoadingDialog();
-        if (type==1 || type==2){
+        if (type == 1 || type == 2) {
             if (Apiurl.GETATTENTIONLIST.equals(uri)) {
                 if (date != null) {
                     Result<List<CompilationsVo>> data = (Result<List<CompilationsVo>>) date;
                     List<CompilationsVo> compilationsVos = data.getData();
-                    if (compilationsVos.size()>0&&compilationsVos!=null){
+                    if (compilationsVos.size() > 0 && compilationsVos != null) {
                         compilationVoList.addAll(compilationsVos);
-                        view.setResourceVoList(null,compilationVoList);
+                        view.setResourceVoList(null, compilationVoList);
                     }
                     view.setResourceSize(compilationsVos.size());
                 }
@@ -133,21 +150,21 @@ public class MyResourcePresent implements ResourceContract.Presenter, OkHttpList
                 if (date != null) {
                     Result<List<ResourceVo>> data = (Result<List<ResourceVo>>) date;
                     List<ResourceVo> resourceVos = data.getData();
-                    if (resourceVos.size()>0&& resourceVos!=null){
+                    if (resourceVos.size() > 0 && resourceVos != null) {
                         resourceVoList.addAll(resourceVos);
-                        view.setResourceVoList(resourceVoList,null);
+                        view.setResourceVoList(resourceVoList, null);
                     }
                     view.setResourceSize(resourceVos.size());
                 }
             }
-        }else if (type==3){
-            Log.i("ddddddddddddd",type+"========================");
+        } else if (type == 3) {
+            Log.i("ddddddddddddd", type + "========================");
             if (date != null) {
                 Result<List<ResourceVo>> data = (Result<List<ResourceVo>>) date;
                 List<ResourceVo> resourceVos = data.getData();
-                if (resourceVos.size()>0&& resourceVos!=null){
+                if (resourceVos.size() > 0 && resourceVos != null) {
                     resourceVoList.addAll(resourceVos);
-                    view.setResourceVoList(resourceVoList,null);
+                    view.setResourceVoList(resourceVoList, null);
                 }
                 view.setResourceSize(resourceVos.size());
             }

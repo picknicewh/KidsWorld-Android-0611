@@ -85,6 +85,7 @@ public class ThemeVoListActivity extends BaseActivity implements ThemeVoListCont
         recyclerView = $(R.id.rv_complaint_list);
         CompilationAdapter adapter = new CompilationAdapter(this, compilationVos);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new CompilationAdapter.onItemClickListener() {
             @Override
