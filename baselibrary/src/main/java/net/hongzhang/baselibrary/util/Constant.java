@@ -73,4 +73,9 @@ public class Constant {
      * 收藏
      */
     public static final String  COLLECT = "collect";
+
+    /**
+     * 登录鉴权签名规则
+     */
+    public static final String  AND_KEY = "9FHGghjGHJgjy57JBKnjklmkllkjnHKLM";
 }

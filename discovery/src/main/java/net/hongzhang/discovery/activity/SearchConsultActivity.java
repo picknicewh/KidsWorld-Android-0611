@@ -24,8 +24,14 @@ import java.util.List;
 
 import static android.R.attr.type;
 
+
 /**
- * 搜索音乐或者视频
+ * 作者： wh
+ * 时间： 2017/3/5
+ * 名称：搜索的资讯列表
+ * 版本说明：
+ * 附加注释：
+ * 主要接口：获取搜索资讯列表
  */
 public class SearchConsultActivity extends BaseActivity implements View.OnClickListener, SearchConsultContract.View {
     /**
@@ -116,6 +122,7 @@ public class SearchConsultActivity extends BaseActivity implements View.OnClickL
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                     ResourceVo vo = resourceList.get(position);
+                    presenter.saveSearchKey(tag,userMessage.getTsId(),vo.getResourceName(),vo.getResourceId());
                     presenter.startConsultActivity(vo.getResourceId());
                 }
             });

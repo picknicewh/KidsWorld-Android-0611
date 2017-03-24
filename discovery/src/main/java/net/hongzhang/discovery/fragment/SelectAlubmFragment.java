@@ -44,7 +44,7 @@ public class SelectAlubmFragment extends BaseFragement implements AlbumSelectCon
     /**
      * 一页显示数据条数
      */
-    private final static int pageSize = 6;
+    private final static int pageSize = 8;
     /**
      * 没有数据
      */

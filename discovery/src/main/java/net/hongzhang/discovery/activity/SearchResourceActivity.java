@@ -22,7 +22,14 @@ import net.hongzhang.discovery.util.SearchHistoryDbHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 作者： wh
+ * 时间： 2017/3/5
+ * 名称： 搜索音乐或者视频，资讯
+ * 版本说明：
+ * 附加注释：SearchHistoryDb 添加本地已经的搜索的关键字数据库
+ * 主要接口：
+ */
 public class SearchResourceActivity extends BaseActivity implements View.OnClickListener {
     /**
      * 搜索框

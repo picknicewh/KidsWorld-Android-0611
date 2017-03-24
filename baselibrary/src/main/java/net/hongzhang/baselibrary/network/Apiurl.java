@@ -219,6 +219,10 @@ public class Apiurl {
      */
     public static final String SERACHRESOURCE = "/rakuen/resourceSearch.do";
     /**
+     * 保存搜索
+     */
+    public static final String SAVESERACHRE = "/rakuen/saveSearch.do";
+    /**
      * 获取banner图
      */
     public static final String GETBANNERLIST = "/rakuen/newGetBanner.do";

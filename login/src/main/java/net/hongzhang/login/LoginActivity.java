@@ -99,7 +99,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
         } else if (i == R.id.tv_agree) {
             Intent intent = new Intent();
-            ComponentName componetName = new ComponentName("net.hongzhang.bbhow", "net.hongzhang.user.activity.TextContentActivity");
+            ComponentName componetName = new ComponentName("net.hongzhang.bbhow",
+                    "net.hongzhang.user.activity.TextContentActivity");
             intent.setComponent(componetName);
             intent.putExtra("source", 2);
             startActivity(intent);
@@ -152,6 +153,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             b_login.setEnabled(true);
             Result<List<CharacterSeleteVo>> result = (Result<List<CharacterSeleteVo>>) date;
             List<CharacterSeleteVo> seleteList = result.getData();
+
             //将用户信息json串保存起来，提供用户多个身份选择
             UserMessage.getInstance(this).setUserMessagejsonCache(new Gson().toJson(seleteList));
             UserMessage.getInstance(this).setCount(result.getData().size());

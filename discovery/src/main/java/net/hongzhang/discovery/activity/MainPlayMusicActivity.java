@@ -36,7 +36,14 @@ import net.hongzhang.discovery.util.PlayMode;
 import net.hongzhang.discovery.util.TextUtil;
 
 import java.util.List;
-
+/**
+ * 作者： wh
+ * 时间： 2017/3/5
+ * 名称： 播放音频页
+ * 版本说明：
+ * 附加注释：
+ * 主要接口：获取专辑列表，收藏音频，提交播放礼拜
+ */
 public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnClickListener, PlayMusicContract.View {
     /**
      * 导航栏左边的按钮

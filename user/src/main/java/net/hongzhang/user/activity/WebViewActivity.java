@@ -30,6 +30,8 @@ public class WebViewActivity extends BaseActivity {
             setCententTitle("版权声明");
         } else if (source == 2) {
             setCententTitle("服务条款");
+        }else if (source==3){
+            setCententTitle("用户协议");
         }
         setLiftImage(R.mipmap.ic_arrow_lift);
         setLiftOnClickClose();

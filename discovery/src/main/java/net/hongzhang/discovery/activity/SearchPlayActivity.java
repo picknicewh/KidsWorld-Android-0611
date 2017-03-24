@@ -28,7 +28,12 @@ import net.hongzhang.discovery.presenter.SearchResourcePresenter;
 import java.util.List;
 
 /**
- * 搜索音乐或者视频
+ * 作者： wh
+ * 时间： 2017/3/5
+ * 名称：搜索音乐或者视频
+ * 版本说明：
+ * 附加注释：
+ * 主要接口：获取搜索音乐或者视频列表
  */
 public class SearchPlayActivity extends BaseActivity implements View.OnClickListener, SearchResourceContract.View {
     /**
@@ -56,7 +61,7 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
     /**
      * 一页显示数据条数
      */
-    private final static int pageSize = 6;
+    private final static int pageSize = 8;
     /**
      * 页面
      */
@@ -167,6 +172,7 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
                 @Override
                 public void OnItemClick(View view, int position) {
                     CompilationVo vo = musicCompilationVos.get(position);
+                    presenter.saveSearchKey(tag,2,userMessage.getTsId(),vo.getAlbumName(),vo.getAlbumId());
                     if (type == MainRecommendPresenter.TYPE_MUISC) {
                         presenter.startMusicActivity(vo.getAlbumId(), null);
                     } else {
@@ -188,6 +194,7 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
                 @Override
                 public void OnItemClick(View view, int position) {
                     ResourceVo vo = resourceList.get(position);
+                    presenter.saveSearchKey(tag,1,userMessage.getTsId(),vo.getResourceName(),vo.getResourceId());
                     if (type == MainRecommendPresenter.TYPE_MUISC) {
                         presenter.startMusicActivity(vo.getAlbumId(), vo.getResourceId());
                     } else {

@@ -42,7 +42,7 @@ public class SearchResourceListFragment extends BaseFragement implements View.On
     private LinearLayout ll_load_more;
     private TextView tv_load_more;
     private ImageView iv_load_more;
-    private int pageSize = 6;
+    private int pageSize = 8;
     /**
      * 页码数
      */
@@ -92,7 +92,6 @@ public class SearchResourceListFragment extends BaseFragement implements View.On
         tag = SearchResourceActivity.tag;
         presenter = new SearchResourcePresenter(getActivity(), this);
         presenter.getSearchResourceList(userMessage.getTsId(), type, pageSize, pageNumber, userMessage.getAccount_id(), tag, 1);
-
         resourceList = new ArrayList<>();
         resourceAdapter = new SearchResourceAdapter(getActivity(), resourceList);
         rv_album.setLayoutManager(new GridLayoutManager(getActivity(), 2));
@@ -102,6 +101,7 @@ public class SearchResourceListFragment extends BaseFragement implements View.On
             @Override
             public void OnItemClick(View view, int position) {
                 ResourceVo vo = resourceList.get(position);
+                presenter.saveSearchKey(tag,1,userMessage.getTsId(),vo.getResourceName(),vo.getResourceId());
                 if (type == MainRecommendPresenter.TYPE_MUISC) {
                     presenter.startMusicActivity(vo.getAlbumId(), vo.getResourceId());
                 } else {

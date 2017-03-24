@@ -60,7 +60,6 @@ public class ConsultListActivity extends BaseActivity implements ConsultListCont
         presenter = new ConsultListPresenter(ConsultListActivity.this, this);
         presenter.getThemeList(MainRecommendPresenter.TYPE_CONSULT, pageNumber, pageSize);
     }
-
     @Override
     public void setThemeList(List<ThemeVo> themeList) {
         titles = new ArrayList<>();

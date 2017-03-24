@@ -42,7 +42,7 @@ public class ThemeListFragment extends BaseFragement implements ThemeListContrac
     /**
      * 一页显示数据条数
      */
-    private final static int pageSize = 6;
+    private final static int pageSize = 10;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

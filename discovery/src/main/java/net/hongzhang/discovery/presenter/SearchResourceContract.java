@@ -29,6 +29,7 @@ public interface SearchResourceContract {
      interface Presenter{
         void getSearchResourceList(String tsId,int type,int pageSize, int pageNumber, String account_id,String tag,int flag);
         void  getSearchHistoryList(int type);
+         void saveSearchKey(String key,int type,String tsId,String targetName,String targetId);
         void insertKey(int type,String tag);
         void startVideoActivity(String themeId, String resourceId);
         void startMusicActivity(String themeId, String resourceId);

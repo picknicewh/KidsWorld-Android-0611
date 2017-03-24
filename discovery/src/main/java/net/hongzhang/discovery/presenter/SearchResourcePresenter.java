@@ -81,7 +81,17 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
         }
         view.setSearchHistoryList(searchKeyVos);
     }
-
+    @Override
+    public void saveSearchKey(String key,int type,String tsId,String targetName,String targetId) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("tsId",tsId);
+        params.put("tag",key);
+        params.put("targetName",targetName);
+        params.put("type",type);//type=1资源 type=2专辑
+        params.put("targetId",targetId);
+        Type mType =  new TypeToken<Result<String>>(){}.getType();
+        OkHttps.sendPost(mType,Apiurl.SAVESERACHRE,params,this);
+    }
     @Override
     public void insertKey(int type, String tag) {
        // Log.i("RRRRRRRR","tag========="+tag+"type========"+type);
@@ -149,7 +159,7 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
                         view.setCompilationVoList(compilationVoList);
                     }*/
                 }
-                view.setResourceSize((resourceVos1.size() + compilationVos.size()));
+                view.setResourceSize((resourceVos1.size()));
             }
         }
     }

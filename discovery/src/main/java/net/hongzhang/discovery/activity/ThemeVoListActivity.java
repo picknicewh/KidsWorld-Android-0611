@@ -51,7 +51,7 @@ public class ThemeVoListActivity extends BaseActivity implements ThemeVoListCont
     /**
      * 一页显示数据条数
      */
-    private final static int pageSize = 8;
+    private final static int pageSize = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

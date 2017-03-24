@@ -10,6 +10,7 @@ import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
+import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.discovery.activity.ConsultActivity;
 import net.hongzhang.discovery.modle.ResourceVo;
 import net.hongzhang.discovery.modle.ResourceVos;
@@ -76,6 +77,19 @@ public class SearchConsultPresenter implements SearchConsultContract.Presenter, 
         List<SearchKeyVo> searchKeyVos = helper.getKeyList(db.getReadableDatabase(), SearchHistoryDb.TABLENAME3);
         view.setSearchHistoryList(searchKeyVos);
     }
+
+    @Override
+    public void saveSearchKey(String key,String tsId,String targetName,String targetId) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("tsId",tsId);
+        params.put("tag",key);
+        params.put("targetName",targetName);
+        params.put("type",1);//type=1资源 type=2专辑
+        params.put("targetId",targetId);
+        Type type =  new TypeToken<Result<String>>(){}.getType();
+        OkHttps.sendPost(type,Apiurl.SAVESERACHRE,params,this);
+    }
+
     @Override
     public void insertKey(String tag) {
         helper.insert(db.getWritableDatabase(), tag, SearchHistoryDb.TABLENAME3);
@@ -93,6 +107,9 @@ public class SearchConsultPresenter implements SearchConsultContract.Presenter, 
                 view.setConsultList(resourceVoList);
                 view.setConsultInfoSize(resourceVos1.size());
             }
+        }else if (Apiurl.SAVESERACHRE.equals(uri)){
+            Result<String> result = (Result<String>) date;
+            G.showToast(context,result.getData());
         }
     }
 

@@ -26,6 +26,7 @@ public interface SearchConsultContract {
     public interface Presenter {
         void getSearchResourceList(String tsId, int type, int pageSize, int pageNumber, String account_id, String tag);
         void getSearchHistoryList();
+        void saveSearchKey(String key,String tsId,String targetName,String targetId);
         void insertKey(String tag);
         void startConsultActivity(String resourceId);
     }

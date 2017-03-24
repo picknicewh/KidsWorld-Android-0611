@@ -1,7 +1,5 @@
 package net.hongzhang.discovery.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -54,7 +52,6 @@ public class SearchConsultListFragment extends BaseFragement implements SearchCo
 
     private UserMessage userMessage;
     private String tag;
-    private SharedPreferences sp;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mconsult_list, null);
@@ -72,7 +69,6 @@ public class SearchConsultListFragment extends BaseFragement implements SearchCo
     }
 
     private void initData() {
-        sp = getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
         userMessage = UserMessage.getInstance(getActivity());
         presenter = new SearchConsultPresenter(getActivity(), this);
         pageNumber=1;
@@ -86,7 +82,9 @@ public class SearchConsultListFragment extends BaseFragement implements SearchCo
         lv_consult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                presenter.startConsultActivity(resourceVos.get(i).getResourceId());
+                ResourceVo resourceVo=resourceVos.get(i);
+                presenter.saveSearchKey(tag,userMessage.getTsId(),resourceVo.getResourceName(),resourceVo.getResourceId());
+                presenter.startConsultActivity(resourceVo.getResourceId());
             }
         });
     }

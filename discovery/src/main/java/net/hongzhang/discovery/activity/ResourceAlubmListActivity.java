@@ -15,7 +15,14 @@ import net.hongzhang.discovery.presenter.MainRecommendPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 作者： wh
+ * 时间： 2017/3/5
+ * 名称： 幼儿听听或者幼儿课堂页面
+ * 版本说明：
+ * 附加注释：根据type的不同进入不同的页面 type=2 幼儿听听 type=1 幼儿课堂
+ * 主要接口：
+ */
 public class ResourceAlubmListActivity extends BaseActivity implements View.OnClickListener {
     /**
      * 页面的头部tab

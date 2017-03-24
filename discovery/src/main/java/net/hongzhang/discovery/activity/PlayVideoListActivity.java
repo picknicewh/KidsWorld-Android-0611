@@ -34,7 +34,14 @@ import java.util.List;
 
 import static net.hongzhang.discovery.R.id.iv_album_more;
 
-
+/**
+ * 作者： wh
+ * 时间： 2017/3/5
+ * 名称： 播放视频详情页
+ * 版本说明：
+ * 附加注释：
+ * 主要接口：获取专辑列表，获取视频详情，获取推荐视频列表，提交评论，获取评论列表，收藏视频
+ */
 public class PlayVideoListActivity extends AppCompatActivity implements View.OnClickListener,
         PlayVideoDetailContract.View {
     private ImageView iv_left;
@@ -102,7 +109,7 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
     /**
      * 当前播放的位置
      */
-    private int position;
+    private int position=0;
     /**
      * 专辑列表适配器
      */
@@ -242,6 +249,7 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void setVideoList(final List<ResourceVo> resourceVos) {
+        position=0;
         if (resourceVos != null && resourceVos.size() > 0) {
             cancel = resourceVos.get(position).getIsFavorites();
         }
