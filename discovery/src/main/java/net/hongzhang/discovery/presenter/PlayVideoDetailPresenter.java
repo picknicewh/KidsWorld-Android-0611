@@ -109,6 +109,23 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
         view.showLoadingDialog();
     }
 
+    @Override
+    public void subPraise( String resourceId, String cancel) {
+        String tsId = UserMessage.getInstance(context).getTsId();
+        if (G.isEmteny(tsId)) {
+            Toast.makeText(context, "请登录后在点赞！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("tsId", tsId);
+        map.put("resourceid", resourceId);
+        map.put("cancel", cancel);
+        Type mType = new TypeToken<Result<String>>() {
+        }.getType();
+        OkHttps.sendPost(mType, Apiurl.RESSUBPRAISE, map, this);
+        view.showLoadingDialog();
+    }
+
 
     @Override
     public void onSuccess(String uri, Object date) {
@@ -142,7 +159,7 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
                 view.setRecommendList(compilationVos);
                 G.log("=========CompialtionVos======");
             }
-        } else if (uri.equals(Apiurl.SUBATTENTION)) {
+        } else if (uri.equals(Apiurl.SUBATTENTION)||uri.equals(Apiurl.RESSUBPRAISE)) {
             if (date != null) {
                 Result<String> data = (Result<String>) date;
                 String result = data.getData();

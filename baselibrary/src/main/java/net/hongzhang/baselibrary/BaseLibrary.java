@@ -49,53 +49,61 @@ public class BaseLibrary {
     /**
      * 部分activity同时销毁的
      */
-    private static List<Activity> activityPartList= null;
+    private static List<Activity> activityPartList = null;
     /**
      * 部分activity同时销毁的
      */
-    public static List<Activity> activityLockList= null;
+    public static List<Activity> activityLockList = null;
     private static Application instance;
-    public static void initializer(Application application){
+
+    public static void initializer(final Application application) {
         OkHttpUtils.init(application);
         initImageLoader(application);
         RongPushClient.registerMiPush(application, " 2882303761517505108", "5551750520108");
-        RongIM.init(application,"e0x9wycfeaamq");//初始化消息中的信息
+        RongIM.init(application, "e0x9wycfeaamq");//初始化消息中的信息
         //e0x9wycfeaamq 测试   x18ywvqfxlloc 生产
-        activitys=new ArrayList<>();
+        activitys = new ArrayList<>();
         activityLockList = new ArrayList<>();
-        instance=application;
+        instance = application;
     }
+
     public static Application getInstance() {
         return instance;
     }
+
     // 添加Activity到容器中
     public static void addActivity(Activity activity) {
         if (activitys != null && activitys.size() > 0) {
-            if(!activitys.contains(activity)){
+            if (!activitys.contains(activity)) {
                 activitys.add(activity);
             }
-        }else{
+        } else {
             activitys.add(activity);
         }
     }
-    public static  void addLockActivity(Activity activity){
-        if (activityLockList!=null){
+
+    public static void addLockActivity(Activity activity) {
+        if (activityLockList != null) {
             activityLockList.add(activity);
         }
     }
-    private  static  int count=0;
-    public static  void removeLockActivity(){
+
+    private static int count = 0;
+
+    public static void removeLockActivity() {
         if (activityLockList != null && activityLockList.size() > 0) {
             for (Activity activity : activityLockList) {
                 activity.finish();
             }
         }
     }
-    public static  void removeLocFirstkActivity(){
+
+    public static void removeLocFirstkActivity() {
         if (activityLockList != null && activityLockList.size() > 0) {
             activityLockList.remove(0);
         }
     }
+
     // 遍历所有Activity并finish
     public static void exit() {
         if (activitys != null && activitys.size() > 0) {
@@ -131,6 +139,7 @@ public class BaseLibrary {
         // 全局初始化此配置
         ImageLoader.getInstance().init(config);
     }
+
     /**
      * 获得当前进程的名字
      *
@@ -153,11 +162,13 @@ public class BaseLibrary {
         }
         return null;
     }
+
     /**
      * 建立与融云服务器的连接
-     * @param token 连接融云的参数
-     * @param  username 用户名
-     * @param  portrait 用户头像地址
+     *
+     * @param token    连接融云的参数
+     * @param username 用户名
+     * @param portrait 用户头像地址
      */
     public static void connect(String token, final Activity activity, final String username, final String portrait) {
         initContract(activity);
@@ -165,35 +176,40 @@ public class BaseLibrary {
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
                 @Override
                 public void onTokenIncorrect() {
-                  Log.i("sss","==========onTokenIncorrect============");
+                    Log.i("sss", "==========onTokenIncorrect============");
                 }
+
                 /**
                  * 连接融云成功
                  * @param userid 当前 token
                  */
                 @Override
                 public void onSuccess(String userid) {
-                    Log.i("ssss","==========onSuccess============");
+                    Log.i("ssss", "==========onSuccess============");
                     G.log("融云连接成功----");
                     if (RongIM.getInstance() != null) {
                         RongIM.getInstance().setCurrentUserInfo(new UserInfo(userid, username, Uri.parse(portrait)));
                         RongIM.getInstance().setMessageAttachedUserInfo(true);
                     }
-                  // initContract(activity);
+                    // initContract(activity);
                 }
+
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-                    Log.i("ssss","==========errorCode============"+errorCode.getMessage());
-                    G.log("融云连接失败----");}
+                    Log.i("ssss", "==========errorCode============" + errorCode.getMessage());
+                    G.log("融云连接失败----");
+                }
             });
         }
     }
+
     /**
      * 初始化联系人
+     *
      * @param context
      */
-    public  static void initContract( Context context){
-        UserMessage userMessage= (UserMessage.getInstance(context));
+    public static void initContract(Context context) {
+        UserMessage userMessage = (UserMessage.getInstance(context));
         GetContractData getContractData = new GetContractData(context);
         getContractData.getContractList(userMessage.getTsId());
         GetGroupData getGroupData = new GetGroupData(context);
