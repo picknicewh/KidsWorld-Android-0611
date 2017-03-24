@@ -122,6 +122,18 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
     }
 
     @Override
+    public void subPraise(String tsId, String resourceId, String cancel) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("tsId", tsId);
+        map.put("resourceid", resourceId);
+        map.put("cancel", cancel);
+        Type mType = new TypeToken<Result<String>>() {
+        }.getType();
+        OkHttps.sendPost(mType, Apiurl.RESSUBPRAISE, map, this);
+        view.showLoadingDialog();
+    }
+
+    @Override
     public void setup() {
         try {
             player.reset();
@@ -198,6 +210,8 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
+
+
     @Override
     public void onSuccess(String uri, Object date) {
         view.stopLoadingDialog();
@@ -223,7 +237,7 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
                     view.setvideoInfo(resourceVos.get(position), position);
                 }
             }
-        } else if (uri.equals(Apiurl.SUBATTENTION)) {
+        } else if (uri.equals(Apiurl.SUBATTENTION)||uri.equals(Apiurl.RESSUBPRAISE)) {
             if (date != null) {
                 Result<String> data = (Result<String>) date;
                 String result = data.getData();

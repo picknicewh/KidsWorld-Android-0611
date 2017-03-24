@@ -48,6 +48,10 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
      */
     private ImageView iv_alubm_collect;
     /**
+     * 点赞
+     */
+    private ImageView iv_album_head;
+    /**
      * 播放集数
      */
     private TextView tv_album_num;
@@ -168,12 +172,14 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
         tv_album_num = (TextView) findViewById(R.id.tv_album_num);
         tv_copy_right = (TextView) findViewById(R.id.tv_copy_right);
         iv_play_full = (ImageView) findViewById(R.id.iv_play_full);
+        iv_album_head = (ImageView) findViewById(R.id.iv_album_head);
 
         iv_alubm_collect.setOnClickListener(this);
         tv_comment.setOnClickListener(this);
         iv_play_full.setOnClickListener(this);
         iv_alubm_more.setOnClickListener(this);
         iv_left.setOnClickListener(this);
+        iv_album_head.setOnClickListener(this);
         resourceVos = new ArrayList<>();
         tsId = UserMessage.getInstance(this).getTsId();
         themeId = getIntent().getStringExtra("themeId");
@@ -235,15 +241,21 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
             }
         } else if (viewId == R.id.iv_left) {
             finish();
+        } else if (viewId == R.id.iv_album_head) {
+            praiseType = praiseType == 1 ? 2 : 1;
+            presenter.subPraise(resourceVos.get(position).getResourceId(), String.valueOf(praiseType));
+            iv_album_head.setImageResource(praiseType == 1 ? R.mipmap.ic_heat_on : R.mipmap.ic_heat_off);
         }
     }
 
     private int visible = 0;
+    private int praiseType = 1;
 
     @Override
     public void setVideoList(final List<ResourceVo> resourceVos) {
         if (resourceVos != null && resourceVos.size() > 0) {
             cancel = resourceVos.get(position).getIsFavorites();
+            praiseType = resourceVos.get(position).getIsPraise();
         }
         this.resourceVos = resourceVos;
         albumAdapter = new VideoAlbumDetailAdapter(this, resourceVos);
@@ -266,11 +278,8 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
         this.position = position;
         tv_album_num.setText(resourceVo.getResourceName());
         ImageCache.imageLoader(resourceVo.getImageUrl(), iv_album);
-        if (resourceVo.getIsFavorites() == 1) {
-            iv_alubm_collect.setImageResource(R.mipmap.star_dark_full);
-        } else {
-            iv_alubm_collect.setImageResource(R.mipmap.star_dark);
-        }
+        iv_alubm_collect.setImageResource(resourceVo.getIsFavorites() == 1 ? R.mipmap.star_dark_full: R.mipmap.star_dark);
+        iv_album_head.setImageResource(resourceVo.getIsPraise() == 1 ? R.mipmap.ic_heat_on : R.mipmap.ic_heat_off);
         tv_brief.setText(resourceVo.getDescription());
         tv_play_count.setText(String.valueOf(resourceVo.getPvcount()));
         ImageCache.imageLoader(UserMessage.getInstance(this).getHoldImgUrl(), iv_user_image);
