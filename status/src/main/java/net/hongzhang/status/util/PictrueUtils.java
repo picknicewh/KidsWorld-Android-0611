@@ -16,6 +16,7 @@ import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.widget.RecyclerImageView;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +58,10 @@ public class PictrueUtils implements View.OnClickListener {
             imageView.setIndex(0);
             imageView.setScaleType(ImageView.ScaleType.FIT_START);
             imageView.setOnClickListener(this);
-            Glide.with(context).load(imageUrl.get(0)).asBitmap().into(new SimpleTarget<Bitmap>() {
+            Glide.with(context)
+                    .load(imageUrl.get(0))
+                    .asBitmap()
+                    .into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
 
@@ -66,7 +70,7 @@ public class PictrueUtils implements View.OnClickListener {
                         rlParams.addView(imageView, pl);
                     }
                 }
-            });
+            })  ;
         } else if (imageUrl.size() == 3 || imageUrl.size() == 6) {
             //3张或者6张图片
             for (int i = 0; i < imageUrl.size(); i++) {

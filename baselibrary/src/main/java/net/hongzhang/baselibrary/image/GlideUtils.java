@@ -45,10 +45,11 @@ public class GlideUtils {
             //   .thumbnail(0.1f)//支持加载1/10的缩略图，再加载全图
                 .into(mImageView);
     }
+
     //默认加载
     public static void loadImageView1(Context mContext, String path, ImageView mImageView) {
         Glide.with(mContext).load(path)
-              //  .placeholder(R.mipmap.ic_img_error)
+                .placeholder(R.mipmap.ic_imgloading)
                 .error(R.mipmap.ic_img_error)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .crossFade()
