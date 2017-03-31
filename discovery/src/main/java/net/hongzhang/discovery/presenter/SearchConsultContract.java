@@ -1,6 +1,6 @@
 package net.hongzhang.discovery.presenter;
 
-import net.hongzhang.discovery.modle.ResourceVo;
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.discovery.modle.SearchKeyVo;
 
 import java.util.List;

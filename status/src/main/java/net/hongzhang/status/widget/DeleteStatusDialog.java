@@ -13,7 +13,7 @@ import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.BaseConformDialog;
 import net.hongzhang.status.R;
-import net.hongzhang.status.StatusFragement;
+import net.hongzhang.status.StatusFragment;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -28,7 +28,7 @@ import java.util.Map;
  * 主要接口：1.删除我的动态
  */
 public class DeleteStatusDialog extends BaseConformDialog implements View.OnClickListener, OkHttpListener {
-    private StatusFragement statusFragement;
+    private StatusFragment statusFragment;
     private Activity context;
     /**
      * 课程id
@@ -39,9 +39,9 @@ public class DeleteStatusDialog extends BaseConformDialog implements View.OnClic
      * 位置
      */
     private int position;
-    public DeleteStatusDialog(StatusFragement statusFragement, String dynamicId,int position){
-        this.statusFragement  = statusFragement;
-        context = statusFragement.getActivity();
+    public DeleteStatusDialog(StatusFragment statusFragment, String dynamicId, int position){
+        this.statusFragment  = statusFragment;
+        context = statusFragment.getActivity();
         this.dynamicId = dynamicId;
         this.position = position;
     }
@@ -65,7 +65,7 @@ public class DeleteStatusDialog extends BaseConformDialog implements View.OnClic
         if (data!=null){
             String  result = data.getData();
             Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
-            statusFragement.updateDelete(position);
+            statusFragment.updateDelete(position);
         }
         alertDialog.dismiss();
     }

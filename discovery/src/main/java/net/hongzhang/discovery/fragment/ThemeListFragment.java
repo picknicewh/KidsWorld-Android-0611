@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.base.BaseFragement;
-import net.hongzhang.baselibrary.widget.NoScrollListView;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.AllAlbumListAdapter;
 import net.hongzhang.discovery.modle.ThemeVo;
@@ -25,7 +25,7 @@ public class ThemeListFragment extends BaseFragement implements ThemeListContrac
     /**
      * 专辑列表
      */
-    private NoScrollListView noScrollListView;
+    private ListView listView;
     private TextView tv_nodata;
     /**
      * 数据处理
@@ -52,7 +52,7 @@ public class ThemeListFragment extends BaseFragement implements ThemeListContrac
     }
 
     private void initView(View view) {
-        noScrollListView = $(view, R.id.lv_album);
+        listView = $(view, R.id.lv_album);
         tv_nodata = $(view, R.id.tv_nodata);
         present = new ThemeListPresenter(getActivity(), this);
         Bundle bundle = getArguments();
@@ -65,8 +65,8 @@ public class ThemeListFragment extends BaseFragement implements ThemeListContrac
         if (themeVos.size() != 0) {
             tv_nodata.setVisibility(View.GONE);
             AllAlbumListAdapter allAlbumAdapter = new AllAlbumListAdapter(getActivity(), themeVos);
-            noScrollListView.setAdapter(allAlbumAdapter);
-            noScrollListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            listView.setAdapter(allAlbumAdapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     String themeId = themeVos.get(i).getThemeId();

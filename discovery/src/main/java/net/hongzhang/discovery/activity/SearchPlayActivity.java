@@ -15,11 +15,10 @@ import android.widget.TextView;
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
-import net.hongzhang.discovery.adapter.CompilationAdapter;
 import net.hongzhang.discovery.adapter.SearchHistoryAdapter;
 import net.hongzhang.discovery.adapter.SearchResourceAdapter;
 import net.hongzhang.discovery.modle.CompilationVo;
-import net.hongzhang.discovery.modle.ResourceVo;
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.discovery.modle.SearchKeyVo;
 import net.hongzhang.discovery.presenter.MainRecommendPresenter;
 import net.hongzhang.discovery.presenter.SearchResourceContract;
@@ -159,12 +158,14 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
     public void setloadMoreVis(boolean isVis) {
         ll_load_more.setVisibility(isVis ? View.VISIBLE : View.GONE);
     }
-
     @Override
     public void setCompilationVoList(final List<CompilationVo> musicCompilationVos) {
-        lv_search_play_history.setVisibility(View.GONE);
+    /*    lv_search_play_history.setVisibility(View.GONE);
         if (musicCompilationVos.size() > 0 && musicCompilationVos != null) {
-            CompilationAdapter adapter = new CompilationAdapter(this, musicCompilationVos);
+            if (adapter!=null){
+                adapter = null;
+            }
+            adapter =  new CompilationAdapter(this, musicCompilationVos);
             rv_search_play.setLayoutManager(new GridLayoutManager(this, 2));
             rv_search_play.setAdapter(adapter);
             rv_search_play.setNestedScrollingEnabled(false);
@@ -174,29 +175,34 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
                     CompilationVo vo = musicCompilationVos.get(position);
                     presenter.saveSearchKey(tag,2,userMessage.getTsId(),vo.getAlbumName(),vo.getAlbumId());
                     if (type == MainRecommendPresenter.TYPE_MUISC) {
-                        presenter.startMusicActivity(vo.getAlbumId(), null);
+                        presenter.getSongList(userMessage.getTsId(),vo.getAlbumId(),null);
+                       // presenter.startMusicActivity(vo.getAlbumId(), null);
                     } else {
                         presenter.startVideoActivity(vo.getAlbumId(), null);
                     }
                 }
             });
-        }
+        }*/
     }
-
+    private  SearchResourceAdapter searchResourceAdapter;
     @Override
     public void setResourceList(final List<ResourceVo> resourceList) {
         lv_search_play_history.setVisibility(View.GONE);
         if (resourceList.size() > 0 && resourceList != null) {
-            SearchResourceAdapter adapter = new SearchResourceAdapter(this, resourceList);
+            if (searchResourceAdapter!=null){
+                searchResourceAdapter=null;
+            }
+            searchResourceAdapter = new SearchResourceAdapter(this, resourceList);
             rv_search_play.setLayoutManager(new GridLayoutManager(this, 2));
-            rv_search_play.setAdapter(adapter);
-            adapter.setOnItemClickListener(new SearchResourceAdapter.onItemClickListener() {
+            rv_search_play.setAdapter(searchResourceAdapter);
+            searchResourceAdapter.setOnItemClickListener(new SearchResourceAdapter.onItemClickListener() {
                 @Override
                 public void OnItemClick(View view, int position) {
                     ResourceVo vo = resourceList.get(position);
                     presenter.saveSearchKey(tag,1,userMessage.getTsId(),vo.getResourceName(),vo.getResourceId());
                     if (type == MainRecommendPresenter.TYPE_MUISC) {
-                        presenter.startMusicActivity(vo.getAlbumId(), vo.getResourceId());
+                        presenter.getSongList(userMessage.getTsId(),vo.getAlbumId(),vo.getResourceId());
+                      //  presenter.startMusicActivity(vo.getAlbumId(), vo.getResourceId());
                     } else {
                         presenter.startVideoActivity(vo.getAlbumId(), vo.getResourceId());
                     }

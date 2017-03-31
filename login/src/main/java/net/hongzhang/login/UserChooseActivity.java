@@ -66,7 +66,6 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
                     um.setSelectFlag(i);
                     LoginActivity.selectUserSubmit(data.getTsId(),UserChooseActivity.this);
                     dialog.show();
-
                 }
             });
         }
@@ -137,9 +136,14 @@ public class UserChooseActivity extends BaseActivity implements OkHttpListener {
             G.KisTyep.isChooseId=true;
            //  flag=1;
             //更新主界面
-          //  G.runshMian(true,this);
-            UserAction.goMainActivity(this);
-            finish();
+            String source = getIntent().getStringExtra("source");
+            if (!G.isEmteny(source)) {
+                if (source.equals("ShareActivity")) {
+                    UserAction.goShareActivity(this,getIntent().getStringExtra("extra"));
+                }
+            }else {
+                UserAction.goMainActivity(this);
+            }
         }
 
     }

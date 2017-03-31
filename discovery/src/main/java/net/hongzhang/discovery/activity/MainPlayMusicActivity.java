@@ -17,14 +17,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import net.hongzhang.baselibrary.BaseLibrary;
 import net.hongzhang.baselibrary.image.ImageCache;
-import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.CircleImageView;
 import net.hongzhang.baselibrary.widget.PromptPopWindow;
 import net.hongzhang.discovery.R;
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.discovery.presenter.PlayMusicContract;
 import net.hongzhang.discovery.presenter.PlayMusicPresenter;
 import net.hongzhang.discovery.service.LockScreenService;
@@ -194,7 +195,6 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
         initView();
         getData();
     }
-
     /**
      * 初始化控件
      */
@@ -247,7 +247,6 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
             }
         });
     }
-
     /**
      * 是否vivoX5
      */
@@ -258,7 +257,6 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
             return false;
         }
     }
-
     /**
      * 数据获取
      */
@@ -270,13 +268,16 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
         tsId = userMessage.getTsId();
         playMode = PlayMode.getDefault();
         Intent intent = getIntent();
-        themeId = intent.getStringExtra("themeId");
+
         resourceId = intent.getStringExtra("resourceId");
         startLockScreenService();
         myMusicReceiver = new MyMusicReceiver();
-        presenter = new PlayMusicPresenter(this, this, position, myMusicReceiver, themeId, resourceId);
-    }
+        resourceVos  =  intent.getParcelableArrayListExtra("resourceVos");
+        themeId  = resourceVos.get(position).getAlbumId();
+        presenter = new PlayMusicPresenter(this, this, position,resourceVos,myMusicReceiver, resourceId);
+      //  presenter = new PlayMusicPresenter(this, this, position,resourceVos,myMusicReceiver,themeId, resourceId);
 
+    }
     /**
      * 启动锁屏
      */
@@ -479,7 +480,6 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
     }
 
     private int duration;
-
     public class MyMusicReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {

@@ -10,9 +10,11 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import net.hongzhang.status.R;
-import net.hongzhang.status.StatusFragement;
 import net.hongzhang.status.adapter.ChooseClassAdapter;
+import net.hongzhang.status.mode.DynamicVo;
+import net.hongzhang.status.StatusFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,28 +26,32 @@ import java.util.List;
  * 主要接口：
  */
 public class ChooseClassPopWindow extends PopupWindow {
-    private StatusFragement statusFragement;
+    private StatusFragment statusFragment;
     private View conentView;
     private ListView lv_classchoose;
     private ChooseClassAdapter adapter;
-    private List<String> classlist ;
-    public  ChooseClassPopWindow(StatusFragement statusFragement,List<String> classlist){
-        this.statusFragement = statusFragement;
-        this.classlist =classlist;
+    private List<DynamicVo> dynamicVos ;
+    private List<String> classlist;
+    public ChooseClassPopWindow(StatusFragment statusFragment, List<DynamicVo> dynamicVos){
+        this.statusFragment = statusFragment;
+        this.dynamicVos =dynamicVos;
+        classlist = new ArrayList<>();
         init();
     }
     private void initview(){
-        if (statusFragement!=null){
-            conentView = LayoutInflater.from(statusFragement.getActivity()).inflate(R.layout.pop_chooseclass,null);
+        if (statusFragment!=null){
+            conentView = LayoutInflater.from(statusFragment.getActivity()).inflate(R.layout.pop_chooseclass,null);
             lv_classchoose = (ListView) conentView.findViewById(R.id.lv_classchoose);
             lv_classchoose.setDivider(null);
-            adapter = new ChooseClassAdapter(statusFragement.getActivity(),classlist);
+            for (DynamicVo d : dynamicVos) {
+                classlist.add(d.getGroupName());
+            }
+            adapter = new ChooseClassAdapter(statusFragment.getActivity(),classlist);
             lv_classchoose.setAdapter(adapter);
             lv_classchoose.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                    statusFragement.setClassname(classlist.get(position));
-                    statusFragement.setPosition(position);
+                    statusFragment.setPosition(position);
                     dismiss();
                 }
             });

@@ -6,13 +6,13 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.discovery.activity.ConsultActivity;
-import net.hongzhang.discovery.modle.ResourceVo;
 import net.hongzhang.discovery.modle.ResourceVos;
 import net.hongzhang.discovery.modle.SearchKeyVo;
 import net.hongzhang.discovery.util.SearchHistoryDb;
@@ -32,8 +32,6 @@ import java.util.Map;
  * 附加注释：
  * 主要接口：
  */
-
-
 public class SearchConsultPresenter implements SearchConsultContract.Presenter, OkHttpListener {
     private Context context;
     private SearchConsultContract.View view;

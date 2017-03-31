@@ -28,7 +28,7 @@ public interface PlayMusicContract  {
     interface Presenter{
         void  getResourceDetail(String tsId, String resourceId);
         void getIsUserPay(String tsId,String accountId);
-        void  getSongList(String tsId, String themeId);
+      // void  getSongList(String tsId, String themeId);
         void savePlayTheRecord(String tsId, String resourceId,int broadcastPace,int type);
         void setup();
         void play();

@@ -1,45 +1,55 @@
 package net.hongzhang.discovery.fragment;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import net.hongzhang.baselibrary.base.BaseFragement;
 import net.hongzhang.baselibrary.image.ImageCache;
+import net.hongzhang.baselibrary.mode.ResourceVo;
+import net.hongzhang.baselibrary.pullrefresh.PullToRefreshBase;
+import net.hongzhang.baselibrary.pullrefresh.PullToRefreshScrollView;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.LoadingDialog;
-import net.hongzhang.baselibrary.widget.NoScrollListView;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.CompilationAdapter;
-import net.hongzhang.discovery.adapter.ConsultAdapter;
+import net.hongzhang.discovery.adapter.ConsultAdapter2;
 import net.hongzhang.discovery.modle.CompilationVo;
-import net.hongzhang.discovery.modle.ResourceVo;
 import net.hongzhang.discovery.presenter.MainRecommendContract;
 import net.hongzhang.discovery.presenter.MainRecommendPresenter;
 import net.hongzhang.discovery.util.BannerImageLoaderUtil;
 import net.hongzhang.user.mode.BannerVo;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 
 /**
  * 修改时间：2017/3/15
  * 修改:首页banner滑动bug 将首页banner修改其它第三方库 github地址：https://github.com/youth5201314/banner
  * 新增音乐播放Trans过度动画 5.0系统才支持
  */
-public class MainDiscoveryFragment extends BaseFragement implements View.OnClickListener, MainRecommendContract.View {
+public class MainDiscoveryFragment extends BaseFragement implements View.OnClickListener, MainRecommendContract.View, PullToRefreshBase.OnRefreshListener<ScrollView> {
     /**
      * 左边图片
      */
@@ -84,7 +94,7 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
     /**
      * 推荐资讯列表
      */
-    private NoScrollListView lv_consult;
+    private RecyclerView lv_consult;
 
     /**
      * 推荐听听更多
@@ -112,32 +122,12 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
      */
     private String tsid;
     /**
-     * 音乐推荐专辑id
-     */
-    private String music_recommend_id;
-    /**
-     * 视频推荐专辑id
-     */
-    private String video_recommend_id;
-    /**
-     * 资讯推荐专辑id
-     */
-    private String consult_recommend_id;
-    /**
      * 用户信息
      */
     private UserMessage userMessage;
-    /**
-     * 装载需要展示导航图
-     */
-    private List<ImageView> guideList;
-   /* @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_discovery);
-        initView();
-    }*/
-
+    private PullToRefreshScrollView pullToRefreshScrollView;
+    private ScrollView scrollView;
+    private View scroll_content;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -150,17 +140,12 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
         iv_left = (ImageView) view.findViewById(R.id.iv_dleft);
         tv_title = (TextView) view.findViewById(R.id.tv_dtitle);
         iv_right = (ImageView) view.findViewById(R.id.iv_dright);
-        bannerView = (Banner) view.findViewById(R.id.bv_home);
         bt_search = (Button) view.findViewById(R.id.et_search);
-        ll_music = (LinearLayout) view.findViewById(R.id.ll_music);
-        ll_class = (LinearLayout) view.findViewById(R.id.ll_class);
-        ll_consult = (LinearLayout) view.findViewById(R.id.ll_consult);
-        gv_music = (RecyclerView) view.findViewById(R.id.gv_music);
-        gv_class = (RecyclerView) view.findViewById(R.id.gv_class);
-        lv_consult = (NoScrollListView) view.findViewById(R.id.lv_consult);
-        tv_more_music = (TextView) view.findViewById(R.id.tv_more_music);
-        tv_more_clsss = (TextView) view.findViewById(R.id.tv_more_class);
-        tv_more_consult = (TextView) view.findViewById(R.id.tv_more_consult);
+        pullToRefreshScrollView = (PullToRefreshScrollView) view.findViewById(R.id.pullToRefreshScrollView);
+        scrollView  = pullToRefreshScrollView.getRefreshableView();
+        scroll_content =  LayoutInflater.from(getActivity()).inflate(R.layout.layout_mian_discovery_content, null);
+        initContentView(scroll_content);
+        pullToRefreshScrollView.setOnRefreshListener(this);
         iv_left.setOnClickListener(this);
         bt_search.setOnClickListener(this);
         iv_right.setOnClickListener(this);
@@ -171,11 +156,23 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
         tv_more_clsss.setOnClickListener(this);
         tv_more_consult.setOnClickListener(this);
         initData();
+        setLastUpdateTime();
     }
-
+    private void initContentView(View view){
+        bannerView = (Banner) view.findViewById(R.id.bv_home);
+        ll_music = (LinearLayout) view.findViewById(R.id.ll_music);
+        ll_class = (LinearLayout) view.findViewById(R.id.ll_class);
+        ll_consult = (LinearLayout) view.findViewById(R.id.ll_consult);
+        gv_music = (RecyclerView) view.findViewById(R.id.gv_music);
+        gv_class = (RecyclerView) view.findViewById(R.id.gv_class);
+        lv_consult = (RecyclerView) view.findViewById(R.id.lv_consult);
+        tv_more_music = (TextView) view.findViewById(R.id.tv_more_music);
+        tv_more_clsss = (TextView) view.findViewById(R.id.tv_more_class);
+        tv_more_consult = (TextView) view.findViewById(R.id.tv_more_consult);
+        scrollView.addView(view);
+    }
     private void initData() {
         G.setTranslucent(getActivity());
-        guideList = new ArrayList<>();
         presenter = new MainRecommendPresenter(getActivity(), this);
         userMessage = UserMessage.getInstance(getActivity());
         tsid = userMessage.getTsId();
@@ -199,11 +196,9 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
             presenter.startConsultListActivity();
         }
     }
-
     @Override
     public void setRecommendVoMusicList(final List<CompilationVo> compilationVos) {
         if (compilationVos != null && compilationVos.size() > 0) {
-            music_recommend_id = String.valueOf(compilationVos.get(0).getAlbumId());
             final CompilationAdapter adapter = new CompilationAdapter(getActivity(), compilationVos);
             gv_music.setAdapter(adapter);
             gv_music.setNestedScrollingEnabled(false);
@@ -211,7 +206,7 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
             adapter.setOnItemClickListener(new CompilationAdapter.onItemClickListener() {
                 @Override
                 public void OnItemClick(View view, int position) {
-                    presenter.startMusicActivity(String.valueOf(compilationVos.get(position).getAlbumId()), null,adapter.getAlbumImageView());
+                      presenter.getSongList(userMessage.getTsId(),compilationVos.get(position).getAlbumId());
                 }
             });
         }
@@ -220,7 +215,6 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
     @Override
     public void setRecommendVoClassList(final List<CompilationVo> compilationVos) {
         if (compilationVos != null && compilationVos.size() > 0) {
-            video_recommend_id = String.valueOf(compilationVos.get(0).getAlbumId());
             CompilationAdapter adapter = new CompilationAdapter(getActivity(), compilationVos);
             gv_class.setAdapter(adapter);
             gv_class.setNestedScrollingEnabled(false);
@@ -238,13 +232,14 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
     @Override
     public void setRecommendVoConsultList(final List<ResourceVo> consultInfovos) {
         if (consultInfovos != null && consultInfovos.size() > 0) {
-            consult_recommend_id = String.valueOf(consultInfovos.get(0).getAlbumId());
-            ConsultAdapter adapter = new ConsultAdapter(getActivity(), consultInfovos);
+            ConsultAdapter2 adapter = new ConsultAdapter2(getActivity(), consultInfovos);
             lv_consult.setAdapter(adapter);
-            lv_consult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            lv_consult.setNestedScrollingEnabled(false);
+            lv_consult.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+            adapter.setOnItemClickListener(new CompilationAdapter.onItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    presenter.startConsultActivity(consultInfovos.get(i).getResourceId());
+                public void OnItemClick(View view, int position) {
+                    presenter.startConsultActivity(consultInfovos.get(position).getResourceId());
                 }
             });
         }
@@ -252,9 +247,9 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
     }
 
     @Override
-    public void setBannerList(List<BannerVo> bannerList) {
+    public void setBannerList(final List<BannerVo> bannerList) {
 //        LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        List<String> bannerImgUrlList = new ArrayList<>();
+        final List<String> bannerImgUrlList = new ArrayList<>();
         for (int i = 0; i < bannerList.size(); i++) {
 //            ImageView iv = new ImageView(getActivity());
 //            iv.setLayoutParams(mParams);
@@ -262,6 +257,7 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
 //            iv.setScaleType(ImageView.ScaleType.FIT_XY);
 //            guideList.add(iv);
             bannerImgUrlList.add(bannerList.get(i).getBanner_url());
+
         }
 //        bannerView.setViewList(guideList);
 //        bannerView.addViewPager(getActivity());
@@ -270,6 +266,21 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
                 .setImages(bannerImgUrlList)//设置轮播图片
                 .setDelayTime(3000)//设置轮播时间
                 .start();
+        bannerView.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                BannerVo bannerVo = bannerList.get(position);
+                if (!G.isEmteny(bannerVo.getBanner_jump())) {
+                    Uri uri = Uri.parse(bannerVo.getBanner_jump().substring(2));
+                    String themeId = uri.getQueryParameter("typeid");
+                    String themeName = uri.getQueryParameter("typename");
+                    //#/childClass_Sort?typeid=28168afc15d845a3a4be77d02ecac672&typename=美术
+                    Log.i("ssssss", themeId + "========================" + themeName);
+                    presenter.startThemeVoListActivity(themeName, themeId);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -285,7 +296,6 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
         //停止轮播
         bannerView.stopAutoPlay();
     }
-
     @Override
     public void rushData() {
         type = MainRecommendPresenter.TYPE_MUISC;
@@ -315,5 +325,39 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
         if (dialog != null) {
             dialog.dismiss();
         }
+    }
+    private SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm");
+    private void setLastUpdateTime() {
+        String text = formatDateTime(System.currentTimeMillis());
+        pullToRefreshScrollView.setLastUpdatedLabel(text);
+    }
+    private String formatDateTime(long time) {
+        if (0 == time) {
+            return "";
+        }
+        return mDateFormat.format(new Date(time));
+    }
+
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+        new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                rushData();
+                pullToRefreshScrollView.onPullDownRefreshComplete();
+            }
+
+        }.sendEmptyMessageDelayed(0, 500);
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+        new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                rushData();
+                pullToRefreshScrollView.onPullUpRefreshComplete();
+            }
+        }.sendEmptyMessageDelayed(0, 500);
     }
 }

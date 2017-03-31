@@ -17,13 +17,12 @@ import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.activity.SearchResourceActivity;
 import net.hongzhang.discovery.adapter.SearchResourceAdapter;
 import net.hongzhang.discovery.modle.CompilationVo;
-import net.hongzhang.discovery.modle.ResourceVo;
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.discovery.modle.SearchKeyVo;
 import net.hongzhang.discovery.presenter.MainRecommendPresenter;
 import net.hongzhang.discovery.presenter.SearchResourceContract;
 import net.hongzhang.discovery.presenter.SearchResourcePresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,10 +60,7 @@ public class SearchResourceListFragment extends BaseFragement implements View.On
     private int type;
     private UserMessage userMessage;
     private String tag;
-
     private SearchResourceAdapter resourceAdapter;
-    private List<ResourceVo> resourceList;
-
 //    private CompilationAdapter compilationAdapter;
 //    private List<CompilationVo> compilationList;
 
@@ -92,39 +88,6 @@ public class SearchResourceListFragment extends BaseFragement implements View.On
         tag = SearchResourceActivity.tag;
         presenter = new SearchResourcePresenter(getActivity(), this);
         presenter.getSearchResourceList(userMessage.getTsId(), type, pageSize, pageNumber, userMessage.getAccount_id(), tag, 1);
-        resourceList = new ArrayList<>();
-        resourceAdapter = new SearchResourceAdapter(getActivity(), resourceList);
-        rv_album.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        rv_album.setNestedScrollingEnabled(false);
-        rv_album.setAdapter(resourceAdapter);
-        resourceAdapter.setOnItemClickListener(new SearchResourceAdapter.onItemClickListener() {
-            @Override
-            public void OnItemClick(View view, int position) {
-                ResourceVo vo = resourceList.get(position);
-                presenter.saveSearchKey(tag,1,userMessage.getTsId(),vo.getResourceName(),vo.getResourceId());
-                if (type == MainRecommendPresenter.TYPE_MUISC) {
-                    presenter.startMusicActivity(vo.getAlbumId(), vo.getResourceId());
-                } else {
-                    presenter.startVideoActivity(vo.getAlbumId(), vo.getResourceId());
-                }
-            }
-        });
-
-//            compilationVos = new ArrayList<>();
-//            compilationAdapter = new CompilationAdapter(getActivity(), compilationVos);
-//            rv_album.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-//            rv_album.setAdapter(compilationAdapter);
-//            compilationAdapter.setOnItemClickListener(new CompilationAdapter.onItemClickListener() {
-//                @Override
-//                public void OnItemClick(View view, int position) {
-//                    CompilationVo compilationVo = compilationVos.get(position);
-//                    if (type == 1) {
-//                        presenter.startMusicActivity(String.valueOf(compilationVo.getAlbumId()), null);
-//                    } else if (type == 2) {
-//                        presenter.startVideoActivity(String.valueOf(compilationVo.getAlbumId()), null);
-//                    }
-//                }
-//            });
     }
 
     @Override
@@ -159,27 +122,30 @@ public class SearchResourceListFragment extends BaseFragement implements View.On
 //        }
     }
 
+    private SearchResourceAdapter adapter;
+
     @Override
     public void setResourceList(final List<ResourceVo> resourceList) {
         if (resourceList != null && resourceList.size() > 0) {
             //避免重复创建新的adapter
-//            SearchResourceAdapter adapter = new SearchResourceAdapter(getActivity(), resourceList);
-//            rv_album.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-//            rv_album.setAdapter(adapter);
-//            adapter.setOnItemClickListener(new SearchResourceAdapter.onItemClickListener() {
-//                @Override
-//                public void OnItemClick(View view, int position) {
-//                    ResourceVo vo = resourceList.get(position);
-//                    if (type == MainRecommendPresenter.TYPE_MUISC) {
-//                        presenter.startMusicActivity(vo.getAlbumId(), vo.getResourceId());
-//                    } else {
-//                        presenter.startVideoActivity(vo.getAlbumId(), vo.getResourceId());
-//                    }
-//                }
-//            });
-            this.resourceList.clear();
-            this.resourceList.addAll(resourceList);
-            resourceAdapter.notifyDataSetChanged();
+            if (adapter!=null){
+                adapter = null;
+            }
+            adapter = new SearchResourceAdapter(getActivity(), resourceList);
+            rv_album.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            rv_album.setNestedScrollingEnabled(false);
+            rv_album.setAdapter(adapter);
+            adapter.setOnItemClickListener(new SearchResourceAdapter.onItemClickListener() {
+                @Override
+                public void OnItemClick(View view, int position) {
+                    ResourceVo vo = resourceList.get(position);
+                    if (type == MainRecommendPresenter.TYPE_MUISC) {
+                        presenter.getSongList(userMessage.getTsId(), vo.getAlbumId(), vo.getResourceId());
+                    } else {
+                        presenter.startVideoActivity(vo.getAlbumId(), vo.getResourceId());
+                    }
+                }
+            });
         }
     }
 

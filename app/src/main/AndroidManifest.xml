@@ -6,36 +6,37 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:name="net.hongzhang.bbhow.util.HunmeApplication"
+        android:name=".util.HunmeApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_main"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="net.hongzhang.bbhow.MainActivity"
+            android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="net.hongzhang.bbhow.StartActivity"
+            android:name=".StartActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="net.hongzhang.bbhow.GuideActivity"
+            android:name=".GuideActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppWelcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <receiver
-            android:name="net.hongzhang.bbhow.util.DemoNotificationReceiver"
+            android:name=".util.DemoNotificationReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
@@ -44,6 +45,18 @@
                 <action android:name="io.rong.push.intent.MI_MESSAGE_CLICKED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".share.ShareActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/json" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

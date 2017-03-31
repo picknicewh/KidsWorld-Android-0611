@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
+import net.hongzhang.baselibrary.image.GlideUtils;
 import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.widget.RecyclerImageView;
@@ -155,7 +156,8 @@ public class PictrueUtils implements View.OnClickListener {
      */
     private RecyclerImageView getImageView(int i) {
         RecyclerImageView imageView = new RecyclerImageView(context);
-        ImageCache.imageLoader(imageUrl.get(i), imageView);
+        GlideUtils.loadImageView1(context,imageUrl.get(i),imageView);
+       // ImageCache.imageLoader(imageUrl.get(i), imageView);
         imageView.setId(i + 100);
         imageView.setOnClickListener(this);
         imageView.setIndex(i);

@@ -162,6 +162,10 @@ public class Apiurl {
 
     //=========================动态================================
     /**
+     * 提交动态
+     */
+    public static final String DYNAMIC = "/dynamics/issueDynamic.do";
+    /**
      * 获取动态详情
      */
     public static final String STATUSLIST = "/dynamics/getDynamic.do";
@@ -195,10 +199,12 @@ public class Apiurl {
      * 用户登录
      */
     public static final String APPLOGIN = "/app/login.do";
+   // public static final String APPLOGIN = "/app/loginBBH.do";
     /**
      * 用户身份选择
      */
     public static final String SELECTUSER = "/app/selectUser.do";
+   // public static final String SELECTUSER = "/app/selectTs.do";
     /**
      * 扫描二维码登录
      */

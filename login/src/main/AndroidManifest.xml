@@ -11,6 +11,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".activity.UserChooseActivity"/>
     </application>
 
 </manifest>

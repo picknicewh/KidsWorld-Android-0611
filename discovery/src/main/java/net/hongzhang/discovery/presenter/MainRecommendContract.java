@@ -1,9 +1,7 @@
 package net.hongzhang.discovery.presenter;
 
-import android.widget.ImageView;
-
 import net.hongzhang.discovery.modle.CompilationVo;
-import net.hongzhang.discovery.modle.ResourceVo;
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.user.mode.BannerVo;
 
 import java.util.List;
@@ -28,14 +26,17 @@ public class MainRecommendContract {
     }
     public interface Presenter{
         void getRecommendResource(String tsId,int size,int type);
+        void getSongList(String tsId, String themeId);
         void getRecommendConsult(String tsId,int pageSize ,String account_id);
         void getBanner(String tsId);
         void startVideoListActivity();
         void startMusicListActivity();
         void startConsultListActivity();
         void startVideoActivity(String AlbumId);
-        void startMusicActivity(String AlbumId, String resourceId, ImageView imageView);
+       // void startMusicActivity(List<ResourceVo> resourceVos,String AlbumId, String resourceId, ImageView imageView);
+        void startMusicActivity(List<ResourceVo> resourceVos,String resourceId);
         void startConsultActivity(String resourceId);
+        void startThemeVoListActivity(String themeName,String themeId);
         void startSearchActivity();
         void startHistoryActivity();
         void startUserActivity();

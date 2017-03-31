@@ -1,0 +1,237 @@
+.InfDetContent{
+    padding-bottom: 10px;
+}
+.InfDetContent.eduInf{
+
+    background-color:white;
+}
+.InfDetTitle {
+    padding: 15px;
+    height: 60px;
+    width: 100%;
+    background-color: #ffffff;
+    z-index: 5;
+}
+.InfDetTitle span.TitleText{
+    display:inline-block;
+    width:90%;
+    font-size:18px;
+    height:40px;
+    overflow: hidden;
+}
+.InfDetTitle span.button{
+    position:absolute;
+    right:15px;
+    background-color:transparent;
+    font-size:22px;
+    margin-top:-13px;
+    margin-right:-15px;
+    background:url(../images/star_dark.png) no-repeat center center;
+    background-size:20px;
+}
+.InfDetTitle span.button.active{
+    background:url(../images/star_dark_full.png) no-repeat center center;
+    background-size:20px;
+}
+.InfDetSubTitle{
+    font-size:14px;
+    padding-left:15px;
+    color: #a0a0a0;
+    height:20px;
+    width:100%;
+    background-color:#ffffff;
+    z-index:5;
+}
+.InfDetContent{
+    padding-bottom: 10px;
+}
+.InfAvoidDes{
+    padding:10px;
+    font-size:12px;
+    color:#8E8E8E;
+}
+.InfDetContent p{
+    margin:10px 15px 0 15px;
+    font-size:15px;
+}
+.InfDetContent.eduInf{
+
+    background-color:white;
+}
+.InfDetContent.ng-binding img {
+    width: 100% !important;
+}
+/*评论*/
+.resComment{
+    border-top: 12px solid #efeff4;
+    padding-top: 10px;
+}
+.resComment .Title{
+    font-size: 17px;
+    font-weight: normal;
+    padding: 0px 15px 10px 15px;
+    border-bottom: 1px solid #e1e1e1;
+}
+.resComment .commentBox{
+    position:relative;
+    padding:10px 0;
+    border-bottom: 1px solid #e1e1e1;
+    width: 100%;
+}
+.resComment .commentBox .image{
+    position:absolute;
+    left:10px;
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background-size:cover;
+    background-position:50% 50%;
+}
+.resComment .commentBox .inputBefore{
+    position:absolute;
+    left:54px;
+    top:10px;
+    width:13px;
+    height:35px;
+    background:url(../images/inputBefore.png) no-repeat center center;
+    background-size:13px 35px;
+}
+.resComment .commentBox .inputBox{
+    margin-left:67px;
+    margin-right: 76px;
+    height:35px;
+}
+.resComment .commentBox .inputBox input{
+    height:35px;
+    width:100%;
+    padding:10px 0;
+    font-size:11px;
+    background:url(../images/inputMiddle.png) repeat-x;
+    background-size:1px 35px;
+    border-radius: 0;
+}
+.resComment .commentBox .inputAfter{
+    position:absolute;
+    right:70px;
+    top:10px;
+    width:6px;
+    height:35px;
+    background:url(../images/inputAfter.png) no-repeat center center;
+    background-size:6px 35px;
+}
+.resComment .commentBox .commit{
+    position:absolute;
+    top:10px;
+    right:10px;
+    width:55px;
+    height:35px;
+    background:url(../images/commit.png) no-repeat center center;
+    background-size:55px 35px;
+}
+.resComment .commentBox .commit[disabled] {
+    opacity: .4;
+    cursor: default!important;
+    pointer-events: none;
+}
+.resComment .commentList{
+    margin-left:10px;
+}
+.resComment .commentList .commentLi{
+    position:relative;
+    border-bottom: 1px solid #e1e1e1;
+}
+.resComment .commentList .commentLi .image{
+    position:absolute;
+    left:0px;
+    top:10px;
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background-size:cover;
+    background-position:50% 50%;
+}
+.resComment .commentList .commentLi .imageIcon{
+    position:absolute;
+    left:26px;
+    top:30px;
+    width:16px;
+    height:16px;
+    font-size:12px;
+    line-height:12px;
+    padding:2px;
+    border-radius:4px;
+    background-color:#efb607;
+    color: #ffffff;
+}
+.resComment .commentList .commentLi .imageIcon.student{
+    background-color:#8EC500;
+}
+.resComment .commentList .commentLi .content{
+    margin-left:47px;
+    margin-right: 12px;
+    padding-top:17px;
+}
+.resComment .commentList .commentLi .content .info span:first-child{
+    font-size:16px;
+}
+.resComment .commentList .commentLi .content .info span:last-child{
+    float:right;
+    color:#a0a0a0;
+    font-size:12px;
+}
+.resComment .commentList .commentLi .content .detail{
+    color:#a0a0a0;
+    font-size:14px;
+    padding:10px 0;
+}
+/* 加载更多 */
+.loadMoreBox{
+    height:52px;
+    text-align:center;
+}
+.loadMoreBox .loadMore{
+    display:inline-block;
+    width:90px;
+    font-size:16px;
+    line-height:22px;
+    height:22px;
+    margin-bottom:15px;
+    vertical-align:middle;
+}
+.loadMoreBox .moreIcon{
+    margin-top:15px;
+    display:inline-block;
+    width:22px;
+    height:22px;
+    background:url(../images/loadMore.png) no-repeat center center;
+    background-size:22px;
+}
+.loadMoreBox .loading{
+    display: inline-block;
+    margin-top:12px;
+}
+.loadMoreBox .loading.spinner.spinner-balanced {
+    stroke: #8ec500;
+    fill: #8ec500;
+}
+.loadMoreBox .loadEnd{
+    display:inline-block;
+    font-size:16px;
+    line-height:22px;
+    margin-top:15px;
+}
+/*2秒自动消失提示框*/
+.kBubble{
+    position:fixed;
+    top:25%;
+    margin:auto 20%;
+    width:60%;
+    z-index:100;
+    text-align:center;
+    box-shadow:0 0 6px #666;
+    background:rgba(0,0,0,.75);
+    font-size:14px;
+    color:#fff;
+    line-height: 2.5;
+
+}

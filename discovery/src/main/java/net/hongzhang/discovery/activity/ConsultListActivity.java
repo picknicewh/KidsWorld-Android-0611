@@ -77,7 +77,6 @@ public class ConsultListActivity extends BaseActivity implements ConsultListCont
         viewPagerHead.setTabcount(titles.size());
         viewPagerHead.setViewPager(viewPager);
         viewPagerHead.setAdapter(this, fragmentList, getSupportFragmentManager(), titles);
-
     }
 
     @Override

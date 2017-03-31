@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import net.hongzhang.baselibrary.base.BaseFragement;
 import net.hongzhang.baselibrary.mode.ResourceVo;
+import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.NoScrollGirdView;
 import net.hongzhang.user.R;
 import net.hongzhang.user.adapter.ResourceAdapter;
@@ -21,6 +22,7 @@ import net.hongzhang.user.util.ResourceContract;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * 作者： wh
@@ -175,15 +177,16 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
                     if (type == 1) {
                         myResourcePresent.starVedioActivity(themeId);
                     } else {
-
-                        myResourcePresent.startMusicActivity(themeId, null);
+                        //myResourcePresent.startMusicActivity(themeId, null);
+                        myResourcePresent.getSongList(UserMessage.getInstance(getActivity()).getTsId(),themeId,null);
                     }
                 } else if (source == 1) {
                     ResourceVo resourceVo = resourceVoList.get(i);
                     if (type == 1) {
                         myResourcePresent.starVedioActivity(resourceVo.getAlbumId());
                     } else {
-                        myResourcePresent.startMusicActivity(resourceVo.getAlbumId(), resourceVo.getResourceId());
+                      //  myResourcePresent.startMusicActivity(resourceVo.getAlbumId(), resourceVo.getResourceId());
+                        myResourcePresent.getSongList(UserMessage.getInstance(getActivity()).getTsId(),resourceVo.getAlbumId(),resourceVo.getResourceId());
                     }
 
                 }

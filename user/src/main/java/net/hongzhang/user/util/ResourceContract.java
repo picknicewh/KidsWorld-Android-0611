@@ -23,8 +23,10 @@ public class ResourceContract {
     public interface Presenter{
         void getCollectResourceList(int pageNumber,int pageSize,int type);
         void getPlayRecordList(int pageNumber,int pageSize,int type);
+        void getSongList(String tsId, String themeId,String resourceId);
         void starVedioActivity(String themeId);
-        void   startMusicActivity(String themeId, String resourceId);
+        //void   startMusicActivity(String themeId, String resourceId);
+        void startMusicActivity(List<ResourceVo> resourceVos, String resourceId);
         void starConsultActivity(String resourceId);
     }
 }

@@ -114,7 +114,7 @@ public class ViewPagerHead extends LinearLayout {
     public void setAdapter(final Context context,List<Fragment> fragments,FragmentManager fragmentManager,List<String> titles){
         if (fragmentManager!=null&& fragments!=null){
             viewPager.setAdapter(new FragmentAdapter(fragmentManager,fragments,titles));
-            viewPager.setOffscreenPageLimit(Tabcount);
+            viewPager.setOffscreenPageLimit(titles.size()-1);
             viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

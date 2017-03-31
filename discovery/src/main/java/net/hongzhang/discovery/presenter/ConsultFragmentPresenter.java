@@ -2,6 +2,7 @@ package net.hongzhang.discovery.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -12,7 +13,7 @@ import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.activity.ConsultActivity;
-import net.hongzhang.discovery.modle.ResourceVo;
+import net.hongzhang.baselibrary.mode.ResourceVo;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class ConsultFragmentPresenter implements ConsultFragmentContract.Present
         map.put("pageNumber", pageNumber);
         map.put("pageSize", pageSize);
         map.put("themeId", themeId);
-        map.put("type", 1);
+        map.put("type", 4);
         map.put("account_id", account_id);
         Type mType = new TypeToken<Result<List<ResourceVo>>>() {
         }.getType();
@@ -70,7 +71,8 @@ public class ConsultFragmentPresenter implements ConsultFragmentContract.Present
                 Result<List<ResourceVo>> result = (Result<List<ResourceVo>>) date;
                 List<ResourceVo> resourceVos = result.getData();
                 resourceVoList.addAll(resourceVos);
-                view.setConsultList(resourceVos);
+                view.setConsultList(resourceVoList);
+                Log.i("TAG",resourceVoList.size()+"-------------------------------------");
                 view.setConsultInfoSize(resourceVos.size());
             }
         }

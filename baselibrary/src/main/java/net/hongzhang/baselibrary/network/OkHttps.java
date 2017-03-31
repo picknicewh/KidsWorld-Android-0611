@@ -173,16 +173,17 @@ public class OkHttps {
                         //验签
 //                            boolean isSuccess=EncryptUtil.verify(map,result.getMsec(),result.getSign());
 //                            if(isSuccess)
-
-                        //服务端正常返回或者是缓存的 请求成功
-                        if (((Result)o).getCode().equals("0")|| isFromCache)
-                            okHttpListener.onSuccess(uri, o);
-                        else if (!isSendError) //否则请求失败  但是必须是之前没有发送错误信息  不能重复发送 会报错
-                            try {
-                                okHttpListener.onError(uri, ((Result<String>) o).getData());
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                        if (o!=null){
+                            //服务端正常返回或者是缓存的 请求成功
+                            if (((Result)o).getCode().equals("0")|| isFromCache)
+                                okHttpListener.onSuccess(uri, o);
+                            else if (!isSendError) //否则请求失败  但是必须是之前没有发送错误信息  不能重复发送 会报错
+                                try {
+                                    okHttpListener.onError(uri, ((Result<String>) o).getData());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                        }
 
 //                            else
 //                               okHttpListener.onError(uri,"非法访问");

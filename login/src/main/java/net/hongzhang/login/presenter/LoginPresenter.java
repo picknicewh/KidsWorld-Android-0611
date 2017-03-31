@@ -7,10 +7,8 @@ import android.view.Gravity;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import net.hongzhang.baselibrary.BaseLibrary;
 import net.hongzhang.baselibrary.activity.UpdateMessageActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
@@ -18,11 +16,8 @@ import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.FormValidation;
 import net.hongzhang.baselibrary.util.G;
-import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.PromptPopWindow;
-import net.hongzhang.login.UserChooseActivity;
 import net.hongzhang.login.mode.CharacterSeleteVo;
-import net.hongzhang.login.util.UserAction;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -40,50 +35,46 @@ import java.util.Map;
 public class LoginPresenter implements LoginContact.Presenter, OkHttpListener {
     private Activity context;
     private LoginContact.View view;
-    private CharacterSeleteVo data;
-    private String password;
-    private String username;
-    public LoginPresenter(Activity context, LoginContact.View view){
-        this.context=context;
-        this.view=view;
+    public LoginPresenter(Activity context, LoginContact.View view) {
+        this.context = context;
+        this.view = view;
     }
+
     @Override
-    public void getIsGologin(CheckBox checkBox, String accountId, String password, String sign, String md5) {
-        this.password = password;
-        this.username =accountId;
+    public void getIsGologin(CheckBox checkBox, String accountId, String password, String sign) {
         if (!checkBox.isChecked()) {
             G.initDisplaySize(context);
             PromptPopWindow promptPopWindow = new PromptPopWindow(context, "请同意服务条款");
             promptPopWindow.showAtLocation(checkBox, Gravity.NO_GRAVITY, (G.size.W - promptPopWindow.getWidth()) / 2, (int) (G.size.H * 0.2));
             return;
         }
-        if (G.isEmteny(username) || G.isEmteny(password)) {
+        if (G.isEmteny(accountId) || G.isEmteny(password)) {
             G.showToast(context, "账号密码不能为空");
             return;
         }
-        if (!FormValidation.isMobileNO(username)) {
+        if (!FormValidation.isMobileNO(accountId)) {
             G.showToast(context, "您输入的账号不规范");
             return;
         }
-        Map<String,Object> params =new HashMap<>();
-        params.put("accountId",accountId);
-        params.put("password",password);
-        params.put("sign",sign);
-        params.put("md5",md5);
-        Type type = new TypeToken<Result<List<CharacterSeleteVo>>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.APPLOGIN,params,this);
+        Map<String, Object> params = new HashMap<>();
+        params.put("accountId", accountId);
+        params.put("password", password);
+        params.put("sign", sign);
+        params.put("requestSource","android");
+        Type type = new TypeToken<Result<List<CharacterSeleteVo>>>() {
+        }.getType();
+        OkHttps.sendPost(type, Apiurl.APPLOGIN, params, this);
         view.showLoadingDialog();
     }
-
     @Override
     public void selectUserSubmit(String tsId) {
-        Map<String,Object> params =new HashMap<>();
-        params.put("tsId",tsId);
-        Type type=new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(type,Apiurl.SELECTUSER,params,this);
+        Map<String, Object> params = new HashMap<>();
+        params.put("tsId", tsId);
+        Type type = new TypeToken<Result<String>>() {
+        }.getType();
+        OkHttps.sendPost(type, Apiurl.SELECTUSER, params, this);
         view.showLoadingDialog();
     }
-
     @Override
     public void goUserAgreementActivity(String url, int source) {
         Intent intent = new Intent();
@@ -91,7 +82,7 @@ public class LoginPresenter implements LoginContact.Presenter, OkHttpListener {
                 "net.hongzhang.user.activity.WebViewActivity");
         intent.setComponent(componetName);
         intent.putExtra("source", source);
-        intent.putExtra("url",url);
+        intent.putExtra("url", url);
         context.startActivity(intent);
     }
 
@@ -105,39 +96,22 @@ public class LoginPresenter implements LoginContact.Presenter, OkHttpListener {
         intent.putExtra("type", "pw");
         intent.putExtra("phoneNumber", phoneNumber);
         intent.setClass(context, UpdateMessageActivity.class);
-       context.startActivity(intent);
+        context.startActivity(intent);
     }
 
     @Override
     public void onSuccess(String uri, Object date) {
         view.stopLoadingDialog();
-        if (Apiurl.APPLOGIN.equals(uri)){
+        if (Apiurl.APPLOGIN.equals(uri)) {
             Result<List<CharacterSeleteVo>> result = (Result<List<CharacterSeleteVo>>) date;
-            List<CharacterSeleteVo> characterSeleteVoList=result.getData();
+            List<CharacterSeleteVo> characterSeleteVoList = result.getData();
             view.setCharacterVoList(characterSeleteVoList);
-
-        } else if (Apiurl.SELECTUSER.equals(uri)) {
-            String sex;
-            if (data.getSex() == null || data.getSex() == 1)
-                sex = "男";
-            else
-                sex = "女";
-            UserAction.saveUserMessage(context, data.getName(),
-                    data.getImg(), data.getClassName(), data.getSchoolName(),
-                    data.getRyId(), data.getTsId(), data.getType(), sex, data.getSignature(), data.getAccount_id());
-            //如果网络连接时，连接融云
-            if (G.isNetworkConnected(context)) {
-                BaseLibrary.connect(data.getRyId(), context, data.getName(), data.getImg());
-            }
-            G.KisTyep.isChooseId = true;
-            context.finish();
-            UserAction.goMainActivity(context);
+            view.setIsOneRole(characterSeleteVoList.size()==1);
         }
     }
-
     @Override
     public void onError(String uri, String error) {
-      view.stopLoadingDialog();
-        Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
+        view.stopLoadingDialog();
+        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
     }
 }

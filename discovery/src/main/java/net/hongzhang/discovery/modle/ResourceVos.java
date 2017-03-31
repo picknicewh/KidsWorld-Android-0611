@@ -1,5 +1,7 @@
 package net.hongzhang.discovery.modle;
 
+import net.hongzhang.baselibrary.mode.ResourceVo;
+
 import java.io.Serializable;
 import java.util.List;
 

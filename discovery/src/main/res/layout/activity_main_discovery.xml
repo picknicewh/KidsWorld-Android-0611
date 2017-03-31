@@ -56,20 +56,26 @@
             android:paddingRight="@dimen/space"
             android:src="@mipmap/ic_history" />
     </LinearLayout>
-
-    <ScrollView
+    <net.hongzhang.baselibrary.pullrefresh.PullToRefreshScrollView
+        android:id="@+id/pullToRefreshScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"/>
+  <!--  <ScrollView
+        android:id="@+id/pull_scrollview"
 
-        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">-->
+
+   <!--     <LinearLayout
+            android:id="@+id/ll_scroll_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!--<net.hongzhang.discovery.widget.BannerView-->
-            <!--android:id="@+id/bv_home"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="150dp" />-->
+            &lt;!&ndash;<net.hongzhang.discovery.widget.BannerView&ndash;&gt;
+            &lt;!&ndash;android:id="@+id/bv_home"&ndash;&gt;
+            &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="150dp" />&ndash;&gt;
             <com.youth.banner.Banner
                 android:id="@+id/bv_home"
                 android:layout_width="match_parent"
@@ -117,9 +123,10 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:src="@mipmap/ic_navitem02"
+                        android:id="@+id/imageView"
                         android:layout_width="40dp"
-                        android:layout_height="40dp" />
+                        android:layout_height="40dp"
+                        android:src="@mipmap/ic_navitem02" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -281,6 +288,6 @@
                     android:divider="@color/transparent"
                     android:dividerHeight="0dp" />
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </LinearLayout>-->
+   <!-- </ScrollView>-->
 </LinearLayout>

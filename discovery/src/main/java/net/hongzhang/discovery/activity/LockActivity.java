@@ -31,12 +31,12 @@ import net.hongzhang.baselibrary.util.DateUtil;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.PermissionsChecker;
 import net.hongzhang.baselibrary.widget.CircleImageView;
-import net.hongzhang.discovery.*;
+import net.hongzhang.discovery.R;
+import net.hongzhang.discovery.presenter.PlayMusicPresenter;
 import net.hongzhang.discovery.service.LockScreenService;
 import net.hongzhang.discovery.util.Constants;
 import net.hongzhang.discovery.util.ImagerComber;
 import net.hongzhang.discovery.util.LockLayer;
-import net.hongzhang.discovery.presenter.PlayMusicPresenter;
 import net.hongzhang.discovery.util.TextUtil;
 
 import java.util.Calendar;

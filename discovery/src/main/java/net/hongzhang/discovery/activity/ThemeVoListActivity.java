@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
+import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.CompilationAdapter;
 import net.hongzhang.discovery.modle.CompilationVo;
@@ -92,7 +93,8 @@ public class ThemeVoListActivity extends BaseActivity implements ThemeVoListCont
             public void OnItemClick(View view, int position) {
                 CompilationVo compilationVo = compilationVos.get(position);
                 if (type == MainRecommendPresenter.TYPE_MUISC) {
-                    presenter.startMusicActivity(compilationVo.getAlbumId(), null);
+                   // presenter.startMusicActivity(compilationVo.getAlbumId(), null);
+                    presenter.getSongList(UserMessage.getInstance(ThemeVoListActivity.this).getTsId(),compilationVo.getAlbumId());
                 } else {
                     presenter.starVedioActivity(compilationVo.getAlbumId(), null);
                 }

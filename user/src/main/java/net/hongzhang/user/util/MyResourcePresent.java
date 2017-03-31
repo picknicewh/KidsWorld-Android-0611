@@ -3,6 +3,7 @@ package net.hongzhang.user.util;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ public class MyResourcePresent implements ResourceContract.Presenter, OkHttpList
     private List<ResourceVo> resourceVoList;
     private int type;
     private static final String url = ServerConfigManager.WEB_IP + "/paradise/index.html";
-
+   private String resourceId;
     public MyResourcePresent(Context context, ResourceContract.View view, int source, int type) {
         this.context = context;
         this.view = view;
@@ -63,7 +64,26 @@ public class MyResourcePresent implements ResourceContract.Presenter, OkHttpList
 
 
     }
-
+    /**
+     * 根据专辑id获取专辑中的资源列表
+     *
+     * @param tsId    角色id
+     * @param themeId 专辑id
+     */
+    @Override
+    public void getSongList(String tsId, String themeId,String resourceId) {
+        this.resourceId = resourceId;
+        Map<String, Object> map = new HashMap<>();
+        map.put("tsId", tsId);
+        map.put("pageSize", 999);
+        map.put("pageNumber", 1);
+        map.put("albumId", themeId);
+        map.put("account_id", UserMessage.getInstance(context).getAccount_id());
+        Type mType = new TypeToken<Result<List<ResourceVo>>>() {
+        }.getType();
+        OkHttps.sendPost(mType, Apiurl.USER_GETTHENELIST, map, this);
+        view.showLoadingDialog();
+    }
     @Override
     public void getCollectResourceList(int pageNumber, int pageSize, int type) {
         Map<String, Object> params = new HashMap<>();
@@ -110,11 +130,11 @@ public class MyResourcePresent implements ResourceContract.Presenter, OkHttpList
     }
 
     @Override
-    public void startMusicActivity(String themeId, String resourceId) {
+    public void startMusicActivity(List<ResourceVo> resourceVos, String resourceId) {
         Intent intent = new Intent();
         ComponentName componetName = new ComponentName("net.hongzhang.bbhow", "net.hongzhang.discovery.activity.MainPlayMusicActivity");
         intent.setComponent(componetName);
-        intent.putExtra("themeId", themeId);
+        intent.putParcelableArrayListExtra("resourceVos", (ArrayList<? extends Parcelable>) resourceVos);
         intent.putExtra("resourceId", resourceId);
         context.startActivity(intent);
     }
@@ -156,9 +176,14 @@ public class MyResourcePresent implements ResourceContract.Presenter, OkHttpList
                     }
                     view.setResourceSize(resourceVos.size());
                 }
+            }else if (uri.equals(Apiurl.USER_GETTHENELIST)) {
+                if (date!=null){
+                    Result<List<ResourceVo>> result = (Result<List<ResourceVo>>) date;
+                    List<ResourceVo> resourceVoList = result.getData();
+                    startMusicActivity(resourceVoList,resourceId);
+                }
             }
         } else if (type == 3) {
-            Log.i("ddddddddddddd", type + "========================");
             if (date != null) {
                 Result<List<ResourceVo>> data = (Result<List<ResourceVo>>) date;
                 List<ResourceVo> resourceVos = data.getData();

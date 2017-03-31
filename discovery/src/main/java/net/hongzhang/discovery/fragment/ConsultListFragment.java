@@ -15,7 +15,7 @@ import net.hongzhang.baselibrary.base.BaseFragement;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.ConsultAdapter;
-import net.hongzhang.discovery.modle.ResourceVo;
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.discovery.presenter.ConsultFragmentContract;
 import net.hongzhang.discovery.presenter.ConsultFragmentPresenter;
 
@@ -67,11 +67,11 @@ public class ConsultListFragment extends BaseFragement implements ConsultFragmen
         ll_load_more = $(view, R.id.ll_load_more);
         tv_load_more = $(view, R.id.tv_load_more);
         iv_load_more = $(view, R.id.iv_load_more);
+        ll_load_more.setOnClickListener(this);
         initData();
     }
 
     private void initData() {
-
         presenter = new ConsultFragmentPresenter(getActivity(), this);
         themeId = getArguments().getString("themeId");
         presenter.getConsultList(pageNumber, pageSize, themeId, UserMessage.getInstance(getActivity()).getAccount_id());
@@ -79,7 +79,6 @@ public class ConsultListFragment extends BaseFragement implements ConsultFragmen
 
     @Override
     public void setConsultList(final List<ResourceVo> resourceVos) {
-
         adapter = new ConsultAdapter(getActivity(), resourceVos);
         lv_consult.setAdapter(adapter);
         lv_consult.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.base.BaseFragement;
+import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.CompilationPlayCountAdapter;
 import net.hongzhang.discovery.modle.CompilationVo;
@@ -104,7 +105,8 @@ public class SelectAlubmFragment extends BaseFragement implements AlbumSelectCon
             public void OnItemClick(View view, int position) {
                 CompilationVo compilationVo = compilationVos.get(position);
                 if (type == MainRecommendPresenter.TYPE_MUISC) {
-                    presenter.startMusicActivity(String.valueOf(compilationVo.getAlbumId()), null);
+                    presenter.getSongList(UserMessage.getInstance(getActivity()).getTsId(),compilationVo.getAlbumId());
+                 //   presenter.startMusicActivity(String.valueOf(compilationVo.getAlbumId()), null);
                 } else if (type == MainRecommendPresenter.TYPE_VIDEO) {
                     presenter.starVedioActivity(String.valueOf(compilationVo.getAlbumId()));
                 }

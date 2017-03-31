@@ -1,3 +1,4 @@
+/*
 package net.hongzhang.status.util;
 
 import android.content.BroadcastReceiver;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,7 +29,6 @@ import net.hongzhang.baselibrary.util.BroadcastConstant;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.LoadingDialog;
-import net.hongzhang.baselibrary.widget.listview.PullableListView;
 import net.hongzhang.status.R;
 import net.hongzhang.status.mode.DynamicVo;
 import net.hongzhang.status.mode.StatusVo;
@@ -39,6 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+*/
 /**
  * 作者： wh
  * 时间： 2016/10/10
@@ -46,7 +48,8 @@ import java.util.Map;
  * 版本说明：
  * 附加注释：
  * 主要接口：
- */
+ *//*
+
 public abstract class BaseReceiverFragment extends BaseFragement implements OkHttpListener,View.OnClickListener{
     public MyJpushReceiver myReceiver;
     public TextView tv_status_bar;
@@ -59,27 +62,37 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
     public   static String  createTime;
     public UserMessage um;
     public     LoadingDialog dialog;
-    /**
+    */
+/**
      * 未读消息的头像
-     */
-    private ImageView iv_head;
-    /**
-     * 未读消息条数
-     */
-    private TextView tv_message;
-    /**
-     * 动态列表
-     */
-    public PullableListView lv_status;
+     *//*
 
-    /**
+    private ImageView iv_head;
+    */
+/**
+     * 未读消息条数
+     *//*
+
+    private TextView tv_message;
+    */
+/**
+     * 动态列表
+     *//*
+
+    public ListView lv_status;
+
+    */
+/**
      * ListView头部
-     */
+     *//*
+
     private View layout_head;
 
-    /**
+    */
+/**
      *网络状态监听
-     */
+     *//*
+
     public ConnectionChangeReceiver connectionChangeReceiver;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,9 +101,11 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
         registerReceiver();
     }
 
-    /**
+    */
+/**
      * 注册监听网络广播广播
-     */
+     *//*
+
     private  void registerReceiver() {
         IntentFilter filter = new IntentFilter(BroadcastConstant.STATUSDOS);
         IntentFilter filtet2 = new IntentFilter(BroadcastConstant.COMMENTINFO);
@@ -101,12 +116,14 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
         connectionChangeReceiver = new ConnectionChangeReceiver();
         getActivity().registerReceiver(connectionChangeReceiver, filter2);
     }
-    /**
+    */
+/**
      * 获取动态列表
      * @param groupId 群id
      * @param  groupType 群类型 1=班级 2=学校
      * @param type 1.加载 2 刷新
-     */
+     *//*
+
     public void getDynamicList(String groupId,String groupType,int pageSize,int pageNum,int type,String dynamicId){
         Map<String,Object> map=new HashMap<>();
         if(G.isEmteny(um.getTsId())){
@@ -130,9 +147,11 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
         showLoadingDialog();
     }
 
-    /**
+    */
+/**
      * 有无网络监听广播
-     */
+     *//*
+
     class ConnectionChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -143,13 +162,14 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
                 tv_status_bar.setVisibility(View.VISIBLE);
             }else {
                 tv_status_bar.setVisibility(View.GONE);
-
             }
         }
     }
-    /**
+    */
+/**
      * 红点广播
-     */
+     *//*
+
     class MyJpushReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -180,9 +200,11 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
         }
     }
 
-    /**
+    */
+/**
      * 有无网络加载页面状态
-     */
+     *//*
+
     public   void  setShowView(){
         if (G.isNetworkConnected(getActivity())){
             rl_nonetwork.setVisibility(View.GONE);
@@ -234,8 +256,9 @@ public abstract class BaseReceiverFragment extends BaseFragement implements OkHt
     public void setRl_nonetwork(RelativeLayout rl_nonetwork) {
         this.rl_nonetwork = rl_nonetwork;
     }
-    public void setLv_status(PullableListView lv_status) {this.lv_status = lv_status;}
+    public void setLv_status(ListView lv_status) {this.lv_status = lv_status;}
     public void setTv_message(TextView tv_message) {this.tv_message = tv_message;}
     public void setIv_head(ImageView iv_head) {this.iv_head = iv_head;}
     public void setLayout_head(View layout_head) {this.layout_head = layout_head;}
 }
+*/

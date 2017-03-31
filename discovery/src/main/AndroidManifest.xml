@@ -29,7 +29,6 @@
             android:exported="false"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.MainDiscoveryActivity" />
         <activity android:name=".activity.ResourceAlubmListActivity" />
         <activity android:name=".activity.MainPlayMusicActivity" />
         <activity

@@ -272,16 +272,16 @@ public class WebCommonPageFrom {
         intent.putExtra("targetId",targetId);
         activity.startActivity(intent);
     }
-    @JavascriptInterface
-    public void startMusicActivity(String themeId,String resourceId) {
-        Intent intent = new Intent();
-        ComponentName componetName = new ComponentName("net.hongzhang.bbhow","net.hongzhang.discovery.activity.MainPlayMusicActivity");
-        intent.setComponent(componetName);
-        intent.putExtra("themeId",themeId);
-        intent.putExtra("resourceId",resourceId);
-        activity.startActivity(intent);
-        Log.i("aaaaaa","===========startMusicActivity=========");
-    }
+//    @JavascriptInterface
+//    public void startMusicActivity(String themeId,String resourceId) {
+//        Intent intent = new Intent();
+//        ComponentName componetName = new ComponentName("net.hongzhang.bbhow","net.hongzhang.discovery.activity.MainPlayMusicActivity");
+//        intent.setComponent(componetName);
+//        intent.putExtra("themeId",themeId);
+//        intent.putExtra("resourceId",resourceId);
+//        activity.startActivity(intent);
+//        Log.i("aaaaaa","===========startMusicActivity=========");
+//    }
     @JavascriptInterface
     public void startVideoActivity(String themeId,String resourceId) {
         Intent intent = new Intent();

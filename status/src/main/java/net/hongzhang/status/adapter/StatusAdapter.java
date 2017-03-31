@@ -2,6 +2,7 @@ package net.hongzhang.status.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,8 @@ import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.CircleImageView;
 import net.hongzhang.status.R;
-import net.hongzhang.status.StatusFragement;
 import net.hongzhang.status.mode.StatusVo;
+import net.hongzhang.status.StatusFragment;
 import net.hongzhang.status.util.PictrueUtils;
 import net.hongzhang.status.widget.DeleteStatusDialog;
 import net.hongzhang.user.activity.StatusDetilsActivity;
@@ -45,7 +46,7 @@ import java.util.Map;
  * ================================================
  */
 public class StatusAdapter extends BaseAdapter implements OkHttpListener {
-    private StatusFragement statusFragement;
+    private StatusFragment statusFragment;
     private List<StatusVo> statusVoList;
     private Context context;
     /**
@@ -62,10 +63,10 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
     private Map<Integer, String> praisesNames;
     private ViewHold viewHold = null;
 
-    public StatusAdapter(StatusFragement statusFragement, List<StatusVo> statusVoList) {
-        this.statusFragement = statusFragement;
+    public StatusAdapter(StatusFragment statusFragment, List<StatusVo> statusVoList) {
+        this.statusFragment = statusFragment;
         this.statusVoList = statusVoList;
-        context = statusFragement.getActivity();
+        context = statusFragment.getActivity();
         praises = new HashMap<>();
         praiseNums = new HashMap<>();
         praisesNames = new HashMap<>();
@@ -121,6 +122,7 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
         viewHold = (ViewHold) view.getTag();
         final StatusVo statusVo = statusVoList.get(i);
         ImageCache.imageLoader(statusVo.getImg(), viewHold.cv_head);
+       // GlideUtils.loadImageView1(context,statusVo.getImg(),viewHold.cv_head);
         viewHold.tv_name.setText(statusVo.getTsName());
         if (statusVo.getDate().length() > 10) {
             viewHold.tv_time.setText(statusVo.getDate().substring(0, 10));
@@ -216,7 +218,7 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
             public void onClick(View view) {
                 Intent intent = new Intent(context, StatusDetilsActivity.class);
                 intent.putExtra("dynamicId", statusVo.getDynamicId());
-                statusFragement.setScrollPosition(getScrollPosition(statusVo));
+                statusFragment.setScrollPosition(getScrollPosition(statusVo));
                 context.startActivity(intent);
             }
         });
@@ -226,7 +228,7 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
             public void onClick(View view) {
                 Intent intent = new Intent(context, StatusDetilsActivity.class);
                 intent.putExtra("dynamicId", statusVo.getDynamicId());
-                statusFragement.setScrollPosition(getScrollPosition(statusVo));
+                statusFragment.setScrollPosition(getScrollPosition(statusVo));
                 context.startActivity(intent);
             }
         });
@@ -240,7 +242,7 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
         viewHold.tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DeleteStatusDialog dialog = new DeleteStatusDialog(statusFragement, statusVo.getDynamicId(), i);
+                DeleteStatusDialog dialog = new DeleteStatusDialog(statusFragment, statusVo.getDynamicId(), i);
                 dialog.initView();
             }
         });
@@ -272,11 +274,13 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
      * @param statusVo
      */
     private int getScrollPosition(StatusVo statusVo) {
-        for (int i = 0; i < statusFragement.statusVoList.size(); i++) {
-            if (statusFragement.statusVoList.get(i).getDynamicId().equals(statusVo.getDynamicId())) {
+        for (int i = 0; i < statusFragment.statusVos.size(); i++) {
+            if (statusFragment.statusVos.get(i).getDynamicId().equals(statusVo.getDynamicId())) {
+                Log.i("---------------------",i+"");
                 return i;
             }
         }
+
         return 1;
     }
 

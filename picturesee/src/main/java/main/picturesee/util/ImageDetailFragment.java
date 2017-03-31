@@ -87,7 +87,8 @@ public class ImageDetailFragment extends Fragment implements View.OnLongClickLis
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (source.equals("net") || source.equals("message")) {
-            Glide.with(getActivity()).load(mImageUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
+          //  GlideUtils.loadImageView1(getActivity(),mImageUrl,mImageView);
+            Glide.with(getActivity()).load(mImageUrl).asBitmap().thumbnail(0.1f).into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                     mImageView.setImageBitmap(resource);

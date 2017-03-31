@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import net.hongzhang.baselibrary.image.GlideUtils;
 import net.hongzhang.discovery.R;
-import net.hongzhang.discovery.modle.ResourceVo;
+import net.hongzhang.baselibrary.mode.ResourceVo;
 
 import java.util.List;
 
@@ -25,6 +25,7 @@ import java.util.List;
  * ================================================
  */
 public class ConsultAdapter extends BaseAdapter {
+
     private Context context;
     private List<ResourceVo> resourceVoList;
     public ConsultAdapter(Context context, List<ResourceVo> resourceVoList) {

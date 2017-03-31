@@ -1,7 +1,7 @@
 package net.hongzhang.discovery.presenter;
 
 import net.hongzhang.discovery.modle.CompilationVo;
-
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import java.util.List;
 
 /**
@@ -23,7 +23,9 @@ public  interface  View{
 }
 public interface Presenter{
     void getThemVoList(String themeId, int pageSize, int pageNumber);
-    void startMusicActivity(String themeId, String resourceId);
+    void getSongList(String tsId, String themeId);
+  //  void startMusicActivity(String themeId, String resourceId);
+  void startMusicActivity(List<ResourceVo> resourceVos, String resourceId);
     void starVedioActivity(String themeId,String resourceId);
 }
 }

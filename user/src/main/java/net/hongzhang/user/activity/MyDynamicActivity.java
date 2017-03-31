@@ -1,41 +1,42 @@
 package net.hongzhang.user.activity;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.reflect.TypeToken;
 import com.umeng.analytics.MobclickAgent;
-
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
+import net.hongzhang.baselibrary.pullrefresh.PullToRefreshBase;
+import net.hongzhang.baselibrary.pullrefresh.PullToRefreshListView;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
-import net.hongzhang.baselibrary.widget.listview.PullToRefreshLayout;
-import net.hongzhang.baselibrary.widget.listview.PullableListView;
 import net.hongzhang.user.R;
 import net.hongzhang.user.adapter.MyDynamicAdapter;
 import net.hongzhang.user.mode.DynamicInfoVo;
-
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MyDynamicActivity extends BaseActivity implements OkHttpListener, PullToRefreshLayout.OnRefreshListener, View.OnClickListener {
-    private PullToRefreshLayout refresh_view;
+public class MyDynamicActivity extends BaseActivity implements OkHttpListener, View.OnClickListener, PullToRefreshBase.OnRefreshListener<ListView> {
+   // private PullToRefreshLayout refresh_view;
     /**
      * 我的动态列表
      */
-    private PullableListView lv_dynamic;
+  //  private PullableListView lv_dynamic;
+    private ListView lv_dynamic;
+    private PullToRefreshListView pullToRefreshListView;
     /**
      * 页码数
      */
@@ -61,7 +62,7 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener, P
      * 没有数据提示
      */
     private TextView tv_nodata;
-
+    private boolean hasData = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,16 +71,20 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener, P
     }
 
     private void initview() {
-        lv_dynamic = $(R.id.lv_dynamic);
-        refresh_view = $(R.id.refresview);
+      //  lv_dynamic = $(R.id.lv_dynamic);
+        dynamicInfoVoList = new ArrayList<>();
         rl_nonetwork = $(R.id.rl_nonetwork);
         tv_nodata = $(R.id.tv_nodata);
-        dynamicInfoVoList = new ArrayList<>();
+        pullToRefreshListView = $(R.id.pulllistview);
+        pullToRefreshListView.setPullLoadEnabled(false);
+        pullToRefreshListView.setScrollLoadEnabled(true);
+        lv_dynamic = pullToRefreshListView.getRefreshableView();
+        pullToRefreshListView.setOnRefreshListener(this);
         rl_nonetwork.setOnClickListener(this);
         getMyDynamic(pageNumber, 10);
         adapter = new MyDynamicAdapter(this, dynamicInfoVoList, pageNumber);
         lv_dynamic.setAdapter(adapter);
-        refresh_view.setOnRefreshListener(this);
+        setLastUpdateTime();
     }
 
     @Override
@@ -125,17 +130,20 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener, P
         stopLoadingDialog();
         if (uri.equals(Apiurl.MYDYNAMICS)) {
             Result<String> data = (Result<String>) date;
-            if (data == null) {
-                //    stopLoadingDialog();
-            } else {
-                // stopLoadingDialog();
+            if (data != null) {
                 List<DynamicInfoVo> dynamicInfoVos = ((Result<List<DynamicInfoVo>>) date).getData();
                 if (dynamicInfoVos.size() > 0) {
+
                     if (pagesize == 1) {
                         dynamicInfoVoList.set(scrollPosition, dynamicInfoVos.get(0));
                     } else {
                         dynamicInfoVoList.addAll(dynamicInfoVos);
                     }
+                }
+                if (dynamicInfoVos.size()<10){
+                    hasData = false;
+                }else {
+                    hasData = true;
                 }
                 setListData();
             }
@@ -159,7 +167,7 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener, P
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
-        refresh_view.setLv_count(dynamicInfoVoList.size());
+      //  refresh_view.setLv_count(dynamicInfoVoList.size());
     }
 
     public void updateDelete(int position) {
@@ -167,33 +175,6 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener, P
         setListData();
 
     }
-
-    @Override
-    public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
-        new Handler() {
-            @Override
-            public void handleMessage(Message message) {
-                dynamicInfoVoList.clear();
-                pageNumber = 1;
-                getMyDynamic(pageNumber, 10);
-                pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-
-            }
-        }.sendEmptyMessageDelayed(0, 500);
-    }
-
-    @Override
-    public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
-        new Handler() {
-            @Override
-            public void handleMessage(Message message) {
-                pageNumber++;
-                getMyDynamic(pageNumber, 10);
-                pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-            }
-        }.sendEmptyMessageDelayed(0, 500);
-    }
-
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.rl_nonetwork) {
@@ -207,4 +188,47 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener, P
         super.onDestroy();
         MobclickAgent.onEvent(this, "openUserDynamic");
     }
+
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+        new Handler() {
+            @Override
+            public void handleMessage(Message message) {
+                dynamicInfoVoList.clear();
+                pageNumber = 1;
+                getMyDynamic(pageNumber, 10);
+                pullToRefreshListView.onPullDownRefreshComplete();
+                setLastUpdateTime();
+
+            }
+        }.sendEmptyMessageDelayed(0, 500);
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+        new Handler() {
+            @Override
+            public void handleMessage(Message message) {
+                pageNumber++;
+                getMyDynamic(pageNumber, 10);
+                pullToRefreshListView.onPullUpRefreshComplete();
+                pullToRefreshListView.setHasMoreData(hasData);
+                setLastUpdateTime();
+
+            }
+        }.sendEmptyMessageDelayed(0, 500);
+    }
+
+    private void setLastUpdateTime() {
+        String text = formatDateTime(System.currentTimeMillis());
+        pullToRefreshListView.setLastUpdatedLabel(text);
+    }
+    private SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm");
+    private String formatDateTime(long time) {
+        if (0 == time) {
+            return "";
+        }
+        return mDateFormat.format(new Date(time));
+    }
+
 }

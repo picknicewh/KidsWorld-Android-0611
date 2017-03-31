@@ -17,13 +17,14 @@ import java.util.List;
 public class LoginContact {
     public  interface  View{
         void setCharacterVoList(List<CharacterSeleteVo> characterSeleteVos);
+        void setIsOneRole(boolean isChoose);
         void showLoadingDialog();
         void stopLoadingDialog();
     }
     public interface Presenter{
-        void getIsGologin(CheckBox checkBox, String accountId, String password, String sign, String md5);
+        void getIsGologin(CheckBox checkBox, String accountId, String password, String sign);
         void selectUserSubmit(String tsid);
         void goUserAgreementActivity(String url,int source);
-        void  goUpdateMessageActivity(String phoneNumber);
+        void goUpdateMessageActivity(String phoneNumber);
     }
 }

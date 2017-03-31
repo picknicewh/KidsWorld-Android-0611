@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.image.ImageCache;
-import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
 import net.hongzhang.baselibrary.network.OkHttpListener;
@@ -23,6 +22,7 @@ import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.activity.MainPlayMusicActivity;
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.discovery.util.Constants;
 import net.hongzhang.discovery.util.MusicNotification;
 import net.hongzhang.discovery.util.TextUtil;
@@ -71,7 +71,7 @@ public class PlayMusicPresenter implements PlayMusicContract.Presenter, OkHttpLi
     /**
      * 资源id
      */
-    public static List<ResourceVo> resourceVos;
+    public  static List<ResourceVo> resourceVos;
     /**
      * 通知管理类
      */
@@ -92,8 +92,8 @@ public class PlayMusicPresenter implements PlayMusicContract.Presenter, OkHttpLi
      * 用户信息类
      */
     private UserMessage userMessage;
-
-    public PlayMusicPresenter(PlayMusicContract.View view, Context context, int position, MainPlayMusicActivity.MyMusicReceiver myMusicReceiver, String themeId, String resourceId) {
+/*
+    public PlayMusicPresenter(PlayMusicContract.View view, Context context,int position, List<ResourceVo> resourceVos, MainPlayMusicActivity.MyMusicReceiver myMusicReceiver, String themeId, String resourceId) {
         this.context = context;
         this.view = view;
         this.position = position;
@@ -102,9 +102,28 @@ public class PlayMusicPresenter implements PlayMusicContract.Presenter, OkHttpLi
         this.themeId = themeId;
         userMessage = UserMessage.getInstance(context);
         tsId = userMessage.getTsId();
+        this.resourceVos = resourceVos;
         registerReceiver();
+        if (resourceVos==null){
+        //    getSongList(userMessage.getTsId(),themeId);
+        }else {
+            view.setSongList(resourceVos);
+            setupMusic();
+        }
       //  getUserPaly();
-        getSongList(tsId, themeId);
+    }*/
+    public PlayMusicPresenter(PlayMusicContract.View view, Context context,int position, List<ResourceVo> resourceVos, MainPlayMusicActivity.MyMusicReceiver myMusicReceiver,  String resourceId) {
+        this.context = context;
+        this.view = view;
+        this.position = position;
+        this.resourceId = resourceId;
+        this.myMusicReceiver = myMusicReceiver;
+        userMessage = UserMessage.getInstance(context);
+        tsId = userMessage.getTsId();
+        this.resourceVos = resourceVos;
+        registerReceiver();
+        view.setSongList(resourceVos);
+        setupMusic();
     }
 
     /**
@@ -129,12 +148,12 @@ public class PlayMusicPresenter implements PlayMusicContract.Presenter, OkHttpLi
         OkHttps.sendPost(mType, Apiurl.SAVEPLAYRECORDING, map, this);
     }
 
-    /**
+   /* *//**
      * 根据专辑id获取专辑中的资源列表
      *
      * @param tsId    角色id
      * @param themeId 专辑id
-     */
+     *//*
     @Override
     public void getSongList(String tsId, String themeId) {
         Map<String, Object> map = new HashMap<>();
@@ -147,7 +166,7 @@ public class PlayMusicPresenter implements PlayMusicContract.Presenter, OkHttpLi
         }.getType();
         OkHttps.sendPost(mType, Apiurl.USER_GETTHENELIST, map, this);
         view.showLoadingDialog();
-    }
+    }*/
 
     /**
      * 根据资源id获取资源详情
@@ -287,7 +306,7 @@ public class PlayMusicPresenter implements PlayMusicContract.Presenter, OkHttpLi
     @Override
     public void sendLockText(ResourceVo resourceVo, boolean isPlaying) {
         Intent intent = new Intent(Constants.ACTION_CHANGETEXT);
-        intent.putExtra("resourceVo", resourceVo);
+        intent.putExtra("resourceVo", (Parcelable) resourceVo);
         intent.putExtra("isPlaying", isPlaying);
         context.sendBroadcast(intent);
     }
@@ -321,33 +340,35 @@ public class PlayMusicPresenter implements PlayMusicContract.Presenter, OkHttpLi
             context.unregisterReceiver(PoaitionChangeReceiver);
         }
     }
-
+   private void setupMusic(){
+       if (resourceId != null) {
+           for (int i = 0; i < resourceVos.size(); i++) {
+               ResourceVo resourceVo = resourceVos.get(i);
+               if (String.valueOf(resourceVo.getResourceId()).equals(resourceId)) {
+                   position = i;
+               }
+           }
+       } else {
+           position = 0;
+       }
+       view.setPosition(position);
+       setup();
+   }
     @Override
     public void onSuccess(String uri, Object date) {
         view.stopLoadingDialog();
-        if (uri.equals(Apiurl.USER_GETTHENELIST)) {
+     /*   if (uri.equals(Apiurl.USER_GETTHENELIST)) {
             if (date != null) {
                 Result<ArrayList<ResourceVo>> data = (Result<ArrayList<ResourceVo>>) date;
                 ArrayList<ResourceVo> resourceVos = data.getData();
                 if (resourceVos.size() > 0 && resourceVos != null) {
                     this.resourceVos = resourceVos;
                     view.setSongList(resourceVos);
-                    if (resourceId != null) {
-                        for (int i = 0; i < resourceVos.size(); i++) {
-                            ResourceVo resourceVo = resourceVos.get(i);
-                            if (String.valueOf(resourceVo.getResourceId()).equals(resourceId)) {
-                                position = i;
-                            }
-                        }
-                    } else {
-                        position = 0;
-                    }
-                    view.setPosition(position);
-                    setup();
+                    setupMusic();
 
                 }
             }
-        } else if (uri.equals(Apiurl.SAVEPLAYRECORDING)) {
+        } else */if (uri.equals(Apiurl.SAVEPLAYRECORDING)) {
             Result<String> data = (Result<String>) date;
             String result = data.getData();
             Log.i("SSS", result);

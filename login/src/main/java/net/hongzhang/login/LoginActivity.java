@@ -50,7 +50,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView tv_unpassword;
     private CharacterSeleteVo data;
     private LoadingDialog dialog;
-
+    /**
+     * 分享的信息
+     */
+    public  String extra;
+    private String source;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +83,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         tv_unpassword.setOnClickListener(this);
         tv_agree.setOnClickListener(this);
         dialog = new LoadingDialog(this, R.style.LoadingDialogTheme);
+        extra  = getIntent().getStringExtra("extra");
+        source = getIntent().getStringExtra("source");
     }
 
     @Override
@@ -153,21 +159,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             b_login.setEnabled(true);
             Result<List<CharacterSeleteVo>> result = (Result<List<CharacterSeleteVo>>) date;
             List<CharacterSeleteVo> seleteList = result.getData();
-
             //将用户信息json串保存起来，提供用户多个身份选择
             UserMessage.getInstance(this).setUserMessagejsonCache(new Gson().toJson(seleteList));
             UserMessage.getInstance(this).setCount(result.getData().size());
             if (result.getData().size() > 1) {
                 dialog.dismiss();
-                startActivity(new Intent(this, UserChooseActivity.class));
+                Intent intent = new Intent(this, UserChooseActivity.class);
+                intent.putExtra("source", source);
+                intent.putExtra("extra", extra);
+                startActivity(intent);
                 finish();
             } else {
                 data = seleteList.get(0);
                 selectUserSubmit(data.getTsId(), this);
-                UserChooseActivity.flag = 1;
             }
             UserAction.saveLoginMessage(this, username, password);
+
+
         } else if (Apiurl.SELECTUSER.equals(uri)) {
+            //如果source不为空，表示分享时，并没有登陆，从而进入登陆页面，登陆成功且角色选择成功后，再次进入分享页面，继续分享。
+            String source = getIntent().getStringExtra("source");
+                if (!G.isEmteny(source)) {
+                    if (source.equals("ShareActivity")) {
+                        UserAction.goShareActivity(this, getIntent().getStringExtra("extra"));
+                    }
+            }
             String sex;
             if (data.getSex() == null || data.getSex() == 1)
                 sex = "男";
@@ -182,7 +198,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             G.KisTyep.isChooseId = true;
             dialog.dismiss();
-            finish();
             UserAction.goMainActivity(this);
         }
 

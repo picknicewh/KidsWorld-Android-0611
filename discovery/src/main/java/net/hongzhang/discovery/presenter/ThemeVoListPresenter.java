@@ -2,6 +2,7 @@ package net.hongzhang.discovery.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -14,6 +15,7 @@ import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.activity.MainPlayMusicActivity;
 import net.hongzhang.discovery.activity.PlayVideoListActivity;
 import net.hongzhang.discovery.modle.CompilationVo;
+import net.hongzhang.baselibrary.mode.ResourceVo;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -47,7 +49,25 @@ public class ThemeVoListPresenter implements ThemeVoListContract.Presenter, OkHt
         intent.putExtra("resourceId", resourceId);
         context.startActivity(intent);
     }
-
+    /**
+     * 根据专辑id获取专辑中的资源列表
+     *
+     * @param tsId    角色id
+     * @param themeId 专辑id
+     */
+    @Override
+    public void getSongList(String tsId, String themeId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("tsId", tsId);
+        map.put("pageSize", 999);
+        map.put("pageNumber", 1);
+        map.put("albumId", themeId);
+        map.put("account_id", UserMessage.getInstance(context).getAccount_id());
+        Type mType = new TypeToken<Result<List<ResourceVo>>>() {
+        }.getType();
+        OkHttps.sendPost(mType, Apiurl.USER_GETTHENELIST, map, this,2,"play_list");
+        view.showLoadingDialog();
+    }
     @Override
     public void getThemVoList(String themeId, int pageSize, int pageNumber) {
         Map<String, Object> map = new HashMap<>();
@@ -62,9 +82,9 @@ public class ThemeVoListPresenter implements ThemeVoListContract.Presenter, OkHt
     }
 
     @Override
-    public void startMusicActivity(String themeId, String resourceId) {
+    public void startMusicActivity(List<ResourceVo> resourceVos, String resourceId) {
         Intent intent = new Intent(context, MainPlayMusicActivity.class);
-        intent.putExtra("themeId", themeId);
+        intent.putParcelableArrayListExtra("resourceVos", (ArrayList<? extends Parcelable>) resourceVos);
         intent.putExtra("resourceId", resourceId);
         context.startActivity(intent);
     }
@@ -78,6 +98,13 @@ public class ThemeVoListPresenter implements ThemeVoListContract.Presenter, OkHt
             compilationVoList.addAll(compilationVos);
             view.setThemeVoList(compilationVoList);
             view.setThemeVoSize(compilationVos.size());
+        }else if (uri.equals(Apiurl.USER_GETTHENELIST)) {
+            if (date!=null){
+                Result<List<ResourceVo>> result = (Result<List<ResourceVo>>) date;
+                List<ResourceVo> resourceVoList = result.getData();
+                ResourceVo resourceVo = resourceVoList.get(0);
+                startMusicActivity(resourceVoList,resourceVo.getResourceId());
+            }
         }
     }
 

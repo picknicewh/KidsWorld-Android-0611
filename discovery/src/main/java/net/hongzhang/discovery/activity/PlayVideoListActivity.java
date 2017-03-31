@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -224,6 +225,7 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
                 iv_alubm_collect.setImageResource(R.mipmap.star_dark_full);
             }
             presenter.subFavorate(resourceVos.get(position).getAlbumId(), cancel);
+            Log.i("SSSSSSS",resourceVos.get(position).getAlbumId()+"==========================");
         } else if (viewId == R.id.tv_comment) {
             String content = et_comment.getText().toString();
             if (!G.isEmteny(content)) {
@@ -260,12 +262,12 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void setVideoList(final List<ResourceVo> resourceVos) {
-        position=0;
+        position = 0;
+        this.resourceVos  =resourceVos;
         if (resourceVos != null && resourceVos.size() > 0) {
             cancel = resourceVos.get(position).getIsFavorites();
             praiseType = resourceVos.get(position).getIsPraise();
         }
-        this.resourceVos = resourceVos;
         albumAdapter = new VideoAlbumDetailAdapter(this, resourceVos);
         rv_play_list.setAdapter(albumAdapter);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -303,6 +305,7 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
         adapter.setOnItemClickListener(new CompilationPlayCountAdapter.onItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {
+                themeId = compilationVos.get(position).getAlbumId();
                 presenter.getVideoList(tsId, String.valueOf(compilationVos.get(position).getAlbumId()));
             }
         });

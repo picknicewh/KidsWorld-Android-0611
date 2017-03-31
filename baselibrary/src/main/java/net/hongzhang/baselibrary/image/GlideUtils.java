@@ -37,14 +37,26 @@ public class GlideUtils {
     //默认加载
     public static void loadImageView(Context mContext, String path, ImageView mImageView) {
         Glide.with(mContext).load(path)
-//                .placeholder(R.mipmap.ic_imgloading)
+               //.placeholder(R.mipmap.ic_img_error)
                 .error(R.mipmap.ic_img_error)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .crossFade()
 //                .centerCrop()
-//                .thumbnail(0.1f)
+            //   .thumbnail(0.1f)//支持加载1/10的缩略图，再加载全图
                 .into(mImageView);
     }
+    //默认加载
+    public static void loadImageView1(Context mContext, String path, ImageView mImageView) {
+        Glide.with(mContext).load(path)
+              //  .placeholder(R.mipmap.ic_img_error)
+                .error(R.mipmap.ic_img_error)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .centerCrop()
+               //    .thumbnail(0.1f)//支持加载1/10的缩略图，再加载全图
+                .into(mImageView);
+    }
+
     //加载指定大小
     public static void loadImageViewSize(Context mContext, String path, int width, int height, ImageView mImageView) {
             Glide.with(mContext).load(path).override(width, height).into(mImageView);

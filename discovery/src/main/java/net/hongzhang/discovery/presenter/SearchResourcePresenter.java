@@ -2,18 +2,21 @@ package net.hongzhang.discovery.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
+import net.hongzhang.baselibrary.util.G;
+import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.activity.MainPlayMusicActivity;
 import net.hongzhang.discovery.activity.PlayVideoListActivity;
 import net.hongzhang.discovery.modle.CompilationVo;
-import net.hongzhang.discovery.modle.ResourceVo;
 import net.hongzhang.discovery.modle.ResourceVos;
 import net.hongzhang.discovery.modle.SearchKeyVo;
 import net.hongzhang.discovery.util.SearchHistoryDb;
@@ -44,7 +47,11 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
      * flag=1表示重新获取新的搜索词列表，flag=2表示同一搜索词加载更多
      */
     private int flag;
-
+    /**
+     * 搜索资源所在资源的位置
+     */
+   private String resourceId;
+    private String albumId;
     public SearchResourcePresenter(Context context, SearchResourceContract.View view) {
         this.context = context;
         this.view = view;
@@ -70,7 +77,28 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
         view.showLoadingDialog();
         view.setloadMoreVis(false);
     }
-
+    /**
+     * 根据专辑id获取专辑中的资源列表
+     *
+     * @param tsId    角色id
+     * @param themeId 专辑id
+     */
+    @Override
+    public void getSongList(String tsId, String themeId,String resourceId) {
+        G.log("zzzzzzzzzzzzzz------"+resourceId);
+        G.log("zzzzzzzzzzzzzz------f"+themeId);
+        this.albumId = themeId;
+        this.resourceId = resourceId;
+        Map<String, Object> map = new HashMap<>();
+        map.put("tsId", tsId);
+        map.put("pageSize", 999);
+        map.put("pageNumber", 1);
+        map.put("albumId", themeId);
+        map.put("account_id", UserMessage.getInstance(context).getAccount_id());
+        Type mType = new TypeToken<Result<List<ResourceVo>>>() {
+        }.getType();
+        OkHttps.sendPost(mType, Apiurl.USER_GETTHENELIST, map, this);
+    }
     @Override
     public void getSearchHistoryList(int type) {
         List<SearchKeyVo> searchKeyVos = new ArrayList<>();
@@ -113,10 +141,11 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
     }
 
     @Override
-    public void startMusicActivity(String AlbumId, String resourceId) {
+    public void startMusicActivity(List<ResourceVo> resourceVos,String resourceId) {
         Intent intent = new Intent(context, MainPlayMusicActivity.class);
-        intent.putExtra("themeId", AlbumId);
+     //  intent.putExtra("themeId", AlbumId);
         intent.putExtra("resourceId", resourceId);
+        intent.putParcelableArrayListExtra("resourceVos", (ArrayList<? extends Parcelable>) resourceVos);
         context.startActivity(intent);
     }
 
@@ -160,6 +189,13 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
                     }*/
                 }
                 view.setResourceSize((resourceVos1.size()));
+            }
+        }else if (uri.equals(Apiurl.USER_GETTHENELIST)) {
+            if (date!=null){
+                Result<List<ResourceVo>> result = (Result<List<ResourceVo>>) date;
+                List<ResourceVo> resourceVoList = result.getData();
+                G.log("zzzzzzzzzzzzzz---++---"+resourceId);
+                startMusicActivity(resourceVoList,resourceId);
             }
         }
     }

@@ -28,7 +28,7 @@ import net.hongzhang.discovery.fragment.MainDiscoveryFragment;
 import net.hongzhang.login.util.UserAction;
 import net.hongzhang.message.fragment.MessageFragement;
 import net.hongzhang.school.SchoolFragement;
-import net.hongzhang.status.StatusFragement;
+import net.hongzhang.status.StatusFragment;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -76,7 +76,7 @@ public class MainActivity extends JPushBaseActivity {
     /**
      * 动态
      */
-    private StatusFragement statusFragement;
+    private StatusFragment statusFragement;
     @Bind(R.id.tv_status)
     TextView tvStatus;
     @Bind(R.id.iv_status)
@@ -166,7 +166,7 @@ public class MainActivity extends JPushBaseActivity {
      * 初始化viewpager
      */
     private void initViewpager() {
-        statusFragement = new StatusFragement();
+        statusFragement = new StatusFragment();
         schoolFragement = new SchoolFragement();
         //discoveryFragement = new DiscoveryFragement();
         discoveryFragement = new MainDiscoveryFragment();

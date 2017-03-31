@@ -15,7 +15,7 @@ import net.hongzhang.baselibrary.widget.NoScrollListView;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.ConsultAdapter;
 import net.hongzhang.discovery.adapter.SearchHistoryAdapter;
-import net.hongzhang.discovery.modle.ResourceVo;
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.discovery.modle.SearchKeyVo;
 import net.hongzhang.discovery.presenter.SearchConsultContract;
 import net.hongzhang.discovery.presenter.SearchConsultPresenter;
