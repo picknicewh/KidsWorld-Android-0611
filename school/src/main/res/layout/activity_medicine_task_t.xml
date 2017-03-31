@@ -33,7 +33,7 @@
                 <TextView
                     android:id="@+id/tv_tsName"
                     android:layout_width="wrap_content"
-
+                    android:textSize="@dimen/ts_large"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingLeft="@dimen/space"
@@ -55,6 +55,7 @@
                     android:paddingBottom="@dimen/space"
                     android:paddingLeft="@dimen/space"
                     android:paddingTop="@dimen/space"
+                    android:textSize="@dimen/ts_large"
                     android:text="喂药日期" />
 
                 <TextView
@@ -80,7 +81,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/v_line"
                     android:padding="@dimen/space"
-                    android:textColor="@color/sc_" />
+                    android:textColor="@color/sc_"
+                    android:textSize="@dimen/ts_large"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -97,7 +99,8 @@
                     android:paddingBottom="@dimen/space"
                     android:paddingLeft="@dimen/space"
                     android:paddingTop="@dimen/space"
-                    android:text="喂药名称" />
+                    android:text="喂药名称"
+                    android:textSize="@dimen/ts_large"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,7 +126,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/v_line2"
                     android:padding="@dimen/space"
-                    android:textColor="@color/sc_" />
+                    android:textColor="@color/sc_"
+                    android:textSize="@dimen/ts_large"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -140,7 +144,8 @@
                     android:paddingBottom="@dimen/space"
                     android:paddingLeft="@dimen/space"
                     android:paddingTop="@dimen/space"
-                    android:text="药物用量" />
+                    android:text="药物用量"
+                    android:textSize="@dimen/ts_large"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -161,7 +166,7 @@
 
                 <TextView
                     android:id="@+id/tv_medicine_dosage"
-
+                    android:textSize="@dimen/ts_large"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/v_line3"
@@ -182,6 +187,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="饭前"
+                    android:textSize="@dimen/ts_large"
                     android:textColor="@color/default_grey" />
 
                 <RadioButton
@@ -190,6 +196,7 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="饭后"
+                    android:textSize="@dimen/ts_large"
                     android:textColor="@color/default_grey" />
 
             </RadioGroup>
@@ -208,6 +215,7 @@
                 android:layout_margin="@dimen/space"
                 android:background="@drawable/finish_medicine_bg"
                 android:text="喂药"
+                android:textSize="@dimen/ts_large"
                 android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>
