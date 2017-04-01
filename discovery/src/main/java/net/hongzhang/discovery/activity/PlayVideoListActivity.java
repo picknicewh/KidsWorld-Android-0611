@@ -305,7 +305,7 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
 
     public void showLoadingDialog() {
         if (dialog == null)
-            dialog = new LoadingDialog(this, net.hongzhang.baselibrary.R.style.LoadingDialogTheme);
+            dialog = new LoadingDialog(this,R.style.LoadingDialogTheme);
         dialog.show();
         dialog.setCancelable(true);
         dialog.setLoadingText("数据加载中...");

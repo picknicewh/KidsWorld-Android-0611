@@ -136,7 +136,7 @@ public class StatusPresenter implements StatusContract.Presenter, OkHttpListener
         Type mType = new TypeToken<Result<List<StatusVo>>>() {
         }.getType();
         OkHttps.sendPost(mType, Apiurl.STATUSLIST, map, this, 2, "status");
-        view.showLoadingDialog();
+//        view.showLoadingDialog();
     }
 
     @Override

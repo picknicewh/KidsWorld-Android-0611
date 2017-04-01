@@ -1,8 +1,12 @@
 package net.hongzhang.baselibrary.widget;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 /**
  * 作者：Restring
@@ -32,5 +36,32 @@ public class RecyclerImageView extends android.support.v7.widget.AppCompatImageV
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Drawable drawable=getDrawable();
+                if(drawable!=null) {
+                    drawable.mutate().setColorFilter(Color.GRAY,
+                            PorterDuff.Mode.MULTIPLY);
+                }
+                invalidate();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
+                Drawable drawableUp=getDrawable();
+                if(drawableUp!=null) {
+                    drawableUp.mutate().clearColorFilter();
+                }
+                invalidate();
+                break;
+        }
+
+        return super.onTouchEvent(event);
     }
 }
