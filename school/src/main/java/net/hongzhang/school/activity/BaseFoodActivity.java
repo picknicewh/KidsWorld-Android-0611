@@ -23,6 +23,13 @@ import java.util.ArrayList;
  * 附加注释：
  * 主要接口：
  */
+
+
+
+
+
+
+
 public abstract class BaseFoodActivity extends BaseActivity implements OkHttpListener , View.OnClickListener{
     public  static  final  String ACTION_GEFOOD = "net.hongzhang.school.getfoodlist";
     public  static  final  int  FOODLISTPAGE = 1;

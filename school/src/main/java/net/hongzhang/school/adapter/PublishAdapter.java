@@ -57,7 +57,10 @@ public class PublishAdapter extends BaseAdapter {
             view= LayoutInflater.from(context).inflate(R.layout.item_publish,null);
             new ViewHold(view);
         }
-        PublishVo vo=publishList.get(i);
+        if (publishList.size()>0){
+            PublishVo vo=publishList.get(i);
+
+
         viewHold= (ViewHold) view.getTag();
         if (G.isEmteny(vo.getTsName())){
             viewHold.tv_title.setText("校长");
@@ -76,6 +79,11 @@ public class PublishAdapter extends BaseAdapter {
             viewHold.tv_ptitle.setText(vo.getTitle());
         }
         viewHold.setTextColor(vo.isRead());
+        }
+
+
+
+
         return view;
     }
 
@@ -96,13 +104,13 @@ public class PublishAdapter extends BaseAdapter {
 
          public void setTextColor(boolean isRead) {
              if (!isRead) {
-                 tv_content.setTextColor(context.getResources().getColor(R.color.sc_));
+                 tv_content.setTextColor(context.getResources().getColor(R.color.minor_text));
                  tv_title.setTextColor(context.getResources().getColor(R.color.main_green));
                  tv_ptitle.setTextColor(Color.BLACK);
              } else {
-                 tv_content.setTextColor(Color.parseColor("#a9a9a9"));
-                 tv_title.setTextColor(Color.parseColor("#a9a9a9"));
-                 tv_ptitle.setTextColor(Color.parseColor("#a9a9a9"));
+                 tv_content.setTextColor(context.getResources().getColor(R.color.darkgray));
+                 tv_title.setTextColor(context.getResources().getColor(R.color.darkgray));
+                 tv_ptitle.setTextColor(context.getResources().getColor(R.color.darkgray));
              }
          }
      }

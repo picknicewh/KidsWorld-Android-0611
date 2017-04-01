@@ -34,9 +34,9 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
     private String resourceId;
     public PlayVideoDetailPresenter(Activity context, PlayVideoDetailContract.View view, String themeId,String resourceId) {
         this.context = context;
+        this.resourceId = resourceId;
         this.view = view;
         this.themeId = themeId;
-        this.resourceId = resourceId;
         tsId = UserMessage.getInstance(context).getTsId();
         getRecommendList(tsId, 4, 1);
     }
@@ -67,7 +67,10 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
         OkHttps.sendPost(mType, Apiurl.GETRECOMMENDLIST, map, this);
        // view.showLoadingDialog();
     }
-
+     public void setResourceId(String resourceId){
+         this.resourceId = resourceId;
+         getCommentList(resourceId, 99999, 1);
+     }
     @Override
     public void getCommentList(String resourceId, int pageSize, int pageNumber) {
         Map<String, Object> map = new HashMap<>();
@@ -149,7 +152,7 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
                         position = 0;
                     }
                     view.setVideoInfo(resourceVos.get(position), position);
-                    getCommentList(resourceVos.get(position).getResourceId(), 99999, 1);
+                    getCommentList(resourceId, 99999, 1);
                 }
             }
         } else if (uri.equals(Apiurl.GETRECOMMENDLIST)) {
@@ -177,7 +180,6 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
                 Result<List<CommentInfoVo>> data = (Result<List<CommentInfoVo>>) date;
                 List<CommentInfoVo> commentInfoVos = data.getData();
                 view.setCommentList(commentInfoVos);
-
             }
         }
     }

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -44,6 +45,11 @@ public class DatePopWindow extends PopupWindow {
         //设置SignPopupWindow的View
         this.setContentView(contentView);
         //设置SignPopupWindow弹出窗体可点击
+       // 0x80000000
+        //实例化一个ColorDrawable颜色为半透明
+        ColorDrawable dw = new ColorDrawable(0xb0000000);
+        //设置SignPopupWindow弹出窗体的背景
+        this.setBackgroundDrawable(dw);
         this.setFocusable(true);
         this.setTouchable(true);
         this.setOutsideTouchable(true);

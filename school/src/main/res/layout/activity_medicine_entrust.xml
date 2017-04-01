@@ -3,8 +3,7 @@
     android:id="@+id/ll_top"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows="true"
-    android:background="@color/colorAccent"
+
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -134,6 +133,7 @@
                     android:layout_below="@id/v_line2"
                     android:background="@color/white"
                     android:hint="请输入药物名称"
+                    android:windowSoftInputMode="stateHidden|adjustResize"
                     android:maxLength="50"
                     android:padding="@dimen/space"
                     android:textColor="@color/sc_"
@@ -187,6 +187,7 @@
                     android:layout_below="@+id/v_line3"
                     android:background="@color/white"
                     android:hint="请输入药物用量"
+                    android:windowSoftInputMode="stateHidden|adjustResize"
                     android:maxLength="50"
                     android:padding="@dimen/space"
                     android:textColor="@color/sc_"
@@ -242,6 +243,7 @@
                     android:gravity="left"
                     android:textSize="@dimen/ts_large"
                     android:hint="请输入备注(0-100个字)"
+                    android:windowSoftInputMode="stateHidden|adjustResize"
                     android:maxLength="100"
                     android:padding="@dimen/space" />
 

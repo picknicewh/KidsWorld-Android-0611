@@ -6,9 +6,12 @@ import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +24,12 @@ import net.hongzhang.baselibrary.util.DateUtil;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.school.R;
 import net.hongzhang.school.activity.MedicineEntrustActivity;
+import net.hongzhang.school.adapter.WeekTopAdapter;
 import net.hongzhang.school.util.DateDb;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * 作者： wh
@@ -120,8 +126,18 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
      */
     private DateDb dateDb;
     private SQLiteDatabase db;
-
-    public MulSelectDateView(Context context, AttributeSet attrs) {
+    private View layout_head;
+    private ImageView iv_year_left;
+    private ImageView iv_year_right;
+    private ImageView iv_mouth_left;
+    private ImageView iv_mouth_right;
+    private TextView tv_year;
+    private TextView tv_mouth;
+    private TextView tv_concal;
+    private TextView tv_finish;
+    private RecyclerView rv_week_top;
+    private RecyclerView rv_date;
+     public MulSelectDateView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context, attrs, 0);
     }
@@ -143,112 +159,48 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
         nextYear = currentYear;
         nextMouth = currentMouth;
         nextDay = currentDay;
+        Log.i("ssssssssss",currentDay+"-----------------");
         dateDb.delete(db);
         insetDate();
         frameRect = new Rect();
         padding = G.dp2px(context, 10);
     }
-
-    private void addTopView(Context context, LinearLayout ll) {
-        LinearLayout linearLayout = new LinearLayout(context);
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        LinearLayout.LayoutParams lps = new LinearLayout.LayoutParams
-                (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lps.setMargins(10, 10, 10, 10);
-        linearLayout.setLayoutParams(lps);
-        ll.addView(linearLayout);
-        //添加年和左右两边按钮
-        getImageView(TGA_YEAR_LEFT, context, linearLayout);
-        getTextView(TGA_YEAR, context, linearLayout);
-        getImageView(TGA_YEAR_RIGHT, context, linearLayout);
-        //添加月和左右两边按钮
-        getImageView(TGA_MOUTH_LEFT, context, linearLayout);
-        getTextView(TGA_MOUTH, context, linearLayout);
-        getImageView(TGA_MOUTH_RIGNT, context, linearLayout);
-        getTextView(TGA_CANCEL, context, linearLayout);
-        getTextView(TGA_FINISH, context, linearLayout);
-
-    }
     /**
-     * 获取头部不同内容的textView
-     * @param  tag 标签
-     * @param  context
-     * @param  linearLayout
+     * 添加头部布局
+     * @param  context 内容
      */
-    private TextView getTextView(int tag, Context context, LinearLayout linearLayout) {
-        TextView textView = new TextView(context);
-        switch (tag) {
-            case TGA_YEAR:
-                String year = nextYear + "年";
-                textView.setText(year);
-                break;
-            case TGA_MOUTH:
-                String mouth;
-                if (nextMouth < 10) {
-                    mouth = "0" + nextMouth + "月";
-                } else {
-                    mouth = nextMouth + "月";
-                }
-                textView.setText(mouth);
-                break;
-            case TGA_FINISH:
-                //文字与左右箭头按钮间距
-                textView.setTextColor(SELECT_BG_COLOR);
-                textView.setText("完成");
-                textView.setPadding(padding, 0, padding, 0);
-                break;
-            case TGA_CANCEL:
-                textView.setTextColor(OTHER_MOUTH_COLOR);
-                textView.setPadding(padding, 0, 0, 0);
-                textView.setText("取消");
-                break;
+    private void addHead(Context context,LinearLayout linearLayout){
+        layout_head = LayoutInflater.from(context).inflate(R.layout.muldate_head,null);
+        iv_year_left = (ImageView) layout_head.findViewById(R.id.iv_year_left);
+        iv_year_right = (ImageView) layout_head.findViewById(R.id.iv_year_right);
+        iv_mouth_left = (ImageView) layout_head.findViewById(R.id.iv_mouth_left);
+        iv_mouth_right = (ImageView) layout_head.findViewById(R.id.iv_mouth_right);
+        tv_year = (TextView)layout_head.findViewById(R.id.tv_year);
+        tv_mouth = (TextView)layout_head.findViewById(R.id.tv_mouth);
+        tv_concal = (TextView)layout_head.findViewById(R.id.tv_concal);
+        tv_finish = (TextView)layout_head.findViewById(R.id.tv_finish);
+        rv_week_top = (RecyclerView)layout_head.findViewById(R.id.rv_week_top);
+        rv_date = (RecyclerView)layout_head.findViewById(R.id.rv_date);
+        rv_week_top.setAdapter(new WeekTopAdapter(context));
+        rv_week_top.setLayoutManager(new GridLayoutManager(context,7));
+   //     rv_date.setAdapter(new MouthDateAdapter(context,getDateList(),currentYear,currentMouth));
+        rv_date.setLayoutManager(new GridLayoutManager(context,7));
+        iv_year_left.setOnClickListener(this);
+        iv_year_right.setOnClickListener(this);
+        iv_mouth_left.setOnClickListener(this);
+        iv_mouth_right.setOnClickListener(this);
+        tv_concal.setOnClickListener(this);
+        tv_finish.setOnClickListener(this);
+        String year = nextYear + "年";
+        tv_year.setText(year);
+        String mouth;
+        if (nextMouth < 10) {
+            mouth = "0" + nextMouth + "月";
+        } else {
+            mouth = nextMouth + "月";
         }
-        textView.setTag(tag);
-        textView.setOnClickListener(this);
-        linearLayout.addView(textView);
-        return textView;
-    }
-    /**
-     * 获取头部不同内容的ImageView
-     * @param  tag 标签
-     * @param  context
-     * @param  ll
-     */
-    private ImageView getImageView(int tag, Context context, LinearLayout ll) {
-        ImageView imageView = new ImageView(context);
-        switch (tag) {
-            case TGA_YEAR_LEFT:
-                imageView.setImageResource(R.mipmap.ic_green_left);
-                break;
-            case TGA_YEAR_RIGHT:
-                imageView.setImageResource(R.mipmap.ic_green_right);
-                break;
-            case TGA_MOUTH_LEFT:
-                imageView.setImageResource(R.mipmap.ic_green_left);
-                break;
-            case TGA_MOUTH_RIGNT:
-                imageView.setImageResource(R.mipmap.ic_green_right);
-                break;
-        }
-        //文字与左右箭头按钮间距
-        LinearLayout.LayoutParams lps = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lps.setMargins(15, 0, 15, 0);
-        imageView.setTag(tag);
-        imageView.setLayoutParams(lps);
-        imageView.setOnClickListener(this);
-        ll.addView(imageView);
-        return imageView;
-    }
-
-    /**
-     * 设置下划线
-     */
-    private void addLine(Context context, LinearLayout ll) {
-        View line = new View(context);
-        line.setBackgroundColor(context.getResources().getColor(R.color.line_gray));
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, G.dp2px(context, 1));
-        line.setLayoutParams(lp);
-        ll.addView(line);
+        tv_mouth.setText(mouth);
+        linearLayout.addView(layout_head);
     }
 
     @Override
@@ -262,7 +214,10 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
         frameRect.right = width - marginLeft;
         frameRect.top = marginTop;
         frameRect.bottom = height - marginTop;
-        addMainView(context);
+        if (getChildCount()==0){
+            Log.i("ssssssssssssss","---------------------------------");
+            addMainView(context);
+        }
     }
 
     /**
@@ -270,7 +225,6 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
      * @param  context
      */
     private void addMainView(Context context) {
-        this.setBackgroundColor(MASK_COLOR);
         LinearLayout linearLayout = new LinearLayout(context);
         LayoutParams lps = new LayoutParams(frameRect.width(), frameRect.height());
         lps.addRule(RelativeLayout.CENTER_IN_PARENT);
@@ -278,9 +232,8 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setBackgroundColor(Color.WHITE);
         this.addView(linearLayout);
-        this.addTopView(context, linearLayout);
-        this.addLine(context, linearLayout);
-        this.addCalenderView(context, linearLayout);
+        addHead(context,linearLayout);
+        //addCalenderView(context, linearLayout);
     }
 
     /**
@@ -307,7 +260,39 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
         ll.addView(linearLayout);
         drawDateView(ll);
     }
-
+    /**
+     * 设置每月的天数，对应的日期
+     *
+     */
+    private  List<String>  getDateList() {
+        List<String> dataList = new ArrayList<>();
+        int rows = 6;
+        int week = DateUtil.getWeekofday(nextYear, nextMouth);
+        int days = DateUtil.getMouthDays(nextYear, nextMouth);
+        int lastMouthday = DateUtil.getMouthDays(nextYear, nextMouth-1) - week+1;
+        int date = 1;
+        int j = 1;
+        for (int row = 1; row <= rows; row++) {
+            if (row == 1) {
+                for (int i = 0; i < 7; i++) {
+                    if (i < week && week != 7) {
+                        dataList.add(String.valueOf( lastMouthday++));
+                    } else {
+                        dataList.add(String.valueOf(date++));
+                    }
+                }
+            } else {
+                for (int i = 0; i < 7; i++) {
+                    if (date > days) {
+                        dataList.add(String.valueOf(j++));
+                    } else {
+                        dataList.add(String.valueOf(date++));
+                    }
+                }
+            }
+        }
+        return dataList;
+    }
 
     /**
      * 设置每月的天数，对应的日期
@@ -320,7 +305,7 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
         int rows = 6;
         int week = DateUtil.getWeekofday(nextYear, nextMouth);
         int days = DateUtil.getMouthDays(nextYear, nextMouth);
-        int lastMouthday = DateUtil.getMouthDays(nextYear, nextMouth) - week;
+        int lastMouthday = DateUtil.getMouthDays(nextYear, nextMouth-1) - week+1;
         Log.i("ssss", week + "=============week");
         Log.i("sss", days + "=============days");
         Log.i("sss", lastMouthday + "=============lastMouthday");
@@ -423,49 +408,40 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        int tag = (int) view.getTag();
-        switch (tag) {
-            case TGA_YEAR_LEFT:
+        int viewId= view.getId();
+        if (viewId== R.id.iv_year_left) {
+            nextYear--;
+            dateDb.delete(db);
+            insetDate();
+            rushData();
+        }else if (viewId==R.id.iv_year_right){
+            nextYear++;
+            dateDb.delete(db);
+            insetDate();
+            rushData();
+        }else if (viewId==R.id.iv_mouth_left){
+            nextMouth = nextMouth - 1;
+            if (nextMouth < 1) {
                 nextYear--;
-                dateDb.delete(db);
-                insetDate();
-                rushData();
-                break;
-            case TGA_YEAR_RIGHT:
+                nextMouth = 12;
+            }
+            dateDb.delete(db);
+            insetDate();
+            rushData();
+        }else if (viewId==R.id.iv_mouth_right){
+            nextMouth = nextMouth + 1;
+            if (nextMouth > 12) {
                 nextYear++;
-                dateDb.delete(db);
-                insetDate();
-                rushData();
-                break;
-            case TGA_MOUTH_LEFT:
-                nextMouth = nextMouth - 1;
-                if (nextMouth < 1) {
-                    nextYear--;
-                    nextMouth = 12;
-                }
-                dateDb.delete(db);
-                insetDate();
-                rushData();
-                break;
-            case TGA_MOUTH_RIGNT:
-                nextMouth = nextMouth + 1;
-                if (nextMouth > 12) {
-                    nextYear++;
-                    nextMouth = 1;
-                }
-                dateDb.delete(db);
-                insetDate();
-                rushData();
-                break;
-            case TGA_FINISH:
-
-                MedicineEntrustActivity.getEditText().setText(dateDb.getDate(db, 2));
-                dismiss();
-                break;
-            case TGA_CANCEL:
-                dismiss();
-                break;
-
+                nextMouth = 1;
+            }
+            dateDb.delete(db);
+            insetDate();
+            rushData();
+        }else if (viewId==R.id.tv_concal){
+            dismiss();
+        }else if (viewId==R.id.tv_finish) {
+            MedicineEntrustActivity.getEditText().setText(dateDb.getDate(db, 2));
+            dismiss();
         }
     }
 
@@ -473,10 +449,10 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
      * 刷新数据
      */
     private void rushData() {
-
-        this.removeAllViews();
+        removeAllViews();
         this.addMainView(context);
     }
+
 
     //state=0 state=4不可点击(已经过去的日期)，state=3表示未来日期 state=2表示当天
     private void insetDate() {
@@ -595,12 +571,10 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
             }
         }
     }
-
     int dwonx = 0;
     int upx = 0;
     int dwony = 0;
     int upy = 0;
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int mimBetween = 10;
@@ -650,4 +624,106 @@ public class MulSelectDateView extends RelativeLayout implements View.OnClickLis
         Intent intent = new Intent(DatePopWindow.DISMISS);
         context.sendBroadcast(intent);
     }
+
+      /*  private void addTopView(Context context, LinearLayout ll) {
+        LinearLayout linearLayout = new LinearLayout(context);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout.LayoutParams lps = new LinearLayout.LayoutParams
+                (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lps.setMargins(10, 10, 10, 10);
+        linearLayout.setLayoutParams(lps);
+        ll.addView(linearLayout);
+        //添加年和左右两边按钮
+        getImageView(TGA_YEAR_LEFT, context, linearLayout);
+        getTextView(TGA_YEAR, context, linearLayout);
+        getImageView(TGA_YEAR_RIGHT, context, linearLayout);
+        //添加月和左右两边按钮
+        getImageView(TGA_MOUTH_LEFT, context, linearLayout);
+        getTextView(TGA_MOUTH, context, linearLayout);
+        getImageView(TGA_MOUTH_RIGNT, context, linearLayout);
+        getTextView(TGA_CANCEL, context, linearLayout);
+        getTextView(TGA_FINISH, context, linearLayout);
+    }
+    *//**
+     * 获取头部不同内容的textView
+     * @param  tag 标签
+     * @param  context
+     * @param  linearLayout
+     *//*
+    private TextView getTextView(int tag, Context context, LinearLayout linearLayout) {
+        TextView textView = new TextView(context);
+        switch (tag) {
+            case TGA_YEAR:
+                String year = nextYear + "年";
+                tv_year.setText(year);
+                break;
+            case TGA_MOUTH:
+                String mouth;
+                if (nextMouth < 10) {
+                    mouth = "0" + nextMouth + "月";
+                } else {
+                    mouth = nextMouth + "月";
+                }
+                textView.setText(mouth);
+                break;
+            case TGA_FINISH:
+                //文字与左右箭头按钮间距
+                textView.setTextColor(SELECT_BG_COLOR);
+                textView.setText("完成");
+                textView.setPadding(padding, 0, padding, 0);
+                break;
+            case TGA_CANCEL:
+                textView.setTextColor(OTHER_MOUTH_COLOR);
+                textView.setPadding(padding, 0, 0, 0);
+                textView.setText("取消");
+                break;
+        }
+        textView.setTag(tag);
+        textView.setOnClickListener(this);
+        linearLayout.addView(textView);
+        return textView;
+    }*/
+  /*  *//**
+     * 获取头部不同内容的ImageView
+     * @param  tag 标签
+     * @param  context
+     * @param  ll
+     *//*
+    private ImageView getImageView(int tag, Context context, LinearLayout ll) {
+        ImageView imageView = new ImageView(context);
+        switch (tag) {
+            case TGA_YEAR_LEFT:
+                imageView.setImageResource(R.mipmap.ic_green_left);
+                break;
+            case TGA_YEAR_RIGHT:
+                imageView.setImageResource(R.mipmap.ic_green_right);
+                break;
+            case TGA_MOUTH_LEFT:
+                imageView.setImageResource(R.mipmap.ic_green_left);
+                break;
+            case TGA_MOUTH_RIGNT:
+                imageView.setImageResource(R.mipmap.ic_green_right);
+                break;
+        }
+        //文字与左右箭头按钮间距
+        LinearLayout.LayoutParams lps = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lps.setMargins(15, 0, 15, 0);
+        imageView.setTag(tag);
+        imageView.setLayoutParams(lps);
+        imageView.setOnClickListener(this);
+        ll.addView(imageView);
+        return imageView;
+    }*/
+
+   /* *//**
+     * 设置下划线
+     *//*
+    private void addLine(Context context, LinearLayout ll) {
+        View line = new View(context);
+        line.setBackgroundColor(context.getResources().getColor(R.color.line_gray));
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, G.dp2px(context, 1));
+        line.setLayoutParams(lp);
+        ll.addView(line);
+    }
+*/
 }

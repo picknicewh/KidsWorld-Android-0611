@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_marginBottom="@dimen/space"
+        android:id="@+id/tv_week"
+        android:text="日"
+        android:layout_gravity="center"
+        android:paddingTop="@dimen/space_x0.5"
+        android:paddingBottom="@dimen/space_x0.5"
+        android:gravity="center"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content" />
+</LinearLayout>

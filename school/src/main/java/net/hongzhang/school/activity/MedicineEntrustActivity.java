@@ -25,6 +25,7 @@ import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.LoadingDialog;
 import net.hongzhang.school.R;
 import net.hongzhang.school.widget.DatePopWindow;
+import net.hongzhang.school.widget.DatePopWindow2;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -61,6 +62,7 @@ public class MedicineEntrustActivity extends Activity implements View.OnClickLis
      * 日期弹窗
      */
     private DatePopWindow datePopWindow;
+    private DatePopWindow2 datePopWindow2;
     /**
      * 加载
      */
@@ -130,8 +132,10 @@ public class MedicineEntrustActivity extends Activity implements View.OnClickLis
         } else if (viewId == R.id.iv_left) {
             finish();
         } else if (viewId == R.id.et_alldate) {
-            datePopWindow = new DatePopWindow(this);
-            datePopWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+            datePopWindow2 = new DatePopWindow2(this,et_alldate);
+            datePopWindow2.showAtLocation(view, Gravity.CENTER, 0, 0);
+           // datePopWindow = new DatePopWindow(this);
+            //datePopWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
         }
     }
 

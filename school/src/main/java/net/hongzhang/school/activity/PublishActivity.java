@@ -81,7 +81,6 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
             }
         });
         getPublishMessage();
-//        testDate();
     }
 
     @Override
@@ -116,8 +115,6 @@ public class PublishActivity extends BaseActivity implements OkHttpListener, Vie
             rl_nonetwork.setVisibility(View.VISIBLE);
         }
     }
-
-
     @Override
     protected void onResume() {
         super.onResume();

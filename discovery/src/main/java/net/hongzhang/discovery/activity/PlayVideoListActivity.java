@@ -181,7 +181,6 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
         tv_copy_right = (TextView) findViewById(R.id.tv_copy_right);
         iv_play_full = (ImageView) findViewById(R.id.iv_play_full);
         iv_album_head = (ImageView) findViewById(R.id.iv_album_head);
-
         iv_alubm_collect.setOnClickListener(this);
         tv_comment.setOnClickListener(this);
         iv_play_full.setOnClickListener(this);
@@ -192,25 +191,8 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
         tsId = UserMessage.getInstance(this).getTsId();
         themeId = getIntent().getStringExtra("themeId");
         resourceId = getIntent().getStringExtra("resourceId");
-        presenter = new PlayVideoDetailPresenter(this, this, themeId, resourceId);
+        presenter = new PlayVideoDetailPresenter(this, this, themeId,resourceId);
         presenter.getVideoList(tsId, themeId);
-
-//        final int endOffset = PlayVideoListActivity.this.getResources().
-//                getDimensionPixelOffset(R.dimen.head_height) - rlActionbar.getHeight(); //图片高度减toolbar高度 透明度改变分界点
-//        svContent.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-//            @Override
-//            public void onScrollChange(View view, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//                if (scrollY <= 0) {  //alpha为0
-//                    rlActionbar.getBackground().setAlpha(0);
-//                } else if (scrollY > 0 && scrollY < endOffset) { //alpha为0到255
-//                    float precent = (float) scrollY / endOffset;
-//                    int alpha = Math.round(precent * 255);
-//                    rlActionbar.getBackground().setAlpha(alpha);
-//                } else if (scrollY >= endOffset) {  //alpha为255
-//                    rlActionbar.getBackground().setAlpha(255);
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -286,6 +268,7 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
     @Override
     public void setVideoInfo(ResourceVo resourceVo, int position) {
         this.position = position;
+        presenter.setResourceId(resourceVo.getResourceId());
         tv_album_num.setText(resourceVo.getResourceName());
         ImageCache.imageLoader(resourceVo.getImageUrl(), iv_album);
         iv_alubm_collect.setImageResource(resourceVo.getIsFavorites() == 1 ? R.mipmap.star_dark_full: R.mipmap.star_dark);

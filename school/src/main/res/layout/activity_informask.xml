@@ -131,7 +131,7 @@
         android:textSize="@dimen/ts_large"
         />
     <EditText
-
+        android:windowSoftInputMode="stateHidden|adjustResize"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:id="@+id/et_cause"
