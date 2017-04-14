@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
@@ -71,20 +72,14 @@ public class DeleteDynamicDialog  extends BaseConformDialog implements View.OnCl
         if (data!=null){
             String  result = data.getData();
             Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
-         /*   for (int i = 0;i< context.dynamicInfoVoList.size();i++){
-                if (context.dynamicInfoVoList.get(i).getDynamicId().equals(dynamicId)){
-                    context.dynamicInfoVoList.remove(i);
-                }
-            }
-            context.adapter.notifyDataSetChanged();*/
             context.updateDelete(position);
         }
         alertDialog.dismiss();
     }
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         context.stopLoadingDialog();
-        Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
+        DetaiCodeUtil.errorDetail(error,context);
         alertDialog.dismiss();
     }
     /**

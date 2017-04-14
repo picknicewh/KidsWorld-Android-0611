@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
@@ -147,6 +148,11 @@ public class PublishFoodActivity extends BaseFoodActivity {
             flag=1;
             return;
         }
+        if (G.isAllSpace(et_food.getText().toString())||G.isEmteny(et_food.getText().toString())){
+            Toast.makeText(this,"文字描述不能为空！",Toast.LENGTH_LONG).show();
+            flag=1;
+            return;
+        }
         Map<String,Object> params = new HashMap<>();
         params.put("tsId", UserMessage.getInstance(this).getTsId());
         params.put("date",getFormateDate(tv_calendar));
@@ -167,8 +173,8 @@ public class PublishFoodActivity extends BaseFoodActivity {
         }
     }
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         stopLoadingDialog();
-        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+        DetaiCodeUtil.errorDetail(error,this);
     }
 }

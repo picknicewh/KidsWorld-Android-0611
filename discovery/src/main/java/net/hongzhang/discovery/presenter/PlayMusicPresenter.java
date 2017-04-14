@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
 import android.os.Parcelable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -15,14 +16,15 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.image.ImageCache;
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.activity.MainPlayMusicActivity;
-import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.discovery.util.Constants;
 import net.hongzhang.discovery.util.MusicNotification;
 import net.hongzhang.discovery.util.TextUtil;
@@ -322,12 +324,12 @@ public class PlayMusicPresenter implements PlayMusicContract.Presenter, OkHttpLi
         filter.addAction(Constants.MUSIC_UPDATE);
         filter.addAction(Constants.MUSIC_ANIAMATION);
         filter.addAction(Constants.ACTION_NOTIFICATION);
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         context.registerReceiver(myMusicReceiver, filter);
         IntentFilter mScreenFilter = new IntentFilter();
         mScreenFilter.addAction(Constants.MUSIC_UPDATE);
         context.registerReceiver(PoaitionChangeReceiver, mScreenFilter);
     }
-
     /**
      * 注销所有的广播
      */
@@ -339,6 +341,7 @@ public class PlayMusicPresenter implements PlayMusicContract.Presenter, OkHttpLi
         if (PoaitionChangeReceiver != null) {
             context.unregisterReceiver(PoaitionChangeReceiver);
         }
+
     }
    private void setupMusic(){
        if (resourceId != null) {
@@ -416,9 +419,9 @@ public class PlayMusicPresenter implements PlayMusicContract.Presenter, OkHttpLi
     }
 
     @Override
-    public void onError(String uri, String error) {
-        view.stopLoadingDialog();
-        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+    public void onError(String uri, Result error) {
+         view.stopLoadingDialog();
+        DetaiCodeUtil.errorDetail(error,context);
     }
 
     /**

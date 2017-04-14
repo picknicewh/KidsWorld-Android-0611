@@ -3,7 +3,6 @@ package net.hongzhang.message.ronglistener;
 import android.app.Activity;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -13,6 +12,7 @@ import net.hongzhang.baselibrary.contract.GroupsDbHelper;
 import net.hongzhang.baselibrary.mode.GroupInfoVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
@@ -153,7 +153,7 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
     }
 
     @Override
-    public void onError(String uri, String error) {
-        Toast.makeText(activity,error,Toast.LENGTH_SHORT).show();
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,activity);
     }
 }

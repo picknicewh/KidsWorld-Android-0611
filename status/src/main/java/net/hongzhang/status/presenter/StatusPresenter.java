@@ -16,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.BroadcastConstant;
@@ -65,6 +66,7 @@ public class StatusPresenter implements StatusContract.Presenter, OkHttpListener
         IntentFilter filter = new IntentFilter(BroadcastConstant.STATUSDOS);
         filter.addAction(BroadcastConstant.STATUSDOS);
         filter.addAction(BroadcastConstant.COMMENTINFO);
+        filter.addAction(BroadcastConstant.DELETEDYNAMIC);
         myReceiver = new MyJpushReceiver();
         context.registerReceiver(myReceiver, filter);
         IntentFilter filter2 = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -214,12 +216,13 @@ public class StatusPresenter implements StatusContract.Presenter, OkHttpListener
             }
         }
     }
-
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,context);
         view.stopLoadingDialog();
         G.KisTyep.isChooseId = false;
     }
+
 
     /**
      * 有无网络监听广播
@@ -253,6 +256,10 @@ public class StatusPresenter implements StatusContract.Presenter, OkHttpListener
                 int count = bundle.getInt("count", 0);
                 String imageUrl = bundle.getString("imageUrl");
                 view.setHeadInfo(count, imageUrl);
+            }else if (action.equals(BroadcastConstant.DELETEDYNAMIC)){
+                String dynamicId = bundle.getString("dynamicId");
+                view.setDeleteDynamic(dynamicId);
+                G.log("xxxxxxxxxxxxxxxx"+dynamicId);
             }
         }
     }

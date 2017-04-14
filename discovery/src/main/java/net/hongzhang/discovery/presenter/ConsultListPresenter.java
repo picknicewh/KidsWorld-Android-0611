@@ -2,12 +2,12 @@ package net.hongzhang.discovery.presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
@@ -68,8 +68,8 @@ public class ConsultListPresenter implements ConsultListContract.Presenter, OkHt
     }
 
     @Override
-    public void onError(String uri, String error) {
-       // view.stopLoadingDialog();
-        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+    public void onError(String uri, Result error) {
+        // view.stopLoadingDialog();
+        DetaiCodeUtil.errorDetail(error,context);
     }
 }

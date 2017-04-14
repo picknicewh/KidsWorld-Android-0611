@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.image.ImageCache;
+import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.school.R;
 import net.hongzhang.school.bean.DishesVo;
 import net.hongzhang.user.util.PublishPhotoUtil;
@@ -61,6 +62,7 @@ public class FoodListAdapter extends BaseAdapter {
         viewHold.tv_dinner.setText(vo.getDinnerTime());
         if (vo.getCookUrl().size()>0){
             ImageCache.imageLoader(vo.getCookUrl().get(0),viewHold.iv_food_image);
+            G.log("++++++++++++++++"+vo.getCookUrl().get(0));
             viewHold.iv_food_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -70,7 +72,7 @@ public class FoodListAdapter extends BaseAdapter {
         }else {
             viewHold.iv_food_image.setImageResource(R.mipmap.ic_img_error);
         }
-        viewHold.iv_food_image.setTag(i);
+        //viewHold.iv_food_image.setTag(i);
 
         return view;
     }

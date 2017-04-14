@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -184,10 +185,10 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
         }
     }
 
-    @Override
-    public void onError(String uri, String error) {
-        view.stopLoadingDialog();
-        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
-    }
 
+    @Override
+    public void onError(String uri, Result error) {
+         view.stopLoadingDialog();
+        DetaiCodeUtil.errorDetail(error,context);
+    }
 }

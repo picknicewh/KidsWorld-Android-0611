@@ -76,16 +76,10 @@ public class PublishPhotoUtil {
         ArrayList<String> imagepath = new ArrayList<>();
         for (int i = 0; i < itemList.size(); i++) {
             String pathurl = itemList.get(i);
-            int index = itemList.get(i).lastIndexOf("/s");
-            String path;
-            if (index != -1)
-                path = pathurl.substring(0, index - 2) + pathurl.substring(index, pathurl.length());
-            else
-                path = pathurl;
-            imagepath.add(path);
+            pathurl = pathurl.replace("/s/","/");
+            imagepath.add(pathurl);
         }
         return imagepath;
-
     }
 
     /**

@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.image.ImageCache;
-import net.hongzhang.discovery.R;
 import net.hongzhang.baselibrary.mode.ResourceVo;
+import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.util.TextUtil;
 
 import java.util.List;

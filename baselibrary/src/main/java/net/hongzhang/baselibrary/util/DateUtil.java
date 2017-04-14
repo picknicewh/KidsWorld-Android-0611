@@ -424,5 +424,18 @@ public class DateUtil {
         date = year + "-" + m + "-" + d;
         return date;
     }
-
+    /**
+      * 获取最近的时间
+     */
+    public static String getLastUpdateTime() {
+        String text;
+        long time = System.currentTimeMillis();
+        SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm");
+        if (0 == time) {
+            text = "";
+        } else {
+            text = mDateFormat.format(new Date(time));
+        }
+        return text;
+    }
 }

@@ -12,9 +12,9 @@ import com.umeng.analytics.MobclickAgent;
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
-import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.user.R;
 import net.hongzhang.user.adapter.PhotoAdapter;
@@ -165,8 +165,8 @@ public class UPhotoActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void onError(String uri, String error) {
-        G.showToast(this,error);
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,this);
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -153,10 +154,11 @@ public class SharePopWindow extends PopupWindow implements View.OnClickListener,
         context.finish();
     }
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         dismiss();
-        if (error.equals("系统错误")) G.showToast(context, "输入的内容有问题哦！");
-        else G.showToast(context, error);
+        DetaiCodeUtil.errorDetail(error,context);
         G.KisTyep.isReleaseSuccess = false;
+
     }
+
 }

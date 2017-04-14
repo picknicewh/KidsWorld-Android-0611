@@ -14,13 +14,13 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="net.hongzhang.school.activity.PublishActivity"
+            android:name="net.hongzhang.school.activity.PublishListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="net.hongzhang.school.activity.PublishDetailActivity"
             android:screenOrientation="portrait" />
         <activity android:name="net.hongzhang.school.activity.LeaveListActivity"/>
-        <activity android:name="net.hongzhang.school.activity.CourseArrangeActivity" />
+        <activity android:name="net.hongzhang.school.activity.CourseArrangeListActivity" />
         <activity android:name="net.hongzhang.school.activity.FoodListActivity" />
         <activity
             android:name="net.hongzhang.school.TestActivity"

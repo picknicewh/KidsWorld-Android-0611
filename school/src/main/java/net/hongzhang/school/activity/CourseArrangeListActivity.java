@@ -8,10 +8,9 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.umeng.analytics.MobclickAgent;
@@ -19,12 +18,14 @@ import com.umeng.analytics.MobclickAgent;
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
+import net.hongzhang.baselibrary.pullrefresh.PullToRefreshBase;
+import net.hongzhang.baselibrary.pullrefresh.PullToRefreshListView;
+import net.hongzhang.baselibrary.util.DateUtil;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
-import net.hongzhang.baselibrary.widget.listview.PullToRefreshLayout;
-import net.hongzhang.baselibrary.widget.listview.PullableListView;
 import net.hongzhang.school.R;
 import net.hongzhang.school.adapter.CourseListAdapter;
 import net.hongzhang.school.bean.SyllabusVo;
@@ -39,13 +40,13 @@ import java.util.Map;
 
 import main.picturesee.util.ImagePagerActivity;
 
-public class CourseArrangeActivity extends BaseActivity implements View.OnClickListener, OkHttpListener {
+public class CourseArrangeListActivity extends BaseActivity implements View.OnClickListener, OkHttpListener, PullToRefreshBase.OnRefreshListener<ListView> {
     /**
      * 是否被删除
      */
     public  static String  COURSEDELETE = "net.hongzhang.school.activity.delete";
-    private PullToRefreshLayout refresh_view;
-    private PullableListView lv_course;
+  //  private PullToRefreshLayout refresh_view;
+    private ListView lv_course;
     /**
      * 数据列表
      */
@@ -59,8 +60,10 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
     /**
      * 加载更多
      */
-    private LinearLayout ll_loadmore;
+  //  private LinearLayout ll_loadmore;
     private int count = 1;
+    private PullToRefreshListView plv_arrange_list;
+    private int pageSize = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,16 +71,23 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
         initView();
     }
    public void initView(){
-       refresh_view = $(R.id.refresh_view);
-       lv_course = $(R.id.lv_course);
+      // refresh_view = $(refresh_view);
+       plv_arrange_list = $(R.id.plv_arrange_list);
+       plv_arrange_list.setPullLoadEnabled(false);
+       plv_arrange_list.setScrollLoadEnabled(true);
+       plv_arrange_list.setOnRefreshListener(this);
+       lv_course  = plv_arrange_list.getRefreshableView();
+       //lv_course = $(R.id.lv_course);
        rl_nonetwork= $(R.id.rl_nonetwork);
-       ll_loadmore =$(R.id.load_more);
+     //  ll_loadmore =$(R.id.load_more);
        tv_nodata = $(R.id.tv_nodata);
-       refresh_view.setOnRefreshListener(new MyListener());
+  //     refresh_view.setOnRefreshListener(new MyListener());
        syllabusVoList = new ArrayList<>();
        getArrange(count);
-       showLoadingDialog();
        setlist();
+       plv_arrange_list.doPullRefreshing(true,500);
+
+       plv_arrange_list.setLastUpdatedLabel(DateUtil.getLastUpdateTime());
    }
     private void setlist(){
         adapter = new CourseListAdapter(this,syllabusVoList);
@@ -85,7 +95,7 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
         lv_course.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                imageBrowernet(i,(ArrayList<String>) syllabusVoList.get(i).getImgs(),CourseArrangeActivity.this);
+                imageBrowernet(i,(ArrayList<String>) syllabusVoList.get(i).getImgs(),CourseArrangeListActivity.this);
             }
         });
     }
@@ -134,15 +144,13 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
         Map<String,Object> params = new HashMap<>();
         params.put("tsId", UserMessage.getInstance(this).getTsId());
         params.put("pageNumber",count);
-        params.put("pageSize",10);
+        params.put("pageSize",pageSize);
         Type type = new TypeToken<Result<List<SyllabusVo>>>(){}.getType();
         OkHttps.sendPost(type, Apiurl.SCHOOL_GETSYLLABUSLISTS,params,this);
        if (G.isNetworkConnected(this)){
           showLoadingDialog();
           rl_nonetwork.setVisibility(View.GONE);
-          dispalynonet(false);
        }else {
-           dispalynonet(true);
            rl_nonetwork.setVisibility(View.VISIBLE);
       }
     }
@@ -170,15 +178,25 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
             if (syllabusVos.size()>0){
                syllabusVoList.addAll(syllabusVos);
             }
+            tv_nodata.setVisibility(syllabusVoList.size()==0?View.VISIBLE:View.GONE);
+            hasMoreData = syllabusVoList.size()==0 || syllabusVoList.size()<pageSize ? false:true;
+            plv_arrange_list.setHasMoreData(hasMoreData);
             if (syllabusVoList.size()==0){
+                plv_arrange_list.getFooterLoadingLayout().setVisibility(View.GONE);
+            }
+
+          /*  if (syllabusVoList.size()==0){
                 tv_nodata.setVisibility(View.VISIBLE);
-                dispalynonet(true);
+             //   dispalynonet(true);
             }else {
                 tv_nodata.setVisibility(View.GONE);
-                dispalynonet(false);
+              //  dispalynonet(false);
+                adapter.notifyDataSetChanged();
+            }*/
+            if (adapter!=null){
                 adapter.notifyDataSetChanged();
             }
-            refresh_view.setLv_count(syllabusVoList.size());
+         //   refresh_view.setLv_count(syllabusVoList.size());
         }
     }
     /**
@@ -187,22 +205,22 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
      */
     public void updateDelete(int position){
         syllabusVoList.remove(position);
+        tv_nodata.setVisibility(syllabusVoList.size()==0?View.VISIBLE:View.GONE);
         if (syllabusVoList.size()==0){
             tv_nodata.setVisibility(View.VISIBLE);
-            dispalynonet(true);
+        //    dispalynonet(true);
         }else {
             tv_nodata.setVisibility(View.GONE);
-            dispalynonet(false);
+          //  dispalynonet(false);
         }
         if (adapter!=null){
             adapter.notifyDataSetChanged();
         }
-        refresh_view.setLv_count(syllabusVoList.size());
+        //refresh_view.setLv_count(syllabusVoList.size());
     }
     /**
-     * 隐藏列表
-     * @param isvisible 是否隐藏
-     */
+   /*  * 隐藏列表
+     *
     private void dispalynonet(boolean isvisible){
         if (isvisible){
             lv_course.setVisibility(View.GONE);
@@ -211,14 +229,45 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
             lv_course.setVisibility(View.VISIBLE);
             ll_loadmore.setVisibility(View.VISIBLE);
         }
-    }
+    }*/
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         stopLoadingDialog();
-        rl_nonetwork.setVisibility(View.VISIBLE);
-        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+        DetaiCodeUtil.errorDetail(error,this);
     }
-    class MyListener implements PullToRefreshLayout.OnRefreshListener {
+    private boolean hasMoreData;
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+        new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                syllabusVoList.clear();
+                count=1;
+                getArrange(count);
+                plv_arrange_list.onPullDownRefreshComplete();
+                plv_arrange_list.setLastUpdatedLabel(DateUtil.getLastUpdateTime());
+
+            }
+        }.sendEmptyMessageDelayed(0,500);
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+        new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                count++;
+                getArrange(count);
+                plv_arrange_list.onPullUpRefreshComplete();
+                plv_arrange_list.setHasMoreData(hasMoreData);
+            }
+        }.sendEmptyMessageDelayed(0,500);
+
+    }
+
+  /*  class MyListener implements PullToRefreshLayout.OnRefreshListener {
          @Override
          public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
              new Handler(){
@@ -246,5 +295,5 @@ public class CourseArrangeActivity extends BaseActivity implements View.OnClickL
              }.sendEmptyMessageDelayed(0,500);
 
          }
-     }
+     }*/
 }

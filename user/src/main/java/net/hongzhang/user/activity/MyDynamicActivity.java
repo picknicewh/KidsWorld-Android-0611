@@ -1,4 +1,6 @@
 package net.hongzhang.user.activity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -6,21 +8,25 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.google.gson.reflect.TypeToken;
 import com.umeng.analytics.MobclickAgent;
+
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.pullrefresh.PullToRefreshBase;
 import net.hongzhang.baselibrary.pullrefresh.PullToRefreshListView;
+import net.hongzhang.baselibrary.util.BroadcastConstant;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.user.R;
 import net.hongzhang.user.adapter.MyDynamicAdapter;
 import net.hongzhang.user.mode.DynamicInfoVo;
+
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -149,13 +155,13 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener, V
             }
         }
     }
-
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         stopLoadingDialog();
         rl_nonetwork.setVisibility(View.VISIBLE);
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        DetaiCodeUtil.errorDetail(error,this);
     }
+
 
     private void setListData() {
         if (dynamicInfoVoList.size() == 0) {
@@ -171,6 +177,10 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener, V
     }
 
     public void updateDelete(int position) {
+        //删除动态后要发送通知给
+        Intent intent  = new Intent(BroadcastConstant.DELETEDYNAMIC);
+        intent.putExtra("dynamicId",dynamicInfoVoList.get(position).getDynamicId());
+        sendBroadcast(intent);
         dynamicInfoVoList.remove(position);
         setListData();
 

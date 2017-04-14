@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -39,6 +40,7 @@ public class UserChoosePresenter implements UserChooseContract.Presenter, OkHttp
         params.put("accountId", accountId);
         params.put("password", password);
         params.put("sign", sign);
+        params.put("requestSource",100003);
         Type type = new TypeToken<Result<List<CharacterSeleteVo>>>() {
         }.getType();
         OkHttps.sendPost(type, Apiurl.APPLOGIN, params, this);
@@ -50,7 +52,7 @@ public class UserChoosePresenter implements UserChooseContract.Presenter, OkHttp
         Map<String, Object> params = new HashMap<>();
         params.put("tsId", tsId);
         params.put("sign", sign);
-        params.put("requestSource", "android");
+        params.put("requestSource", 100003);
         Type type = new TypeToken<Result<String>>() {
         }.getType();
         OkHttps.sendPost(type, Apiurl.SELECTUSER, params, this);
@@ -67,17 +69,19 @@ public class UserChoosePresenter implements UserChooseContract.Presenter, OkHttp
         } else if (Apiurl.SELECTUSER.equals(uri)) {
             Result<String> data = (Result<String>) date;
             String result = data.getData();
-            if (result.equals("成功")) {
+            G.showToast(context,result);
+            if (result.contains("成功")) {
                 view.setIsChoose(true);
             } else {
                 view.setIsChoose(false);
             }
-            G.showToast(context,"身份选择失败，请重新选择");
+
         }
     }
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         view.stopLoadingDialog();
-        G.showToast(context, error);
+        DetaiCodeUtil.errorDetail(error,context);
     }
+
 }

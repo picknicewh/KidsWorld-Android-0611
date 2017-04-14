@@ -24,6 +24,7 @@ import net.hongzhang.baselibrary.contract.ContractsDbHelper;
 import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -226,12 +227,12 @@ public class UMassageActivity extends BaseActivity implements View.OnClickListen
             flag = 1;
         }
     }
-
     @Override
-    public void onError(String uri, String error) {
-        G.showToast(this,error);
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,this);
         flag = 0;
     }
+
 
     @Override
     protected void onDestroy() {

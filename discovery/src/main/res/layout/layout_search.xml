@@ -21,8 +21,10 @@
                 android:hint="请输入关键词"
                 android:textColor="@color/text_"
                 android:textSize="@dimen/ts_small"
+                android:lines="1"
                 android:background="@drawable/ic_search_bg"
                 android:drawablePadding="@dimen/space_x0.5"
+                android:maxLength="16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView

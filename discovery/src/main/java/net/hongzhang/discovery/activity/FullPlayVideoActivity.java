@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -29,9 +30,9 @@ import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.LoadingDialog;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.VideoAlbumAdapter;
-import net.hongzhang.discovery.util.MyGestureListener;
 import net.hongzhang.discovery.presenter.PlayVideoContract;
 import net.hongzhang.discovery.presenter.PlayVideoPresenter;
+import net.hongzhang.discovery.util.MyGestureListener;
 import net.hongzhang.discovery.widget.ChooseAlbumPopWindow;
 
 import java.util.ArrayList;
@@ -151,6 +152,16 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
     private RelativeLayout rl_full_srceen;
     private GestureDetector mGestureDetector;
     private MyGestureListener myGestureListener;
+    private RelativeLayout rl_light;
+    private RelativeLayout rl_sound;
+    private ProgressBar pb_light;
+    private ProgressBar pb_sound;
+    private ImageView iv_lock;
+    private RelativeLayout rl_content;
+    /**
+     * 触摸事件是否分发
+     */
+    private boolean isTouchTransmit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +182,12 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         tv_name = (TextView) findViewById(R.id.tv_video_name);
         iv_collect = (ImageView) findViewById(R.id.iv_collect);
         rl_full_srceen = (RelativeLayout) findViewById(R.id.rl_full_srceen);
+        rl_light = (RelativeLayout) findViewById(R.id.view_light);
+        rl_content = (RelativeLayout) findViewById(R.id.rl_content);
+        rl_sound = (RelativeLayout) findViewById(R.id.view_sound);
+        pb_light = (ProgressBar) rl_light.findViewById(R.id.pb_light);
+        pb_sound = (ProgressBar) rl_sound.findViewById(R.id.pb_sound);
+        iv_lock = (ImageView) findViewById(R.id.iv_lock);
         // vsb_light = (VerticalSeekBar) findViewById(R.id.vsb_light);
         // vsb_volume = (VerticalSeekBar) findViewById(R.id.vsb_volume);
         iv_play = (ImageView) findViewById(R.id.iv_play);
@@ -180,10 +197,11 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         ll_contorl = (LinearLayout) findViewById(R.id.ll_contorl);
         iv_theme = (ImageView) findViewById(R.id.iv_theme);
         iv_collect.setOnClickListener(this);
-       // rl_full_srceen.setOnClickListener(this);
+        // rl_full_srceen.setOnClickListener(this);
         iv_left.setOnClickListener(this);
         iv_play.setOnClickListener(this);
         iv_theme.setOnClickListener(this);
+        iv_lock.setOnClickListener(this);
         initData();
     }
 
@@ -202,20 +220,22 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         //audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         myGestureListener = new MyGestureListener(this);
         mGestureDetector = new GestureDetector(this, myGestureListener);
+        presenter.registerReceiver();
         //  vsb_volume.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
         // vsb_volume.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
-       // int normal = Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, 255);
+        // int normal = Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, 255);
         //  vsb_light.setMax(255);
         //  vsb_light.setProgress(normal);
         //  vsb_light.setOnSeekBarChangeListener(this);
         //vsb_volume.setOnSeekBarChangeListener(this);
         sb_video.setOnSeekBarChangeListener(this);
-     //   surfaceView.setOnTouchListener(this);
-    //    surfaceView.setOnClickListener(this);
+        //   surfaceView.setOnTouchListener(this);
+        //    surfaceView.setOnClickListener(this);
         timerStart();
 
 
     }
+
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
@@ -253,6 +273,17 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
                 setInfoIsVisible(View.GONE);
                 isclick = true;
             }
+        } else if (viewId == R.id.iv_lock) {
+            if (!isTouchTransmit) {
+                iv_lock.setImageResource(R.mipmap.ic_lock);
+                rl_content.setVisibility(View.GONE);
+                isTouchTransmit = true;
+            } else {
+                iv_lock.setImageResource(R.mipmap.ic_unlock);
+                rl_content.setVisibility(View.VISIBLE);
+                isTouchTransmit = false;
+            }
+
         }
     }
 
@@ -276,11 +307,11 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
      * @param isVisible 是否可见
      */
     private void setInfoIsVisible(int isVisible) {
-        rl_toolbar.setVisibility(isVisible);
-        ll_contorl.setVisibility(isVisible);
+        if (!isTouchTransmit){
+            rl_content.setVisibility(isVisible);
+        }
+        iv_lock.setVisibility(isVisible);
         //vsb_light.setVisibility(isVisible);
-        //
-        //
         //  vsb_volume.setVisibility(isVisible);
     }
 
@@ -361,14 +392,8 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         super.onResume();
         //开启屏幕旋转监听
         listener.enable();
-        Log.i("fffff", "===========onResume=============");
 
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i("fffff", "===========onStart=============");
     }
 
     @Override
@@ -382,21 +407,20 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
     protected void onStop() {
         super.onStop();
         presenter.pause();
-        Log.i("fffff", "===========onStop=============");
     }
 
     @Override
     protected void onRestart() {
-        Log.i("fffff", "===========onRestart=============");
         super.onRestart();
         presenter.play();
         presenter.setActivityRestart(true);
     }
 
     @Override
-    public void setCurrent(int progress) {
+    public void setCurrent(int progress, int cacheProgress) {
         currentPosition = progress;
         sb_video.setProgress(progress);
+        sb_video.setSecondaryProgress(cacheProgress);
     }
 
     @Override
@@ -425,6 +449,7 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         super.onDestroy();
         Log.i("fffff", "===========onDestroy=============");
         presenter.destroy();
+        presenter.unRegisterReceiver();
         presenter.savePlayTheRecord(UserMessage.getInstance(this).getTsId(), resourceId, currentPosition, 2);
         if (timerTask != null) {
             timerTask.cancel();
@@ -465,6 +490,31 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         }*/
     }
 
+    /**
+     * * 设置当前亮度百分百
+     *
+     * @param progress 百分比
+     */
+    public void setLightProgress(int progress) {
+        G.log("----------------x2x" + progress);
+        rl_light.setVisibility(View.VISIBLE);
+        pb_light.setProgress(progress);
+        G.log("----------------x2x" + (rl_light.getVisibility() == View.VISIBLE));
+
+    }
+
+    /**
+     * 设置当前音量百分比
+     *
+     * @param progress 百分比
+     */
+    public void setSoundProgress(int progress) {
+        G.log("----------------x1x" + progress);
+        rl_sound.setVisibility(View.VISIBLE);
+        pb_sound.setProgress(progress);
+        // G.log("----------------x1x"+ rl_sound.getVisibility());
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (mGestureDetector.onTouchEvent(event)) {
@@ -474,6 +524,8 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_UP:
                 myGestureListener.endGesture();
+                rl_light.setVisibility(View.GONE);
+                rl_sound.setVisibility(View.GONE);
                 break;
         }
         mDate = new Date();
@@ -518,9 +570,9 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         @Override
         public void onOrientationChanged(int orientation) {
             //屏幕旋转角度，如果0-180度正面如果大于180度就方面
-            if (orientation >= 0 && orientation <= 180) {
+            if (orientation >= 90 && orientation <= 180) {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
-            } else if (orientation > 180 && orientation < 360) {
+            } else if (orientation > 270 && orientation < 360) {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             }
         }

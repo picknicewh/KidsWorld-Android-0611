@@ -1,12 +1,12 @@
 package net.hongzhang.school.util;
 
 import android.app.Activity;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.school.bean.MedicineVo;
@@ -82,7 +82,9 @@ public class MedicineTDetailPresenter implements MedicineTDetail.Presenter,OkHtt
      }
     }
     @Override
-    public void onError(String uri, String error) {
-        Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,context);
+
     }
+
 }

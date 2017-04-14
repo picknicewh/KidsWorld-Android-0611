@@ -1,85 +1,11 @@
-<!DOCTYPE html>
-<html  ng-app="app">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-		<title></title>
-		<link rel="stylesheet" href="css/main.css">
-		<link rel="stylesheet" href="../common/ionic/css/ionic.min.css">
-		<script src="../common/ionic/js/ionic.bundle.min.js"></script>
-	    <script src="../common/jquery/jquery.js"></script>
-	    <script src="../common/jquery/store.min.js"></script>
-	    <script src="js/Umeng.js"></script>
-	    <script src="js/app.js"></script>
-	    <!--<script src="js/EduInformation_DetailCtrl.js"></script>-->
-	</head>
-	<body ng-controller="EduInformationCtrl">
-		<!--内容及评论-->
-	    <ion-content class="InfDetContent eduInf">
-	        <!--资讯标题-->
-	        <div class="InfDetTitle eduInf">
-	            <span class="TitleText">{{ displayInfName }}</span>
-	            <span class="button storeInf" ng-click="store()" ng-class="{'active':storeActive}"></span>
-	        </div>
-
-
-	        <!--资讯副标题-->
-	        <div class="InfDetSubTitle eduInf">
-	            <span>{{ displaySource }}</span>&nbsp;{{ displayCreatetime | date : "MM-dd hh:mm"}}
-	        </div>
-	
-	        <!--内容-->
-	        <div class="InfDetContent" ng-bind-html="displayInfCnt">
-	        </div>
-	        <!--固定的说明内容-->
-	        <div class="InfAvoidDes">免责声明：本文摘自于“互联网”，本站转载出于非商业性的教育和科研之目的，并不意味着赞同其观点或证实其内容的真实性。如转载稿涉及版权等问题，请作者在两周内速来电或来函联系。</div>
-	        <!--评论-->
-	        <div class="resComment">
-	            <div class="Title">
-	                评论
-	            </div>
-	            <!--评论输入框-->
-	            <div class="commentBox">
-	                <div class="image" style="background-image:url('{{ currentUser.img }}'),url('images/default_avatar_gray.png')"></div>
-	                <span class="inputBefore"></span>
-	                <div class="inputBox">
-	                    <input type="text" maxlength="400" placeholder="快来评论吧..." ng-model="commentWord"  ng-focus="scrollToUp()" ng-blur="scrollBack()"/>
-	                </div>
-	                <span class="inputAfter"></span>
-	                <div class="commit" ng-click="subComment(commentWord)" ng-disabled="!commentWord"></div>
-	            </div>
-	            <!--评论列表框-->
-	            <div class="commentList">
-	                <div class="commentLi" ng-repeat="item_comment in items_comment">
-	                    <div class="image" style="background-image:url('{{ item_comment.tsImgurl }}'),url('images/default_avatar_gray.png')"></div>
-	                    <span class="imageIcon" ng-class="{'student':item_comment.tsType==1 }">{{ item_comment.tsType==1?"学":"师" }}</span>
-	                    <div class="content">
-	                        <div class="info">
-	                            <span>{{ item_comment.tsName }}</span>
-	                            <span>{{ item_comment.date }}</span>
-	                        </div>
-	                        <div class="detail">
-	                            {{ item_comment.content }}
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	            <!--加载更多-->
-	            <div class="loadMoreBox">
-	                <span class="loadMore" ng-show="loadState==0" ng-click="loadMoreData()">更多评论</span>
-	                <span class="moreIcon" ng-show="loadState==0" ng-click="loadMoreData()"></span>
-	                <ion-spinner icon="bubbles" class="spinner-balanced loading" ng-show="loadState==1"></ion-spinner>
-	                <span class="loadEnd" ng-show="loadState==2">没有更多评论了</span>
-	            </div>
-	        </div>
-	    </ion-content>
-	    
-	    <script type="text/javascript">
+<!DOCTYPE html><html ng-app=app><head><meta charset=UTF-8><meta name=viewport content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"><title></title><link rel=stylesheet href=css/main.css><link rel=stylesheet href=../common/ionic/css/ionic.min.css><script src=../common/ionic/js/ionic.bundle.min.js></script><script src=../common/jquery/jquery.js></script><script src=../common/jquery/store.min.js></script><script src=js/Umeng.js></script><script src=js/app.js></script></head><body ng-controller=EduInformationCtrl><ion-content ng-show=!flag ng-click=doRefresh() style="background:#efeff4 url(images/errbg.png) no-repeat 30% center; background-size: contain;"></ion-content><ion-content class="InfDetContent eduInf" ng-show=flag><div class="InfDetTitle eduInf"><span class=TitleText>{{ displayInfName }}</span> <span class="button storeInf" ng-click=store() ng-class="{'active':storeActive}"></span></div><div class="InfDetSubTitle eduInf"><span>{{ displaySource }}</span>&nbsp;{{ displayCreatetime | date : "MM-dd hh:mm"}}</div><div class=InfDetContent ng-bind-html=displayInfCnt></div><div class=InfAvoidDes>免责声明：本文摘自于“互联网”，本站转载出于非商业性的教育和科研之目的，并不意味着赞同其观点或证实其内容的真实性。如转载稿涉及版权等问题，请作者在两周内速来电或来函联系。</div><div class=resComment><div class=Title>评论</div><div class=commentBox><div class=image style="background-image:url('{{ currentUser.img }}'),url('images/default_avatar_gray.png')"></div><span class=inputBefore></span><div class=inputBox><input id=pinglun type=text maxlength=400 placeholder=快来评论吧... ng-model=commentWord ng-focus=scrollToUp() ng-blur=scrollBack()></div><span class=inputAfter></span><div class=commit ng-click=subComment(commentWord)></div></div><div class=commentList><div class=commentLi ng-repeat="item_comment in items_comment"><div class=image style="background-image:url('{{ item_comment.tsImgurl }}'),url('images/default_avatar_gray.png')"></div><span class=imageIcon ng-class="{'student':item_comment.tsType==1 }">{{ item_comment.tsType==1?"学":"师" }}</span><div class=content><div class=info><span>{{ item_comment.tsName }}</span> <span>{{ item_comment.date }}</span></div><div class=detail>{{ item_comment.content }}</div></div></div></div><div class=loadMoreBox><span class=loadMore ng-show="loadState==0" ng-click=loadMoreData()>更多评论</span> <span class=moreIcon ng-show="loadState==0" ng-click=loadMoreData()></span><ion-spinner icon=bubbles class="spinner-balanced loading" ng-show="loadState==1"></ion-spinner><span class=loadEnd ng-show="loadState==2">没有更多评论了</span></div></div></ion-content><script type=text/javascript>
 	      	var platFlag=testPlat();      //测试浏览器平台，并存为全局变量，方便后续调用，0为安卓，1为ios，2为PC
 	        var tsIdLogin=getUrlParam('tsId');    //将tsId存为全局变量，方便后续调用
 	        var accountIdLogin=getUrlParam('accountId');    //将accountId存为全局变量，方便后续调用
 //	        var tsIdLogin = "54b84bb4284b426bb90f9608f8476208";
 //	        var accountIdLogin="70996710086test0003";
+//	        var tsIdLogin = "893e898dbed746a3b8584016d6b26212";
+//	        var accountIdLogin="36766010086test0002";
 	      	checkHistory();     //检查历史记录
 	
 	      	//测试浏览器平台，0为安卓，1为ios，2为PC
@@ -109,6 +35,4 @@
 		            store.set('tsIdHis',tsIdLogin);
 		        }
 		    }
-	    </script>
-	</body>
-</html>
+	    </script></body></html>

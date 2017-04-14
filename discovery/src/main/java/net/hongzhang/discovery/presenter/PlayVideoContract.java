@@ -17,7 +17,7 @@ public class PlayVideoContract {
 
         void setIsPlay(boolean isPlay);
 
-        void setCurrent(int progress);
+        void setCurrent(int progress,int cacheProgress );
 
         void setDuration(int max);
 
@@ -48,7 +48,8 @@ public class PlayVideoContract {
         void setPosition(int position);
 
         void setScreenDirection(int orientation, SurfaceView surfaceView);
-
+        void registerReceiver();
+        void unRegisterReceiver();
         void subPraise(String tsId, String resourceId, String cancel);
     }
 }

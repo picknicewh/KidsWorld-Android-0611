@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -19,6 +18,7 @@ import net.hongzhang.baselibrary.base.BaseFragement;
 import net.hongzhang.baselibrary.mode.GroupInfoVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -29,7 +29,8 @@ import net.hongzhang.message.adapter.ClassAdapter;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;import java.util.List;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
@@ -133,10 +134,9 @@ public class GroupListFragment extends BaseFragement implements OkHttpListener,V
         }
     }
     @Override
-    public void onError(String uri, String error) {
-        Toast.makeText(getActivity(),error,Toast.LENGTH_SHORT).show();
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,getActivity());
     }
-
     @Override
     public void onClick(View view) {
         if (view.getId()==R.id.iv_right){

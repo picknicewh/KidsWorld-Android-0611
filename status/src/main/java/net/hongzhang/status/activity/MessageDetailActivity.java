@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -17,6 +16,7 @@ import net.hongzhang.baselibrary.database.StatusInfoDbHelper;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.mode.StatusInfoVo;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
@@ -127,10 +127,10 @@ public class MessageDetailActivity extends BaseActivity implements OkHttpListene
     }
 
     @Override
-    public void onError(String uri, String error) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
-    }
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,this);
 
+    }
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.tv_more) {

@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@drawable/fillet_pop"
+
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/tv_title"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/fillet_pop"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="是否退出当前账号？"
-        style="@style/TextStyleBase"
-        android:paddingTop="20dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="@dimen/space"
-        android:paddingRight="@dimen/space"
-        android:gravity="center"
-        />
-
-    <Button
-        android:layout_gravity="center"
-        android:background="#00000000"
-        android:id="@+id/btn_conform"
-        android:textSize="@dimen/ts_x_large"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/main_text_green"
-        android:text="确认退出"
-        />
+        android:layout_height="wrap_content">
+        <TextView
+            android:padding="@dimen/space_x2"
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="是否退出当前账号？"
+            style="@style/TextStyleBase"
+            android:gravity="center"
+            />
+        <View
+            android:background="@color/line_divide"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_gray"/>
+        <Button
+            android:layout_gravity="center"
+            android:background="#00000000"
+            android:id="@+id/btn_conform"
+            android:textSize="@dimen/ts_x_large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text_green"
+            android:text="确认退出"
+            />
+    </LinearLayout>
 </LinearLayout>

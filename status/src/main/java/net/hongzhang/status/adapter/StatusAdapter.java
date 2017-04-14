@@ -18,14 +18,15 @@ import com.google.gson.reflect.TypeToken;
 import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.CircleImageView;
 import net.hongzhang.status.R;
-import net.hongzhang.status.mode.StatusVo;
 import net.hongzhang.status.StatusFragment;
+import net.hongzhang.status.mode.StatusVo;
 import net.hongzhang.status.util.PictrueUtils;
 import net.hongzhang.status.widget.DeleteStatusDialog;
 import net.hongzhang.user.activity.StatusDetilsActivity;
@@ -296,10 +297,10 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
     }
 
     @Override
-    public void onError(String uri, String error) {
-        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
-    }
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,context);
 
+    }
     class ViewHold {
         CircleImageView cv_head;//头像
         TextView tv_name; //姓名

@@ -3,12 +3,13 @@ package net.hongzhang.discovery.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
@@ -20,7 +21,6 @@ import net.hongzhang.discovery.activity.ResourceAlubmListActivity;
 import net.hongzhang.discovery.activity.SearchResourceActivity;
 import net.hongzhang.discovery.activity.ThemeVoListActivity;
 import net.hongzhang.discovery.modle.CompilationVo;
-import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.user.activity.CollectActivity;
 import net.hongzhang.user.activity.UserActivity;
 import net.hongzhang.user.mode.BannerVo;
@@ -66,13 +66,18 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
         map.put("type", type);
         Type mType = new TypeToken<Result<List<CompilationVo>>>() {
         }.getType();
-        OkHttps.sendPost(mType, Apiurl.GETRECOMMENDLIST, map, this,2,"recommend_resource");
+        String cacheName;//避免缓存覆盖
+        if (type==TYPE_MUISC){
+             cacheName = "recommend_music";
+        }else {
+            cacheName = "recommend_video";
+        }
+        OkHttps.sendPost(mType, Apiurl.GETRECOMMENDLIST, map, this,2,cacheName);
     //    view.showLoadingDialog();
     }
 
     /**
      * 根据专辑id获取专辑中的资源列表
-     *
      * @param tsId    角色id
      * @param themeId 专辑id
      */
@@ -86,6 +91,7 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
         map.put("account_id", UserMessage.getInstance(context).getAccount_id());
         Type mType = new TypeToken<Result<List<ResourceVo>>>() {
         }.getType();
+
         OkHttps.sendPost(mType, Apiurl.USER_GETTHENELIST, map, this,2,"play_list");
         view.showLoadingDialog();
     }
@@ -231,8 +237,8 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
     }
 
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         view.stopLoadingDialog();
-        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+        DetaiCodeUtil.errorDetail(error,context);
     }
 }

@@ -9,8 +9,8 @@ import android.view.View;
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.widget.ViewPagerHead;
 import net.hongzhang.discovery.R;
-import net.hongzhang.discovery.fragment.ThemeListFragment;
 import net.hongzhang.discovery.fragment.SelectAlubmFragment;
+import net.hongzhang.discovery.fragment.ThemeListFragment;
 import net.hongzhang.discovery.presenter.MainRecommendPresenter;
 
 import java.util.ArrayList;

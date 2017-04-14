@@ -14,6 +14,7 @@ import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -151,7 +152,7 @@ public class SignDialog implements View.OnClickListener, OkHttpListener {
     }
 
     @Override
-    public void onError(String uri, String error) {
-        G.showToast(context,error);
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,context);
     }
 }

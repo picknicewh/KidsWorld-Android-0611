@@ -12,6 +12,7 @@ import net.hongzhang.baselibrary.activity.PermissionsActivity;
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -98,8 +99,9 @@ public class AlbumDetailsActivity extends BaseActivity implements OkHttpListener
     }
 
     @Override
-    public void onError(String uri, String error) {
-        G.showToast(this, error);
+    public void onError(String uri, Result error) {
+        stopLoadingDialog();
+        DetaiCodeUtil.errorDetail(error,this);
     }
 
     @Override

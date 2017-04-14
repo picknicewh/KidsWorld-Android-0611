@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import net.hongzhang.baselibrary.pullrefresh.PullToRefreshScrollView;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.LoadingDialog;
+import net.hongzhang.baselibrary.widget.PromptPopWindow;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.CompilationAdapter;
 import net.hongzhang.discovery.adapter.ConsultAdapter2;
@@ -206,7 +208,12 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
             adapter.setOnItemClickListener(new CompilationAdapter.onItemClickListener() {
                 @Override
                 public void OnItemClick(View view, int position) {
-                      presenter.getSongList(userMessage.getTsId(),compilationVos.get(position).getAlbumId());
+                     if (G.isNetworkConnected(getActivity())){
+                         presenter.getSongList(userMessage.getTsId(),compilationVos.get(position).getAlbumId());
+                     }else {
+                         PromptPopWindow promptPopWindow = new PromptPopWindow(getActivity(), "与服务器连接异常，请检查网络后重试！");
+                         promptPopWindow.showAtLocation(view, Gravity.CENTER,0, 0);
+                     }
                 }
             });
         }
@@ -222,7 +229,13 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
             adapter.setOnItemClickListener(new CompilationAdapter.onItemClickListener() {
                 @Override
                 public void OnItemClick(View view, int position) {
-                    presenter.startVideoActivity(String.valueOf(compilationVos.get(position).getAlbumId()));
+                    if (G.isNetworkConnected(getActivity())){
+                        presenter.startVideoActivity(String.valueOf(compilationVos.get(position).getAlbumId()));
+                    }else {
+                        PromptPopWindow promptPopWindow = new PromptPopWindow(getActivity(), "与服务器连接异常，请检查网络后重试！");
+                        promptPopWindow.showAtLocation(view, Gravity.CENTER,0, 0);
+                    }
+
                 }
             });
         }
@@ -298,6 +311,7 @@ public class MainDiscoveryFragment extends BaseFragement implements View.OnClick
     }
     @Override
     public void rushData() {
+        presenter.getBanner(tsid);
         type = MainRecommendPresenter.TYPE_MUISC;
         if (type == MainRecommendPresenter.TYPE_MUISC) {
             presenter.getRecommendResource(tsid, 4, type);

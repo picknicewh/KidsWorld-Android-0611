@@ -14,6 +14,7 @@ import net.hongzhang.baselibrary.mode.ContractInfoVo;
 import net.hongzhang.baselibrary.mode.GroupInfoVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
@@ -303,7 +304,7 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
         stopLoadingDialog();
     }
     @Override
-    public void onError(String uri, String error) {
-        Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,this);
     }
 }

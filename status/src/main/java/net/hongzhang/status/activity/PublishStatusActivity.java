@@ -19,6 +19,7 @@ import net.hongzhang.baselibrary.activity.PermissionsActivity;
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.DateUtil;
@@ -286,15 +287,14 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         loadingDialog.dismiss();
         finish();
     }
-
     @Override
-    public void onError(String uri, String error) {
-        if (error.equals("系统错误")) G.showToast(this, "输入的内容有问题哦！");
-        else G.showToast(this, error);
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,this);
         tv_subtilte.setEnabled(true);
         G.KisTyep.isReleaseSuccess = false;
         loadingDialog.dismiss();
     }
+
 
     /**
      * 退出提示

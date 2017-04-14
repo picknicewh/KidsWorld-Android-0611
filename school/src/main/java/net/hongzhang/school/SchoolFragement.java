@@ -17,12 +17,12 @@ import net.hongzhang.baselibrary.network.ServerConfigManager;
 import net.hongzhang.baselibrary.util.BroadcastConstant;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.school.activity.ClassListActivity;
-import net.hongzhang.school.activity.CourseArrangeActivity;
+import net.hongzhang.school.activity.CourseArrangeListActivity;
 import net.hongzhang.school.activity.FoodListActivity;
 import net.hongzhang.school.activity.LeaveListActivity;
 import net.hongzhang.school.activity.MedicineListSActivity;
 import net.hongzhang.school.activity.MedicineListTActivity;
-import net.hongzhang.school.activity.PublishActivity;
+import net.hongzhang.school.activity.PublishListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,14 +120,14 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             schoolDosDisappear(BroadcastConstant.LEAVEASEKDOS);
         } else if (view.getId() == R.id.rl_info) {
             //通知
-            intent.setClass(getActivity(), PublishActivity.class);
+            intent.setClass(getActivity(), PublishListActivity.class);
             schoolDosDisappear(BroadcastConstant.SCHOOLINFODOS);
         } else if (view.getId() == R.id.rl_food) {
             //食谱
             intent.setClass(getActivity(), FoodListActivity.class);
         } else if (view.getId() == R.id.rl_arrangement) {
             //课程安排
-            intent.setClass(getActivity(), CourseArrangeActivity.class);
+            intent.setClass(getActivity(), CourseArrangeListActivity.class);
         } else if (view.getId() == R.id.rl_openClass) {
             //开放课堂
             intent.setClass(getActivity(), ClassListActivity.class);

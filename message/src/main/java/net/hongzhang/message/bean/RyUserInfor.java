@@ -1,5 +1,6 @@
 package net.hongzhang.message.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * 附加注释：
  * 主要接口：
  */
-public class RyUserInfor {
+public class RyUserInfor implements Serializable{
     /**
 
      * ts_name	String
@@ -124,7 +125,7 @@ public class RyUserInfor {
         this.ryId = ryId;
     }
 
-   public class AccountInfo{
+    public class AccountInfo implements Serializable{
        /**
         * 手机号
         */

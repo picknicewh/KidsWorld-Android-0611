@@ -50,4 +50,8 @@ public class BroadcastConstant {
      */
     public static  final String  HIDEMAINTAB = " net.hongzhang.bbhow.MyDosShowReceiver";
 
+    /**
+     * 我的动态删除动态广播通知
+     */
+    public static  final String  DELETEDYNAMIC = " net.hongzhang.bbhow.DeleteDynamic";
 }

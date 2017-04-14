@@ -2,13 +2,13 @@ package net.hongzhang.discovery.presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -49,12 +49,12 @@ public class SearchConsultPresenter implements SearchConsultContract.Presenter, 
     }
 
     @Override
-    public void getSearchResourceList(String tsId, int type, int pageSize, int pageNumber, String account_id, String tag) {
+    public void getSearchResourceList(String tsId, int pageSize, int pageNumber, String account_id, String tag) {
         Map<String, Object> map = new HashMap<>();
         map.put("tsId", tsId);
         map.put("pageSize", pageSize);
         map.put("pageNumber", pageNumber);
-        map.put("type", type);
+        map.put("type", 3);
         map.put("tag", tag);
         map.put("account_id", account_id);
         Type mType = new TypeToken<Result<ResourceVos>>() {
@@ -67,6 +67,7 @@ public class SearchConsultPresenter implements SearchConsultContract.Presenter, 
     public void startConsultActivity(String resourceId) {
         Intent intent = new Intent(context, ConsultActivity.class);
         intent.putExtra("resourceId", resourceId);
+        G.log("-----------------"+resourceId);
         context.startActivity(intent);
     }
 
@@ -111,9 +112,10 @@ public class SearchConsultPresenter implements SearchConsultContract.Presenter, 
         }
     }
 
+
     @Override
-    public void onError(String uri, String error) {
-        view.stopLoadingDialog();
-        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+    public void onError(String uri, Result error) {
+         view.stopLoadingDialog();
+        DetaiCodeUtil.errorDetail(error,context);
     }
 }

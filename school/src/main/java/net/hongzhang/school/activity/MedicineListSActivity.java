@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.umeng.analytics.MobclickAgent;
@@ -18,6 +17,7 @@ import com.umeng.analytics.MobclickAgent;
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -204,9 +204,9 @@ public class MedicineListSActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         stopLoadingDialog();
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        DetaiCodeUtil.errorDetail(error,this);
     }
 
     @Override

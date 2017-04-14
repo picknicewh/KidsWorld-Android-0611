@@ -23,6 +23,7 @@ import net.hongzhang.baselibrary.BaseLibrary;
 import net.hongzhang.baselibrary.activity.UpdateMessageActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.EncryptUtil;
@@ -122,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (!checkBox.isChecked()) {
             G.initDisplaySize(this);
             PromptPopWindow promptPopWindow = new PromptPopWindow(this, "请同意服务条款");
-            promptPopWindow.showAtLocation(checkBox, Gravity.NO_GRAVITY, (G.size.W - promptPopWindow.getWidth()) / 2, (int) (G.size.H * 0.2));
+            promptPopWindow.showAtLocation(checkBox, Gravity.NO_GRAVITY, 0,0);
             return;
         }
         if (G.isEmteny(username) || G.isEmteny(password)) {
@@ -202,14 +203,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
     }
-
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         if (dialog != null) {
             dialog.dismiss();
         }
         b_login.setEnabled(true);
-        G.showToast(this, error);
+        DetaiCodeUtil.errorDetail(error,this);
     }
 
     public boolean dispatchKeyEvent(KeyEvent event) {

@@ -8,6 +8,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 
+import net.hongzhang.baselibrary.R;
+
 public class PackageUtils {
 	/**
 	 * 获取软件版本号，对应AndroidManifest.xml下android:versionCode
@@ -33,6 +35,10 @@ public class PackageUtils {
 			e.printStackTrace();
 		}
 		return versionName;
+	}
+	public static String getApkName(Context context){
+		String appName = context.getResources().getString(R.string.app_name);
+		return appName;
 	}
 	/**
     * check the app is installed

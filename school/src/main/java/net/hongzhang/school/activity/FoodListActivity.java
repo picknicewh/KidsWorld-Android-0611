@@ -9,13 +9,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.umeng.analytics.MobclickAgent;
 
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
@@ -126,7 +126,6 @@ public class FoodListActivity extends BaseFoodActivity   {
             }
         });
     }
-
     /**
      * 获取食谱
      * @param date 日期
@@ -144,17 +143,14 @@ public class FoodListActivity extends BaseFoodActivity   {
 
     @Override
     public void onSuccess(final String uri, Object date) {
+        stopLoadingDialog();
         final Result<CooikeVo> data = (Result<CooikeVo>) date;
         if (data!=null){
-            stopLoadingDialog();
+
             CooikeVo cooikeVo = data.getData();
             dishesVos = cooikeVo.getDishesList();
-            if (dishesVos.size()==0){
-                lv_foodlist.setVisibility(View.GONE);
-                tv_nodata.setVisibility(View.VISIBLE);
-            }else {
-                lv_foodlist.setVisibility(View.VISIBLE);
-                tv_nodata.setVisibility(View.GONE);
+           tv_nodata.setVisibility(dishesVos.size()==0?View.VISIBLE:View.GONE);
+            if (dishesVos.size()>0){
                 adapter = new FoodListAdapter(this,dishesVos);
                 lv_foodlist.setAdapter(adapter);
                 lv_foodlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -185,9 +181,9 @@ public class FoodListActivity extends BaseFoodActivity   {
         }
     }
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         stopLoadingDialog();
-        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+        DetaiCodeUtil.errorDetail(error,this);
     }
 
     @Override

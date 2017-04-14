@@ -1,5 +1,7 @@
 package net.hongzhang.user.mode;
 
+import java.io.Serializable;
+
 /**
  * 作者： wh
  * 时间： 2016/12/12
@@ -8,7 +10,7 @@ package net.hongzhang.user.mode;
  * 附加注释：
  * 主要接口：
  */
-public class BannerVo {
+public class BannerVo implements Serializable {
     /**
      * 图片ID
      */

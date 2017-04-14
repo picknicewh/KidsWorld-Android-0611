@@ -3,19 +3,19 @@ package net.hongzhang.discovery.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.activity.MainPlayMusicActivity;
 import net.hongzhang.discovery.activity.PlayVideoListActivity;
 import net.hongzhang.discovery.modle.CompilationVo;
-import net.hongzhang.baselibrary.mode.ResourceVo;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -92,12 +92,14 @@ public class ThemeVoListPresenter implements ThemeVoListContract.Presenter, OkHt
     @Override
     public void onSuccess(String uri, Object date) {
         view.stopLoadingDialog();
-        if (date != null) {
-            Result<List<CompilationVo>> result = (Result<List<CompilationVo>>) date;
-            List<CompilationVo> compilationVos = result.getData();
-            compilationVoList.addAll(compilationVos);
-            view.setThemeVoList(compilationVoList);
-            view.setThemeVoSize(compilationVos.size());
+        if (uri.equals(Apiurl.GETHEMELISTBYID)){
+            if (date != null) {
+                Result<List<CompilationVo>> result = (Result<List<CompilationVo>>) date;
+                List<CompilationVo> compilationVos = result.getData();
+                compilationVoList.addAll(compilationVos);
+                view.setThemeVoList(compilationVoList);
+                view.setThemeVoSize(compilationVos.size());
+            }
         }else if (uri.equals(Apiurl.USER_GETTHENELIST)) {
             if (date!=null){
                 Result<List<ResourceVo>> result = (Result<List<ResourceVo>>) date;
@@ -109,8 +111,8 @@ public class ThemeVoListPresenter implements ThemeVoListContract.Presenter, OkHt
     }
 
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         view.stopLoadingDialog();
-        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+        DetaiCodeUtil.errorDetail(error,context);
     }
 }

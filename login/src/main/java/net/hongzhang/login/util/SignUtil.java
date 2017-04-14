@@ -18,6 +18,7 @@ public class SignUtil {
      */
     public static String getSign(String url) {
         String sign;
+        url = url.replace(".do","");
         String currentTime = String.valueOf(System.currentTimeMillis());
         String hashValue = url + currentTime + Constant.AND_KEY;
         sign = currentTime + "-" + MD5Utils.encode(hashValue);

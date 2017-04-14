@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
+import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.widget.ViewPagerHead;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.SearchHistoryAdapter;
@@ -19,6 +20,7 @@ import net.hongzhang.discovery.fragment.SearchResourceListFragment;
 import net.hongzhang.discovery.modle.SearchKeyVo;
 import net.hongzhang.discovery.util.SearchHistoryDb;
 import net.hongzhang.discovery.util.SearchHistoryDbHelper;
+import net.hongzhang.discovery.util.TextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,6 +122,7 @@ public class SearchResourceActivity extends BaseActivity implements View.OnClick
                 ll_search_content.setVisibility(View.VISIBLE);
                 lv_search_history_list.setVisibility(View.GONE);
                 tag = searchKeyVos.get(position).getKey();
+                et_search_key.setText(tag);
                 initViewPager();
             }
         });
@@ -131,10 +134,16 @@ public class SearchResourceActivity extends BaseActivity implements View.OnClick
         if (viewId == R.id.tv_search) {
             lv_search_history_list.setVisibility(View.GONE);
             ll_search_content.setVisibility(View.VISIBLE);
-            tag = et_search_key.getText().toString();
-            helper.insert(db.getWritableDatabase(), tag,SearchHistoryDb.TABLENAME);
-            setSearchHistoryList();
-            initViewPager();
+            tag = et_search_key.getText().toString().trim();
+            if (TextUtil.isAllSpace(tag)){
+                G.showToast(this,"搜索关键词不能为空");
+                et_search_key.setText("");
+            }else {
+                helper.insert(db.getWritableDatabase(), tag,SearchHistoryDb.TABLENAME);
+                setSearchHistoryList();
+                initViewPager();
+            }
+
         } else if (viewId == R.id.tv_clean) {
             et_search_key.setText("");
             lv_search_history_list.setVisibility(View.GONE);

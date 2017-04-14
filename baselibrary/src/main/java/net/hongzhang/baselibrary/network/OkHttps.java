@@ -1,5 +1,6 @@
 package net.hongzhang.baselibrary.network;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -10,6 +11,7 @@ import com.lzy.okhttputils.callback.AbsCallback;
 import com.lzy.okhttputils.model.HttpParams;
 import com.lzy.okhttputils.request.PostRequest;
 
+import net.hongzhang.baselibrary.BaseLibrary;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.util.G;
 
@@ -25,6 +27,8 @@ import java.util.Set;
 import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
+
+
 
 /**
  * ================================================
@@ -43,7 +47,7 @@ public class OkHttps {
     private static String uri_host = ServerConfigManager.SERVER_IP;
     private static final String ERRORPROMPT = "与服务器连接异常，请检查网络后重试！";
     private static boolean isSendError;
-
+    private static Context context;
     private static OkHttpUtils getInstance() {
         if (null == httpUtils) {
             httpUtils = OkHttpUtils.getInstance()
@@ -149,13 +153,15 @@ public class OkHttps {
      * @param okHttpListener
      */
     private static void doInternet(final Type type, final String uri, HttpParams params, final OkHttpListener okHttpListener) {
+        context = BaseLibrary.getInstance().getApplicationContext();
         postRequest.params(params)
                 .execute(new AbsCallback<Object>() {
                     @Override
                     public Object parseNetworkResponse(Response response) throws Exception {
                         String value = response.body().string();
                         JSONObject jsonObject = new JSONObject(value);
-                        isSuccess = "0".equals(jsonObject.getString("code"));
+                        String code = jsonObject.getString("code");
+                        isSuccess = "0".equals(code);
                         isSendError = false; //初始化默认发送过错误
                         //是否成功访问（服务端是不是正常返回值 如果不是正常返回一般date都是String类型 直接去解析 否则 按照所传的格式解析）
                         if (isSuccess)
@@ -179,7 +185,7 @@ public class OkHttps {
                                 okHttpListener.onSuccess(uri, o);
                             else if (!isSendError) //否则请求失败  但是必须是之前没有发送错误信息  不能重复发送 会报错
                                 try {
-                                    okHttpListener.onError(uri, ((Result<String>) o).getData());
+                                    okHttpListener.onError(uri, (Result<String>)o);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -192,7 +198,10 @@ public class OkHttps {
                     @Override
                     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                         super.onError(isFromCache, call, response, e);
-                        okHttpListener.onError(uri, ERRORPROMPT);
+                        Result<String> result =new Result<>();
+                        result.setData(ERRORPROMPT);
+                        result.setCode("-9999");
+                        okHttpListener.onError(uri, result);
                         isSendError = true; //请求失败 并且告诉onResponse已经发送过无需发送
                     }
 

@@ -15,6 +15,7 @@ import net.hongzhang.baselibrary.activity.PermissionsActivity;
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.DateUtil;
@@ -109,12 +110,12 @@ public class PublishInfoActivity extends BaseActivity implements OkHttpListener 
             flag=1;
             return;
         }
-        if (G.isEmteny(et_content.getText().toString())){
+        if (G.isEmteny(et_content.getText().toString()) ||G.isAllSpace(et_content.getText().toString())){
             Toast.makeText(this,"内容不能为空",Toast.LENGTH_SHORT).show();
             flag=1;
             return;
         }
-        if (G.isEmteny(et_title.getText().toString())){
+        if (G.isEmteny(et_title.getText().toString())||G.isAllSpace(et_title.getText().toString())){
             Toast.makeText(this,"标题不能为空",Toast.LENGTH_SHORT).show();
             flag=1;
             return;
@@ -141,10 +142,9 @@ public class PublishInfoActivity extends BaseActivity implements OkHttpListener 
         }
     }
     @Override
-    public void onError(String uri, String error) {
-        flag=1;
+    public void onError(String uri, Result error) {
         stopLoadingDialog();
-        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+        DetaiCodeUtil.errorDetail(error,this);
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {

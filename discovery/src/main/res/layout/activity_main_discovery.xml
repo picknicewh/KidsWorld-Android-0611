@@ -44,6 +44,7 @@
             android:background="@drawable/bg_login_text"
             android:drawableLeft="@mipmap/ic_dissearch"
             android:hint="搜索故事、课堂、资讯"
+            android:textColorHint="@color/minor_text"
             android:paddingLeft="@dimen/space_x2"
             android:paddingRight="@dimen/space_x2"
             android:textSize="@dimen/ts_medium" />

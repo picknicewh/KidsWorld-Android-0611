@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -24,7 +26,6 @@ import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.activity.MainPlayMusicActivity;
 import net.hongzhang.discovery.adapter.MusicNameAdapter;
-import net.hongzhang.baselibrary.mode.ResourceVo;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -139,8 +140,8 @@ public class PlayListPopuWindow extends PopupWindow implements OkHttpListener,Vi
         tv_song_size.setText("播放列表("+resourceVos.size()+")");
     }
     @Override
-    public void onError(String uri, String error) {
-        Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,context);
     }
     /**
      * 提交收藏列表

@@ -15,6 +15,7 @@ import net.hongzhang.baselibrary.contract.GroupDb;
 import net.hongzhang.baselibrary.contract.GroupsDbHelper;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
@@ -124,8 +125,8 @@ public class ModifyNameActivity extends BaseActivity implements OkHttpListener {
             Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
         }
      }
-     @Override
-     public void onError(String uri, String error) {
-        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
-     }
+    @Override
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,this);
+    }
 }

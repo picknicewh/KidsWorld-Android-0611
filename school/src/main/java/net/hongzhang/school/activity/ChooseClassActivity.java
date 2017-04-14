@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -151,7 +152,7 @@ public class ChooseClassActivity extends BaseActivity implements View.OnClickLis
                 Toast.makeText(this,"未选择发送对象",Toast.LENGTH_SHORT).show();
                 return;
             }
-            Intent intent = new Intent(this,PublishActivity.class);
+            Intent intent = new Intent(this,PublishListActivity.class);
             intent.putExtra("classIds",getChooseName(chooseClassList));
             setResult(CHOOSE_CLASS,intent);
             finish();
@@ -169,7 +170,9 @@ public class ChooseClassActivity extends BaseActivity implements View.OnClickLis
         }
     }
     @Override
-    public void onError(String uri, String error) {
-        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+    public void onError(String uri, Result error) {
+        stopLoadingDialog();
+        DetaiCodeUtil.errorDetail(error,this);
+
     }
 }

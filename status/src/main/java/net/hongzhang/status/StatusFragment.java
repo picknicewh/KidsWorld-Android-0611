@@ -243,11 +243,7 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
      * 刷新数据
      */
     private void setListData() {
-        if (statusVos.size() == 0) {
-            tv_nodata.setVisibility(View.VISIBLE);
-        } else {
-            tv_nodata.setVisibility(View.GONE);
-        }
+        tv_nodata.setVisibility(statusVos.size()==0?View.VISIBLE:View.GONE);
         if (adapter != null) {
             adapter.setData(statusVos);
             adapter.notifyDataSetChanged();
@@ -310,7 +306,10 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
         if (viewId == R.id.iv_right) {
             presenter.goPublishChoose(groupId, view);
         } else if (viewId == R.id.ll_classchoose) {
-            presenter.showClassChoose(classPopWindow, rl_toolbar);
+            if (dynamicVoList.size()>0&& dynamicVoList!=null){
+                presenter.showClassChoose(classPopWindow, rl_toolbar);
+            }
+
         } else if (viewId == R.id.tv_status_bar) {
             presenter.goSettingNetWork();
         } else if (viewId == R.id.ll_message) {
@@ -383,11 +382,7 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
                         }
                         statusVos.addAll(statusList);
                         //如果当前返回的动态列表小于当前的页面加载数，那么说明没有更多的数据
-                        if (statusList.size() < pageSize) {
-                            hasData = false;
-                        } else {
-                            hasData = true;
-                        }
+                        hasData =  statusList.size() < pageSize ? false:true;
                     }
                     break;
                 case RUSHTYPE://动态刷新只需要加载刚刚没有的数据，并添加在列表最前面
@@ -405,11 +400,7 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
      */
     @Override
     public void setTvStatusbar(boolean isVisible) {
-        if (isVisible) {
-            tv_status_bar.setVisibility(View.VISIBLE);
-        } else {
-            tv_status_bar.setVisibility(View.GONE);
-        }
+        tv_status_bar.setVisibility(isVisible?View.VISIBLE:View.GONE);
     }
     /**
      * 设置极光推送推送过来的班级id，与当前班级id对比，如果相同，则发送红点
@@ -432,6 +423,18 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
             }
             ImageCache.imageLoader(imageUrl, iv_head_image);
             tv_head_count.setText(count + "条新消息");
+        }
+    }
+
+    /**
+     * 广播接收我的动态删除的动态。并把当前动态的一起删除。
+     */
+    @Override
+    public void setDeleteDynamic(String dynamicId) {
+        for (int i = 0 ;  i<statusVos.size();i++ ){
+            if (statusVos.get(i).getDynamicId().equals(dynamicId)){
+                updateDelete(i);
+            }
         }
     }
 

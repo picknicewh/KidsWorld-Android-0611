@@ -5,6 +5,7 @@ import android.net.Uri;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.discovery.R;
 
+
 /**
  * 作者： Administrator
  * 时间： 2016/11/15
@@ -28,7 +29,23 @@ public class TextUtil {
         }
         return stringBuffer.toString();
     }
-
+    /**
+     * 判断是否全为空格
+     */
+    public static boolean isAllSpace(String tag) {
+        char[] chars = tag.toCharArray();
+        int count=0;
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i]==' '){
+                count++;
+            }
+        }
+        if (count==chars.length){
+            return true;
+        }else {
+            return false;
+        }
+    }
     public static String encodeChineseUrl(String url) {
         int lastIndex = 0;
         if (url.contains("Music")) {

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.PublishActivity">
+    tools:context=".activity.PublishListActivity">
     <include
         android:id="@+id/rl_nonetwork"
         layout="@layout/nonetwork"/>
@@ -17,9 +17,13 @@
         android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <ListView
+    <net.hongzhang.baselibrary.pullrefresh.PullToRefreshListView
+        android:id="@+id/plv_publish"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+  <!--  <ListView
         android:id="@+id/lv_publish"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </ListView>
+    </ListView>-->
 </LinearLayout>

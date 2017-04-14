@@ -143,14 +143,22 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void showLoadingDialog() {
         if (dialog == null)
             dialog = new LoadingDialog(this, R.style.LoadingDialogTheme);
-        dialog.show();
+        try {
+            dialog.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         dialog.setCancelable(true);
         dialog.setLoadingText("数据加载中...");
     }
 
     public void stopLoadingDialog() {
         if (dialog != null) {
-            dialog.dismiss();
+            try {
+                dialog.dismiss();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 

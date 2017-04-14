@@ -21,6 +21,7 @@ import com.google.zxing.Result;
 import com.google.zxing.ResultPoint;
 
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -190,7 +191,8 @@ public class ScanActivity extends Activity implements CameraManager.PreviewFrame
         String path = result.getText().toString();
         if (path.contains("sign=") && path.contains("&pushId=") && path.contains("&create_time=")) {
             String hashValue = "/app/qRCodeLogin" + time + AND_KEY;
-            String sign = time + "-" + MD5Utils.encode(hashValue);
+           String sign = time + "-" + MD5Utils.encode(hashValue);
+           // String  sign  = SignUtil.getSign(Apiurl.SCANLOGIN);
             String md5 = getMD5Code(path);
             scanLogin(md5, sign,UserMessage.getInstance(this).getAccount_id());
         } else {
@@ -217,7 +219,7 @@ public class ScanActivity extends Activity implements CameraManager.PreviewFrame
         Map<String, Object> param = new HashMap<>();
         param.put("token", token);
         param.put("sign", sign);
-        param.put("requestSource", "android");
+        param.put("requestSource", 100003);
         Type type = new TypeToken<net.hongzhang.baselibrary.mode.Result<String>>() {
         }.getType();
         OkHttps.sendPost(type, Apiurl.CONFIRMCODELOGIN, param, this);
@@ -227,7 +229,7 @@ public class ScanActivity extends Activity implements CameraManager.PreviewFrame
         Map<String, Object> param = new HashMap<>();
         param.put("md5", md5);
         param.put("tsId", UserMessage.getInstance(this).getTsId());
-        param.put("requestSource", "android");
+        param.put("requestSource", 100003);
         param.put("sign", sign);
         param.put("accountId",accountId);
         Type type = new TypeToken<net.hongzhang.baselibrary.mode.Result<ScanVo>>() {
@@ -257,6 +259,25 @@ public class ScanActivity extends Activity implements CameraManager.PreviewFrame
     @Override
     public void foundPossibleResultPoint(ResultPoint resultPoint) {
     }
+    @Override
+    public void onClick(View view) {
+        int viewId = view.getId();
+        if (viewId == R.id.tv_conform_login) {
+            long time = System.currentTimeMillis();
+            String hasValue = "/app/qRCodeConfirmLogin" + time + AND_KEY;
+            String sign = time + "-" + MD5Utils.encode(hasValue);
+        //    String   sign  =  SignUtil.getSign(Apiurl.CONFIRMCODELOGIN);
+            String mToken = MD5Utils.encode(token);
+            qRCodeConformLogin(mToken, sign);
+        } else if (viewId == R.id.tv_concel_login) {
+            rl_scan.setVisibility(View.VISIBLE);
+            rl_conform_login.setVisibility(View.GONE);
+        } else if (viewId == R.id.tv_close1) {
+            finish();
+        } else if (viewId == R.id.tv_close2) {
+            finish();
+        }
+    }
 
     @Override
     public void onSuccess(String uri, Object date) {
@@ -279,26 +300,7 @@ public class ScanActivity extends Activity implements CameraManager.PreviewFrame
     }
 
     @Override
-    public void onError(String uri, String error) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onClick(View view) {
-        int viewId = view.getId();
-        if (viewId == R.id.tv_conform_login) {
-            long time = System.currentTimeMillis();
-            String hasValue = "/app/qRCodeConfirmLogin" + time + AND_KEY;
-            String sign = time + "-" + MD5Utils.encode(hasValue);
-            String mToken = MD5Utils.encode(token);
-            qRCodeConformLogin(mToken, sign);
-        } else if (viewId == R.id.tv_concel_login) {
-            rl_scan.setVisibility(View.VISIBLE);
-            rl_conform_login.setVisibility(View.GONE);
-        } else if (viewId == R.id.tv_close1) {
-            finish();
-        } else if (viewId == R.id.tv_close2) {
-            finish();
-        }
+    public void onError(String uri, net.hongzhang.baselibrary.mode.Result error) {
+        DetaiCodeUtil.errorDetail(error,this);
     }
 }

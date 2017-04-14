@@ -73,7 +73,7 @@ public class SearchConsultListFragment extends BaseFragement implements SearchCo
         presenter = new SearchConsultPresenter(getActivity(), this);
         pageNumber=1;
         tag = SearchResourceActivity.tag;
-        presenter.getSearchResourceList(userMessage.getTsId(), 3, pageSize, pageNumber,userMessage.getAccount_id(), tag);
+        presenter.getSearchResourceList(userMessage.getTsId(), pageSize, pageNumber,userMessage.getAccount_id(), tag);
     }
     @Override
     public void setConsultList(final List<ResourceVo> resourceVos) {
@@ -110,7 +110,7 @@ public class SearchConsultListFragment extends BaseFragement implements SearchCo
     public void onClick(View view) {
         if (view.getId() == R.id.ll_load_more) {
             pageNumber++;
-            presenter.getSearchResourceList(userMessage.getTsId(), 3, pageNumber,
+            presenter.getSearchResourceList(userMessage.getTsId(), pageNumber,
                     pageSize, userMessage.getAccount_id(), tag);
         }
     }

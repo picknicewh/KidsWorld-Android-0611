@@ -1,5 +1,7 @@
 package net.hongzhang.baselibrary.network;
 
+import net.hongzhang.baselibrary.mode.Result;
+
 /**
  * HTTP 监听器
  * @author Shurrik
@@ -7,5 +9,5 @@ package net.hongzhang.baselibrary.network;
  */
 public interface OkHttpListener<T> {
 	void onSuccess(String uri, T date);
-	void onError(String uri, String error);
+	void onError(String uri, Result<String> result);
 }

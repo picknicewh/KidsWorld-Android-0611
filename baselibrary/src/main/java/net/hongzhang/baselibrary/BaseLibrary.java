@@ -45,7 +45,7 @@ public class BaseLibrary {
     /**
      * 整体activity同时销毁的
      */
-    private static List<Activity> activitys = null;
+    public static List<Activity> activitys = null;
     /**
      * 部分activity同时销毁的
      */
@@ -60,7 +60,8 @@ public class BaseLibrary {
         OkHttpUtils.init(application);
         initImageLoader(application);
         RongPushClient.registerMiPush(application, " 2882303761517505108", "5551750520108");
-        RongIM.init(application, "e0x9wycfeaamq");//初始化消息中的信息
+      //  RongIM.init(application, "e0x9wycfeaamq");//初始化消息中的信息
+        RongIM.init(application, "x18ywvqfxlloc");//初始化消息中的信息
         //e0x9wycfeaamq 测试   x18ywvqfxlloc 生产
         activitys = new ArrayList<>();
         activityLockList = new ArrayList<>();

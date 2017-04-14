@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         BaseLibrary.addActivity(this);
         initView();
+
     }
 
     private void initView() {
@@ -66,6 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         presenter = new LoginPresenter(LoginActivity.this, this);
         userMessage = UserMessage.getInstance(this);
         characterSeleteVo = new CharacterSeleteVo();
+
     }
 
     @Override

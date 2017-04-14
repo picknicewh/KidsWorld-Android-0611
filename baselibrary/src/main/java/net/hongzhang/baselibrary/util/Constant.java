@@ -78,4 +78,6 @@ public class Constant {
      * 登录鉴权签名规则
      */
     public static final String  AND_KEY = "9FHGghjGHJgjy57JBKnjklmkllkjnHKLM";
+
+
 }

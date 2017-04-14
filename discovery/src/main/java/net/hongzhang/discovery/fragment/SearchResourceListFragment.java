@@ -12,12 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.base.BaseFragement;
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.activity.SearchResourceActivity;
 import net.hongzhang.discovery.adapter.SearchResourceAdapter;
 import net.hongzhang.discovery.modle.CompilationVo;
-import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.discovery.modle.SearchKeyVo;
 import net.hongzhang.discovery.presenter.MainRecommendPresenter;
 import net.hongzhang.discovery.presenter.SearchResourceContract;
@@ -61,6 +61,7 @@ public class SearchResourceListFragment extends BaseFragement implements View.On
     private UserMessage userMessage;
     private String tag;
     private SearchResourceAdapter resourceAdapter;
+  //  private PullToRefreshRecycleView pullToRefreshRecycleView;
 //    private CompilationAdapter compilationAdapter;
 //    private List<CompilationVo> compilationList;
 
@@ -72,6 +73,27 @@ public class SearchResourceListFragment extends BaseFragement implements View.On
     }
 
     private void initView(View view) {
+       /* resourceVos = new ArrayList<>();
+        pullToRefreshRecycleView =  $(view, R.id.prv_album);
+        rv_album = pullToRefreshRecycleView.getRefreshableView();
+        pullToRefreshRecycleView.setPullLoadEnabled(true);
+        pullToRefreshRecycleView.setPullRefreshEnabled(false);
+        pullToRefreshRecycleView.setScrollLoadEnabled(true);
+        pullToRefreshRecycleView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+                pageNumber=1;
+            }
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+                pageNumber++;
+                presenter.getSearchResourceList(userMessage.getTsId(), type, pageSize, pageNumber,
+                        userMessage.getAccount_id(), tag, 2);
+                pullToRefreshRecycleView.onPullUpRefreshComplete();
+
+            }
+        });*/
+
         rv_album = $(view, R.id.rv_album);
         ll_load_more = $(view, R.id.ll_load_more);
         tv_load_more = $(view, R.id.tv_load_more);
@@ -80,7 +102,6 @@ public class SearchResourceListFragment extends BaseFragement implements View.On
         pageNumber = 1;
         initData();
     }
-
     private void initData() {
         userMessage = UserMessage.getInstance(getActivity());
         Bundle bundle = getArguments();
@@ -121,14 +142,12 @@ public class SearchResourceListFragment extends BaseFragement implements View.On
 //            compilationAdapter.notifyDataSetChanged();
 //        }
     }
-
     private SearchResourceAdapter adapter;
-
     @Override
     public void setResourceList(final List<ResourceVo> resourceList) {
         if (resourceList != null && resourceList.size() > 0) {
             //避免重复创建新的adapter
-            if (adapter!=null){
+            if (adapter != null) {
                 adapter = null;
             }
             adapter = new SearchResourceAdapter(getActivity(), resourceList);
@@ -144,16 +163,17 @@ public class SearchResourceListFragment extends BaseFragement implements View.On
                     } else {
                         presenter.startVideoActivity(vo.getAlbumId(), vo.getResourceId());
                     }
+                    presenter.saveSearchKey(tag,1,userMessage.getTsId(),vo.getResourceName(),vo.getResourceId());
                 }
             });
         }
     }
 
-
     public void setResourceSize(int size) {
         //当返回数小于当前请求数 则显示加载完毕
         if (size == 0 || size < pageSize) {
             lastPage();
+
         }
     }
 

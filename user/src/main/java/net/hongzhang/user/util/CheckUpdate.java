@@ -20,13 +20,14 @@ import com.lzy.okhttputils.callback.FileCallback;
 
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.MD5Utils;
-import net.hongzhang.baselibrary.widget.MyAlertDialog;
 import net.hongzhang.baselibrary.util.NetWorkUitls;
 import net.hongzhang.baselibrary.util.PackageUtils;
+import net.hongzhang.baselibrary.widget.MyAlertDialog;
 import net.hongzhang.user.R;
 import net.hongzhang.user.mode.CheckUpadteVo;
 
@@ -108,7 +109,6 @@ public class CheckUpdate implements OkHttpListener {
 			// 获得存储卡的路径
 			mSavePath = Environment.getExternalStorageDirectory().toString() + "/ChatFile";
 		}
-
 		if(NetWorkUitls.isNetworkAvailable(context)){
 			checkUpdate();
 		}else if(updateType==0) {
@@ -137,11 +137,14 @@ public class CheckUpdate implements OkHttpListener {
 			}
         }
     }
-
-    @Override
-    public void onError(String uri, String error) {
+	@Override
+	public void onError(String uri, Result error) {
+		dialog.dismiss();
 		if(isPrompt) G.showToast(context, "您已经是最新版本");
-    }
+		DetaiCodeUtil.errorDetail(error,context);
+
+
+	}
 
     private void downLoadAPK(){
         OkHttpUtils.get(downLoadURL).execute(new FileCallback(mSavePath,APPNAME+ MD5Utils.encode(version) + ".apk.temp") {

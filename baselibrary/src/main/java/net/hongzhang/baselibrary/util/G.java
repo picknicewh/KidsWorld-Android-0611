@@ -387,7 +387,23 @@ public class G {
             context.startActivity(intent);
         }
     }
-
+    /**
+     * 判断是否全为空格
+     */
+    public static boolean isAllSpace(String tag) {
+        char[] chars = tag.toCharArray();
+        int count=0;
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i]==' '){
+                count++;
+            }
+        }
+        if (count==chars.length){
+            return true;
+        }else {
+            return false;
+        }
+    }
     public static String getClassName(Activity activity) {
         String className = activity.getLocalClassName();
         return className.substring((className.lastIndexOf(".") + 1), className.length());//截取类名
@@ -397,4 +413,5 @@ public class G {
         int index = imageUrl.lastIndexOf("/s");
         return imageUrl.substring(0, index) + imageUrl.substring(index + 2, imageUrl.length());
     }
+
 }

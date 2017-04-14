@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.message.R;
@@ -78,8 +78,8 @@ public class GroupMemberDetailActivity extends BaseActivity implements OkHttpLis
         }
     }
     @Override
-    public void onError(String uri, String error) {
-        Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,this);
     }
     /**
      * 设置列表显示

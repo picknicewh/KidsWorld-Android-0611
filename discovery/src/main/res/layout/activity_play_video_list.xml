@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorAccent">
-
         <ImageView
             android:id="@+id/iv_left"
             android:layout_width="wrap_content"
@@ -17,6 +16,14 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/space"
             android:src="@mipmap/ic_arrow_lift" />
+
+        <TextView
+            android:layout_centerInParent="true"
+             android:text="视频详情"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ts_xx_large"
+            android:textColor="@color/white" />
     </RelativeLayout>
     <ScrollView
         android:id="@+id/sv_content"
@@ -252,6 +259,7 @@
                         android:paddingLeft="@dimen/space"
                         android:paddingRight="@dimen/space"
                         android:paddingTop="@dimen/space_x0.5"
+                        android:lines="1"
                         android:text="评论"
                         android:textColor="@color/white" />
                 </LinearLayout>

@@ -2,6 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include
+        android:id="@+id/rl_nonetwork"
+        layout="@layout/nonetwork"/>
     <LinearLayout
         android:orientation="vertical"
         android:layout_gravity="center"
@@ -11,14 +14,12 @@
         android:layout_height="wrap_content">
         <net.hongzhang.baselibrary.widget.CircleImageView
             android:id="@+id/iv_phead"
-
             android:layout_width="60dp"
             android:layout_height="60dp" />
         <TextView
             android:id="@+id/tv_pname"
             android:layout_marginTop="@dimen/space"
             android:layout_marginBottom="@dimen/space_x2"
-
             android:textColor="@color/theme_text"
             android:textSize="@dimen/ts_large"
             android:layout_width="wrap_content"
@@ -30,49 +31,19 @@
         android:layout_height="@dimen/line_gray"/>
     <LinearLayout
         android:padding="@dimen/space"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-           <TextView
-               android:id="@+id/tv_role"
-               android:text="家长"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
-            <TextView
-                android:layout_marginTop="@dimen/space"
-                android:id="@+id/tv_phone"
+        <TextView
+            android:id="@+id/tv_role"
+            android:text="家长"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_phone_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-                android:textColor="@color/black"
-                android:textSize="@dimen/ts_large"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <RelativeLayout
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-           <ImageView
-               android:layout_marginRight="40dp"
-               android:layout_alignParentRight="true"
-               android:id="@+id/iv_pcall"
-               android:src="@mipmap/ic_call"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
-            <ImageView
-
-                android:layout_alignParentRight="true"
-                android:id="@+id/iv_pmessage"
-                android:src="@mipmap/ic_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
     </LinearLayout>
     <View
         android:layout_marginLeft="@dimen/space"
@@ -92,7 +63,7 @@
             android:layout_marginTop="@dimen/space"
             android:id="@+id/tv_school"
 
-            android:textColor="@color/black"
+            android:textColor="@color/theme_text"
             android:textSize="@dimen/ts_large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -114,7 +85,7 @@
         <TextView
             android:layout_marginTop="@dimen/space"
             android:id="@+id/tv_pclass"
-            android:textColor="@color/black"
+            android:textColor="@color/theme_text"
             android:textSize="@dimen/ts_large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

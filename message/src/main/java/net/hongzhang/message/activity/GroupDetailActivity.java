@@ -23,6 +23,7 @@ import net.hongzhang.baselibrary.contract.GroupDb;
 import net.hongzhang.baselibrary.contract.GroupsDbHelper;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
@@ -280,8 +281,8 @@ public class GroupDetailActivity extends BaseActivity implements OkHttpListener 
         }
     }
     @Override
-    public void onError(String uri, String error) {
-        Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,this);
     }
     /**
      * 获取最后两个添加和删除

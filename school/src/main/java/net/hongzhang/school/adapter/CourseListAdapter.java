@@ -12,7 +12,7 @@ import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.school.R;
-import net.hongzhang.school.activity.CourseArrangeActivity;
+import net.hongzhang.school.activity.CourseArrangeListActivity;
 import net.hongzhang.school.bean.SyllabusVo;
 import net.hongzhang.school.widget.DeleteDialog;
 
@@ -29,10 +29,10 @@ import java.util.List;
  * ================================================
  */
 public class CourseListAdapter extends BaseAdapter  {
-    private CourseArrangeActivity context;
+    private CourseArrangeListActivity context;
     private List<SyllabusVo> syllabusVoList;
 
-    public CourseListAdapter(CourseArrangeActivity context, List<SyllabusVo> publishList) {
+    public CourseListAdapter(CourseArrangeListActivity context, List<SyllabusVo> publishList) {
         this.context = context;
         this.syllabusVoList = publishList;
     }
@@ -77,8 +77,9 @@ public class CourseListAdapter extends BaseAdapter  {
         });
         viewHold.tv_describle.setText(vo.getTitle());
         if (vo.getImgs().size()>0){
-         //   ImageCache.imageLoader(vo.getImgs().get(0),viewHold.iv_course);
-            viewHold.iv_course.setImageBitmap(ImageCache.getBitmap(vo.getImgs().get(0)));
+
+            ImageCache.imageLoader(vo.getImgs().get(0),viewHold.iv_course);
+            //viewHold.iv_course.setImageBitmap(ImageCache.getBitmap(vo.getImgs().get(0)));
             viewHold.iv_course.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
         return view;

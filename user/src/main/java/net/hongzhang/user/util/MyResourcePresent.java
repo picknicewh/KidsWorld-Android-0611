@@ -5,13 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.network.ServerConfigManager;
@@ -197,8 +197,8 @@ public class MyResourcePresent implements ResourceContract.Presenter, OkHttpList
     }
 
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         view.stopLoadingDialog();
-        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+        DetaiCodeUtil.errorDetail(error,context);
     }
 }

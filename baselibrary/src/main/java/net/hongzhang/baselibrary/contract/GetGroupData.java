@@ -2,13 +2,13 @@ package net.hongzhang.baselibrary.contract;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.mode.GroupInfoVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -87,7 +87,8 @@ public class GetGroupData implements OkHttpListener {
         }
     }
     @Override
-    public void onError(String uri, String error) {
-        Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,context);
     }
+
 }

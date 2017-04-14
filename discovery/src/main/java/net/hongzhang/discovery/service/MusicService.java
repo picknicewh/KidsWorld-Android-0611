@@ -14,6 +14,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+
 import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.discovery.util.Constants;
 import net.hongzhang.discovery.util.PlayMode;
@@ -191,7 +192,7 @@ public class MusicService extends Service implements OnPreparedListener,
                 }
             }else if (action.equals(Constants.ACTION_PROCRESSBAR)){
                 int progress = intent.getIntExtra("progress",current);
-                 player.seekTo(progress);
+                player.seekTo(progress);
             }
 
         }

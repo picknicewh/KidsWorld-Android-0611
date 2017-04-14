@@ -72,12 +72,13 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
           return;
         }
         View coupons_view = LayoutInflater.from(context).inflate(R.layout.dialog_prompt, null);
+        String hint = "您的帐号已在其他设备上登录，如果不是您的操作，请尽快重新登录修改密码.";
          final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, context,0);
         Button btn_conform = (Button) coupons_view.findViewById(net.hongzhang.baselibrary.R.id.btn_conform);
         TextView pop_title = (TextView) coupons_view.findViewById(net.hongzhang.baselibrary.R.id.tv_title);
         alertDialog.setCancelable(false);
         btn_conform.setText("确认退出");
-        pop_title.setText("您的帐号已在其他设备上登录，如果不是您的操作，请尽快重新登录修改密码.");
+        pop_title.setText(hint);
         btn_conform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -95,5 +96,7 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
                 alertDialog.dismiss();
             }
         });
+
+
     }
 }

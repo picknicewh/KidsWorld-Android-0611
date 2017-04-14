@@ -5,13 +5,13 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.view.Gravity;
 import android.widget.CheckBox;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.activity.UpdateMessageActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.FormValidation;
@@ -45,7 +45,7 @@ public class LoginPresenter implements LoginContact.Presenter, OkHttpListener {
         if (!checkBox.isChecked()) {
             G.initDisplaySize(context);
             PromptPopWindow promptPopWindow = new PromptPopWindow(context, "请同意服务条款");
-            promptPopWindow.showAtLocation(checkBox, Gravity.NO_GRAVITY, (G.size.W - promptPopWindow.getWidth()) / 2, (int) (G.size.H * 0.2));
+            promptPopWindow.showAtLocation(checkBox, Gravity.CENTER, 0, 0);
             return;
         }
         if (G.isEmteny(accountId) || G.isEmteny(password)) {
@@ -60,7 +60,7 @@ public class LoginPresenter implements LoginContact.Presenter, OkHttpListener {
         params.put("accountId", accountId);
         params.put("password", password);
         params.put("sign", sign);
-        params.put("requestSource","android");
+        params.put("requestSource",100003);
         Type type = new TypeToken<Result<List<CharacterSeleteVo>>>() {
         }.getType();
         OkHttps.sendPost(type, Apiurl.APPLOGIN, params, this);
@@ -110,8 +110,9 @@ public class LoginPresenter implements LoginContact.Presenter, OkHttpListener {
         }
     }
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         view.stopLoadingDialog();
-        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+        DetaiCodeUtil.errorDetail(error,context);
     }
+
 }

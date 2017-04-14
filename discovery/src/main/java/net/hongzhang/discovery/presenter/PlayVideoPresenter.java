@@ -1,8 +1,16 @@
 package net.hongzhang.discovery.presenter;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -17,6 +25,7 @@ import com.google.gson.reflect.TypeToken;
 import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -43,6 +52,7 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
     private boolean isPrepared;
     private String tsId = UserMessage.getInstance(context).getTsId();
     private int currentPosition = 0;
+    private NetBroadcastReceiver receiver;
 
     public PlayVideoPresenter(Activity context, SurfaceView surfaceView, PlayVideoContract.View view, String alubmId, String resourceId) {
         this.context = context;
@@ -69,7 +79,7 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
         map.put("tsId", tsId);
         map.put("resourceid", resourceId);
         if (type == 2) {
-            map.put("broadcastPace", broadcastPace/1000);
+            map.put("broadcastPace", broadcastPace / 1000);
         }
         map.put("type", type);
         Type mType = new TypeToken<Result<String>>() {
@@ -79,7 +89,7 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
 
     @Override
     public void getVideoList(String tsId, String themeId) {
-        G.log("====themeId=="+themeId);
+        G.log("====themeId==" + themeId);
         Map<String, Object> map = new HashMap<>();
         map.put("tsId", tsId);
         map.put("pageSize", 999);
@@ -144,7 +154,7 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
             player.setOnBufferingUpdateListener(this);
             player.setOnErrorListener(this);
             isPrepared = false;
-            view.showLoadingDialog();
+           view.showLoadingDialog();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -153,12 +163,16 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
     @Override
     public void play() {
         try {
-            if (player != null) {
-                Log.i("fffff", "===========play=============" + player.getCurrentPosition());
-                player.start();
-                view.setIsPlay(true);
-                savePlayTheRecord(tsId, resourceId, player.getCurrentPosition(), 1);
-            }
+          //  if (G.isNetworkConnected(context)) {
+                if (player != null) {
+                    player.start();
+                    view.setIsPlay(true);
+                    savePlayTheRecord(tsId, resourceId, player.getCurrentPosition(), 1);
+                }
+          //  } else {
+              //  pause();
+         //   }
+
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
@@ -171,7 +185,6 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
             if (player != null) {
                 player.pause();
                 view.setIsPlay(false);
-                Log.i("fffff", "===========pause=============");
             }
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -211,10 +224,9 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
     }
 
 
-
     @Override
     public void onSuccess(String uri, Object date) {
-        view.stopLoadingDialog();
+       // view.stopLoadingDialog();
         if (uri.equals(Apiurl.USER_GETTHENELIST)) {
             if (date != null) {
                 Result<ArrayList<ResourceVo>> data = (Result<ArrayList<ResourceVo>>) date;
@@ -237,7 +249,7 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
                     view.setvideoInfo(resourceVos.get(position), position);
                 }
             }
-        } else if (uri.equals(Apiurl.SUBATTENTION)||uri.equals(Apiurl.RESSUBPRAISE)) {
+        } else if (uri.equals(Apiurl.SUBATTENTION) || uri.equals(Apiurl.RESSUBPRAISE)) {
             if (date != null) {
                 Result<String> data = (Result<String>) date;
                 String result = data.getData();
@@ -246,10 +258,11 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
         }
     }
 
+
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         view.stopLoadingDialog();
-        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+        DetaiCodeUtil.errorDetail(error, context);
     }
 
     @Override
@@ -261,7 +274,6 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
     public void onPrepared(MediaPlayer mediaPlayer) {
         try {
             if (player != null) {
-                Log.i("fffff", "===========onPrepared=============");
                 isPrepared = true;
                 view.stopLoadingDialog();
                 player.start();
@@ -281,18 +293,19 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
         Log.i("fffff", "===========setup=============onCompletion");
-
-        if (!isActivityRestart) {
-            savePlayTheRecord(tsId, resourceId, mediaPlayer.getDuration(), 2);
-            position++;
-            if (position > resourceVos.size() - 1) {
-                position = 0;
+        if (G.isNetworkConnected(context)) {
+            if (!isActivityRestart) {
+                savePlayTheRecord(tsId, resourceId, mediaPlayer.getDuration(), 2);
+                position++;
+                if (position > resourceVos.size() - 1) {
+                    position = 0;
+                }
+                view.setvideoInfo(resourceVos.get(position), position);
+            } else {
+                isActivityRestart = false;
             }
-            view.setvideoInfo(resourceVos.get(position), position);
-        } else {
-            isActivityRestart = false;
+            setup();
         }
-        setup();
     }
 
 
@@ -336,11 +349,16 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
             player = null;
         }
     }
-
+    private int cachePosition;
     @Override
     public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
-//        G.log("========视屏缓冲大小==========" + i);
-        view.setCurrent(player.getCurrentPosition());
+        float persent = (float) i / (float) 100;
+        float p = player.getDuration() * persent;
+        //G.log("========视屏缓冲大小==========" + i);
+        cachePosition = (int)p;
+        currentPosition = player.getCurrentPosition();
+        view.setCurrent(currentPosition, cachePosition);
+
     }
 
 
@@ -360,4 +378,45 @@ public class PlayVideoPresenter implements PlayVideoContract.Presenter, OkHttpLi
 
         return false;
     }
+
+    @Override
+    public void registerReceiver() {
+        receiver = new NetBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        context.registerReceiver(receiver, filter);
+    }
+
+    @Override
+    public void unRegisterReceiver() {
+        context.unregisterReceiver(receiver);
+    }
+
+    private class NetBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(final Context context, Intent intent) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mobNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            NetworkInfo wifiNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
+                pause();
+                view.showLoadingDialog();
+                new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        if (msg.what==0x01){
+                            view.stopLoadingDialog();
+                            G.showToast(context,"没有网络请检查网络设置");
+                        }
+                    }
+                }.sendEmptyMessageDelayed(0x01,5000);
+
+            } else {
+                 changeSeeBar(currentPosition);
+                 play();
+            }
+        }
+    }
+
 }

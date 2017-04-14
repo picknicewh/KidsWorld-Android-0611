@@ -31,6 +31,9 @@ public class SearchHistoryDbHelper {
      * @param tableName 表名
      */
     public void insert(SQLiteDatabase db, String key, String tableName) {
+        if (getcount(db,tableName)>5){
+            deleteByKey(db,getLastOne(db,tableName),tableName);
+        }
         if (!G.isEmteny(key)) {
             Cursor cursor = db.rawQuery("select * from " + tableName + " order by uid desc", null);
             int keyIndex = cursor.getColumnIndex("key");
@@ -104,7 +107,24 @@ public class SearchHistoryDbHelper {
         String sql = "delete from " + tableName + "  where key ='" + key + "'";
         db.execSQL(sql);
     }
-
+    /**
+     * 获取条数
+     * @param db  数据库
+     * @param tableName
+     */
+    public int getcount(SQLiteDatabase db,String tableName){
+        Cursor cursor = db.rawQuery("select * from " + tableName + " ", null);
+        int i = 0;
+        while (cursor.moveToNext()){
+            i++;
+        }
+        cursor.close();
+        return i;
+    }
+     public String getLastOne(SQLiteDatabase database,String tableName) {
+         List<SearchKeyVo> searchKeyVoList = getKeyList(database,tableName);
+         return searchKeyVoList.get(searchKeyVoList.size()-1).getKey();
+     }
     /**
      * 删除所有
      *

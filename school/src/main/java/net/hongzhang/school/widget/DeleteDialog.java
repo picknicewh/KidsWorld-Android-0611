@@ -8,12 +8,13 @@ import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.BaseConformDialog;
 import net.hongzhang.school.R;
-import net.hongzhang.school.activity.CourseArrangeActivity;
+import net.hongzhang.school.activity.CourseArrangeListActivity;
 import net.hongzhang.school.activity.LeaveListActivity;
 import net.hongzhang.school.fragment.MedicineFeedListFragment;
 import net.hongzhang.school.fragment.MedicineProcessFragment;
@@ -80,8 +81,8 @@ public class DeleteDialog extends BaseConformDialog implements View.OnClickListe
           if (context instanceof LeaveListActivity){
               LeaveListActivity   activity = (LeaveListActivity) context;
               activity.deleteUpdate(position);
-          }else if (context instanceof CourseArrangeActivity){
-              CourseArrangeActivity arrangeActivity = (CourseArrangeActivity) context;
+          }else if (context instanceof CourseArrangeListActivity){
+              CourseArrangeListActivity arrangeActivity = (CourseArrangeListActivity) context;
               arrangeActivity.updateDelete(position);
           }
           else {
@@ -94,9 +95,9 @@ public class DeleteDialog extends BaseConformDialog implements View.OnClickListe
         alertDialog.dismiss();
     }
     @Override
-    public void onError(String uri, String error) {
-        Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
-        alertDialog.dismiss();
+    public void onError(String uri, Result error) {
+        DetaiCodeUtil.errorDetail(error,context);
+
     }
     /**
      * 删除请假

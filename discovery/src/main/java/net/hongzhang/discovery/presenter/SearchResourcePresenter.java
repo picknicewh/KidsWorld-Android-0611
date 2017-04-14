@@ -3,13 +3,13 @@ package net.hongzhang.discovery.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -85,8 +85,6 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
      */
     @Override
     public void getSongList(String tsId, String themeId,String resourceId) {
-        G.log("zzzzzzzzzzzzzz------"+resourceId);
-        G.log("zzzzzzzzzzzzzz------f"+themeId);
         this.albumId = themeId;
         this.resourceId = resourceId;
         Map<String, Object> map = new HashMap<>();
@@ -120,6 +118,8 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
         Type mType =  new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(mType,Apiurl.SAVESERACHRE,params,this);
     }
+
+
     @Override
     public void insertKey(int type, String tag) {
        // Log.i("RRRRRRRR","tag========="+tag+"type========"+type);
@@ -165,13 +165,6 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
                     }
                     compilationVoList.addAll(compilationVos);
                     view.setCompilationVoList(compilationVoList);
-//                    if (resourceVos1 != null && resourceVos1.size() > 0) {
-//                        if (flag == 1) {
-//                            resourceVoList.clear();
-//                        }
-//                        resourceVoList.addAll(resourceVos1);
-//                        view.setResourceList(resourceVoList);
-//                    }
                 }
 
                 if (resourceVos1 != null && resourceVos1.size() > 0) {
@@ -180,7 +173,7 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
                     }
                     resourceVoList.addAll(resourceVos1);
                     view.setResourceList(resourceVoList);
-                  /*  if (compilationVos != null && compilationVos.size() > 0) {
+                   /* if (compilationVos != null && compilationVos.size() > 0) {
                         if (flag == 1) {
                             compilationVoList.clear();
                         }
@@ -188,6 +181,7 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
                         view.setCompilationVoList(compilationVoList);
                     }*/
                 }
+              //  view.setResourceList(resourceVos1);
                 view.setResourceSize((resourceVos1.size()));
             }
         }else if (uri.equals(Apiurl.USER_GETTHENELIST)) {
@@ -197,13 +191,18 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
                 G.log("zzzzzzzzzzzzzz---++---"+resourceId);
                 startMusicActivity(resourceVoList,resourceId);
             }
+        }else if (uri.equals(Apiurl.SAVESERACHRE)){
+            Result<String> result = (Result<String>) date;
+            String resultData = result.getData();
+            G.log(resultData);
+            //G.showToast(context,resultData);
         }
     }
 
     @Override
-    public void onError(String uri, String error) {
+    public void onError(String uri, Result error) {
         view.stopLoadingDialog();
         view.setloadMoreVis(true);
-        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+        DetaiCodeUtil.errorDetail(error,context);
     }
 }

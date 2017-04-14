@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.DateUtil;
@@ -88,7 +89,7 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
      * 用户信息
      */
     private UserMessage message;
-    private LoadingDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,12 +224,12 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
         params.put("cause",et_cause.getText().toString());
         Type type = new TypeToken<Result<String>>(){}.getType();
         OkHttps.sendPost(type,Apiurl.SCHOOL_SUBLEAVE,params,this);
-        dialog.show();
+        showLoadingDialog();
     }
     @Override
     public void onSuccess(String uri, Object date) {
+        showLoadingDialog();
            Result< String> data = (Result<String>) date;
-           dialog.dismiss();
            if (data.isSuccess()){
             String result  = data.getData();
             Toast.makeText(LeaveAskActivity.this,result,Toast.LENGTH_SHORT).show();
@@ -237,8 +238,8 @@ public class LeaveAskActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void onError(String uri, String error) {
-        dialog.dismiss();
-        Toast.makeText(LeaveAskActivity.this,error,Toast.LENGTH_SHORT).show();
+    public void onError(String uri, Result error) {
+        stopLoadingDialog();
+        DetaiCodeUtil.errorDetail(error,this);
     }
 }

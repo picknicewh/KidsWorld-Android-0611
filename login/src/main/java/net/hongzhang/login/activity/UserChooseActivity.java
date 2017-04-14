@@ -5,7 +5,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import com.umeng.analytics.MobclickAgent;
+
 import net.hongzhang.baselibrary.BaseLibrary;
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.network.Apiurl;
@@ -19,6 +21,7 @@ import net.hongzhang.login.presenter.UserChooseContract;
 import net.hongzhang.login.presenter.UserChoosePresenter;
 import net.hongzhang.login.util.SignUtil;
 import net.hongzhang.login.util.UserAction;
+
 import java.util.ArrayList;
 import java.util.List;
 

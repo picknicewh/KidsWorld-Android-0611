@@ -3,8 +3,11 @@ package net.hongzhang.discovery.activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,12 +23,12 @@ import android.widget.TextView;
 
 import net.hongzhang.baselibrary.BaseLibrary;
 import net.hongzhang.baselibrary.image.ImageCache;
+import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.CircleImageView;
 import net.hongzhang.baselibrary.widget.PromptPopWindow;
 import net.hongzhang.discovery.R;
-import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.discovery.presenter.PlayMusicContract;
 import net.hongzhang.discovery.presenter.PlayMusicPresenter;
 import net.hongzhang.discovery.service.LockScreenService;
@@ -176,7 +179,7 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
     /**
      * 是否免费资源-----如果普通用户非免费资源不能播放。如果会员用户所有资源都可光看
      */
-    private int isResourceFree;
+    private int isResourceFree=2;
     /**
      * 旋转动画工具类
      */
@@ -228,24 +231,6 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
         ll_play.setOnClickListener(this);
         animationUtil = new AnimationUtil(fl_album);
         iv_left.setOnClickListener(this);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                if (b) {
-                    presenter.changeSeeBar(progress);
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                presenter.pause();
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                presenter.play();
-            }
-        });
     }
     /**
      * 是否vivoX5
@@ -268,15 +253,29 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
         tsId = userMessage.getTsId();
         playMode = PlayMode.getDefault();
         Intent intent = getIntent();
-
         resourceId = intent.getStringExtra("resourceId");
         startLockScreenService();
         myMusicReceiver = new MyMusicReceiver();
         resourceVos  =  intent.getParcelableArrayListExtra("resourceVos");
         themeId  = resourceVos.get(position).getAlbumId();
         presenter = new PlayMusicPresenter(this, this, position,resourceVos,myMusicReceiver, resourceId);
-      //  presenter = new PlayMusicPresenter(this, this, position,resourceVos,myMusicReceiver,themeId, resourceId);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                if (b && isResourceFree==2) {
+                    presenter.changeSeeBar(progress);
+                }
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                presenter.pause();
+            }
 
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                presenter.play();
+            }
+        });
     }
     /**
      * 启动锁屏
@@ -303,17 +302,18 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
             playListPopuWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
         } else if (viewId == R.id.iv_play || viewId == R.id.ll_play) {
             //isResourceFree==2免费==1收费
-            if (isResourceFree == 2) {
-                play();
-            } else {
-                PromptPopWindow promptPopWindow = new PromptPopWindow(this, "小主人，您的套餐已到期暂不能收看了。别难受，尽快续订，和贝贝虎一起愉快的玩耍吧!");
-                promptPopWindow.showAtLocation(view, Gravity.NO_GRAVITY, (int) (G.size.W * 0.1), (int) (G.size.H * 0.7));
-              /*  if (isResourceFree==1){
-
-                }else {
+            if (!G.isNetworkConnected(this)){
+                PromptPopWindow promptPopWindow = new PromptPopWindow(this, "与服务器连接异常，请检查网络后重试！");
+                promptPopWindow.showAtLocation(view, Gravity.CENTER,0, 0);
+            }else {
+                if (isResourceFree == 2) {
                     play();
-                }*/
+                } else {
+                    PromptPopWindow promptPopWindow = new PromptPopWindow(this, "小主人，您的套餐已到期暂不能收看了。别难受，尽快续订，和贝贝虎一起愉快的玩耍吧!");
+                    promptPopWindow.showAtLocation(view, Gravity.CENTER,0, 0);
+                }
             }
+
         } else if (viewId == R.id.iv_nextSong) {
             boolean isFastClick = isFastClick(clickTime);
             if (!isFastClick) {
@@ -342,7 +342,7 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
         //当第一次播放时点击按钮开始播放，记录当前播放记录
         if (position == 0 && isFirst) {
             ishasPlay = true;
-            Log.i("ssssssssss", "tsId:" + tsId + "===========resourceId:" + resourceId + "==========hasplayTime:" + hasplayTime + "== //当第一次播放时点击按钮开始播放，记录当前播放记录===");
+          //  Log.i("ssssssssss", "tsId:" + tsId + "===========resourceId:" + resourceId + "==========hasplayTime:" + hasplayTime + "== //当第一次播放时点击按钮开始播放，记录当前播放记录===");
             presenter.savePlayTheRecord(tsId, resourceId, hasplayTime, 1);
             isFirst = false;
         }
@@ -474,19 +474,21 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
         presenter.unRisterReceiver();
         close();
         if (ishasPlay) {
-            Log.i("ssssssssss", "tsId:" + tsId + "===========resourceId:" + resourceId + "==========hasplayTime:" + hasplayTime + "==========直接终止");
+           // Log.i("ssssssssss", "tsId:" + tsId + "===========resourceId:" + resourceId + "==========hasplayTime:" + hasplayTime + "==========直接终止");
             presenter.savePlayTheRecord(tsId, resourceId, hasplayTime, 2);
         }
     }
 
     private int duration;
+    private int currentTime=0;
+    private boolean isNetBreakUp = false;
     public class MyMusicReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             switch (intent.getAction()) {
                 case Constants.MUSIC_CURRENT:
                     //获取当前暂停或停止播放时的播放时间
-                    final int currentTime = intent.getIntExtra("currentTime", 0);
+                    currentTime = intent.getIntExtra("currentTime", 0);
                     hasplayTime = currentTime / 1000;
                     tv_currentTime.setText(G.toTime(currentTime));
                     seekBar.setProgress(currentTime);
@@ -517,22 +519,22 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
                         if (!isVivoX5()) {
                             iv_loading.startAnimation(operatingAnim);
                             iv_loading.setVisibility(View.VISIBLE);
-                            iv_play.setClickable(false);
+                            iv_play.setEnabled(false);
                         } else {
-                            iv_play.setClickable(true);
+                            iv_play.setEnabled(true);
                         }
                     } else if (state == 0) {
                         ishasPlay = true;
                         animationUtil.startRotateAnimation();
                         iv_loading.clearAnimation();
-                        iv_play.setClickable(true);
+                        iv_play.setEnabled(true);
                         iv_loading.setVisibility(View.INVISIBLE);
                         //非第一次播放,切换歌曲时，记录
                         presenter.savePlayTheRecord(tsId, resourceId, hasplayTime, 1);
                     } else if (state == 1) {
                         iv_loading.clearAnimation();
                         iv_loading.setVisibility(View.INVISIBLE);
-                        iv_play.setClickable(true);
+                        iv_play.setEnabled(true);
                     } else if (state == 3) {
                         if (!isVivoX5()) {
                             animationUtil.cancelRotateAnimation();
@@ -562,6 +564,41 @@ public class MainPlayMusicActivity extends BaseMusicActivity implements View.OnC
                         presenter.preSong();
                     } else if (op == Constants.CLOSE) {
                         close();
+                    }
+                    break;
+                case ConnectivityManager.CONNECTIVITY_ACTION:
+                    ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo mobNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+                    NetworkInfo wifiNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                    if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
+                        isNetBreakUp  =true;
+                      //  iv_play.setEnabled(false);
+                        presenter.pause();
+                        showLoadingDialog();
+                        new Handler(){
+                            @Override
+                            public void handleMessage(Message msg) {
+                                super.handleMessage(msg);
+                                if (msg.what==0x01){
+                                    stopLoadingDialog();
+                                    G.showToast(MainPlayMusicActivity.this,"没有网络请检查网络设置");
+                                }
+                            }
+                        }.sendEmptyMessageDelayed(0x01,5000);
+                        animationUtil.cancelRotateAnimation();
+                    } else {
+                          if (isNetBreakUp){
+                             // iv_play.setEnabled(true);
+                              animationUtil.startRotateAnimation();
+                              G.log("-------------------------"+currentTime);
+                              if (currentTime==0){
+                                  play();
+                              }else {
+                                  seekBar.setProgress(currentTime);
+                                  presenter.play();
+                              }
+
+                          }
                     }
                     break;
             }

@@ -17,6 +17,7 @@ import com.umeng.analytics.MobclickAgent;
 import net.hongzhang.baselibrary.R;
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.EncryptUtil;
@@ -212,15 +213,16 @@ public class UpdateMessageActivity extends BaseActivity implements View.OnClickL
             finish();
         }
     }
-
     @Override
-    public void onError(String uri, String error) {
-        G.showToast(this,error);
+    public void onError(String uri, Result error) {
+        stopLoadingDialog();
+        DetaiCodeUtil.errorDetail(error,this);
         if(VALIDATECODE.equals(uri)){
             myCount.onFinish();
             myCount.cancel();
         }
     }
+
 
     /**
      * 一个倒计时的内部类

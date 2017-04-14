@@ -13,18 +13,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
+import net.hongzhang.baselibrary.mode.ResourceVo;
+import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.SearchHistoryAdapter;
 import net.hongzhang.discovery.adapter.SearchResourceAdapter;
 import net.hongzhang.discovery.modle.CompilationVo;
-import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.discovery.modle.SearchKeyVo;
 import net.hongzhang.discovery.presenter.MainRecommendPresenter;
 import net.hongzhang.discovery.presenter.SearchResourceContract;
 import net.hongzhang.discovery.presenter.SearchResourcePresenter;
+import net.hongzhang.discovery.util.TextUtil;
 
 import java.util.List;
+
 
 /**
  * 作者： wh
@@ -117,6 +120,7 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
         setLiftOnClickClose();
     }
 
+
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
@@ -124,10 +128,16 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
             pageNumber = 1;
             lv_search_play_history.setVisibility(View.GONE);
             ll_search_content.setVisibility(View.VISIBLE);
-            tag = et_search_key.getText().toString();
-            presenter.insertKey(type, tag);
-            presenter.getSearchHistoryList(type);
-            presenter.getSearchResourceList(userMessage.getTsId(), type, pageSize, pageNumber, userMessage.getAccount_id(), tag, 1);
+            tag = et_search_key.getText().toString().trim();
+            if (!TextUtil.isAllSpace(tag)){
+                presenter.insertKey(type, tag);
+                presenter.getSearchHistoryList(type);
+                presenter.getSearchResourceList(userMessage.getTsId(), type, pageSize, pageNumber, userMessage.getAccount_id(), tag, 1);
+            }else {
+                et_search_key.setText("");
+                G.showToast(this,"搜索关键词不能为空");
+            }
+
         } else if (viewId == R.id.tv_clean) {
             et_search_key.setText("");
         } else if (view.getId() == R.id.ll_load_more) {
@@ -149,6 +159,7 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
                 ll_search_content.setVisibility(View.VISIBLE);
                 lv_search_play_history.setVisibility(View.GONE);
                 tag = searchKeyVoList.get(position).getKey();
+                et_search_key.setText(tag);
                 presenter.getSearchResourceList(userMessage.getTsId(), type, pageSize, pageNumber, userMessage.getAccount_id(), tag, 1);
             }
         });
@@ -158,6 +169,7 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
     public void setloadMoreVis(boolean isVis) {
         ll_load_more.setVisibility(isVis ? View.VISIBLE : View.GONE);
     }
+
     @Override
     public void setCompilationVoList(final List<CompilationVo> musicCompilationVos) {
     /*    lv_search_play_history.setVisibility(View.GONE);
@@ -184,13 +196,15 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
             });
         }*/
     }
-    private  SearchResourceAdapter searchResourceAdapter;
+
+    private SearchResourceAdapter searchResourceAdapter;
+
     @Override
     public void setResourceList(final List<ResourceVo> resourceList) {
         lv_search_play_history.setVisibility(View.GONE);
         if (resourceList.size() > 0 && resourceList != null) {
-            if (searchResourceAdapter!=null){
-                searchResourceAdapter=null;
+            if (searchResourceAdapter != null) {
+                searchResourceAdapter = null;
             }
             searchResourceAdapter = new SearchResourceAdapter(this, resourceList);
             rv_search_play.setLayoutManager(new GridLayoutManager(this, 2));
@@ -199,13 +213,14 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
                 @Override
                 public void OnItemClick(View view, int position) {
                     ResourceVo vo = resourceList.get(position);
-                    presenter.saveSearchKey(tag,1,userMessage.getTsId(),vo.getResourceName(),vo.getResourceId());
+                    presenter.saveSearchKey(tag, 1, userMessage.getTsId(), vo.getResourceName(), vo.getResourceId());
                     if (type == MainRecommendPresenter.TYPE_MUISC) {
-                        presenter.getSongList(userMessage.getTsId(),vo.getAlbumId(),vo.getResourceId());
-                      //  presenter.startMusicActivity(vo.getAlbumId(), vo.getResourceId());
+                        presenter.getSongList(userMessage.getTsId(), vo.getAlbumId(), vo.getResourceId());
+                        //  presenter.startMusicActivity(vo.getAlbumId(), vo.getResourceId());
                     } else {
                         presenter.startVideoActivity(vo.getAlbumId(), vo.getResourceId());
                     }
+                    presenter.saveSearchKey(tag, 1, userMessage.getTsId(), vo.getResourceName(), vo.getResourceId());
                 }
             });
         }

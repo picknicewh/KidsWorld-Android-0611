@@ -1,12 +1,12 @@
 package net.hongzhang.discovery.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 
 import net.hongzhang.baselibrary.util.G;
+import net.hongzhang.discovery.activity.FullPlayVideoActivity;
 
 /**
  * Created by wanghua on 2017/2/21.
@@ -32,13 +32,13 @@ public class MyGestureListener extends android.view.GestureDetector.SimpleOnGest
     /**
      * 当前页
      */
-    private Activity activity;
+    private FullPlayVideoActivity activity;
     /**
      * 当前亮度
      */
     private float mBrightness;
 
-    public MyGestureListener(Activity activity) {
+    public MyGestureListener(FullPlayVideoActivity activity) {
         this.activity = activity;
         G.initDisplaySize(activity);
         mAudioManager = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
@@ -62,6 +62,8 @@ public class MyGestureListener extends android.view.GestureDetector.SimpleOnGest
             onBrightnessSlide((olderY - y) / screenHeight);
         if (olderX >= srceenWidth / 3 * 2 && olderX <= srceenWidth)
             onVolumeSlide((olderY - y) / screenHeight);
+
+
         return super.onScroll(e1, e2, distanceX, distanceY);
     }
 
@@ -71,6 +73,7 @@ public class MyGestureListener extends android.view.GestureDetector.SimpleOnGest
      * @param percent
      */
     private void onVolumeSlide(float percent) {
+
         if (mVolume == -1) {
             mVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
             if (mVolume < 0)
@@ -83,6 +86,9 @@ public class MyGestureListener extends android.view.GestureDetector.SimpleOnGest
             index = 0;
         // 变更声音
         mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, index, 0);
+        G.log("----------------onVolumeSlide"+index);
+        activity.setSoundProgress(index);
+
     }
 
     /**
@@ -91,6 +97,8 @@ public class MyGestureListener extends android.view.GestureDetector.SimpleOnGest
      * @param percent
      */
     private void onBrightnessSlide(float percent) {
+
+
         if (mBrightness < 0) {
             mBrightness = activity.getWindow().getAttributes().screenBrightness;
             if (mBrightness <= 0.00f)
@@ -105,6 +113,8 @@ public class MyGestureListener extends android.view.GestureDetector.SimpleOnGest
         else if (lpa.screenBrightness < 0.01f)
             lpa.screenBrightness = 0.01f;
         activity.getWindow().setAttributes(lpa);
+        G.log("----------------onBrightnessSlide"+lpa.screenBrightness*100);
+        activity.setLightProgress((int) (lpa.screenBrightness *100));
 
     }
     /** 手势结束 */
@@ -112,5 +122,4 @@ public class MyGestureListener extends android.view.GestureDetector.SimpleOnGest
         mVolume = -1;
         mBrightness = -1f;
     }
-
 }

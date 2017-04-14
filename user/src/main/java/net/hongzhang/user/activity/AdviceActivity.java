@@ -12,6 +12,7 @@ import com.umeng.analytics.MobclickAgent;
 import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
@@ -53,6 +54,7 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
             String advice=et_advice.getText().toString().trim();
             if(G.isEmteny(advice)){
                 G.showToast(this,"反馈内容不能为空！");
+                b_submit.setEnabled(true);
                 return;
             }
             um=UserMessage.getInstance(this);
@@ -72,10 +74,10 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
             finish();
         }
     }
-
     @Override
-    public void onError(String uri, String error) {
-        G.showToast(this,error);
+    public void onError(String uri, Result error) {
+        stopLoadingDialog();
+        DetaiCodeUtil.errorDetail(error,this);
     }
 
     @Override

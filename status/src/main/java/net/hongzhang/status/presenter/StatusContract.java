@@ -25,6 +25,7 @@ public class StatusContract {
         void setTvStatusbar(boolean isVisible);
         void setTargetId(String targetId);
         void setHeadInfo(int count,String imageUrl );
+        void setDeleteDynamic(String dynamicId);
         void showLoadingDialog();
         void stopLoadingDialog();
     }

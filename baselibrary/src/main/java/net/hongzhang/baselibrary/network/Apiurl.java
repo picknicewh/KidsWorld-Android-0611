@@ -199,12 +199,12 @@ public class Apiurl {
      * 用户登录
      */
     public static final String APPLOGIN = "/app/login.do";
-   // public static final String APPLOGIN = "/app/loginBBH.do";
+    //public static final String APPLOGIN = "/app/loginBBH.do";
     /**
      * 用户身份选择
      */
     public static final String SELECTUSER = "/app/selectUser.do";
-   // public static final String SELECTUSER = "/app/selectTs.do";
+    // public static final String SELECTUSER = "/app/selectTs.do";
     /**
      * 扫描二维码登录
      */
@@ -257,7 +257,10 @@ public class Apiurl {
      * 获取某个专辑下的资源列表
      */
     public static final String USER_GETTHENELIST = "/rakuen/getCompilationsAllResource.do";
-
+    /**
+     * 搜索足迹
+     */
+    public static final String SENDSEARCHFOOT = "/rakuen/searchFootprint.do";
     /**
      * 获取某个资源具体信息
      */

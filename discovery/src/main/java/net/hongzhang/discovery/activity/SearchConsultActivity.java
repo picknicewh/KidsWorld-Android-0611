@@ -10,19 +10,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
+import net.hongzhang.baselibrary.mode.ResourceVo;
+import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.NoScrollListView;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.ConsultAdapter;
 import net.hongzhang.discovery.adapter.SearchHistoryAdapter;
-import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.discovery.modle.SearchKeyVo;
 import net.hongzhang.discovery.presenter.SearchConsultContract;
 import net.hongzhang.discovery.presenter.SearchConsultPresenter;
+import net.hongzhang.discovery.util.TextUtil;
 
 import java.util.List;
-
-import static android.R.attr.type;
 
 
 /**
@@ -141,7 +141,7 @@ public class SearchConsultActivity extends BaseActivity implements View.OnClickL
                 lv_search_counslt_history.setVisibility(View.GONE);
                 tag = searchKeyVoList.get(position).getKey();
                 et_search_key.setText(tag);
-                presenter.getSearchResourceList(userMessage.getTsId(), type, pageSize, pageNumber, userMessage.getAccount_id(), tag);
+                presenter.getSearchResourceList(userMessage.getTsId(), pageSize, pageNumber, userMessage.getAccount_id(), tag);
             }
         });
     }
@@ -159,15 +159,20 @@ public class SearchConsultActivity extends BaseActivity implements View.OnClickL
             pageNumber=1;
             lv_search_counslt_history.setVisibility(View.GONE);
             ll_search_content.setVisibility(View.VISIBLE);
-            tag = et_search_key.getText().toString();
-            presenter.insertKey(tag);
-            presenter.getSearchHistoryList();
-            presenter.getSearchResourceList(userMessage.getTsId(), 3, pageSize, pageNumber, userMessage.getAccount_id(), tag);
+            tag = et_search_key.getText().toString().trim();
+             if (!TextUtil.isAllSpace(tag)){
+                 presenter.insertKey(tag);
+                 presenter.getSearchHistoryList();
+                 presenter.getSearchResourceList(userMessage.getTsId(), pageSize, pageNumber, userMessage.getAccount_id(), tag);
+             }else {
+                 G.showToast(this,"搜索关键词不能为空");
+                 et_search_key.setText("");
+             }
         } else if (viewId == R.id.tv_clean) {
             et_search_key.setText("");
         } else if (view.getId() == R.id.ll_load_more) {
             pageNumber++;
-            presenter.getSearchResourceList(userMessage.getTsId(), 3, pageSize, pageNumber, userMessage.getAccount_id(), tag);
+            presenter.getSearchResourceList(userMessage.getTsId(),  pageSize, pageNumber, userMessage.getAccount_id(), tag);
         }else if (viewId==R.id.et_search_key){
             lv_search_counslt_history.setVisibility(View.VISIBLE);
         }

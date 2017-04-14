@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,6 +21,7 @@ import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.CircleImageView;
 import net.hongzhang.baselibrary.widget.LoadingDialog;
+import net.hongzhang.baselibrary.widget.PromptPopWindow;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.CompilationPlayCountAdapter;
 import net.hongzhang.discovery.adapter.VideoAlbumDetailAdapter;
@@ -147,7 +148,7 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
      * 版权
      */
     private TextView tv_copy_right;
-
+    private  int isResourceFree;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -207,20 +208,27 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
                 iv_alubm_collect.setImageResource(R.mipmap.star_dark_full);
             }
             presenter.subFavorate(resourceVos.get(position).getAlbumId(), cancel);
-            Log.i("SSSSSSS",resourceVos.get(position).getAlbumId()+"==========================");
         } else if (viewId == R.id.tv_comment) {
-            String content = et_comment.getText().toString();
-            if (!G.isEmteny(content)) {
+            String content = et_comment.getText().toString().trim();
+            if (!G.isEmteny(content) && !G.isAllSpace(content)) {
                 presenter.subComment(tsId, resourceVos.get(position).getResourceId(), content);
+            }else {
+                G.showToast(this,"评论内容不能为空！");
             }
         } else if (viewId == R.id.iv_play_full) {
             if (resourceVos != null && resourceVos.size() > 0) {
-                Intent intent = new Intent(this, FullPlayVideoActivity.class);
+                if (isResourceFree==1){
+                    PromptPopWindow promptPopWindow = new PromptPopWindow(this, "小主人，您的套餐已到期暂不能收看了。别难受，尽快续订，和贝贝虎一起愉快的玩耍吧!");
+                    promptPopWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                }else {
+                    Intent intent = new Intent(this, FullPlayVideoActivity.class);
 //                G.log("=======AlbumId========="+resourceVos.get(position).getAlbumId());
-                //返回的AlbumId为空   themeId
-                intent.putExtra("albumId", themeId);
-                intent.putExtra("resourceId", resourceVos.get(position).getResourceId());
-                startActivity(intent);
+                    //返回的AlbumId为空   themeId
+                    intent.putExtra("albumId", themeId);
+                    intent.putExtra("resourceId", resourceVos.get(position).getResourceId());
+                    startActivity(intent);
+                }
+
             }
         } else if (viewId == iv_album_more) {
             if (visible == 0) {
@@ -268,6 +276,7 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
     @Override
     public void setVideoInfo(ResourceVo resourceVo, int position) {
         this.position = position;
+        isResourceFree = resourceVos.get(position).getPay();
         presenter.setResourceId(resourceVo.getResourceId());
         tv_album_num.setText(resourceVo.getResourceName());
         ImageCache.imageLoader(resourceVo.getImageUrl(), iv_album);
