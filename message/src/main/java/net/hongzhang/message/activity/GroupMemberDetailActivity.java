@@ -1,6 +1,6 @@
 package net.hongzhang.message.activity;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,9 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.UserInfo;
-
 public class GroupMemberDetailActivity extends BaseActivity implements OkHttpListener {
     private GridView gv_memberDetail;
     private MemberAdapter adapter;
@@ -42,7 +39,6 @@ public class GroupMemberDetailActivity extends BaseActivity implements OkHttpLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_member_detail);
-
         gv_memberDetail = $(R.id.gv_memberdetail);
         targetGroupId = getIntent().getStringExtra("targetGroupId");
         targetGroupName = getIntent().getStringExtra("targetGroupName");
@@ -91,7 +87,7 @@ public class GroupMemberDetailActivity extends BaseActivity implements OkHttpLis
         gv_memberDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                final GroupMemberVo groupMemberVo = groupMemberVoList.get(i);
+               /* final GroupMemberVo groupMemberVo = groupMemberVoList.get(i);
                 if (RongIM.getInstance()!=null){
                     RongIM.getInstance().startPrivateChat(GroupMemberDetailActivity.this,groupMemberVo.getTs_id(),groupMemberVo.getTs_name());
                     RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
@@ -106,7 +102,13 @@ public class GroupMemberDetailActivity extends BaseActivity implements OkHttpLis
                     if(null!=groupMemberVo.getImgUrl()){
                         RongIM.getInstance().refreshUserInfoCache(new UserInfo(groupMemberVo.getTs_id(), groupMemberVo.getTs_name(), Uri.parse(groupMemberVo.getImgUrl())));
                     }
-                }
+                }*/
+                Intent intent = new Intent(GroupMemberDetailActivity.this,PersonDetailActivity.class);
+                intent.putExtra("targetId",groupMemberVoList.get(i).getTs_id());
+                intent.putExtra("title",groupMemberVoList.get(i).getTs_name());
+                startActivity(intent);
+                finish();
+
             }
         });
     }

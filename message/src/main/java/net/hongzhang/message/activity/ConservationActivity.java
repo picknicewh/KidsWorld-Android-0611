@@ -1,9 +1,10 @@
 package net.hongzhang.message.activity;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -18,6 +19,8 @@ import net.hongzhang.baselibrary.network.Apiurl;
 import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
+import net.hongzhang.baselibrary.util.BroadcastConstant;
+import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.MyConnectionStatusListener;
 import net.hongzhang.baselibrary.util.PermissionsChecker;
 import net.hongzhang.message.R;
@@ -45,7 +48,7 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
     /**
      * 名字view
      */
-    private TextView tv_name;
+    private  TextView tv_name;
     /**
      * 返回
      */
@@ -78,9 +81,9 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
             Manifest.permission.RECORD_AUDIO, //麦克风权限
     };
     private boolean isGroup = false;
-    private SharedPreferences spf;
-    private SharedPreferences.Editor editor;
-
+  //  private SharedPreferences spf;
+   // private SharedPreferences.Editor editor;
+    private GroupOperationReceiver receiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,32 +110,39 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
         iv_call.setOnClickListener(this);
         iv_detail.setOnClickListener(this);
         iv_back.setOnClickListener(this);
+        receiver = new GroupOperationReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BroadcastConstant.EDITGROUPNAME);
+        filter.addAction(BroadcastConstant.DELETEDEXITGROIP);
+        registerReceiver(receiver,filter);
         setGroupInfo();
+
     }
     private void setGroupInfo(){
-        spf=getSharedPreferences("name", Context.MODE_PRIVATE);
-        editor=spf.edit();
-        targetId =  spf.getString("targetGroupId","");
-        name = spf.getString("groupName","");
-        Intent intent = getIntent();
-        if (targetId.equals("")&& name.equals("") || !targetId.equals(intent.getData().getQueryParameter("targetId"))&&
+      //  spf=getSharedPreferences("name", Context.MODE_PRIVATE);
+      //  editor=spf.edit();
+      //  targetId =  spf.getString("targetGroupId","");
+      //  name = spf.getString("groupName","");
+    /*    if (targetId.equals("")&& name.equals("") || !targetId.equals(intent.getData().getQueryParameter("targetId"))&&
                 !name.equals(intent.getData().getQueryParameter("title"))){
-                targetId = intent.getData().getQueryParameter("targetId");
-                name = intent.getData().getQueryParameter("title");
-        }
-        editor.putString("groupName",name);
-        editor.putString("targetGroupId",targetId);
-        editor.commit();
+        }*/
+      //  editor.putString("groupName",name);
+      //  editor.putString("targetGroupId",targetId);
+     //   editor.commit();
+        Intent intent = getIntent();
+        targetId = intent.getData().getQueryParameter("targetId");
+        name = intent.getData().getQueryParameter("title");
         tv_name.setText(name);
-
         mconversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
         showview(mconversationType);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        setGroupInfo();
+    protected void onRestart() {
+        G.log("------------onRestart----------");
+      //  setGroupInfo();
+        tv_name.setText(name);
+        super.onRestart();
     }
 
     private void  showview(Conversation.ConversationType mconversationType){
@@ -149,6 +159,8 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
              isGroup = false;
          }
     }
+
+
     /**
      * 获取用户详情
      */
@@ -174,17 +186,19 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
                 intent.putExtra("title",name);
                 intent.putExtra("targetGroupId",targetId);
                 startActivityForResult(intent,GroupDetailActivity.EDIT_NMAE);
+
             }else {
                 intent.setClass(this,PersonDetailActivity.class);
                 intent.putExtra("title",name);
                 intent.putExtra("targetId",targetId);
                 startActivity(intent);
-                //保留一个activity，其他切换都界面，都给销毁
+                finish();
+               /* //保留一个activity，其他切换都界面，都给销毁
                 if (spf.getInt("count",0)==1){
                 //   finish();
                 }
                 editor.putInt("count",1);
-                editor.commit();
+                editor.commit();*/
             }
         }
     }
@@ -198,10 +212,27 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
             }
         }
     }
-
     @Override
     public void onError(String uri, Result error) {
-
         DetaiCodeUtil.errorDetail(error,this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+    private class  GroupOperationReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(BroadcastConstant.DELETEDEXITGROIP)){
+                finish();
+            }else if (action.equals(BroadcastConstant.EDITGROUPNAME)){
+                String groupName =  intent.getStringExtra("groupName");
+                tv_name.setText(groupName);
+                G.log("---------------------"+groupName);
+            }
+        }
     }
 }

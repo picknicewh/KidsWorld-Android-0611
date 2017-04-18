@@ -198,7 +198,7 @@ public class ContractListFragment extends BaseFragement implements SectionIndexe
                     if (RongIM.getInstance()!=null){
                         Intent intent  = new Intent(getActivity(),PersonDetailActivity.class);
                         intent.putExtra("targetId",uid);
-                        //intent.putExtra("title",name);
+                        intent.putExtra("title",name);
                         startActivity(intent);
                     }
                 }

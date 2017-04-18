@@ -103,14 +103,14 @@ public class ModifyNameActivity extends BaseActivity implements OkHttpListener {
          groupName = et_name.getText().toString();
          editor.putString("groupName",groupName);
          editor.commit();
+         if (TextUtils.isEmpty(et_name.getText().toString())){
+             Toast.makeText(this,"群组名不能为空！",Toast.LENGTH_SHORT).show();
+             return;
+         }
         Map<String,Object> params = new HashMap<>();
         params.put("tsId",UserMessage.getInstance(this).getTsId());
         params.put("groupChatAdmin", UserMessage.getInstance(this).getTsId());
         params.put("groupChatId",targetGroupId);
-        if (TextUtils.isEmpty(et_name.getText().toString())){
-            Toast.makeText(this,"群组名不能为空！",Toast.LENGTH_SHORT).show();
-            return;
-        }
         params.put("groupChatName",groupName);
          //更新数据库
         dbHelper.updateGroupName(groupDb.getWritableDatabase(),groupName,targetGroupId);

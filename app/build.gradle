@@ -7,8 +7,8 @@ android {
         applicationId "net.hongzhang.bbhow"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 20170310
-        versionName "3.2.4"
+        versionCode 20170418
+        versionName "3.2.5"
     }
     buildTypes {
         release {

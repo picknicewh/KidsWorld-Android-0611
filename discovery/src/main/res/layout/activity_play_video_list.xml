@@ -242,6 +242,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_et_comment"
                         android:hint="快来评论吧..."
+                        android:lines="2"
                         android:padding="@dimen/space"
                         android:paddingLeft="@dimen/space"
                         android:textColor="@color/minor_text"

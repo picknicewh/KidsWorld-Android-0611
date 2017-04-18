@@ -33,15 +33,19 @@ public class ConverationListFragment extends Fragment {
      *获取聊天列表
      */
     public void  initframent(){
-        ConversationListFragment fragment = new ConversationListFragment();
-        Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
-                .appendPath("conversationlist")
-                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
-                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话聚合显示
-                .build();
-        fragment.setUri(uri);
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.rong_content, fragment);
-        transaction.commitAllowingStateLoss();
+        try {
+            ConversationListFragment fragment = new ConversationListFragment();
+            Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
+                    .appendPath("conversationlist")
+                    .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
+                    .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话聚合显示
+                    .build();
+            fragment.setUri(uri);
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.rong_content, fragment);
+            transaction.commitAllowingStateLoss();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

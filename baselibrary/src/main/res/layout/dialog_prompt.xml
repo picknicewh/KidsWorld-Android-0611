@@ -4,34 +4,36 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
-        android:orientation="vertical"
-        android:background="@drawable/fillet_pop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/fillet_pop"
+        android:orientation="vertical">
+
         <TextView
-            android:padding="@dimen/space_x2"
             android:id="@+id/tv_title"
+            style="@style/TextStyleBase"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="是否退出当前账号？"
-            style="@style/TextStyleBase"
             android:gravity="center"
-            />
+            android:padding="@dimen/space_x2"
+            android:text="是否退出当前账号？" />
+
         <View
-            android:background="@color/line_divide"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/line_gray"/>
+            android:layout_height="@dimen/line_gray"
+            android:background="@color/line_divide" />
+
         <Button
-            android:layout_gravity="center"
-            android:background="#00000000"
             android:id="@+id/btn_conform"
-            android:textSize="@dimen/ts_x_large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/main_text_green"
+            android:layout_gravity="center"
+            android:background="#00000000"
             android:text="确认退出"
-            />
+            android:textColor="@color/main_text_green"
+            android:textSize="@dimen/ts_x_large" />
     </LinearLayout>
 </LinearLayout>

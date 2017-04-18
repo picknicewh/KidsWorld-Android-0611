@@ -22,7 +22,7 @@ import net.hongzhang.message.R;
 import net.hongzhang.message.adapter.ContractMemberAdapter;
 import net.hongzhang.message.bean.GroupMemberVo;
 import net.hongzhang.message.bean.GroupMemberVos;
-import net.hongzhang.message.widget.CreateGroupDialog;
+import net.hongzhang.message.widget.GroupNameOperationDialog;
 import net.hongzhang.message.widget.OperationGroupDialog;
 
 import java.lang.reflect.Type;
@@ -147,7 +147,8 @@ public class ContractMemberActivity extends BaseActivity implements OkHttpListen
               tv_subTitle.setClickable(true);
               tv_subTitle.setTextColor(getResources().getColor(R.color.white));
               if (type ==0){
-                  CreateGroupDialog createGroupDialog = new CreateGroupDialog(ContractMemberActivity.this,getTargets(userids));
+                  GroupNameOperationDialog createGroupDialog =
+                          new GroupNameOperationDialog(ContractMemberActivity.this,getTargets(userids), GroupNameOperationDialog.CREATE_GROUP);
                   createGroupDialog.initView();
               }else if (type==1){
                   OperationGroupDialog exitGroupDialog = new OperationGroupDialog(

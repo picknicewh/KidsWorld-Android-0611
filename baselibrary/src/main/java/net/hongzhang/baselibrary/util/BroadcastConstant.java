@@ -54,4 +54,12 @@ public class BroadcastConstant {
      * 我的动态删除动态广播通知
      */
     public static  final String  DELETEDYNAMIC = " net.hongzhang.bbhow.DeleteDynamic";
+    /**
+     * 解散或退出群组
+     */
+    public static  final String  DELETEDEXITGROIP = " net.hongzhang.bbhow.DeleteExitGroup";
+    /**
+     * 修改群名称
+     */
+    public static  final String  EDITGROUPNAME = " net.hongzhang.bbhow.EditGroupName";
 }

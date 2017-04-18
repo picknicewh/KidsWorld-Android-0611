@@ -43,6 +43,8 @@
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:hint="请输入搜索的联系人"
+                android:maxLength="15"
+                android:lines="1"
                 android:padding="@dimen/space_x0.5"
                 android:textSize="@dimen/ts_small" />
 

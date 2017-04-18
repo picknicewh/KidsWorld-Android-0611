@@ -2,6 +2,7 @@ package net.hongzhang.message.widget;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import net.hongzhang.baselibrary.network.Apiurl;
 import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
+import net.hongzhang.baselibrary.util.BroadcastConstant;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.MyAlertDialog;
 import net.hongzhang.message.R;
@@ -252,6 +254,8 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
             } else if (flag == FLAG_REMOVE_MEMBER) {
                 context.finish();
             }
+            //如果退出群聊，把聊天上一个页面退出
+            context.sendBroadcast(new Intent(BroadcastConstant.DELETEDEXITGROIP));
             GroupsDbHelper dbHelper = new GroupsDbHelper();
             GroupDb groupDb = new GroupDb(context);
             dbHelper.deleteByClassId(groupDb.getWritableDatabase(), targetGroupId);
@@ -261,7 +265,8 @@ public class OperationGroupDialog implements View.OnClickListener, OkHttpListene
         } else if (uri.contains(Apiurl.MESSAGE_DISSORE_GROUP)) {
             result(date);
             context.finish();
-
+            //如果退出群聊，把聊天上一个页面退出
+            context.sendBroadcast(new Intent(BroadcastConstant.DELETEDEXITGROIP));
         }
     }
 
