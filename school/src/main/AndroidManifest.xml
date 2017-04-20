@@ -34,7 +34,8 @@
         <activity android:name=".activity.MedicineTaskTActivity" />
         <activity android:name=".activity.MedicineEntrustActivity" />
         <activity android:name=".activity.ReleaseActivity" />
-        <activity android:name=".activity.HomeInteractionActivity"></activity>
+        <activity android:name=".activity.HomeInteractionActivity" />
+        <activity android:name=".activity.RankingListActivity"></activity>
     </application>
 
 </manifest>

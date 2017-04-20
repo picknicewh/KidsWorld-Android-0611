@@ -26,14 +26,4 @@
     <string name="xlistview_footer_hint_normal">上拉加载更多</string>
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
     <string name="xlistview_footer_hint_loading">加载中...</string>
-    <string name="function_details">
-1. 是否需要老师选择学科或维度选择\n
-2. 文字类作业要求可输入1000字，若超过300字则折叠显示\n
-3. 点击框框添加图片，一次仅能上传9张图片\n
-4. 活动要求最多200字\n
-5. 必选发布时间和截止时间，采用时间滚轮的形式在屏幕底部进行选择\n
-6. 评价若选择是，则开启作业打分功能模块，教师在上传截止时间后将对作业进行评价，若不勾选则不加载该模块\n
-7. 作业题目仅能输入至多30个汉字\n
-8. 考察维度可多选、全选
-    </string>
 </resources>

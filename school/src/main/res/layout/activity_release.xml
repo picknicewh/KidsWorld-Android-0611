@@ -124,6 +124,7 @@
             android:textSize="@dimen/ts_x_large" />
 
         <EditText
+            android:id="@+id/et_album"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space"
@@ -141,8 +142,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/space">
+            android:orientation="vertical">
 
             <EditText
                 android:layout_width="match_parent"
@@ -151,6 +151,7 @@
                 android:paddingTop="@dimen/space" />
 
             <GridView
+                android:id="@+id/gv_picture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:horizontalSpacing="@dimen/space"
@@ -220,30 +221,6 @@
                     android:background="@drawable/fillet_default_green"
                     android:padding="@dimen/space_x0.5" />
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_x2"
-                android:layout_marginRight="@dimen/space_x2"
-                android:background="@drawable/frame_black"
-                android:gravity="center"
-                android:text="功能详解"
-                android:textSize="@dimen/ts_x_large" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space"
-                android:layout_marginTop="@dimen/space"
-                android:text="@string/function_details" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
