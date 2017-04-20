@@ -22,7 +22,7 @@ import net.hongzhang.school.activity.FoodListActivity;
 import net.hongzhang.school.activity.LeaveListActivity;
 import net.hongzhang.school.activity.MedicineListSActivity;
 import net.hongzhang.school.activity.MedicineListTActivity;
-import net.hongzhang.school.activity.PublishListActivity;
+import net.hongzhang.school.activity.ReleaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,7 +120,8 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             schoolDosDisappear(BroadcastConstant.LEAVEASEKDOS);
         } else if (view.getId() == R.id.rl_info) {
             //通知
-            intent.setClass(getActivity(), PublishListActivity.class);
+//            intent.setClass(getActivity(), PublishListActivity.class);
+            intent.setClass(getActivity(), ReleaseActivity.class);
             schoolDosDisappear(BroadcastConstant.SCHOOLINFODOS);
         } else if (view.getId() == R.id.rl_food) {
             //食谱
