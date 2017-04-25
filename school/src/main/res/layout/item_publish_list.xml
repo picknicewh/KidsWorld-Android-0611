@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_margin="@dimen/space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+     <LinearLayout
+
+         android:layout_weight="1"
+         android:orientation="vertical"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content">
+         <TextView
+             android:id="@+id/tv_publish_name"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@color/theme_text"
+             android:text="桦桦（王桦）"/>
+         <TextView
+             android:layout_marginTop="@dimen/space_x0.5"
+             android:id="@+id/tv_publish_time"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="上传时间：2017年3月15日 9：00"
+             android:textColor="@color/theme_text"/>
+     </LinearLayout>
+    <ImageView
+        android:src="@mipmap/ic_black_right"
+        android:layout_gravity="center"
+        android:id="@+id/iv_publish_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

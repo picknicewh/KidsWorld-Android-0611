@@ -12,11 +12,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.base.BaseFragement;
+import net.hongzhang.baselibrary.mode.ResourceVo;
+import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.activity.SearchResourceActivity;
 import net.hongzhang.discovery.adapter.ConsultAdapter;
-import net.hongzhang.baselibrary.mode.ResourceVo;
 import net.hongzhang.discovery.modle.SearchKeyVo;
 import net.hongzhang.discovery.presenter.SearchConsultContract;
 import net.hongzhang.discovery.presenter.SearchConsultPresenter;
@@ -83,8 +84,12 @@ public class SearchConsultListFragment extends BaseFragement implements SearchCo
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ResourceVo resourceVo=resourceVos.get(i);
+                if (G.isEmteny(resourceVo.getResourceId())){
+                    G.showToast(getActivity(),"该资源已经下架!");
+                }else {
+                    presenter.startConsultActivity(resourceVo.getResourceId());
+                }
                 presenter.saveSearchKey(tag,userMessage.getTsId(),resourceVo.getResourceName(),resourceVo.getResourceId());
-                presenter.startConsultActivity(resourceVo.getResourceId());
             }
         });
     }

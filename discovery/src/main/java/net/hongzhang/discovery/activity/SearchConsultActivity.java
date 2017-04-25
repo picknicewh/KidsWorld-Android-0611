@@ -122,8 +122,12 @@ public class SearchConsultActivity extends BaseActivity implements View.OnClickL
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                     ResourceVo vo = resourceList.get(position);
+                    if (G.isEmteny(vo.getResourceId())){
+                        G.showToast(SearchConsultActivity.this,"该资源已经下架！");
+                    }else {
+                        presenter.startConsultActivity(vo.getResourceId());
+                    }
                     presenter.saveSearchKey(tag,userMessage.getTsId(),vo.getResourceName(),vo.getResourceId());
-                    presenter.startConsultActivity(vo.getResourceId());
                 }
             });
         }

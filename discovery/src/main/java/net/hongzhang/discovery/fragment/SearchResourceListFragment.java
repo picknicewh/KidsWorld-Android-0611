@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import net.hongzhang.baselibrary.base.BaseFragement;
 import net.hongzhang.baselibrary.mode.ResourceVo;
+import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.activity.SearchResourceActivity;
@@ -158,10 +159,15 @@ public class SearchResourceListFragment extends BaseFragement implements View.On
                 @Override
                 public void OnItemClick(View view, int position) {
                     ResourceVo vo = resourceList.get(position);
-                    if (type == MainRecommendPresenter.TYPE_MUISC) {
-                        presenter.getSongList(userMessage.getTsId(), vo.getAlbumId(), vo.getResourceId());
-                    } else {
-                        presenter.startVideoActivity(vo.getAlbumId(), vo.getResourceId());
+                    if (G.isEmteny(vo.getAlbumId()) ||G.isEmteny(vo.getResourceId())){
+                        G.showToast(getActivity(),"该资源已经下架！");
+                    }else {
+                        if (type == MainRecommendPresenter.TYPE_MUISC) {
+                            presenter.getSongList(userMessage.getTsId(), vo.getAlbumId(), vo.getResourceId());
+                        } else {
+                            presenter.startVideoActivity(vo.getAlbumId(), vo.getResourceId());
+                        }
+
                     }
                     presenter.saveSearchKey(tag,1,userMessage.getTsId(),vo.getResourceName(),vo.getResourceId());
                 }

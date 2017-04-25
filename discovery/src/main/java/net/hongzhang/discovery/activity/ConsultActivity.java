@@ -1,8 +1,10 @@
 package net.hongzhang.discovery.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -37,6 +39,7 @@ public class ConsultActivity extends BaseActivity implements OkHttpListener {
     private ProgressBar progress_bar;
     private String  url;
     private RelativeLayout rl_nonetwork;
+    @SuppressLint("JavascriptInterface,SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +51,7 @@ public class ConsultActivity extends BaseActivity implements OkHttpListener {
         wb_consult = $(R.id.wb_consult);
         progress_bar = $(R.id.progress_bar);
         rl_nonetwork = $(R.id.rl_nonetwork);
+        wb_consult.addJavascriptInterface(this, "G");
         userMessage = UserMessage.getInstance(this);
         resourceId = getIntent().getStringExtra("resourceId");
         if (G.isNetworkConnected(this)){
@@ -63,6 +67,10 @@ public class ConsultActivity extends BaseActivity implements OkHttpListener {
             rl_nonetwork.setVisibility(View.VISIBLE);
         }
 
+    }
+    @JavascriptInterface
+    public void showToast(String msg){
+        G.showToast(this,msg);
     }
     /**
      * 保存播放记录列表

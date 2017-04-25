@@ -213,14 +213,17 @@ public class SearchPlayActivity extends BaseActivity implements View.OnClickList
                 @Override
                 public void OnItemClick(View view, int position) {
                     ResourceVo vo = resourceList.get(position);
-                    presenter.saveSearchKey(tag, 1, userMessage.getTsId(), vo.getResourceName(), vo.getResourceId());
-                    if (type == MainRecommendPresenter.TYPE_MUISC) {
-                        presenter.getSongList(userMessage.getTsId(), vo.getAlbumId(), vo.getResourceId());
-                        //  presenter.startMusicActivity(vo.getAlbumId(), vo.getResourceId());
-                    } else {
-                        presenter.startVideoActivity(vo.getAlbumId(), vo.getResourceId());
+                    if (G.isEmteny(vo.getAlbumId())||G.isEmteny(vo.getResourceId()) ){
+                        G.showToast(SearchPlayActivity.this,"该资源已经下架!");
+                    }else {
+                        if (type == MainRecommendPresenter.TYPE_MUISC) {
+                            presenter.getSongList(userMessage.getTsId(), vo.getAlbumId(), vo.getResourceId());
+                        } else {
+                            presenter.startVideoActivity(vo.getAlbumId(), vo.getResourceId());
+                        }
                     }
                     presenter.saveSearchKey(tag, 1, userMessage.getTsId(), vo.getResourceName(), vo.getResourceId());
+
                 }
             });
         }

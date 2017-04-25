@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="等级评定"
+            android:textColor="@color/theme_text"
+            android:textSize="@dimen/ts_x_large" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/myRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:max="5"
+            android:numStars="5"
+            android:rating="5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="很好"
+                android:textColor="@color/theme_text" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="好"
+                android:textColor="@color/theme_text" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="一般"
+                android:textColor="@color/theme_text" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="较差"
+                android:textColor="@color/theme_text" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="很差"
+                android:textColor="@color/theme_text" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_gray"
+            android:background="@color/minor_text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space"
+            android:text="行为特长"
+            android:textColor="@color/theme_text"
+            android:textSize="@dimen/ts_x_large" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="完成情况"
+                android:textColor="@color/theme_text"
+                android:textSize="@dimen/ts_large" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_finish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="态度"
+                android:textColor="@color/theme_text"
+                android:textSize="@dimen/ts_large" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_attitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="能力"
+                android:textColor="@color/theme_text"
+                android:textSize="@dimen/ts_large" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_ability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/infor_et_bg"
+            android:gravity="left"
+            android:hint="请输入评语"
+            android:lines="8"
+            android:maxLength="150"
+            android:paddingLeft="@dimen/space_x0.5"
+            android:paddingTop="@dimen/space_x0.5"
+            android:textColorHint="@color/minor_text"
+            android:textSize="@dimen/ts_medium" />
+
+        <TextView
+            android:id="@+id/tv_confrom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_x2"
+            android:background="@color/main_green"
+            android:gravity="center"
+            android:padding="@dimen/space"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ts_large" />
+    </LinearLayout>
+
+</ScrollView>

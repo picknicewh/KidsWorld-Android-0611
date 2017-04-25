@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/fillet_pop"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加标签"
+        android:textColor="@color/theme_text"
+        android:textSize="@dimen/ts_xx_large"
+        android:gravity="center"
+        android:padding="@dimen/space"
+        />
+
+
+    <EditText
+        android:id="@+id/et_tag"
+        android:padding="@dimen/space"
+        android:background="@drawable/password_selecter"
+        android:layout_margin="@dimen/space_x2"
+        android:hint="请输入标签的名称（2-3）个字"
+        android:textSize="@dimen/ts_medium"
+        android:layout_gravity="center"
+        android:maxLength="3"
+        android:lines="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:textSize="@dimen/ts_xx_large">
+
+        <View
+            android:layout_width="@dimen/line_gray"
+            android:layout_height="match_parent"
+            android:background="@color/line_gray" />
+
+        <Button
+            android:id="@+id/bt_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:text="取消"
+            android:textColor="@color/main_text_green"
+            android:textSize="@dimen/ts_x_large" />
+
+        <Button
+            android:id="@+id/bt_conform"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:text="确认"
+            android:textColor="@color/main_text_green"
+            android:textSize="@dimen/ts_x_large" />
+    </LinearLayout>
+</LinearLayout>

@@ -153,7 +153,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 rl_restrict.setVisibility(View.GONE);
                 setCententTitle("发布课程");
                 maxContent = 1;
-                PublishPhotoUtil.showPhoto(this, itemList, gv_photo, maxContent);
+              //  PublishPhotoUtil.showPhoto(this, itemList, gv_photo, maxContent);
                 PublishPhotoUtil.goSelectImager(itemList, this, gv_photo, maxContent);
                 PublishPhotoUtil.showPhoto(this, itemList, gv_photo, maxContent);
                 //  goSelectImager();
@@ -235,6 +235,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             tv_subtilte.setEnabled(true);
             return;
         }
+        G.log("---------xx--------"+dyContent);
         loadingDialog.show();
         Map<String, Object> map = new HashMap<>();
         map.put("tsId", UserMessage.getInstance(this).getTsId());

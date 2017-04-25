@@ -213,6 +213,7 @@ public class FullPlayVideoActivity extends Activity implements View.OnClickListe
         mDate = new Date();
         alubumId = getIntent().getStringExtra("albumId");
         resourceId = getIntent().getStringExtra("resourceId");
+        G.log("vxvxvx"+resourceId);
         resourceVos = new ArrayList<>();
         listener = new MyEventListener(this);
         presenter = new PlayVideoPresenter(this, surfaceView, this, alubumId, resourceId);

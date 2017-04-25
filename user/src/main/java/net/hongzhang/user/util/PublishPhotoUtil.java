@@ -20,6 +20,7 @@ import java.util.List;
 
 import main.picturesee.util.ImagePagerActivity;
 
+
 /**
  * 作者： wh
  * 时间： 2016/10/12
@@ -39,7 +40,7 @@ public class PublishPhotoUtil {
      * 发布照片页面
      */
     public static void showPhoto(final Activity context, final ArrayList<String> itemList, final GridView gridView, final int maxContent) {
-        final GridAlbumAdapter adapter = new GridAlbumAdapter(itemList, context, maxContent);
+        GridAlbumAdapter adapter = new GridAlbumAdapter(itemList, context, maxContent);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

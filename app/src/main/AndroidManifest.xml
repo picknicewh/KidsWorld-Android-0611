@@ -57,6 +57,9 @@
                 <data android:mimeType="text/json" />
             </intent-filter>
         </activity>
+        <activity android:name="net.hongzhang.school.activity.TaskDetailActivity">
+
+        </activity>
     </application>
 
 </manifest>

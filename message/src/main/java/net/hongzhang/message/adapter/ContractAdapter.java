@@ -9,8 +9,7 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-
+import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.message.R;
 import net.hongzhang.message.bean.GroupMemberBean;
 
@@ -75,7 +74,6 @@ public class ContractAdapter extends BaseAdapter implements SectionIndexer {
 			viewHolder.tvTitle = (TextView) view.findViewById(R.id.tv_title_item);
 			viewHolder.tvLetter = (TextView) view.findViewById(R.id.tv_catalog_item);
             viewHolder.ivimage = (ImageView)view.findViewById(R.id.iv_image_item);
-
 			view.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) view.getTag();
@@ -90,7 +88,7 @@ public class ContractAdapter extends BaseAdapter implements SectionIndexer {
 			viewHolder.tvLetter.setVisibility(View.GONE);
 		}
 		viewHolder.tvTitle.setText(this.list.get(position).getName());
-		ImageLoader.getInstance().displayImage(mContent.getImg(),viewHolder.ivimage);
+		ImageCache.imageLoader(mContent.getImg(),viewHolder.ivimage);
 		return view;
 	}
 

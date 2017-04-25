@@ -80,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="@dimen/ts_large"
-                        android:textColor="@color/main_text_grey" />
+                        android:textColor="@color/minor_text" />
 
                     <ImageView
                         android:id="@+id/iv_album_collect"
@@ -103,7 +103,7 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:src="@mipmap/ic_arrow_right" />
+                        android:src="@mipmap/arrow_right" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -117,33 +117,31 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginRight="@dimen/space"
-                        android:src="@mipmap/pvcount" />
+                        android:src="@mipmap/ic_circle_play" />
 
                     <TextView
                         android:id="@+id/tv_play_count"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:textColor="@color/main_text_grey" />
+                        android:textColor="@color/minor_text"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/space">
-
+               >
                     <TextView
                         android:id="@+id/tv_brief"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/main_text_grey" />
+                        android:textColor="@color/minor_text"/>
 
                     <TextView
                         android:id="@+id/tv_copy_right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space"
                         android:text="@string/copy_right"
                         android:textColor="@color/minor_text"
                         android:visibility="gone" />
@@ -242,7 +240,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_et_comment"
                         android:hint="快来评论吧..."
-                        android:lines="2"
+                        android:lines="1"
                         android:padding="@dimen/space"
                         android:paddingLeft="@dimen/space"
                         android:textColor="@color/minor_text"

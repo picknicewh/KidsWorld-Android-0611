@@ -28,27 +28,26 @@ import java.util.Map;
 public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Presenter, OkHttpListener {
     private Activity context;
     private PlayVideoDetailContract.View view;
-    private List<ResourceVo> resourceVos;
     private int position = 0;
-    private String themeId;
+    private String alubmId;
     private String tsId;
     private String resourceId;
-    public PlayVideoDetailPresenter(Activity context, PlayVideoDetailContract.View view, String themeId,String resourceId) {
+    public PlayVideoDetailPresenter(Activity context, PlayVideoDetailContract.View view, String alubmId,String resourceId) {
         this.context = context;
         this.resourceId = resourceId;
         this.view = view;
-        this.themeId = themeId;
+        this.alubmId = alubmId;
         tsId = UserMessage.getInstance(context).getTsId();
         getRecommendList(tsId, 4, 1);
     }
 
     @Override
-    public void getVideoList(String tsId, String themeId) {
+    public void getVideoList(String tsId, String alubmId) {
         Map<String, Object> map = new HashMap<>();
         map.put("tsId", tsId);
         map.put("pageSize", 999);
         map.put("pageNumber", 1);
-        map.put("albumId", themeId);
+        map.put("albumId", alubmId);
         map.put("account_id", UserMessage.getInstance(context).getAccount_id());
         Type mType = new TypeToken<Result<List<ResourceVo>>>() {
         }.getType();
@@ -68,8 +67,10 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
         OkHttps.sendPost(mType, Apiurl.GETRECOMMENDLIST, map, this);
        // view.showLoadingDialog();
     }
-     public void setResourceId(String resourceId){
+     public void setResourceId(String resourceId,String alubmId){
          this.resourceId = resourceId;
+         this.alubmId  = alubmId;
+         this.position=0;
          getCommentList(resourceId, 99999, 1);
      }
     @Override
@@ -129,19 +130,14 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
         OkHttps.sendPost(mType, Apiurl.RESSUBPRAISE, map, this);
         view.showLoadingDialog();
     }
-
-
     @Override
     public void onSuccess(String uri, Object date) {
         view.stopLoadingDialog();
         if (uri.equals(Apiurl.USER_GETTHENELIST)) {
             if (date != null) {
                 Result<ArrayList<ResourceVo>> data = (Result<ArrayList<ResourceVo>>) date;
-//                G.log(data.getData()+"xxxxxxxxxxxx");
                 List<ResourceVo> resourceVos = data.getData();
                 if (resourceVos.size() > 0 && resourceVos != null) {
-                    this.resourceVos = resourceVos;
-                    view.setVideoList(resourceVos);
                     if (resourceId != null) {
                         for (int i = 0; i < resourceVos.size(); i++) {
                             ResourceVo resourceVo = resourceVos.get(i);
@@ -152,8 +148,9 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
                     } else {
                         position = 0;
                     }
-                    view.setVideoInfo(resourceVos.get(position), position);
-                    getCommentList(resourceId, 99999, 1);
+                    view.setVideoList(resourceVos,position);
+                    view.setVideoInfo(resourceVos.get(position));
+                    getCommentList(resourceVos.get(position).getResourceId(),9999,1);
                 }
             }
         } else if (uri.equals(Apiurl.GETRECOMMENDLIST)) {
@@ -161,7 +158,6 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
                 Result<List<CompilationVo>> data = (Result<List<CompilationVo>>) date;
                 List<CompilationVo> compilationVos = data.getData();
                 view.setRecommendList(compilationVos);
-                G.log("=========CompialtionVos======");
             }
         } else if (uri.equals(Apiurl.SUBATTENTION)||uri.equals(Apiurl.RESSUBPRAISE)) {
             if (date != null) {
@@ -174,7 +170,7 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
                 Result<String> data = (Result<String>) date;
                 String result = data.getData();
                 Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
-                getVideoList(tsId,themeId);
+                getVideoList(tsId,alubmId);
             }
         } else if (uri.equals(Apiurl.GETCOMMENTLIST)) {
             if (date != null) {
@@ -184,11 +180,9 @@ public class PlayVideoDetailPresenter implements PlayVideoDetailContract.Present
             }
         }
     }
-
-
     @Override
     public void onError(String uri, Result error) {
          view.stopLoadingDialog();
-        DetaiCodeUtil.errorDetail(error,context);
+         DetaiCodeUtil.errorDetail(error,context);
     }
 }

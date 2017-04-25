@@ -12,13 +12,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DateUtil {
 
-    private final static SimpleDateFormat DATE_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-    private final static SimpleDateFormat DATE = new SimpleDateFormat("yyyy-MM-dd");
-
+    public final static SimpleDateFormat DATE_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public final static SimpleDateFormat DATE = new SimpleDateFormat("yyyy-MM-dd");
+    public final static SimpleDateFormat format_chinese = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
     /**
      * yyyy-MM-dd HH:mm:ss
      */
@@ -231,7 +232,12 @@ public class DateUtil {
         }
         return rows;
     }
-
+    public static boolean isEmoji(String string) {
+        Pattern p = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
+                Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(string);
+        return m.find();
+    }
     /**
      * 获取某年某月的第一天是星期几
      *

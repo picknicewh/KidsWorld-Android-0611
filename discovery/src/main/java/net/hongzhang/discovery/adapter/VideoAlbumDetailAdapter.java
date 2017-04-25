@@ -80,6 +80,7 @@ public class VideoAlbumDetailAdapter extends RecyclerView.Adapter<VideoAlbumDeta
         clicks.put(currentPosition,0);
         currentPosition = position;
         clicks.put(position,1);
+
         notifyDataSetChanged();
    }
     @Override

@@ -198,13 +198,13 @@ public class Apiurl {
     /**
      * 用户登录
      */
-    public static final String APPLOGIN = "/app/login.do";
-    //public static final String APPLOGIN = "/app/loginBBH.do";
+   // public static final String APPLOGIN = "/app/login.do";
+    public static final String APPLOGIN = "/app/loginBBH.do";
     /**
      * 用户身份选择
      */
-    public static final String SELECTUSER = "/app/selectUser.do";
-    // public static final String SELECTUSER = "/app/selectTs.do";
+  //  public static final String SELECTUSER = "/app/selectUser.do";
+     public static final String SELECTUSER = "/app/selectTs.do";
     /**
      * 扫描二维码登录
      */

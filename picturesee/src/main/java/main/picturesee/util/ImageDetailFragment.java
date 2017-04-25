@@ -115,6 +115,7 @@ public class ImageDetailFragment extends Fragment implements View.OnLongClickLis
 
 
         } else if (source.equals("local")) {
+            progressBar.setVisibility(View.GONE);
             Bitmap bitmap = getLoacalBitmap(mImageUrl);
             mImageView.setImageBitmap(bitmap);
         }

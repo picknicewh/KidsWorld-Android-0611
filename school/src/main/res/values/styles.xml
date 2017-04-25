@@ -48,4 +48,10 @@
         <item name="android:padding">@dimen/space</item>
         <item name="android:scaleType">centerInside</item>
     </style>
+
+    <style name="myRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_bar_self</item>
+        <item name="android:minHeight">60dip</item>
+        <item name="android:maxHeight">60dip</item>
+    </style>
 </resources>

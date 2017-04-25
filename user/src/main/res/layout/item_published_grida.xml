@@ -2,18 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/item_grida_image"
+    <FrameLayout
         android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:scaleType="centerCrop">
-    </ImageView>
-
-    <ImageView
-        android:id="@+id/clv_delete"
-        android:layout_alignRight="@id/item_grida_image"
-        android:layout_width="20dp"
-        android:layout_height="20dp" />
+        android:layout_height="80dp">
+        <ImageView
+            android:src="@mipmap/ic_img_error"
+            android:id="@+id/item_grida_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+        <ImageView
+            android:id="@+id/clv_delete"
+            android:layout_gravity="right"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_play_icon"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_play_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+    </FrameLayout>
 
 </RelativeLayout>

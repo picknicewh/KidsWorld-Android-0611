@@ -98,8 +98,6 @@ public class ScanView  extends View{
         canvas.drawRect(0, frame.top, frame.left, frame.bottom, mPaint);
         canvas.drawRect(frame.right, frame.top,width,frame.bottom, mPaint);
         canvas.drawRect(0, frame.bottom, width, height, mPaint);
-
-
         //绘制扫描线，扫描线是来回扫描的，设置每个2秒重新来回扫描
         //扫描线的的宽度x轴方向始终固定，y轴一直改变从0-frame.height
          long now = System.currentTimeMillis();

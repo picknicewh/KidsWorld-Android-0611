@@ -115,7 +115,7 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
     /**
      * 当前播放的位置
      */
-    private int position=0;
+    private int position = 0;
     /**
      * 专辑列表适配器
      */
@@ -139,7 +139,7 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
     /**
      * 主题id
      */
-    private String themeId;
+    private String alubmId;
     /**
      * 当前资源id
      */
@@ -148,17 +148,11 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
      * 版权
      */
     private TextView tv_copy_right;
-    private  int isResourceFree;
+    private int isResourceFree;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            Window window = getWindow();
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            window.setStatusBarColor(Color.TRANSPARENT);
-//        }
         setContentView(R.layout.activity_play_video_list);
         G.initDisplaySize(this);
         initSurfView();
@@ -190,10 +184,10 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
         iv_album_head.setOnClickListener(this);
         resourceVos = new ArrayList<>();
         tsId = UserMessage.getInstance(this).getTsId();
-        themeId = getIntent().getStringExtra("themeId");
+        alubmId = getIntent().getStringExtra("themeId");
         resourceId = getIntent().getStringExtra("resourceId");
-        presenter = new PlayVideoDetailPresenter(this, this, themeId,resourceId);
-        presenter.getVideoList(tsId, themeId);
+        presenter = new PlayVideoDetailPresenter(this, this, alubmId, resourceId);
+        presenter.getVideoList(tsId, alubmId);
     }
 
     @Override
@@ -212,19 +206,18 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
             String content = et_comment.getText().toString().trim();
             if (!G.isEmteny(content) && !G.isAllSpace(content)) {
                 presenter.subComment(tsId, resourceVos.get(position).getResourceId(), content);
-            }else {
-                G.showToast(this,"评论内容不能为空！");
+                et_comment.setText("");
+            } else {
+                G.showToast(this, "评论内容不能为空！");
             }
         } else if (viewId == R.id.iv_play_full) {
             if (resourceVos != null && resourceVos.size() > 0) {
-                if (isResourceFree==1){
+                if (isResourceFree == 1) {
                     PromptPopWindow promptPopWindow = new PromptPopWindow(this, "小主人，您的套餐已到期暂不能收看了。别难受，尽快续订，和贝贝虎一起愉快的玩耍吧!");
                     promptPopWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-                }else {
+                } else {
                     Intent intent = new Intent(this, FullPlayVideoActivity.class);
-//                G.log("=======AlbumId========="+resourceVos.get(position).getAlbumId());
-                    //返回的AlbumId为空   themeId
-                    intent.putExtra("albumId", themeId);
+                    intent.putExtra("albumId", alubmId);
                     intent.putExtra("resourceId", resourceVos.get(position).getResourceId());
                     startActivity(intent);
                 }
@@ -250,38 +243,49 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
     private int visible = 0;
     private int praiseType = 1;
 
+    /**
+     * 设置列表
+     *
+     * @param resourceVos 资源列表
+     * @param position    默认为0，如果搜索进来的话根据搜索出专辑的第几首歌来定位当前的位置
+     */
     @Override
-    public void setVideoList(final List<ResourceVo> resourceVos) {
-        position = 0;
-        this.resourceVos  =resourceVos;
-        if (resourceVos != null && resourceVos.size() > 0) {
-            cancel = resourceVos.get(position).getIsFavorites();
-            praiseType = resourceVos.get(position).getIsPraise();
-        }
+    public void setVideoList(final List<ResourceVo> resourceVos, int position) {
+        this.position = position;
+        this.resourceVos = resourceVos;
+        alubmId = resourceVos.get(0).getAlbumId();
         albumAdapter = new VideoAlbumDetailAdapter(this, resourceVos);
         rv_play_list.setAdapter(albumAdapter);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rv_play_list.setLayoutManager(manager);
+        albumAdapter.setCurrentPosition(position);//定位当前选中框的位置
+        rv_play_list.scrollToPosition(position);//把recycleView移动到当前播放视频的的位置
         albumAdapter.setOnItemClickListener(new VideoAlbumDetailAdapter.onItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {
                 if (albumAdapter != null) {
                     albumAdapter.setCurrentPosition(position);
-                    setVideoInfo(resourceVos.get(position), position);
+                    setVideoInfo(resourceVos.get(position));
                 }
             }
         });
     }
-
+    /**
+     * 设置当前播放视频的的显示的信息
+     *
+     * @param resourceVo 资源信息
+     */
     @Override
-    public void setVideoInfo(ResourceVo resourceVo, int position) {
-        this.position = position;
-        isResourceFree = resourceVos.get(position).getPay();
-        presenter.setResourceId(resourceVo.getResourceId());
+    public void setVideoInfo(ResourceVo resourceVo) {
+        isResourceFree = resourceVo.getPay();
+        cancel = resourceVo.getIsFavorites();
+        praiseType = resourceVo.getIsPraise();
+        presenter.setResourceId(resourceVo.getResourceId(),alubmId);
         tv_album_num.setText(resourceVo.getResourceName());
         ImageCache.imageLoader(resourceVo.getImageUrl(), iv_album);
-        iv_alubm_collect.setImageResource(resourceVo.getIsFavorites() == 1 ? R.mipmap.star_dark_full: R.mipmap.star_dark);
+        iv_alubm_collect.setImageResource(resourceVo.getIsFavorites() == 1 ? R.mipmap.star_dark_full : R.mipmap.star_dark);
         iv_album_head.setImageResource(resourceVo.getIsPraise() == 1 ? R.mipmap.ic_heat_on : R.mipmap.ic_heat_off);
+        tv_brief.setVisibility(G.isEmteny(resourceVo.getDescription())  ? View.GONE : View.VISIBLE);
         tv_brief.setText(resourceVo.getDescription());
         tv_play_count.setText(String.valueOf(resourceVo.getPvcount()));
         ImageCache.imageLoader(UserMessage.getInstance(this).getHoldImgUrl(), iv_user_image);
@@ -297,35 +301,31 @@ public class PlayVideoListActivity extends AppCompatActivity implements View.OnC
         adapter.setOnItemClickListener(new CompilationPlayCountAdapter.onItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {
-                themeId = compilationVos.get(position).getAlbumId();
-                presenter.getVideoList(tsId, String.valueOf(compilationVos.get(position).getAlbumId()));
+                alubmId = String.valueOf(compilationVos.get(position).getAlbumId());
+                presenter.getVideoList(tsId, alubmId);
             }
         });
     }
 
     @Override
     public void setCommentList(List<CommentInfoVo> commentInfoVos) {
-        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rv_comment_list.setNestedScrollingEnabled(false);
-        rv_comment_list.setLayoutManager(manager);
+        rv_comment_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         VideoCommentListAdapter adapter = new VideoCommentListAdapter(this, commentInfoVos);
         rv_comment_list.setAdapter(adapter);
     }
-
     public void showLoadingDialog() {
         if (dialog == null)
-            dialog = new LoadingDialog(this,R.style.LoadingDialogTheme);
+            dialog = new LoadingDialog(this, R.style.LoadingDialogTheme);
         dialog.show();
         dialog.setCancelable(true);
         dialog.setLoadingText("数据加载中...");
     }
-
     public void stopLoadingDialog() {
         if (dialog != null) {
             dialog.dismiss();
         }
     }
-
     @Override
     protected void onResume() {
         super.onResume();

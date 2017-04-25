@@ -11,9 +11,9 @@ import java.util.List;
  */
 public class PlayVideoDetailContract {
     public interface View {
-        void setVideoList(List<ResourceVo> resourceVos);
+        void setVideoList(List<ResourceVo> resourceVos,int position);
 
-        void setVideoInfo(ResourceVo resourceVo, int position);
+        void setVideoInfo(ResourceVo resourceVo);
 
         void setRecommendList(List<CompilationVo> compilationVos);
 

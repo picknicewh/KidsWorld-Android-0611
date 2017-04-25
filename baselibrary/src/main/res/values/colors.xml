@@ -63,4 +63,5 @@
     <color name="main_text_green">#8ec500</color>
     <color name="text_blue">#5a6197</color>
     <color name="icon_teacher">#f7ab08</color>
+    <color name="nv_read_doc">#191919</color>
 </resources>

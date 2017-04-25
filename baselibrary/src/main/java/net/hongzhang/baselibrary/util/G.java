@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -413,5 +414,12 @@ public class G {
         int index = imageUrl.lastIndexOf("/s");
         return imageUrl.substring(0, index) + imageUrl.substring(index + 2, imageUrl.length());
     }
-
+    /**
+     * * 把Bitmap转Byte      
+     */
+    public static byte[] Bitmap2Bytes(Bitmap bm) {
+        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG,100,baos);
+        return baos.toByteArray();
+    }
 }
