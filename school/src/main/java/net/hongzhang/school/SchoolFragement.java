@@ -22,7 +22,7 @@ import net.hongzhang.school.activity.FoodListActivity;
 import net.hongzhang.school.activity.LeaveListActivity;
 import net.hongzhang.school.activity.MedicineListSActivity;
 import net.hongzhang.school.activity.MedicineListTActivity;
-import net.hongzhang.school.activity.TaskDetailActivity;
+import net.hongzhang.school.activity.PublishListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,6 +120,8 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             schoolDosDisappear(BroadcastConstant.LEAVEASEKDOS);
         } else if (view.getId() == R.id.rl_info) {
             //通知
+//            intent.setClass(getActivity(), PublishListActivity.class);
+            intent.setClass(getActivity(), HomeInteractionActivity.class);
             intent.setClass(getActivity(), TaskDetailActivity.class);
             schoolDosDisappear(BroadcastConstant.SCHOOLINFODOS);
         } else if (view.getId() == R.id.rl_food) {
@@ -133,7 +135,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             intent.setClass(getActivity(), ClassListActivity.class);
         } else if (view.getId() == R.id.rl_medicine) {
             //  intent.setClass(getActivity(), net.hunme.school.activity.TestActivity.class);
-       /*    intent.setClass(getActivity(), HMDroidGap.class);
+       /*     intent.setClass(getActivity(), HMDroidGap.class);
             intent.putExtra("loadUrl",geturl());
             schoolDosDisappear(BroadcastConstant.MEDICINEDOS);
            */
@@ -142,6 +144,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
                 intent.setClass(getActivity(), MedicineListSActivity.class);
             } else {
                 intent.setClass(getActivity(), MedicineListTActivity.class);
+                //"http://192.168.1.171:8787/KidsWorld-Web
                 schoolDosDisappear(BroadcastConstant.MEDICINEDOS);
             }
         }

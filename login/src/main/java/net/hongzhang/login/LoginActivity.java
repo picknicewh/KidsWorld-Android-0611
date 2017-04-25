@@ -176,7 +176,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             UserAction.saveLoginMessage(this, username, password);
 
-
         } else if (Apiurl.SELECTUSER.equals(uri)) {
             //如果source不为空，表示分享时，并没有登陆，从而进入登陆页面，登陆成功且角色选择成功后，再次进入分享页面，继续分享。
             String source = getIntent().getStringExtra("source");
