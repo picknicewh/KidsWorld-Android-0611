@@ -211,9 +211,7 @@ public class StatusPresenter implements StatusContract.Presenter, OkHttpListener
         } else if (Apiurl.STATUSLIST.equals(uri)) {
             Result<List<StatusVo>> data = (Result<List<StatusVo>>) date;
             List<StatusVo> statusVos = data.getData();
-            if (statusVos != null && statusVos.size() > 0) {
-                view.setStatusList(statusVos);
-            }
+            view.setStatusList(statusVos);
         }
     }
     @Override

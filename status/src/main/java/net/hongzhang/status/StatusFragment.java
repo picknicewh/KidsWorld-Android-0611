@@ -155,7 +155,7 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
      * 动态通知数据
      */
     private StatusInfoDbHelper dbHelper;
-    private String tsId ;
+    private String tsId;
     /**
      * 是否还有更多的数据
      */
@@ -164,6 +164,7 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
      * 是否已经点击过动态小窗口
      */
     private boolean isClick;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_status, container, false);
@@ -226,24 +227,28 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
     /**
      * --->适配器调用
      * 设置当前点击进入详情页面的位置
+     *
      * @param scrollPosition
      */
     public void setScrollPosition(int scrollPosition) {
         this.scrollPosition = scrollPosition;
     }
+
     /**
      * ---->删除动态对话框调用，立即删除当前的选中的动态。并且刷新适配器
-     * @param position  当前删除的动态的位置
+     *
+     * @param position 当前删除的动态的位置
      */
     public void updateDelete(int position) {
         statusVos.remove(position);
         setListData();
     }
+
     /**
      * 刷新数据
      */
     private void setListData() {
-        tv_nodata.setVisibility(statusVos.size()==0?View.VISIBLE:View.GONE);
+        tv_nodata.setVisibility(statusVos.size() == 0 ? View.VISIBLE : View.GONE);
         if (adapter != null) {
             adapter.setData(statusVos);
             adapter.notifyDataSetChanged();
@@ -256,12 +261,12 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
         //用户发布动态成功 重新刷新数据
         if (G.KisTyep.isReleaseSuccess) {
             G.KisTyep.isReleaseSuccess = false;
-            loadPage =pageSize;
-            pageNum=1;
+            loadPage = pageSize;
+            pageNum = 1;
             //如果动态列表有数据 调用刷新方法否者调用加载进行刷新数据
             if (statusVos.size() > 0) {
                 type = RUSHTYPE;
-                presenter.getDynamicList(groupId, groupType, pageSize, pageNum, type,  statusVos.get(0).getDynamicId());
+                presenter.getDynamicList(groupId, groupType, pageSize, pageNum, type, statusVos.get(0).getDynamicId());
             } else {
                 type = OTHERTYPE;
                 presenter.getDynamicList(groupId, groupType, pageSize, pageNum, type, null);
@@ -271,11 +276,11 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
         if (G.KisTyep.isUpdateComment) {
             type = OTHERTYPE;
             //页码从1开始所以pageNumber加一
-            loadPage =1;
+            loadPage = 1;
             presenter.getDynamicList(groupId, groupType, 1, scrollPosition + 1, type, null);
             G.KisTyep.isUpdateComment = false;
         }
-        if (isClick){
+        if (isClick) {
             lv_status.removeHeaderView(layout_head);
         }
         //设置消息通知状态，评论完了要重新获取通知栏的消息
@@ -300,13 +305,14 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
             tv_head_count.setText(dbHelper.getNoReadcount(db, tsId) + "条新消息");
         }
     }
+
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
         if (viewId == R.id.iv_right) {
             presenter.goPublishChoose(groupId, view);
         } else if (viewId == R.id.ll_classchoose) {
-            if (dynamicVoList.size()>0&& dynamicVoList!=null){
+            if (dynamicVoList.size() > 0 && dynamicVoList != null) {
                 presenter.showClassChoose(classPopWindow, rl_toolbar);
             }
 
@@ -320,6 +326,7 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
     /**
      * ---->班级选择弹窗调用
      * 设置当前空间选择的位置
+     *
      * @param position 班级列表位置
      */
     public void setPosition(int position) {
@@ -327,9 +334,11 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
         DynamicVo dynamicVo = dynamicVoList.get(position);
         setDynamicVo(dynamicVo);
     }
+
     /**
      * 设置当前的动态头部信息
-     * @param  dynamicVo 动态头部信息
+     *
+     * @param dynamicVo 动态头部信息
      */
     @Override
     public void setDynamicVo(DynamicVo dynamicVo) {
@@ -338,20 +347,24 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
         tv_classname.setText(dynamicVo.getGroupName());
         type = OTHERTYPE;
         loadPage = pageSize;
-        pageNum=1;
+        pageNum = 1;
         //statusVos.clear();
-        presenter.getDynamicList(groupId, groupType, pageSize, pageNum, type, null);
+          presenter.getDynamicList(groupId, groupType, pageSize, pageNum, type, null);
     }
+
     /**
      * 是否已经点击动态小弹窗
-     * @param isClickWindow  是的点击
+     *
+     * @param isClickWindow 是的点击
      */
     @Override
     public void setIsClickWindow(boolean isClickWindow) {
-        this.isClick =isClickWindow;
+        this.isClick = isClickWindow;
     }
+
     /**
      * 设置当前的动态头部列表信息
+     *
      * @param dynamicVoList 动态头部列表
      */
     @Override
@@ -363,8 +376,10 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
             setDynamicVo(dynamicVo);
         }
     }
+
     /**
      * 设置当前的动态列表
+     *
      * @param statusList 动态列表
      */
     @Override
@@ -377,12 +392,13 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
                         hasData = true;
                         statusVos.set(scrollPosition, statusList.get(0));
                     } else {//当pageNum=1时表示第一页，第一页时清除所有的数据，重新加载新的第一页数据
-                        if (pageNum==1){
+                        if (pageNum == 1) {
                             statusVos.clear();
                         }
                         statusVos.addAll(statusList);
                         //如果当前返回的动态列表小于当前的页面加载数，那么说明没有更多的数据
-                        hasData =  statusList.size() < pageSize ? false:true;
+                        hasData = statusList.size() < pageSize ? false : true;
+
                     }
                     break;
                 case RUSHTYPE://动态刷新只需要加载刚刚没有的数据，并添加在列表最前面
@@ -390,30 +406,37 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
                     statusVos.addAll(0, statusList);
                     break;
             }
+        } else {
+            hasData = false;
         }
         setListData();
     }
 
     /**
      * 通过网络监听，监听当前是否网络做出响应的处理
-     * @param  isVisible 是否网络
+     *
+     * @param isVisible 是否网络
      */
     @Override
     public void setTvStatusbar(boolean isVisible) {
-        tv_status_bar.setVisibility(isVisible?View.VISIBLE:View.GONE);
+        tv_status_bar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
+
     /**
      * 设置极光推送推送过来的班级id，与当前班级id对比，如果相同，则发送红点
+     *
      * @param targetId 班级id
      */
     @Override
     public void setTargetId(String targetId) {
         presenter.sendStatusDosBroadcast(targetId, groupId);
     }
+
     /**
      * 设置极光推送推送过来的点赞或评论条数和最后一个点赞的人头像
-     * @param count 点赞或评论条数
-     * @param  imageUrl 当前的图片id
+     *
+     * @param count    点赞或评论条数
+     * @param imageUrl 当前的图片id
      */
     @Override
     public void setHeadInfo(int count, String imageUrl) {
@@ -431,8 +454,8 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
      */
     @Override
     public void setDeleteDynamic(String dynamicId) {
-        for (int i = 0 ;  i<statusVos.size();i++ ){
-            if (statusVos.get(i).getDynamicId().equals(dynamicId)){
+        for (int i = 0; i < statusVos.size(); i++) {
+            if (statusVos.get(i).getDynamicId().equals(dynamicId)) {
                 updateDelete(i);
             }
         }
@@ -443,6 +466,7 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
         super.onDestroy();
         presenter.unregisterReceiver();
     }
+
     /**
      * 下拉刷新动态数据
      */
@@ -466,6 +490,7 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
 
         }.sendEmptyMessageDelayed(0, 500);
     }
+
     /**
      * 上拉加载动态数据
      */

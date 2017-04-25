@@ -120,9 +120,9 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             schoolDosDisappear(BroadcastConstant.LEAVEASEKDOS);
         } else if (view.getId() == R.id.rl_info) {
             //通知
-//            intent.setClass(getActivity(), PublishListActivity.class);
-            intent.setClass(getActivity(), HomeInteractionActivity.class);
-            intent.setClass(getActivity(), TaskDetailActivity.class);
+            intent.setClass(getActivity(), PublishListActivity.class);
+            //intent.setClass(getActivity(), HomeInteractionActivity.class);
+            //intent.setClass(getActivity(), TaskDetailActivity.class);
             schoolDosDisappear(BroadcastConstant.SCHOOLINFODOS);
         } else if (view.getId() == R.id.rl_food) {
             //食谱

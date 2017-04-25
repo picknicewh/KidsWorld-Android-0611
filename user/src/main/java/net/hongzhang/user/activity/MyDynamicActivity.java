@@ -36,11 +36,11 @@ import java.util.List;
 import java.util.Map;
 
 public class MyDynamicActivity extends BaseActivity implements OkHttpListener, View.OnClickListener, PullToRefreshBase.OnRefreshListener<ListView> {
-   // private PullToRefreshLayout refresh_view;
+    // private PullToRefreshLayout refresh_view;
     /**
      * 我的动态列表
      */
-  //  private PullableListView lv_dynamic;
+    //  private PullableListView lv_dynamic;
     private ListView lv_dynamic;
     private PullToRefreshListView pullToRefreshListView;
     /**
@@ -69,6 +69,7 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener, V
      */
     private TextView tv_nodata;
     private boolean hasData = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +78,7 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener, V
     }
 
     private void initview() {
-      //  lv_dynamic = $(R.id.lv_dynamic);
+        //  lv_dynamic = $(R.id.lv_dynamic);
         dynamicInfoVoList = new ArrayList<>();
         rl_nonetwork = $(R.id.rl_nonetwork);
         tv_nodata = $(R.id.tv_nodata);
@@ -146,20 +147,23 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener, V
                         dynamicInfoVoList.addAll(dynamicInfoVos);
                     }
                 }
-                if (dynamicInfoVos.size()<10){
+                if (dynamicInfoVos.size() < 10) {
                     hasData = false;
-                }else {
+                } else {
                     hasData = true;
                 }
                 setListData();
+            } else {
+                hasData = false;
             }
         }
     }
+
     @Override
     public void onError(String uri, Result error) {
         stopLoadingDialog();
         rl_nonetwork.setVisibility(View.VISIBLE);
-        DetaiCodeUtil.errorDetail(error,this);
+        DetaiCodeUtil.errorDetail(error, this);
     }
 
 
@@ -173,18 +177,19 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener, V
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
-      //  refresh_view.setLv_count(dynamicInfoVoList.size());
+        //  refresh_view.setLv_count(dynamicInfoVoList.size());
     }
 
     public void updateDelete(int position) {
         //删除动态后要发送通知给
-        Intent intent  = new Intent(BroadcastConstant.DELETEDYNAMIC);
-        intent.putExtra("dynamicId",dynamicInfoVoList.get(position).getDynamicId());
+        Intent intent = new Intent(BroadcastConstant.DELETEDYNAMIC);
+        intent.putExtra("dynamicId", dynamicInfoVoList.get(position).getDynamicId());
         sendBroadcast(intent);
         dynamicInfoVoList.remove(position);
         setListData();
 
     }
+
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.rl_nonetwork) {
@@ -233,7 +238,9 @@ public class MyDynamicActivity extends BaseActivity implements OkHttpListener, V
         String text = formatDateTime(System.currentTimeMillis());
         pullToRefreshListView.setLastUpdatedLabel(text);
     }
+
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm");
+
     private String formatDateTime(long time) {
         if (0 == time) {
             return "";

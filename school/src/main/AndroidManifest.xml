@@ -46,7 +46,6 @@
         <activity android:name=".activity.MedicineListSActivity" />
         <activity android:name=".activity.MedicineTaskTActivity" />
         <activity android:name=".activity.MedicineEntrustActivity" />
-        <activity android:name=".activity.HomeInteractionSActivity" />
         <activity android:name=".activity.TaskDetailActivity" />
         <activity android:name=".activity.PublishActiveSActivity" />
         <activity android:name=".activity.PublishActiveTActivity" />
