@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -117,5 +118,14 @@ public class UpdateConformDialog extends AlertDialog implements View.OnClickList
             }
         }
         return mSavePath;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK){
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+
     }
 }

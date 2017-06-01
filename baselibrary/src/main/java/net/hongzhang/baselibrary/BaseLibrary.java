@@ -7,6 +7,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
@@ -62,6 +64,7 @@ public class BaseLibrary {
         RongPushClient.registerMiPush(application, " 2882303761517505108", "5551750520108");
       //  RongIM.init(application, "e0x9wycfeaamq");//初始化消息中的信息
         RongIM.init(application, "x18ywvqfxlloc");//初始化消息中的信息
+        SpeechUtility.createUtility(application, SpeechConstant.APPID +"=59254e5d");//初始化语音
         //e0x9wycfeaamq 测试   x18ywvqfxlloc 生产
         activitys = new ArrayList<>();
         activityLockList = new ArrayList<>();

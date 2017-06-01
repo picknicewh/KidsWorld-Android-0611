@@ -3,19 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-   <!-- <net.hongzhang.baselibrary.pullrefresh.PullToRefreshRecycleView
-        android:id="@+id/prv_album"
+    <net.hongzhang.baselibrary.pullrefresh.PullToRefreshRecyclerView
+        android:id="@+id/pullrecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>-->
-    <ScrollView
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
+    <TextView
+        android:id="@+id/tv_no_more_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/space"
+        android:text="已经到底啦"
+        android:textColor="@color/minor_text"
+        android:textSize="@dimen/ts_large"
+        android:visibility="gone" />
+   <!-- <ScrollView
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <!-- 嵌套一个 RelativeLayout 解决6.0 RecyclerView显示不全-->
+            &lt;!&ndash; 嵌套一个 RelativeLayout 解决6.0 RecyclerView显示不全&ndash;&gt;
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,5 +45,5 @@
 
             <include layout="@layout/layout_load_more" />
         </LinearLayout>
-    </ScrollView>
+    </ScrollView>-->
 </LinearLayout>

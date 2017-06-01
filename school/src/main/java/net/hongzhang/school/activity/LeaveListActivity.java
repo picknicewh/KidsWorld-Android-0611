@@ -82,7 +82,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
          plv_leave_list.setPullLoadEnabled(false);
          plv_leave_list.setScrollLoadEnabled(true);
          plv_leave_list.setOnRefreshListener(this);
-         plv_leave_list.doPullRefreshing(true, 500);
+     //    plv_leave_list.doPullRefreshing(true, 500);
          rl_nonetwork = $(R.id.rl_lvnonetwork);
          tv_nodata = $(R.id.tv_nodata);
       //   ll_loadmore = $(R.id.load_more);

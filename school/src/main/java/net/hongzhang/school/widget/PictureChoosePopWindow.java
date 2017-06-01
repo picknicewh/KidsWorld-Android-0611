@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import net.hongzhang.school.R;
 import net.hongzhang.school.activity.CameraCaptureActivity;
-import net.hongzhang.school.activity.PublishActiveSActivity;
+import net.hongzhang.school.activity.SubmitTaskActivityS;
 
 /**
  * 作者： wanghua
@@ -28,7 +28,6 @@ public class PictureChoosePopWindow extends PopupWindow implements View.OnClickL
 
     public PictureChoosePopWindow(Activity context) {
         this.context = context;
-
         init();
     }
 
@@ -40,6 +39,12 @@ public class PictureChoosePopWindow extends PopupWindow implements View.OnClickL
         tv_alubm.setOnClickListener(this);
         tv_cancel.setOnClickListener(this);
         ll_camera.setOnClickListener(this);
+    }
+
+    private boolean hasVideo;
+
+    public void setHasVideo(boolean hasVideo) {
+        this.hasVideo = hasVideo;
     }
 
     /**
@@ -71,14 +76,15 @@ public class PictureChoosePopWindow extends PopupWindow implements View.OnClickL
       /*  if (viewId==R.id.tv_concal){
         }else */
         if (viewId == R.id.tv_album) {
-            if (context instanceof PublishActiveSActivity) {
-                PublishActiveSActivity activity = (PublishActiveSActivity) context;
+            if (context instanceof SubmitTaskActivityS) {
+                SubmitTaskActivityS activity = (SubmitTaskActivityS) context;
                 activity.goSelectImager(activity);
             }
         } else if (viewId == R.id.ll_camera) {
             Intent intent = new Intent(context, CameraCaptureActivity.class);
+            intent.putExtra("hasVideo",hasVideo);
             //是第二个参数的问题，该参数必须大于0才能在返回值，并激活onActivityResult方法。
-           // 最开始是用的一个activity默认的常量：RESULT_OK，跟踪了代码后发现，该常量的值为-1，
+            // 最开始是用的一个activity默认的常量：RESULT_OK，跟踪了代码后发现，该常量的值为-1，
             // 当然没法激活 onActivityResult方法了，随后随便修改为一个大于0的整数，程序即通跑成功。
             context.startActivityForResult(intent, 1);
         }

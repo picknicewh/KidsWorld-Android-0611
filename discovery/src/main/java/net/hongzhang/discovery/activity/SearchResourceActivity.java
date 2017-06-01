@@ -24,6 +24,7 @@ import net.hongzhang.discovery.util.TextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * 作者： wh
  * 时间： 2017/3/5
@@ -65,6 +66,7 @@ public class SearchResourceActivity extends BaseActivity implements View.OnClick
      */
     private SearchHistoryDb db;
     private SearchHistoryDbHelper helper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +80,7 @@ public class SearchResourceActivity extends BaseActivity implements View.OnClick
         setCententTitle("搜索");
         setLiftOnClickClose();
     }
+
     private void initView() {
         ll_search_content = $(R.id.ll_search_content);
         lv_search_history_list = $(R.id.lv_search_history_list);
@@ -87,7 +90,7 @@ public class SearchResourceActivity extends BaseActivity implements View.OnClick
         viewPagerHead = $(R.id.vph_search);
         tv_clean = $(R.id.tv_clean);
         tv_clean.setOnClickListener(this);
-        et_search_key.setOnClickListener(this );
+        et_search_key.setOnClickListener(this);
         tv_search.setOnClickListener(this);
         tv_clean.setOnClickListener(this);
         et_search_key.setOnClickListener(this);
@@ -97,12 +100,13 @@ public class SearchResourceActivity extends BaseActivity implements View.OnClick
         titles.add("教育资讯");
         setSearchHistoryList();
     }
+
     private void initViewPager() {
         List<Fragment> fragments = new ArrayList<>();
         for (int i = 1; i <= 2; i++) {
             SearchResourceListFragment fragment = new SearchResourceListFragment();
             Bundle bundle = new Bundle();
-            bundle.putInt("type", 3-i);
+            bundle.putInt("type", 3 - i);
             fragment.setArguments(bundle);
             fragments.add(fragment);
         }
@@ -110,10 +114,11 @@ public class SearchResourceActivity extends BaseActivity implements View.OnClick
         viewPagerHead.setViewPager(viewPager);
         viewPagerHead.setAdapter(this, fragments, getSupportFragmentManager(), titles);
     }
+
     private void setSearchHistoryList() {
         db = new SearchHistoryDb(this);
         helper = SearchHistoryDbHelper.getinstance();
-        searchKeyVos = helper.getKeyList(db.getReadableDatabase(),SearchHistoryDb.TABLENAME);
+        searchKeyVos = helper.getKeyList(db.getReadableDatabase(), SearchHistoryDb.TABLENAME);
         SearchHistoryAdapter adapter = new SearchHistoryAdapter(this, searchKeyVos);
         lv_search_history_list.setAdapter(adapter);
         lv_search_history_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -127,7 +132,9 @@ public class SearchResourceActivity extends BaseActivity implements View.OnClick
             }
         });
     }
+
     public static String tag;
+
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
@@ -135,19 +142,18 @@ public class SearchResourceActivity extends BaseActivity implements View.OnClick
             lv_search_history_list.setVisibility(View.GONE);
             ll_search_content.setVisibility(View.VISIBLE);
             tag = et_search_key.getText().toString().trim();
-            if (TextUtil.isAllSpace(tag)){
-                G.showToast(this,"搜索关键词不能为空");
+            if (TextUtil.isAllSpace(tag)) {
+                G.showToast(this, "搜索关键词不能为空");
                 et_search_key.setText("");
-            }else {
-                helper.insert(db.getWritableDatabase(), tag,SearchHistoryDb.TABLENAME);
+            } else {
+                helper.insert(db.getWritableDatabase(), tag, SearchHistoryDb.TABLENAME);
                 setSearchHistoryList();
                 initViewPager();
             }
-
         } else if (viewId == R.id.tv_clean) {
             et_search_key.setText("");
             lv_search_history_list.setVisibility(View.GONE);
-        } else if (viewId==R.id.et_search_key){
+        } else if (viewId == R.id.et_search_key) {
             lv_search_history_list.setVisibility(View.VISIBLE);
         }
     }

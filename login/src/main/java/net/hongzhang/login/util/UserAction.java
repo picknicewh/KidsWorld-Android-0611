@@ -7,7 +7,8 @@ import android.content.Intent;
 
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
-import net.hongzhang.login.LoginActivity;
+//import net.hongzhang.login.LoginActivity;
+import net.hongzhang.login.activity.LoginActivity;
 
 /**
  * ================================================

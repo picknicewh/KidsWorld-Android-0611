@@ -40,7 +40,7 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
     private Context context;
     private SearchResourceContract.View view;
     private List<CompilationVo> compilationVoList;
-    private List<ResourceVo> resourceVoList;
+    //  private List<ResourceVo> resourceVoList;
     private SearchHistoryDb db;
     private SearchHistoryDbHelper helper;
     /**
@@ -50,13 +50,14 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
     /**
      * 搜索资源所在资源的位置
      */
-   private String resourceId;
+    private String resourceId;
     private String albumId;
+
     public SearchResourcePresenter(Context context, SearchResourceContract.View view) {
         this.context = context;
         this.view = view;
         compilationVoList = new ArrayList<>();
-        resourceVoList = new ArrayList<>();
+        // resourceVoList = new ArrayList<>();
         db = new SearchHistoryDb(context);
         helper = SearchHistoryDbHelper.getinstance();
     }
@@ -77,6 +78,7 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
         view.showLoadingDialog();
         view.setloadMoreVis(false);
     }
+
     /**
      * 根据专辑id获取专辑中的资源列表
      *
@@ -84,7 +86,7 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
      * @param themeId 专辑id
      */
     @Override
-    public void getSongList(String tsId, String themeId,String resourceId) {
+    public void getSongList(String tsId, String themeId, String resourceId) {
         this.albumId = themeId;
         this.resourceId = resourceId;
         Map<String, Object> map = new HashMap<>();
@@ -97,6 +99,7 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
         }.getType();
         OkHttps.sendPost(mType, Apiurl.USER_GETTHENELIST, map, this);
     }
+
     @Override
     public void getSearchHistoryList(int type) {
         List<SearchKeyVo> searchKeyVos = new ArrayList<>();
@@ -107,22 +110,33 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
         }
         view.setSearchHistoryList(searchKeyVos);
     }
+
     @Override
-    public void saveSearchKey(String key,int type,String tsId,String targetName,String targetId) {
-        Map<String,Object> params = new HashMap<>();
-        params.put("tsId",tsId);
-        params.put("tag",key);
-        params.put("targetName",targetName);
-        params.put("type",type);//type=1资源 type=2专辑
-        params.put("targetId",targetId);
-        Type mType =  new TypeToken<Result<String>>(){}.getType();
-        OkHttps.sendPost(mType,Apiurl.SAVESERACHRE,params,this);
+    public void saveSearchKey(String key, int type, String tsId, String targetName, String targetId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("tsId", tsId);
+        params.put("tag", key);
+        params.put("targetName", targetName);
+        params.put("type", type);//type=1资源 type=2专辑
+        params.put("targetId", targetId);
+        Type mType = new TypeToken<Result<String>>() {
+        }.getType();
+        OkHttps.sendPost(mType, Apiurl.SAVESERACHRE, params, this);
     }
 
+    public String getToptag(int type) {
+        String tag = null;
+        if (type == MainRecommendPresenter.TYPE_MUISC) {
+            tag = helper.getLastOne(db.getWritableDatabase(), SearchHistoryDb.TABLENAME1);
+        } else if (type == MainRecommendPresenter.TYPE_VIDEO) {
+            tag = helper.getLastOne(db.getWritableDatabase(), SearchHistoryDb.TABLENAME2);
+        }
+        return tag;
+    }
 
     @Override
     public void insertKey(int type, String tag) {
-       // Log.i("RRRRRRRR","tag========="+tag+"type========"+type);
+        // Log.i("RRRRRRRR","tag========="+tag+"type========"+type);
         if (type == MainRecommendPresenter.TYPE_MUISC) {
             helper.insert(db.getWritableDatabase(), tag, SearchHistoryDb.TABLENAME1);
         } else if (type == MainRecommendPresenter.TYPE_VIDEO) {
@@ -137,13 +151,12 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
         intent.putExtra("themeId", AlbumId);
         intent.putExtra("resourceId", resourceId);
         context.startActivity(intent);
-
     }
 
     @Override
-    public void startMusicActivity(List<ResourceVo> resourceVos,String resourceId) {
+    public void startMusicActivity(List<ResourceVo> resourceVos, String resourceId) {
         Intent intent = new Intent(context, MainPlayMusicActivity.class);
-     //  intent.putExtra("themeId", AlbumId);
+        //  intent.putExtra("themeId", AlbumId);
         intent.putExtra("resourceId", resourceId);
         intent.putParcelableArrayListExtra("resourceVos", (ArrayList<? extends Parcelable>) resourceVos);
         context.startActivity(intent);
@@ -157,8 +170,11 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
             if (date != null) {
                 Result<ResourceVos> result = (Result<ResourceVos>) date;
                 ResourceVos resourceVos = result.getData();
-                List<CompilationVo> compilationVos = resourceVos.getAlbumManageList();
+                //    List<CompilationVo> compilationVos = resourceVos.getAlbumManageList();
                 List<ResourceVo> resourceVos1 = resourceVos.getResourceManageList();
+                view.setResourceList(resourceVos1);
+                view.setResourceSize((resourceVos1.size()));
+             /*
                 if (compilationVos != null && compilationVos.size() > 0) {
                     if (flag == 1) {
                         compilationVoList.clear();
@@ -166,32 +182,30 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
                     compilationVoList.addAll(compilationVos);
                     view.setCompilationVoList(compilationVoList);
                 }
-
                 if (resourceVos1 != null && resourceVos1.size() > 0) {
                     if (flag == 1) {
-                        resourceVoList.clear();
+                       // resourceVoList.clear();
                     }
-                    resourceVoList.addAll(resourceVos1);
-                    view.setResourceList(resourceVoList);
-                   /* if (compilationVos != null && compilationVos.size() > 0) {
+                  //  resourceVoList.addAll(resourceVos1);
+
+                   *//* if (compilationVos != null && compilationVos.size() > 0) {
                         if (flag == 1) {
                             compilationVoList.clear();
                         }
                         compilationVoList.addAll(compilationVos);
                         view.setCompilationVoList(compilationVoList);
-                    }*/
+                    }*//*
                 }
-              //  view.setResourceList(resourceVos1);
-                view.setResourceSize((resourceVos1.size()));
+              //  view.setResourceList(resourceVos1);*/
+
             }
-        }else if (uri.equals(Apiurl.USER_GETTHENELIST)) {
-            if (date!=null){
+        } else if (uri.equals(Apiurl.USER_GETTHENELIST)) {
+            if (date != null) {
                 Result<List<ResourceVo>> result = (Result<List<ResourceVo>>) date;
                 List<ResourceVo> resourceVoList = result.getData();
-                G.log("zzzzzzzzzzzzzz---++---"+resourceId);
-                startMusicActivity(resourceVoList,resourceId);
+                startMusicActivity(resourceVoList, resourceId);
             }
-        }else if (uri.equals(Apiurl.SAVESERACHRE)){
+        } else if (uri.equals(Apiurl.SAVESERACHRE)) {
             Result<String> result = (Result<String>) date;
             String resultData = result.getData();
             G.log(resultData);
@@ -203,6 +217,6 @@ public class SearchResourcePresenter implements SearchResourceContract.Presenter
     public void onError(String uri, Result error) {
         view.stopLoadingDialog();
         view.setloadMoreVis(true);
-        DetaiCodeUtil.errorDetail(error,context);
+        DetaiCodeUtil.errorDetail(error, context);
     }
 }

@@ -62,6 +62,8 @@ public class ShareActivity extends BaseActivity implements ShareContract.View {
         String type = intent.getType();
         if (Intent.ACTION_SEND.equals(action) && "text/json".equals(type)) {
             String json = intent.getStringExtra(Intent.EXTRA_TEXT);
+           // String json = "{\"type\":1,\"title\":\"\",\"text\":\"趣乐园真好玩\",\"paths\":[\"/storage/emulated/0/Android/data/cn.net.hongzhang.quleyuan_android/files/SreenCut/IMG_2017_05_16_07_11_57_3432.jpg\"]}";
+            G.log("xxxxxxxxx"+json);
             shareVo = new Gson().fromJson(json, ShareVo.class);
         }
     }
@@ -91,5 +93,4 @@ public class ShareActivity extends BaseActivity implements ShareContract.View {
         });
         rvClassList.setAdapter(adapter);
     }
-
 }

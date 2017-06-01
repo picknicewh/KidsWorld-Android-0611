@@ -87,6 +87,7 @@ public class UserChooseActivity extends BaseActivity implements UserChooseContra
                 characterSeleteVo = characterSeleteVos.get(position);
                 presenter.selectUserSubmit(characterSeleteVo.getTsId(), SignUtil.getSign(Apiurl.SELECTUSER));
                 um.setSelectFlag(position);
+
             }
         });
         if(isGoBack){

@@ -19,6 +19,8 @@ import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.school.activity.ClassListActivity;
 import net.hongzhang.school.activity.CourseArrangeListActivity;
 import net.hongzhang.school.activity.FoodListActivity;
+import net.hongzhang.school.activity.HomeInteractionActivityS;
+import net.hongzhang.school.activity.HomeInteractionActivityT;
 import net.hongzhang.school.activity.LeaveListActivity;
 import net.hongzhang.school.activity.MedicineListSActivity;
 import net.hongzhang.school.activity.MedicineListTActivity;
@@ -68,6 +70,10 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
      * 喂药
      */
     private RelativeLayout rl_medicine;
+    /**
+     * 家园互动
+     */
+    private RelativeLayout rl_home;
     private TextView tv_dos_medicine;
 
     private ShowDosRecivier recivier;
@@ -98,6 +104,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
         tv_dos_info = $(v, R.id.tv_dos_info);
         tv_dos_leaveadk = $(v, R.id.tv_dos_leaveadk);
         tv_dos_medicine = $(v, R.id.tv_dos_medicine);
+        rl_home= $(v, R.id.rl_home);
         rl_check.setOnClickListener(this);
         rl_leave.setOnClickListener(this);
         rl_inform.setOnClickListener(this);
@@ -105,6 +112,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
         rl_arrangement.setOnClickListener(this);
         rl_openClass.setOnClickListener(this);
         rl_medicine.setOnClickListener(this);
+        rl_home.setOnClickListener(this);
         registerReceiver();
     }
 
@@ -113,16 +121,14 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
         Intent intent = new Intent();
         if (view.getId() == R.id.rl_check) {
             //考勤
-            intent.setClass(getActivity(), TestActivity.class);
+       //     intent.setClass(getActivity(), TestActivity.class);
         } else if (view.getId() == R.id.rl_leave) {
             //请假
             intent.setClass(getActivity(), LeaveListActivity.class);
             schoolDosDisappear(BroadcastConstant.LEAVEASEKDOS);
         } else if (view.getId() == R.id.rl_info) {
             //通知
-            intent.setClass(getActivity(), PublishListActivity.class);
-            //intent.setClass(getActivity(), HomeInteractionActivity.class);
-            //intent.setClass(getActivity(), TaskDetailActivity.class);
+             intent.setClass(getActivity(), PublishListActivity.class);
             schoolDosDisappear(BroadcastConstant.SCHOOLINFODOS);
         } else if (view.getId() == R.id.rl_food) {
             //食谱
@@ -146,6 +152,12 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
                 intent.setClass(getActivity(), MedicineListTActivity.class);
                 //"http://192.168.1.171:8787/KidsWorld-Web
                 schoolDosDisappear(BroadcastConstant.MEDICINEDOS);
+            }
+        }else if (view.getId()==R.id.rl_home){
+            if (UserMessage.getInstance(getActivity()).getType().equals("1")){
+                intent.setClass(getActivity(), HomeInteractionActivityS.class);
+            }else {
+                intent.setClass(getActivity(), HomeInteractionActivityT.class);
             }
         }
         startActivity(intent);

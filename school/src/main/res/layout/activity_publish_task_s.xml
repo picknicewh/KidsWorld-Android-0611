@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_layout"
+    tools:context="net.hongzhang.school.activity.SubmitTaskActivityS">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_x0.5"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="@dimen/space">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/space_x0.5"
+                android:paddingLeft="@dimen/space_x0.5"
+                android:text="活动标题"
+                android:textColor="@color/theme_text"
+                android:textSize="@dimen/ts_x_large" />
+
+
+            <TextView
+
+                android:id="@+id/tv_user_info"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/space_x0.5"
+                android:paddingLeft="@dimen/space_x0.5"
+                android:text="小一班   小红"
+                android:textColor="@color/minor_text"
+                android:textSize="@dimen/ts_x_large" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_comment_task_edit"
+                android:orientation="vertical">
+                    <EditText
+                        android:id="@+id/et_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_margin="@dimen/space_x0.5"
+                        android:background="@color/home_minor_bg"
+                        android:gravity="left"
+                        android:hint="说点啥..."
+                        android:maxLength="200"
+                        android:textColor="@color/theme_text"
+                        android:textSize="@dimen/ts_medium" />
+                <net.hongzhang.baselibrary.widget.NoScrollGirdView
+                    android:id="@+id/gv_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:numColumns="4"
+                    android:scrollbars="none"
+                    android:verticalSpacing="@dimen/space" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_gray"
+                android:background="@color/line_divide" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/space"
+                android:paddingRight="@dimen/space">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="是否允许作业公开？"
+                    android:textColor="@color/theme_text"
+                    android:textSize="@dimen/ts_x_large" />
+
+                <ToggleButton
+                    android:id="@+id/tb_open"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/transparent"
+                    android:button="@drawable/toggle_btn"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:orientation="horizontal"
+                android:padding="@dimen/space">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="发布时间："
+                    android:textColor="@color/minor_text"
+                    android:textSize="@dimen/ts_large" />
+
+                <TextView
+                    android:id="@+id/tv_publish_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="2017年4月19日9：00"
+                    android:textColor="@color/minor_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space"
+                android:orientation="horizontal"
+                android:padding="@dimen/space">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="截止时间："
+                    android:textColor="@color/minor_text"
+                    android:textSize="@dimen/ts_large" />
+
+                <TextView
+                    android:id="@+id/tv_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2017年4月19日9：00"
+                    android:textColor="@color/minor_text" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_divide" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

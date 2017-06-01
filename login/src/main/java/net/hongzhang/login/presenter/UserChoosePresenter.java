@@ -69,13 +69,14 @@ public class UserChoosePresenter implements UserChooseContract.Presenter, OkHttp
         } else if (Apiurl.SELECTUSER.equals(uri)) {
             Result<String> data = (Result<String>) date;
             String result = data.getData();
-            G.showToast(context,result);
-            if (result.contains("成功")) {
-                view.setIsChoose(true);
+           // G.showToast(context,result);
+            view.setIsChoose(true);
+            G.showToast(context,"登陆成功");
+            /*if (result.contains("成功")) {
+
             } else {
                 view.setIsChoose(false);
-            }
-
+            }*/
         }
     }
     @Override

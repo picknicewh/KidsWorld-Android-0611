@@ -23,7 +23,7 @@ import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.MyAlertDialog;
-import net.hongzhang.login.LoginActivity;
+import net.hongzhang.login.activity.LoginActivity;
 import net.hongzhang.user.R;
 import net.hongzhang.user.activity.USettingActivity;
 import net.hongzhang.user.adapter.PhotoAdapter;

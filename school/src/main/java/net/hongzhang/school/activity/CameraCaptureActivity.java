@@ -2,26 +2,29 @@ package net.hongzhang.school.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import net.hongzhang.baselibrary.takevideo.CameraManager;
+import net.hongzhang.baselibrary.takevideo.CameraProgressBar;
+import net.hongzhang.baselibrary.takevideo.CameraView;
+import net.hongzhang.baselibrary.takevideo.MediaPlayerManager;
+import net.hongzhang.baselibrary.util.FileUtils;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.PermissionsChecker;
 import net.hongzhang.school.R;
-import net.hongzhang.school.util.CameraManager;
-import net.hongzhang.school.util.CameraView;
-import net.hongzhang.baselibrary.util.FileUtils;
-import net.hongzhang.school.util.MediaPlayerManager;
-import net.hongzhang.school.widget.CameraProgressBar;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -58,6 +61,7 @@ public class CameraCaptureActivity extends Activity implements View.OnClickListe
     private RelativeLayout rl_save;
     private ImageView iv_save;
     private ImageView iv_unsave;
+    private ImageView iv_picture;
     /**
      * true代表视频录制,否则拍照
      */
@@ -83,7 +87,6 @@ public class CameraCaptureActivity extends Activity implements View.OnClickListe
     /**
      * 视频录制地址
      */
-
     private String recorderPath;
     /**
      * 图片地址
@@ -107,25 +110,24 @@ public class CameraCaptureActivity extends Activity implements View.OnClickListe
     private MediaPlayerManager playerManager;
     private byte[] photodata;
     private final String[] PERMISSIONS = new String[]{
-            Manifest.permission.CAMERA,//麦克风权限
-            Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.DISABLE_KEYGUARD,
+            Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO,//麦克风权限
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.SYSTEM_ALERT_WINDOW,
-            Manifest.permission.WRITE_SETTINGS,
-            Manifest.permission.ACCESS_NETWORK_STATE
+            Manifest.permission.READ_EXTERNAL_STORAGE
     };
-
+    private MyEventListener myEventListener;
+    private boolean hasVideo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera_capture);
+        setContentView(R.layout.activity_capture_video);
         ButterKnife.bind(this);
         PermissionsChecker.getInstance(this).getPerMissions(PERMISSIONS);
         initView();
     }
 
     private void initView() {
+        //iv_picture = (ImageView) findViewById(R.id.iv_picture);
         mTextureView = (TextureView) findViewById(R.id.tv_preview);
         ivCameraSwitch = (ImageView) findViewById(R.id.iv_camera_switch);
         ivCancle = (ImageView) findViewById(R.id.iv_cancle);
@@ -144,63 +146,75 @@ public class CameraCaptureActivity extends Activity implements View.OnClickListe
 
 
     private void initData() {
+        //如果已经有视频，使得长按事件取消
+        hasVideo = getIntent().getBooleanExtra("hasVideo",false);
         G.initDisplaySize(this);
+        myEventListener = new MyEventListener(this);
         cameraManager = CameraManager.getInstance(getApplication());
+        cameraManager.setOrientaion(0);
         playerManager = MediaPlayerManager.getInstance(getApplication());
         cameraManager.setCameraType(isSupportRecord ? 1 : 0);
         final int max = MAX_RECORD_TIME / PLUSH_PROGRESS;
         mProgressBar.setMaxProgress(max);
-        mProgressBar.setLongScale(true);
+        // mProgressBar.setLongScale(true);
         mProgressBar.setOnProgressTouchListener(new CameraProgressBar.OnProgressTouchListener() {
             @Override
-            public void onClick(CameraProgressBar progressBar) {
+            public void onClick(final CameraProgressBar progressBar) {
                 cameraManager.takePhoto(new Camera.PictureCallback() {
                     @Override
                     public void onPictureTaken(byte[] data, Camera camera) {
-                        setTakeButtonShow(true);
                         photodata = data;
+                        photoPath = FileUtils.getUploadPhotoFile(getApplicationContext());
+                        isPhotoTakingState = FileUtils.savePhoto(photoPath, photodata, cameraManager.isCameraFrontFacing());
+                        Bitmap bitmap = FileUtils.rotateBitmapByDegree(BitmapFactory.decodeFile(photoPath), mOrientation);
+                        iv_picture.setImageBitmap(bitmap);
+                        FileUtils.saveBmpToPath(bitmap, photoPath);
+                        setTakeButtonShow(true);
                     }
                 });
                 isSupportRecord = false;
             }
+
             @Override
             public void onLongClick(CameraProgressBar progressBar) {
-                isSupportRecord = true;
-                cameraManager.setCameraType(1);
-                recorderPath = FileUtils.getUploadVideoFile(getApplicationContext());
-                cameraManager.startMediaRecord(recorderPath);
-                isRecording = true;
-                progressSubscription = Observable.interval(100, TimeUnit.MILLISECONDS,
-                        AndroidSchedulers.mainThread()).take(max).subscribe(new Subscriber<Long>() {
-                    @Override
-                    public void onCompleted() {
-                        stopRecorder(true);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
-                        mProgressBar.setProgress(mProgressBar.getProgress() + 1);
-                    }
-                });
+                if (!hasVideo){
+                    isSupportRecord = true;
+                    cameraManager.setCameraType(1);
+                    recorderPath = FileUtils.getUploadVideoFile(getApplicationContext());
+                    cameraManager.startMediaRecord(recorderPath);
+                    isRecording = true;
+                    progressSubscription = Observable.interval(100, TimeUnit.MILLISECONDS,
+                            AndroidSchedulers.mainThread()).take(max).subscribe(new Subscriber<Long>() {
+                        @Override
+                        public void onCompleted() {
+                            stopRecorder(true);
+                        }
+                        @Override
+                        public void onError(Throwable e) {
+                        }
+                        @Override
+                        public void onNext(Long aLong) {
+                            mProgressBar.setProgress(mProgressBar.getProgress() + 1);
+                        }
+                    });
+                }
             }
-
             @Override
             public void onZoom(boolean zoom) {
-                cameraManager.handleZoom(zoom);
+              //  cameraManager.handleZoom(zoom);
             }
 
             @Override
             public void onLongClickUp(CameraProgressBar progressBar) {
-                isSupportRecord = false;
-                cameraManager.setCameraType(0);
-                stopRecorder(true);
-                if (progressSubscription != null) {
-                    progressSubscription.unsubscribe();
+                if (!hasVideo){
+                    isSupportRecord = false;
+                    cameraManager.setCameraType(0);
+                    stopRecorder(true);
+                    if (progressSubscription != null) {
+                        progressSubscription.unsubscribe();
+                    }
                 }
+
             }
 
             @Override
@@ -219,7 +233,7 @@ public class CameraCaptureActivity extends Activity implements View.OnClickListe
 
             @Override
             public void handleZoom(boolean zoom) {
-                cameraManager.handleZoom(zoom);
+              //  cameraManager.handleZoom(zoom);
             }
         });
     }
@@ -241,15 +255,18 @@ public class CameraCaptureActivity extends Activity implements View.OnClickListe
                 recordSecond = 0;
             }
         } else if (play && mTextureView != null && mTextureView.isAvailable()) {
-            setTakeButtonShow(true);
+            rl_save.setVisibility(View.VISIBLE );
+            rl_capture.setVisibility(View.GONE);
             cameraManager.closeCamera();
             playerManager.playMedia(new Surface(mTextureView.getSurfaceTexture()), recorderPath);
         }
-
     }
+
     @Override
     protected void onResume() {
         super.onResume();
+        //开启屏幕旋转监听
+        myEventListener.enable();
         if (mTextureView.isAvailable()) {
             if (recorderPath != null) {//优先播放视频
                 playerManager.playMedia(new Surface(mTextureView.getSurfaceTexture()), recorderPath);
@@ -271,55 +288,43 @@ public class CameraCaptureActivity extends Activity implements View.OnClickListe
             cameraManager.changeCameraFacing(mTextureView.getSurfaceTexture(),
                     mTextureView.getWidth(), mTextureView.getHeight());
         } else if (viewId == R.id.iv_save) {
-            Intent intent = new Intent(this, PublishActiveSActivity.class);
+            Intent intent = new Intent(this, SubmitTaskActivityS.class);
             if (photodata != null) {
                 //保存照片
-                photoPath = FileUtils.getUploadPhotoFile(getApplicationContext());
-                isPhotoTakingState = FileUtils.savePhoto(photoPath, photodata, cameraManager.isCameraFrontFacing());
+                // photoPath = FileUtils.getUploadPhotoFile(getApplicationContext());
+                // isPhotoTakingState = FileUtils.savePhoto(photoPath, photodata, cameraManager.isCameraFrontFacing());
                 intent.putExtra("photoPath", photoPath);
+                intent.putExtra("face", cameraManager.isCameraFrontFacing());
                 setResult(REQUEST_PHOTO, intent);
             } else if (recorderPath != null) {
                 intent.putExtra("recorderPath", recorderPath);
                 setResult(REQUEST_VIDEO, intent);
-
             }
             finish();
         } else if (viewId == R.id.iv_unsave) {
             if (recorderPath != null) {
                 playerManager.stopMedia();
                 FileUtils.delteFiles(new File(recorderPath));
-                cameraManager.closeCamera();
-                cameraManager.openCamera(mTextureView.getSurfaceTexture(),
-                        mTextureView.getWidth(), mTextureView.getHeight());
+            } else if (photoPath != null) {
+                FileUtils.delteFiles(new File(photoPath));
             }
+            cameraManager.closeCamera();
+            cameraManager.openCamera(mTextureView.getSurfaceTexture(),
+                    mTextureView.getWidth(), mTextureView.getHeight());
             setTakeButtonShow(false);
-            cameraManager.restartPreview();
+
         }
     }
 
     private void setTakeButtonShow(boolean isStop) {
-        rl_capture.setVisibility(isStop ? View.GONE : View.VISIBLE);
         rl_save.setVisibility(isStop ? View.VISIBLE : View.GONE);
+        iv_picture.setVisibility(isStop ? View.VISIBLE : View.GONE);
+        rl_capture.setVisibility(isStop ? View.GONE : View.VISIBLE);
+        mTextureView.setVisibility(isStop ? View.GONE : View.VISIBLE);
+        ivCameraSwitch.setVisibility(isStop ? View.GONE : View.VISIBLE);
+        mCameraView.setVisibility(isStop ? View.GONE : View.VISIBLE);
+        mCameraView.removeOnZoomListener();
     }
-
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        cameraManager.closeCamera();
-        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {//当前为横屏  
-            cameraManager.openCameraH(mTextureView.getSurfaceTexture(),
-                    mTextureView.getWidth(), mTextureView.getHeight());
-            G.log("vvvvvvvvv"+"横向拍照");
-        } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {//当前为竖屏  
-            cameraManager.openCamera(mTextureView.getSurfaceTexture(),
-                    mTextureView.getWidth(), mTextureView.getHeight());
-            G.log("vvvvvvvvv"+"竖向拍照");
-        }
-
-        super.onConfigurationChanged(newConfig);
-    }
-
-
     /**
      * camera回调监听
      */
@@ -350,6 +355,8 @@ public class CameraCaptureActivity extends Activity implements View.OnClickListe
     @Override
     protected void onPause() {
         G.log("---------------------" + "onPause");
+        //结束屏幕旋转监听
+        myEventListener.disable();
         cameraManager.closeCamera();
         playerManager.stopMedia();
         if (progressSubscription != null) {
@@ -366,4 +373,29 @@ public class CameraCaptureActivity extends Activity implements View.OnClickListe
         super.onDestroy();
         mCameraView.removeOnZoomListener();
     }
+
+    private int mOrientation = 0;
+
+    private class MyEventListener extends OrientationEventListener {
+
+        public MyEventListener(Context context) {
+            super(context);
+        }
+
+        @Override
+        public void onOrientationChanged(int orientation) {
+            //只检测是否有四个角度的改变  
+            if (orientation > 350 || orientation < 10) {
+                mOrientation = 0;
+            } else if (orientation > 80 && orientation < 100) {
+                mOrientation = 90;
+            } else if (orientation > 170 && orientation < 190) {
+                mOrientation = 180;
+            } else if (orientation > 260 && orientation < 280) {
+                mOrientation = 270;
+            }
+            ivCameraSwitch.setRotation(-mOrientation);
+        }
+    }
+
 }

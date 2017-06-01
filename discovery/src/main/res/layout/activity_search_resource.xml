@@ -25,7 +25,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:vphTabcount="3" />
-
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_search"
             android:layout_width="match_parent"

@@ -9,8 +9,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.signature.StringSignature;
 
 import net.hongzhang.baselibrary.R;
+
+import java.util.UUID;
 
 /**
  * 作者： wanghua
@@ -37,13 +40,15 @@ public class GlideUtils {
     //默认加载
     public static void loadImageView(Context mContext, String path, ImageView mImageView) {
         Glide.with(mContext).load(path)
-               //.placeholder(R.mipmap.ic_img_error)
+                //.placeholder(R.mipmap.ic_img_error)
                 .error(R.mipmap.ic_img_error)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .crossFade()
+                . signature(new StringSignature(UUID.randomUUID().toString()))
 //                .centerCrop()
-            //   .thumbnail(0.1f)//支持加载1/10的缩略图，再加载全图
+                //   .thumbnail(0.1f)//支持加载1/10的缩略图，再加载全图
                 .into(mImageView);
+
     }
 
     //默认加载
@@ -54,13 +59,13 @@ public class GlideUtils {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .crossFade()
                 .centerCrop()
-               //    .thumbnail(0.1f)//支持加载1/10的缩略图，再加载全图
+                //    .thumbnail(0.1f)//支持加载1/10的缩略图，再加载全图
                 .into(mImageView);
     }
 
     //加载指定大小
     public static void loadImageViewSize(Context mContext, String path, int width, int height, ImageView mImageView) {
-            Glide.with(mContext).load(path).override(width, height).into(mImageView);
+        Glide.with(mContext).load(path).override(width, height).into(mImageView);
     }
 
     //设置加载中以及加载失败图片并且指定大小
@@ -114,6 +119,19 @@ public class GlideUtils {
     //设置缩略图支持
     public static void loadImageViewThumbnail(Context mContext, String path, ImageView mImageView) {
         Glide.with(mContext).load(path).thumbnail(0.1f).into(mImageView);
+    }
+
+    /**
+     * 会先加载缩略图
+     */
+
+    //设置缩略图支持
+    public static void loadImageViewR(Context mContext, String path, ImageView mImageView) {
+        Glide.with(mContext).load(path).error(R.mipmap.ic_img_error)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade().
+                 transform(new GlideRoundTransform(mContext)).
+                into(mImageView);
     }
 
     /**

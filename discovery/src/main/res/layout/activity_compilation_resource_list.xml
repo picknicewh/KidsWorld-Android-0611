@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_compilation_resource_list"
     android:layout_width="match_parent"
@@ -7,13 +7,13 @@
     android:orientation="vertical"
     tools:context="net.hongzhang.discovery.activity.ThemeVoListActivity">
 
-    <LinearLayout
+  <!--  <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <!-- 嵌套一个 RelativeLayout 解决6.0 RecyclerView显示不全-->
+        &lt;!&ndash; 嵌套一个 RelativeLayout 解决6.0 RecyclerView显示不全&ndash;&gt;
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:descendantFocusability="blocksDescendants">
 
@@ -25,5 +25,21 @@
         </RelativeLayout>
 
         <include layout="@layout/layout_load_more" />
-    </LinearLayout>
-</ScrollView>
+    </LinearLayout>-->
+    <net.hongzhang.baselibrary.pullrefresh.PullToRefreshRecyclerView
+        android:id="@+id/pullToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <TextView
+
+        android:id="@+id/tv_no_more_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/space"
+        android:text="已经到底啦"
+        android:textColor="@color/minor_text"
+        android:visibility="gone" />
+</LinearLayout>

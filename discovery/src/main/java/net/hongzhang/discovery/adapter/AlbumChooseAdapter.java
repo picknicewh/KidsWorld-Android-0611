@@ -49,7 +49,7 @@ public class AlbumChooseAdapter extends RecyclerView.Adapter<AlbumChooseAdapter.
        /* ResourceVo resourceVo  = resourceVos.get(position);
         ImageCache.imageLoader(TextUtil.encodeChineseUrl(resourceVo.getImageUrl()), holder.iv_image);
         holder.tv_title.setText("第"+(position+1)+"集");*/
-        holder.ll_alumb.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (itemClickListener!=null){

@@ -14,7 +14,7 @@
     <color name="b_gray">#787878</color>
     <color name="line_gray">#e1e1e1</color>
     <color name="harf_white">#80ffffff</color>
-    <color name="harf_black">#50000000</color>
+    <color name="harf_black">#80000000</color>
     <color name="_black">#DD000000</color>
     <color name="pop_black">#DD494949</color>
     <color name="sc_">#494949</color>
@@ -24,6 +24,8 @@
     <color name="lig_gray">#eeeeee</color>
     <color name="parent">#8ec500</color>
     <color name="main_green">#8dc700</color>
+    <color name="gradient_yellow">#c0f248</color>
+    <color name="gradient_green">#aade2e</color>
     <!--主题页面背景-->
     <color name="bg_layout">#efeff4</color>
     <!--tab选项颜色-->

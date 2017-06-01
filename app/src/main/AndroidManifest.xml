@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:name=".util.HunmeApplication"
         android:allowBackup="true"
@@ -17,7 +17,13 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="xxt.app.net.hongzhang.bbhow" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".StartActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
@@ -28,11 +34,7 @@
             android:name=".GuideActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppWelcome">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <receiver
@@ -57,9 +59,25 @@
                 <data android:mimeType="text/json" />
             </intent-filter>
         </activity>
-        <activity android:name="net.hongzhang.school.activity.TaskDetailActivity">
-
+        <activity android:name="net.hongzhang.school.activity.TaskDetailActivity" />
+        <activity android:name=".login.AuthorizedLoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="net.hongzhang.bbhow"
+                    android:scheme="login" />
+            </intent-filter>
         </activity>
+
+        <activity android:name=".speech.SpeechActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

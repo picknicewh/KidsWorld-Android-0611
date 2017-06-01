@@ -85,8 +85,7 @@ public class CourseArrangeListActivity extends BaseActivity implements View.OnCl
        syllabusVoList = new ArrayList<>();
        getArrange(count);
        setlist();
-       plv_arrange_list.doPullRefreshing(true,500);
-
+      // plv_arrange_list.doPullRefreshing(true,500);
        plv_arrange_list.setLastUpdatedLabel(DateUtil.getLastUpdateTime());
    }
     private void setlist(){

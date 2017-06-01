@@ -8,6 +8,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import net.hongzhang.baselibrary.widget.CommonPubishPopWindow;
 import net.hongzhang.status.R;
+import net.hongzhang.status.activity.CaptureVideoActivity;
 import net.hongzhang.status.activity.PublishStatusActivity;
 
 /**
@@ -46,20 +47,24 @@ public class StatusPublishPopWindow extends CommonPubishPopWindow {
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent();
-        intent.setClass(context, PublishStatusActivity.class);
-        if (view.getId()== R.id.iv_text){
+        int viewId = view.getId();
+        Intent intent =null;
+        if (viewId==R.id.iv_text){
+            intent = new Intent(context, PublishStatusActivity.class);
             intent.putExtra("type",WORDS);
             intent.putExtra("groupId",classId);
             MobclickAgent.onEvent(context, "releaseTextDynamic");
-        }else if (view.getId()==  R.id.iv_photo){
-           // intent.setClass(context,)
+        }else if (viewId== R.id.iv_photo){
+            intent = new Intent(context, PublishStatusActivity.class);
             intent.putExtra("type",PICTURE);
             intent.putExtra("groupId",classId);
             MobclickAgent.onEvent(context, "releasePhotoDynamic");
-        }/*else if (view.getId()==  R.id.iv_move){
+        }else if (viewId== R.id.iv_movie){
+            intent = new Intent(context, CaptureVideoActivity.class);
             intent.putExtra("type",VEDIO);
-        }*/
+            intent.putExtra("groupId",classId);
+            MobclickAgent.onEvent(context, "releaseVideoDynamic");
+        }
         context.startActivity(intent);
         dismiss();
     }

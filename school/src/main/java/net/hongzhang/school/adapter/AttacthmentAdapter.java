@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import net.hongzhang.school.R;
 import net.hongzhang.school.activity.OfficeReadActivity;
+
+import java.util.List;
 
 /**
  * 作者： wanghua
@@ -22,12 +25,15 @@ import net.hongzhang.school.activity.OfficeReadActivity;
 
 public class AttacthmentAdapter extends RecyclerView.Adapter<AttacthmentAdapter.ViewHolder> {
     private Context context;
-    private int[] images = new int[]{R.mipmap.ic_powerpoint, R.mipmap.ic_excel, R.mipmap.ic_word};
+    private int[] images = new int[]{ R.mipmap.ic_word,R.mipmap.ic_ppt, R.mipmap.ic_pdf, R.mipmap.ic_excel};
+    private List<String> fileList;
     private onItemClickListener itemClickListener;
-    public AttacthmentAdapter(Context context) {
-        this.context = context;
 
+    public AttacthmentAdapter(Context context, List<String> fileList) {
+        this.context = context;
+        this.fileList = fileList;
     }
+
     @Override
     public AttacthmentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(
@@ -44,6 +50,7 @@ public class AttacthmentAdapter extends RecyclerView.Adapter<AttacthmentAdapter.
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, OfficeReadActivity.class);
+                //  intent.putExtra("path",fileList.get(position));
                 context.startActivity(intent);
             }
         });
@@ -69,10 +76,13 @@ public class AttacthmentAdapter extends RecyclerView.Adapter<AttacthmentAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView iv_image;
-
+        public TextView tv_file_name;
+        public TextView tv_file_size;
         public ViewHolder(View view) {
             super(view);
             iv_image = (ImageView) view.findViewById(R.id.iv_image);
+            tv_file_name = (TextView) view.findViewById(R.id.tv_file_name);
+            tv_file_size = (TextView) view.findViewById(R.id.tv_file_size);
             view.setTag(this);
         }
     }

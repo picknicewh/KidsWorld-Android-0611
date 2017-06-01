@@ -8,6 +8,9 @@ import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.widget.UpdateConformDialog;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 作者： wanghua
  * 时间： 2017/4/12
@@ -56,6 +59,7 @@ public class DetaiCodeUtil {
     public static  final String CODE_SERVER_MAINTENTENANCE = "-6";
     public static  final String CODE_LOGIN_EXPIRED  ="-5";
     public static  final String CODE_UPGRADE   = "-99";
+    public static  final String CODE_SKIP  = "90032";
     public static  void DetaiCode(String code, Context context){
             switch (code){
                 case CODE_SUCCESS:
@@ -65,11 +69,18 @@ public class DetaiCodeUtil {
                 case CODE_ILLEGAL_ACCESS:
                 case  CODE_LOGIN_EXPIRED:goLoginActivity(context);break;
                 case CODE_UPGRADE:
-                    UpdateConformDialog conformDialog =new UpdateConformDialog(context);
-                    conformDialog.show();
+                     dialogs.clear();
+                     UpdateConformDialog conformDialog =new UpdateConformDialog(context);
+                     dialogs.add(conformDialog);
+                     dialogs.get(0).show();
                     break;
+                case CODE_SKIP:
+                   G.showToast(context,"skip其他操作");
+                    break;
+
         }
     }
+    private static List<UpdateConformDialog> dialogs = new ArrayList<>();
     /**
      * 前往登陆页面
      * @param context

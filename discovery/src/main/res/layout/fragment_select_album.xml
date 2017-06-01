@@ -6,6 +6,22 @@
     android:gravity="center"
     android:orientation="vertical">
 
+
+    <net.hongzhang.baselibrary.pullrefresh.PullToRefreshRecyclerView
+        android:id="@+id/prcv_album"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/tv_no_more_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/space"
+        android:text="已经到底啦"
+        android:textColor="@color/minor_text"
+        android:textSize="@dimen/ts_large"
+        android:visibility="gone" />
     <TextView
         android:id="@+id/tv_nodata"
         android:layout_width="match_parent"
@@ -14,8 +30,7 @@
         android:gravity="center"
         android:text="没有专辑哦"
         android:visibility="gone" />
-
-    <ScrollView
+   <!-- <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -24,22 +39,22 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!-- 嵌套一个 RelativeLayout 解决6.0 RecyclerView显示不全-->
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:descendantFocusability="blocksDescendants">
+            &lt;!&ndash; &lt;!&ndash; 嵌套一个 RelativeLayout 解决6.0 RecyclerView显示不全&ndash;&gt;
+             <RelativeLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:descendantFocusability="blocksDescendants">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_album"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:divider="@color/transparent"
-                    android:dividerHeight="0dp"
-                    android:numColumns="2" />
-            </RelativeLayout>
+                 <android.support.v7.widget.RecyclerView
+                     android:id="@+id/rv_album"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:divider="@color/transparent"
+                     android:dividerHeight="0dp"
+                     android:numColumns="2" />
+             </RelativeLayout>
 
-            <include layout="@layout/layout_load_more" />
+             <include layout="@layout/layout_load_more" />&ndash;&gt;
         </LinearLayout>
-    </ScrollView>
+    </ScrollView>-->
 </LinearLayout>

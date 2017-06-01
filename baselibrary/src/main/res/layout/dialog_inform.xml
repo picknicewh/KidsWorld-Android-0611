@@ -25,18 +25,17 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"/>
 
-     <!--   <ImageView
-            android:id="@+id/iv_move"
+        <ImageView
+            android:id="@+id/iv_movie"
             android:src="@mipmap/ic_status_move"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"/>-->
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:id="@+id/ll_shade"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </LinearLayout>
+        android:layout_height="match_parent"/>
 </LinearLayout>

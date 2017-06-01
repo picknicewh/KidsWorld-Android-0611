@@ -2,70 +2,155 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/space"
-    android:background="@drawable/frame_black"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
-    <TextView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="活动题目"
-        android:textColor="@color/black"
-        android:textSize="@dimen/ts_x_large" />
+        android:paddingBottom="@dimen/space"
+        android:paddingTop="@dimen/space">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_x0.5"
-        android:orientation="horizontal"
-        android:padding="@dimen/space_x0.5">
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="考察维度" />
+            android:background="@drawable/bg_active_content"
+            android:orientation="vertical">
 
-        <TextView
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <net.hongzhang.school.widget.RoundImageView
+                    android:id="@+id/iv_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/harf_black"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_active_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/space"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/ts_x_large" />
+
+                    <TextView
+                        android:id="@+id/tv_end_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:paddingBottom="@dimen/space_x0.5"
+                        android:paddingLeft="@dimen/space"
+                        android:paddingRight="@dimen/space"
+                        android:paddingTop="@dimen/space_x0.5"
+                        android:textColor="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/iv_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@mipmap/ic_task_doing"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_active_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space"
+                android:textColor="@color/minor_text" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_gray"
+                android:background="@color/home_divide" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_x1.5"
+                android:paddingLeft="@dimen/space"
+                android:paddingRight="@dimen/space"
+                android:paddingTop="@dimen/space_x1.5">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="考核维度："
+                    android:textColor="@color/theme_text"
+                    android:textSize="@dimen/ts_x_large" />
+
+                <TextView
+                    android:id="@+id/tv_active_check"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:maxLines="2"
+                    android:textColor="@color/minor_text" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_gray"
+
+                android:background="@color/home_divide" />
+
+            <LinearLayout
+                android:id="@+id/ll_active_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_x1.5"
+                android:paddingLeft="@dimen/space"
+                android:paddingRight="@dimen/space"
+                android:paddingTop="@dimen/space_x1.5">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="家长完成情况："
+                    android:textColor="@color/theme_text"
+                    android:textSize="@dimen/ts_x_large" />
+
+                <ProgressBar
+                    android:id="@+id/pb_active_progress"
+                    style="@style/myActiveProgress"
+                    android:max="100"
+                    android:progress="100" />
+
+                <TextView
+                    android:id="@+id/tv_progress_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/space_x2"
+                    android:paddingLeft="@dimen/space"
+                    android:text="10/36" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_prise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="能力提升" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/space_x0.5">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="活动截至时间" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2017年8月8日 11:00" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/space_x0.5">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="完成情况" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="已经完成考察" />
-    </LinearLayout>
-
+            android:layout_gravity="bottom|right"
+            android:src="@mipmap/ic_praised" />
+    </FrameLayout>
 </LinearLayout>

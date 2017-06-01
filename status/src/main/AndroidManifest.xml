@@ -25,7 +25,8 @@
                 android:targetPackage="com.android.settings" />
         </PreferenceScreen>
 
-        <activity android:name="net.hongzhang.status.activity.MessageDetailActivity"></activity>
+        <activity android:name="net.hongzhang.status.activity.MessageDetailActivity"/>
+        <activity android:name=".activity.CaptureVideoActivity"/>
     </application>
 
 </manifest>

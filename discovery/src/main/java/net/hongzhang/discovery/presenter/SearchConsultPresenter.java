@@ -102,8 +102,8 @@ public class SearchConsultPresenter implements SearchConsultContract.Presenter, 
                 Result<ResourceVos> result = (Result<ResourceVos>) date;
                 ResourceVos resourceVos = result.getData();
                 List<ResourceVo> resourceVos1 = resourceVos.getResourceManageList();
-                resourceVoList.addAll(resourceVos1);
-                view.setConsultList(resourceVoList);
+               // resourceVoList.addAll(resourceVos1);
+                view.setConsultList(resourceVos1);
                 view.setConsultInfoSize(resourceVos1.size());
             }
         }else if (Apiurl.SAVESERACHRE.equals(uri)){

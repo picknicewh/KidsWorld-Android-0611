@@ -17,7 +17,8 @@ import net.hongzhang.baselibrary.base.BaseActivity;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.PackageUtils;
 import net.hongzhang.baselibrary.util.UserMessage;
-import net.hongzhang.login.UserChooseActivity;
+//import net.hongzhang.login.UserChooseActivity;
+import net.hongzhang.login.activity.UserChooseActivity;
 import net.hongzhang.user.R;
 import net.hongzhang.user.util.CacheHelp;
 import net.hongzhang.user.util.CheckUpdate;
@@ -103,11 +104,7 @@ public class USettingActivity extends BaseActivity implements View.OnClickListen
         setSubTitleOnClickListener(this);
         setCententTitle("账户设置");
         setSubTitle("切换");
-        if (UserMessage.getInstance(this).getCount()>1){
-            findViewById(R.id.tv_subtitle).setVisibility(View.VISIBLE);
-        }else {
-            findViewById(R.id.tv_subtitle).setVisibility(View.GONE);
-        }
+
 
     }
     public  static  TextView getTv_cache(){

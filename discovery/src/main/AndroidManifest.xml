@@ -45,6 +45,7 @@
         <activity android:name=".activity.SearchPlayActivity" />
         <activity android:name=".activity.SearchConsultActivity" />
         <activity android:name=".activity.ThemeVoListActivity"/>
+        <activity android:name=".activity.ThemeVoListActivity2"/>
         <activity android:name=".activity.ConsultActivity"
 
             />

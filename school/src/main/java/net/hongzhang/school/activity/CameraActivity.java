@@ -176,7 +176,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        setContentView(R.layout.activity_camera_capture);
+        setContentView(R.layout.activity_capture_video);
         initView();
         initDatas();
     }

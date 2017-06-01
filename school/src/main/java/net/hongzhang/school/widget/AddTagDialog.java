@@ -10,7 +10,7 @@ import android.widget.EditText;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.widget.MyAlertDialog;
 import net.hongzhang.school.R;
-import net.hongzhang.school.adapter.TaskCommentAdapter;
+import net.hongzhang.school.adapter.TaskCommentChildTagAdapter;
 
 /**
  * 作者： wh
@@ -42,9 +42,8 @@ public class AddTagDialog implements View.OnClickListener {
      * 对话框
      */
     private AlertDialog alertDialog;
-    private TaskCommentAdapter adapter;
-
-    public AddTagDialog(Activity context, TaskCommentAdapter adapter) {
+    private TaskCommentChildTagAdapter adapter;
+    public AddTagDialog(Activity context, TaskCommentChildTagAdapter adapter) {
         this.context = context;
         this.adapter =adapter;
     }
@@ -65,13 +64,11 @@ public class AddTagDialog implements View.OnClickListener {
         } else if (view.getId() == R.id.bt_conform) {
             String tag = et_tag.getText().toString().trim();
             if (!G.isAllSpace(tag)|| !G.isEmteny(tag)){
-                adapter.addTag(et_tag.getText().toString());
+               // adapter.addTag(et_tag.getText().toString());
             }else {
                 G.showToast(context,"标签不能为空哦！");
             }
-
         }
         alertDialog.dismiss();
     }
-
 }

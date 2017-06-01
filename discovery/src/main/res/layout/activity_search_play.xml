@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_search_play"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,7 +13,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/ll_search_play"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <net.hongzhang.baselibrary.pullrefresh.PullToRefreshRecyclerView
+            android:id="@+id/pull_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_no_more_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/space"
+            android:text="已经到底啦"
+            android:textColor="@color/minor_text"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -24,7 +45,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="gone">
-            <!-- 嵌套一个 RelativeLayout 解决6.0 RecyclerView显示不全-->
+            &lt;!&ndash; 嵌套一个 RelativeLayout 解决6.0 RecyclerView显示不全&ndash;&gt;
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,6 +59,12 @@
 
             <include layout="@layout/layout_load_more" />
         </LinearLayout>
-    </ScrollView>
+    </ScrollView>-->
+    <!--<LinearLayout
+        android:id="@+id/ll_search_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+    </LinearLayout>-->
 </LinearLayout>

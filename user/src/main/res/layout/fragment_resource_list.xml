@@ -11,8 +11,23 @@
         android:text="你还没有收藏哦，快去收藏吧！"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <net.hongzhang.baselibrary.pullrefresh.PullToRefreshRecyclerView
+        android:id="@+id/pullToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
 
-    <ScrollView
+    <TextView
+
+        android:id="@+id/tv_no_more_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/space"
+        android:text="已经到底啦"
+        android:textColor="@color/minor_text"
+        android:visibility="gone" />
+   <!-- <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -48,6 +63,6 @@
                     android:layout_height="25dp" />
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </ScrollView>-->
 
 </LinearLayout>

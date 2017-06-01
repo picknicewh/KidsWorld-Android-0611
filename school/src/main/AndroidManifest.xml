@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -19,44 +19,59 @@
         <activity
             android:name=".activity.PublishDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.LeaveListActivity" />
-        <activity android:name=".activity.CourseArrangeListActivity" />
-        <activity android:name=".activity.FoodListActivity" />
+        <activity android:name=".activity.LeaveListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.CourseArrangeListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.FoodListActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".TestActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".activity.TestActivity" />
-        <activity android:name=".activity.ClassListActivity" />
-        <activity android:name=".activity.PublishFoodActivity" />
-        <activity android:name=".activity.PublishInfoActivity" />
-        <activity android:name=".activity.ChooseClassActivity" />
-        <activity android:name=".activity.MedicineListTActivity" />
-        <activity android:name=".activity.MedicineListSActivity" />
-        <activity android:name=".activity.MedicineTaskTActivity" />
-        <activity android:name=".activity.MedicineEntrustActivity" />
-        <activity android:name=".activity.ReleaseActivity" />
-        <activity android:name=".activity.HomeInteractionActivity" />
-        <activity android:name=".activity.RankingListActivity"></activity>
-        <activity android:name=".activity.TestActivity" />
-        <activity android:name=".activity.ClassListActivity" />
-        <activity android:name=".activity.PublishFoodActivity" />
-        <activity android:name=".activity.PublishInfoActivity" />
-        <activity android:name=".activity.ChooseClassActivity" />
-        <activity android:name=".activity.MedicineListTActivity" />
-        <activity android:name=".activity.MedicineListSActivity" />
-        <activity android:name=".activity.MedicineTaskTActivity" />
-        <activity android:name=".activity.MedicineEntrustActivity" />
-        <activity android:name=".activity.TaskDetailActivity" />
-        <activity android:name=".activity.PublishActiveSActivity" />
-        <activity android:name=".activity.PublishActiveTActivity" />
-        <activity android:name=".activity.PublishActiveDetailActivity" />
-        <activity android:name=".activity.TaskCommentActivity" />
-        <activity android:name=".activity.OfficeReadActivity"
+        <activity android:name=".activity.ClassListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.PublishFoodActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.PublishInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ChooseClassActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MedicineListTActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MedicineListSActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MedicineTaskTActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MedicineEntrustActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.PublishActiveActivityT"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.HomeInteractionActivityS"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.HomeInteractionActivityT"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.RankingListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.TaskDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SubmitTaskActivityS"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SubmitTaskListActivityT"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SubmitTaskDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.CommentTaskActivityT"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.CommentTaskActivityS"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".activity.OfficeReadActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.CameraCaptureActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden" />
-        <activity android:name=".activity.PreviewVideoActivity"></activity>
     </application>
 
 </manifest>

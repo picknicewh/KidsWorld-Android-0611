@@ -1,45 +1,31 @@
 package net.hongzhang.status.activity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.reflect.TypeToken;
-
 import net.hongzhang.baselibrary.activity.PermissionsActivity;
 import net.hongzhang.baselibrary.base.BaseActivity;
-import net.hongzhang.baselibrary.mode.Result;
-import net.hongzhang.baselibrary.network.Apiurl;
-import net.hongzhang.baselibrary.network.DetaiCodeUtil;
-import net.hongzhang.baselibrary.network.OkHttpListener;
-import net.hongzhang.baselibrary.network.OkHttps;
+import net.hongzhang.baselibrary.takevideo.PreviewVideoActivity;
+import net.hongzhang.baselibrary.takevideo.VideoUtil;
 import net.hongzhang.baselibrary.util.DateUtil;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.PermissionsChecker;
-import net.hongzhang.baselibrary.util.UserMessage;
-import net.hongzhang.baselibrary.widget.LoadingDialog;
-import net.hongzhang.baselibrary.widget.MyAlertDialog;
 import net.hongzhang.status.R;
+import net.hongzhang.status.presenter.PublicStatusContract;
+import net.hongzhang.status.presenter.PublicStatusPresenter;
 import net.hongzhang.status.widget.StatusPublishPopWindow;
 import net.hongzhang.user.adapter.GridAlbumAdapter;
-import net.hongzhang.user.util.BitmapCache;
 import net.hongzhang.user.util.PublishPhotoUtil;
 
-import java.io.File;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 作者： wh
@@ -49,7 +35,7 @@ import java.util.Map;
  * 附加注释：
  * 主要接口：
  */
-public class PublishStatusActivity extends BaseActivity implements View.OnClickListener, OkHttpListener {
+public class PublishStatusActivity extends BaseActivity implements View.OnClickListener, PublicStatusContract.View {
     /**
      * 文字的内容
      */
@@ -71,31 +57,23 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
      * 选择的内容
      */
     private TextView tv_permitchoose;
-    private final String DYNAMIC = "/dynamics/issueDynamic.do";
     /**
      * 发布类型
      */
     private String dynamicType;
     /**
-     * 可见范围
-     */
-    private String dynamicVisicty = "1";
-    /**
      * 限制内容
      */
     private RelativeLayout rl_restrict;
-    private LoadingDialog loadingDialog;
     private TextView tv_subtilte;
     /**
      * 班级id
      */
     private String classId;
-    /*   // 访问相册所需的全部权限
-       private final String[] PERMISSIONS = new String[]{
-               Manifest.permission.WRITE_EXTERNAL_STORAGE, //读写权限
-               Manifest.permission.CAMERA
-       };*/
     private int maxContent;
+    private PublicStatusPresenter presenter;
+    private boolean hasVideo;
+    private String recorderPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,55 +90,32 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         setLiftOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!G.isEmteny(et_content.getText().toString().trim())
-                        || dynamicType.equals("1") && itemList.size() >= 1
-                        || dynamicType.equals("4") && itemList.size() == 1) {
-                    getExitPrompt();
-                } else {
-                    finish();
-                }
+                closeActviity();
             }
         });
     }
 
-    /**
-     * 显示不同值传过来界面的状态
-     *
-     * @param type 类型值
-     */
-    private void showView(int type) {
-        GridAlbumAdapter adapter = new GridAlbumAdapter(itemList, this, maxContent);
+    //发布视频的第一帧
+    private GridAlbumAdapter adapter;
+
+    private void initVideoAdapter() {
+        adapter = new GridAlbumAdapter(itemList, this, 1);
         gv_photo.setAdapter(adapter);
-        switch (type) {
-            case StatusPublishPopWindow.WORDS:
-                setCententTitle("发布文字");
-                dynamicType = "3";
-                break;
-            case StatusPublishPopWindow.PICTURE:
-                setCententTitle("发布图片");
-                maxContent = 9;
-                PublishPhotoUtil.goSelectImager(itemList, this, gv_photo, maxContent);
-                PublishPhotoUtil.showPhoto(this, itemList, gv_photo, maxContent);
-                //  goSelectImager();
-                // showPhoto();
-                dynamicType = "1";
-                break;
-            case StatusPublishPopWindow.VEDIO:
-                setCententTitle("发布视频");
-                dynamicType = "2";
-                break;
-            case 4:
-                rl_restrict.setVisibility(View.GONE);
-                setCententTitle("发布课程");
-                maxContent = 1;
-              //  PublishPhotoUtil.showPhoto(this, itemList, gv_photo, maxContent);
-                PublishPhotoUtil.goSelectImager(itemList, this, gv_photo, maxContent);
-                PublishPhotoUtil.showPhoto(this, itemList, gv_photo, maxContent);
-                //  goSelectImager();
-                // showPhoto();
-                dynamicType = "4";
-                break;
-        }
+        gv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (hasVideo) {
+                    Intent intent = new Intent(getApplicationContext(), PreviewVideoActivity.class);
+                    intent.putExtra("path", recorderPath);
+                    startActivityForResult(intent, 1);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), CaptureVideoActivity.class);
+                    intent.putExtra("type", StatusPublishPopWindow.VEDIO);
+                    intent.putExtra("groupId", classId);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     /**
@@ -176,36 +131,62 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         tv_subtilte = $(R.id.tv_subtitle);
         tv_subtilte.setOnClickListener(this);
         ll_permitchoose.setOnClickListener(this);
-        DateUtil.setEditContent(et_content, tv_count);
-        rl_restrict.setVisibility(View.VISIBLE);
-        classId = getIntent().getStringExtra("groupId");
-        itemList = new ArrayList<>();
-        showView(getIntent().getIntExtra("type", 1));
-        loadingDialog = new LoadingDialog(this, R.style.LoadingDialogTheme);
+        initData();
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case ChoosePermitActivity.CHOOSE_PERMIT:
-                if (data != null) {
-                    String permit = data.getStringExtra("permit");
-                    tv_permitchoose.setText(permit);
-                    if (permit.equals("班级空间"))
-                        dynamicVisicty = "1";
-                    else
-                        dynamicVisicty = "2";
+    private void initData() {
+        itemList = new ArrayList<>();
+        Intent data = getIntent();
+        initVideoAdapter();
+        DateUtil.setEditContent(et_content, tv_count);
+        rl_restrict.setVisibility(View.VISIBLE);
+        classId = data.getStringExtra("groupId");
+        presenter = new PublicStatusPresenter(PublishStatusActivity.this, this);
+        showView(data.getIntExtra("type", 1));
+    }
+
+    /**
+     * 显示不同值传过来界面的状态
+     *
+     * @param type 类型值
+     */
+    private void showView(int type) {
+        switch (type) {
+            case StatusPublishPopWindow.WORDS:
+                setCententTitle("发布文字");
+                dynamicType = "3";
+                break;
+            case StatusPublishPopWindow.PICTURE:
+                setCententTitle("发布图片");
+                maxContent = 9;
+                dynamicType = "1";
+                PublishPhotoUtil.goSelectImager(itemList, this, gv_photo, maxContent);
+                PublishPhotoUtil.showPhoto(this, itemList, gv_photo, maxContent);
+                break;
+            case StatusPublishPopWindow.VEDIO:
+                setCententTitle("发布视频");
+                dynamicType = "2";
+                maxContent = 1;
+                recorderPath = getIntent().getStringExtra("recorderPath");
+                if (!G.isEmteny(recorderPath)) {
+                    String path = VideoUtil.getVideoFirstFrame(recorderPath, this);
+                    hasVideo = true;
+                    itemList.add(path);
+                    adapter.notifyDataSetChanged();
                 }
                 break;
-            case PermissionsChecker.REQUEST_CODE:
-                //检测到没有授取权限 关闭页面
-                if (resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
-                    G.showToast(this, "权限没有授取，本次操作取消，请到权限中心授权");
-                } else if (resultCode == PermissionsActivity.PERMISSIONS_GRANTED) {
-                    G.showToast(this, "权限获取成功！");
-                }
+            case 4:
+                rl_restrict.setVisibility(View.GONE);
+                setCententTitle("发布课程");
+                maxContent = 1;
+                dynamicType = "4";
+                PublishPhotoUtil.goSelectImager(itemList, this, gv_photo, maxContent);
+                PublishPhotoUtil.showPhoto(this, itemList, gv_photo, maxContent);
                 break;
         }
     }
+
+
 
     @Override
     public void onClick(View view) {
@@ -219,115 +200,47 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             tv_subtilte.setEnabled(false);
             String dyContent = et_content.getText().toString().trim();
             if (dynamicType.equals("4")) {
-                publishcaurse(dyContent);
+                presenter.publishcaurse(dyContent, itemList);
             } else {
-                publishstatus(dyContent);
+                presenter.publishstatus(dyContent, dynamicType, itemList, classId);
             }
         }
     }
-
-    /**
-     * 发布课程
-     */
-    private void publishcaurse(String dyContent) {
-        if (G.isEmteny(dyContent) || itemList.size() < 1) {
-            G.showToast(this, "发布的内容不能为空");
-            tv_subtilte.setEnabled(true);
-            return;
-        }
-        G.log("---------xx--------"+dyContent);
-        loadingDialog.show();
-        Map<String, Object> map = new HashMap<>();
-        map.put("tsId", UserMessage.getInstance(this).getTsId());
-        map.put("content", dyContent);
-        Type type = new TypeToken<Result<String>>() {
-        }.getType();
-        List<File> list = BitmapCache.getFileList(itemList);
-        OkHttps.sendPost(type, Apiurl.SCHOOL_PUBLISHCAURSE, map, list, this);
-    }
-
-    /**
-     * 发布状态
-     */
-    private void publishstatus(String dyContent) {
-        if (G.isEmteny(dyContent) && dynamicType.equals("3")) {
-            G.showToast(this, "发布的内容不能为空");
-            tv_subtilte.setEnabled(true);
-            return;
-        }
-        if (dynamicType.equals("1") && itemList.size() == 0) {
-            G.showToast(this, "发布的图片不能为空");
-            tv_subtilte.setEnabled(true);
-            return;
-        }
-        loadingDialog.show();
-        Map<String, Object> map = new HashMap<>();
-        map.put("tsId", UserMessage.getInstance(this).getTsId());
-        map.put("text", dyContent);
-        map.put("dynamicVisicty", dynamicVisicty);
-        map.put("classId", classId);
-        Type type = new TypeToken<Result<String>>() {
-        }.getType();
-        if (dynamicType.equals("1") && itemList.size() > 0) {
-            List<File> list = BitmapCache.getFileList(itemList);
-            dynamicType = "1";
-            map.put("dynamicType", dynamicType);
-            OkHttps.sendPost(type, DYNAMIC, map, list, this);
+    private void closeActviity(){
+        if (!G.isEmteny(et_content.getText().toString().trim())
+                || dynamicType.equals("1") && itemList.size() >= 1
+                || dynamicType.equals("4") && itemList.size() == 1) {
+            G.log("-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"+et_content.getText().toString().trim());
+            presenter.getExitPrompt();
         } else {
-            dynamicType = "3";
-            map.put("dynamicType", dynamicType);
-            OkHttps.sendPost(type, DYNAMIC, map, this);
+            finish();
         }
     }
-
-    @Override
-    public void onSuccess(String uri, Object date) {
-        G.showToast(this, "发布成功!");
-        tv_subtilte.setEnabled(true);
-        G.KisTyep.isReleaseSuccess = true;
-        loadingDialog.dismiss();
-        finish();
-    }
-    @Override
-    public void onError(String uri, Result error) {
-        DetaiCodeUtil.errorDetail(error,this);
-        tv_subtilte.setEnabled(true);
-        G.KisTyep.isReleaseSuccess = false;
-        loadingDialog.dismiss();
-    }
-
-
-    /**
-     * 退出提示
-     */
-    private void getExitPrompt() {
-        View coupons_view = LayoutInflater.from(this).inflate(R.layout.alertdialog_message, null);
-        final AlertDialog alertDialog = MyAlertDialog.getDialog(coupons_view, this, 1);
-        Button b_notrigst = (Button) coupons_view.findViewById(R.id.pop_notrigst);
-        Button b_mastrigst = (Button) coupons_view.findViewById(R.id.pop_mastrigst);
-        TextView pop_title = (TextView) coupons_view.findViewById(R.id.tv_poptitle);
-        b_mastrigst.setText("确认");
-        pop_title.setText("是否放弃本次编辑？");
-        b_notrigst.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PermissionsChecker.REQUEST_CODE) {
+            //检测到没有授取权限 关闭页面
+            if (resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
+                G.showToast(this, "权限没有授取，本次操作取消，请到权限中心授权");
+            } else if (resultCode == PermissionsActivity.PERMISSIONS_GRANTED) {
+                G.showToast(this, "权限获取成功！");
             }
-        });
-        b_mastrigst.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-                finish();
+        }
+        //预览图中删除视频
+        if (resultCode==PreviewVideoActivity.RESULT_DELETE){
+            if (itemList!=null && itemList.size()>0){
+                itemList.remove(0);
+                adapter.notifyDataSetChanged();
             }
-        });
-    }
 
+        }
+
+    }
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            if (!G.isEmteny(et_content.getText().toString().trim()) || dynamicType.equals("1") && itemList.size() > 1) {
-                getExitPrompt();
+            if (!G.isEmteny(et_content.getText().toString().trim())
+                    || dynamicType.equals("1") && itemList.size() > 1) {
+                presenter.getExitPrompt();
             } else {
                 finish();
             }
@@ -338,9 +251,15 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onRestart() {
         super.onRestart();
-        if (dynamicType.equals("4") && itemList.size() < 1 || null != dynamicType && dynamicType.equals("1") && itemList.size() < 1) {
+        if (dynamicType.equals("4") && itemList.size() < 1
+                || null != dynamicType && dynamicType.equals("1") && itemList.size() < 1) {
             finish();
         }
+    }
+
+    @Override
+    public void setSubTitleEnable(boolean enable) {
+        tv_subtilte.setEnabled(enable);
     }
 }
 

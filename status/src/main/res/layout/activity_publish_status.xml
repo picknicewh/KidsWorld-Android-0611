@@ -57,16 +57,18 @@
                 android:visibility="gone" />
         </LinearLayout>
     </RelativeLayout>
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <GridView
-        android:layout_alignParentBottom="true"
         android:id="@+id/gv_photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/space_x0.5"
         android:horizontalSpacing="@dimen/space"
-        android:verticalSpacing="@dimen/space"
         android:numColumns="4"
-        android:scrollbars="none" />
+        android:scrollbars="none"
+        android:verticalSpacing="@dimen/space" />
 
 </LinearLayout>

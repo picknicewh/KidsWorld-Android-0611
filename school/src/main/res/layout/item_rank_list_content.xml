@@ -1,38 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="@dimen/space_x0.5">
+    android:orientation="horizontal">
 
-    <net.hongzhang.baselibrary.widget.CircleImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:scaleType="centerCrop"
-        android:layout_gravity="center"
-        android:src="@mipmap/ic_leimu" />
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/space_x0.5"
-        android:text="小明"
-        android:textSize="@dimen/ts_large" />
+        android:orientation="horizontal"
+        android:padding="@dimen/space">
 
-    <RatingBar
-        android:layout_marginLeft="@dimen/space"
-        android:id="@+id/ratingBar"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        <net.hongzhang.baselibrary.widget.CircleImageView
+            android:id="@+id/civ_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_leimu" />
 
-    <ImageView
-        android:layout_marginLeft="@dimen/space"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@mipmap/ic_eye" />
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space_x0.5"
+            android:text="小明"
+            android:textSize="@dimen/ts_large" />
 
+        <net.hongzhang.school.widget.StarProgressBar
+            android:id="@+id/ratingBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space"
+            android:layout_weight="1"
+            app:canTouch="false"
+            app:emptyStart="@mipmap/ic_empty_star_s"
+            app:fullStart="@mipmap/ic_full_star_s"
+            app:halfStart="@mipmap/ic_half_star_s" />
+
+        <ImageView
+            android:id="@+id/iv_see"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space"
+            android:src="@mipmap/ic_eye" />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space"
+            android:text="90分"
+            android:textSize="@dimen/ts_large" />
+    </LinearLayout>
 </LinearLayout>

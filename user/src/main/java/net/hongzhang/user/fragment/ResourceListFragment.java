@@ -1,19 +1,21 @@
 package net.hongzhang.user.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.base.BaseFragement;
 import net.hongzhang.baselibrary.mode.ResourceVo;
+import net.hongzhang.baselibrary.pullrefresh.PullToRefreshBase;
+import net.hongzhang.baselibrary.pullrefresh.PullToRefreshRecyclerView;
 import net.hongzhang.baselibrary.util.UserMessage;
-import net.hongzhang.baselibrary.widget.NoScrollGirdView;
 import net.hongzhang.user.R;
 import net.hongzhang.user.adapter.ResourceAdapter;
 import net.hongzhang.user.mode.CompilationsVo;
@@ -36,7 +38,7 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
     /**
      * 资源列表显示控件
      */
-    private NoScrollGirdView gv_list;
+    private RecyclerView rv_list;
     /**
      * 没有资源
      */
@@ -44,15 +46,15 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
     /**
      * 分页加载，加载更多
      */
-    private LinearLayout ll_load_more;
+ //   private LinearLayout ll_load_more;
     /**
      * 显示是否有数据
      */
-    private TextView tv_load_more;
+ //   private TextView tv_load_more;
     /**
      * 显示数据控件
      */
-    private ImageView iv_load_more;
+ //   private ImageView iv_load_more;
     /**
      * 数据资源列表
      */
@@ -85,7 +87,8 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
      * 资源类型 1 视频 2 音乐
      */
     private int type;
-
+    private PullToRefreshRecyclerView pullToRefresh;
+    private TextView tv_no_more_data;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_resource_list, null);
@@ -99,15 +102,39 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
      * @param view
      */
     private void initView(View view) {
-        gv_list = $(view, R.id.gv_resource_list);
+        pullToRefresh  =  $(view, R.id.pullToRefresh);
+        rv_list = pullToRefresh.getRefreshableView();
+        pullToRefresh.setPullLoadEnabled(false);
+        pullToRefresh.setScrollLoadEnabled(true);
+        pullToRefresh.setPullRefreshEnabled(false);
         tv_nodata = $(view, R.id.tv_nodata);
-        ll_load_more = $(view, R.id.ll_load_more);
-        tv_load_more = $(view, R.id.tv_load_more);
-        iv_load_more = $(view, R.id.iv_load_more);
-        ll_load_more.setOnClickListener(this);
+        tv_no_more_data = $(view,R.id.tv_no_more_data);
+        // gv_list = $(view, R.id.gv_resource_list);
+     //   ll_load_more = $(view, R.id.ll_load_more);
+      //  tv_load_more = $(view, R.id.tv_load_more);
+      //  iv_load_more = $(view, R.id.iv_load_more);
+     //   ll_load_more.setOnClickListener(this);
+        pullToRefresh.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
+            @Override public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {}
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+                new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        pageNumber++;
+                        if (source == 0) {
+                            myResourcePresent.getCollectResourceList(pageNumber, pageSize, type);
+                        } else if (source == 1) {
+                            myResourcePresent.getPlayRecordList(pageNumber, pageSize, type);
+                        }
+                        pullToRefresh.onPullUpRefreshComplete();
+                    }
+                }.sendEmptyMessageDelayed(0, 500);
+            }
+    });
         initData();
     }
-
     /**
      * 初始化数据
      */
@@ -121,18 +148,53 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
         } else if (source == 1) {
             resourceManagerVoList = new ArrayList<>();
         }
+        initList();
+
+
     }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.ll_load_more) {
+       /* if (view.getId() == R.id.ll_load_more) {
             pageNumber++;
             if (source == 0) {
                 myResourcePresent.getCollectResourceList(pageNumber, pageSize, type);
             } else if (source == 1) {
                 myResourcePresent.getPlayRecordList(pageNumber, pageSize, type);
             }
+        }*/
+    }
+
+    private void initList() {
+        if (source == 0) {
+            adapter = new ResourceAdapter(getActivity(), compilationsVoList, resourceManagerVoList);
+        } else if (source == 1) {
+            adapter = new ResourceAdapter(getActivity(), compilationsVoList, resourceManagerVoList);
         }
+        rv_list.setAdapter(adapter);
+        rv_list.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        adapter.setOnItemClickListener(new ResourceAdapter.onItemClickListener() {
+            @Override
+            public void OnItemClick(View view, int position) {
+                if (source == 0) {
+                    CompilationsVo compilationsVo = compilationsVoList.get(position);
+                    String themeId = compilationsVo.getAlbumId();
+                    if (type == 1) {
+                        myResourcePresent.starVedioActivity(themeId);
+                    } else {
+                        myResourcePresent.getSongList(UserMessage.getInstance(getActivity()).getTsId(), themeId, null);
+                    }
+                } else if (source == 1) {
+                    ResourceVo resourceVo = resourceManagerVoList.get(position);
+                    if (type == 1) {
+                        myResourcePresent.starVedioActivity(resourceVo.getAlbumId());
+                    } else {
+                        myResourcePresent.getSongList(UserMessage.getInstance(getActivity()).getTsId(), resourceVo.getAlbumId(), resourceVo.getResourceId());
+                    }
+
+                }
+            }
+        });
     }
 
     /**
@@ -160,9 +222,13 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
      */
     @Override
     public void setResourceVoList(final List<ResourceVo> resourceVoList, final List<CompilationsVo> compilationsVos) {
-        this.resourceManagerVoList = resourceVoList;
-        this.compilationsVoList = compilationsVos;
-        if (source == 0) {
+       if (resourceManagerVoList!=null){
+           resourceManagerVoList.addAll(resourceVoList);
+       }
+       if (compilationsVoList!=null){
+           compilationsVoList.addAll(compilationsVos);
+       }
+      /*  if (source == 0) {
             adapter = new ResourceAdapter(getActivity(), compilationsVos, resourceVoList);
         } else if (source == 1) {
             adapter = new ResourceAdapter(getActivity(), compilationsVos, resourceVoList);
@@ -177,7 +243,6 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
                     if (type == 1) {
                         myResourcePresent.starVedioActivity(themeId);
                     } else {
-                        //myResourcePresent.startMusicActivity(themeId, null);
                         myResourcePresent.getSongList(UserMessage.getInstance(getActivity()).getTsId(),themeId,null);
                     }
                 } else if (source == 1) {
@@ -185,18 +250,17 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
                     if (type == 1) {
                         myResourcePresent.starVedioActivity(resourceVo.getAlbumId());
                     } else {
-                      //  myResourcePresent.startMusicActivity(resourceVo.getAlbumId(), resourceVo.getResourceId());
                         myResourcePresent.getSongList(UserMessage.getInstance(getActivity()).getTsId(),resourceVo.getAlbumId(),resourceVo.getResourceId());
                     }
 
                 }
             }
-        });
+        });*/
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
     }
-
+    private boolean hasMoreData;
     /**
      * 根据每次加载资源列表的数据做出相应的处理
      *
@@ -206,6 +270,14 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
      */
     @Override
     public void setResourceSize(int size) {
+        if (size==0|| size<pageSize){
+            hasMoreData  = false;
+        }
+        else {
+            hasMoreData = true;
+        }
+        tv_no_more_data.setVisibility(hasMoreData ? View.GONE : View.VISIBLE);
+        pullToRefresh.setPullLoadEnabled(hasMoreData);
         if (size == 0) {
             if (source == 0) {
                 if (compilationsVoList.size() > 0) {
@@ -222,19 +294,21 @@ public class ResourceListFragment extends BaseFragement implements ResourceContr
                     tv_nodata.setText("你还没有足迹哦，快去留下足迹吧！");
                 }
             }
-            lastPage();
+           // lastPage();
         } else {
             if (size < 10) {
-                lastPage();
+              //  lastPage();
             }
             tv_nodata.setVisibility(View.GONE);
         }
     }
 
+
+
     private void lastPage() {
-        ll_load_more.setVisibility(View.VISIBLE);
-        tv_load_more.setText("没有更多数据了");
-        iv_load_more.setVisibility(View.GONE);
-        ll_load_more.setClickable(false);
+       // ll_load_more.setVisibility(View.VISIBLE);
+       // tv_load_more.setText("没有更多数据了");
+      //  iv_load_more.setVisibility(View.GONE);
+     //   ll_load_more.setClickable(false);
     }
 }

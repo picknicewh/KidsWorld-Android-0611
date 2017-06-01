@@ -48,7 +48,7 @@ import net.hongzhang.baselibrary.R;
  * 附加注释：
  * 主要接口：
  */
-public class CircleImageView extends ImageView {
+public class CircleImageView extends android.support.v7.widget.AppCompatImageView {
 
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 

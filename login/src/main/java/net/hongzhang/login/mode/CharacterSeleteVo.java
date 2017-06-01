@@ -22,7 +22,7 @@ public class CharacterSeleteVo implements Serializable{
     private String ryId;      // 融云通讯ID（token）
     private Integer sex;     //性别 1=男 0=女
     private String signature; // 个性签名
-   private String  account_id;//账号id
+    private String  account_id;//账号id
 
     public String getAccount_id() {
         return account_id;

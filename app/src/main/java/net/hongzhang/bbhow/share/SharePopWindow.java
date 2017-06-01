@@ -142,6 +142,7 @@ public class SharePopWindow extends PopupWindow implements View.OnClickListener,
         int viewID = view.getId();
         if (viewID == R.id.tv_concel) {
             dismiss();
+            context.finish();
         } else if (viewID == R.id.tv_conform) {
             publishstatus(content, dynamicType, pathList, classId);
         }
@@ -158,7 +159,6 @@ public class SharePopWindow extends PopupWindow implements View.OnClickListener,
         dismiss();
         DetaiCodeUtil.errorDetail(error,context);
         G.KisTyep.isReleaseSuccess = false;
-
     }
 
 }

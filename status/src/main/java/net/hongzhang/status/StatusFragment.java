@@ -348,8 +348,7 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
         type = OTHERTYPE;
         loadPage = pageSize;
         pageNum = 1;
-        //statusVos.clear();
-          presenter.getDynamicList(groupId, groupType, pageSize, pageNum, type, null);
+        presenter.getDynamicList(groupId, groupType, pageSize, pageNum, type, null);
     }
 
     /**
@@ -398,7 +397,6 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
                         statusVos.addAll(statusList);
                         //如果当前返回的动态列表小于当前的页面加载数，那么说明没有更多的数据
                         hasData = statusList.size() < pageSize ? false : true;
-
                     }
                     break;
                 case RUSHTYPE://动态刷新只需要加载刚刚没有的数据，并添加在列表最前面

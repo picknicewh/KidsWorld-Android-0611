@@ -111,9 +111,12 @@ public class ViewPagerHead extends LinearLayout {
         this.setOrientation(LinearLayout.VERTICAL);
         this.setBackgroundColor(Color.WHITE);
     }
+    private  FragmentAdapter adapter ;
     public void setAdapter(final Context context,List<Fragment> fragments,FragmentManager fragmentManager,List<String> titles){
+        ViewPagerHead.this.removeAllViews();
         if (fragmentManager!=null&& fragments!=null){
-            viewPager.setAdapter(new FragmentAdapter(fragmentManager,fragments,titles));
+            adapter  = new FragmentAdapter(fragmentManager,fragments,titles);
+            viewPager.setAdapter(adapter);
             viewPager.setOffscreenPageLimit(titles.size()-1);
             viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override

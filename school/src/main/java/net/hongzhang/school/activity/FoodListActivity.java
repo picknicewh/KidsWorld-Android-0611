@@ -93,14 +93,10 @@ public class FoodListActivity extends BaseFoodActivity   {
         tv_calendar.setText(dateView.getDate());
     }
     @Override
-    protected void onResume() {
+    protected void onRestart() {
+        super.onRestart();
         initCalenderView();
-        super.onResume();
         getCookBook(dateView.getFormatDate());
-      /*  if (flag==1){
-
-            flag = 0;
-        }*/
     }
 
     public static NoScrollListView getListView(){

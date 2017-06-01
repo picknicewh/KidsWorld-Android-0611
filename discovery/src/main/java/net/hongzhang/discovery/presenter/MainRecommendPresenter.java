@@ -19,7 +19,7 @@ import net.hongzhang.discovery.activity.MainPlayMusicActivity;
 import net.hongzhang.discovery.activity.PlayVideoListActivity;
 import net.hongzhang.discovery.activity.ResourceAlubmListActivity;
 import net.hongzhang.discovery.activity.SearchResourceActivity;
-import net.hongzhang.discovery.activity.ThemeVoListActivity;
+import net.hongzhang.discovery.activity.ThemeVoListActivity2;
 import net.hongzhang.discovery.modle.CompilationVo;
 import net.hongzhang.user.activity.CollectActivity;
 import net.hongzhang.user.activity.UserActivity;
@@ -190,7 +190,7 @@ public class MainRecommendPresenter implements MainRecommendContract.Presenter, 
 
     @Override
     public void startThemeVoListActivity(String themeName, String themeId) {
-        Intent intent = new Intent(context, ThemeVoListActivity.class);
+        Intent intent = new Intent(context, ThemeVoListActivity2.class);
         intent.putExtra("themeName", themeName);
         intent.putExtra("themeId", themeId);
         intent.putExtra("type", MainRecommendPresenter.TYPE_VIDEO);

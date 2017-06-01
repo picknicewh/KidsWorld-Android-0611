@@ -5,7 +5,6 @@
     android:layout_gravity="center"
     android:gravity="center">
     <LinearLayout
-
         android:orientation="vertical"
         android:background="@drawable/fillet_pop"
         android:layout_width="match_parent"
@@ -57,6 +56,5 @@
                 android:text="确认"
                 />
         </LinearLayout>
-
     </LinearLayout>
 </LinearLayout>

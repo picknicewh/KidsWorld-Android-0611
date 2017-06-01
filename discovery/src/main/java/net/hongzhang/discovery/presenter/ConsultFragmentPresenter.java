@@ -2,7 +2,6 @@ package net.hongzhang.discovery.presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -70,9 +69,9 @@ public class ConsultFragmentPresenter implements ConsultFragmentContract.Present
             if (date != null) {
                 Result<List<ResourceVo>> result = (Result<List<ResourceVo>>) date;
                 List<ResourceVo> resourceVos = result.getData();
-                resourceVoList.addAll(resourceVos);
-                view.setConsultList(resourceVoList);
-                Log.i("TAG",resourceVoList.size()+"-------------------------------------");
+              //  resourceVoList.addAll(resourceVos);
+                view.setConsultList(resourceVos);
+             //   Log.i("TAG",resourceVoList.size()+"-------------------------------------");
                 view.setConsultInfoSize(resourceVos.size());
             }
         }

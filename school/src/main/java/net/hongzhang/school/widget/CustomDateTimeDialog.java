@@ -1,6 +1,5 @@
 package net.hongzhang.school.widget;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,8 +12,7 @@ import net.hongzhang.baselibrary.widget.wheel.NumericWheelView;
 import net.hongzhang.baselibrary.widget.wheel.OnWheelChangedListener;
 import net.hongzhang.baselibrary.widget.wheel.WheelView;
 import net.hongzhang.school.R;
-import net.hongzhang.school.activity.TaskDetailActivity;
-import net.hongzhang.school.activity.LeaveAskActivity;
+import net.hongzhang.school.activity.BaseDateSelectActivity;
 
 import java.util.Calendar;
 
@@ -28,11 +26,10 @@ import java.util.Calendar;
  * 主要接口：无
  */
 public class CustomDateTimeDialog extends Dialog implements View.OnClickListener {
-    private Activity context;
+    private BaseDateSelectActivity context;
     /**
      * 年
      */
-
     private NumericWheelView wv_year;
     /**
      * 月
@@ -87,13 +84,14 @@ public class CustomDateTimeDialog extends Dialog implements View.OnClickListener
      * 开始还是结束标记
      */
     private int flag;
-    public CustomDateTimeDialog(Activity context) {
+
+    public CustomDateTimeDialog(BaseDateSelectActivity context) {
         super(context);
         this.context = context;
         // TODO Auto-generated constructor stub
     }
 
-    public CustomDateTimeDialog(Activity context, int theme,int flag) {
+    public CustomDateTimeDialog(BaseDateSelectActivity context, int theme, int flag) {
         super(context, theme);
         this.context = context;
         this.flag = flag;
@@ -169,7 +167,7 @@ public class CustomDateTimeDialog extends Dialog implements View.OnClickListener
         wv_minute = (NumericWheelView) view.findViewById(R.id.wv_minute);
         b_confirm = (Button) view.findViewById(R.id.b_confirm);
         b_cancle = (Button) view.findViewById(R.id.b_cancel);
-       b_confirm.setOnClickListener(this);
+        b_confirm.setOnClickListener(this);
         b_cancle.setOnClickListener(this);
     }
 
@@ -220,14 +218,7 @@ public class CustomDateTimeDialog extends Dialog implements View.OnClickListener
         if (viewid == R.id.b_confirm) {
             setCalendar();
             long millis = calendar.getTimeInMillis();
-            if (context instanceof LeaveAskActivity){
-                LeaveAskActivity askActivity = (LeaveAskActivity) context;
-                askActivity.setDateTextView(millis,flag);
-            }else if (context instanceof TaskDetailActivity){
-                TaskDetailActivity activity = (TaskDetailActivity) context;
-                activity.setDateTextView(millis,flag);
-            }
-
+            context.setDateTextView(millis, flag);
             dismiss();
         } else if (viewid == R.id.b_cancel) {
             cancel();

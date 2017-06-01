@@ -77,7 +77,6 @@ public class CourseListAdapter extends BaseAdapter  {
         });
         viewHold.tv_describle.setText(vo.getTitle());
         if (vo.getImgs().size()>0){
-
             ImageCache.imageLoader(vo.getImgs().get(0),viewHold.iv_course);
             //viewHold.iv_course.setImageBitmap(ImageCache.getBitmap(vo.getImgs().get(0)));
             viewHold.iv_course.setScaleType(ImageView.ScaleType.CENTER_CROP);

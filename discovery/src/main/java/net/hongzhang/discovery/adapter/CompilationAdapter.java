@@ -40,7 +40,7 @@ public class CompilationAdapter extends RecyclerView.Adapter<CompilationAdapter.
     @Override
     public CompilationAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.item_resource_search_list, parent, false);
+                .inflate(R.layout.item_resource_search_list, parent,false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
 

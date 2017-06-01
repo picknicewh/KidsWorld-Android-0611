@@ -1,6 +1,6 @@
 package net.hongzhang.status.adapter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +21,8 @@ import net.hongzhang.baselibrary.network.Apiurl;
 import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
+import net.hongzhang.baselibrary.takevideo.PreviewVideoActivity;
+import net.hongzhang.baselibrary.takevideo.VideoUtil;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.baselibrary.widget.CircleImageView;
@@ -49,7 +51,7 @@ import java.util.Map;
 public class StatusAdapter extends BaseAdapter implements OkHttpListener {
     private StatusFragment statusFragment;
     private List<StatusVo> statusVoList;
-    private Context context;
+    private Activity context;
     /**
      * 点赞集合
      */
@@ -122,8 +124,9 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
         }
         viewHold = (ViewHold) view.getTag();
         final StatusVo statusVo = statusVoList.get(i);
+
         ImageCache.imageLoader(statusVo.getImg(), viewHold.cv_head);
-       // GlideUtils.loadImageView1(context,statusVo.getImg(),viewHold.cv_head);
+        // GlideUtils.loadImageView1(context,statusVo.getImg(),viewHold.cv_head);
         viewHold.tv_name.setText(statusVo.getTsName());
         if (statusVo.getDate().length() > 10) {
             viewHold.tv_time.setText(statusVo.getDate().substring(0, 10));
@@ -164,18 +167,22 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
             viewHold.tv_id.setText("师");
             viewHold.tv_id.setBackgroundResource(R.drawable.user_teach_selecter);
         }
-
         //是否点赞
         if (praises.get(i) == 1) {
             viewHold.iv_praise.setImageResource(R.mipmap.ic_heat_on);
         } else if (praises.get(i) == 2) {
             viewHold.iv_praise.setImageResource(R.mipmap.ic_heat_off);
         }
-
         //加载图片
         if (statusVo.getImgUrl() != null && statusVo.getImgUrl().size() > 0) {
-            viewHold.rl_picture.setVisibility(View.VISIBLE);
-            viewHold.pictrueUtils.setPictrueLoad(context, statusVo.getImgUrl(), viewHold.rl_picture);
+            if (statusVo.getImgUrl().size()==1&&statusVo.getImgUrl().get(0).contains(".mp4")){
+                viewHold.rl_video.setVisibility(View.VISIBLE);
+                ImageCache.imageLoader(VideoUtil.getFirstFrame(statusVo.getImgUrl().get(0)), viewHold.iv_video);
+            }else {
+                viewHold.rl_video.setVisibility(View.GONE);
+                viewHold.rl_picture.setVisibility(View.VISIBLE);
+                viewHold.pictrueUtils.setPictrueLoad(context, statusVo.getImgUrl(), viewHold.rl_picture);
+            }
         } else {
             viewHold.rl_picture.setVisibility(View.GONE);
         }
@@ -233,7 +240,14 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
                 context.startActivity(intent);
             }
         });
-
+        viewHold.rl_video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, PreviewVideoActivity.class);
+                i.putExtra("path", statusVo.getImgUrl().get(0));
+                context.startActivityForResult(i,1);
+            }
+        });
         if (UserMessage.getInstance(context).getTsId().equals(statusVo.getTsId())) {
             viewHold.tv_delete.setVisibility(View.VISIBLE);
         } else {
@@ -277,7 +291,7 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
     private int getScrollPosition(StatusVo statusVo) {
         for (int i = 0; i < statusFragment.statusVos.size(); i++) {
             if (statusFragment.statusVos.get(i).getDynamicId().equals(statusVo.getDynamicId())) {
-                Log.i("---------------------",i+"");
+                Log.i("---------------------", i + "");
                 return i;
             }
         }
@@ -298,9 +312,10 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
 
     @Override
     public void onError(String uri, Result error) {
-        DetaiCodeUtil.errorDetail(error,context);
+        DetaiCodeUtil.errorDetail(error, context);
 
     }
+
     class ViewHold {
         CircleImageView cv_head;//头像
         TextView tv_name; //姓名
@@ -316,6 +331,8 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
         RelativeLayout rl_picture;
         TextView tv_delete;//删除
         PictrueUtils pictrueUtils;
+        RelativeLayout rl_video;
+        ImageView iv_video;
 
         public ViewHold(View view) {
             cv_head = (CircleImageView) view.findViewById(R.id.cv_head);
@@ -331,6 +348,8 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
             tv_delete = (TextView) view.findViewById(R.id.tv_delete);
             iv_comment = (ImageView) view.findViewById(R.id.iv_comment);
             rl_picture = (RelativeLayout) view.findViewById(R.id.rl_picture);
+            rl_video = (RelativeLayout) view.findViewById(R.id.rl_video);
+            iv_video = (ImageView) view.findViewById(R.id.iv_video);
             pictrueUtils = new PictrueUtils();
             view.setTag(this);
         }

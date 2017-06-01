@@ -1,36 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_margin="@dimen/space"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-     <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_submit_list_item"
+    android:orientation="horizontal">
 
-         android:layout_weight="1"
-         android:orientation="vertical"
-         android:layout_width="0dp"
-         android:layout_height="wrap_content">
-         <TextView
-             android:id="@+id/tv_publish_name"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textColor="@color/theme_text"
-             android:text="桦桦（王桦）"/>
-         <TextView
-             android:layout_marginTop="@dimen/space_x0.5"
-             android:id="@+id/tv_publish_time"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="上传时间：2017年3月15日 9：00"
-             android:textColor="@color/theme_text"/>
-     </LinearLayout>
-    <ImageView
-        android:src="@mipmap/ic_black_right"
-        android:layout_gravity="center"
-        android:id="@+id/iv_publish_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/ll_praise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space">
+        <net.hongzhang.baselibrary.widget.CircleImageView
+            android:id="@+id/civ_image"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_img_error"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:layout_marginRight="@dimen/space"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/space"
+            android:paddingTop="@dimen/space">
+            <TextView
+                android:id="@+id/tv_publish_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="花花"
+                android:textColor="@color/theme_text"
+                android:textSize="@dimen/ts_x_large" />
+
+            <TextView
+                android:id="@+id/tv_relation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space"
+                android:layout_toRightOf="@+id/tv_publish_name"
+                android:background="@drawable/bg_green_yellow"
+                android:paddingLeft="@dimen/space"
+                android:paddingRight="@dimen/space"
+                android:layout_margin="2dp"
+                android:text="父亲"
+                android:textColor="@color/white"
+              />
+            <TextView
+                android:id="@+id/tv_publish_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_publish_name"
+                android:layout_marginTop="@dimen/space"
+                android:text="2017年3月7日 17：00"
+                android:textColor="@color/minor_text" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_apprise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/space"
+            android:text="已评价"
+            android:gravity="center"
+            android:textColor="@color/minor_text"
+           />
+
+        <ImageView
+            android:id="@+id/iv_publish_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_circle_arraw_right" />
     </LinearLayout>
 </LinearLayout>

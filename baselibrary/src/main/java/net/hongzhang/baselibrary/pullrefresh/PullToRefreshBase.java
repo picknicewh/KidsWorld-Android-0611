@@ -13,6 +13,8 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import net.hongzhang.baselibrary.util.G;
+
 /**
  * 这个实现了下拉刷新和上拉加载更多的功能
  * 
@@ -155,7 +157,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         // 然后再松开手，就会触发刷新操作
         int headerHeight = (null != mHeaderLayout) ? mHeaderLayout.getContentSize() : 0;
         int footerHeight = (null != mFooterLayout) ? mFooterLayout.getContentSize() : 0;
-        
+        G.log(mFooterLayout.getContentSize()+"----------------"+mFooterLayout.getHeight());
+
         if (headerHeight < 0) {
             headerHeight = 0;
         }
@@ -182,7 +185,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         
         pTop = -headerHeight;
         pBottom = -footerHeight;
-        
         setPadding(pLeft, pTop, pRight, pBottom);
     }
     
@@ -430,7 +432,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         if (null != mHeaderLayout) {
             mHeaderLayout.setLastUpdatedLabel(label);
         }
-        
         if (null != mFooterLayout) {
             mFooterLayout.setLastUpdatedLabel(label);
         }
@@ -626,6 +627,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         setScrollBy(0, -(int)delta);
         
         if (null != mFooterLayout && 0 != mFooterHeight) {
+
             float scale = Math.abs(getScrollYValue()) / (float) mFooterHeight;
             mFooterLayout.onPull(scale);
         }

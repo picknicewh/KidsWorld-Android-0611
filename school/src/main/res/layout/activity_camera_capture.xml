@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
      <FrameLayout
          android:layout_width="match_parent"
          android:layout_height="match_parent">
@@ -12,74 +14,86 @@
              android:id="@+id/tv_preview"
              android:layout_width="match_parent"
              android:layout_height="match_parent" />
-         <net.hongzhang.school.util.CameraView
+         <net.hongzhang.baselibrary.takevideo.CameraView
              android:id="@+id/camera_view"
              android:layout_width="match_parent"
              android:layout_height="match_parent" />
 
          <RelativeLayout
-             android:layout_margin="@dimen/space_x2"
+
              android:layout_width="match_parent"
              android:layout_height="match_parent">
+
              <ImageView
                  android:id="@+id/iv_camera_switch"
-                 android:layout_alignParentRight="true"
-                 android:src="@mipmap/ic_camera_switch"
                  android:layout_width="30dp"
-                 android:layout_height="30dp" />
+                 android:layout_height="30dp"
+                 android:layout_alignParentRight="true"
+                 android:layout_marginRight="@dimen/space_x2"
+                 android:layout_marginTop="@dimen/space_x2"
+                 android:src="@mipmap/ic_camera_switch" />
+
              <RelativeLayout
                  android:id="@+id/rl_capture"
-                 android:layout_marginBottom="@dimen/space_x3"
-                 android:layout_alignParentBottom="true"
                  android:layout_width="match_parent"
-                 android:layout_height="wrap_content">
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentBottom="true"
+                 android:layout_marginBottom="@dimen/space_x3">
+
                  <ImageView
-                     android:layout_centerVertical="true"
                      android:id="@+id/iv_cancle"
-                     android:src="@mipmap/ic_arraw_down"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
+                     android:layout_centerVertical="true"
                      android:paddingLeft="@dimen/space_x3"
-                     />
-                <!-- <ImageView
+                     android:src="@mipmap/ic_arraw_down" />
+                 <!-- <ImageView
                      android:visibility="gone"
                      android:id="@+id/iv_capture"
                      android:src="@mipmap/ic_capture"
                      android:layout_width="80dp"
                      android:layout_height="80dp"
                     android:layout_centerInParent="true"/>-->
-                 <net.hongzhang.school.widget.CameraProgressBar
+                 <net.hongzhang.baselibrary.takevideo.CameraProgressBar
                      android:id="@+id/camera_progress_bar"
                      android:layout_width="100dp"
                      android:layout_height="100dp"
                      android:layout_centerInParent="true" />
              </RelativeLayout>
-             <RelativeLayout
-                 android:visibility="gone"
-                 android:id="@+id/rl_save"
-                 android:orientation="horizontal"
-                 android:layout_marginBottom="@dimen/space_x3"
-                 android:layout_alignParentBottom="true"
+
+             <ImageView
+                 android:id="@+id/iv_picture"
                  android:layout_width="match_parent"
-                 android:layout_height="wrap_content">
+                 android:layout_height="wrap_content"
+                 android:layout_centerInParent="true"
+                 android:visibility="gone" />
+
+             <RelativeLayout
+                 android:id="@+id/rl_save"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentBottom="true"
+                 android:layout_marginBottom="@dimen/space_x3"
+                 android:orientation="horizontal"
+                 android:visibility="gone">
+
                  <ImageView
-                     android:layout_centerVertical="true"
                      android:id="@+id/iv_unsave"
-                     android:src="@mipmap/ic_circle_error"
                      android:layout_width="60dp"
                      android:layout_height="60dp"
+                     android:layout_centerVertical="true"
                      android:layout_marginLeft="@dimen/space"
-                     />
+                     android:src="@mipmap/ic_circle_error" />
+
                  <ImageView
-                    android:layout_alignParentRight="true"
                      android:id="@+id/iv_save"
-                     android:src="@mipmap/ic_circle_right"
                      android:layout_width="60dp"
                      android:layout_height="60dp"
+                     android:layout_alignParentRight="true"
                      android:layout_marginRight="@dimen/space"
-                    />
+                     android:src="@mipmap/ic_circle_right" />
              </RelativeLayout>
          </RelativeLayout>
-
      </FrameLayout>
-</LinearLayout>
+
+</RelativeLayout>

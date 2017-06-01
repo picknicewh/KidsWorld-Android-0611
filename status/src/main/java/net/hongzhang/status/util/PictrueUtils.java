@@ -64,13 +64,12 @@ public class PictrueUtils implements View.OnClickListener {
                     .into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-
                     RelativeLayout.LayoutParams pl = getLayoutParams(resource, imageView);
                     if (pl != null) {
                         rlParams.addView(imageView, pl);
                     }
                 }
-            })  ;
+            }) ;
         } else if (imageUrl.size() == 3 || imageUrl.size() == 6) {
             //3张或者6张图片
             for (int i = 0; i < imageUrl.size(); i++) {

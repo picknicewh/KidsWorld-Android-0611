@@ -86,6 +86,7 @@ public class ImageDetailFragment extends Fragment implements View.OnLongClickLis
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        G.log("--xxxxxxxxxxxxxxxxxx"+source);
         if (source.equals("net") || source.equals("message")) {
             G.log("-------------------------"+mImageUrl);
           //  GlideUtils.loadImageView1(getActivity(),mImageUrl,mImageView);

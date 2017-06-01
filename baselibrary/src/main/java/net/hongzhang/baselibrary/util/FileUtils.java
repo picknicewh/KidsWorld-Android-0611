@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
@@ -15,10 +16,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+
+import mabeijianxi.camera.model.AutoVBRMode;
+import mabeijianxi.camera.model.MediaRecorderConfig;
 
 
 public class FileUtils {
@@ -136,6 +141,25 @@ public class FileUtils {
         return getUploadCachePath(context) + getTimeString() + ".mp4";
     }
 
+    public static void setConfirg(String path) {
+        MediaRecorderConfig config = new MediaRecorderConfig.Buidler().
+                doH264Compress(new AutoVBRMode())
+                      //  .setVelocity(BaseMediaBitrateConfig.Velocity.ULTRAFAST)).
+                .setMediaBitrateConfig(new AutoVBRMode())
+                     //   .setVelocity(BaseMediaBitrateConfig.Velocity.ULTRAFAST))
+                .recordTimeMax(6 * 1000)
+                .maxFrameRate(20)
+                .captureThumbnailsTime(1)
+                .recordTimeMin((1500))
+                .build();
+
+      /*  // 选择本地视频压缩  
+        LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
+        final LocalMediaConfig config = buidler.setVideoPath(path).captureThumbnailsTime(1)
+                .doH264Compress(new AutoVBRMode()).setFramerate(15).build();
+        OnlyCompressOverBean onlyCompressOverBean = new LocalMediaCompress(config).startCompress();*/
+    }
+
     /**
      * 保存拍摄图片
      *
@@ -168,8 +192,40 @@ public class FileUtils {
             } finally {
                 closeCloseable(fos);
             }
+
+
         }
         return false;
+    }
+
+    /**
+     * @param bitmap   要保存的图片
+     * @param filePath 目标路径
+     * @return 是否成功
+     * @Description 保存图片到指定路径
+     */
+    public static boolean saveBmpToPath(final Bitmap bitmap, final String filePath) {
+        if (bitmap == null || filePath == null) {
+            return false;
+        }
+        boolean result = false; //默认结果
+        File file = new File(filePath);
+        OutputStream outputStream = null; //文件输出流
+        try {
+            outputStream = new FileOutputStream(file);
+            result = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream); //将图片压缩为JPEG格式写到文件输出流，100是最大的质量程度
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (outputStream != null) {
+                try {
+                    outputStream.close(); //关闭输出流
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
     }
 
     /**
@@ -385,5 +441,62 @@ public class FileUtils {
         return false;
     }
 
+    /**
+     *  * 读取图片的旋转的角度
+     *  * @param path
+     *  *  图片绝对路径
+     *  * @return 图片的旋转角度
+     */
+    public static int getBitmapDegree(String path) {
+        int degree = 0;
+        try {
+            ExifInterface exifInterface = new ExifInterface(path);
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
 
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return degree;
+    }
+
+    public static Bitmap rotateBitmapByDegree(Bitmap bm, int degree) {
+        Bitmap returnBm = null;
+        // 根据旋转角度，生成旋转矩阵
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        try {
+            // 将原始图片按照旋转矩阵进行旋转，并得到新的图片
+            returnBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+        } catch (OutOfMemoryError e) {
+        }
+        if (returnBm == null) {
+            returnBm = bm;
+        }
+        if (bm != returnBm) {
+            bm.recycle();
+        }
+        return returnBm;
+    }
+
+    /**
+     *  * 把Bitmap转Byte      
+     */
+    public static byte[] Bitmap2Bytes(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        return baos.toByteArray();
+    }
 }

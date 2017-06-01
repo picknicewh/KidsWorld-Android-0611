@@ -216,101 +216,150 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/layout_select_line">
+        android:layout_marginTop="@dimen/space"
+        android:background="@drawable/layout_select_line"
+        android:orientation="vertical">
+
         <RelativeLayout
             android:id="@+id/rl_leave"
-            android:background="@drawable/layout_select_not_line"
-            android:padding="@dimen/space_x1.5"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_select_not_line"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_x1.5">
+
             <ImageView
-                android:layout_centerVertical="true"
                 android:id="@+id/iv_askleave"
-                android:src="@mipmap/ic_askleave"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/iv_askleave"
-                android:layout_marginLeft="@dimen/space"
-                android:text="请假"
-                style="@style/TextStyleBase"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/theme_text"/>
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_askleave" />
 
             <TextView
-                android:visibility="gone"
+                style="@style/TextStyleBase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space"
+                android:layout_toRightOf="@id/iv_askleave"
+                android:text="请假"
+                android:textColor="@color/theme_text" />
+
+            <TextView
                 android:id="@+id/tv_dos_leaveadk"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/space_x2.5"
-                android:layout_centerVertical="true"
                 android:background="@drawable/circledos"
-                android:layout_alignParentRight="true"
-                android:textColor="@android:color/white"  />
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
+
             <ImageView
-                android:layout_marginRight="@dimen/space_x0.5"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/ic_arrow_right"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/space_x0.5"
+                android:src="@mipmap/ic_arrow_right" />
         </RelativeLayout>
+
         <View
-            android:layout_marginLeft="@dimen/space"
-            android:background="@color/line_gray"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"/>
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/space"
+            android:background="@color/line_gray" />
+
         <RelativeLayout
             android:id="@+id/rl_medicine"
-            android:background="@drawable/layout_select_not_line"
-            android:padding="@dimen/space_x1.5"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_select_not_line"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_x1.5">
+
             <ImageView
-                android:layout_centerVertical="true"
                 android:id="@+id/iv_medicine"
-                android:src="@mipmap/ic_medcine"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/iv_medicine"
-                android:layout_marginLeft="@dimen/space"
-                android:text="喂药"
+                android:src="@mipmap/ic_medcine" />
+
+            <TextView
                 style="@style/TextStyleBase"
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/theme_text"/>
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space"
+                android:layout_toRightOf="@id/iv_medicine"
+                android:text="喂药"
+                android:textColor="@color/theme_text" />
+
             <TextView
                 android:id="@+id/tv_dos_medicine"
-                android:visibility="gone"
-                android:layout_marginRight="@dimen/space_x2.5"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/space_x2.5"
                 android:background="@drawable/circledos"
-                android:layout_alignParentRight="true"
-                android:textColor="@android:color/white"  />
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
+
             <ImageView
-                android:layout_marginRight="@dimen/space_x0.5"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/ic_arrow_right"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/space_x0.5"
+                android:src="@mipmap/ic_arrow_right" />
         </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/space"
+            android:background="@color/line_gray" />
+
+        <RelativeLayout
+            android:id="@+id/rl_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_select_not_line"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_x1.5">
+
+            <ImageView
+                android:id="@+id/iv_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_home_reaction" />
+
+            <TextView
+                style="@style/TextStyleBase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space"
+                android:layout_toRightOf="@id/iv_home"
+                android:text="家园互动"
+                android:textColor="@color/theme_text" />
 
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/space_x0.5"
+                android:src="@mipmap/ic_arrow_right" />
+        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

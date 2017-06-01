@@ -88,12 +88,13 @@ public class AlbumSelectPresenter implements AlbumSelectContract.Presenter, OkHt
             if (date!=null){
                 Result<List<CompilationVo>> data  = (Result<List<CompilationVo>>) date;
                 List<CompilationVo> compilationVos = data.getData();
-                if (compilationVos.size()>0&&compilationVos!=null){
+                view.setAlbum(compilationVos);
+                view.setResourceSize(compilationVos.size());
+               /* if (compilationVos.size()>0&&compilationVos!=null){
                     compilationVoList.addAll(compilationVos);
                     view.setAlbum(compilationVoList);
 
-                }
-                view.setResourceSize(compilationVos.size());
+                }*/
             }
         }else if (uri.equals(Apiurl.USER_GETTHENELIST)) {
             if (date!=null){

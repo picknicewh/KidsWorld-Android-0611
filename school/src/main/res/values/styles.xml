@@ -54,4 +54,35 @@
         <item name="android:minHeight">60dip</item>
         <item name="android:maxHeight">60dip</item>
     </style>
+    <style name="myActivityRadio">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@null</item>
+        <item name="android:paddingBottom">@dimen/space</item>
+        <item name="android:paddingTop">@dimen/space</item>
+        <item name="android:paddingLeft">@dimen/space_x2</item>
+        <item name="android:paddingRight">@dimen/space_x2</item>
+        <item name="android:background">@drawable/bg_activity_radio_btn</item>
+        <item name="android:textColor">@drawable/rb_active_text_color</item>
+    </style>
+    <style name="rbActiveS">
+        <item name="android:paddingLeft">@dimen/space_x2</item>
+        <item name="android:paddingRight">@dimen/space_x2</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@drawable/rb_active_text_color_s</item>
+    </style>
+    <style name="myActiveProgress" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:progressDrawable">@drawable/bg_progress_bar</item>
+        <item name="android:maxHeight">@dimen/space</item>
+        <item name="android:minHeight">@dimen/space</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
 </resources>

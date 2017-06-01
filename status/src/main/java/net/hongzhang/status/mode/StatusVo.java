@@ -205,5 +205,6 @@ public class StatusVo implements Serializable{
     public void setDynamidRew(List<DynamidRew> dynamidRew) {
         this.dynamidRew = dynamidRew;
     }
+
 }
 

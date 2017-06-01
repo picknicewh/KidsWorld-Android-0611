@@ -78,6 +78,23 @@ public class OkHttps {
         doInternet(type, uri, getParams(map), okHttpListener);
     }
     /**
+     * 没有缓存的请求
+     *
+     * @param uri            请求地址
+     * @param map            请求参数
+     * @param okHttpListener 请求回调对象
+     */
+    public static void sendPost(String baseUrl,Type type, final String uri, Map<String, Object> map, final OkHttpListener okHttpListener) {
+        if (null == uri || okHttpListener == null) {
+            G.log("参数或者访问地址为空");
+            return;
+        }
+        //进行网络请求
+        postRequest = getInstance()
+                .post(baseUrl + uri);
+        doInternet(type, uri, getParams(map), okHttpListener);
+    }
+    /**
      * 上传文件
      *
      * @param type
@@ -236,7 +253,6 @@ public class OkHttps {
             }catch (Exception e){
                 G.log("==参数异常=="+entry.getKey());
             }
-
             G.log(entry.getKey() + "------请求参数-------" + entry.getValue());
         }
 //        params.put("msec",msec);
@@ -245,4 +261,7 @@ public class OkHttps {
 //        G.log("-----msec---------"+msec);
         return params;
     }
+
+
+
 }

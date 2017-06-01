@@ -160,21 +160,23 @@ public class MyResourcePresent implements ResourceContract.Presenter, OkHttpList
                 if (date != null) {
                     Result<List<CompilationsVo>> data = (Result<List<CompilationsVo>>) date;
                     List<CompilationsVo> compilationsVos = data.getData();
-                    if (compilationsVos.size() > 0 && compilationsVos != null) {
+                    view.setResourceVoList(null, compilationsVos);
+                    view.setResourceSize(compilationsVos.size());
+                   /* if (compilationsVos.size() > 0 && compilationsVos != null) {
                         compilationVoList.addAll(compilationsVos);
                         view.setResourceVoList(null, compilationVoList);
-                    }
-                    view.setResourceSize(compilationsVos.size());
+                    }*/
                 }
             } else if (Apiurl.GETPLAYRECORDING.equals(uri)) {
                 if (date != null) {
                     Result<List<ResourceVo>> data = (Result<List<ResourceVo>>) date;
                     List<ResourceVo> resourceVos = data.getData();
-                    if (resourceVos.size() > 0 && resourceVos != null) {
+                    view.setResourceVoList(resourceVos, null);
+                    view.setResourceSize(resourceVos.size());
+                   /*  if (resourceVos.size() > 0 && resourceVos != null) {
                         resourceVoList.addAll(resourceVos);
                         view.setResourceVoList(resourceVoList, null);
-                    }
-                    view.setResourceSize(resourceVos.size());
+                    }*/
                 }
             }else if (uri.equals(Apiurl.USER_GETTHENELIST)) {
                 if (date!=null){
@@ -187,11 +189,12 @@ public class MyResourcePresent implements ResourceContract.Presenter, OkHttpList
             if (date != null) {
                 Result<List<ResourceVo>> data = (Result<List<ResourceVo>>) date;
                 List<ResourceVo> resourceVos = data.getData();
-                if (resourceVos.size() > 0 && resourceVos != null) {
-                    resourceVoList.addAll(resourceVos);
-                    view.setResourceVoList(resourceVoList, null);
-                }
+                view.setResourceVoList(resourceVos, null);
                 view.setResourceSize(resourceVos.size());
+                /*  if (resourceVos.size() > 0 && resourceVos != null) {
+                    resourceVoList.addAll(resourceVos);
+
+                }*/
             }
         }
     }

@@ -25,7 +25,6 @@
     <color name="dark_gray">#555555</color>
     <color name="light_gray">#eeeeee</color>
     <color name="parent">#8ec500</color>
-
     <color name="haft_main_green">#808dc700</color>
     <color name="main_green_0.8">#E68dc700</color>
     <color name="noread_grey">#c6c6c6</color>
@@ -41,6 +40,7 @@
 
     <color name="bg_line">#e1e1e1</color>
     <color name="blue">#0000FF</color><!--蓝色 -->
+
 
     <!--主题颜色-->
     <color name="theme_text">#494949</color><!-- 主要的字体的颜色 -->
@@ -64,4 +64,14 @@
     <color name="text_blue">#5a6197</color>
     <color name="icon_teacher">#f7ab08</color>
     <color name="nv_read_doc">#191919</color>
+
+    <!--家园互动颜色表-->
+    <color name="home_main_layout">#deeded</color>
+    <color name="home_minor_bg">#fbfbfb</color>
+    <color name="home_main_text">#171717</color>
+    <color name="home_minor_text">#444444</color>
+    <color name="home_third_text">#a7a7a7</color>
+    <color name="home_border">#d8d8d8</color>
+    <color name="home_divide">#eff1f3</color>
+    <color name="home_blue">#92c0fa</color>
 </resources>

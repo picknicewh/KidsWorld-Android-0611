@@ -19,17 +19,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
+
 import net.hongzhang.baselibrary.BaseLibrary;
+import net.hongzhang.baselibrary.mode.Result;
+import net.hongzhang.baselibrary.network.DetaiCodeUtil;
+import net.hongzhang.baselibrary.network.OkHttpListener;
+import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.BroadcastConstant;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.MyConnectionStatusListener;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.fragment.MainDiscoveryFragment;
+import net.hongzhang.login.util.SignUtil;
 import net.hongzhang.login.util.UserAction;
 import net.hongzhang.message.fragment.MessageFragement;
 import net.hongzhang.school.SchoolFragement;
 import net.hongzhang.status.StatusFragment;
 
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,9 +58,9 @@ import main.jpushlibrary.JPush.JPushBaseActivity;
  * 附加注释：继承了极光推送页面，初始化极光的设置,其中ShwoMessageReceiver为通讯未读消息个数接收广播，当未读消息不为0时，显示小圆点，否则不显示
  * 主要接口：
  */
-public class MainActivity extends JPushBaseActivity {
-     /**
-    * 通讯圆点
+public class MainActivity extends JPushBaseActivity implements OkHttpListener {
+    /**
+     * 通讯圆点
      */
     @Bind(R.id.tv_dos_message)
     TextView tvMeaasgeDos;
@@ -59,7 +69,7 @@ public class MainActivity extends JPushBaseActivity {
      */
     @Bind(R.id.tv_dos_status)
     TextView tvStatusDos;
-     /**
+    /**
      * 园所圆点
      */
     @Bind(R.id.tv_dos_school)
@@ -137,10 +147,12 @@ public class MainActivity extends JPushBaseActivity {
         setContentView(R.layout.activity_main);
         initData();
         initViewpager();
-        Log.i("EEE",userMessage.getTsId());
+        Log.i("EEE", userMessage.getTsId());
 
     }
-    private void initData(){
+
+    private void initData() {
+       // loginhjySkip();
         userMessage = UserMessage.getInstance(this);
         ButterKnife.bind(this);
         timer = new Timer();
@@ -154,14 +166,15 @@ public class MainActivity extends JPushBaseActivity {
             setNoreadMessage();
         }
         // 账号抢登监听
-        if (RongIM.getInstance()!=null){
-            Log.i("jjj","=====================");
+        if (RongIM.getInstance() != null) {
+            Log.i("jjj", "=====================");
             RongIM.setConnectionStatusListener(new MyConnectionStatusListener(this));
         }
-     //   RongIM.setConnectionStatusListener(new MyConnectionStatusListener(MainActivity.this));
+        //   RongIM.setConnectionStatusListener(new MyConnectionStatusListener(MainActivity.this));
         registerReceiver();
         initCount();
     }
+
     /**
      * 初始化viewpager
      */
@@ -176,16 +189,17 @@ public class MainActivity extends JPushBaseActivity {
         ft.commit();
         mContent = discoveryFragement;
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        if ( G.KisTyep.isChooseId ) {
+        if (G.KisTyep.isChooseId) {
             initViewpager();
             G.KisTyep.isChooseId = false;
         }
-        if (G.KisTyep.isUpadteHold){
+        if (G.KisTyep.isUpadteHold) {
             initViewpager();
-            G.KisTyep.isUpadteHold  = false;
+            G.KisTyep.isUpadteHold = false;
         }
         setNoreadMessage();
     }
@@ -374,6 +388,8 @@ public class MainActivity extends JPushBaseActivity {
             count = -1;
         }
     }
+
+
     /**
      * 全屏播放视频隐藏底部tab广播
      * 接收动态小红点的广播
@@ -384,7 +400,7 @@ public class MainActivity extends JPushBaseActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             Bundle bundle = intent.getExtras();
-            if (bundle!=null){
+            if (bundle != null) {
                 if (action.equals(BroadcastConstant.HIDEMAINTAB)) {
                     if (bundle.getBoolean("isVisible", false)) {
                         llTab.setVisibility(View.VISIBLE);
@@ -397,8 +413,8 @@ public class MainActivity extends JPushBaseActivity {
                     } else {
                         tvStatusDos.setVisibility(View.GONE);
                     }
-                }else if (action.equals(BroadcastConstant.MAINSCHOOLDOS)) {
-                    if (bundle.getInt("count", 0)==1) {
+                } else if (action.equals(BroadcastConstant.MAINSCHOOLDOS)) {
+                    if (bundle.getInt("count", 0) == 1) {
                         tvDosSchool.setVisibility(View.VISIBLE);
                     } else {
                         tvDosSchool.setVisibility(View.GONE);
@@ -418,6 +434,33 @@ public class MainActivity extends JPushBaseActivity {
                 }
             }
         }
+    }
+
+    private void loginhjySkip() {
+        String url = "/login/hjySkip.do";
+        Intent intent = getIntent();
+        String user = intent.getStringExtra("user");
+        String app_token = intent.getStringExtra("app_token");
+        String sign = SignUtil.getSign("/login/hjySkip");
+        int requestSource = 100003;
+        Map<String, Object> params = new HashMap<>();
+        params.put("user", user);
+        params.put("app_token", app_token);
+        params.put("sign", sign);
+        params.put("requestSource", requestSource);
+        Type type = new TypeToken<Result<String>>() {
+        }.getType();
+        OkHttps.sendPost("http://192.168.5.144/ZJYD",type, url, params, this);
+    }
+    @Override
+    public void onSuccess(String uri, Object date) {
+        Result<String> result = (Result<String>) date;
+        G.showToast(this, result.getData());
+    }
+
+    @Override
+    public void onError(String uri, Result result) {
+        DetaiCodeUtil.errorDetail(result, this);
     }
 }
 

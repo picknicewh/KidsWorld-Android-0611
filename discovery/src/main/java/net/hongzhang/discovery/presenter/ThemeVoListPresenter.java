@@ -41,7 +41,6 @@ public class ThemeVoListPresenter implements ThemeVoListContract.Presenter, OkHt
         compilationVoList  =new ArrayList<>();
 
     }
-
     @Override
     public void starVedioActivity(String themeId,String resourceId) {
         Intent intent = new Intent(context, PlayVideoListActivity.class);
@@ -96,8 +95,8 @@ public class ThemeVoListPresenter implements ThemeVoListContract.Presenter, OkHt
             if (date != null) {
                 Result<List<CompilationVo>> result = (Result<List<CompilationVo>>) date;
                 List<CompilationVo> compilationVos = result.getData();
-                compilationVoList.addAll(compilationVos);
-                view.setThemeVoList(compilationVoList);
+                //compilationVoList.addAll(compilationVos);
+                view.setThemeVoList(compilationVos);
                 view.setThemeVoSize(compilationVos.size());
             }
         }else if (uri.equals(Apiurl.USER_GETTHENELIST)) {

@@ -113,6 +113,66 @@ public class Apiurl {
      * 发布委托喂药
      */
     public static final String SCHOOL_MEDICINEPUBLISH = "/school/publishMedicineCommissioned.do";
+    /**
+     * 教师获取家园互动活动列表
+     */
+    public static final String SCHOOL_THOMEINTRRACTION = "/homeInteractive/getTeacherHomeInteractive.do";
+    /**
+     * 家长获取正在进行中的家园互动活动列表
+     */
+    public static final String SCHOOL_HOMEINTERACTIVELIST = "/homeInteractive/getPatriarchHomeInteractive.do";
+    /**
+     * 家长获取已截止的家园互动活动列表
+     */
+    public static final String SCHOOL_ENDHOMEINTERACTIVELIST = "/homeInteractive/getPatriarchEndHomeInteractive.do";
+    /**
+     * 教师发布活动
+     */
+    public static final String SCHOOL_PUBLISHACTIVITY = "/homeInteractive/postActivity.do";
+    /**
+     * 获取活动分类
+     */
+    public static final String SCHOOL_GRTACTIVITYTYPE = "/homeInteractive/getActivityType.do";
+    /**
+     * 获取活动维度
+     */
+    public static final String SCHOOL_GETDIMENDIONAL = "/homeInteractive/getDimensionality.do";
+    /**
+     * 获取活动详情
+     */
+    public static final String SCHOOL_GETACTIVEDETAIL = "/homeInteractive/getHomeInteractiveDetails.do";
+    /**
+     *家长上传活动
+     */
+    public static final String SCHOOL_COMMENTACTIVE= "/homeInteractive/patriarchSubmitHomeInteractive.do";
+    /**
+     *教师获取活动上传情况
+     */
+    public static final String SCHOOL_COMMENTACTIVELIST= "/homeInteractive/homeInteractiveUpload.do";
+    /**
+     *获取作品详情
+     */
+    public static final String SCHOOL_GETTEAKDETAIL= "/homeInteractive/getHomeInteractiveWorksDetails.do";
+    /**
+     * 教师评分获取用户维度
+     */
+    public static final String SCHOOL_GETDIMESIONALITY= "/homeInteractive/getActivityTsDimensionality.do";
+    /**
+     *添加用户活动标签
+     */
+    public static final String SCHOOL_ADDACTIVETAG= "/homeInteractive/addActivityTagName.do";
+    /**
+     *上传评分
+     */
+    public static final String SCHOOL_COMMITSCORE= "/homeInteractive/scorepoint.do";
+    /**
+     *获取活动排行榜
+     */
+    public static final String SCHOOL_GETACTIVERANKINGLIST= "/homeInteractive/getRankingList.do";
+    /**
+     * 获取评价详情
+     */
+    public static final String SCHOOL_GETCOMMENTEDETAIL= "/homeInteractive/getAppraiseDetails.do";
     //==============================个人中心============================
     /**
      * 意见反馈
@@ -198,13 +258,13 @@ public class Apiurl {
     /**
      * 用户登录
      */
-    public static final String APPLOGIN = "/app/login.do";
-   // public static final String APPLOGIN = "/app/loginBBH.do";
+    // public static final String APPLOGIN = "/app/login.do";
+    public static final String APPLOGIN = "/app/loginBBH.do";
     /**
      * 用户身份选择
      */
-    public static final String SELECTUSER = "/app/selectUser.do";
-   //  public static final String SELECTUSER = "/app/selectTs.do";
+   // public static final String SELECTUSER = "/app/selectUser.do";
+    public static final String SELECTUSER = "/app/selectTs.do";
     /**
      * 扫描二维码登录
      */
@@ -218,7 +278,10 @@ public class Apiurl {
      * 获取二维码
      */
     public static final String CETQRCODE = "/app/getQRCode.do";
-
+    /**
+     *授权登陆
+     */
+    public static final String AUTHORIZATION = "/app/authorization.do";
     //=========================乐园================================
     /**
      * 搜索资源
@@ -301,4 +364,6 @@ public class Apiurl {
      * 点赞资源
      */
     public static final String RESSUBPRAISE = "/rakuen/subPraise.do";
+
+
 }

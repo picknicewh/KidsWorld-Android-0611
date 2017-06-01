@@ -51,16 +51,17 @@ public abstract class CommonPubishPopWindow extends PopupWindow implements View.
         iv_text= (ImageView) conentView.findViewById(R.id.iv_text);
         iv_photo= (ImageView) conentView.findViewById(R.id.iv_photo);
         ll_shade = (LinearLayout) conentView.findViewById(R.id.ll_shade);
-     //   iv_move= (ImageView) conentView.findViewById(R.id.iv_move);
+        iv_move= (ImageView) conentView.findViewById(R.id.iv_movie);
         iv_text.setOnClickListener(this);
         iv_photo.setOnClickListener(this);
+        iv_move.setOnClickListener(this);
         ll_shade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
             }
         });
-    //    iv_move.setOnClickListener(this);
+
 
     }
 

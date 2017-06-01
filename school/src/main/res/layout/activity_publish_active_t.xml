@@ -1,28 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.hongzhang.school.activity.PublishActiveTActivity">
+    android:scrollbars="none">
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_margin="@dimen/space"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/space">
         <TextView
-            android:id="@+id/tv_publish_count"
-            android:textSize="@dimen/ts_x_large"
-            android:text="已有20位家长上传活动"
-            android:textColor="@color/theme_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space"
+            android:layout_weight="1"
+            android:paddingBottom="@dimen/space"
+            android:paddingTop="@dimen/space"
+            android:text="活动分类"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ts_x_large" />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_yubao"
+                style="@style/myActivityRadio"
+                android:checked="true"
+                android:text="保育" />
+
+            <RadioButton
+                android:id="@+id/rb_teach"
+                style="@style/myActivityRadio"
+                android:layout_marginLeft="@dimen/space"
+                android:text="教学" />
+        </RadioGroup>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/space">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingBottom="@dimen/space_x2"
+                android:paddingTop="@dimen/space_x2"
+                android:text="选择活动考察维度"
+                android:textColor="@color/black"
+                android:textSize="@dimen/ts_x_large" />
+
+            <ImageView
+                android:id="@+id/iv_select_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_max_six"
+                android:textColor="@color/white"
+                android:textSize="@dimen/ts_small"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/textView"
+                android:layout_toEndOf="@+id/textView" />
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_dimensionality"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <ListView
-            android:id="@+id/lv_publish_list"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="活动主题"
+            android:textColor="@color/black"
+            android:paddingTop="@dimen/space"
+            android:textSize="@dimen/ts_x_large" />
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@color/transparent"
-            android:scrollbars="none"
-            android:dividerHeight="0dp"/>
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/space_x0.5"
+            android:background="@color/line_divide" />
+        <EditText
+            android:id="@+id/et_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space"
+            android:background="@color/white"
+            android:maxLength="30"
+            android:paddingBottom="@dimen/space"
+            android:paddingTop="@dimen/space"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/space_x0.5"
+            android:background="@color/line_divide" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/space"
+
+                android:layout_marginBottom="@dimen/space_x2"
+                android:layout_marginTop="@dimen/space">
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/black"
+                    android:paddingTop="@dimen/space_x0.5"
+                    android:paddingBottom="@dimen/space_x0.5"
+                    android:textSize="@dimen/ts_x_large"
+                    android:text="活动内容" />
+
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/frame_green"
+                      android:src="@mipmap/ic_public_web"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/ts_small"
+                    android:layout_toEndOf="@+id/tv_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/tv_content" />
+            </RelativeLayout>
+
+
+            <EditText
+                android:id="@+id/et_content"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@color/white"
+                android:gravity="left"
+                android:hint="最多输入1000个字."
+                android:maxLength="200"
+                android:paddingTop="@dimen/space_x0.5"
+                android:windowSoftInputMode="stateHidden|adjustResize" />
+
+            <net.hongzhang.baselibrary.widget.NoScrollGirdView
+                android:id="@+id/gv_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_x2"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:verticalSpacing="@dimen/space" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/space_x0.5"
+                android:background="@color/line_divide" />
+            <LinearLayout
+                android:id="@+id/ll_publish_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_x1.5"
+                android:paddingTop="@dimen/space_x1.5">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="活动发布时间："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/ts_x_large" />
+
+                <TextView
+                    android:id="@+id/tv_publish_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="2017年3月5日9：00"
+                    android:textSize="@dimen/ts_large" />
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_arrow_right" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/space_x0.5"
+                android:background="@color/line_divide" />
+
+            <LinearLayout
+                android:id="@+id/ll_commit_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_x1.5"
+                android:paddingTop="@dimen/space_x1.5">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="活动提交时间："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/ts_x_large" />
+
+                <TextView
+                    android:id="@+id/tv_commit_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="2017年3月5日9：00"
+                    android:textSize="@dimen/ts_large" />
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_arrow_right" />
+            </LinearLayout>
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/space_x0.5"
+                android:background="@color/line_divide" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_x1.5"
+                android:paddingTop="@dimen/space_x1.5">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="是否需要评价活动"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/ts_x_large" />
+
+                <ToggleButton
+                    android:id="@+id/tb_conform_comment"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/transparent"
+                    android:button="@drawable/toggle_btn"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

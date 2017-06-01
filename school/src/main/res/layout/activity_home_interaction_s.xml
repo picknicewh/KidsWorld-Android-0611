@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/space">
+
+        <ImageView
+            android:id="@+id/iv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_x2.5"
+            android:src="@mipmap/ic_arrow_lift" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/space_x2"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_finish"
+                style="@style/rbActiveS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rb_active_left"
+                android:checked="true"
+                android:text="已完成" />
+
+            <RadioButton
+                android:id="@+id/rb_publish"
+                style="@style/rbActiveS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rb_active_right"
+                android:text="已发布" />
+        </RadioGroup>
+    </RelativeLayout>
+
+    <ExpandableListView
+
+        android:scrollbars="none"
+        android:id="@+id/expand_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space"
+        android:layout_marginRight="@dimen/space"/>
+    <TextView
+        android:id="@+id/tv_nodata"
+        android:visibility="gone"
+         android:gravity="center"
+        android:text="还没有发布的作业哦。"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
+

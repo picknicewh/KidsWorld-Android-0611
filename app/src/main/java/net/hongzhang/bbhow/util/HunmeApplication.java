@@ -35,9 +35,8 @@ public class HunmeApplication extends Application {
         JPushInterface.init(this);// 初始化 JPush
         BaseLibrary.initializer(this);
         setExtendProvide();
-//        SchoolLib.initializer();
-    }
 
+    }
     //回话扩展功能自定义
     private void setExtendProvide(){
         InputProvider.ExtendProvider[] provider = {

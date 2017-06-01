@@ -1,12 +1,18 @@
 package net.hongzhang.baselibrary.util;
 
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.bigkoo.pickerview.TimePickerView;
+
+import net.hongzhang.baselibrary.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +26,7 @@ public class DateUtil {
     public final static SimpleDateFormat DATE_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public final static SimpleDateFormat DATE = new SimpleDateFormat("yyyy-MM-dd");
     public final static SimpleDateFormat format_chinese = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
+
     /**
      * yyyy-MM-dd HH:mm:ss
      */
@@ -232,12 +239,14 @@ public class DateUtil {
         }
         return rows;
     }
+
     public static boolean isEmoji(String string) {
         Pattern p = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
                 Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(string);
         return m.find();
     }
+
     /**
      * 获取某年某月的第一天是星期几
      *
@@ -290,7 +299,7 @@ public class DateUtil {
             case 6:
             case 9:
             case 11:
-                days=30;
+                days = 30;
                 break;
             case 2:
                 if (isleap(year)) {
@@ -430,8 +439,9 @@ public class DateUtil {
         date = year + "-" + m + "-" + d;
         return date;
     }
+
     /**
-      * 获取最近的时间
+     * 获取最近的时间
      */
     public static String getLastUpdateTime() {
         String text;
@@ -443,5 +453,31 @@ public class DateUtil {
             text = mDateFormat.format(new Date(time));
         }
         return text;
+    }
+
+    public static TimePickerView getTimePickerView(Context context, TimePickerView.OnTimeSelectListener listener) {
+        TimePickerView.Builder builder = new TimePickerView.Builder(context, listener);
+        builder.setType(getType())
+                .setLabel("", "", "", "", "", "")
+                .setCancelColor(ContextCompat.getColor(context, R.color.colorAccent))
+                .setSubmitColor(ContextCompat.getColor(context, R.color.colorAccent))
+                .setTitleText("选择日期和时间")
+                .isCyclic(true)//是否循环滚动
+                .setContentSize(20);
+        TimePickerView timePickerView = builder.build();
+        timePickerView.setDate(Calendar.getInstance());
+        return timePickerView;
+    }
+
+    private static boolean[] getType() {
+        boolean[] type = new boolean[6];
+        for (int i = 0; i < 6; i++) {
+            if (i == 5) {
+                type[i] = false;
+            } else {
+                type[i] = true;
+            }
+        }
+        return type;
     }
 }

@@ -1,17 +1,19 @@
 package net.hongzhang.discovery.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.hongzhang.baselibrary.base.BaseFragement;
+import net.hongzhang.baselibrary.pullrefresh.PullToRefreshBase;
+import net.hongzhang.baselibrary.pullrefresh.PullToRefreshRecyclerView;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.discovery.R;
 import net.hongzhang.discovery.adapter.CompilationPlayCountAdapter;
@@ -35,9 +37,10 @@ public class SelectAlubmFragment extends BaseFragement implements AlbumSelectCon
     /**
      * 加载更多
      */
-    private LinearLayout ll_load_more;
+  /* private LinearLayout ll_load_more;
     private TextView tv_load_more;
-    private ImageView iv_load_more;
+    private ImageView iv_load_more;*/
+    private TextView tv_has_more_data;
     /**
      * 页码数
      */
@@ -53,7 +56,7 @@ public class SelectAlubmFragment extends BaseFragement implements AlbumSelectCon
     /**
      * 数据列表
      */
-    private List<CompilationVo> compilationVos;
+    private List<CompilationVo> compilationVoList;
     /**
      * 数据处理
      */
@@ -66,6 +69,8 @@ public class SelectAlubmFragment extends BaseFragement implements AlbumSelectCon
      * 适配器
      */
     private CompilationPlayCountAdapter adapter;
+    private PullToRefreshRecyclerView prcv_album;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,15 +80,53 @@ public class SelectAlubmFragment extends BaseFragement implements AlbumSelectCon
     }
 
     private void initView(View view) {
-        recyclerView = $(view, R.id.rv_album);
-        ll_load_more = $(view, R.id.ll_load_more);
-        tv_load_more = $(view, R.id.tv_load_more);
-        iv_load_more = $(view, R.id.iv_load_more);
+        compilationVoList = new ArrayList<>();
+        prcv_album = $(view, R.id.prcv_album);
+        tv_has_more_data = $(view, R.id.tv_no_more_data);
         tv_nodata = $(view, R.id.tv_nodata);
-        compilationVos = new ArrayList<>();
-        ll_load_more.setOnClickListener(this);
-        initData();
+        recyclerView = prcv_album.getRefreshableView();
+        prcv_album.setPullLoadEnabled(true);
+        prcv_album.setPullRefreshEnabled(false);
+        prcv_album.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
 
+            }
+            @Override
+            public void onPullUpToRefresh(final PullToRefreshBase<RecyclerView> refreshView) {
+                new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        pageNumber++;
+                        presenter.getAlbumList(type, pageSize, pageNumber);
+                        refreshView.onPullUpRefreshComplete();
+                    }
+                }.sendEmptyMessageDelayed(0, 500);
+            }
+        });
+        //  recyclerView = $(view, R.id.rv_album);
+        //   ll_load_more = $(view, R.id.ll_load_more);
+        //  tv_load_more = $(view, R.id.tv_load_more);
+        //    iv_load_more = $(view, R.id.iv_load_more);
+
+        //   ll_load_more.setOnClickListener(this);
+        adapter = new CompilationPlayCountAdapter(getActivity(), compilationVoList);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new CompilationPlayCountAdapter.onItemClickListener() {
+            @Override
+            public void OnItemClick(View view, int position) {
+                CompilationVo compilationVo = compilationVoList.get(position);
+                if (type == MainRecommendPresenter.TYPE_MUISC) {
+                    presenter.getSongList(UserMessage.getInstance(getActivity()).getTsId(), compilationVo.getAlbumId());
+                } else if (type == MainRecommendPresenter.TYPE_VIDEO) {
+                    presenter.starVedioActivity(String.valueOf(compilationVo.getAlbumId()));
+                }
+            }
+        });
+        initData();
     }
 
     private void initData() {
@@ -95,58 +138,47 @@ public class SelectAlubmFragment extends BaseFragement implements AlbumSelectCon
 
     @Override
     public void setAlbum(final List<CompilationVo> compilationVos) {
-        this.compilationVos = compilationVos;
-        adapter = new CompilationPlayCountAdapter(getActivity(), compilationVos);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new CompilationPlayCountAdapter.onItemClickListener() {
-            @Override
-            public void OnItemClick(View view, int position) {
-                CompilationVo compilationVo = compilationVos.get(position);
-                if (type == MainRecommendPresenter.TYPE_MUISC) {
-                    presenter.getSongList(UserMessage.getInstance(getActivity()).getTsId(),compilationVo.getAlbumId());
-                 //   presenter.startMusicActivity(String.valueOf(compilationVo.getAlbumId()), null);
-                } else if (type == MainRecommendPresenter.TYPE_VIDEO) {
-                    presenter.starVedioActivity(String.valueOf(compilationVo.getAlbumId()));
-                }
-            }
-        });
+        compilationVoList.addAll(compilationVos);
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
     }
 
+    private boolean hasMoreData;
+
     @Override
     public void setResourceSize(int size) {
+        if (size == 0 || size < pageSize) {
+            hasMoreData = false;
+        } else {
+            hasMoreData = true;
+        }
+        prcv_album.setPullLoadEnabled(hasMoreData);
+        tv_has_more_data.setVisibility(hasMoreData ? View.GONE : View.VISIBLE);
         if (size == 0) {
-            if (compilationVos.size() > 0) {
+            if (compilationVoList.size() > 0) {
                 tv_nodata.setVisibility(View.GONE);
             } else {
                 tv_nodata.setVisibility(View.VISIBLE);
-                tv_nodata.setText("你还没有收藏哦，快去收藏吧！");
+                tv_nodata.setText("你还没有数据哦！");
             }
-            lastPage();
         } else {
-            if (size < pageSize) {
-                lastPage();
-            }
             tv_nodata.setVisibility(View.GONE);
         }
     }
 
     private void lastPage() {
-        ll_load_more.setVisibility(View.VISIBLE);
-        tv_load_more.setText("没有更多数据了");
-        iv_load_more.setVisibility(View.GONE);
-        ll_load_more.setClickable(false);
+        //    ll_load_more.setVisibility(View.VISIBLE);
+        //  tv_load_more.setText("没有更多数据了");
+        //  iv_load_more.setVisibility(View.GONE);
+        //   ll_load_more.setClickable(false);
     }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.ll_load_more) {
-            pageNumber++;
-            presenter.getAlbumList(type, pageSize, pageNumber);
-        }
+        //  if (view.getId() == R.id.ll_load_more) {
+        //  pageNumber++;
+        //presenter.getAlbumList(type, pageSize, pageNumber);
+        // }
     }
 }

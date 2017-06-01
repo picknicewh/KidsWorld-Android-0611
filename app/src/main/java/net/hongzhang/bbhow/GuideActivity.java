@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import net.hongzhang.baselibrary.widget.BannerViewPager;
 import net.hongzhang.baselibrary.widget.SimplePagerAdapter;
-import net.hongzhang.login.LoginActivity;
+import net.hongzhang.login.activity.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;

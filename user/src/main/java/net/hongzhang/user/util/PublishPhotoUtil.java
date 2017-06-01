@@ -39,7 +39,7 @@ public class PublishPhotoUtil {
     /**
      * 发布照片页面
      */
-    public static void showPhoto(final Activity context, final ArrayList<String> itemList, final GridView gridView, final int maxContent) {
+    public static void showPhoto(final Activity context, final ArrayList<String> itemList, final GridView gridView,final int maxContent) {
         GridAlbumAdapter adapter = new GridAlbumAdapter(itemList, context, maxContent);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
