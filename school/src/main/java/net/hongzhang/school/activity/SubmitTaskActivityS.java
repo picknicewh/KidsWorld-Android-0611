@@ -131,7 +131,7 @@ public class SubmitTaskActivityS extends BaseActivity implements View.OnClickLis
 
     private void initData() {
         userMessage = UserMessage.getInstance(this);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         tvTitle.setText(intent.getStringExtra("title"));
         tvPublishTime.setText(intent.getStringExtra("publicDate"));
         tvEndTime.setText(intent.getStringExtra("endDate"));
@@ -150,7 +150,8 @@ public class SubmitTaskActivityS extends BaseActivity implements View.OnClickLis
                         //  G.log("----------------------------------" + videoList.get(0));
                         Intent i = new Intent(getApplicationContext(), PreviewVideoActivity.class);
                         i.putExtra("path", recorderPath);
-                        startActivityForResult(i, 1);
+                        intent.putExtra("source",PreviewVideoActivity.SOURCE_SCHOOL);
+                        startActivityForResult(i, PreviewVideoActivity.SOURCE_SCHOOL);
                     } else {
                         PublishPhotoUtil.imageBrower(position, itemList, SubmitTaskActivityS.this);
                     }

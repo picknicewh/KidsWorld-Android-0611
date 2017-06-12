@@ -26,6 +26,7 @@ import net.hongzhang.user.adapter.GridAlbumAdapter;
 import net.hongzhang.user.util.PublishPhotoUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者： wh
@@ -74,7 +75,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
     private PublicStatusPresenter presenter;
     private boolean hasVideo;
     private String recorderPath;
-
+    private List<String> recorderPaths;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,7 +108,8 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 if (hasVideo) {
                     Intent intent = new Intent(getApplicationContext(), PreviewVideoActivity.class);
                     intent.putExtra("path", recorderPath);
-                    startActivityForResult(intent, 1);
+                    intent.putExtra("source",PreviewVideoActivity.SOURCE_STATUS);
+                    startActivityForResult(intent, PreviewVideoActivity.SOURCE_STATUS);
                 } else {
                     Intent intent = new Intent(getApplicationContext(), CaptureVideoActivity.class);
                     intent.putExtra("type", StatusPublishPopWindow.VEDIO);
@@ -136,13 +138,17 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
 
     private void initData() {
         itemList = new ArrayList<>();
+        recorderPaths = new ArrayList<>();
         Intent data = getIntent();
-        initVideoAdapter();
         DateUtil.setEditContent(et_content, tv_count);
         rl_restrict.setVisibility(View.VISIBLE);
         classId = data.getStringExtra("groupId");
         presenter = new PublicStatusPresenter(PublishStatusActivity.this, this);
-        showView(data.getIntExtra("type", 1));
+        int type = data.getIntExtra("type",1);
+        if (type==StatusPublishPopWindow.VEDIO){
+            initVideoAdapter();
+        }
+        showView(type);
     }
 
     /**
@@ -168,6 +174,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
                 dynamicType = "2";
                 maxContent = 1;
                 recorderPath = getIntent().getStringExtra("recorderPath");
+                recorderPaths.add(recorderPath);
                 if (!G.isEmteny(recorderPath)) {
                     String path = VideoUtil.getVideoFirstFrame(recorderPath, this);
                     hasVideo = true;
@@ -186,8 +193,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-
-
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
@@ -202,7 +207,7 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             if (dynamicType.equals("4")) {
                 presenter.publishcaurse(dyContent, itemList);
             } else {
-                presenter.publishstatus(dyContent, dynamicType, itemList, classId);
+                presenter.publishstatus(dyContent, dynamicType, recorderPaths, classId);
             }
         }
     }
@@ -210,7 +215,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
         if (!G.isEmteny(et_content.getText().toString().trim())
                 || dynamicType.equals("1") && itemList.size() >= 1
                 || dynamicType.equals("4") && itemList.size() == 1) {
-            G.log("-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"+et_content.getText().toString().trim());
             presenter.getExitPrompt();
         } else {
             finish();
@@ -256,7 +260,6 @@ public class PublishStatusActivity extends BaseActivity implements View.OnClickL
             finish();
         }
     }
-
     @Override
     public void setSubTitleEnable(boolean enable) {
         tv_subtilte.setEnabled(enable);

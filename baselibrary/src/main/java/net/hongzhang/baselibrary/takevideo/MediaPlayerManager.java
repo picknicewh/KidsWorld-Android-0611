@@ -12,22 +12,21 @@ import net.hongzhang.baselibrary.util.G;
  */
 
 public class MediaPlayerManager {
-
-    private Application app;
+    private Application context;
 
     private MediaPlayer mPlayer;
 
-    private MediaPlayerManager(Application app) {
-        this.app = app;
+    private MediaPlayerManager(Application context) {
+        this.context = context;
     }
 
     private static MediaPlayerManager INSTANCE;
 
-    public static MediaPlayerManager getInstance(Application app) {
+    public static MediaPlayerManager getInstance(Application context) {
         if (INSTANCE == null) {
             synchronized (CameraManager.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new MediaPlayerManager(app);
+                    INSTANCE = new MediaPlayerManager(context);
                 }
             }
         }
@@ -42,6 +41,7 @@ public class MediaPlayerManager {
             if (mPlayer == null) {
                 mPlayer = new MediaPlayer();
                 mPlayer.setDataSource(mediaPath);
+
             } else {
                 if (mPlayer.isPlaying()) {
                     mPlayer.stop();
@@ -79,5 +79,4 @@ public class MediaPlayerManager {
             G.log(e);
         }
     }
-
 }

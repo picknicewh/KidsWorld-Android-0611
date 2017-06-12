@@ -22,8 +22,6 @@ public class RyUserInfor implements Serializable{
      img	String
      tsType	Integer
      ryId	String
-
-     *
      */
     private String tsName;
     /**

@@ -18,13 +18,12 @@ import net.hongzhang.baselibrary.util.BroadcastConstant;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.school.activity.ClassListActivity;
 import net.hongzhang.school.activity.CourseArrangeListActivity;
-import net.hongzhang.school.activity.FoodListActivity;
 import net.hongzhang.school.activity.HomeInteractionActivityS;
 import net.hongzhang.school.activity.HomeInteractionActivityT;
 import net.hongzhang.school.activity.LeaveListActivity;
-import net.hongzhang.school.activity.MedicineListSActivity;
-import net.hongzhang.school.activity.MedicineListTActivity;
+import net.hongzhang.school.activity.MedicineListActivity;
 import net.hongzhang.school.activity.PublishListActivity;
+import net.hongzhang.school.activity.RecipesListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,7 +131,7 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             schoolDosDisappear(BroadcastConstant.SCHOOLINFODOS);
         } else if (view.getId() == R.id.rl_food) {
             //食谱
-            intent.setClass(getActivity(), FoodListActivity.class);
+            intent.setClass(getActivity(), RecipesListActivity.class);
         } else if (view.getId() == R.id.rl_arrangement) {
             //课程安排
             intent.setClass(getActivity(), CourseArrangeListActivity.class);
@@ -140,20 +139,22 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             //开放课堂
             intent.setClass(getActivity(), ClassListActivity.class);
         } else if (view.getId() == R.id.rl_medicine) {
-            //  intent.setClass(getActivity(), net.hunme.school.activity.TestActivity.class);
-       /*     intent.setClass(getActivity(), HMDroidGap.class);
+            //intent.setClass(getActivity(), net.hunme.school.activity.TestActivity.class);
+          /* intent.setClass(getActivity(), HMDroidGap.class);
             intent.putExtra("loadUrl",geturl());
             schoolDosDisappear(BroadcastConstant.MEDICINEDOS);
            */
             //喂药
-            if (UserMessage.getInstance(getActivity()).getType().equals("1")) {
+           /* if (UserMessage.getInstance(getActivity()).getType().equals("1")) {
                 intent.setClass(getActivity(), MedicineListSActivity.class);
             } else {
                 intent.setClass(getActivity(), MedicineListTActivity.class);
                 //"http://192.168.1.171:8787/KidsWorld-Web
                 schoolDosDisappear(BroadcastConstant.MEDICINEDOS);
-            }
+            }*/
+            intent.setClass(getActivity(), MedicineListActivity.class);
         }else if (view.getId()==R.id.rl_home){
+
             if (UserMessage.getInstance(getActivity()).getType().equals("1")){
                 intent.setClass(getActivity(), HomeInteractionActivityS.class);
             }else {
@@ -203,7 +204,6 @@ public class SchoolFragement extends BaseFragement implements View.OnClickListen
             Bundle bundle = intent.getExtras();
             String tsid = bundle.getString("tsId");
             isVisible = bundle.getBoolean("isVisible", false);
-
             if (action.equals(BroadcastConstant.LEAVEASEKDOS)) {//请假
                 ShowDos(isVisible, tsid, tv_dos_leaveadk);
             } else if (action.equals(BroadcastConstant.MEDICINEDOS)) {//喂药

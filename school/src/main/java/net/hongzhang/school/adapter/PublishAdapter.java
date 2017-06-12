@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import net.hongzhang.baselibrary.image.ImageCache;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.school.R;
@@ -70,9 +72,10 @@ public class PublishAdapter extends BaseAdapter {
         viewHold.tv_content.setText(vo.getMessage());
         viewHold.tv_date.setText(vo.getDateTime().substring(0,10));
         if (G.isEmteny(vo.getImgUrl())){
-            viewHold.lv_holad.setImageResource(R.mipmap.ic_headmaster);//校长的头像
+            Glide.with(context).load(R.mipmap.ic_headmaster)
+                    .into(viewHold.lv_holad);
         }else {
-            ImageCache.imageLoader(vo.getImgUrl(),viewHold.lv_holad);
+            ImageCache.imageLoade(vo.getImgUrl(),viewHold.lv_holad);
         }
 
         if (!G.isEmteny(vo.getTitle())){
@@ -80,10 +83,6 @@ public class PublishAdapter extends BaseAdapter {
         }
         viewHold.setTextColor(vo.isRead());
         }
-
-
-
-
         return view;
     }
 

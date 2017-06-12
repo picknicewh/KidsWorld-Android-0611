@@ -22,11 +22,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+
+import net.hongzhang.baselibrary.mode.MapVo;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * ================================================
@@ -255,33 +263,6 @@ public class G {
         public static boolean isUpdateComment = false;
     }
 
-    /**
-     * 设置图片布局参数,根据不同长度的图片不同的布局
-     *
-     * @param url      图片的url
-     * @param iv_image 图片控件
-     */
-    public static void setParam(Context context, String url, ImageView iv_image) {
-        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(url);
-        if (bitmap != null) {
-            int imageWidth = bitmap.getWidth();
-            int imageHeight = bitmap.getHeight();
-            LinearLayout.LayoutParams lp;
-            int viewWidth = G.dp2px(context, 160);
-            int viewHeight = G.dp2px(context, 160);
-            if (imageHeight > imageWidth) {
-                lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, viewHeight * 2);
-                iv_image.setScaleType(ImageView.ScaleType.FIT_START);
-            } else if (imageHeight == imageWidth) {
-                lp = new LinearLayout.LayoutParams(viewWidth, viewWidth);
-                iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            } else {
-                lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, viewHeight);
-                iv_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            }
-            iv_image.setLayoutParams(lp);
-        }
-    }
 
     /**
      * 进入权限管理页面
@@ -388,23 +369,25 @@ public class G {
             context.startActivity(intent);
         }
     }
+
     /**
      * 判断是否全为空格
      */
     public static boolean isAllSpace(String tag) {
         char[] chars = tag.toCharArray();
-        int count=0;
+        int count = 0;
         for (int i = 0; i < chars.length; i++) {
-            if (chars[i]==' '){
+            if (chars[i] == ' ') {
                 count++;
             }
         }
-        if (count==chars.length){
+        if (count == chars.length) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
+
     public static String getClassName(Activity activity) {
         String className = activity.getLocalClassName();
         return className.substring((className.lastIndexOf(".") + 1), className.length());//截取类名
@@ -414,12 +397,30 @@ public class G {
         int index = imageUrl.lastIndexOf("/s");
         return imageUrl.substring(0, index) + imageUrl.substring(index + 2, imageUrl.length());
     }
+
     /**
-     * * 把Bitmap转Byte      
+     *  * 把Bitmap转Byte      
      */
     public static byte[] Bitmap2Bytes(Bitmap bm) {
-        ByteArrayOutputStream baos=new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG,100,baos);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
         return baos.toByteArray();
+    }
+
+    /**
+     * 将map转换成一个key和value列表
+     *
+     * @param itemList map
+     */
+    public static List<MapVo> getItemList(Map<String, String> itemList) {
+        List<MapVo> params = new ArrayList<>();
+        Set<Map.Entry<String, String>> entries = itemList.entrySet();
+        for (Map.Entry<String, String> entry : entries) {
+            MapVo mapVo = new MapVo();
+            mapVo.setKey(entry.getKey());
+            mapVo.setValue(entry.getValue());
+            params.add(mapVo);
+        }
+        return params;
     }
 }

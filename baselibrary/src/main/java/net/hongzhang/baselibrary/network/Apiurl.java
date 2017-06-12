@@ -11,14 +11,20 @@ package net.hongzhang.baselibrary.network;
 public class Apiurl {
 
     //=============================通讯=====================================
+
     /**
      * 获取通讯成员
      */
     public static final String MESSAGE_GETGTOUP = "/message/getGroup.do";
     /**
+     * 获取角色信息-----》新接口
+     */
+    public static final String MESSAGE_GETTSINFO = "/appUser/getTsInfo.do";
+    /**
      * 获取用户详情
      */
     public static final String MESSAGE_GETDETAIL = "/message/getTS.do";
+
     /**
      * 创建群
      */
@@ -82,6 +88,75 @@ public class Apiurl {
      */
     public static final String SCHOOL_GETCOOKBOOK = "/school/getCookbook.do";
     /**
+     * 教师发布食谱
+     */
+    public static final String SCHOOL_ISSUECB= "/school/teacherIssueCB.do";
+    /**
+     *  获取班级食谱
+     */
+    public static final String SCHOOL_GETCB= "/school/getCB.do";
+    /**
+     * 获取该角色所有班级
+     */
+    public static final String SCHOOL_GETUSERCLASS= "/appUser/getUserClass.do";
+
+    /**
+     * 教师获取今日请假
+     */
+    public static final String SCHOOL_GETTODAYLEAVES = "/school/todayVacation.do";
+    /**
+     * 教师获取已请假信息
+     */
+    public static final String SCHOOL_GETALREADYLEAVES = "/school/alreadyVacation.do";
+    /**
+     * 家长获取请假中信息
+     */
+    public static final String SCHOOL_GETPATRIARCHLEAVES = "/school/patriarchVacation.do";
+    /**
+     * 家长获取历史请假列表
+     */
+    public static final String SCHOOL_GETHISTORYLEAVES = "/school/patriarchVacationHistory.do";
+    /**
+     * 家长发布请假
+     */
+    public static final String SCHOOL_PUBLISHLEAVES = "/school/patriarchSubmitVacation.do";
+    /**
+     * 家长获取请假事由
+     */
+    public static final String SCHOOL_LEAVECOURSE = "/school/getVacationContent.do";
+    /**
+     * 获取常见药品
+     */
+    public static final String SCHOOL_GETDRIGTYPE = "/school/getDrigType.do";
+    /**
+     * 获取患病类型
+     */
+    public static final String SCHOOL_GETSICKENTYPE = "/school/getSickenType.do";
+    /**
+     *添加患病类型
+     */
+    public static final String SCHOOL_ADDSICKENTYPE = "/school/addSickenType.do";
+    /**
+     * 添加常见药品
+     */
+    public static final String SCHOOL_ADDRIGTYPE = "/school/addDrugType.do";
+    /**
+     * 发布委托喂药
+     */
+    public static final String SCHOOL_SUBMITMEICINE = "/school/issueMedicine.do";
+    /**
+     * 获取喂药日期
+     */
+    public static final String SCHOOL_GETMEDICINEDATE = "/school/getMedicineDate.do";
+    /**
+     *获取喂药委托
+     */
+    public static final String SCHOOL_GETMEDICINE = "/school/getMedicine.do";
+
+
+
+
+    /**
      * 请假
      */
     public static final String SCHOOL_GETLEAVES = "/school/getLeave.do";
@@ -142,37 +217,37 @@ public class Apiurl {
      */
     public static final String SCHOOL_GETACTIVEDETAIL = "/homeInteractive/getHomeInteractiveDetails.do";
     /**
-     *家长上传活动
+     * 家长上传活动
      */
-    public static final String SCHOOL_COMMENTACTIVE= "/homeInteractive/patriarchSubmitHomeInteractive.do";
+    public static final String SCHOOL_COMMENTACTIVE = "/homeInteractive/patriarchSubmitHomeInteractive.do";
     /**
-     *教师获取活动上传情况
+     * 教师获取活动上传情况
      */
-    public static final String SCHOOL_COMMENTACTIVELIST= "/homeInteractive/homeInteractiveUpload.do";
+    public static final String SCHOOL_COMMENTACTIVELIST = "/homeInteractive/homeInteractiveUpload.do";
     /**
-     *获取作品详情
+     * 获取作品详情
      */
-    public static final String SCHOOL_GETTEAKDETAIL= "/homeInteractive/getHomeInteractiveWorksDetails.do";
+    public static final String SCHOOL_GETTEAKDETAIL = "/homeInteractive/getHomeInteractiveWorksDetails.do";
     /**
      * 教师评分获取用户维度
      */
-    public static final String SCHOOL_GETDIMESIONALITY= "/homeInteractive/getActivityTsDimensionality.do";
+    public static final String SCHOOL_GETDIMESIONALITY = "/homeInteractive/getActivityTsDimensionality.do";
     /**
-     *添加用户活动标签
+     * 添加用户活动标签
      */
-    public static final String SCHOOL_ADDACTIVETAG= "/homeInteractive/addActivityTagName.do";
+    public static final String SCHOOL_ADDACTIVETAG = "/homeInteractive/addActivityTagName.do";
     /**
-     *上传评分
+     * 上传评分
      */
-    public static final String SCHOOL_COMMITSCORE= "/homeInteractive/scorepoint.do";
+    public static final String SCHOOL_COMMITSCORE = "/homeInteractive/scorepoint.do";
     /**
-     *获取活动排行榜
+     * 获取活动排行榜
      */
-    public static final String SCHOOL_GETACTIVERANKINGLIST= "/homeInteractive/getRankingList.do";
+    public static final String SCHOOL_GETACTIVERANKINGLIST = "/homeInteractive/getRankingList.do";
     /**
      * 获取评价详情
      */
-    public static final String SCHOOL_GETCOMMENTEDETAIL= "/homeInteractive/getAppraiseDetails.do";
+    public static final String SCHOOL_GETCOMMENTEDETAIL = "/homeInteractive/getAppraiseDetails.do";
     //==============================个人中心============================
     /**
      * 意见反馈
@@ -263,7 +338,7 @@ public class Apiurl {
     /**
      * 用户身份选择
      */
-   // public static final String SELECTUSER = "/app/selectUser.do";
+    // public static final String SELECTUSER = "/app/selectUser.do";
     public static final String SELECTUSER = "/app/selectTs.do";
     /**
      * 扫描二维码登录
@@ -279,7 +354,7 @@ public class Apiurl {
      */
     public static final String CETQRCODE = "/app/getQRCode.do";
     /**
-     *授权登陆
+     * 授权登陆
      */
     public static final String AUTHORIZATION = "/app/authorization.do";
     //=========================乐园================================

@@ -66,6 +66,9 @@ public class VideoUtil {
     }
     public static String  getFirstFrame(String videoPath){
         int index = videoPath.lastIndexOf(".");
+        if (index==-1){
+            return "";
+        }
         String imagePath = videoPath.substring(0,index)+".png";
         return imagePath;
     }

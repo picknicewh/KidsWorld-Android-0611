@@ -326,6 +326,7 @@
             android:background="@color/line_gray" />
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/rl_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

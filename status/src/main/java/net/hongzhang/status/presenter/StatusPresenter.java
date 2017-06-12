@@ -207,10 +207,12 @@ public class StatusPresenter implements StatusContract.Presenter, OkHttpListener
             if (dynamicList != null && dynamicList.size() > 0) {
                 view.setStatusHead(dynamicList);
                 view.setDynamicVo(dynamicList.get(position));
+                G.log("-xxxxxxxxxxxxx-position:"+position);
             }
         } else if (Apiurl.STATUSLIST.equals(uri)) {
             Result<List<StatusVo>> data = (Result<List<StatusVo>>) date;
             List<StatusVo> statusVos = data.getData();
+            G.log("-xxxxxxxxxxxxx-statusVos:"+statusVos.size());
             view.setStatusList(statusVos);
         }
     }

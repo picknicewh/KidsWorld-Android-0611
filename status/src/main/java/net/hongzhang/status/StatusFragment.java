@@ -250,8 +250,9 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
     private void setListData() {
         tv_nodata.setVisibility(statusVos.size() == 0 ? View.VISIBLE : View.GONE);
         if (adapter != null) {
-            adapter.setData(statusVos);
+//            adapter.setData(statusVos);
             adapter.notifyDataSetChanged();
+//            adapter.notifyDataSetInvalidated();
         }
     }
 
@@ -268,8 +269,8 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
                 type = RUSHTYPE;
                 presenter.getDynamicList(groupId, groupType, pageSize, pageNum, type, statusVos.get(0).getDynamicId());
             } else {
-                type = OTHERTYPE;
-                presenter.getDynamicList(groupId, groupType, pageSize, pageNum, type, null);
+                //  type = OTHERTYPE;
+                // presenter.getDynamicList(groupId, groupType, pageSize, pageNum, type, null);
             }
         }
         // 动态发生改变 刷新数据
@@ -348,7 +349,6 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
         type = OTHERTYPE;
         loadPage = pageSize;
         pageNum = 1;
-        presenter.getDynamicList(groupId, groupType, pageSize, pageNum, type, null);
     }
 
     /**
@@ -389,8 +389,11 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
                     //当loadPage=1时，表示进入动态详情页修改单条记录
                     if (loadPage == 1) {
                         hasData = true;
-                        statusVos.set(scrollPosition, statusList.get(0));
-                    } else {//当pageNum=1时表示第一页，第一页时清除所有的数据，重新加载新的第一页数据
+                        if (statusVos.size() > scrollPosition) {
+                            statusVos.set(scrollPosition, statusList.get(0));
+                        }
+                    } else {
+                        //当pageNum=1时表示第一页，第一页时清除所有的数据，重新加载新的第一页数据
                         if (pageNum == 1) {
                             statusVos.clear();
                         }
@@ -407,6 +410,7 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
         } else {
             hasData = false;
         }
+        G.log("xxxxxxxxxxxxxx"+type);
         setListData();
     }
 
@@ -478,14 +482,19 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
                 intent.putExtra("count", 0);
                 getActivity().sendBroadcast(intent);
                 pageNum = 1;
-                statusVos.clear();
                 loadPage = pageSize;
                 type = OTHERTYPE;
-                presenter.getDynamicList(groupId, groupType, pageSize, pageNum, type, null);
+                if (!G.isEmteny(groupType) & !G.isEmteny(groupType)) {
+                   /* if (statusVos!=null &&statusVos.size()>0){
+                        presenter.getDynamicList(groupId, groupType, pageSize, pageNum, type, statusVos.get(0).getDynamicId());
+                    }else {
+
+                    }*/
+                    presenter.getDynamicList(groupId, groupType, pageSize, pageNum, type, null);
+                }
                 pullToRefreshListView.onPullDownRefreshComplete();
                 pullToRefreshListView.setLastUpdatedLabel(presenter.getLastUpdateTime());
             }
-
         }.sendEmptyMessageDelayed(0, 500);
     }
 
@@ -497,7 +506,7 @@ public class StatusFragment extends BaseFragement implements View.OnClickListene
         new Handler() {
             @Override
             public void handleMessage(Message message) {
-                //上拉加载
+              //上拉加载
                 pageNum++;
                 type = OTHERTYPE;
                 loadPage = pageSize;

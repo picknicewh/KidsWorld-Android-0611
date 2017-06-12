@@ -110,7 +110,10 @@
         <!-- imlib config begin -->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="x18ywvqfxlloc"/>
+            android:value="e0x9wycfeaamq"  />
+        <!--  android:value="e0x9wycfeaamq"  测试账号-->
+        <!--  android:value="x18ywvqfxlloc"  生产账号-->
+
 
         <service
             android:name="io.rong.imlib.ipc.RongService"

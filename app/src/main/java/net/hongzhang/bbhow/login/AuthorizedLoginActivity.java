@@ -48,7 +48,6 @@ public class AuthorizedLoginActivity extends BaseActivity implements AuthorizedL
     private String keyNumber;
     private String packageName;
     private String activityName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +95,7 @@ public class AuthorizedLoginActivity extends BaseActivity implements AuthorizedL
 
     @OnClick(R.id.tv_login)
     public void onViewClicked() {
-        try {
+       /* try {
             Intent intent = new Intent();
             JSONObject j = new JSONObject();
             j.put("userid", userMessage.getLoginName());
@@ -106,22 +105,41 @@ public class AuthorizedLoginActivity extends BaseActivity implements AuthorizedL
             finish();
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-      //  presenter.authorizedLogin(userMessage.getTsId(), keyNumber);
+        }*/
+       presenter.authorizedLogin(userMessage.getTsId(), keyNumber);
     }
 
     @Override
     public void setToken(String token) {
-
+        try {
+            Intent intent = new Intent();
+            JSONObject j = new JSONObject();
+            j.put("userid", userMessage.getLoginName());
+            j.put("token", token);
+            intent.putExtra("data", j.toString());
+            setResult(RESULT_OK, intent);
+            finish();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
-
     @Override
     public void onClick(View view) {
         int viewID = view.getId();
         if (viewID == R.id.tv_subtitle) {
             Intent intent = new Intent(AuthorizedLoginActivity.this, UserChooseActivity.class);
+            intent.putExtra("source","AuthorizedLoginActivity");
             intent.putExtra("type", true);
-            startActivity(intent);
+            startActivityForResult(intent,1);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode==RESULT_OK){
+            tvName.setText(userMessage.getUserName());
+            tvPhoneNum.setText("(" + userMessage.getLoginName() + ")");
+            ImageCache.imageLoader(userMessage.getHoldImgUrl(),civImage);
         }
     }
 }

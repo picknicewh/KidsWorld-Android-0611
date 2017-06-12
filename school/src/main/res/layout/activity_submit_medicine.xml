@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        android:padding="@dimen/space">
+
+        <ImageView
+            android:id="@+id/iv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_arrow_lift" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="委托喂药"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ts_xx_large" />
+
+        <TextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:text="发布"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ts_large" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/space">
+
+                <RelativeLayout
+                    android:id="@+id/rl_sick_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/space">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_weight="1"
+                        android:drawableLeft="@mipmap/ic_sick_name"
+                        android:drawablePadding="@dimen/space_x0.5"
+                        android:text="患病类型"
+                        android:textColor="@color/theme_text"
+                        android:textSize="@dimen/ts_large" />
+
+                    <TextView
+                        android:id="@+id/tv_sick_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center"
+                        android:drawablePadding="@dimen/space_x0.5"
+                        android:drawableRight="@mipmap/ic_arrow_right"
+                        android:text="请选择（必填）"
+                        android:textColor="@color/theme_text"
+                        android:textSize="@dimen/ts_large" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_addSick_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="@dimen/space_x0.5"
+                    android:text="没有找到?"
+                    android:textColor="@color/minor_text" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_gray"
+                    android:layout_marginTop="@dimen/space_x0.5"
+                    android:background="@color/line_divide" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_medicine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/space">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@mipmap/ic_medicine_name"
+                        android:drawablePadding="@dimen/space_x0.5"
+                        android:text="常见药品"
+                        android:textColor="@color/theme_text"
+                        android:textSize="@dimen/ts_large" />
+
+                    <TextView
+                        android:id="@+id/tv_medicine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawablePadding="@dimen/space_x0.5"
+                        android:drawableRight="@mipmap/ic_arrow_right"
+                        android:gravity="center"
+                        android:text="请选择（必填）"
+                        android:textColor="@color/theme_text"
+                        android:textSize="@dimen/ts_large" />
+
+
+                </RelativeLayout>
+
+                <TextView
+
+                    android:id="@+id/tv_addMedicine_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="@dimen/space_x0.5"
+                    android:text="没有找到?"
+                    android:textColor="@color/minor_text" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_gray"
+                    android:layout_marginTop="@dimen/space_x0.5"
+                    android:background="@color/line_divide" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_dates"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/space">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@mipmap/ic_medicine_time"
+                        android:drawablePadding="@dimen/space_x0.5"
+                        android:text="喂药时间"
+                        android:textColor="@color/theme_text"
+                        android:textSize="@dimen/ts_large" />
+
+                    <ImageView
+                        android:id="@+id/iv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:src="@mipmap/ic_circle_add"
+                        android:textColor="@color/theme_text"
+                        android:textSize="@dimen/ts_large" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/iv_date"
+                        android:textColor="@color/theme_text"
+                        android:textSize="@dimen/ts_large" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_gray"
+                    android:layout_marginTop="@dimen/space_x0.5"
+                    android:background="@color/line_divide" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_days"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:padding="@dimen/space">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:drawableLeft="@mipmap/ic_medicine_days"
+                        android:drawablePadding="@dimen/space_x0.5"
+                        android:text="喂药天数"
+                        android:textColor="@color/theme_text"
+                        android:textSize="@dimen/ts_large" />
+
+                    <EditText
+
+                        android:id="@+id/et_days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@color/white"
+                        android:gravity="right"
+                        android:hint="请输入（必填）"
+                        android:inputType="number"
+                        android:textColor="@color/theme_text"
+                        android:textSize="@dimen/ts_large" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_gray"
+                    android:layout_marginTop="@dimen/space_x0.5"
+                    android:background="@color/line_divide" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:padding="@dimen/space">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@mipmap/ic_medicine_num"
+                        android:drawablePadding="@dimen/space_x0.5"
+                        android:text="喂药数量"
+                        android:textColor="@color/theme_text"
+                        android:textSize="@dimen/ts_large" />
+
+                    <EditText
+                        android:id="@+id/et_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@color/white"
+                        android:gravity="right"
+                        android:hint="请选择（必填）"
+                        android:inputType="number"
+                        android:textColor="@color/theme_text"
+                        android:textSize="@dimen/ts_large" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_gray"
+                    android:layout_marginTop="@dimen/space_x0.5"
+                    android:background="@color/line_divide" />
+
+                <LinearLayout
+                    android:id="@+id/ll_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space">
+
+                    <EditText
+                        android:id="@+id/et_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_advice_selecter"
+                        android:gravity="left"
+                        android:hint="家长留言"
+                        android:lines="8"
+                        android:maxLength="200"
+                        android:padding="@dimen/space"
+                        android:textColor="@color/theme_text"
+                        android:textSize="@dimen/ts_large"
+                        android:windowSoftInputMode="stateHidden|adjustResize" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

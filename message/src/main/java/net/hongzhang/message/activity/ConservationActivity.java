@@ -24,7 +24,7 @@ import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.MyConnectionStatusListener;
 import net.hongzhang.baselibrary.util.PermissionsChecker;
 import net.hongzhang.message.R;
-import net.hongzhang.message.bean.RyUserInfor;
+import net.hongzhang.message.bean.RyUserInfo;
 import net.hongzhang.message.ronglistener.MyConversationBehaviorListener;
 
 import java.lang.reflect.Type;
@@ -167,18 +167,20 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
     private void  getUserInfor(String userid){
         Map<String,Object> param = new HashMap<>();
         param.put("tsId",userid);
-        Type type = new  TypeToken<Result<RyUserInfor>>(){}.getType();
-        OkHttps.sendPost(type, Apiurl.MESSAGE_GETDETAIL,param,this,2,"phone");
+        Type type = new  TypeToken<Result<RyUserInfo>>(){}.getType();
+        OkHttps.sendPost(type, Apiurl.MESSAGE_GETTSINFO,param,this,2,"phone");
     }
     @Override
     public void onClick(View v) {
         if (v.getId()==R.id.iv_cback){
             finish();
         }else if (v.getId()==R.id.iv_call){
-            Uri phoneUri =  Uri.parse("tel:"+phoneNumber);
-            Intent intent = new Intent(Intent.ACTION_DIAL,phoneUri);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            if (!G.isEmteny(phoneNumber)){
+                Uri phoneUri =  Uri.parse("tel:"+phoneNumber);
+                Intent intent = new Intent(Intent.ACTION_DIAL,phoneUri);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
         }else if (v.getId()==R.id.iv_detail){
             Intent intent = new Intent();
             if (isGroup){
@@ -204,11 +206,11 @@ public class ConservationActivity extends FragmentActivity implements View.OnCli
     }
     @Override
     public void onSuccess(String uri, Object date) {
-        Result<RyUserInfor> UserInfor = (Result<RyUserInfor>) date;
-        if (UserInfor!=null){
-            if (UserInfor.isSuccess()){
-                RyUserInfor ryUserInfor= UserInfor.getData();
-                phoneNumber = ryUserInfor.getAccount_info().get(0).getPhone();
+        Result<RyUserInfo> UserInfo= (Result<RyUserInfo>) date;
+        if (UserInfo!=null){
+            if (UserInfo.isSuccess()){
+                RyUserInfo ryUserInfo= UserInfo.getData();
+                phoneNumber = ryUserInfo.getPhone();
             }
         }
     }

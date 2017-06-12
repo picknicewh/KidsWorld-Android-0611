@@ -77,6 +77,8 @@ public class OkHttps {
                 .post(uri_host + uri);
         doInternet(type, uri, getParams(map), okHttpListener);
     }
+
+
     /**
      * 没有缓存的请求
      *
@@ -228,6 +230,54 @@ public class OkHttps {
                     }
                 });
     }
+    /**
+     * post请求发送给服务器json
+     * @param uri            请求地址
+     * @param json      json数据
+     * @param okHttpListener 请求回调对象
+     */
+    public static void sendPostJson(final Type type, final String uri,String json ,final OkHttpListener okHttpListener){
+        postRequest.postJson(json).url(uri_host+uri).execute(new AbsCallback<Object>() {
+            @Override
+            public Object parseNetworkResponse(Response response) throws Exception {
+                String value = response.body().string();
+                JSONObject jsonObject = new JSONObject(value);
+                String code = jsonObject.getString("code");
+                isSuccess = "0".equals(code);
+                isSendError = false; //初始化默认发送过错误
+                //是否成功访问（服务端是不是正常返回值 如果不是正常返回一般date都是String类型 直接去解析 否则 按照所传的格式解析）
+                if (isSuccess)
+                    return new Gson().fromJson(value, type);
+                else
+                    return new Gson().fromJson(value, new TypeToken<Result<String>>() {
+                    }.getType());
+            }
+            @Override
+            public void onResponse(boolean isFromCache, Object o, Request request, @Nullable Response response) {
+                if (o!=null){
+                    //服务端正常返回或者是缓存的 请求成功
+                    if (((Result)o).getCode().equals("0")|| isFromCache)
+                        okHttpListener.onSuccess(uri, o);
+                    else if (!isSendError) //否则请求失败  但是必须是之前没有发送错误信息  不能重复发送 会报错
+                        try {
+                            okHttpListener.onError(uri, (Result<String>)o);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                }
+            }
+            @Override
+            public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                super.onError(isFromCache, call, response, e);
+                Result<String> result =new Result<>();
+                result.setData(ERRORPROMPT);
+                result.setCode("-9999");
+                okHttpListener.onError(uri, result);
+                isSendError = true; //请求失败 并且告诉onResponse已经发送过无需发送
+            }
+        });
+    }
+
 
     /**
      * 组合访问参数

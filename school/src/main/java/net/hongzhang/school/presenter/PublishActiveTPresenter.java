@@ -1,10 +1,13 @@
 package net.hongzhang.school.presenter;
 
 import android.app.Activity;
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.mode.Result;
@@ -13,10 +16,12 @@ import net.hongzhang.baselibrary.network.DetaiCodeUtil;
 import net.hongzhang.baselibrary.network.OkHttpListener;
 import net.hongzhang.baselibrary.network.OkHttps;
 import net.hongzhang.baselibrary.util.G;
+import net.hongzhang.school.R;
 import net.hongzhang.user.util.BitmapCache;
 
 import java.io.File;
 import java.lang.reflect.Type;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +62,33 @@ public class PublishActiveTPresenter implements PublishActiveTContract.Presenter
         OkHttps.sendPost(mType, Apiurl.SCHOOL_PUBLISHACTIVITY, params, list, this);
         view.showLoadingDialog();
     }
+    public TimePickerView getTimePickerView(Context context, TimePickerView.OnTimeSelectListener listener) {
+        TimePickerView.Builder builder = new TimePickerView.Builder(context, listener);
+        builder.setType(getType())
+                .setLabel("", "", "", "", "", "")
+                .setCancelColor(ContextCompat.getColor(context, R.color.colorAccent))
+                .setSubmitColor(ContextCompat.getColor(context, R.color.colorAccent))
+                .setTitleText("选择日期和时间")
+                .isCyclic(true)//是否循环滚动
+                .setContentSize(20);
+        TimePickerView timePickerView = builder.build();
+        timePickerView.setDate(Calendar.getInstance());
+        return timePickerView;
+    }
 
+
+
+    private static boolean[] getType() {
+        boolean[] type = new boolean[6];
+        for (int i = 0; i < 6; i++) {
+            if (i == 5) {
+                type[i] = false;
+            } else {
+                type[i] = true;
+            }
+        }
+        return type;
+    }
     @Override
     public void getActivityType() {
         Map<String, Object> params = new HashMap<>();

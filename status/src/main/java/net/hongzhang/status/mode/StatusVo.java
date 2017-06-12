@@ -41,7 +41,7 @@ public class StatusVo implements Serializable{
     /**
      *动态图片地址
      */
-   private List<String> imgUrl	;
+   private List<String> imgUrl;
     /**
      *小视屏地址
      */
@@ -53,7 +53,7 @@ public class StatusVo implements Serializable{
     /**
      *点赞人名称
      */
-   private java.util.List<String>list	;
+   private java.util.List<String>list;
     /**
      *是否赞
      *  1=已赞 2=未赞
@@ -76,7 +76,6 @@ public class StatusVo implements Serializable{
      * 评论数
     */
     private int rewCount;
-
     public int getRewCount() {
         return rewCount;
     }

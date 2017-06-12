@@ -138,7 +138,8 @@ public class FileUtils {
      * @return
      */
     public static String getUploadVideoFile(Context context) {
-        return getUploadCachePath(context) + getTimeString() + ".mp4";
+       return getUploadCachePath(context) + getTimeString() + ".mp4";
+       // return getUploadCachePath(context) + getTimeString() + ".mov";
     }
 
     public static void setConfirg(String path) {

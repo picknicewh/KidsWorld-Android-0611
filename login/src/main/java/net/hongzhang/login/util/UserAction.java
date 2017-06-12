@@ -104,4 +104,16 @@ public class UserAction {
         activity.startActivity(intent);
         activity.finish();
     }
+    /**
+     * 前往分享
+     * @param activity
+     */
+    public static void goAuthorizedLoginActivity(Activity activity) {
+        ComponentName componetName = new ComponentName("net.hongzhang.bbhow",
+                "net.hongzhang.bbhow.login.AuthorizedLoginActivity");
+        Intent intent = new Intent();
+        intent.setComponent(componetName);
+        activity.setResult(Activity.RESULT_OK);
+        activity.finish();
+    }
 }

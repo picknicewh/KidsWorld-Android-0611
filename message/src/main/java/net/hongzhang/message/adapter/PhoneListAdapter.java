@@ -11,10 +11,8 @@ import android.widget.TextView;
 
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.message.R;
-import net.hongzhang.message.bean.RyUserInfor;
+import net.hongzhang.message.bean.RyUserInfo;
 import net.hongzhang.message.widget.ConformDialog;
-
-import java.util.List;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
@@ -31,16 +29,18 @@ import io.rong.imlib.model.UserInfo;
 
 public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.ViewHolder> {
     private Activity context;
-    private List<RyUserInfor.AccountInfo> accountInfos;
-    private RyUserInfor ryUserInfor;
+    // private List<RyUserInfor.AccountInfo> accountInfos;
+    private RyUserInfo ryUserInfo;
     private String tsId;
-    public PhoneListAdapter(Activity context, RyUserInfor ryUserInfor,String tsId) {
+
+    public PhoneListAdapter(Activity context, RyUserInfo ryUserInfo, String tsId) {
         this.context = context;
-        this.ryUserInfor = ryUserInfor;
+        this.ryUserInfo = ryUserInfo;
         this.tsId = tsId;
-        accountInfos = ryUserInfor.getAccount_info();
+        //accountInfos = ryUserInfo.getAccount_info();
 
     }
+
     private PhoneListAdapter.onItemClickListener itemClickListener = null;
 
     @Override
@@ -51,35 +51,36 @@ public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.View
         return holder;
 
     }
+
     @Override
     public void onBindViewHolder(final PhoneListAdapter.ViewHolder holder, final int position) {
-        final RyUserInfor.AccountInfo accountInfo = accountInfos.get(position);
-        holder.tv_phoneNum.setText(accountInfo.getPhone());
-        holder.tv_name.setText(accountInfo.getName());
+        // final RyUserInfor.AccountInfo accountInfo = accountInfos.get(position);
+        holder.tv_phoneNum.setText(ryUserInfo.getPhone());
+        holder.tv_name.setText(ryUserInfo.getName());
         holder.iv_phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ConformDialog dialog  = new ConformDialog(context,accountInfo.getPhone());
+                ConformDialog dialog = new ConformDialog(context, ryUserInfo.getPhone());
                 dialog.initView();
             }
         });
-       final UserInfo userInfo = new UserInfo(tsId,ryUserInfor.getTsName(), Uri.parse(ryUserInfor.getImg()));
+        final UserInfo userInfo = new UserInfo(tsId, ryUserInfo.getTsName(), Uri.parse(ryUserInfo.getImgUrl()));
         holder.iv_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!G.isEmteny(tsId)&&!G.isEmteny(ryUserInfor.getTsName())){
-                    if (RongIM.getInstance()!=null){
-                        RongIM.getInstance().startPrivateChat(context,tsId,ryUserInfor.getTsName());
+                if (!G.isEmteny(tsId) && !G.isEmteny(ryUserInfo.getTsName())) {
+                    if (RongIM.getInstance() != null) {
+                        RongIM.getInstance().startPrivateChat(context, tsId, ryUserInfo.getTsName());
                         RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
                             @Override
                             public UserInfo getUserInfo(String userId) {
-                                if(null!=ryUserInfor.getImg()){
-                                    return  userInfo;
+                                if (null != ryUserInfo.getImgUrl()) {
+                                    return userInfo;
                                 }
                                 return null;
                             }
                         }, true);
-                        if(null!=ryUserInfor.getImg()){
+                        if (null != ryUserInfo.getImgUrl()) {
                             RongIM.getInstance().refreshUserInfoCache(userInfo);
                         }
                     }
@@ -96,7 +97,7 @@ public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.View
 
     @Override
     public int getItemCount() {
-        return accountInfos.size();
+        return 1;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -105,6 +106,7 @@ public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.View
         private TextView tv_phoneNum;
         private ImageView iv_message;
         private TextView tv_name;
+
         public ViewHolder(View view) {
             super(view);
             iv_phone = (ImageView) view.findViewById(R.id.iv_phone);

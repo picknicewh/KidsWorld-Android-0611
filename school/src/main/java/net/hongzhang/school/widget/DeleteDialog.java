@@ -80,7 +80,7 @@ public class DeleteDialog extends BaseConformDialog implements View.OnClickListe
             Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
           if (context instanceof LeaveListActivity){
               LeaveListActivity   activity = (LeaveListActivity) context;
-              activity.deleteUpdate(position);
+            //  activity.deleteUpdate(position);
           }else if (context instanceof CourseArrangeListActivity){
               CourseArrangeListActivity arrangeActivity = (CourseArrangeListActivity) context;
               arrangeActivity.updateDelete(position);

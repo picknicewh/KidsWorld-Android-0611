@@ -23,8 +23,6 @@ import java.util.UUID;
  * 附加注释：
  * 主要接口：
  */
-
-
 public class GlideUtils {
     /**
      * Glide特点

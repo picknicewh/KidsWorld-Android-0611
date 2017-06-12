@@ -89,7 +89,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initData() {
-        UserMessage um = UserMessage.getInstance(this);
+        UserMessage um = new UserMessage(this);
         ImageCache.imageLoader(um.getHoldImgUrl(), cv_portrait);
         if ("1".equals(um.getType())) {
             tv_id.setText("学");

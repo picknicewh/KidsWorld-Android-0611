@@ -1,8 +1,6 @@
 package net.hongzhang.baselibrary.util;
 
 
-import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextWatcher;
@@ -10,14 +8,12 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.TimePickerView;
-
-import net.hongzhang.baselibrary.R;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,6 +22,8 @@ public class DateUtil {
     public final static SimpleDateFormat DATE_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public final static SimpleDateFormat DATE = new SimpleDateFormat("yyyy-MM-dd");
     public final static SimpleDateFormat format_chinese = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
+    public final static SimpleDateFormat TIME = new SimpleDateFormat("HH:mm");
+    public final static SimpleDateFormat DATE_MOUTH = new SimpleDateFormat("MM月dd日");
 
     /**
      * yyyy-MM-dd HH:mm:ss
@@ -355,6 +353,26 @@ public class DateUtil {
         return s;
     }
 
+    public static List<String> getDayList() {
+        List<String> dayList = new ArrayList<>();
+        for (int i = 0; i <= 24; i++) {
+            if (i < 10) {
+                dayList.add("0" + i);
+            } else {
+                dayList.add(String.valueOf(i));
+            }
+        }
+        return dayList;
+    }
+
+    public static List<String> getWholeTime() {
+        List<String> dayList = new ArrayList<>();
+        dayList.add("00");
+        dayList.add("30");
+        return dayList;
+
+    }
+
     /**
      * 计算文字的长度，如果文字的长度大于100则不能再输入
      *
@@ -455,29 +473,4 @@ public class DateUtil {
         return text;
     }
 
-    public static TimePickerView getTimePickerView(Context context, TimePickerView.OnTimeSelectListener listener) {
-        TimePickerView.Builder builder = new TimePickerView.Builder(context, listener);
-        builder.setType(getType())
-                .setLabel("", "", "", "", "", "")
-                .setCancelColor(ContextCompat.getColor(context, R.color.colorAccent))
-                .setSubmitColor(ContextCompat.getColor(context, R.color.colorAccent))
-                .setTitleText("选择日期和时间")
-                .isCyclic(true)//是否循环滚动
-                .setContentSize(20);
-        TimePickerView timePickerView = builder.build();
-        timePickerView.setDate(Calendar.getInstance());
-        return timePickerView;
-    }
-
-    private static boolean[] getType() {
-        boolean[] type = new boolean[6];
-        for (int i = 0; i < 6; i++) {
-            if (i == 5) {
-                type[i] = false;
-            } else {
-                type[i] = true;
-            }
-        }
-        return type;
-    }
 }

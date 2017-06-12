@@ -3,14 +3,19 @@ package net.hongzhang.baselibrary.takevideo;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.graphics.SurfaceTexture;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import net.hongzhang.baselibrary.R;
+import net.hongzhang.baselibrary.image.ImageCache;
+import net.hongzhang.baselibrary.util.G;
+import net.hongzhang.baselibrary.widget.LoadingDialog;
 
 
 public class PreviewVideoActivity extends Activity implements View.OnClickListener {
@@ -18,63 +23,62 @@ public class PreviewVideoActivity extends Activity implements View.OnClickListen
     public static final int SOURCE_SCHOOL = 2;
     public static final int RESULT_DELETE = 3;
     private TextureView textureView;
-    private MediaPlayerManager playerManager;
     private String recorderPath;
     private ImageView iv_left;
     private ImageView iv_delete;
     private int source;
-
+    private RelativeLayout rl_head;
+    private ImageView iv_image;
+    public LoadingDialog dialog;
+    private MediaPlayer mPlayer;
+    private SurfaceView surfaceView;
+    private SurfaceHolder holder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview_video);
-     //   G.setTranslucent(this);
+        G.setTranslucent(this);
         init();
     }
 
     private void init() {
-        textureView = (TextureView) findViewById(R.id.texture_view);
+       // textureView = (TextureView) findViewById(texture_view);
+        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         iv_left = (ImageView) findViewById(R.id.iv_left);
         iv_delete = (ImageView) findViewById(R.id.iv_delete);
-        playerManager = MediaPlayerManager.getInstance(getApplication());
+        iv_image = (ImageView) findViewById(R.id.iv_image);
+        rl_head =  (RelativeLayout)findViewById(R.id.rl_head);
         recorderPath = getIntent().getStringExtra("path");
-        source = getIntent().getIntExtra("source", SOURCE_STATUS);
-        textureView.setSurfaceTextureListener(listener);
+        source = getIntent().getIntExtra("source", -1);
+        holder = surfaceView.getHolder();
+        //不传递source时表示查看动态查看视频
+        rl_head.setVisibility(source==-1?View.GONE:View.VISIBLE);
+        ImageCache.imageLoader(VideoUtil.getFirstFrame(recorderPath),iv_image);
+      //  setVideoParam();
+        //textureView.setSurfaceTextureListener(listener);
+        holder.addCallback(callback);
         iv_delete.setOnClickListener(this);
         iv_left.setOnClickListener(this);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        playerManager.stopMedia();
-    }
-
-    /**
-     * camera回调监听
-     */
-    private TextureView.SurfaceTextureListener listener = new TextureView.SurfaceTextureListener() {
+    private SurfaceHolder.Callback callback  = new SurfaceHolder.Callback() {
         @Override
-        public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
+        public void surfaceCreated(SurfaceHolder surfaceHolder) {
             if (recorderPath != null) {
-                playerManager.playMedia(new Surface(texture), recorderPath);
+                playMedia(surfaceView.getHolder(), recorderPath);
             }
         }
 
         @Override
-        public void onSurfaceTextureSizeChanged(SurfaceTexture texture, int width, int height) {
+        public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
         }
 
         @Override
-        public boolean onSurfaceTextureDestroyed(SurfaceTexture texture) {
-            return true;
-        }
-
-        @Override
-        public void onSurfaceTextureUpdated(SurfaceTexture texture) {
+        public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+            stopMedia();
         }
     };
-
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
@@ -101,4 +105,77 @@ public class PreviewVideoActivity extends Activity implements View.OnClickListen
         setResult(RESULT_DELETE);
         finish();
     }
+    /**
+     * 播放Media
+     */
+    public void playMedia(SurfaceHolder surface, String mediaPath) {
+        if (source==-1){
+            showLoadingDialog();
+        }
+        try {
+            if (mPlayer == null) {
+                mPlayer = new MediaPlayer();
+                mPlayer.setDataSource(mediaPath);
+            } else {
+                if (mPlayer.isPlaying()) {
+                    mPlayer.stop();
+                }
+                mPlayer.reset();
+                mPlayer.setDataSource(mediaPath);
+            }
+         //   mPlayer.setSurface(surface);
+            mPlayer.setDisplay(surface);
+            mPlayer.setLooping(true);
+            mPlayer.prepareAsync();
+            mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    stopLoadingDialog();
+                    mp.start();
+                }
+            });
+        } catch (Exception e) {
+            G.log(e);
+        }
+    }
+
+    /**
+     * 停止播放Media
+     */
+    public void stopMedia() {
+        try {
+            if (mPlayer != null) {
+                if (mPlayer.isPlaying()) {
+                    mPlayer.stop();
+                }
+                mPlayer.release();
+                mPlayer = null;
+            }
+        } catch (Exception e) {
+            G.log(e);
+        }
+    }
+    public void showLoadingDialog() {
+        if (dialog == null)
+            dialog = new LoadingDialog(this, R.style.LoadingDialogTheme);
+        try {
+            dialog.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        dialog.setCancelable(true);
+        dialog.setLoadingText("数据加载中...");
+    }
+
+    public void stopLoadingDialog() {
+        if (dialog != null) {
+            try {
+                dialog.dismiss();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 }

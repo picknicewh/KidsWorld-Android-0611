@@ -49,7 +49,7 @@ public class AuthorizedLoginPresenter implements AuthorizedLoginContract.Present
     @Override
     public void onSuccess(String uri, Object date) {
         view.stopLoadingDialog();
-        if (Apiurl.DYNAMICHEAD.equals(uri)) {
+        if (Apiurl.AUTHORIZATION.equals(uri)) {
             Result<String> data = (Result<String>) date;
             view.setToken(data.getData());
         }

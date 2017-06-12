@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
      <net.hongzhang.baselibrary.widget.CircleImageView
         android:layout_margin="@dimen/space"
-        android:src="@mipmap/ic_img_error"
+         android:src="@mipmap/ic_headmaster"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/lv_holad" />

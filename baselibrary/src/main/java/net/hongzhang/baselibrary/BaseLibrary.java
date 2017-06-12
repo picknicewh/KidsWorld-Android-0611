@@ -62,8 +62,8 @@ public class BaseLibrary {
         OkHttpUtils.init(application);
         initImageLoader(application);
         RongPushClient.registerMiPush(application, " 2882303761517505108", "5551750520108");
-      //  RongIM.init(application, "e0x9wycfeaamq");//初始化消息中的信息
-        RongIM.init(application, "x18ywvqfxlloc");//初始化消息中的信息
+        RongIM.init(application, "e0x9wycfeaamq");//初始化消息中的信息--》测试账号
+       // RongIM.init(application, "x18ywvqfxlloc");//初始化消息中的信息--生产账号
         SpeechUtility.createUtility(application, SpeechConstant.APPID +"=59254e5d");//初始化语音
         //e0x9wycfeaamq 测试   x18ywvqfxlloc 生产
         activitys = new ArrayList<>();

@@ -5,37 +5,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="net.hongzhang.school.activity.LeaveListActivity">
+
     <TextView
+
         android:id="@+id/tv_nodata"
-        android:visibility="gone"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:text="没有数据"
-        android:textSize="18sp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="暂时没有请假信息"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
     <include
         android:id="@+id/rl_lvnonetwork"
-        layout="@layout/nonetwork"/>
+        layout="@layout/nonetwork" />
 
-    <!--<net.hongzhang.baselibrary.widget.listview.PullToRefreshLayout
-        android:id="@+id/refresh_view"
+    <net.hongzhang.baselibrary.pullrefresh.PullToRefreshRecyclerView
+        android:layout_marginTop="@dimen/space"
+        android:id="@+id/pullToRefreshRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <include layout="@layout/refresh_head" />
-        &lt;!&ndash; 支持所有实现Pullable接口的View &ndash;&gt;
-    <net.hongzhang.baselibrary.widget.listview.PullableListView
-        android:divider="@color/transparent"
-        android:dividerHeight="0dp"
-        android:id="@+id/lv_leaves"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/tv_no_more_data"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-        <include
-            android:id="@+id/load_more"
-            layout="@layout/load_more" />
-    </net.hongzhang.baselibrary.widget.listview.PullToRefreshLayout>-->
-    <net.hongzhang.baselibrary.pullrefresh.PullToRefreshListView
-        android:id="@+id/plv_leave_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/space"
+        android:text="已经到底啦"
+        android:textColor="@color/minor_text"
+        android:textSize="@dimen/ts_large"
+        android:visibility="gone" />
 </LinearLayout>

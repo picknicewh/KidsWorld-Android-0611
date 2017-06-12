@@ -2,24 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/black">
     <RelativeLayout
+        android:id="@+id/rl_head"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="64dp"
         android:padding="@dimen/space">
         <ImageView
             android:id="@+id/iv_left"
-            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/space_x2"
             android:src="@mipmap/ic_arrow_lift"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"/>
+       />
         <TextView
+            android:layout_marginTop="@dimen/space_x2"
             android:textSize="@dimen/ts_x_large"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:text="1/1"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
@@ -27,15 +29,32 @@
         <ImageView
             android:id="@+id/iv_delete"
             android:layout_alignParentRight="true"
-            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/space_x2"
              android:src="@mipmap/ic_delete_pic"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"/>
+            android:layout_height="wrap_content" />
     </RelativeLayout>
-    <TextureView
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rl_pic"
+        android:layout_below="@+id/rl_head"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/iv_image"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <!--<TextureView
         android:id="@+id/texture_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true" />
+        android:layout_height="wrap_content" />-->
+
 </LinearLayout>

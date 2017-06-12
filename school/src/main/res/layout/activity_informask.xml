@@ -5,13 +5,15 @@
     android:background="@color/main_bg"
     android:fillViewport="true"
     android:orientation="vertical">
+
     <LinearLayout
-        android:layout_marginTop="@dimen/space"
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:padding="@dimen/space">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -30,21 +32,22 @@
             android:textColor="@color/theme_text"
             android:textSize="@dimen/ts_large" />
     </LinearLayout>
+
     <LinearLayout
-        android:background="@color/white"
-        android:layout_height="wrap_content"
         android:id="@+id/ll_istarttime"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:padding="@dimen/space">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/minor_text"
             android:layout_weight="1"
             android:text="开始时间"
+            android:textColor="@color/minor_text"
             android:textSize="@dimen/ts_large" />
 
         <TextView
@@ -60,20 +63,20 @@
 
 
     <LinearLayout
-        android:background="@color/white"
-        android:layout_height="wrap_content"
         android:id="@+id/ll_iendtime"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:padding="@dimen/space">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/minor_text"
             android:layout_weight="1"
             android:text="结束时间"
+            android:textColor="@color/minor_text"
             android:textSize="@dimen/ts_large" />
 
         <TextView
@@ -89,19 +92,20 @@
 
 
     <LinearLayout
-        android:background="@color/white"
-        android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:padding="@dimen/space">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/minor_text"
             android:layout_weight="2"
             android:text="用餐"
+            android:textColor="@color/minor_text"
             android:textSize="@dimen/ts_large" />
 
         <TextView
@@ -114,32 +118,46 @@
             android:textColor="@color/theme_text"
             android:textSize="@dimen/ts_large" />
     </LinearLayout>
+
     <LinearLayout
-        android:background="@color/white"
-        android:layout_height="wrap_content"
+        android:id="@+id/ll_course"
+        android:gravity="center"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space"
-        android:orientation="vertical"
-       >
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:gravity="left"
-        android:padding="@dimen/space"
-        android:text="请假事由"
-        android:textColor="@color/minor_text"
-        android:textSize="@dimen/ts_large"
-        />
-    <EditText
-        android:windowSoftInputMode="stateHidden|adjustResize"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:id="@+id/et_cause"
-        android:layout_margin="@dimen/space"
-        android:background="@drawable/infor_et_bg"
-        android:maxLength="200"
-        android:gravity="left"
-        android:textColor="@color/minor_text" />
-</LinearLayout>
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:padding="@dimen/space"
+            android:text="请假事由"
+            android:textColor="@color/minor_text"
+            android:textSize="@dimen/ts_large" />
+
+        <TextView
+            android:id="@+id/tv_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请选择（必填）"
+            android:textColor="@color/theme_text"
+            android:drawableRight="@mipmap/ic_arrow_right"
+            android:drawablePadding="@dimen/space_x0.5"/>
+
+        <EditText
+            android:id="@+id/et_cause"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="@dimen/space"
+            android:background="@drawable/infor_et_bg"
+            android:gravity="left"
+            android:maxLength="200"
+            android:textColor="@color/minor_text"
+            android:visibility="gone"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+    </LinearLayout>
 
 </LinearLayout>

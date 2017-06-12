@@ -73,6 +73,7 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
         praises = new HashMap<>();
         praiseNums = new HashMap<>();
         praisesNames = new HashMap<>();
+
     }
 
     /**
@@ -158,7 +159,6 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
         } else {
             viewHold.tv_comment_num.setText("评论");
         }
-
         //显示的身份
         if (statusVo.getTsType() == 1) {
             viewHold.tv_id.setText("学");
@@ -175,18 +175,17 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
         }
         //加载图片
         if (statusVo.getImgUrl() != null && statusVo.getImgUrl().size() > 0) {
-            if (statusVo.getImgUrl().size()==1&&statusVo.getImgUrl().get(0).contains(".mp4")){
-                viewHold.rl_video.setVisibility(View.VISIBLE);
-                ImageCache.imageLoader(VideoUtil.getFirstFrame(statusVo.getImgUrl().get(0)), viewHold.iv_video);
-            }else {
-                viewHold.rl_video.setVisibility(View.GONE);
-                viewHold.rl_picture.setVisibility(View.VISIBLE);
-                viewHold.pictrueUtils.setPictrueLoad(context, statusVo.getImgUrl(), viewHold.rl_picture);
-            }
+            viewHold.rl_picture.setVisibility(View.VISIBLE);
+            viewHold.pictrueUtils.setPictrueLoad(context, statusVo.getImgUrl(), viewHold.rl_picture);
         } else {
             viewHold.rl_picture.setVisibility(View.GONE);
         }
-
+        if (statusVo.getVideoUrl()!=null){
+            viewHold.rl_video.setVisibility(View.VISIBLE);
+            ImageCache.imageLoader(VideoUtil.getFirstFrame(statusVo.getVideoUrl()),viewHold.iv_video);
+        }else {
+            viewHold.rl_video.setVisibility(View.GONE);
+        }
         //点赞按钮事件
         viewHold.iv_praise.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,8 +243,8 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, PreviewVideoActivity.class);
-                i.putExtra("path", statusVo.getImgUrl().get(0));
-                context.startActivityForResult(i,1);
+                i.putExtra("path", statusVo.getVideoUrl());
+                context.startActivity(i);
             }
         });
         if (UserMessage.getInstance(context).getTsId().equals(statusVo.getTsId())) {
@@ -253,7 +252,6 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
         } else {
             viewHold.tv_delete.setVisibility(View.GONE);
         }
-
         viewHold.tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -353,5 +351,11 @@ public class StatusAdapter extends BaseAdapter implements OkHttpListener {
             pictrueUtils = new PictrueUtils();
             view.setTag(this);
         }
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+        setData(statusVoList);
     }
 }

@@ -122,7 +122,6 @@ public class CaptureVideoActivity extends Activity implements View.OnClickListen
         initData();
     }
     private void initData() {
-
         //如果已经有视频，使得长按事件取消
         hasVideo = getIntent().getBooleanExtra("hasVideo",false);
         G.initDisplaySize(this);
@@ -201,7 +200,6 @@ public class CaptureVideoActivity extends Activity implements View.OnClickListen
         }
         });
     }
-
     /**
      * 停止拍摄
      *

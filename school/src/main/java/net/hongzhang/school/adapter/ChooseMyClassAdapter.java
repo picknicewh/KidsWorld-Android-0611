@@ -8,9 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import net.hongzhang.baselibrary.mode.ClassVo;
 import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.school.R;
-import net.hongzhang.school.bean.ClassVo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +61,7 @@ public class ChooseMyClassAdapter extends BaseAdapter {
 			viewHolder = (ViewHolder) view.getTag();
 		}
 		ClassVo dynamicVo = dynamicList.get(position);
-		viewHolder.tv_class.setText(dynamicVo.getClass_name());
+		viewHolder.tv_class.setText(dynamicVo.getGroupName());
 		// 根据isSelected来设置checkbox的选中状况
 		viewHolder.cb_class.setChecked(getIsSelected().get(position));
 		return view;

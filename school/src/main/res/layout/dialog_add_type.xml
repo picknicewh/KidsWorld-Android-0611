@@ -6,9 +6,10 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="添加标签"
+        android:text="添加类型"
         android:textColor="@color/theme_text"
         android:textSize="@dimen/ts_xx_large"
         android:gravity="center"
@@ -17,14 +18,14 @@
 
 
     <EditText
-        android:id="@+id/et_tag"
+        android:id="@+id/et_text"
         android:padding="@dimen/space"
         android:background="@drawable/password_selecter"
         android:layout_margin="@dimen/space_x2"
-        android:hint="请输入标签的名称（2-3）个字"
+        android:hint="请输入名称（2-3）个字"
         android:textSize="@dimen/ts_medium"
         android:layout_gravity="center"
-        android:maxLength="3"
+        android:maxLength="10"
         android:lines="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

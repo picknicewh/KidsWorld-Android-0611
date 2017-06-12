@@ -54,7 +54,9 @@ public class ImageCache {
 //        ImageCache().displayImage(getNewUrl(imageUri), imageView, options);
             GlideUtils.loadImageView(imageView.getContext(),getNewUrl(imageUri),imageView);
     }
-
+    public static void imageLoade( String imageUri,  ImageView imageView){
+        ImageCache().displayImage(getNewUrl(imageUri), imageView, options);
+    }
     /**
      *  显示普通图片
      * @param imageUri 图片地址

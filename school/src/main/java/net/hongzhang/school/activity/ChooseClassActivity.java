@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 
 import net.hongzhang.baselibrary.base.BaseActivity;
+import net.hongzhang.baselibrary.mode.ClassVo;
 import net.hongzhang.baselibrary.mode.Result;
 import net.hongzhang.baselibrary.network.Apiurl;
 import net.hongzhang.baselibrary.network.DetaiCodeUtil;
@@ -20,7 +21,6 @@ import net.hongzhang.baselibrary.util.G;
 import net.hongzhang.baselibrary.util.UserMessage;
 import net.hongzhang.school.R;
 import net.hongzhang.school.adapter.ChooseMyClassAdapter;
-import net.hongzhang.school.bean.ClassVo;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -121,7 +121,7 @@ public class ChooseClassActivity extends BaseActivity implements View.OnClickLis
         for (int i = 0; i < isSelected.size(); i++) {
             boolean ischeck = isSelected.get(i);
             if (ischeck) {
-                String name =dynamicList.get(i).getClass_id();
+                String name =dynamicList.get(i).getGroupName();
                 classids.add(name);
             }
         }

@@ -101,18 +101,21 @@ public class UserChooseActivity extends BaseActivity implements UserChooseContra
     @Override
     public void setIsChoose(boolean isChoose) {
         if (isChoose) {
-            //如果source不为空，表示分享时，并没有登陆，从而进入登陆页面，登陆成功且角色选择成功后，再次进入分享页面，继续分享。
-            String source = getIntent().getStringExtra("source");
-            if (!G.isEmteny(source)) {
-                if (source.equals("ShareActivity")) {
-                    UserAction.goShareActivity(this, getIntent().getStringExtra("extra"));
-                }
-            }
             String sex;
             if (characterSeleteVo.getSex() == null || characterSeleteVo.getSex() == 1) sex = "男";
             else sex = "女";
             UserAction.saveUserMessage(this, characterSeleteVo.getName(), characterSeleteVo.getImg(), characterSeleteVo.getClassName(), characterSeleteVo.getSchoolName(),
                     characterSeleteVo.getRyId(), characterSeleteVo.getTsId(), characterSeleteVo.getType(), sex, characterSeleteVo.getSignature(), characterSeleteVo.getAccount_id());
+            //如果source不为空，表示分享时，并没有登陆，从而进入登陆页面，登陆成功且角色选择成功后，再次进入分享页面，继续分享。
+            String source = getIntent().getStringExtra("source");
+            if (!G.isEmteny(source)) {
+                if (source.equals("ShareActivity")) {
+                    UserAction.goShareActivity(this, getIntent().getStringExtra("extra"));
+                }else if (source.equals("AuthorizedLoginActivity")){//如果授权登录
+                    UserAction.goAuthorizedLoginActivity(this);
+                    return;
+                }
+            }
             //如果网络连接时，连接融云
             if (G.isNetworkConnected(this)) {
                 BaseLibrary.connect(characterSeleteVo.getRyId(), this, characterSeleteVo.getName(), characterSeleteVo.getImg());

@@ -1,73 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_x2"
+    android:orientation="vertical">
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-      <net.hongzhang.baselibrary.widget.CircleImageView
-        android:src="@mipmap/person"
-        android:layout_margin="@dimen/space"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/lv_holad" />
-        <TextView
-            android:layout_weight="1"
 
-            android:id="@+id/tv_title"
-            android:layout_width="0dp"
-            android:layout_marginTop="@dimen/space"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/ts_x_large"
-            android:textColor="@color/main_green" />
-        <TextView
-            android:paddingRight="@dimen/space"
-            android:layout_marginTop="@dimen/space"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_date"
-            android:textSize="@dimen/ts_medium"
-            android:textColor="@color/minor_text"
-            android:layout_alignParentRight="true"/>
-
-    </LinearLayout>
-        <TextView
-
-            android:layout_gravity="center"
-            android:layout_below="@id/lv_holad"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_ptitle"
-            android:textColor="@color/black"
-            android:textSize="@dimen/ts_xx_large"/>
-    <LinearLayout
-        android:layout_marginLeft="@dimen/space_x2"
-        android:layout_marginTop="@dimen/space"
-        android:layout_marginRight="@dimen/space_x2"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:paddingBottom="@dimen/space"
-            android:textColor="@color/theme_text"
-            android:id="@+id/tv_content"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/ts_xx_large"
-            android:text="PhoneGap/Cordova是一个专业的移动应用开发框架，是一个全面的WEB APP开发的框架，提供了以WEB形式来访问终端设备的API的功能。这对于采用WEB APP进行开发者来说是个福音，这可以避免了原生开发的某些功能。Cordova 只是个原生外壳，app的内核是一个完整的webapp，需要调用的原生功能将以原生插件的形式实现，以暴露js接口的方式调用。" />
-          <ImageView
-              android:layout_below="@+id/tv_content"
-              android:id="@+id/iv_image"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content" />
-    </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_holad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space"
+                android:orientation="horizontal">
+
+                <net.hongzhang.baselibrary.widget.CircleImageView
+                    android:id="@+id/lv_holad"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/person" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/space"
+                    android:textColor="@color/main_green"
+                    android:textSize="@dimen/ts_x_large" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/space"
+                    android:paddingRight="@dimen/space"
+                    android:textColor="@color/minor_text"
+                    android:textSize="@dimen/ts_medium" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_ptitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_holad"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/ts_xx_large" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_ptitle"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space_x2"
+                android:layout_marginRight="@dimen/space_x2"
+                android:layout_marginTop="@dimen/space"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/space"
+                    android:text="PhoneGap/Cordova是一个专业的移动应用开发框架，是一个全面的WEB APP开发的框架，提供了以WEB形式来访问终端设备的API的功能。这对于采用WEB APP进行开发者来说是个福音，这可以避免了原生开发的某些功能。Cordova 只是个原生外壳，app的内核是一个完整的webapp，需要调用的原生功能将以原生插件的形式实现，以暴露js接口的方式调用。"
+                    android:textColor="@color/theme_text"
+                    android:textSize="@dimen/ts_xx_large" />
+
+                <ImageView
+                    android:id="@+id/iv_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fac_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        app:backgroundTint="@color/white"
+        android:src="@mipmap/ic_voice" />
+</RelativeLayout>

@@ -1,6 +1,8 @@
 package net.hongzhang.bbhow.util;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import net.hongzhang.baselibrary.BaseLibrary;
@@ -36,6 +38,11 @@ public class HunmeApplication extends Application {
         BaseLibrary.initializer(this);
         setExtendProvide();
 
+    }
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
     //回话扩展功能自定义
     private void setExtendProvide(){

@@ -183,7 +183,7 @@ public class PublishActiveActivityT extends BaseDateSelectActivity implements Vi
     public void onClick(View view) {
         int viewId = view.getId();
         if (viewId == R.id.ll_publish_time) {
-            DateUtil.getTimePickerView(this, new TimePickerView.OnTimeSelectListener() {
+            presenter.getTimePickerView(this, new TimePickerView.OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date, View v) {
                     startTime =  date.getTime();
@@ -192,7 +192,7 @@ public class PublishActiveActivityT extends BaseDateSelectActivity implements Vi
             }).show();
 
         } else if (viewId == R.id.ll_commit_time) {
-            DateUtil.getTimePickerView(this, new TimePickerView.OnTimeSelectListener() {
+            presenter.getTimePickerView(this, new TimePickerView.OnTimeSelectListener() {
 
                 @Override
                 public void onTimeSelect(Date date, View v) {

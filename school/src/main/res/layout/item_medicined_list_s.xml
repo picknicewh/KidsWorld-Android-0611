@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:background="@drawable/infor_et_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/space"
+        android:layout_marginLeft="@dimen/space"
+        android:layout_marginRight="@dimen/space"
+        android:padding="@dimen/space">
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9:30"
+            android:textColor="@color/main_green"
+            android:textSize="35sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/space"
+            android:paddingBottom="@dimen/space">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="小名"
+                android:textColor="@color/theme_text"
+                android:textSize="@dimen/ts_large" />
+
+            <TextView
+                android:id="@+id/tv_sick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="肠胃炎"
+                android:textColor="@color/theme_text"
+                android:textSize="@dimen/ts_large" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/space"
+            android:paddingBottom="@dimen/space">
+            <TextView
+                android:id="@+id/tv_medicine"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="三九胃泰"
+                android:textColor="@color/theme_text"
+                android:textSize="@dimen/ts_large" />
+
+            <TextView
+                android:id="@+id/tv_medicine_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1粒"
+                android:textColor="@color/theme_text"
+                android:textSize="@dimen/ts_large" />
+        </LinearLayout>
+
+        <TextView
+            android:textColor="@color/minor_text"
+            android:text="备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注"
+            android:id="@+id/tv_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

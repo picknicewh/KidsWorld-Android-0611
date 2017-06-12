@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+
+    tools:context="net.hongzhang.school.activity.SubmitRecipesActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_x0.5"
+        android:orientation="vertical"
+        android:padding="@dimen/space">
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/space_x0.5"
+            android:paddingLeft="@dimen/space_x0.5"
+            android:text="9月1日"
+            android:textColor="@color/main_green"
+            android:textSize="30sp" />
+
+
+        <TextView
+            android:id="@+id/tv_class"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/space_x0.5"
+            android:paddingLeft="@dimen/space_x0.5"
+            android:text="小一班 "
+            android:textColor="@color/minor_text"
+            android:textSize="@dimen/ts_x_large" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/infor_et_bg"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/et_content"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="@dimen/space_x0.5"
+                android:background="@color/white"
+                android:gravity="left"
+                android:hint="请输入食谱..."
+                android:maxLength="200"
+                android:textColor="@color/theme_text"
+                android:textSize="@dimen/ts_medium" />
+
+            <net.hongzhang.baselibrary.widget.NoScrollGirdView
+                android:id="@+id/gv_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:verticalSpacing="@dimen/space"
+                android:layout_margin="@dimen/space_x0.5"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_time"
+            android:padding="@dimen/space"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="时间点"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/theme_text"
+                android:textSize="@dimen/ts_large"/>
+            <TextView
+                android:textSize="@dimen/ts_large"
+                android:gravity="center"
+                android:id="@+id/tv_time"
+                android:text="请选择（必填）"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/theme_text"
+          />
+        </LinearLayout>
+        <View
+            android:background="@color/line_divide"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_gray"/>
+    </LinearLayout>
+
+</LinearLayout>

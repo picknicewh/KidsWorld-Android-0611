@@ -70,7 +70,7 @@ public class WebCommonPageFrom {
                 switch (view) {
                     case Constant.HOME:
                        // iv_left.setImageResource(R.mipmap.ic_history);
-                        ImageCache.imageLoader(UserMessage.getInstance(activity).getHoldImgUrl(),iv_left);
+                        ImageCache.imageLoader(UserMessage.getInstance(activity.getApplication()).getHoldImgUrl(),iv_left);
                       /*  tv_title.setText("乐园");
                         tv_title.setVisibility(View.VISIBLE);*/
                         iv_right.setImageResource(R.mipmap.ic_history);

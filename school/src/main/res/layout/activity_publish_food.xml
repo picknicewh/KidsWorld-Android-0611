@@ -74,15 +74,16 @@
         android:maxLength="140"
         android:layout_margin="@dimen/space"
         android:padding="@dimen/space_x2" />
+
     <GridView
-        android:layout_marginLeft="@dimen/space_x2"
-        android:layout_marginRight="@dimen/space_x2"
-        android:layout_alignParentBottom="true"
         android:id="@+id/gv_food"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/space_x2"
+        android:layout_marginRight="@dimen/space_x2"
         android:horizontalSpacing="@dimen/space"
-        android:verticalSpacing="@dimen/space"
         android:numColumns="3"
-        android:scrollbars="none" />
+        android:scrollbars="none"
+        android:verticalSpacing="@dimen/space" />
 </LinearLayout>
